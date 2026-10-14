@@ -1,0 +1,409 @@
+; SPDX-License-Identifier: 0BSD
+; common.vla - a library of template macros that a cartridge's source includes
+; (SPEC.md section 7.8), 0BSD with the cartridges, so it is copied freely. The pass
+; knows none of these by name: each is a text an author wrote, and a source may define
+; its own beside them, or include a library of its own instead. They are examples, to
+; be read, copied, changed and outgrown. Since KIT.1 they hold the kit's first verbs,
+; the patterns two cartridges wrote alike by hand, or one wrote as the page spells it;
+; since KIT.2 the picture, a string a row of cells and a character a cell; since CART.4,
+; the stacking game Kairos, the verbs every and since, the look map, a still Camera and
+; the Write sheet's row; and since ENGINE.9 interior, the rule over a board's interior,
+; whose size a source states once, as a parameter a door may give another value.
+;
+; The rules each macro here keeps, which are the language's:
+;   - Template macros only. A parameter is replaced by the form the caller passes; no
+;     gensym and no eval, every binding named by the caller.
+;   - A parameter never takes the name of a row it writes: a parameter called name
+;     would replace the head of a (name ...) row too, and the load would refuse the row.
+;   - A macro that walks a list recurses in tail position, its own call the last form
+;     of its begin, so the expander's trampoline keeps the rows flat. A chain stops at
+;     5,000 links: each application is one, and so is each begin it unwraps. The forms
+;     of a begin before its last wait, and each is expanded as a chain of its own, which
+;     is how a picture's rows and cells each start one. Since vla-lang 0.9.2 a walk that
+;     hands its list on whole, (cdr characters), costs its length; one that splices its
+;     rest, (unquote-splicing (cdr ...)), copies the rest at every step, which is for
+;     dozens of items, never thousands.
+;   - An address is joined: (&expand "A" (+expand index 1)) is the text "A1", since
+;     &expand joins its atoms into one text and +expand adds two numbers as the macro
+;     expands. A column is reached by arithmetic too, (address-expand row column) or
+;     (column-letters-expand column), and a text is split by characters-expand: the
+;     expand-time primitives vla-lang 0.9.0 added (SPEC.md section 7.8).
+;   - A macro's call is no argument of &expand, nor of any expand-time primitive, which
+;     takes its arguments as data: (&expand "=" (twin ...)) is refused, with the id
+;     vla-expand-arg-is-list. So a macro that finds a text hands it on to the macro
+;     named after it, (first-cell range then args...) becoming (then first args...), and
+;     the verbs compose by reference, one writing a cell that another reads.
+;   - A verb builds its row inside a quasiquote, its pieces spliced in by unquote and
+;     joined when the row itself is expanded, so a piece may be a string or an &expand
+;     of strings. Named inside the verb's own &expand, a parameter bound to an &expand
+;     would be handed over as the list it is, and refused.
+
+; ---- one sheet, named once ----------------------------------------------------------
+; A run of rows on one sheet, the sheet named at the top of the run and not on every
+; row: cells and formulas take entries, each an address or a range and what it holds,
+; and on takes rows, or calls of a verb or a picture, each written without its sheet.
+; The cartridge the pass writes still names the sheet on every row, which stands alone
+; there, as the record prints it (SPEC.md section 7.3).
+
+(defmacro (cells sheet & entries)
+  "value cells of one sheet, named once: each entry an address or a range, then its value"
+  (quote-if (null? entries)
+    (begin)
+    (begin
+      (cell sheet (car (car entries)) (car (cdr (car entries))))
+      (quasiquote (cells (unquote sheet) (unquote-splicing (cdr entries)))))))
+
+(defmacro (formulas sheet & entries)
+  "formula cells of one sheet, named once: each entry an address or a range, then its formula"
+  (quote-if (null? entries)
+    (begin)
+    (begin
+      (formula sheet (car (car entries)) (car (cdr (car entries))))
+      (quasiquote (formulas (unquote sheet) (unquote-splicing (cdr entries)))))))
+
+(defmacro (on sheet & forms)
+  "rows of one sheet, named once: each a row, or a call whose first argument is the sheet, written without it"
+  (quote-if (null? forms)
+    (begin)
+    (begin
+      (cons (car (car forms)) (cons sheet (cdr (car forms))))
+      (quasiquote (on (unquote sheet) (unquote-splicing (cdr forms)))))))
+
+; ---- the sheets, and their words ----------------------------------------------------
+; A cartridge's sheets in tab order, each visible; a sheet hidden is written as its own
+; row, (sheet "X" hidden). Then a sheet's own words: a block of settings holds a label
+; in column A beside each value in column B, and a table holds its headers in row 1
+; over its columns (SPEC.md section 3). Each takes the cell its first text goes in, and
+; the texts in order, a text or a number each.
+
+(defmacro (sheets & tabs)
+  "the sheets in tab order, each visible: a (sheet name visible) row a name"
+  (quote-if (null? tabs)
+    (begin)
+    (begin
+      (sheet (car tabs) visible)
+      (quasiquote (sheets (unquote-splicing (cdr tabs)))))))
+
+(defmacro (labels sheet first & texts)
+  "texts down a column from a cell, one a row: a block's labels"
+  (quasiquote (labels-from (unquote sheet) (unquote (row-expand first)) (unquote (column-expand first)) (unquote-splicing texts))))
+
+(defmacro (labels-from sheet row column & texts)
+  "labels' walk: a text a row, down from the row and the column given"
+  (quote-if (null? texts)
+    (begin)
+    (begin
+      (cell sheet (address-expand row column) (car texts))
+      (quasiquote (labels-from (unquote sheet) (unquote (+expand row 1)) (unquote column) (unquote-splicing (cdr texts)))))))
+
+(defmacro (headers sheet first & texts)
+  "texts along a row from a cell, one a column: a table's headers"
+  (quasiquote (headers-from (unquote sheet) (unquote (row-expand first)) (unquote (column-expand first)) (unquote-splicing texts))))
+
+(defmacro (headers-from sheet row column & texts)
+  "headers' walk: a text a column, along from the row and the column given"
+  (quote-if (null? texts)
+    (begin)
+    (begin
+      (cell sheet (address-expand row column) (car texts))
+      (quasiquote (headers-from (unquote sheet) (unquote row) (unquote (+expand column 1)) (unquote-splicing (cdr texts)))))))
+
+; ---- the Palette (SPEC.md section 3.2) ----------------------------------------------
+
+(defmacro (palette & entries)
+  "the Palette's sixteen rows: each entry a color and a name, its index its place from 0"
+  (quasiquote (palette-from 0 (unquote entries))))
+
+(defmacro (palette-from index entries)
+  "the Palette's rows from an index on, an entry at a time"
+  (quote-if (null? entries)
+    (begin)
+    (begin
+      (palette-entry index (car entries))
+      (palette-from (+expand index 1) (cdr entries)))))
+
+(defmacro (palette-entry index entry)
+  "one Palette row: the index in column A, the color in B, the name in C"
+  (cell "Palette" (symbol "\"A" (+expand index 1)) index)
+  (cell "Palette" (symbol "\"B" (+expand index 1)) (car entry))
+  (cell "Palette" (symbol "\"C" (+expand index 1)) (car (cdr entry))))
+
+(defmacro (cga-palette)
+  "the CGA's sixteen in their own order, SPEC.md section 3.2's table, a palette with a name"
+  (palette                          ; the sixteen colors, index 0 first
+    ("#000000" "black")             ; 0
+    ("#0000AA" "blue")              ; 1
+    ("#00AA00" "green")             ; 2
+    ("#00AAAA" "cyan")              ; 3
+    ("#AA0000" "red")               ; 4
+    ("#AA00AA" "magenta")           ; 5
+    ("#AA5500" "brown")             ; 6
+    ("#AAAAAA" "light gray")        ; 7
+    ("#555555" "dark gray")         ; 8
+    ("#5555FF" "light blue")        ; 9
+    ("#55FF55" "light green")       ; 10
+    ("#55FFFF" "light cyan")        ; 11
+    ("#FF5555" "light red")         ; 12
+    ("#FF55FF" "light magenta")     ; 13
+    ("#FFFF55" "yellow")            ; 14
+    ("#FFFFFF" "white")))           ; 15
+
+; ---- the looks (SPEC.md section 7.3) ------------------------------------------------
+; The grid's twin of the Palette: a look map, each value drawn through a format whose
+; fill is a color, so that the grid draws a sheet's values as the plane draws its bytes
+; (SPEC.md decision 19). A fill is written as the record writes it, six hex digits and
+; no #.
+
+(defmacro (looks sheet & fills)
+  "a sheet's look map from a list of fills: the value n drawn through the format n+1, its fill the nth, from 0"
+  (quasiquote (looks-from (unquote sheet) 0 (unquote fills))))
+
+(defmacro (looks-from sheet index fills)
+  "looks' walk: a format and a look a fill, from an index on"
+  (quote-if (null? fills)
+    (begin)
+    (begin
+      (format (+expand index 1) (car fills) general nowrap)
+      (look sheet index (+expand index 1))
+      (looks-from sheet (+expand index 1) (cdr fills)))))
+
+; ---- the buttons and the keys (SPEC.md sections 3.3 and 3.4) --------------------------
+
+(defmacro (button-labels sheet)
+  "the Input sheet's ten button labels in a sheet's column A, up to select, rows 1 to 10"
+  (labels sheet "A1" "up" "down" "left" "right" "a" "b" "x" "y" "start" "select"))
+
+(defmacro (keys letter & codes)
+  "a player's column of the Keys sheet: the KeyboardEvent.code that holds each button, up to select, from row 1"
+  (quasiquote (keys-from (unquote letter) 0 (unquote codes))))
+
+(defmacro (keys-from letter index codes)
+  "a player's codes from an index on, a code at a time; the column's letter joined to the row"
+  (quote-if (null? codes)
+    (begin)
+    (begin
+      (cell "Keys" (&expand letter (+expand index 1)) (car codes))
+      (keys-from letter (+expand index 1) (cdr codes)))))
+
+(defmacro (default-keys)
+  "the Keys sheet as SPEC.md section 3.4 tabulates it: the ten labels in column A, and player 1's keys, TIC-80's, in column B; a later player is a keys call"
+  (button-labels "Keys")
+  (keys "B"                         ; player 1: SPEC.md section 3.4's defaults, TIC-80's
+    "ArrowUp"                       ; up
+    "ArrowDown"                     ; down
+    "ArrowLeft"                     ; left
+    "ArrowRight"                    ; right
+    "KeyZ"                          ; a
+    "KeyX"                          ; b
+    "KeyA"                          ; x
+    "KeyS"                          ; y
+    "Enter"                         ; start
+    "Space"))                       ; select
+
+; ---- the Audio sheet (SPEC.md section 3.6) ------------------------------------------
+; A table, a voice a row: the header in row 1 and the voices' numbers in column A, rows 2
+; to 5; a cartridge writes each voice's wave, note and volume in columns B to D itself.
+
+(defmacro (audio)
+  "the Audio sheet's header row, voice, wave, note and volume, and its four voices' numbers"
+  (headers "Audio" "A1" "voice" "wave" "note" "volume")
+  (labels "Audio" "A2" 1 2 3 4))
+
+; ---- the Camera (SPEC.md section 3.8) -----------------------------------------------
+; Two cells the host places the Screen's window by, each beside its label. A still
+; Camera holds two values, which only a person's edit moves; with a Camera, the Screen
+; may hold cells beyond the window, which the plane never draws and a grid of the
+; sheet does. A Camera that pans holds a formula, and is written as rows.
+
+(defmacro (camera top left)
+  "a still Camera: the window's top row and left column as values, each beside its label"
+  (cell "Camera" "A1" "row")
+  (cell "Camera" "B1" top)
+  (cell "Camera" "A2" "column")
+  (cell "Camera" "B2" left))
+
+; ---- the Write sheet (SPEC.md section 3.9) ------------------------------------------
+; A row a write, from its cell in column A: the sheet a value goes to; in column B its
+; address, or a range every cell of which takes the value, while a test holds, and
+; else empty, which writes nothing; in column C the value. After each step the host
+; issues each row as a derived write before the next frame, so a value lands a frame
+; late. The table's header is the headers macro's.
+
+(defmacro (put sheet at target when address what)
+  "a row of the Write sheet, from its cell in column A: the target sheet; =IF(when,address,\"\"); =what"
+  (quasiquote (put-from (unquote sheet) (unquote (row-expand at)) (unquote (column-expand at)) (unquote target) (unquote when) (unquote address) (unquote what))))
+
+(defmacro (put-from sheet row column target when address what)
+  "put, its row and column read; its value parameter is what, since value heads a row of the record"
+  (cell sheet (address-expand row column) target)
+  (quasiquote (formula (unquote sheet) (unquote (address-expand row (+expand column 1))) (&expand "=IF(" (unquote when) "," (unquote address) ",\"\")")))
+  (quasiquote (formula (unquote sheet) (unquote (address-expand row (+expand column 2))) (&expand "=" (unquote what)))))
+
+; ---- the verbs: first frame, interior, press, count, hold, dice, every, since ---------
+; Each verb writes one formula row, one shape filled over a range, which the language
+; computes as a run (SPEC.md section 2's rules). The sheet comes first, so that on names
+; it once, then the range, then what the verb means, in the order its formula reads it.
+; Its other arguments are pieces of a formula without the = sign, a reference, a test
+; or an expression, written as the range's first cell reads it; the fill moves them as
+; it moves every relative reference. A piece is a string or an &expand of strings, and
+; never another macro's call: one verb writes a cell that another reads, and so every
+; pattern's value is a cell a person sees. A verb writes a twin as its sheet's name and
+; .last, so it wants a sheet whose name a formula writes bare, without quotes, as every
+; sheet the cartridges name is.
+
+(defmacro (first-frame sheet range start rule)
+  "the first frame's value, then the rule every later frame: =IF(Clock!$B$1=1,start,rule)"
+  (quasiquote (formula (unquote sheet) (unquote range) (&expand "=IF(Clock!$B$1=1," (unquote start) "," (unquote rule) ")"))))
+
+; A board's interior (ENGINE.9): first-frame over every cell of a board but its border,
+; one cell wide, which stays empty and reads as 0. The board's size comes first, its
+; width and its height in cells, and not the sheet, so that a source states its board
+; once, as a parameter that hands the size on: (board-size interior sheet start rule)
+; becomes (interior 320 200 sheet start rule). A door builds the source on a larger board
+; by handing the pass a later definition of the parameter (SPEC.md section 7.8), and the
+; same rule covers it. Its sheet is no first argument, so on cannot name it.
+
+(defmacro (interior width height sheet start rule)
+  "first-frame over a board width by height cells, less its border: B2 to the cell before its last row and column"
+  (quasiquote (first-frame (unquote sheet) (unquote (&expand "B2:" (address-expand (-expand height 1) (-expand width 1)))) (unquote start) (unquote rule))))
+
+(defmacro (pressed sheet range button)
+  "1 in the frame a button goes down and 0 otherwise, its cell 1 this frame and 0 the last, the rising edge (SPEC.md section 3.3): =IF(AND(button=1,its twin=0),1,0)"
+  (twin button pressed-from sheet range button))
+
+(defmacro (pressed-from last sheet range button)
+  "pressed, its button's twin found"
+  (quasiquote (formula (unquote sheet) (unquote range) (&expand "=IF(AND(" (unquote button) "=1," (unquote last) "=0),1,0)"))))
+
+(defmacro (count sheet range event)
+  "each cell its own last value plus an event, a count of the frames it is 1 or a sum of its numbers: =sheet.last!first+event"
+  (first-cell range count-from sheet range event))
+
+(defmacro (count-from first sheet range event)
+  "count, its range's first cell found"
+  (quasiquote (formula (unquote sheet) (unquote range) (&expand "=" (unquote sheet) ".last!" (unquote first) "+" (unquote event)))))
+
+(defmacro (hold sheet range when new)
+  "each cell its own last value until an event replaces it, SPEC.md section 3.9's keep-last: =IF(when,new,sheet.last!first)"
+  (first-cell range hold-from sheet range when new))
+
+(defmacro (hold-from first sheet range when new)
+  "hold, its range's first cell found"
+  (quasiquote (formula (unquote sheet) (unquote range) (&expand "=IF(" (unquote when) "," (unquote new) "," (unquote sheet) ".last!" (unquote first) ")"))))
+
+(defmacro (dice sheet at)
+  "Park and Miller's minimal standard in one cell (SPEC.md section 3.5): the seed in the first frame, then the last value times 16807, modulo 2147483647; one cell, since its Clock references are relative and a fill would move them"
+  (quasiquote (formula (unquote sheet) (unquote at) (&expand "=IF(Clock!B1=1,Clock!B3,MOD(" (unquote sheet) ".last!" (unquote at) "*16807,2147483647))"))))
+
+(defmacro (every sheet range count n)
+  "1 in every nth frame of a count and 0 in the others, the clock divider of SPEC.md section 12 over any count: =IF(MOD(count,n)=0,1,0)"
+  (quasiquote (formula (unquote sheet) (unquote range) (&expand "=IF(MOD(" (unquote count) "," (unquote n) ")=0,1,0)"))))
+
+(defmacro (since sheet range event)
+  "the frames since an event, 0 in its frame and one more in each frame after, Appendix C's age: =IF(event,0,sheet.last!first+1)"
+  (first-cell range since-from sheet range event))
+
+(defmacro (since-from first sheet range event)
+  "since, its range's first cell found"
+  (quasiquote (formula (unquote sheet) (unquote range) (&expand "=IF(" (unquote event) ",0," (unquote sheet) ".last!" (unquote first) "+1)"))))
+
+; A verb that reads its own last value writes the twin of its range's first cell,
+; Tally.last!B1 for a fill over Tally!B1:E10, and pressed writes its button's twin,
+; Input.last!B1 for Input!B1. No primitive gives either text, and a macro's call is no
+; argument of &expand, so each is found by a walk that hands it on: (first-cell range
+; then args...) becomes (then first args...), the macro named then called with the
+; first cell before its own arguments, and twin hands on a reference's twin the same
+; way. An application a character, up to the range's colon or the reference's end.
+
+(defmacro (first-cell range then & args)
+  "a range's first cell, its text before the colon, handed on: (then first args...)"
+  (quasiquote (first-cell-from (unquote (characters-expand range)) "" (unquote then) (unquote-splicing args))))
+
+(defmacro (first-cell-from characters made then & args)
+  "first-cell's walk: the range's characters one at a time, up to its colon or its end"
+  (quote-if (null? characters)
+    (quasiquote ((unquote then) (unquote made) (unquote-splicing args)))
+    (quote-if (eq? (car characters) ":")
+      (quasiquote ((unquote then) (unquote made) (unquote-splicing args)))
+      (quasiquote (first-cell-from (unquote (cdr characters)) (unquote (&expand made (car characters))) (unquote then) (unquote-splicing args))))))
+
+(defmacro (twin reference then & args)
+  "a reference's twin, Input!B1 read as Input.last!B1, handed on: (then twin args...)"
+  (quasiquote (twin-from (unquote (characters-expand reference)) "" (unquote then) (unquote-splicing args))))
+
+(defmacro (twin-from characters made then & args)
+  "twin's walk: the reference's characters one at a time, its ! written .last!"
+  (quote-if (null? characters)
+    (quasiquote ((unquote then) (unquote made) (unquote-splicing args)))
+    (quasiquote (twin-from (unquote (cdr characters)) (unquote (quote-if (eq? (car characters) "!") (&expand made ".last!") (&expand made (car characters)))) (unquote then) (unquote-splicing args)))))
+
+; ---- pictures -----------------------------------------------------------------------
+; A picture is rows of text: each string one row of cells, down from a top-left cell,
+; and each character one cell, its value the legend's, so that a sprite, a tile or a
+; pattern is written as it looks. A dot writes no cell, in every legend, so a picture's
+; empty cells are no rows at all, which the plane reads as 0 (SPEC.md section 3.1); a
+; legend's entry for a dot is never read, and a space is a character like any other. A
+; row shorter than another writes nothing past its end. The legend is hex, PICO-8's
+; sixteen digits, 0 to 9 and a to f the Palette's indices 0 to 15, as a PICO-8
+; cartridge keeps its sprites; or a list of entries, each a character and its value, a
+; number, a text or a truth value, the first entry for a character giving its value:
+; (("O" 1)) for a Life pattern, O a live cell. A character the legend does not hold
+; writes a row the load refuses, (not-in-the-legend sheet cell character), where its
+; cell would be, so that the cartridge says where. A picture writes a row a cell and
+; never a range, so a block of one value is a cells entry. Each row and each cell begins
+; a chain of its own, so a picture the Screen's size, 320 by 200, expands in about half
+; a second, and the chain stops one at 2,499 rows, or at a row of 2,499 cells (SPEC.md
+; section 7.8).
+
+(defmacro (picture sheet top-left legend & rows)
+  "rows of cells drawn as text: each string a row down from the top-left, each character a cell, its value the legend's; a dot writes no cell; the legend hex, PICO-8's sixteen digits, or a list of (character value) entries"
+  (quasiquote (picture-from (unquote sheet) (unquote (row-expand top-left)) (unquote (column-expand top-left)) (unquote legend) (unquote rows))))
+
+(defmacro (picture-from sheet row column legend rows)
+  "picture's walk down its rows, a string at a time, each row a walk of its own"
+  (quote-if (null? rows)
+    (begin)
+    (begin
+      (picture-row sheet row column legend (characters-expand (car rows)))
+      (picture-from sheet (+expand row 1) column legend (cdr rows)))))
+
+(defmacro (picture-row sheet row column legend characters)
+  "picture's walk along a row, a character at a time: a dot passed over, any other its cell"
+  (quote-if (null? characters)
+    (begin)
+    (quote-if (eq? (car characters) ".")
+      (picture-row sheet row (+expand column 1) legend (cdr characters))
+      (begin
+        (quote-if (equal? legend hex)
+          (picture-hex sheet (address-expand row column) (car characters))
+          (picture-legend sheet (address-expand row column) (car characters) legend))
+        (picture-row sheet row (+expand column 1) legend (cdr characters))))))
+
+(defmacro (picture-hex sheet at character)
+  "a character's cell in PICO-8's sixteen digits, 0 to 9 and a to f the Palette's indices 0 to 15, its clauses tried in one application; any other character a row the load refuses"
+  (cond
+    ((eq? character "0") (cell sheet at 0))
+    ((eq? character "1") (cell sheet at 1))
+    ((eq? character "2") (cell sheet at 2))
+    ((eq? character "3") (cell sheet at 3))
+    ((eq? character "4") (cell sheet at 4))
+    ((eq? character "5") (cell sheet at 5))
+    ((eq? character "6") (cell sheet at 6))
+    ((eq? character "7") (cell sheet at 7))
+    ((eq? character "8") (cell sheet at 8))
+    ((eq? character "9") (cell sheet at 9))
+    ((eq? character "a") (cell sheet at 10))
+    ((eq? character "b") (cell sheet at 11))
+    ((eq? character "c") (cell sheet at 12))
+    ((eq? character "d") (cell sheet at 13))
+    ((eq? character "e") (cell sheet at 14))
+    ((eq? character "f") (cell sheet at 15))
+    (else (not-in-the-legend sheet at character))))
+
+(defmacro (picture-legend sheet at character legend)
+  "a character's cell in a legend of (character value) entries, an entry at a time, the first that holds it giving its value; a character none holds a row the load refuses"
+  (quote-if (null? legend)
+    (not-in-the-legend sheet at character)
+    (quote-if (eq? (&expand (car (car legend))) character)
+      (cell sheet at (car (cdr (car legend))))
+      (picture-legend sheet at character (cdr legend)))))
