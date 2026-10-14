@@ -31,6 +31,10 @@ empty.*
 
 ## 🔪 MISE EN PLACE
 
+- ✅ **`MISE.3` — the first measurements: three probes, each a day in scratch, each deciding a spelling.** *Scoped, measured and hand-run 2026-10-14: the scoping, every number beside its prediction, the owner's hand run and what it found are under THE ITEMS, SCOPED.* Run over Alonzo's own page and runner with a Buffet-shaped scratch cartridge, before a row of the game is written, and each number written in `SPIKE.md` beside its prediction so that course 0's scoping cites them. (1) **The window's cost.** An 80 by 50 panel of texts and numbers drawn in Chrome at `(rate 30)`. The host draws from the full record until `ENGINE.8`'s second slice lands, and the record carries every formula's text: by `vla-lang` 0.9.3's release notes, an 80 by 50 window of one short formula costs 10.3 ms natively from the record and 1.7 to 1.9 ms from the `values` view (1.3 to 1.4 in the browser). A panel of many short formulas is Buffet's shape and nobody has measured it. The number decides whether course 0 ships over the record or asks Alonzo for the slice with the number in hand (`MISE.6`), and it is re-measured on the real window at first light (`HOUSE.4`). (2) **A number format with a glyph.** Whether the viewport honors a number format with a literal glyph in it (the record's `format` row carries a number format and `KERNEL.5`'s painter spells numbers by it; a `▲` in a format is (check)), which decides `FRONT.2`'s spelling of gains: a format, or a glyph cell beside the number. (3) **The picker's limit.** `CHOOSE` over references against the 8,192-character formula, about a thousand references, and the text join `&`, which the dialect has (the language's `Concat`, checked 2026-10-14), so that a ledger row's address may be joined from a count and not chosen; the number decides `MENU.1`'s picker and `PLATE.1`'s ledger ring. The fourth question the draft asked, the boundary frame against the ordinary frame, needs a model to measure and is answered by the first model: it is `POT.1`'s oracle. *Needs:* nothing. *Oracle:* the three numbers written beside their predictions. *Pays into:* `MISE.1`'s decisions, `FRONT.2`, `MENU.1`, `PLATE.1`, the ask of `ENGINE.8`. *Measured 2026-10-14, every number beside its prediction in `SPIKE.md`:* course 0's densest panel draws a frame in 1.5 to 1.7 ms in Chrome at full screen, so course 0 ships over the record; the spellings the numbers settle, approved by the owner the same day, stand as dated lines on `FRONT.1`, `FRONT.2`, `MENU.1`, `PLATE.1`, `MISE.1` and `MISE.6`; the owner's hand run in the owner's own Chrome made the browser number real, 1.4 ms a frame at p50. `~days`
+
+  *Closed 2026-10-14.* Predicted `~days`, a day a probe; cost one session, the three probes and the owner's hand run. What landed: no file of the game, since every probe lived in scratch; in this file, the scoping, its predictions with the numbers beside them, what the probes and the hand run found, and the spellings; in `OMAKASE.md`, six spellings approved on their items and three candidates in `MISE.6`'s table. Five of the seventeen predictions missed in part, each named beside its number: the record's bar falls near 1,400 formula cells and not 2,000; a background spelled by cells costs more in Chrome than predicted; a joined text's two decimals take 140 characters; the picker's text costs a view 43 µs; the way out takes five cells and not four. The probes' premise for (2) did not hold, which the scoping found by reading before any probe ran.
+
 # THE ITEMS, SCOPED
 
 ## `POT.1` — the calendar and the dice
@@ -182,3 +186,268 @@ from the frame itself, the die reading the frame with its values the
 same, the verb's multiplier changed, a source edit not expanded, the
 frames a day off the rate and the exam rolling the seed itself; each was
 caught by the test written for it.
+
+## `MISE.3` — the first measurements: three probes, each deciding a spelling
+
+*Scoped 2026-10-14 at the owner's word, "Scope and implement MISE.3 in
+Buffet: the first measurements, three probes in scratch, each deciding a
+spelling every later formula repeats", the probes as the owner
+recommended them and weighed below. Every prediction here was written
+before any number was taken; each number is written beside its own,
+marked a measurement or derived. Nothing goes under `src/`: every probe
+cartridge, crate and page lives in the session's scratchpad, the crate
+pinned as the oracle crate is (`alonzo` =0.1.0 and `vla-lang` =0.9.3
+from crates.io) with a target of its own, and Alonzo is read and its
+tools run, nothing in it edited.*
+
+**What it stands on, read in the code on the day.** The owner's reading
+of what `ENGINE.14` changed holds, each point checked at its line:
+- The host views a grid cartridge's Screen through the Camera's whole
+  window at every frame, the manifest's 80 by 50 at the Camera's corner,
+  and hands the record to its viewport, whose `load` reads the record and
+  paints at once (Alonzo `web/host.js`, `_drawGrid`; `web/viewport.js`,
+  `load`); another sheet's tab is viewed through the cells in view alone
+  (`refreshSheet`). Added by the reading: the record prints a sheet's
+  filled cells alone (`vla-lang` 0.9.3, `src/view.rs`), so a window costs
+  what it holds and not its 4,000 cells, a formula dearest, a shared
+  child's text moved from its master at every view after a walk of the
+  whole sheet for the masters, the window's panel and every other.
+- A number or a date wider than its column draws as `#`s (`hashesOf`);
+  the record's `format` rows carry `general` or `text` and nothing else
+  (`src/sheet.rs`, `NumFmt`), and the viewport's reader counts any other
+  as malformed. Probe (2)'s premise does not hold, and the probe is turned
+  into `FRONT.2`'s choice among the spellings the dialect has.
+- The library's fourteen functions (`src/calc/library.rs`, `NAMES`), no
+  `TEXT`, `ROUND`, `INDEX` or `INDIRECT`. `&` joins texts, a number joined
+  as its fifteen-digit text (`src/calc/value.rs`, `number_to_text`), so
+  12.30 joins as `12.3`. A formula longer than 8,192 characters, its `=`
+  aside and counted in characters and not bytes, refuses the cartridge at
+  load (`src/calc/formula.rs`, `LENGTH_LIMIT`, `calc-formula-too-long`).
+- Added: a look matches its value, a number, a text, a truth value or an
+  error, in every cell of its sheet (`SPEC.md` §3.1, §7.3), so a look keyed
+  on a number colors every cell that happens to hold it.
+- Added: the host issues each Write row whose address is not empty as its
+  own `derived` write before the next frame's inputs; the replay never logs
+  one and refuses a replay that holds one (`_readWrite`, `_issueDerived`,
+  `_readReplay`). Alonzo's native runners apply no Write sheet, so the
+  scratch runner applies it as the host does, and the host itself is
+  driven in the page.
+
+**The probes, as scoped.**
+
+1. **The window's cost.** *The cartridge:* a scratch grid cartridge in
+   Buffet's shape at `(rate 30)` and `(screen grid 80 50)`: `POT.1`'s Day
+   sheet, so that the market moves on a day's first frame and on no other
+   (`BD-7`); a Pot sheet, an index of three sines of the day; a Market
+   sheet of fifty vehicles, each its price, yesterday's, the change, the
+   change in percent and its sign, every one a function of the day; a
+   Plate sheet, holdings and basis as values and the marks as formulas; a
+   Camera; and a Screen of course 0's five panels stacked down it, 80 by
+   250 (`FRONT.1`), each a tab strip, labels, values and short formulas
+   reading the model. *The proportions, and why:* counted from the dishes'
+   own text, since no panel is designed yet: the Exam a question, four
+   options and a ten-cell progress row (`GUARD.1`); the Overview two
+   pockets, the date, the weather word, the ticker and a strategy guide of
+   four rows (`FRONT.3`); the Market four rungs, each a name, its price,
+   change, percent and glyph, the holding and its value and six buttons
+   (`STATION.1`, `PLATE.1`); the Plate a row a rung a pocket, seven
+   columns, and a five-order ledger excerpt (`PLATE.1`, `PLATE.2`); Work
+   one button and its counts (`BACK.1`). That is 40 to 130 filled cells a
+   panel, 20 to 95 of them formulas of 10 to 45 characters, 1 to 3% of the
+   window: the *lean* Screen, measured through each panel's window. Later
+   courses fill panels (twelve rungs a station, the curve, the lattice,
+   the league table), so a *ladder* on the Market panel's window measures
+   250, 500, 1,000, 2,000 and 4,000 short formulas in eight shapes reading
+   the Market and the Plate, 11 to 45 characters, to find the density at
+   which the record crosses the bar; and one *background* variant, the
+   lean Market panel with every empty cell holding a space and a look,
+   measures a panel's background spelled by cells rather than by column
+   formats. *Natively:* a scratch crate's runner, release, opted out of
+   Windows' throttling and on the performance cores, three runs of 91
+   frames (three market days and a frame), timing at every frame the step,
+   the `grid` view of the window, the `values` view of the same window,
+   and the host's other views (the Camera and the Clock). *In the
+   browser:* Alonzo's player built by its own `tools/build_web.ps1` into
+   the scratchpad, the probe pasted into the drawer's box and loaded,
+   driven in real time in headless Chrome 155 at 2,560 by 1,440 CSS pixels
+   and a ratio of 1.5, the owner's full screen, opted out and pinned, the
+   drawer closed; at every frame the tick that runs it timed by a wrapper
+   on `host.tick`, and `host.timing`'s view and draw read; and the main
+   thread's whole busy time from the DevTools protocol's
+   `Performance.getMetrics`; frames 31 to 180 a run. *The rule, written
+   before the numbers:* course 0 ships over the record when its densest
+   lean panel keeps a frame's tick under 8.3 ms at p95 and under 16.7 ms at
+   its longest in Chrome at full screen, the bars `ENGINE.8`'s second
+   slice set for the grid's blit case; else `MISE.6` asks Alonzo for that
+   slice now, with the number. The ladder's crossing becomes `FRONT.1`'s
+   budget for a panel and `MISE.6`'s trigger for the ask.
+2. **Gains by glyph.** Answered by reading as far as formats go, and
+   turned into `FRONT.2`'s choice. *The cartridge:* a scratch source over
+   the kit at widths a Buffet panel would take (a name column of 22
+   characters, numbers of 12, a glyph column of 3), a row each spelling for
+   a gain, a loss, a flat day and a number too wide for the default 64
+   pixels: (a) a glyph cell beside the number, `FRONT.2`'s current
+   spelling, its shade from a look keyed on the glyph's own text; (b) a
+   text joined with `&`, the glyph and a number rounded to cents by `INT`
+   arithmetic, its two decimals kept by hand; (c) a look keyed on a sign
+   cell, a fill and no glyph, keyed once on numbers, 1 and -1, and once on
+   texts of spaces; (d) number formats in the record, which no cartridge
+   can draw today, described as the ask it would be. Each drawn in the
+   player at full screen and captured, its record and the viewport's draw
+   list read. *The glyph's path:* `▲` and `▼` through the pass (natively
+   and the page's own Build), the load, the record, the page's module,
+   decoder and viewport, and Buffet's checks and tests over a scratch
+   clone whose source carries a glyph. *The rule:* `FRONT.2` takes the
+   spelling that shows a glyph and a shade, keeps a number right-aligned
+   and a number, costs least, and needs no other repository.
+3. **The picker's limit, and the ledger's address.** *The picker:*
+   `CHOOSE` over references down column A of a content sheet, its index a
+   cell, counted for each of `MENU.1`'s eight sheet names by arithmetic,
+   and held by loading the largest picker and the next, one reference past
+   the limit; a load and a step timed at that count natively, the index
+   moved once a day; the picker in the Screen's window, and read there
+   through a reference; the picker on its own sheet and on its content
+   sheet, whose references carry no sheet's name; a library macro writing
+   it through the pass, timed; and the way out at 2,000 rows, a picker by
+   pages. *The ledger:* `PLATE.1`'s ring, a Ledger sheet of a header and a
+   hundred rows of six fields (the order, the day, the pocket, the rung,
+   the shares, the price), a Write row a field through the kit's `put`, its
+   address joined from the order count, `"A"&(MOD(n-1,100)+2)`, an order
+   at every frame the left button is held; driven 260 frames with a
+   scripted hand through the real host in the page (`runFrameSync`, its
+   own module), then its replay played by the same host
+   (`play(text, true)`), then natively by the scratch runner applying the
+   Write sheet as the host does; the three ledgers compared, and the
+   counters of derived writes read.
+
+**The predictions, before any number.** The numbers column was filled as
+each was taken, the same day.
+
+| | Probe 1, the window's cost | Predicted | The number |
+|---|---|---|---|
+| P1.1 | the lean panels natively: the densest one's `grid` view; its `values` view; an ordinary frame's step; a day's first frame's step | 0.1 to 0.4 ms; 0.02 to 0.1 ms; under 0.05 ms; 0.1 to 0.5 ms | *Measurement*, p50s of three runs: 0.20 ms (the Plate; p95 0.21 to 0.30); 0.072 to 0.075 ms; 0.0037 to 0.0041 ms; 0.13 to 0.15 ms. Inside every range. The other panels' `grid` 0.026 (Work) to 0.089 ms (the Market). The host's own calls a frame cost more than an ordinary frame's step: the Input rows written, 0.058 ms; the Camera, File and Clock viewed, 0.025 |
+| P1.2 | the full window natively, 4,000 short formulas: `grid`; `values`; the ladder's slope | 7 to 10 ms (the owner's "about 10"); 1.6 to 1.9 ms; linear, about 2 µs a formula cell from the record and 0.4 from `values` | *Measurement*: 8.9 to 9.1 ms; 1.81 to 1.87 ms; linear, 2.2 µs a formula cell from the record (250 cells 0.51 ms, 500 1.09, 1,000 2.24, 2,000 4.56) and 0.46 from `values` (0.12, 0.24, 0.47, 0.93). Inside, `values` a little dearer a cell than predicted. A day's first frame steps 0.14 ms at 250 cells and 0.52 at 4,000 |
+| P1.3 | the densest lean panel in Chrome at full screen: a frame's tick at p50 and p95; the Screen's view in it | 1 to 2 ms and under 3 ms; under 0.5 ms | *Measurement*, headless Chrome 155 on the GPU (ANGLE, Direct3D 11), three runs of 150 frames: 1.5 to 1.7 ms and 2.4 to 2.7, at its longest 2.8 to 3.4; the view 0.2 to 0.3. Inside. The frame is the viewport's, its reading and painting 1.0 to 1.1 ms; the other four panels 1.1 to 1.4 ms at p50 and 1.8 to 2.3 at p95; the main thread's whole a frame 2.4 to 2.6. **The rule is met three times over: course 0 ships over the record.** The owner's hand run, in the owner's own Chrome at full screen: 1.4 ms and 2.2, at its longest 2.7; the view 0.2 |
+| P1.4 | the full window in Chrome at full screen: a frame's tick | 14 to 16 ms (the owner's "about 14"): the view about 9, the viewport's reading about 1.7, its painting 3 to 4 at a ratio of 1.5 | *Measurement*: 15.5 to 15.7 ms (p95 16.2 to 16.7, at its longest 17.1 to 17.6): the view 8.2, the viewport's load 6.9 to 7.1, with 2,000 of the cells in view. Inside the range; the view lighter and the load heavier than predicted. The main thread's whole a frame, 18.4 to 18.8 ms. The owner's hand run: 14.7 ms and 15.6, at its longest 15.9, the view 7.9 |
+| P1.5 | the ladder's crossing of 8.3 ms at p95 in Chrome | about 2,000 formula cells in the window | *Derived*, between the measured rungs: about 1,400 cells. The measured p95s: 250 cells 3.3 to 3.5 ms, 500 4.3 to 4.7, 1,000 6.4 to 6.5, 2,000 10.6 to 11.1. **Missed**: the bar falls lower than predicted, since the viewport's load grows with the cells as the view does, about 4.4 ms a thousand cells in all. The owner's hand run of the 1,000-cell rung: 5.1 ms and 6.0, at its longest 7.3 |
+| P1.6 | the background spelled by cells, over the lean Market panel | 1 to 2 ms more natively, 2 to 4 ms more in Chrome | *Measurement*: natively 2.0 to 2.2 ms against the lean Market panel's 0.09, 1.9 to 2.1 more, and `values` saves none of it (1.9 to 2.1 ms: cells are cells); in Chrome 5.8 to 6.0 ms against 1.3 to 1.4, 4.4 to 4.7 more. **Missed** in Chrome. The same background spelled by the columns' format, every column of the window carrying a lavender style (measured beside it): 0.11 ms natively, and 1.7 to 2.0 in Chrome (p95 2.8 to 3.0), the fills' painting alone |
+
+| | Probe 2, gains by glyph | Predicted | What it showed |
+|---|---|---|---|
+| P2.1 | (a) the glyph cell | `▲` and `▼` legible in the viewport's font, the number right-aligned beside them, the look's shade on the glyph's cell; a cell and a shape more a number | As predicted, drawn at full screen: `▲` and `▼` crisp in a 3-character column, shaded `#D9CCF5` and `#A99BC4` by looks keyed on the glyphs' own texts, `=` on a flat day unshaded. Found: the number beside it is the record's spelling, so 12.30 draws `12.3` and 25.00 draws `25`, here and in every spelling that keeps a number |
+| P2.2 | (b) the joined text | `▲12.34` left-aligned; two decimals kept by about 80 to 100 characters of formula; decimal points that do not line up; a text too wide cut or spilled, never `#`s | As predicted but for the length: `▲13.55`, `=25.00`, `▲12.30` left-aligned, no two decimal points in one column; 140 characters of formula (**missed**: 80 to 100), a price and a change read twice each; the plain join beside it losing the zeros, `▲12.3` and `=25`; a joined text too wide spilled into the empty cell beside it, never `#`s |
+| P2.3 | (c) the look on a sign cell | a fill and no glyph, so not `BD-6`'s glyph and shade by itself; keyed on numbers, every Screen cell holding 1 takes the gain's fill; texts of spaces collide with nothing | As predicted: keyed on 1 and -1, the sign cell shows its digits, and the two holdings of one share beside it take the gain's shade; keyed on texts of spaces, a fill alone, colliding with nothing on the card |
+| P2.4 | (d) number formats in the record | a `SPEC.md` version, a language change (`NumFmt`, the record, the core's writer and reader) and the viewport's painter learning Excel's format grammar: weeks across three repositories, not asked for course 0 | Not drawable, by reading. Yet the only spelling that keeps a number, its right alignment and its zeros together, which (a) and (b) each give half of: written into `MISE.6` as a candidate, not asked |
+| P2.5 | the glyph's path | through the pass, the load, the record, the page and Buffet's checks unchanged; one character to the length limit; the host's digest over LF bytes the same as PowerShell's | *Measurement*, as predicted: the native pass and the page's own (`alonzo_expand`, in the module) write the same 3,296 characters, glyphs and all; the load, both records and the draw list carry them (six `▲` and seven `▼` text operations); the host's replay digest, `04AFFF39…FC4A62B5`, is PowerShell's over the same LF bytes; a formula of 8,190 glyphs in quotes, 8,192 characters and 24,572 bytes, loads, and one glyph more is refused. In a scratch clone whose source writes `uniform ▲` on the Dice sheet: Buffet's runner, its fourteen tests and `run_checks.ps1 -WithExtras`, two checks and two controls, all green |
+
+| | Probe 3, the picker and the ledger | Predicted | The number |
+|---|---|---|---|
+| P3.1 | references a picker holds, its index `B1`, relative references down column A (*derived*, by arithmetic) | Exam 829; Jokes, Memos and Names 753; Errors 690; Endings 637; Headlines 552; Achievements 460; on its own content sheet, references without a sheet's name, 1,548; one reference more refuses the load | *Measurement*, exactly as derived for every name: each count loads, and one reference more refuses the cartridge at load, `calc-formula-too-long` at the picker's line. A picker written on the Screen itself, its index `Pick!B1`, still holds Headlines' 552 |
+| P3.2 | a load and a step at the limit, natively | about 1 to 3 ms more a load for each full picker; the step that moves the index under 0.05 ms; the frames that do not, nothing | *Measurement*, two runs: one full picker (Headlines, 552) 2.3 to 2.5 ms more a load (3.1 to 3.3 against 0.8); `MENU.1`'s eight sheets each at its limit with its picker, 2.9 to 3.0 ms a picker (30.4 to 30.9 ms against 6.7 to 7.2, a cartridge of 285 KB); the step that moves the index 0.0030 to 0.0034 ms against 0.0025 to 0.0028 without the picker; an ordinary frame 0.0015 to 0.0016 either way. Inside |
+| P3.3 | the picker's text in the Screen's window | 10 to 30 µs more a `grid` view natively, nothing in `values`; read through a reference, nothing | *Measurement*: 0.049 ms against 0.006 through a reference, 43 µs more (**missed**, a little: 10 to 30), the record 8,771 bytes against 591; `values` 0.005 ms either way. Read through a reference, nothing, as predicted |
+| P3.4 | the library's macro writing a full picker through the pass | under 50 ms, within the expander's limits (the walk trampolined, the text accumulated under `unquote`) | *Measurement*: a scratch library's `picker`, a walker joining a reference a step under `unquote`, writes Headlines' 552-reference picker byte for byte as the generator writes it; the pass over the whole source, its 552 content rows with it, 4.2 ms |
+| P3.5 | the way out at 2,000 rows, a picker by pages | four cells, the right row at every index, a step still under 0.05 ms | *Measurement*: five cells, four pages of 500 and the picker over them (**missed** by the top picker's own cell); every index from 1 to 2,000 picks its own row; a step that moves the index 0.0036 ms |
+| P3.6 | the ledger ring | every order lands a frame late, the hundred-and-first on the first row, no refusal; the replay's ledger byte for byte the live run's, and the native runner's the same; no derived row in the replay's text | *Measurement*, as predicted. Through the real host in the page, 260 frames: 246 orders, six derived writes landing on each of 245 frames and none on the other 15, none refused, a hundred rows filled and row 102 empty, the last order's six waiting for a frame the run never steps. The replay, 17,722 bytes, holds no derived row, and played by the same host re-derives the 1,470 writes into a ledger record equal to the live one, character for character. The native runner's 600 cells equal both, and the hand's |
+
+**How the numbers were taken.** Natively, the scratch crate's runner, release
+under Buffet's profile, each run its own process, opted out of Windows'
+throttling and pinned to the performance cores, a fixed computation timed at
+its start and its end and no run's clock moved more than 9%. In the browser,
+Alonzo's player built by its own `tools/build_web.ps1` from its tree at
+`29ef8ae` with the uncommitted follow-up (a tab strip's CSS, no drawing),
+carrying the module built from the registry pin, 749,386 bytes (224 more
+than the module in Alonzo's tree: the panic locations name each crate's
+source path, the engine's from the registry here and from the tree there),
+the host reached by one line added to a copy, `window.__host = host;`;
+headless Chrome 155 at 2,560 by 1,440 CSS pixels and a ratio of 1.5, on the
+GPU, every process of its own profile opted out and pinned, a Chrome a
+cartridge, the frames at 30 a second on 60 Hz ticks; in-page times are
+Chrome's, in steps of 0.1 ms. A scratch number is a scoping's, never a
+floor. The browser numbers are headless; the owner's hand run, below, made
+P1.3 real.
+
+**The owner's hand run, 2026-10-14.** Three pages, each the player with the
+host reached and a probe loading itself, read in the owner's own Chrome at
+full screen, 2,560 by 1,440 at 1.5, the drawer closed, each printing a
+sample every five seconds in a corner; three screenshots. The densest lean
+panel: a frame's tick 1.4 ms at p50, 2.2 at p95, 2.7 at its longest, the
+view 0.2, the viewport's load 0.9, 36 columns and 68 rows in view. The
+1,000-cell rung: 5.1, 6.0 and 7.3, the view 2.0, the load 2.9. The 4,000:
+14.7, 15.6 and 15.9, the view 7.9, the load 6.5. Each about a tenth below
+the headless run's. In the owner's words: "All three hand tests run
+(screenshots attached); recommendations approved." The screenshots showed
+what no run of mine had looked at, the panels' money, written below.
+
+**What it found.**
+- Course 0's frame is the viewport's and not the record's. The densest lean
+  panel's tick is 1.5 to 1.7 ms, of which the Screen's view is 0.2 to 0.3
+  and the viewport's reading and painting 1.0 to 1.1; `ENGINE.8`'s second
+  slice would take about 0.15 ms of it (*derived*: the panel's `values` view
+  natively 0.07 ms against its record's 0.20).
+- `BD-7` is seen working: a lean ordinary frame steps in 4 µs and a day's
+  first in 0.13 to 0.15 ms, and the host's own calls a frame, the Input rows
+  written and the device sheets viewed, cost twenty times an ordinary step.
+- A number shows its shortest spelling: money in whole cents draws `12.3`
+  for $12.30 and `25` for $25.00 in a number cell, and only a joined text
+  keeps two decimals: a row for `MENU.5`'s accuracy sheet until the day
+  number formats are asked for.
+- Money computed in dollars draws its binary noise, found in the owner's
+  screenshots: the Plate panel's unrealized gain, a mark less shares times
+  basis, drew `-8.280000000000001` and `6.380000000000003`, a change of two
+  rounded prices `0.03000000000000025`, and a mark of 6 shares at 30.19,
+  $181.14, drew `########` in its 11-character column, its spelling being
+  181.14000000000001. The record spells a number's shortest round trip and
+  the viewport never respells it (`SPEC.md` §3.1); every price that was one
+  rounding, `INT(x*100+0.5)/100`, drew clean, as whole cents divided by 100
+  always do below $70 trillion (*derived*: below 2^46 dollars two doubles
+  stand closer than a cent).
+- A background spelled by cells costs a panel 4.4 to 4.7 ms a frame in
+  Chrome, and the same lavender spelled by the columns' format 0.3 to 0.7.
+- At the owner's full screen the player shows 38 to 40 columns and 68 rows
+  of the default cells, so a 50-row panel leaves 18 rows blank beneath its
+  window; rows of 20 points, 27 pixels, would fill the height (`FRONT.1`'s).
+- Alonzo's player, found while measuring: a grid cartridge whose Camera
+  starts below row 1, loaded while the grid's box is hidden (its first grid
+  load after a plane, the page opening on Life), opens scrolled to rows 1
+  to 68, blank rows above its window. The load scrolls to the Camera's
+  corner before the page shows the box, and frame 1 sees no Camera move to
+  follow; the Screen's tab, or a second load, gives the window back. Not
+  Buffet's at first light, whose Exam panel stands at row 1 in a page with
+  no plane before it; Alonzo's to mend, written into `MISE.6`.
+
+**The spellings it settles**, all six approved by the owner 2026-10-14,
+each written as a dated line on its item in `OMAKASE.md`:
+1. **`MISE.6`, `ENGINE.8`'s second slice: not asked for course 0.** The ask's
+   trigger: a panel past 1,000 formula cells in its window, or the playtest
+   pass's frame over 8.3 ms at p95 (`MISE.5`).
+2. **`FRONT.1`: a panel holds at most 1,000 formula cells in its window**
+   (p95 6.4 to 6.5 ms, where the bar falls near 1,400); its background is
+   its columns' format and never a filled cell; rows of 20 points so that a
+   panel fills a full screen's height, the owner's to judge by eye.
+3. **`FRONT.2`: the glyph cell beside the number, shaded by a look keyed on
+   the glyph's own text**, `▲`, `▼` and `=`, never on a number, which would
+   shade every holding of one share; a fill with no glyph keyed on a text of
+   spaces where a shade alone is wanted; the joined text only where two
+   decimals matter more than a column's alignment (a ticker's sentence, the
+   certificate, the report card's remarks). Number formats in the record,
+   the spelling that would keep both, written into `MISE.6` as a candidate,
+   not asked.
+4. **`MENU.1` and `MISE.1`'s library: the picker on its content sheet**, its
+   references bare, 1,548 rows a picker; past that a picker by pages of 500;
+   its cell off the Screen and read there through a reference; the library's
+   `picker` the scratch walker's shape, a reference joined a step under
+   `unquote`. On a sheet of its own it would hold Headlines' 552 and
+   Achievements' 460.
+5. **`PLATE.1`: the ledger's row computed once, `=MOD(n-1,100)+2`, and each
+   field's address joined from it with `&`**, a Write row a field through the
+   kit's `put`. It lands a frame late, every frame an order stands, and the
+   replay re-derives it, so the order's fields are its own frame's values.
+6. **`FRONT.2`, found at the hand run and approved the same day as
+   sufficient for Buffet: money is whole cents as integers in every cell of
+   the model, and reaches a panel by one division by 100**, never as a
+   difference or a product of dollar amounts, so that no money cell draws
+   binary noise or `#`s for a number that fits. The owner's word with it:
+   decimal precision for real-world spreadsheets, Excel's or better and of
+   arbitrary length, is an important item for Frazaro once it expands on
+   Buffet's lessons, Julia's handling of number precision a reference;
+   written into `MISE.6` as the owner's candidate for Frazaro.
