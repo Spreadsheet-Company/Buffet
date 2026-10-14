@@ -1,0 +1,41 @@
+# The Cargo workspace: the oracle, one member. The game itself is a
+# cartridge, rows the engine loads, and no crate; what the workspace holds is
+# the game written a second time by hand, the runners that play it and the
+# tests that hold every frame of the cartridge to it (OMAKASE.md, MISE.2),
+# all of it over the engine and the language consumed from crates.io and
+# never copied here, as a stranger consumes them.
+#
+# The pins are exact and never a range, and a registry version and never a
+# git rev (the owner's route, 2026-10-14): alonzo 0.1.0, the engine's first
+# release, and vla-lang 0.9.2, the version that release pins, so that the
+# lock holds one copy of the language. Until alonzo 0.1.0 is on crates.io
+# the pin resolves on the owner's machine through a local, git-ignored
+# .cargo/config.toml whose [patch.crates-io] points at the engine's own tree
+# beside this repository; the day it is published the patch is deleted and
+# Cargo.lock is committed (HOUSE.2).
+
+[workspace]
+resolver = "2"
+members = ["oracle"]
+
+[workspace.package]
+version = "0.1.0"
+edition = "2021"
+rust-version = "1.75"
+license = "AGPL-3.0-or-later"
+repository = "https://github.com/Spreadsheet-Company/Buffet"
+
+[workspace.dependencies]
+alonzo = "=0.1.0"
+vla-lang = "=0.9.2"
+
+[profile.release]
+# Alonzo's own release profile, copied so that a build of the engine's
+# module from this workspace (cargo build --release -p alonzo --target
+# wasm32-unknown-unknown, for the page, HOUSE.4) keeps its import section
+# empty: a panic aborts, so the module imports nothing to unwind with.
+panic = "abort"
+lto = true
+codegen-units = 1
+opt-level = "s"
+strip = true

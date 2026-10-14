@@ -1,0 +1,27 @@
+# == Buffet ==
+
+# The Cargo workspace's build output. Cargo.lock is NOT ignored: the
+# workspace holds runners, so the lockfile is committed from the first build
+# that resolves alonzo from crates.io (HOUSE.2), and not before, since a lock
+# made under the local patch below would name a path and not the registry.
+target/
+
+# Local overrides of Cargo's configuration: .cargo/config.toml holds, until
+# alonzo 0.1.0 is on crates.io (HOUSE.2), a [patch.crates-io] that satisfies
+# Cargo.toml's registry pin from the engine's tree beside this repository. It
+# is the owner's machine's and never the repository's.
+.cargo/
+
+# The page tools/build_web.ps1 will write from the vendored template and the
+# engine's module (HOUSE.4): the template is source, the filled page is
+# output.
+web/index.html
+
+# Scratch area for throwaway experiments, so they never clutter history.
+scratch/
+
+# Editor and operating-system residue.
+~$*
+*.tmp
+.DS_Store
+Thumbs.db

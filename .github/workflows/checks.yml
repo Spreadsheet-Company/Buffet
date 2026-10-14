@@ -1,0 +1,23 @@
+# The checks, on every push to main and every pull request (HOUSE.1), in
+# Alonzo's shape, one job today: the ratchets job runs tools/run_checks.ps1
+# under Windows PowerShell 5.1, the house's floor for every check, with the
+# floor on the count and the controls that prove each check on mutants. The
+# crate job, which builds, formats, lints and tests the workspace over the
+# engine from crates.io, joins the day the pin resolves there (HOUSE.2):
+# until then a build fails to resolve, and a red job no push can fix is worse
+# than an honest absence.
+name: checks
+on:
+  push:
+    branches: [main]
+  pull_request:
+jobs:
+  ratchets:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: every tools/check_*.ps1 under Windows PowerShell 5.1, the floor and the controls
+        shell: pwsh
+        run: |
+          & powershell -NoProfile -ExecutionPolicy Bypass -File tools/run_checks.ps1 -WithExtras
+          exit $LASTEXITCODE

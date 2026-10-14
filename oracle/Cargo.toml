@@ -1,0 +1,16 @@
+[package]
+name = "buffet-oracle"
+description = "Buffet written by hand: the game's oracle, its runners and its tests, over the Alonzo engine"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+repository.workspace = true
+rust-version.workspace = true
+# A game is not a crate: nothing here is ever published. The cartridge is
+# the artifact, and this crate is how it is held.
+publish = false
+
+[dependencies]
+# The engine and the language, as the workspace pins them, and nothing else.
+alonzo.workspace = true
+vla-lang.workspace = true
