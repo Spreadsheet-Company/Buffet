@@ -24,7 +24,7 @@ license = "AGPL-3.0-or-later"
 repository = "https://github.com/Spreadsheet-Company/Buffet"
 
 [workspace.dependencies]
-alonzo = "=0.1.0"
+alonzo = "=0.1.1"
 vla-lang = "=0.9.3"
 
 [profile.release]
