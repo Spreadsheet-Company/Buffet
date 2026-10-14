@@ -7,12 +7,10 @@
 #
 # The pins are exact and never a range, and a registry version and never a
 # git rev (the owner's route, 2026-10-14): alonzo 0.1.0, the engine's first
-# release, and vla-lang 0.9.2, the version that release pins, so that the
-# lock holds one copy of the language. Until alonzo 0.1.0 is on crates.io
-# the pin resolves on the owner's machine through a local, git-ignored
-# .cargo/config.toml whose [patch.crates-io] points at the engine's own tree
-# beside this repository; the day it is published the patch is deleted and
-# Cargo.lock is committed (HOUSE.2).
+# release, and vla-lang 0.9.3, the version that release pins, so that the
+# lock holds one copy of the language. Both resolve from crates.io since
+# alonzo 0.1.0 was published (2026-10-14): the local patch that stood in for
+# it is deleted, and Cargo.lock is committed (HOUSE.2).
 
 [workspace]
 resolver = "2"
@@ -27,7 +25,7 @@ repository = "https://github.com/Spreadsheet-Company/Buffet"
 
 [workspace.dependencies]
 alonzo = "=0.1.0"
-vla-lang = "=0.9.2"
+vla-lang = "=0.9.3"
 
 [profile.release]
 # Alonzo's own release profile, copied so that a build of the engine's

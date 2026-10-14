@@ -67,14 +67,9 @@ cargo test --workspace
 tools\run_checks.ps1
 ```
 
-The pin on `alonzo` resolves the day Alonzo's first release, 0.1.0, is on
-crates.io. Until then a local, git-ignored `.cargo/config.toml` may satisfy
-it from the engine's own tree beside this repository:
-
-```toml
-[patch.crates-io]
-alonzo = { path = "../Alonzo/engine" }
-```
+Both pins, `alonzo = "=0.1.0"`, Alonzo's first release, and
+`vla-lang = "=0.9.3"`, the language it pins, resolve from crates.io, and
+`Cargo.lock` is committed.
 
 ## Not advice
 
