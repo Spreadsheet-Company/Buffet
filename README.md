@@ -32,10 +32,10 @@ work; [`SPIKE.md`](SPIKE.md) is the ledger of what has been served, empty.
 
 | What | Where | License |
 |---|---|---|
-| the game: every cartridge, source and library, the replays and goldens, the game written by hand with its runners and tests, the checks and the builders | `cartridges/`, `oracle/`, `tools/`, the workspace's own files | AGPL-3.0-or-later |
-| the game's own folder, whose source includes the content and whose cartridge carries it | `cartridges/buffet/` | AGPL-3.0-or-later AND CC-BY-SA-4.0 |
-| what the diner reads: the content sheets and the documents | `cartridges/**/content/`, `*.md`, `docs/` | CC-BY-SA-4.0 |
-| the kit, copied from Alonzo | `kit/` | 0BSD |
+| the game: every cartridge, source and library, the replays and goldens, the game written by hand with its runners and tests, the checks and the builders | `src/`, `oracle/`, `tools/`, the workspace's own files | AGPL-3.0-or-later |
+| the game's own files, whose source includes the content and whose cartridge carries it | `src/buffet*.vla`, `src/courses/` | AGPL-3.0-or-later AND CC-BY-SA-4.0 |
+| what the diner reads: the content sheets and the documents | `src/content/`, `*.md`, `docs/` | CC-BY-SA-4.0 |
+| the kit, copied from Alonzo | `src/common.vla` | 0BSD |
 | the page's files, vendored from Alonzo | `web/` | Apache-2.0 |
 
 Why this shape, in three sentences. The game's cells are open by design, so

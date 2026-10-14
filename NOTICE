@@ -12,10 +12,11 @@ Spreadsheet Company for use outside those terms; see COMMERCIAL.md.
 
 What the diner reads, the content sheets and the documents, is licensed
 under the Creative Commons Attribution-ShareAlike 4.0 International
-license. The game's own folder, cartridges/buffet/, carries both, since
-its source includes the content and its cartridge carries it.
+license. The game's own files, src/buffet*.vla and the frozen courses
+under src/courses/, carry both, since its source includes the content and
+its cartridge carries it.
 
-The kit under kit/ is copied from Alonzo, Spreadsheet Company's game
+The kit, src/common.vla, is copied from Alonzo, Spreadsheet Company's game
 engine, under the BSD Zero Clause License it came with, and the page's
 files under web/, when they are vendored from Alonzo, keep their Apache
 License, Version 2.0. The engine itself and VLA, its language, are

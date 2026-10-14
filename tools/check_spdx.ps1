@@ -2,14 +2,15 @@
 check_spdx.ps1 - the license map, REUSE.toml, verified against the tree.
 
 WHY: one repository, four license territories and one expression over the
-game's own folder, no directory moves. The map is REUSE.toml
+game's own files, no directory moves. The map is REUSE.toml
 (reuse.software, specification 3.3): path globs resolve every file to one
 SPDX identifier or expression, AGPL-3.0-or-later for everything that
 computes, CC-BY-SA-4.0 for what the diner reads, 0BSD for the kit copied
 from Alonzo and Apache-2.0 for the page's files vendored from it, and
-`AGPL-3.0-or-later AND CC-BY-SA-4.0` over the game's own folder, whose
+`AGPL-3.0-or-later AND CC-BY-SA-4.0` over the game's own files, whose
 source includes the content and whose cartridge carries it (README.md, "The
-terms"; OMAKASE.md, HOUSE.1). A map is worth what the last check of it was
+terms"; OMAKASE.md, HOUSE.1). The game lives in one folder, src/ (the
+owner's word of 2026-10-14, OMAKASE.md, MISE.1). A map is worth what the last check of it was
 worth, and the day a file lands at a path the map does not name it has no
 license at all. This script is Alonzo's tools/check_spdx.ps1 adapted to this
 map by the same copyright holder, under this repository's terms.
@@ -26,13 +27,13 @@ WHAT IT HOLDS, four things, none needing a host:
   2. Every identifier the map uses has its full text in LICENSES/<id>.txt;
      an expression is read identifier by identifier, AND, OR and WITH
      splitting it and parentheses dropped.
-  3. Every text file under cartridges/ and kit/ carries
+  3. Every text file under src/ carries
      `SPDX-License-Identifier: <what the map resolves it to>` in its first
      twelve lines, the identifier whole (a content sheet carrying the
      game's expression fails, since the expression is not the content's
      terms): a cartridge is made to be read and copied, and the notice
      travels with the copy; a content sheet carries the content's terms and
-     a kit file the terms it came with. A Rust source carries a header by
+     the kit's copy the terms it came with. A Rust source carries a header by
      this repository's habit, but the rule does not demand one of it: a
      Rust file's license is the map's.
   4. A header never disagrees with the map, which rule 3 holds by wanting
@@ -41,8 +42,8 @@ WHAT IT HOLDS, four things, none needing a host:
 -Control proves the check on a scratch tree with a synthetic file list, so it
 needs no repository: the clean copy passes; a file at a path the map does
 not name fails; a license text removed fails; a source without its header
-fails; a content sheet carrying the game's expression fails; a kit file
-whose territory the map moves fails. Each mutant proves it applied before
+fails; a content sheet carrying the game's expression fails; the kit's copy,
+whose territory the map moves, fails. Each mutant proves it applied before
 the check is asked.
 
 House style (tools/check_*.ps1): PowerShell 5.1 and pwsh alike, host-free, a
@@ -61,11 +62,10 @@ $repoRoot = Split-Path -Parent $PSScriptRoot
 
 # ---- baseline: the territories whose files carry a load-bearing header ----
 # The header wanted is the map's own resolution of the file, so a territory
-# holding two kinds of file, the game's rows and its content sheets, is one
-# rule.
+# holding four kinds of file, the game's rows, its library, its content
+# sheets and the kit's copy, is one rule.
 $headerRules = @(
-    @{ Under = 'cartridges/'; Why = 'a cartridge is made to be read and copied, and the notice travels with the copy' },
-    @{ Under = 'kit/';        Why = 'the kit is copied from Alonzo under the terms it came with, and keeps its notice' }
+    @{ Under = 'src/'; Why = 'the game is made to be read and copied, and the notice travels with the copy, the kit''s the terms it came with' }
 )
 # The files a header can live in; the rest of a territory (an image, a sound)
 # resolves through the map alone.
@@ -188,18 +188,18 @@ if ($Control) {
             'oracle/src/lib.rs'                      = "// SPDX-License-Identifier: AGPL-3.0-or-later`n//! the oracle`n"
             'tools/check_x.ps1'                      = "# a check`n"
             '.github/workflows/checks.yml'           = "name: checks`n"
-            'cartridges/kitchen.vla'                 = "; SPDX-License-Identifier: AGPL-3.0-or-later`n(defmacro (x) 1)`n"
-            'cartridges/buffet/buffet.source.vla'    = "; SPDX-License-Identifier: AGPL-3.0-or-later AND CC-BY-SA-4.0`n(include `"../kitchen.vla`")`n"
-            'cartridges/buffet/content/jokes.vla'    = "; SPDX-License-Identifier: CC-BY-SA-4.0`n(cell `"Jokes`" `"A1`" `"a row`")`n"
-            'kit/common.vla'                         = "; SPDX-License-Identifier: 0BSD`n(defmacro (y) 2)`n"
-            'cartridges/buffet/art.png'              = 'not a png; exempt from the header rule by its extension'
+            'src/kitchen.vla'                        = "; SPDX-License-Identifier: AGPL-3.0-or-later`n(defmacro (x) 1)`n"
+            'src/buffet.source.vla'                  = "; SPDX-License-Identifier: AGPL-3.0-or-later AND CC-BY-SA-4.0`n(include `"kitchen.vla`")`n"
+            'src/content/jokes.vla'                  = "; SPDX-License-Identifier: CC-BY-SA-4.0`n(cell `"Jokes`" `"A1`" `"a row`")`n"
+            'src/common.vla'                         = "; SPDX-License-Identifier: 0BSD`n(defmacro (y) 2)`n"
+            'src/content/art.png'                    = 'not a png; exempt from the header rule by its extension'
         }
         foreach ($rel in $tree.Keys) {
             $p = Join-Path $tmp $rel
             New-Item -ItemType Directory -Path (Split-Path -Parent $p) -Force | Out-Null
             [System.IO.File]::WriteAllText($p, $tree[$rel], $utf8)
         }
-        $files = @('.gitignore', 'README.md', 'oracle/src/lib.rs', 'tools/check_x.ps1', '.github/workflows/checks.yml', 'cartridges/kitchen.vla', 'cartridges/buffet/buffet.source.vla', 'cartridges/buffet/content/jokes.vla', 'kit/common.vla', 'cartridges/buffet/art.png', 'LICENSE', 'LICENSES/AGPL-3.0-or-later.txt')
+        $files = @('.gitignore', 'README.md', 'oracle/src/lib.rs', 'tools/check_x.ps1', '.github/workflows/checks.yml', 'src/kitchen.vla', 'src/buffet.source.vla', 'src/content/jokes.vla', 'src/common.vla', 'src/content/art.png', 'LICENSE', 'LICENSES/AGPL-3.0-or-later.txt')
 
         $verdicts = New-Object System.Collections.Generic.List[string]
         $ok = $true
@@ -211,8 +211,8 @@ if ($Control) {
             $verdicts.Add("the clean copy: $($clean.Failures.Count) problem(s), $($clean.Resolved.Count) resolved, $($clean.Headers.Count) header(s); wanted 0, 10, 4: $($clean.Failures -join ' | ')")
         }
 
-        $source = Join-Path $tmp 'cartridges/buffet/buffet.source.vla'
-        $jokes = Join-Path $tmp 'cartridges/buffet/content/jokes.vla'
+        $source = Join-Path $tmp 'src/buffet.source.vla'
+        $jokes = Join-Path $tmp 'src/content/jokes.vla'
         $zero = Join-Path $tmp 'LICENSES/0BSD.txt'
         $reuse = Join-Path $tmp 'REUSE.toml'
         $source0 = [System.IO.File]::ReadAllText($source)
@@ -229,17 +229,17 @@ if ($Control) {
                Applied = { -not (Test-Path -LiteralPath $zero) }
                Want = 'LICENSES/0BSD.txt missing' },
             @{ Name = 'a source without its header'
-               Apply = { [System.IO.File]::WriteAllText($source, "(include `"../kitchen.vla`")`n", $utf8); $script:mutFiles = $files }
+               Apply = { [System.IO.File]::WriteAllText($source, "(include `"kitchen.vla`")`n", $utf8); $script:mutFiles = $files }
                Applied = { -not ([System.IO.File]::ReadAllText($source)).Contains('SPDX-License-Identifier') }
-               Want = 'header: cartridges/buffet/buffet.source.vla lacks' },
+               Want = 'header: src/buffet.source.vla lacks' },
             @{ Name = 'a content sheet carrying the game''s expression'
                Apply = { [System.IO.File]::WriteAllText($jokes, "; SPDX-License-Identifier: AGPL-3.0-or-later AND CC-BY-SA-4.0`n(cell `"Jokes`" `"A1`" `"a row`")`n", $utf8); $script:mutFiles = $files }
                Applied = { ([System.IO.File]::ReadAllText($jokes)).Contains('AGPL-3.0-or-later AND CC-BY-SA-4.0') }
-               Want = "header: cartridges/buffet/content/jokes.vla lacks 'SPDX-License-Identifier: CC-BY-SA-4.0'" },
-            @{ Name = 'a kit file whose territory the map moves'
+               Want = "header: src/content/jokes.vla lacks 'SPDX-License-Identifier: CC-BY-SA-4.0'" },
+            @{ Name = 'the kit''s copy, whose territory the map moves'
                Apply = { [System.IO.File]::WriteAllText($reuse, $reuse0.Replace('SPDX-License-Identifier = "0BSD"', 'SPDX-License-Identifier = "Apache-2.0"'), $utf8); $script:mutFiles = $files }
                Applied = { ([regex]::Matches($reuse0, 'SPDX-License-Identifier = "0BSD"')).Count -eq 1 -and -not ([System.IO.File]::ReadAllText($reuse)).Contains('"0BSD"') }
-               Want = "header: kit/common.vla lacks 'SPDX-License-Identifier: Apache-2.0'" }
+               Want = "header: src/common.vla lacks 'SPDX-License-Identifier: Apache-2.0'" }
         )
         foreach ($mu in $mutants) {
             & $mu.Apply
@@ -279,11 +279,11 @@ if ($gitCode -ne 0) {
 }
 $report = Get-Report $repoRoot $tracked
 $summary = ($report.Resolved.Values | Group-Object | Sort-Object Name | ForEach-Object { "$($_.Name)=$($_.Count)" }) -join ', '
-Write-Host "check_spdx: $($report.Resolved.Count) tracked files resolved ($summary); $($report.Headers.Count) header(s) read under cartridges/ and kit/"
+Write-Host "check_spdx: $($report.Resolved.Count) tracked files resolved ($summary); $($report.Headers.Count) header(s) read under src/"
 if ($report.Failures.Count -gt 0) {
     Write-Host "FAIL: $($report.Failures.Count) problem(s)"
     $report.Failures | ForEach-Object { Write-Host "  - $_" }
     exit 1
 }
-Write-Host 'OK: every tracked file has one license, every license has its text, every cartridge and kit file carries the header the map gives it'
+Write-Host 'OK: every tracked file has one license, every license has its text, every file under src/ carries the header the map gives it'
 exit 0

@@ -23,8 +23,8 @@ the right to submit it.
 
 | What you touch | Path | License | What you sign |
 |---|---|---|---|
-| the content: a joke, an exam question with its why, a headline, a memo, a name, an achievement, a row of the accuracy sheet, a scenario | `cartridges/**/content/`, `*.md`, `docs/` | CC-BY-SA-4.0 | the DCO alone |
-| the code: the game's source and library, its rows, a replay or a golden, the game written by hand, a runner, a check | `cartridges/` (less `content/`), `oracle/`, `tools/`, the workspace's own files | AGPL-3.0-or-later, alone or with CC-BY-SA-4.0 in the game's own folder | the DCO and, once, `CLA.md` |
+| the content: a joke, an exam question with its why, a headline, a memo, a name, an achievement, a row of the accuracy sheet, a scenario | `src/content/`, `*.md`, `docs/` | CC-BY-SA-4.0 | the DCO alone |
+| the code: the game's source and library, its rows, a replay or a golden, the game written by hand, a runner, a check | `src/` (less `src/content/` and the kit's copy, `src/common.vla`), `oracle/`, `tools/`, the workspace's own files | AGPL-3.0-or-later, alone or with CC-BY-SA-4.0 in the game's own files | the DCO and, once, `CLA.md` |
 
 By contributing, you agree your contribution is licensed under the license
 of the file it touches, as `REUSE.toml` declares it. The agreement for code

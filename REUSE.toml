@@ -1,7 +1,7 @@
 # REUSE.toml - the license map (reuse.software, specification 3.3).
 #
 # One repository, four license territories and one expression over the game's
-# own folder, no directory moves: path globs resolve every file to one SPDX
+# own files, no directory moves: path globs resolve every file to one SPDX
 # identifier, later [[annotations]] tables winning when more than one matches
 # a file, so the specific entries sit below the general ones. The reasoning is
 # README.md's "The terms" and OMAKASE.md's HOUSE.1 (the owner's decision of
@@ -10,33 +10,38 @@
 # publishes its changes, and a commercial license is sold to whoever wants out
 # of those terms (COMMERCIAL.md); what the diner reads, the content sheets and
 # the documents, is CC-BY-SA-4.0, so that a stranger's joke needs no paperwork
-# but the DCO; the game's own folder carries both, since its source includes
-# the content and its cartridge carries it; the kit copied from Alonzo keeps
-# its 0BSD; and the page's files, when they are vendored from Alonzo, keep
-# their Apache-2.0. tools/check_spdx.ps1 verifies this map against the tree on
+# but the DCO; the game's own files carry both, since its source includes the
+# content and its cartridge carries it; the kit copied from Alonzo keeps its
+# 0BSD; and the page's files, when they are vendored from Alonzo, keep their
+# Apache-2.0. The game lives in one folder, src/ (the owner's word of
+# 2026-10-14, OMAKASE.md, MISE.1): the source, the cartridge the pass writes
+# beside it, the library, the kit's copy, and later the content sheets and the
+# frozen courses. tools/check_spdx.ps1 verifies this map against the tree on
 # every push: every tracked file resolves to one identifier or expression,
 # every identifier in it has its text under LICENSES/, and every text file
-# under cartridges/ and kit/ carries the header the map gives it in its first
-# twelve lines, so the notice travels with a copy.
+# under src/ carries the header the map gives it in its first twelve lines, so
+# the notice travels with a copy.
 
 version = 1
 SPDX-PackageName = "Buffet"
 SPDX-PackageSupplier = "Spreadsheet Company <english@spreadsheet.company>"
 SPDX-PackageDownloadLocation = "https://github.com/Spreadsheet-Company/Buffet"
 
-# The game: every cartridge, source and library under cartridges/, the crate
-# that holds the game written by hand with its runners and tests, the checks
-# and the builders, the workspace's own files, CI and this map itself.
+# The game: everything under src/ unless a table below says otherwise, the
+# library first among it; the crate that holds the game written by hand with
+# its runners and tests, the checks and the builders, the workspace's own
+# files, CI and this map itself.
 [[annotations]]
-path = ["cartridges/**", "oracle/**", "tools/**", "Cargo.toml", "Cargo.lock", "rust-toolchain.toml", "REUSE.toml", ".gitignore", ".gitattributes", ".github/**"]
+path = ["src/**", "oracle/**", "tools/**", "Cargo.toml", "Cargo.lock", "rust-toolchain.toml", "REUSE.toml", ".gitignore", ".gitattributes", ".github/**"]
 SPDX-FileCopyrightText = "2026 Spreadsheet Company"
 SPDX-License-Identifier = "AGPL-3.0-or-later"
 
-# The game's own folder: its source includes the content sheets and the
-# cartridge the pass writes carries their rows, as do the frozen courses and
-# a golden that holds a sentence, so a file here is code and words together.
+# The game's own files: its source includes the content sheets and the
+# cartridge the pass writes carries their rows, as do its replay, its golden
+# that holds a sentence, and the frozen courses, so a file here is code and
+# words together.
 [[annotations]]
-path = ["cartridges/buffet/**"]
+path = ["src/buffet*.vla", "src/courses/**"]
 SPDX-FileCopyrightText = "2026 Spreadsheet Company"
 SPDX-License-Identifier = "AGPL-3.0-or-later AND CC-BY-SA-4.0"
 
@@ -45,15 +50,15 @@ SPDX-License-Identifier = "AGPL-3.0-or-later AND CC-BY-SA-4.0"
 # stranger adds a row to, and the documents at the root, under docs/, and the
 # notice. Share-alike, the content's own reciprocity.
 [[annotations]]
-path = ["cartridges/**/content/**", "*.md", "docs/**", "NOTICE"]
+path = ["src/content/**", "*.md", "docs/**", "NOTICE"]
 SPDX-FileCopyrightText = "2026 Spreadsheet Company"
 SPDX-License-Identifier = "CC-BY-SA-4.0"
 
 # The kit: Alonzo's cartridges/common.vla, copied byte for byte at the
-# engine's pinned version and held to it by a check (OMAKASE.md, HOUSE.3),
-# under the terms it came with.
+# engine's pinned version to src/common.vla and held to it by a check
+# (OMAKASE.md, HOUSE.3), under the terms it came with.
 [[annotations]]
-path = ["kit/**"]
+path = ["src/common.vla"]
 SPDX-FileCopyrightText = "2026 Spreadsheet Company"
 SPDX-License-Identifier = "0BSD"
 
