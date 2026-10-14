@@ -1,0 +1,96 @@
+; SPDX-License-Identifier: AGPL-3.0-or-later AND CC-BY-SA-4.0
+; buffet.source.vla - Buffet, all you can sheet: an idle game in which you run an
+; asset-management firm, and a spreadsheet you are allowed to open (OMAKASE.md). The pass
+; expands this file into buffet.vla beside it, the rows the engine loads (SPEC.md section
+; 7.8): edit this one, then expand it again with
+;   cargo run --release --example expand
+; and the oracle's tests hold the cartridge to this file and every frame of it to the
+; game written by hand, oracle/src/buffet.rs.
+;
+; Course 0 is being cooked, a dish at a time (OMAKASE.md, COURSE.0). Served so far:
+;   POT.1   the calendar and the dice: the Day sheet, the one sheet that reads the frame,
+;           and the Dice sheet, the market's die, which rolls once a market day, and the
+;           exam's, which rolls once a game.
+;
+; The market's clock (BD-7). One tick is one market day, thirty frames at the manifest's
+; rate of thirty, so a day a second and a year about six minutes. The Day sheet alone
+; reads the frame, Clock!B1; every other formula reads the day, so that a frame between
+; two days computes the calendar's three cells, the day, the phase and the boundary, and
+; nothing else, and a day's first frame computes what the day moves. The Clock's rate is
+; the teacher's dial: written to 60, the game runs two days a second and no formula
+; changes, since the frames a day stay thirty.
+;
+; The dice (BD-3). The market is a pure function of the seed and the day, so its die
+; steps on a day's first frame and on no other, from the seed on the first day, and the
+; same days give the same dice however many frames a day there are. Each day the die
+; jumps 1,017 draws, and the day's draws stand beneath it, so a dish that needs a draw
+; takes the next free one, and a later course adds draws without moving one an earlier
+; course reads. The exam's die is the seed jumped half the generator's period away, so
+; the market and the exam never share a die: the market's die reaches the exam's after
+; more than a million days. Each jump is a multiplier below 2^22, so every product stays
+; under 2^53 and exact in a double, as Park and Miller's own step is.
+
+; The libraries whose macros this source calls, both beside it: the kit, Alonzo's
+; common.vla copied at the pin (sheets, labels, on, cells, formulas and hold), then
+; Buffet's own, kitchen.vla (draws).
+(include "common.vla")
+(include "kitchen.vla")
+
+(cartridge "buffet"
+  (spec 3)
+  (title "Buffet")
+  (rate 30)
+  (screen grid 80 50)
+  (seed 777)
+  (author "Spreadsheet Company")
+  (license "AGPL-3.0-or-later AND CC-BY-SA-4.0")
+  (notes "Buffet: all you can sheet. The kitchen is open and the dining room is not: so far the market's calendar, a market day a second, and its dice, rolled once a day where anyone can watch them roll. Pick the Day or the Dice sheet to watch."))
+
+(sheets "Screen" "Day" "Dice")
+
+; ---- POT.1: the calendar ------------------------------------------------------------
+; A block of settings and its workings, a label in column A beside each value in B. The
+; frame is 1 in the first step, so the day and the phase count from the frame less one:
+; the first frame is the first day's first, and every day, the first too, opens on a
+; boundary frame and holds thirty frames.
+
+(on "Day"
+  (labels "A1" "frames a day" "days a year" "day" "phase" "boundary" "year" "day of the year")
+  (cells
+    ("B1" 30)                       ; frames a day: the manifest's rate, a day a second; a test holds the two equal
+    ("B2" 365))                     ; days a year: every day a market day, weekends and holidays too
+  (formulas
+    ("B3" "=INT((Clock!B1-1)/B1)")  ; the day, from 0: the market's clock, which every other formula reads
+    ("B4" "=MOD(Clock!B1-1,B1)")    ; the phase: the frame within the day, from 0
+    ("B5" "=IF(B4=0,1,0)")          ; the boundary: 1 in a day's first frame, the one frame the market moves in
+    ("B6" "=INT(B3/B2)+1")          ; the year, from 1
+    ("B7" "=MOD(B3,B2)+1")))        ; the day of the year, from 1 to 365
+
+; ---- POT.1: the dice ----------------------------------------------------------------
+; Two streams, each a die and its draws, the draws by the library's verb. Column C
+; holds each draw's uniform; columns E and F the two jumps, each in draws and as the
+; multiplier that makes it, 16807 to that power modulo 2147483647, which a test holds.
+
+(on "Dice"
+  (labels "A1" "the market's die" "draw 1" "draw 2" "draw 3" "draw 4")
+  (cells ("C1" "uniform"))
+  (hold                             ; the market's die, the stream's state:
+    "B1"                            ;   its cell
+    "Day!$B$5=1"                    ;   when it rolls: a day's first frame, and no other
+    "MOD(IF(Day!$B$3=0,Clock!$B$3,Dice.last!B1)*$F$2,2147483647)")   ; what it rolls to: the seed on the first day, else yesterday's die, jumped a day's draws
+  (draws                            ; the market's draws, read by the dish that needs one:
+    "B2"                            ;   the first, beneath the die
+    4)                              ;   how many a day so far: POT.2's four phases read them first
+  (labels "A7" "the exam's die" "draw 1" "draw 2")
+  (cells ("C7" "uniform"))
+  (formulas
+    ("B7" "=MOD(Clock!$B$3*$F$4,2147483647)"))   ; the exam's die: the seed jumped half the period, once a game
+  (draws                            ; the exam's draws:
+    "B8"                            ;   the first, beneath its die
+    2)                              ;   how many: GUARD.1's start and stride through the bank
+  (labels "E1" "a day's jump, in draws" "its multiplier" "the exam's jump, in draws" "its multiplier")
+  (cells
+    ("F1" 1017)                     ; a day's jump: the first past a thousand whose multiplier is below 2^22
+    ("F2" 86383)                    ; 16807^1017 modulo 2147483647
+    ("F3" 1073741912)               ; the exam's jump: 2^30 + 88, the first past half the period whose multiplier is below 2^22
+    ("F4" 1164196)))                ; 16807^1073741912 modulo 2147483647

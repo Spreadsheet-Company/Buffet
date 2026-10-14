@@ -7,13 +7,105 @@
 //! and the tests that load the cartridge through the engine and hold every
 //! frame to the hand.
 //!
-//! Nothing of the game is here yet. The crate holds one function and one
-//! test, the smoke test of the pin: a two-row cartridge loaded through
-//! `alonzo` from crates.io, stepped, its step rows read. The day the pin
-//! resolves from the registry (`HOUSE.2`), this is the first green build.
+//! What it holds since `POT.1` (2026-10-14): the hand, [`buffet`], its
+//! calendar and its dice; the door the runners and the tests share, which
+//! reads a source of the repository and the texts it includes and hands
+//! them to the engine's pass, `alonzo::pass::expand`, as the engine's own
+//! runner does; and the smoke test of the pin, a two-row cartridge loaded
+//! through `alonzo` from crates.io and stepped. The crate is never
+//! published, so its tests read the repository beside it at run time.
+
+use std::collections::BTreeMap;
+use std::collections::BTreeSet;
+use std::path::{Path, PathBuf};
 
 use alonzo::cartridge::Cartridge;
-use vla_lang::machine::Step;
+use alonzo::pass::{expand, folder_of, includes, Expansion};
+use vla_lang::machine::{LineRefusal, Step, Viewed};
+
+pub mod buffet;
+
+/// The repository's root, the folder above this crate.
+pub fn root() -> PathBuf {
+    Path::new(env!("CARGO_MANIFEST_DIR")).join("..")
+}
+
+/// A file of the repository, by its path from the root, read whole.
+pub fn read(path: &str) -> String {
+    let at = root().join(path);
+    std::fs::read_to_string(&at).unwrap_or_else(|e| panic!("{}: {e}", at.display()))
+}
+
+/// A text with CRLF read as LF, as a `.vla` is stored and as a replay's
+/// digest reads it.
+pub fn lf(text: &str) -> String {
+    text.replace("\r\n", "\n")
+}
+
+/// The texts a source may include, read from `base` under the keys the pass
+/// resolves them by: its includes, and theirs, each against the source's own
+/// folder, each read once. A text that cannot be read is left out, and the
+/// pass refuses it by name. Alonzo's runner's own walk, `examples/expand.rs`.
+pub fn gather(base: &Path, path: &str, text: &str) -> Vec<(String, String)> {
+    let folder = folder_of(path).to_string();
+    let mut files = Vec::new();
+    let mut seen = BTreeSet::new();
+    let mut queue = includes(text, &folder);
+    while let Some(key) = queue.pop() {
+        if !seen.insert(key.clone()) {
+            continue;
+        }
+        if let Ok(body) = std::fs::read_to_string(base.join(&key)) {
+            queue.extend(includes(&body, &folder));
+            files.push((key, body));
+        }
+    }
+    files
+}
+
+/// A source of the repository, by its path from the root, expanded by the
+/// pass with every text it includes.
+pub fn expand_source(path: &str) -> Result<Expansion, LineRefusal> {
+    let text = read(path);
+    let files = gather(&root(), path, &text);
+    expand(&text, path, &files)
+}
+
+/// A cartridge of the repository, by its path from the root, loaded by the
+/// engine under its file's name, or the load's refusal in its words.
+pub fn load(path: &str) -> Result<Cartridge, String> {
+    let text = read(path);
+    let name = alonzo::pass::file_name(path);
+    Cartridge::load(&text, name, text.len())
+        .map_err(|r| format!("line {}: {} {}", r.line, r.refusal.id, r.refusal.text))
+}
+
+/// The values of a window of a sheet as the `values` record prints them, by
+/// address: a number as its shortest text, a text without its quotes. A cell
+/// with no value is not there.
+pub fn values(cart: &Cartridge, sheet: &str, window: &str) -> BTreeMap<String, String> {
+    let Ok(Viewed::Text(record)) = cart.view("values", sheet, Some(window)) else {
+        panic!("the {sheet} sheet's record of {window}");
+    };
+    let mut out = BTreeMap::new();
+    for head in ["(value ", "(cell "] {
+        let head = format!("{head}\"{sheet}\" \"");
+        for line in record.lines() {
+            if let Some((addr, v)) = line
+                .strip_prefix(head.as_str())
+                .and_then(|rest| rest.split_once("\" "))
+            {
+                let v = v.strip_suffix(')').unwrap_or(v);
+                let v = v
+                    .strip_prefix('"')
+                    .and_then(|t| t.strip_suffix('"'))
+                    .unwrap_or(v);
+                out.insert(addr.to_string(), v.to_string());
+            }
+        }
+    }
+    out
+}
 
 /// A cartridge's text loaded through the engine and stepped `frames` times
 /// at an unbounded budget: each step's row, `(step <frame> <evaluated> <of>

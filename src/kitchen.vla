@@ -1,0 +1,45 @@
+; SPDX-License-Identifier: AGPL-3.0-or-later
+; kitchen.vla - Buffet's own library of template macros (OMAKASE.md, MISE.1): the
+; patterns this game writes twice, beside the kit, Alonzo's common.vla, whose verbs it
+; never writes again. Both stand in src/ beside the game's source, which includes the
+; kit, then this file, each by its own line:
+;   (include "common.vla")
+;   (include "kitchen.vla")
+; and this file includes nothing. The pass resolves every include against the source's
+; own folder, an included file's includes too (SPEC.md section 7.8), so an include of
+; the kit written here would hold only for a source at one depth, and a frozen course
+; stands two folders deeper than the game's source, in src/courses/ (OMAKASE.md, MISE.1's
+; second slice), where its includes are "../../common.vla" and "../../kitchen.vla".
+;
+; The library grows by the ratchet (OMAKASE.md, "The service"): a pattern written twice
+; in Buffet comes here at its second writing; a pattern a second cartridge writes alike
+; goes to Alonzo's kit by a pull request there, the copy under kit/ following at the
+; next pin. The rules are the kit's, which are the language's: template macros alone,
+; no gensym and no eval; a parameter never the name of a row it writes; a verb's pieces
+; are strings, or &expand of strings and of the expand-time primitives.
+;
+; Since POT.1 (2026-10-14): draws, a stream's draws down a column beneath its die.
+
+; ---- the dice (POT.1) ---------------------------------------------------------------
+; A stream is a die and its draws. The die is one cell, the stream's state, which the
+; source writes: the market's die jumps once a day, and the exam's is a function of the
+; seed alone. Its draws stand in the column beneath it, each one step of Park and
+; Miller's minimal standard on from the cell above (SPEC.md section 3.5), so a dish that
+; needs a draw takes the next one down, and a draw once read never moves. Each draw's
+; uniform, the draw over the modulus, a number between 0 and 1, stands beside it in the
+; next column, where a formula reads it. Each draw reads the one above it in the same
+; frame, so the column is computed a cell at a time, when the die moves and never
+; between, which for a few draws a day costs nothing worth timing.
+
+(defmacro (draws sheet first many)
+  "a stream's draws, many of them down a column from first, beneath the die in the cell above: each =MOD(above*16807,2147483647), and its uniform beside it in the next column, =draw/2147483647"
+  (quasiquote (draws-at (unquote sheet) (unquote (row-expand first)) (unquote (column-expand first)) (unquote many))))
+
+(defmacro (draws-at sheet row column many)
+  "draws, its first cell's row and column read: the steps down the column, then the uniforms beside them"
+  (formula sheet
+    (&expand (address-expand row column) ":" (address-expand (+expand row (-expand many 1)) column))
+    (&expand "=MOD(" (address-expand (-expand row 1) column) "*16807,2147483647)"))
+  (formula sheet
+    (&expand (address-expand row (+expand column 1)) ":" (address-expand (+expand row (-expand many 1)) (+expand column 1)))
+    (&expand "=" (address-expand row column) "/2147483647")))

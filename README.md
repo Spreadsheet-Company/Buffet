@@ -22,7 +22,7 @@ at a time. Every mechanic is cells you can read, which is the lesson and
 the joke: the game is fun insofar as it is funny, and it is a tutorial
 because it cannot help it, the model being open by design.
 
-**Nothing is built yet.** The repository was founded on 2026-10-14. The
+**Course 0 is being cooked.** The repository was founded on 2026-10-14. The
 design reference is [`BUFFET.md`](BUFFET.md); the roadmap is
 [`OMAKASE.md`](OMAKASE.md), the chef's order: eight courses, each a
 playable game composed on the one before, and the kitchen's families of
@@ -56,13 +56,18 @@ Vulnerabilities: [`SECURITY.md`](SECURITY.md).
 
 ## Building
 
-The game is a cartridge, rows the engine loads, and the workspace holds its
-oracle: the game written a second time by hand, the runners that play it
-and the tests that hold every frame of the cartridge to it. It consumes the
-engine and the language from crates.io as a stranger does, pinned exactly
-in `Cargo.toml`:
+The game is a cartridge, rows the engine loads, and all of it is in `src/`:
+the source a person edits, `src/buffet.source.vla`; the cartridge the
+engine's pass expands it into, `src/buffet.vla`, committed so that a
+stranger can load it without building anything; Buffet's own library of
+macros, `src/kitchen.vla`; and Alonzo's kit, `src/common.vla`, copied at the
+engine's pin. The workspace holds the game's oracle: the game written a
+second time by hand, the runners that play it and the tests that hold every
+frame of the cartridge to it. It consumes the engine and the language from
+crates.io as a stranger does, pinned exactly in `Cargo.toml`:
 
 ```text
+cargo run --release --example expand      # src/buffet.source.vla into src/buffet.vla
 cargo test --workspace
 tools\run_checks.ps1
 ```
