@@ -77,9 +77,10 @@ line a check and one total, and `-WithExtras` for the controls that prove
 each check on mutants; beside it the Cargo oracle, `cargo build --workspace`,
 `cargo fmt --all -- --check`,
 `cargo clippy --workspace --all-targets -- -D warnings` and
-`cargo test --workspace`. CI runs the checks on every push and pull
-request (`.github/workflows/checks.yml`); the Cargo half joins it the day
-the engine resolves from crates.io (`HOUSE.2`).
+`cargo test --workspace`. CI runs both on every push and pull request
+(`.github/workflows/checks.yml`): the checks under Windows PowerShell 5.1,
+and the Cargo half on Linux with `--locked`, the engine's module built for
+the browser beside it (`HOUSE.2`).
 
 ## Security
 
