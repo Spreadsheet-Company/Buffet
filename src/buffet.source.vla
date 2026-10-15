@@ -225,32 +225,32 @@
 ; frame (BD-7).
 ;
 ; The fine print: the Disclosures sheet, a disclosure a month at the foot of every view
-; (FRONT.1's views read Disclosures!F3), round the rows from the first on the first day,
+; (FRONT.1's views read Disclosures!D3), round the rows from the first on the first day,
 ; so that a row added joins the round with no formula edited.
 
 (disclosures)                       ; the Disclosures sheet: its headers, its rows, their count and their picker
 
 (on "Disclosures"
-  (labels "E5" "days a disclosure stands")
+  (labels "C5" "days a disclosure stands")
   (cells
-    ("F5" 30))                      ; a month: thirty market days, thirty seconds at the manifest's rate
+    ("D5" 30))                      ; a month: thirty market days, thirty seconds at the manifest's rate
   (formulas
-    ("F2" "=MOD(INT(Day!$B$3/F5),F1)+1")))   ; the row shown: the day's month round the rows, the first on the first day
+    ("D2" "=MOD(INT(Day!$B$3/D5),D1)+1")))   ; the row shown: the day's month round the rows, the first on the first day
 
 ; ---- MENU.2: the exam's bank --------------------------------------------------------
 ; The Questions sheet: the bank from which the Series 777 draws its nine scored
 ; questions, a seeded start and a stride through it by the exam's two draws on the Dice
 ; sheet (GUARD.1), a question a row, each its concept, the question, four options, the
 ; right one's letter and the one line that says why. Eight fields, so its table runs
-; from A to J and its values stand in M: the count in M1 and a picker a field in M3 to
-; M10, beside their labels in L. Its last question, ungraded, which names the firm's
+; from A to H and its values stand in K: the count in K1 and a picker a field in K3 to
+; K10, beside their labels in J. Its last question, ungraded, which names the firm's
 ; archetype, is no row of the bank: it is asked last and always, and never drawn.
 ;
-; The row shown, M2, a value, is the first question until GUARD.1's draw drives it: the
-; bank is read by nothing that draws yet, and a person's edit of M2 shows any question.
+; The row shown, K2, a value, is the first question until GUARD.1's draw drives it: the
+; bank is read by nothing that draws yet, and a person's edit of K2 shows any question.
 
 (questions)                         ; the Questions sheet: its headers, its rows, their count and a picker a field
 
 (on "Questions"
   (cells
-    ("M2" 1)))                      ; the row shown: the first question, until the exam's draw (GUARD.1)
+    ("K2" 1)))                      ; the row shown: the first question, until the exam's draw (GUARD.1)

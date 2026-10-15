@@ -80,7 +80,7 @@ if ($Floor -gt 0) { $expectedAtLeast = $Floor }
 $extras = @(
     @{ Script = 'check_spdx.ps1'; Args = @('-Control'); What = 'HOUSE.1 license map: a clean scratch tree passes, five mutants fail' },
     @{ Script = 'check_vendored.ps1'; Args = @('-Control'); What = 'HOUSE.3, HOUSE.4 the copies from Alonzo: clean copies pass, five mutants fail' },
-    @{ Script = 'check_layout.ps1'; Args = @('-Control'); What = 'MISE.1, MENU.1 the layout and the content rule: a clean copy passes, fifteen mutants fail' },
+    @{ Script = 'check_layout.ps1'; Args = @('-Control'); What = 'MISE.1, MENU.1 the layout and the content rule: a clean copy passes, fourteen mutants fail' },
     @{ Script = 'check_web_offline.ps1'; Args = @('-Control'); What = 'HOUSE.4, MENU.1 the page offline: the real set and a built page pass, fifteen mutants fail' }
 )
 

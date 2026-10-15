@@ -3,8 +3,8 @@ check_layout.ps1 - the game's one folder, src/, held to the layout MISE.1 decide
 
 WHY: the game lives in one folder, src/ (the owner's word of 2026-10-14,
 docs/OMAKASE.md, MISE.1): the source a person edits, the cartridge the pass writes
-beside it, Buffet's own library and the kit's copy, the content sheets under
-src/content/, and later the frozen courses. A path is the dearest thing to move
+beside it, Buffet's own library and the kit's copy, and the content sheets under
+src/content/. A path is the dearest thing to move
 later, since the license map, the checks and the page's places name it, and a
 folder that gains a file nobody named gains it silently. Rows are the engine's to
 judge and not this script's: the oracle crate's tests load the cartridge
@@ -19,9 +19,10 @@ WHAT IT HOLDS, four things, none needing a host, cargo or the network:
      source, its cartridge, the two libraries, the content sheets and their
      how-to, src/content/README.md. Any other file under src/ fails by name.
      Each kind is counted against the count pinned for it below: sources 1,
-     cartridges 1, libraries 2, how-tos 1, content sheets (a .vla of
-     src/content/) 2 since MENU.2 wrote the second, and courses (a folder of
-     src/courses/) 0 until MISE.1's second slice writes its rule.
+     cartridges 1, libraries 2, how-tos 1, and content sheets (a .vla of
+     src/content/) 2 since MENU.2 wrote the second. No course has a folder:
+     a course is a tranche of the one game, never a frozen copy of it (the
+     owner's word of 2026-10-15, docs/OMAKASE.md, BD-1, amended).
   2. The cartridge's second line is the pass's banner naming its source,
      word for word as alonzo::pass::banner writes it under the source's
      header line (check_spdx.ps1 holds that header): a cartridge written by
@@ -36,7 +37,7 @@ WHAT IT HOLDS, four things, none needing a host, cargo or the network:
      kitchen.vla includes nothing (MISE.1's decision 2): the pass resolves
      every include against the source's own folder, an included file's too,
      so a library that included the kit would name it by a path true at one
-     depth only, and a frozen course stands two folders deeper. A content
+     depth only. A content
      sheet the source does not include is words no game shows, and an
      include of one that is not there refuses the pass.
   4. The content rule (MENU.1, decisions 4 and 9, as amended at its hand
@@ -56,8 +57,8 @@ WHAT IT HOLDS, four things, none needing a host, cargo or the network:
 -Control proves the check on a scratch copy of the seven files: the clean
 copy passes; a stray file under src/, the cartridge missing, a banner naming
 another source, an include in kitchen.vla, the source's includes out of
-order, a third content sheet past its pin, a course before its pin, a
-content sheet the source does not include, a content sheet that includes, a
+order, a third content sheet past its pin, a content sheet the source does
+not include, a content sheet that includes, a
 content sheet that defines a second macro, a content sheet with a capital
 letter in its name, a content sheet whose macro bears another file's name,
 the source's call of a content sheet's macro gone, an include among the
@@ -85,7 +86,7 @@ $repoRoot = Split-Path -Parent $PSScriptRoot
 # which includes nothing. 2026-10-15, MENU.1: the content sheets, a .vla each
 # under src/content/, the first the Disclosures sheet's, and the how-to beside
 # them; the same day, MENU.2, the second, the Questions sheet's, the exam's
-# bank. No course yet.
+# bank.
 $sourceName = 'buffet.source.vla'
 $cartridgeName = 'buffet.vla'
 $includeOrder = @('common.vla', 'kitchen.vla')
@@ -111,9 +112,7 @@ $kinds = @(
        Missing = 'the How to add a row beside the content sheets, for a stranger with five minutes (MENU.1)'
        Raise = 'a file added or removed moves its name and this pin together, in this file' },
     @{ Kind = 'content sheet'; Plural = 'content sheets'; Pinned = 2; Folder = $contentFolder; Unit = 'file'
-       Raise = 'a sheet arrives with the dish that reads it (MENU.1''s decision 1), which raises this pin and adds its include to the source' },
-    @{ Kind = 'course'; Plural = 'courses'; Pinned = 0; Folder = 'courses'; Unit = 'folder'
-       Raise = 'the courses'' rule, MISE.1''s second slice (COURSE.1), raises this pin' }
+       Raise = 'a sheet arrives with the dish that reads it (MENU.1''s decision 1), which raises this pin and adds its include to the source' }
 )
 
 # A file's path under src/ to its kind, case and all: a name that differs
@@ -178,7 +177,7 @@ function Format-Found($found) {
 }
 
 # The check over a root. Returns one record: Failures (one line each), Found
-# (each kind's files under src/, a course by its folder) and Files (every
+# (each kind's files under src/) and Files (every
 # file under src/).
 function Get-Report([string]$root) {
     $failures = New-Object System.Collections.Generic.List[string]
@@ -204,11 +203,10 @@ function Get-Report([string]$root) {
             foreach ($k in $kinds) {
                 if (-not $k.Folder -or $parts[0] -cne $k.Folder) { continue }
                 if ($k.Unit -eq 'file' -and $parts.Count -eq 2 -and $rel.EndsWith('.vla', [System.StringComparison]::Ordinal)) { $kind = $k.Kind }
-                elseif ($k.Unit -eq 'folder' -and $parts.Count -ge 3) { $kind = $k.Kind; $unit = 'src/' + $parts[0] + '/' + $parts[1] + '/' }
             }
         }
         if ($null -eq $kind) {
-            $failures.Add("stray: src/$rel is no file the layout names: the source, its cartridge, the two libraries, a content sheet (src/content/<name>.vla) and its how-to (src/$howTo), or a course (src/courses/<name>/)")
+            $failures.Add("stray: src/$rel is no file the layout names: the source, its cartridge, the two libraries, a content sheet (src/content/<name>.vla) and its how-to (src/$howTo)")
         } elseif (-not $found[$kind].Contains($unit)) {
             $found[$kind].Add($unit)
         }
@@ -352,7 +350,6 @@ if ($Control) {
         $stray = Join-Path $tsrc 'notes.txt'
         $second = Join-Path $contentC 'jokes.vla'
         $capital = Join-Path $contentC 'Disclosures.vla'
-        $course = Join-Path $tsrc 'courses/buffet0/buffet0.vla'
         $banner0 = Get-Banner $sourceName
         $banner1 = Get-Banner 'other.source.vla'
         $incKit = '(include "common.vla")'
@@ -394,10 +391,6 @@ if ($Control) {
                Apply = { [System.IO.File]::WriteAllText($second, "; SPDX-License-Identifier: CC-BY-SA-4.0`r`n", $utf8) }
                Applied = { Test-Path -LiteralPath $second }
                Want = "count: content sheets, 3 under src/ (src/$contentFolder/$sheetName, src/$contentFolder/jokes.vla, src/$contentFolder/$bankName)" },
-            @{ Name = 'a course before its pin is raised'
-               Apply = { New-Item -ItemType Directory -Path (Split-Path -Parent $course) -Force | Out-Null; [System.IO.File]::WriteAllText($course, "; a frozen course`r`n", $utf8) }
-               Applied = { Test-Path -LiteralPath $course }
-               Want = 'count: courses, 1 under src/ (src/courses/buffet0/)' },
             @{ Name = 'a content sheet the source does not include'
                Apply = { $l = Get-LfLines $sourceC; $script:hits = @($l | Where-Object { $_ -ceq $incSheet }).Count; [System.IO.File]::WriteAllText($sourceC, ((@($l | Where-Object { $_ -cne $incSheet })) -join "`r`n"), $utf8) }
                Applied = { $l = Get-LfLines $sourceC; ($script:hits -eq 1) -and (@($l | Where-Object { $_ -ceq $incSheet }).Count -eq 0) }
@@ -449,7 +442,7 @@ if ($Control) {
             [System.IO.File]::WriteAllBytes($sourceC, $source0)
             [System.IO.File]::WriteAllBytes($cartC, $cart0)
             [System.IO.File]::WriteAllBytes($kitchenC, $kitchen0)
-            foreach ($extra in @($stray, $contentC, (Join-Path $tsrc 'courses'))) {
+            foreach ($extra in @($stray, $contentC)) {
                 if (Test-Path -LiteralPath $extra) { Remove-Item -LiteralPath $extra -Recurse -Force }
             }
             New-Item -ItemType Directory -Path $contentC | Out-Null

@@ -56,16 +56,17 @@ is merged, under five rules:
 The voice is a fund's compliance department's, as the design reference
 has it (`docs/BUFFET.md`, section 2): deadpan, understated, never a wink at
 the camera. *How to add a row* is `src/content/README.md`, beside the
-sheets: one line in one file, its approver left empty for the reviewer,
-who writes their GitHub name there on approving the row (`docs/OMAKASE.md`,
-`MENU.1`).
+sheets: a row in one file, reviewed in the pull request that adds it, whose
+approval by the named reviewer is the row's review; the row itself names no
+reviewer (`docs/OMAKASE.md`, `MENU.1`, amended 2026-10-15).
 
 ## What a change to the game needs
 
-- **A course is a game** (`docs/OMAKASE.md`, `BD-1`). A change to an earlier
-  course's rows re-records that course's replay and says so; a later
-  course's build never moves an earlier course's bytes, which the pass's
-  check over every frozen course's source holds (`MISE.1`).
+- **A course is a game** (`docs/OMAKASE.md`, `BD-1`). Each course adds
+  features to the game the courses before it made playable, and may change
+  what they built; no course is frozen. A change that breaks something an
+  earlier course built, a recorded replay among it, is made only when it
+  must be, and says so.
 - **The hand holds every frame.** A rule changed in the cartridge is
   changed in the game written by hand (`oracle/`, `MISE.2`) and in the
   page's own copy of it, and `cargo test` holds the replay goldens to it.

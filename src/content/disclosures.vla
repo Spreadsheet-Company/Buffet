@@ -11,13 +11,13 @@
   "the fine print: the Disclosures sheet, a disclosure a row"
   (strings "Disclosures"            ; the sheet, hidden among the tabs
     ("disclosure" 100)              ; its one field: the header over its texts, and its width in characters
-    ; each row: its vintage, the course that added it; its approver; and the disclosure
-    (0 "prestoncolejohnson" "Past performance is not indicative of future results, but history has proven (slightly) less coy than the future.")
-    (0 "prestoncolejohnson" "Buffet is not a financial advisor. Buffet is barely a game.")
-    (0 "prestoncolejohnson" "All investments carry risk; some investments also carry a reward.")
-    (0 "prestoncolejohnson" "Buffet is not FDIC-insured. Is the FDIC FDIC-insured? Food for thought.")
-    (0 "prestoncolejohnson" "Diversification does not ensure a profit; it ensures you will be wrong in several places simultaneously.")
-    (0 "prestoncolejohnson" "Forward-looking statements are predictions about the future. (see also: divintion, prognostication, augury, etc.)")
-    (0 "prestoncolejohnson" "This is not a recommendation to buy or sell. 'Ursi et tauri, cavete!'.")
-    (0 "prestoncolejohnson" "Your capital is at risk, but our fees are not.")
+    ; each row: the disclosure
+    ("Past performance is not indicative of future results, but history has proven (slightly) less coy than the future.")
+    ("Buffet is not a financial advisor. Buffet is barely a game.")
+    ("All investments carry risk; some investments also carry a reward.")
+    ("Buffet is not FDIC-insured. Is the FDIC FDIC-insured? Food for thought.")
+    ("Diversification does not ensure a profit; it ensures you will be wrong in several places simultaneously.")
+    ("Forward-looking statements are predictions about the future. (see also: divintion, prognostication, augury, etc.)")
+    ("This is not a recommendation to buy or sell. 'Ursi et tauri, cavete!'.")
+    ("Your capital is at risk, but our fees are not.")
     ))                              ; the sheet's end: a row added goes on a line above this one

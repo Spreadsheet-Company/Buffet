@@ -15,8 +15,8 @@
 # 0BSD; and the page's files, vendored from Alonzo, keep their Apache-2.0.
 # The game lives in one folder, src/ (the owner's word of 2026-10-14,
 # docs/OMAKASE.md, MISE.1): the source, the cartridge the pass writes
-# beside it, the library, the kit's copy, and later the content sheets and the
-# frozen courses. tools/check_spdx.ps1 verifies this map against the tree on
+# beside it, the library, the kit's copy and the content sheets.
+# tools/check_spdx.ps1 verifies this map against the tree on
 # every push: every tracked file resolves to one identifier or expression,
 # every identifier in it has its text under LICENSES/, and every text file
 # under src/ carries the header the map gives it in its first twelve lines, so
@@ -37,11 +37,10 @@ SPDX-FileCopyrightText = "2026 Spreadsheet Company"
 SPDX-License-Identifier = "AGPL-3.0-or-later"
 
 # The game's own files: its source includes the content sheets and the
-# cartridge the pass writes carries their rows, as do its replay, its golden
-# that holds a sentence, and the frozen courses, so a file here is code and
-# words together.
+# cartridge the pass writes carries their rows, as do its replay and its
+# golden that holds a sentence, so a file here is code and words together.
 [[annotations]]
-path = ["src/buffet*.vla", "src/courses/**"]
+path = ["src/buffet*.vla"]
 SPDX-FileCopyrightText = "2026 Spreadsheet Company"
 SPDX-License-Identifier = "AGPL-3.0-or-later AND CC-BY-SA-4.0"
 
