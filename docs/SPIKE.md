@@ -1266,3 +1266,161 @@ log's line naming `alonzo` 0.1.3 over `vla-lang` 0.9.3 is in no
 screenshot; a headless load of the same page read it before the handover,
 and Build, which only the engine's module can run, says the module was
 there. Passed.
+
+## `FRONT.1` — the workbook: the game's views, each a sheet of its own
+
+*Scoped 2026-10-15 at the owner's word, "Scope and implement FRONT.1 from
+Buffet's OMAKASE.md": first as panels on the Screen, from `OMAKASE.md`'s
+line (`COURSE.0`'s item 5), the three spellings the owner approved for it at
+`MISE.3`'s close and the code of the page `HOUSE.4` vendored at `v0.1.3`;
+then, at the owner's two readings the same day, as the game's views on
+sheets of their own, which waits on Alonzo. Nothing was built.*
+
+*The owner's first reading. "No kitchen names anywhere. The kitchen analogy
+is for the dev documents only. The title, "Buffet", is the extent of the
+kitchen terminology in the game, because the game should look and feel like
+a fund manager's workbook with the humor limited to financial and economic
+winks and jokes throughout": `BD-2`'s amendment, striking the kitchen's
+titles the first scoping put on its panels. "The tabs should not be
+numbered, because they're not necessarily serial": its labels, `1 Exam` to
+`5 Work`, and the number keys with them. "The game should open on the
+player's portfolio until the Exam is created", where it opened on the
+Market. And why the panels shared their columns' widths: "That's not how
+spreadsheets work."*
+
+**What it stands on, read on the day** (`web/` as vendored at `v0.1.3`;
+`vla-lang` 0.9.3 and `alonzo` 0.1.3 as the registry holds them).
+- The page opens a grid cartridge on its Screen, drawn through the Camera's
+  window (`host.js`, `_drawGrid`), and the player loads a cartridge picked
+  from its list paused at frame 0, where a formula shows its text until its
+  first value (`index.template.html`).
+- The pointer. The host writes `Input!B11` and `B12`, the Screen's own
+  column and row under the pointer through the Camera, 0 off the window's
+  cells, and `B13`, the left button held (`_inputRows`, `_windowCellAt`).
+  While another sheet shows, the pointer is 0, so a click there is never
+  the game's (`ENGINE.14`).
+- A sheet shown by its tab is viewed at every frame as the `grid` record of
+  the region in view, every formula's text with it (`refreshSheet`,
+  `viewRecord`), where the Screen has been drawn from the `values` view,
+  the grid record less its formula rows, after frame 0 since `alonzo` 0.1.3
+  (`ENGINE.8`'s second slice).
+- The keys. The host writes `Input!B17` and `B18`, the last key pressed
+  during a frame as `KeyboardEvent.key` and `.code`, for that frame alone,
+  for every key, bound or not (`keyDown`, `_inputRows`). A key the Keys
+  sheet binds, one key to each of ten buttons a player, is taken before the
+  viewport sees it; the viewport moves by the arrows, Page Up and Down,
+  Home, End and Enter (`viewport.js`, `_keyDown`).
+- The step follows a formula cell to its readers only when it computes a
+  value whose bits differ from its last (`vla-lang` 0.9.3,
+  `machine/mod.rs`), so a cell that reads the pointer and holds 0 between
+  presses shields everything that reads it from the pointer's moves.
+- A row's height is one `(row ...)` row a sheet row, in points, with no
+  range form (`machine/load.rs`), and a column's width one `(column ...)`
+  row a column, in Excel's characters, about 7 CSS pixels a character, the
+  default 64 pixels (`viewport.js`, `columnPixels`). Frazaro's `.xlsx`
+  writer already writes Excel's sheet-wide default row height,
+  `<sheetFormatPr defaultRowHeight="15"/>` (`core/src/sheet/ooxml.rs`).
+- `describe`'s `every-frame` counts only a shape the reach cannot follow, a
+  defined name's or a span's, and none that reads the Input sheet
+  (`calc/census.rs`).
+- At the owner's full screen, 2,560 by 1,440 CSS pixels at a ratio of 1.5,
+  the player shows 38 to 40 columns and 68 rows of the default cells
+  (`MISE.3`).
+
+**The first scoping, struck.** It laid the line's five panels down the one
+Screen, fifty rows each, the Camera moving the window from one to another;
+a tab strip on each panel's first row, the panel's own tab marked; a Window
+sheet that read a click and the number keys and kept the tab shown; and the
+game opening on the Market. Stacked on one sheet, the panels shared every
+column's width, so the widths had to be a grid every panel lay on, and a
+panel's 20-point rows cost 250 `row` rows. It followed the line, and the
+line followed the page, which opens on the Screen and hears a click there
+alone. Offered, after the first reading, the panels side by side on the
+Screen, each its own widths and only the strip's columns shared, or the
+game's views as sheets of their own, which waits on Alonzo, the owner chose
+the sheets: "Real sheets are the path forward ("the UI is a workbook"),
+because Buffet is a mini, blossoming Frazaro, so each Buffet tab should
+have its own properties as if each were an independent view." Of the keys,
+which the first scoping had read as the tabs' shortcuts: "Keyboard
+shortcuts are crucial to a spreadsheet, but I expect key chords [Alt +
+sequence of keys] to be the main approach to mouseless interaction." And a
+horizon past this item, named and set aside in the same breath: "A nifty
+pipe dream of mine would be to allow arbitrary cartridges to be loaded
+alongside spreadsheet sheets, since every cartridge is a grid of cells, so
+Kairos could be a tab beside any other sheet... but I don't need to get
+ahead of myself here."
+
+**What Buffet needs of Alonzo**, asked 2026-10-15 at the owner's choice,
+its ID that repository's to mint (`ENGINE.18` its next free), and written
+into `MISE.6`. Each need names the dish that needs it first; each spelling
+is Alonzo's.
+1. **The sheet a grid cartridge opens on** (`FRONT.1`). Buffet opens on its
+   Portfolio sheet, where the page opens every grid cartridge on its
+   Screen.
+2. **A sheet shown drawn as the Screen is** (`FRONT.1`). Buffet's views are
+   sheets that change once a market day, and a sheet shown moves every
+   formula's text at every frame; asked, the `values` view after frame 0.
+   The still frame for a sheet shown, its load and paint skipped when its
+   record is the one last drawn, is `ENGINE.17`'s decision 8, built the
+   same day at the owner's word (below).
+3. **A click on the sheet shown, the game's** (`BACK.1`, `PLATE.1`,
+   `GUARD.1`). Asked: the cell under the pointer on whatever sheet the
+   viewport shows, and that sheet's name, in the Input sheet, so that a
+   button compares the sheet, the row and the column, and a button on the
+   Portfolio is ever pressed.
+4. **The game showing a sheet** (`GUARD.1`, whose exam ends on the
+   Portfolio). An effect the host reads after each step, the person's own
+   tab followed between its changes, as the Camera's move is.
+5. **The Screen of a cartridge whose views are sheets** (with 1). Buffet's
+   Screen holds nothing, yet stands first among the tabs and is what the
+   page draws: hidden, or none.
+6. **Key chords** (a sitting of its own, before the first dish that needs
+   one). Alt and a sequence of keys, the main way about the workbook
+   without a mouse: which chords the workbook keeps for itself, moving
+   between sheets the first; how a cartridge declares its own as data, the
+   Keys sheet being "Emacs's keymap as a cell edit" (`SPEC.md` §3.4) for
+   one key a button today; and which chords the browser keeps for itself
+   (Chrome's Alt+Left goes back a page).
+
+**What `FRONT.1` becomes**, rescoped when Alonzo releases the item, its
+decisions then the owner's to approve:
+- The game's views are sheets of their own, each with its own widths,
+  heights, looks and gridlines, reached by the workbook's own tabs: no
+  strip drawn in cells, no Camera, no Window sheet, no `panel` in the
+  library.
+- The Portfolio first, the sheet the game opens on until the Exam exists
+  (`GUARD.1`). A view enters with the dish that fills it, the Exam with
+  `GUARD.1`, the Overview with `FRONT.3`, Work with `BACK.1`, the market's
+  view and its buttons with `PLATE.1`, so no sheet stands empty waiting.
+- First light: the Portfolio showing the day and the four stocks, each its
+  price today and its change since yesterday in dollars, whole cents over
+  100 once (`FRONT.2`'s money rule), moving a day a second; the shares, the
+  cost, the value and the gain are `PLATE.1`'s columns beside them.
+- The model's sheets after the views, visible: the spreadsheet a player may
+  open (`AD-6`).
+- The names a fund manager's, plain, the tabs unnumbered (`BD-2`'s
+  amendment). A market view named Market and the model's Market sheet,
+  `POT.2`'s index, cannot share a name, and one is renamed at `PLATE.1`.
+- The rows the default height, unless the owner asks for taller ones by
+  eye. A sheet's default row height, Excel's `<sheetFormatPr
+  defaultRowHeight>`, is a candidate ask of Frazaro (`MISE.6`); a `row` row
+  over a range of rows is the other spelling.
+- The notes: the kitchen's words out (`BD-2`), the tagline kept, "because
+  it's the game's tagline and punchline" (the owner, 2026-10-15), spelled
+  as the README's title spells it, "All You Can Sheet".
+- Kept from the first scoping: a view holds at most 1,000 formula cells in
+  view (`MISE.3`); a background by the columns' format; a button reading a
+  click kept once in cells that hold 0 between presses, never the raw
+  pointer; `MISE.3`'s first number re-measured on the real view by a probe
+  page; the owner's hand test; the hand and the tests holding every frame.
+
+**`ENGINE.17`, built beside this in Alonzo.** A peer session built
+Alonzo's `ENGINE.17` the same day, minted for Buffet, its client: a grid
+frame whose Screen record is the one the viewport last drew is neither
+loaded nor painted. Its decision 8, the owner's word on its first build,
+gives a sheet shown in the Screen's place the same skip, so Buffet's views
+on sheets take it, each still between market days so long as it shows
+nothing that changes every frame (`BD-7`: only the Day sheet reads the
+frame, and the Day sheet, its phase moving every frame, is never still).
+Uncommitted there on 2026-10-15, awaiting the owner's `?blit=1` run and
+hand test; the views' item builds on its tree.
