@@ -25,6 +25,10 @@
 //! rows counted by its extent; every row picked in its turn; a row added to
 //! the content file expanding with no other edit; the one picker's limit and
 //! the tripwire before it; and every sheet written bare, the content hidden.
+//! Since `MENU.2`: each content sheet held to its file, read by the
+//! language's own reader and not by the library's walk; the exam's bank, its
+//! first question shown, every question whole, every field picked at every
+//! row, and a question added expanding with no other edit.
 
 use std::collections::{BTreeMap, BTreeSet};
 
@@ -34,15 +38,26 @@ use buffet_oracle::buffet::{
     LOOK_BACK, RUNGS, WAVES, YEAR,
 };
 use buffet_oracle::{expand_source, gather, lf, load, read, root, values};
+use vla_lang::form::Form;
 use vla_lang::machine::Viewed;
+use vla_lang::reader::read_forms;
 
 const SOURCE: &str = "src/buffet.source.vla";
 const CARTRIDGE: &str = "src/buffet.vla";
 const DESCRIBE: &str = "oracle/testdata/describe/buffet.vla";
 /// The fine print's content file, and the sheet its call writes (`MENU.1`).
 const DISCLOSURES: &str = "src/content/disclosures.vla";
-/// The content sheets, each a file of `src/content/`, hidden among the tabs.
-const CONTENT_SHEETS: [&str; 1] = ["Disclosures"];
+/// The exam's bank's content file, and the sheet its call writes (`MENU.2`).
+const QUESTIONS: &str = "src/content/questions.vla";
+/// The content sheets, each written by a file of `src/content/` and hidden
+/// among the tabs: the sheet, and its file.
+const CONTENT: [(&str, &str); 2] = [("Disclosures", DISCLOSURES), ("Questions", QUESTIONS)];
+/// The exam's bank's fields, in their columns from A (`MENU.2`'s decision 1,
+/// the headers title-cased by the owner after the hand test): the order
+/// `GUARD.1`'s view reads them in.
+const QUESTION_FIELDS: [&str; 8] = [
+    "Concept", "Question", "Option A", "Option B", "Option C", "Option D", "Answer", "Why",
+];
 
 fn cartridge() -> Cartridge {
     load(CARTRIDGE).unwrap_or_else(|e| panic!("{CARTRIDGE} loads: {e}"))
@@ -53,6 +68,107 @@ fn seed(cart: &Cartridge) -> u64 {
         Seed::Number(n) => u64::from(n),
         Seed::Host => panic!("the game's seed is a number, so every first game is the same market"),
     }
+}
+
+/// A content file of `src/content/`, read by the language's own reader and
+/// not by the library's walk (`MENU.2`): the sheet its call of `strings`
+/// names, its fields, each a header and a width in characters, and its rows.
+struct Content {
+    sheet: String,
+    fields: Vec<(String, u64)>,
+    rows: Vec<ContentRow>,
+}
+
+/// A row of a content file's call: its vintage, its approver and its fields'
+/// texts, as the file writes them.
+struct ContentRow {
+    vintage: String,
+    approver: String,
+    words: Vec<String>,
+}
+
+/// A content file read whole: one macro, its docstring and its one call of
+/// `strings`, which names the sheet, then its fields as a list of a header
+/// and a width each, then the rows, each its vintage, its approver and its
+/// texts. A number is a symbol to the reader and a text a string.
+fn content(path: &str) -> Content {
+    let text = read(path);
+    let forms = read_forms(&text).unwrap_or_else(|r| panic!("{path}: {} {}", r.id, r.text));
+    let [Form::List(def)] = forms.as_slice() else {
+        panic!("{path} holds one form");
+    };
+    let call = match def.items.as_slice() {
+        [Form::Sym(head), Form::List(_), Form::Str(_), Form::List(call)] if head == "defmacro" => {
+            call
+        }
+        _ => panic!("{path}: one macro, its docstring and its one call"),
+    };
+    let [Form::Sym(verb), Form::Str(sheet), Form::List(fields), rows @ ..] = call.items.as_slice()
+    else {
+        panic!("{path}: a call naming its sheet, then its fields");
+    };
+    assert_eq!(verb, "strings", "{path}: the call is the library's strings");
+    let fields = fields
+        .items
+        .chunks(2)
+        .map(|pair| match pair {
+            [Form::Str(header), Form::Sym(width)] => (
+                header.clone(),
+                width
+                    .parse()
+                    .unwrap_or_else(|e| panic!("{path}: {header}'s width, {width}: {e}")),
+            ),
+            _ => panic!("{path}: a field is a header and a width"),
+        })
+        .collect();
+    let rows = rows
+        .iter()
+        .map(|row| {
+            let Form::List(row) = row else {
+                panic!("{path}: a row is a list");
+            };
+            let [Form::Sym(vintage), Form::Str(approver), words @ ..] = row.items.as_slice() else {
+                panic!(
+                    "{path}, line {}: a row opens on its vintage and its approver",
+                    row.line
+                );
+            };
+            let words = words
+                .iter()
+                .map(|word| match word {
+                    Form::Str(text) => text.clone(),
+                    _ => panic!("{path}, line {}: a field is a text", row.line),
+                })
+                .collect();
+            ContentRow {
+                vintage: vintage.clone(),
+                approver: approver.clone(),
+                words,
+            }
+        })
+        .collect();
+    Content {
+        sheet: sheet.clone(),
+        fields,
+        rows,
+    }
+}
+
+/// A column's letters from its number, 1 for A.
+fn letters(mut column: usize) -> String {
+    let mut out = Vec::new();
+    while column > 0 {
+        column -= 1;
+        out.push(b'A' + (column % 26) as u8);
+        column /= 26;
+    }
+    out.reverse();
+    String::from_utf8(out).expect("capital letters")
+}
+
+/// A cell's address from its row and its column, each from 1.
+fn address(row: usize, column: usize) -> String {
+    format!("{}{row}", letters(column))
 }
 
 /// The Disclosures sheet's texts, its column A below the headers, row 2 first:
@@ -772,7 +888,7 @@ fn one_picker_holds_1547_rows_and_no_more() {
             "(include \"common.vla\")\n",
             "(include \"kitchen.vla\")\n",
             "(sheet \"Screen\" visible)\n",
-            "(strings \"Bank\" \"row\"\n",
+            "(strings \"Bank\" (\"row\" 100)\n",
         ));
         for k in 1..=rows {
             s.push_str(&format!("  (0 \"\" \"row {k}\")\n"));
@@ -816,8 +932,9 @@ fn one_picker_holds_1547_rows_and_no_more() {
         }
     }
     let cart = cartridge();
-    for sheet in CONTENT_SHEETS {
-        let count: usize = values(&cart, sheet, "F1:F1")["F1"]
+    for (sheet, path) in CONTENT {
+        let at = address(1, content(path).fields.len() + 5);
+        let count: usize = values(&cart, sheet, &format!("{at}:{at}"))[&at]
             .parse()
             .expect("a count");
         assert!(
@@ -870,6 +987,7 @@ fn every_sheet_is_written_bare_and_the_strings_hidden() {
         ("Market", "visible"),
         ("Stocks", "visible"),
         ("Disclosures", "hidden"),
+        ("Questions", "hidden"),
         ("Clock", "visible"),
         ("File", "visible"),
         ("Input", "visible"),
@@ -881,9 +999,287 @@ fn every_sheet_is_written_bare_and_the_strings_hidden() {
             "the twins after every sheet: {name} {state}"
         );
     }
-    for sheet in CONTENT_SHEETS {
+    for (sheet, _) in CONTENT {
         assert!(own.contains(&(sheet, "hidden")), "{sheet} hidden");
     }
+}
+
+/// Each content sheet is its file (`MENU.2`): the file read by the language's
+/// own reader, which shares no walk with the library's `strings`, and every
+/// row of its call a row of the sheet from row 2, its fields from column A and
+/// its vintage and approver after them, the table ending at its last row; the
+/// headers its fields' then the vintage's and the approver's; each field's
+/// width, and the approver's 20; and beside the table, past one empty column,
+/// the labels, `rows`, `the row shown`, `shown` and each later field's header
+/// down the column, with the rows counted beside `rows`. The fine print and
+/// the exam's bank alike, one field and eight.
+#[test]
+fn each_content_sheet_is_its_file() {
+    let cart = cartridge();
+    let text = lf(&read(CARTRIDGE));
+    for (sheet, path) in CONTENT {
+        let file = content(path);
+        assert_eq!(file.sheet, sheet, "{path} writes the {sheet} sheet");
+        let n = file.fields.len();
+        let rows = file.rows.len();
+        let last = (rows + 2).max(n + 2);
+        let got = values(&cart, sheet, &format!("A1:{}", address(last, n + 5)));
+        let cell = |row: usize, column: usize| got.get(&address(row, column)).map(String::as_str);
+        let mut headers: Vec<&str> = file.fields.iter().map(|(h, _)| h.as_str()).collect();
+        headers.extend(["vintage", "approved by"]);
+        for (k, header) in headers.iter().enumerate() {
+            assert_eq!(
+                cell(1, k + 1),
+                Some(*header),
+                "{sheet}!{}",
+                address(1, k + 1)
+            );
+        }
+        let mut widths: Vec<(usize, u64)> = (1..).zip(file.fields.iter().map(|f| f.1)).collect();
+        widths.push((n + 2, 20));
+        for (column, width) in widths {
+            let row = format!(
+                "(column \"{sheet}\" \"{}\" {width} shown none)",
+                letters(column)
+            );
+            assert!(text.lines().any(|l| l == row), "{sheet}: {row}");
+        }
+        for (r, row) in (2..).zip(&file.rows) {
+            assert_eq!(
+                row.words.len(),
+                n,
+                "{path}: the row for {sheet}'s row {r} holds {} fields where the sheet has {n}",
+                row.words.len()
+            );
+            for (k, word) in row.words.iter().enumerate() {
+                assert_eq!(
+                    cell(r, k + 1),
+                    Some(word.as_str()),
+                    "{sheet}!{}",
+                    address(r, k + 1)
+                );
+            }
+            assert_eq!(
+                cell(r, n + 1),
+                Some(row.vintage.as_str()),
+                "{sheet}!{}, the vintage",
+                address(r, n + 1)
+            );
+            assert_eq!(
+                cell(r, n + 2),
+                Some(row.approver.as_str()),
+                "{sheet}!{}, the approver",
+                address(r, n + 2)
+            );
+        }
+        for column in 1..=n + 2 {
+            assert_eq!(
+                cell(rows + 2, column),
+                None,
+                "{sheet}!{}: the table ends at its last row",
+                address(rows + 2, column)
+            );
+        }
+        let mut labels = vec!["rows", "the row shown", "shown"];
+        labels.extend(file.fields.iter().skip(1).map(|(h, _)| h.as_str()));
+        for (k, label) in labels.iter().enumerate() {
+            assert_eq!(
+                cell(k + 1, n + 4),
+                Some(*label),
+                "{sheet}!{}",
+                address(k + 1, n + 4)
+            );
+        }
+        assert_eq!(
+            cell(1, n + 5),
+            Some(rows.to_string().as_str()),
+            "{sheet}!{}, the rows counted",
+            address(1, n + 5)
+        );
+    }
+}
+
+/// The exam's bank shows its first question (`MENU.2`): the row shown, `M2`,
+/// a value the source writes, 1, until `GUARD.1`'s draw drives it; and from
+/// the first frame its eight pickers, `M3` to `M10`, the first row's fields,
+/// each beside its label.
+#[test]
+fn the_questions_sheet_shows_its_first_question() {
+    let mut cart = cartridge();
+    cart.step(0);
+    let got = values(&cart, "Questions", "A1:M10");
+    assert_eq!(
+        got.get("M2").map(String::as_str),
+        Some("1"),
+        "Questions!M2, the row shown"
+    );
+    let first: Vec<&str> = (1..=8).map(|k| got[&address(2, k)].as_str()).collect();
+    let shown: Vec<&str> = (3..=10).map(|r| got[&format!("M{r}")].as_str()).collect();
+    assert_eq!(shown, first, "Questions!M3:M10, the first question");
+}
+
+/// Every question is whole (`MENU.2`): the bank's eight fields in their
+/// order, and each question eight texts, none empty; its four options
+/// distinct; its answer the right option's letter, a capital from A to D; its
+/// why one line of at most 140 characters, which a concept card quotes alone;
+/// its vintage a whole number. And no letter answers more than a third of the
+/// bank, so a player who always answers one letter learns only the letter:
+/// the draft answered B twelve times in nineteen (decision 3).
+#[test]
+fn every_question_is_whole() {
+    let bank = content(QUESTIONS);
+    let headers: Vec<&str> = bank.fields.iter().map(|(h, _)| h.as_str()).collect();
+    assert_eq!(
+        headers, QUESTION_FIELDS,
+        "the bank's fields, in their order"
+    );
+    let mut answers: BTreeMap<&str, usize> = BTreeMap::new();
+    for (q, row) in (1..).zip(&bank.rows) {
+        assert_eq!(row.words.len(), 8, "question {q}: eight fields");
+        for (field, word) in QUESTION_FIELDS.iter().zip(&row.words) {
+            assert!(
+                !word.trim().is_empty(),
+                "question {q}: its {field} is empty"
+            );
+        }
+        let options: BTreeSet<&str> = row.words[2..6].iter().map(String::as_str).collect();
+        assert_eq!(options.len(), 4, "question {q}: four options, each its own");
+        let answer = row.words[6].as_str();
+        assert!(
+            ["A", "B", "C", "D"].contains(&answer),
+            "question {q}: its answer is {answer:?}, where a capital from A to D names the right option"
+        );
+        let why = row.words[7].chars().count();
+        assert!(
+            why <= 140,
+            "question {q}: its why runs {why} characters, past one line of 140"
+        );
+        assert!(
+            row.vintage.parse::<u64>().is_ok(),
+            "question {q}: its vintage, {}, is no whole number",
+            row.vintage
+        );
+        *answers.entry(answer).or_insert(0) += 1;
+    }
+    let n = bank.rows.len();
+    for (letter, count) in answers {
+        assert!(
+            3 * count <= n,
+            "{letter} answers {count} of the {n} questions, more than a third: the reviewer spreads the letters (MENU.2's decision 3)"
+        );
+    }
+}
+
+/// A picker a field picks every question in its turn (`MENU.2`): the row
+/// shown written from 1 to the bank's last as a person's edit, and at each
+/// step the eight pickers that row's fields, read off the sheet's own columns.
+#[test]
+fn every_field_is_picked_at_every_row() {
+    let mut cart = cartridge();
+    let n = content(QUESTIONS).rows.len();
+    let table = values(&cart, "Questions", &format!("A2:H{}", n + 1));
+    for k in 1..=n {
+        let edit = format!("(cell \"Questions\" \"M2\" {k})");
+        cart.write(&edit)
+            .unwrap_or_else(|r| panic!("{edit}: {} {}", r.refusal.id, r.refusal.text));
+        cart.step(0);
+        let got = values(&cart, "Questions", "M3:M10");
+        for field in 1..=8 {
+            assert_eq!(
+                got.get(&format!("M{}", field + 2)),
+                table.get(&address(k + 1, field)),
+                "the row shown {k}: Questions!M{}",
+                field + 2
+            );
+        }
+    }
+}
+
+/// A question added is a row of the content file's call and nothing else
+/// (`MENU.2`): the source expanded with one question more differs from the
+/// cartridge in its ten cells, the count and the eight pickers alone, loads,
+/// and shows the new question at its row. Its approver is left empty, as a
+/// stranger leaves it for the reviewer (`src/content/README.md`).
+#[test]
+fn a_question_added_expands_with_no_other_edit() {
+    let added = [
+        "A concept added by the oracle",
+        "A question the oracle added. Its answer is:",
+        "the first option",
+        "the second option",
+        "the third option",
+        "the fourth option",
+        "D",
+        "A why the oracle added, in one line.",
+    ];
+    let text = lf(&read(QUESTIONS));
+    let lines: Vec<&str> = text.lines().collect();
+    let close = lines
+        .iter()
+        .rposition(|l| l.trim_start().starts_with(')'))
+        .expect("the line that closes the call");
+    let mut grown: Vec<String> = lines[..close].iter().map(|l| l.to_string()).collect();
+    grown.push("    (0 \"\"".to_string());
+    for (k, word) in added.iter().enumerate() {
+        let end = if k + 1 == added.len() { ")" } else { "" };
+        grown.push(format!("     \"{word}\"{end}"));
+    }
+    grown.extend(lines[close..].iter().map(|l| l.to_string()));
+    let source = read(SOURCE);
+    let mut files = gather(&root(), SOURCE, &source);
+    let at = files
+        .iter()
+        .position(|(path, _)| path == QUESTIONS)
+        .expect("the source includes the bank");
+    files[at].1 = grown.join("\n") + "\n";
+    let ex = alonzo::pass::expand(&source, SOURCE, &files)
+        .unwrap_or_else(|r| panic!("line {}: {} {}", r.line, r.refusal.id, r.refusal.text));
+
+    let n = content(QUESTIONS).rows.len();
+    let picker = |field: usize, rows: usize| {
+        let refs: Vec<String> = (2..rows + 2).map(|r| address(r, field)).collect();
+        format!(
+            "(formula \"Questions\" \"M{}\" \"=CHOOSE(M2,{})\")",
+            field + 2,
+            refs.join(",")
+        )
+    };
+    let held = lf(&read(CARTRIDGE));
+    let before: BTreeSet<&str> = held.lines().collect();
+    let after: BTreeSet<&str> = ex.text.lines().collect();
+    let gone: BTreeSet<String> = before.difference(&after).map(|l| l.to_string()).collect();
+    let came: BTreeSet<String> = after.difference(&before).map(|l| l.to_string()).collect();
+    let mut want_gone: BTreeSet<String> = (1..=8).map(|f| picker(f, n)).collect();
+    want_gone.insert(format!("(cell \"Questions\" \"M1\" {n})"));
+    let new_row = n + 2;
+    let mut want_came: BTreeSet<String> = (1..=8).map(|f| picker(f, n + 1)).collect();
+    want_came.insert(format!("(cell \"Questions\" \"M1\" {})", n + 1));
+    for (k, word) in added.iter().enumerate() {
+        want_came.insert(format!(
+            "(cell \"Questions\" \"{}\" \"{word}\")",
+            address(new_row, k + 1)
+        ));
+    }
+    want_came.insert(format!(
+        "(cell \"Questions\" \"{}\" 0)",
+        address(new_row, 9)
+    ));
+    want_came.insert(format!(
+        "(cell \"Questions\" \"{}\" \"\")",
+        address(new_row, 10)
+    ));
+    assert_eq!(gone, want_gone, "the rows the added question took away");
+    assert_eq!(came, want_came, "the rows the added question brought");
+
+    let mut cart = Cartridge::load(&ex.text, "buffet.vla", ex.text.len())
+        .unwrap_or_else(|r| panic!("line {}: {} {}", r.line, r.refusal.id, r.refusal.text));
+    let edit = format!("(cell \"Questions\" \"M2\" {})", n + 1);
+    cart.write(&edit)
+        .unwrap_or_else(|r| panic!("{edit}: {} {}", r.refusal.id, r.refusal.text));
+    cart.step(0);
+    let got = values(&cart, "Questions", "M3:M10");
+    let shown: Vec<&str> = (3..=10).map(|r| got[&format!("M{r}")].as_str()).collect();
+    assert_eq!(shown, added, "the question added, shown at its row");
 }
 
 /// The library's verb, `draws`, ten thousand of them beneath a die of 1: the

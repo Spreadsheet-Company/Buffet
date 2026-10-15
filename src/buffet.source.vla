@@ -20,6 +20,9 @@
 ;   MENU.1  the strings: the content sheets, each a file of src/content/ that holds the
 ;           words alone, and the first of them, the Disclosures sheet, the fine print,
 ;           a disclosure a month.
+;   MENU.2  the exam's bank: the Questions sheet, twenty questions, each its concept, four
+;           options, the right one's letter and the one line that says why, from which
+;           the Series 777 will draw its nine scored questions (GUARD.1).
 ;
 ; The market's clock (BD-7). One tick is one market day, thirty frames at the manifest's
 ; rate of thirty, so a day a second and a year about six minutes. The Day sheet alone
@@ -47,7 +50,7 @@
   (seed 791886)                     ; every first game's market: a first year that dips early and closes 10% up
   (author "Spreadsheet Company")
   (license "AGPL-3.0-or-later AND CC-BY-SA-4.0")
-  (notes "Buffet: All You Can Sheet. The back office is open and the front office is not: so far the market's calendar, a market day a second; its dice, rolled once a day where anyone can watch them roll; the market itself, four waves and a drift, moving once a day; four stocks priced off it in whole cents, the dearest paying a dividend four days a year; and the fine print, a disclosure a month. Pick the Day, the Dice, the Market or the Stocks sheet to watch, or the Disclosures sheet among the hidden sheets."))
+  (notes "Buffet: All You Can Sheet. The back office is open and the front office is not: so far the market's calendar, a market day a second; its dice, rolled once a day where anyone can watch them roll; the market itself, four waves and a drift, moving once a day; four stocks priced off it in whole cents, the dearest paying a dividend four days a year; the fine print, a disclosure a month; and the Series 777's question bank, twenty questions awaiting an exam the regulator has yet to schedule. Pick the Day, the Dice, the Market or the Stocks sheet to watch, or the Disclosures or the Questions sheet among the hidden sheets."))
 
 ; The libraries whose macros this source calls, both beside it: the kit, Alonzo's
 ; common.vla copied at the pin (sheets, labels, headers, on, cells, formulas and
@@ -60,6 +63,7 @@
 (include "common.vla")
 (include "kitchen.vla")
 (include "content/disclosures.vla")
+(include "content/questions.vla")
 
 (sheets "Screen" "Day" "Dice" "Market" "Stocks")
 
@@ -232,3 +236,21 @@
     ("F5" 30))                      ; a month: thirty market days, thirty seconds at the manifest's rate
   (formulas
     ("F2" "=MOD(INT(Day!$B$3/F5),F1)+1")))   ; the row shown: the day's month round the rows, the first on the first day
+
+; ---- MENU.2: the exam's bank --------------------------------------------------------
+; The Questions sheet: the bank from which the Series 777 draws its nine scored
+; questions, a seeded start and a stride through it by the exam's two draws on the Dice
+; sheet (GUARD.1), a question a row, each its concept, the question, four options, the
+; right one's letter and the one line that says why. Eight fields, so its table runs
+; from A to J and its values stand in M: the count in M1 and a picker a field in M3 to
+; M10, beside their labels in L. Its last question, ungraded, which names the firm's
+; archetype, is no row of the bank: it is asked last and always, and never drawn.
+;
+; The row shown, M2, a value, is the first question until GUARD.1's draw drives it: the
+; bank is read by nothing that draws yet, and a person's edit of M2 shows any question.
+
+(questions)                         ; the Questions sheet: its headers, its rows, their count and a picker a field
+
+(on "Questions"
+  (cells
+    ("M2" 1)))                      ; the row shown: the first question, until the exam's draw (GUARD.1)

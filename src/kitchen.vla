@@ -25,6 +25,9 @@
 ; picker, CHOOSE over a column of a sheet's rows. Both entered at their first writing,
 ; where the ratchet waits for a second, since a content file holds its words alone:
 ; the second content sheet is their second writing.
+; Since MENU.2 (2026-10-15), that second writing: strings of several fields, for the
+; exam's bank, eight fields wide, the fine print its case of one field, expanding to its
+; bytes unchanged; picker unchanged, a picker a field.
 
 ; ---- the dice (POT.1) ---------------------------------------------------------------
 ; A stream is a die and its draws. The die is one cell, the stream's state, which the
@@ -50,46 +53,106 @@
     (&expand (address-expand row (+expand column 1)) ":" (address-expand (+expand row (-expand many 1)) (+expand column 1)))
     (&expand "=" (address-expand row column) "/2147483647")))
 
-; ---- the strings (MENU.1) -----------------------------------------------------------
-; A content sheet holds one kind of string the game shows, a string a row, and a file of
-; src/content/ defines it, words alone: one macro named after the file, whose body is
-; one call of strings, naming the sheet, the word for a row of it and then the rows,
-; each its vintage, the course that added it; its approver, the reviewer who approved
-; it; and its text. The source includes the file after its manifest, with every
-; include, and calls its macro where the sheet belongs. The sheet is hidden, as a
-; workbook keeps its reference data at the back, and stands among the tabs where the
-; source's call of its macro stands. Its table holds the headers in row 1 and a row of
-; the call a row of the sheet from row 2, the text in column A, the vintage in B and
-; the approver in C; beside the table, a label in column E beside each value in F: the
-; rows counted in F1, a value; the row shown in F2, which the dish that reads the sheet
-; writes; and in F3 the text shown, the picker, which a view reads through a reference
-; and never holds, since its formula would ride in every frame's record. So a row added
-; is a line of the call, and no formula is edited.
+; ---- the strings (MENU.1, MENU.2) ---------------------------------------------------
+; A content sheet holds one kind of string the game shows, a row of fields a row, and a
+; file of src/content/ defines it, words alone: one macro named after the file, whose
+; body is one call of strings, naming the sheet; then its fields, as a list of each
+; field's header and its width in characters, ("disclosure" 100) for a sheet of one
+; field; then the rows, each its vintage, the course that added it; its approver, the
+; reviewer who approved it; and its fields, in the list's order. The source includes the
+; file after its manifest, with every include, and calls its macro where the sheet
+; belongs. The sheet is hidden, as a workbook keeps its reference data at the back, and
+; stands among the tabs where the source's call of its macro stands. Its table holds the
+; headers in row 1 and a row of the call a row of the sheet from row 2: its fields from
+; column A, then its vintage and its approver. Beside the table, past one empty column,
+; a label beside each value: the rows counted, a value; the row shown, which the dish
+; that reads the sheet writes; then a picker a field, the first labeled shown, as a
+; sheet of one field labels its only picker, and each later one by its field's header,
+; down the column. So the fine print, one field wide, holds its text in A, its vintage
+; in B and its approver in C, its count, row shown and picker in F1, F2 and F3; and the
+; exam's bank, eight fields wide, its table in A to J and its values in M1 to M10. A
+; view reads a picker through a reference and never holds its text, since its formula
+; would ride in every frame's record. So a row added is a row of the call, and no
+; formula is edited. The expander has no length of a list, so strings counts the fields
+; first, a walk that hands the count on to the macro that lays the sheet out.
 
-(defmacro (strings content word & rows)
-  "a content sheet, hidden: the headers in row 1, then a row of the sheet a row of the call, its text in A, its vintage in B and its approver in C; the rows counted in F1, and the text shown in F3, picked by the row shown in F2, which the dish writes"
+(defmacro (strings content fields & rows)
+  "a content sheet, hidden: its fields from column A, each a header and a width, then the vintage and the approver; a row of the call a row of the sheet from row 2; beside the table, the rows counted, the row shown, which the dish writes, and a picker a field"
+  (quasiquote (strings-count (unquote content) (unquote fields) (unquote rows) (unquote fields) 0)))
+
+(defmacro (strings-count content fields rows rest n)
+  "strings' first walk: the fields counted, a header and a width each, the count handed on to the sheet"
+  (quote-if (null? rest)
+    (strings-sheet content fields rows n)
+    (strings-count content fields rows (cddr rest) (+expand n 1))))
+
+(defmacro (strings-sheet content fields rows n)
+  "the sheet of n fields: its hidden row, its widths, its headers and its labels, then its rows, their count and a picker a field"
   (sheet content hidden)
-  (column content "A" 100 shown none)
-  (column content "C" 20 shown none)
-  (headers content "A1" word "vintage" "approved by")
-  (labels content "E1" "rows" "the row shown" "shown")
-  (quasiquote (strings-from (unquote content) 2 (unquote rows))))
+  (strings-widths content fields 1)
+  (column content (column-letters-expand (+expand n 2)) 20 shown none)
+  (strings-headers content fields 1)
+  (labels-from content 1 (+expand n 4) "rows" "the row shown" "shown")
+  (strings-labels content (cddr fields) 4 (+expand n 4))
+  (strings-from content 2 n fields rows))
 
-(defmacro (strings-from content row rows)
-  "strings' walk, its list handed on whole: a row of the call a row of the sheet, then the count and the picker over the rows written"
+(defmacro (strings-widths content fields at)
+  "each field's width at its column, from the column given; the vintage's column is left at the default"
+  (quote-if (null? fields)
+    (begin)
+    (begin
+      (column content (column-letters-expand at) (car (cdr fields)) shown none)
+      (strings-widths content (cddr fields) (+expand at 1)))))
+
+(defmacro (strings-headers content fields at)
+  "the headers in row 1: each field's, from the column given, then the vintage's and the approver's"
+  (quote-if (null? fields)
+    (begin
+      (cell content (address-expand 1 at) "vintage")
+      (cell content (address-expand 1 (+expand at 1)) "approved by"))
+    (begin
+      (cell content (address-expand 1 at) (car fields))
+      (strings-headers content (cddr fields) (+expand at 1)))))
+
+(defmacro (strings-labels content fields at col)
+  "each later field's label, its header, down the labels' column from the row given, beside its picker"
+  (quote-if (null? fields)
+    (begin)
+    (begin
+      (cell content (address-expand at col) (car fields))
+      (strings-labels content (cddr fields) (+expand at 1) col))))
+
+(defmacro (strings-from content row n fields rows)
+  "strings' walk over the rows, its list handed on whole: a row of the call a row of the sheet, then the count and a picker a field over the rows written"
   (quote-if (null? rows)
     (begin
-      (cell content "F1" (-expand row 2))
-      (picker content "F3" "F2" "A" 2 (-expand row 1)))
+      (cell content (address-expand 1 (+expand n 5)) (-expand row 2))
+      (strings-pickers content fields 3 1 n (-expand row 1)))
     (begin
-      (strings-row content row (car rows))
-      (strings-from content (+expand row 1) (cdr rows)))))
+      (strings-row content row n (car rows))
+      (strings-from content (+expand row 1) n fields (cdr rows)))))
 
-(defmacro (strings-row content row entry)
-  "one row of the call, its vintage, its approver and its text, a row of the sheet: the text in A, the vintage in B, the approver in C"
-  (cell content (address-expand row 1) (car (cddr entry)))
-  (cell content (address-expand row 2) (car entry))
-  (cell content (address-expand row 3) (car (cdr entry))))
+(defmacro (strings-row content row n entry)
+  "one row of the call, a row of the sheet: its fields from column A, then its vintage and its approver"
+  (strings-words content row 1 (cddr entry))
+  (cell content (address-expand row (+expand n 1)) (car entry))
+  (cell content (address-expand row (+expand n 2)) (car (cdr entry))))
+
+(defmacro (strings-words content row col words)
+  "a row's fields, each in the next column from the column given"
+  (quote-if (null? words)
+    (begin)
+    (begin
+      (cell content (address-expand row col) (car words))
+      (strings-words content row (+expand col 1) (cdr words)))))
+
+(defmacro (strings-pickers content fields at k n last)
+  "a picker a field, down the values' column from the row given: the kth field's over the kth column, each by the row shown"
+  (quote-if (null? fields)
+    (begin)
+    (begin
+      (picker content (address-expand at (+expand n 5)) (address-expand 2 (+expand n 5)) (column-letters-expand k) 2 last)
+      (strings-pickers content (cddr fields) (+expand at 1) (+expand k 1) n last))))
 
 ; ---- the picker (MENU.1) ------------------------------------------------------------
 ; CHOOSE over references, the dialect having no INDEX until KERNEL.8 computes one: the

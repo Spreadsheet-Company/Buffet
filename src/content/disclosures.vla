@@ -10,7 +10,7 @@
 (defmacro (disclosures)
   "the fine print: the Disclosures sheet, a disclosure a row"
   (strings "Disclosures"            ; the sheet, hidden among the tabs
-    "disclosure"                    ; what a row of it is: the header over its texts
+    ("disclosure" 100)              ; its one field: the header over its texts, and its width in characters
     ; each row: its vintage, the course that added it; its approver; and the disclosure
     (0 "prestoncolejohnson" "Past performance is not indicative of future results, but history has proven (slightly) less coy than the future.")
     (0 "prestoncolejohnson" "Buffet is not a financial advisor. Buffet is barely a game.")

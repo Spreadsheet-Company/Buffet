@@ -57,6 +57,10 @@ empty.*
 
   *Closed 2026-10-15.* Predicted `~days`; cost one session, the scoping, the build, the owner's hand test and its amendment. What landed: `src/content/disclosures.vla` and its *How to add a row*, `src/content/README.md`; `strings` and `picker` in `src/kitchen.vla`; the source's include at its top, its call of the sheet and the fine print's index, and the game's notes rewritten for `BD-2`, the back office open and the front office not; the hand's rotation and five tests of the cartridge, 33 in all; the describe golden blessed again; the layout check's content rule; the page's content blocks; `CONTRIBUTING.md`'s fifth rule; and, in the same commit, the Linux cells CI's run 38712895205 answered for `STATION.1` and `HOUSE.4`. One of the nine predictions missed: the page grew 9,587 characters where about 5,000 were predicted, the library's own block forgotten; and P6 held at the median alone, one round of five past it. After the hand test passed, the owner rewrote seven of the eight rows, grouped every include together and set the manifest first, the includes after it and the code after them; the cartridge moved in those seven rows and nowhere else.
 
+- ✅ **`MENU.2`, first slice — the exam bank: twenty questions and their whys.** *Scoped, built and hand-tested 2026-10-15: the scoping, its fifteen decisions approved whole by the owner, every prediction beside its number, what the build found and the owner's hand test are under THE ITEMS, SCOPED.* The Questions sheet, `src/content/questions.vla`, hidden after the Disclosures sheet: twenty graded questions, the nineteen drafted in `BUFFET.md` §3, checked against `BD-2` and for accuracy, and a twentieth written, *Shares*; each its concept, the question, four options, the right one's letter, the letters spread five to each over the bank, and a one-line why a concept card can quote alone (`FRONT.5`); a finance educator's read before the release (`BD-5`), the deposit insurance's figure marked to confirm. The draft's twentieth, ungraded, which sets the archetype, is no row of the bank, being asked last and always and never drawn: its options are recommended to the Firms sheet and its prompt to the Exam view (`GUARD.1`, `BACK.2`), and the contract's sentence reads nine scored questions drawn from the bank of twenty, then a tenth, ungraded. The library's `strings` grown to several fields, each a header and a width, the fine print its case of one and expanding to its bytes unchanged, `picker` unchanged, a picker a field; the row shown, `Questions!M2`, a value until `GUARD.1`'s draw drives it, with the finding for that dish that a stride picked among the primes above 1,547 is coprime to every bank a picker holds, the dialect having no `GCD`. Second slices at each license, with `GUARD.2`, toward forty to sixty. *Oracle, met:* each content sheet held to its file, read by the language's own reader; every question whole; every field picked at every row; a question added expanding with no other edit; the first question shown; the tripwire and the tab order over both sheets; the layout check's content pin raised from 1 to 2, its control fifteen mutants over seven files; the describe golden blessed again; five mutants, each caught by the test written for it; and the owner's hand test in the page. *Pays into:* `GUARD.1` and every exam after it; every content sheet of several fields after it. `~days`
+
+  *Closed 2026-10-15.* Predicted `~days`; cost one session, the scoping, the build and the owner's hand test. What landed: `src/content/questions.vla`; `strings` of several fields in `src/kitchen.vla`, the Disclosures file's one line of fields respelled; the source's include, call and row shown, and the game's notes; five tests of the cartridge more and three extended, 38 in all; the describe golden blessed again; the layout check's pin and control; the *How to add a row* for a sheet of several fields; and, in `OMAKASE.md`, the contract's sentence, `GUARD.1`'s and `BACK.2`'s notes and the hoist ledger's row. Two of the nine predictions missed: the pass took 1.7 ms more where under one was predicted, a cost paid at a build and never at a frame, and the first frame some 40 µs more where under 10 was predicted; every frame after it held. After the hand test passed, the owner rewrote eighteen of the twenty questions and title-cased the bank's headers; the cartridge moved in seventy rows of text and nowhere else.
+
 ## 🔪 MISE EN PLACE
 
 - ✅ **`MISE.3` — the first measurements: three probes, each a day in scratch, each deciding a spelling.** *Scoped, measured and hand-run 2026-10-14: the scoping, every number beside its prediction, the owner's hand run and what it found are under THE ITEMS, SCOPED.* Run over Alonzo's own page and runner with a Buffet-shaped scratch cartridge, before a row of the game is written, and each number written in `SPIKE.md` beside its prediction so that course 0's scoping cites them. (1) **The window's cost.** An 80 by 50 panel of texts and numbers drawn in Chrome at `(rate 30)`. The host draws from the full record until `ENGINE.8`'s second slice lands, and the record carries every formula's text: by `vla-lang` 0.9.3's release notes, an 80 by 50 window of one short formula costs 10.3 ms natively from the record and 1.7 to 1.9 ms from the `values` view (1.3 to 1.4 in the browser). A panel of many short formulas is Buffet's shape and nobody has measured it. The number decides whether course 0 ships over the record or asks Alonzo for the slice with the number in hand (`MISE.6`), and it is re-measured on the real window at first light (`HOUSE.4`). (2) **A number format with a glyph.** Whether the viewport honors a number format with a literal glyph in it (the record's `format` row carries a number format and `KERNEL.5`'s painter spells numbers by it; a `▲` in a format is (check)), which decides `FRONT.2`'s spelling of gains: a format, or a glyph cell beside the number. (3) **The picker's limit.** `CHOOSE` over references against the 8,192-character formula, about a thousand references, and the text join `&`, which the dialect has (the language's `Concat`, checked 2026-10-14), so that a ledger row's address may be joined from a count and not chosen; the number decides `MENU.1`'s picker and `PLATE.1`'s ledger ring. The fourth question the draft asked, the boundary frame against the ordinary frame, needs a model to measure and is answered by the first model: it is `POT.1`'s oracle. *Needs:* nothing. *Oracle:* the three numbers written beside their predictions. *Pays into:* `MISE.1`'s decisions, `FRONT.2`, `MENU.1`, `PLATE.1`, the ask of `ENGINE.8`. *Measured 2026-10-14, every number beside its prediction in `SPIKE.md`:* course 0's densest panel draws a frame in 1.5 to 1.7 ms in Chrome at full screen, so course 0 ships over the record; the spellings the numbers settle, approved by the owner the same day, stand as dated lines on `FRONT.1`, `FRONT.2`, `MENU.1`, `PLATE.1`, `MISE.1` and `MISE.6`; the owner's hand run in the owner's own Chrome made the browser number real, 1.4 ms a frame at p50. `~days`
@@ -1840,3 +1844,424 @@ The cartridge expanded from the amended files differs from the one the
 owner tested in the seven rows the owner wrote and nowhere else, 169 rows
 still, the describe golden unmoved and the 33 tests green; the page, built
 again, holds 1,595,679 characters.
+
+## `MENU.2`, first slice — the exam bank: twenty questions and their whys
+
+*Scoped 2026-10-15 at the owner's word, "Scope and implement MENU.2's first
+slice in Buffet (Delta/Buffet): the exam bank, twenty questions and their
+whys, the game's second content sheet", to stop for the owner's approval
+before building: from `OMAKASE.md`'s line (`COURSE.0`'s item 13), the draft
+bank in `BUFFET.md` §3, `COURSE.0`'s opening contract, and `MENU.1`'s
+scoping, build record and amendments, which set the shape a content sheet
+takes. It comes now because Alonzo is building `ENGINE.19` and `ENGINE.20`,
+so `ENGINE.18`'s views, which `FRONT.1` and every dish with a button wait
+on, are unreleased, and this item needs nothing of Alonzo's; and because it
+is `strings`' second writing, the ratchet's moment to shape a sheet of
+several fields before another sheet copies the one-text shape. Each
+decision carries its recommendation, for the owner to approve, amend or
+strike; the rows and the whys are drafts, for the owner to approve or
+rewrite, as the owner rewrote `MENU.1`'s. The predictions were written
+before any number was taken. Approved whole by the owner the same day,
+"Recommendation approved; proceed with implementing MENU.2 as scoped", and
+built that day. Alonzo's tree, where a peer builds `ENGINE.19`, was read and
+never touched.*
+
+**What it stands on, read on the day** (`vla-lang` 0.9.3 and `alonzo`
+0.1.3 as the registry holds them; `web/` as vendored at `v0.1.3`; Buffet at
+`3dd3eeb`).
+- `MENU.1`'s shape, as amended at its hand test: a content file is one
+  macro named after it, whose body is one call of `strings`; the source
+  includes it after the manifest, with every include, and calls the macro
+  where the sheet belongs. `check_layout.ps1` holds both, its content pin
+  at 1, its control fifteen mutants over a clean copy of six files.
+- `strings` writes one field: the text in A, the vintage in B, the approver
+  in C; A 100 characters wide and C 20; the headers in row 1; labels in E
+  beside values in F: `rows` and the count, `F1`; `the row shown` and the
+  index the source writes, `F2`; `shown` and the picker, `F3`. Its rows
+  come in this order: the sheet's, A's width, C's, the three headers, the
+  three labels, each row's A, B and C, `F1`, `F3`. `picker` takes the
+  column it picks, so it serves a field each unchanged, as `MENU.1`'s
+  decision 4 foresaw.
+- The expander's list primitives are `car`, `cdr`, `cddr`, `cons`, `list`,
+  `null?`, `eq?`, `equal?`, `quote-if` and `cond`, beside the arithmetic,
+  the comparisons, `&expand` and the address primitives (`expand.rs`). None
+  counts a list and none tells a list from a word, so one parameter cannot
+  take either; a count is a walk that hands its number on to the macro that
+  uses it, as the kit's `first-cell` hands on a text.
+- The dialect computes fourteen functions, `IF`, `AND`, `OR`, `NOT`, `SUM`,
+  `MIN`, `MAX`, `ABS`, `INT`, `MOD`, `ROW`, `COLUMN`, `CHOOSE` and `SIN`
+  (`calc/library.rs`): no `GCD`, `MATCH`, `INDEX`, `CODE` or `LEN`. It
+  compares texts with their case folded, as Excel does (`calc/eval.rs`), so
+  "c" equals "C".
+- The language's reader is public, `vla_lang::reader::read_forms`, a number
+  read as a symbol and a text as a string, so a test can read a content
+  file's rows without the library's walk.
+- `describe` counts a sheet's readers as its shapes' references to it,
+  Disclosures' 11 being `F2`'s two and `F3`'s nine, and from sixteen it
+  indexes them by where a change stands, `(most k)` beside the count
+  (`calc/census.rs`, `calc/reach.rs`).
+- The page writes each `.vla` of `src/content/` as a block,
+  `library-content-<name>`, and the offline check owes each by the same
+  rule (`build_web.ps1`; `check_web_offline.ps1`, `Get-OwedBlocks`), so a
+  second sheet asks nothing of either. The player's drawer holds "An edit,
+  one row:" and its Write, where a hand test writes a cell.
+- The exam's die and its two draws stand on the Dice sheet, `B7:C9`, a
+  function of the seed alone, read by nothing: `POT.1`'s decision 8 kept
+  them for `GUARD.1`'s start and stride.
+- The draft bank holds nineteen graded questions and a twentieth,
+  ungraded, which sets the archetype. The nineteen answer B twelve times, A
+  six, C once and D never. Four of its texts hold a quotation in double
+  quotes, which a VLA string writes `\"`, where `MENU.1`'s *How to add a
+  row* asks for single ones; and it writes "pavement" and "films" where the
+  house writes American English (the owner's word of 2026-10-14).
+- `ENGINE.18`, committed in Alonzo's tree (`199789c`) and unreleased: a
+  grid cartridge opens on the sheet `Camera!B3` names, else on its first
+  visible sheet, so a hidden content sheet never opens the game.
+
+**The decisions.**
+
+1. **The fields: the concept, the question, four options, the answer and
+   the why (rec).** In the order the draft writes a question: its concept
+   in bold, the question, the options, the answer marked. The concept is
+   the idea the question tests, *Opportunity cost*: the title of the
+   concept card that later quotes the why (`BUFFET.md` §10, `FRONT.5`) and
+   the glossary's term, written now since a field added later is an edit
+   of every row. The Exam view never shows it before the question is
+   answered, since a concept can name its answer: Q14's is its right
+   option's own words. The headers are a reference sheet's plain words,
+   `concept`, `question`, `option A` to `option D`, `answer` and `why`, and
+   not `A` to `D`, which would stand over the columns C to F and read as
+   their letters. Then the vintage and the approver, as on every content
+   sheet.
+
+2. **The answer a letter, A to D (rec).** The question reads that way: its
+   options lettered in the headers and on the Exam view, its answer marked
+   by letter in the draft, its proctor speaking in letters ("Also B"); so a
+   reviewer checks a row at a glance, and a stranger writes the letter they
+   would circle. It costs `GUARD.1` a comparison where a click becomes a
+   letter, `CHOOSE(k,"A","B","C","D")`, or each option cell held to its own
+   letter; and four `IF`s where a formula wants the right option's text,
+   the dialect holding no `MATCH` or `CODE`. The case is folded, so "c"
+   would score, and the oracle holds every answer a capital (decision 12).
+   *The alternative:* the option's place, 1 to 4, which a click's row gives
+   by arithmetic and `CHOOSE(answer,...)` turns into the right option's
+   text, where a reviewer counts.
+
+3. **The answers spread over the letters, five each (rec).** A player who
+   always answered B would score two in three of the draft's nineteen and
+   learn the pattern before the concepts. So the right option moves among
+   the four, each question's other options keeping the order in which
+   their jokes build, and the twenty answer A, B, C and D five times each
+   (decision 7). The draw takes nine, so the letters a player meets are the
+   draw's; the bank's spread is the reviewer's to keep as rows arrive, and
+   the oracle holds only that no letter answers more than a third of the
+   bank, which the draft's twelve B would fail and one stranger's row will
+   not (decision 12).
+
+4. **The twentieth: off the bank, a question of its own kind, and a
+   twentieth graded question in its place (rec).** "Which best describes
+   you?" is not the bank's kind of string. It has no right answer and no
+   why; it is asked last and always, never drawn; it belongs to the Series
+   777 alone, where every license's exam after it draws from a bank
+   (`GUARD.2`); and its four options are the four archetypes `BACK.2` names
+   the firm by. So it goes where the archetypes are, recommended to the
+   dishes that read it: its options a column of the Firms sheet (`MENU.1`'s
+   name for `BACK.2`'s), each beside the firm it picks, and its prompt the
+   Exam view's, arriving with the first dish that asks it, `GUARD.1`, ahead
+   of `BACK.2`, which names the firm; their scopings settle it, and the
+   draft's text waits in `BUFFET.md` §3. The bank then holds graded
+   questions alone: every row the draw's, a row added joining the draw, the
+   count the bank's size. The contract squares in one sentence: nine scored
+   questions drawn from a bank of twenty by a seeded start and a stride
+   coprime to the bank's size, so no question repeats, then a tenth,
+   ungraded, which sets the archetype. The twentieth graded question is
+   written new, *Shares*: what a share of stock is, the first thing course
+   0's player buys and the bond question's missing pair. *The
+   alternatives:* the archetype a row of this sheet, its answer empty, kept
+   at row 2 so that rows added after it extend the drawn range, the draw
+   over the rows below it and the count less one: two kinds on one sheet,
+   and a stranger's row put above it drawn silently as the archetype; or
+   the draft's nineteen alone, the contract's twenty amended to nineteen.
+
+5. **What reads the sheet: a row shown the source writes, 1, until
+   `GUARD.1`'s draw drives it (rec).** The draw is `GUARD.1`'s line and its
+   oracle, no repeats over every seed of a thousand; and where the exam's
+   state stands, the draw, the question asked, the score and the
+   archetype, is `GUARD.1`'s to lay out with its view. Written now, the
+   draw would be half a mechanism waiting on a shape its other half
+   decides, and nothing the player sees would read it either way. So the
+   source writes `M2`, the row shown, a value, 1: the pickers show the
+   first question, and the oracle writes the cell to walk every row. What
+   this slice hands `GUARD.1` instead is a finding: with no `GCD` in the
+   dialect, a stride coprime to the bank's size has no test, but a prime
+   larger than the bank's size is coprime to it, so a stride picked by the
+   exam's second draw among the primes above 1,547, the most rows one
+   picker holds (1,549, 1,553, 1,559 and on), is coprime to every bank a
+   picker can hold, with nothing to test; the start, the first draw modulo
+   the bank's size. *The alternative:* the draw now, beside the table, the
+   start, the stride and the nine rows drawn, the row shown the first of
+   them, the hand holding the draw over a thousand seeds: some fifteen rows
+   and a test, `GUARD.1`'s oracle moved forward and no view reading it.
+
+6. **`strings` of several fields, Disclosures its case of one (rec).** The
+   call names the sheet, then its fields as a list, each a header and a
+   width in characters, then the rows: `(strings "Questions" ("concept" 20
+   "question" 130 ...) rows ...)`. Disclosures' file changes in one line,
+   `"disclosure"` becoming `("disclosure" 100)`, its rows untouched, and
+   its cartridge rows stand byte for byte, which is this decision's proof.
+   The verb counts the fields, a walk that hands the count on, then writes
+   in the order Disclosures' rows already take: the sheet's hidden row;
+   each field's width at its column, then the approver's 20, the vintage's
+   column left at the default; the headers, the fields' then `vintage` and
+   `approved by`; beside the table, past one empty column, labels in the
+   column the fields' count plus four and values in the next: `rows`, `the
+   row shown` and `shown` as today, then each later field's header down
+   the column; the rows, each its fields from column A, then its vintage
+   and its approver; the count; and a picker a field, the first beside
+   `shown`, each later one beside its header. The first field's picker
+   keeps Disclosures' label and each later one is labeled by its field: one
+   rule with a first step, the price of Disclosures' bytes. For
+   Disclosures, one field: the same rows in the same order, `E:F` and
+   `F3`. For Questions, eight: the table A to J, labels in L and values in
+   M, `M1` the count, `M2` the row shown, `M3` to `M10` the pickers,
+   `shown` beside the concept's. `picker` stands unchanged. A row added is
+   still a row of the call: its ten cells, the count and the eight pickers
+   move, and no formula is edited. Each field is as wide as its longest
+   drafted text, the concept 20, the question 130, each option 62, the
+   answer 7 and the why 140, so the sheet runs some 4,000 pixels across and
+   every row reads whole at the hand test. *The alternatives:* a second
+   verb for several fields beside `strings`, two shapes for a stranger to
+   learn and the generalization the ratchet asks for not made; or the
+   pickers along row 3, `M3` to `T3`, in the table's own order beside the
+   one label `shown`, no first step, and no telling one field's picker from
+   the next.
+
+7. **The rows: the draft's nineteen, checked, and the twentieth (rec).** A
+   row is a block in the file: its vintage and its approver on its first
+   line, then a field a line in the order the fields name them, since a
+   question's row runs near 400 characters and a field a line diffs a
+   changed option as one line. The fields' list above the rows is written a
+   field a line with its comment, the owner's rule for a call of many
+   arguments (2026-10-08), and the rows bare beneath it. Each row was
+   checked against `BD-2` (no kitchen word, the humor financial or
+   economic, punch up, fictional names, PG-13, clarity first), for accuracy
+   (`BD-5`, **(check)** where a finance educator confirms before the
+   release), and for the house's American English; a quote inside a text
+   is a single quote. Every row's approver is the owner,
+   `prestoncolejohnson`, by approving this scoping, and its vintage 0.
+
+   | | The concept and the question | The options, the right one ✔ | The verdict |
+   |---|---|---|---|
+   | 1 | *Opportunity cost.* You can read the prospectus or nap. The opportunity cost of the nap is: | (A) nothing, naps are free; (B) the prospectus, and probably a lawsuit; (C) the value of the best thing you gave up ✔; (D) $4.99 a month, billed annually | kept as written; the proctor's "Correct. Also B." waits with the remarks (decision 9) |
+   | 2 | *Supply and demand.* It rains and umbrella prices rise. This is: | (A) a conspiracy by Big Umbrella; (B) demand rising against a fixed supply ✔; (C) a weather-adjusted vibe; (D) illegal in at least one state | kept as written |
+   | 3 | *Inflation.* Your cash earns 0% while prices rise 3% a year. After a year it buys: | (A) the same, a dollar is a dollar; (B) nothing, it has gone to a better place; (C) about 3% less ✔; (D) more, if you believe in it | the right one moved to C; accurate, a dollar buying 1/1.03 of what it did, 2.9% less |
+   | 4 | *The rule of 72.* At 8% a year, money roughly doubles in: | (A) 9 years ✔; (B) 8 years, because the number is 8; (C) never, money only multiplies in movies; (D) one quarter, according to the brochure | "films" made "movies"; D rewritten, since "until the next quarterly report" does not complete "doubles in"; accurate, the exact doubling 9.006 years |
+   | 5 | *Risk and return.* On average, the higher the expected return, the: | (A) higher the risk, which is what you are being paid for ✔; (B) lower the risk, obviously; (C) better the logo; (D) closer your brother-in-law is to being right | the right one moved to A |
+   | 6 | *Diversification.* 'Don't put all your eggs in one basket' is advice about: | (A) poultry; (B) baskets, mostly; (C) spreading risk without necessarily lowering expected return ✔; (D) eggs, specifically | the right one moved to C; for the owner's eye: the eggs are the proverb's, investing's own phrase for diversification, and no kitchen's, but they are food |
+   | 7 | *Bonds.* A bond is: | (A) a lasting emotional connection; (B) a spy; (C) a stock with a sad backstory; (D) a loan you make, which pays interest and returns the principal ✔ | the right one moved to D |
+   | 8 | *Bonds and rates.* When interest rates rise, existing bonds: | (A) fall in price, because new bonds pay more ✔; (B) rise, out of solidarity; (C) stay put, bonds are loyal; (D) are not discussed at parties | the right one moved to A |
+   | 9 | *Liquidity.* Which is the most liquid? | (A) a private island; (B) a 1952 baseball card; (C) your cousin's startup; (D) cash ✔ | the right one moved to D, after the three that are not |
+   | 10 | *Bear market.* A bear market is a fall of at least: | (A) 2%, and a deep sigh; (B) 20% from the peak ✔; (C) 100%, a figure usually reserved for your cousin's startup; (D) a bear's weight in honey | kept as written; 20% is a convention, and the why says so |
+   | 11 | *Price to earnings.* A stock with a price-to-earnings ratio (P/E) of 20 costs, per dollar of yearly earnings: | (A) $0.05; (B) 20 hugs; (C) a bargain, according to the company; (D) $20 ✔ | the ratio spelled out for a first player; "a type of coffee" rewritten as C, a beverage's joke, the break room's, where `BD-2` wants a financial one; the right one moved to D |
+   | 12 | *Moral hazard.* 'Too big to fail' encourages banks to: | (A) shrink; (B) take more risk, because someone else pays for the downside ✔; (C) take up jogging; (D) fail bigger, for the exposure | kept as written |
+   | 13 | *Leverage.* You put in $1, borrow $9 and buy a $10 asset that falls 10%. Your equity is now: | (A) $9; (B) $10; (C) $0 ✔; (D) a learning experience | the right one moved to C; accurate, interest aside |
+   | 14 | *Sunk cost.* You paid $50 for a terrible movie and stay 'because you paid'. This is: | (A) the sunk-cost fallacy ✔; (B) loyalty; (C) cinema; (D) a deductible | "film" made "movie"; the right one moved to A |
+   | 15 | *Deposit insurance.* A US bank deposit is insured, per depositor, per insured bank, up to: | (A) $2.50; (B) $250,000 ✔; (C) $250 million; (D) a pinky promise | **(check)** $250,000, the FDIC's standard maximum per depositor, per insured bank, for each ownership category: a figure of law, to confirm at the release; "per insured bank" for "per bank", the FDIC's own words; the right one moved to B |
+   | 16 | *Central banks.* A central bank raises rates to: | (A) make borrowing cheaper; (B) impress other central banks; (C) give the bond market something to talk about; (D) cool inflation by making borrowing more expensive ✔ | "dearer" made "more expensive", for an American classroom; "fund the pens" rewritten as C, a joke whose target no reader finds; the right one moved to D |
+   | 17 | *Efficient markets.* Two economists see a $20 bill on the sidewalk. One says, 'If it were real, someone would have picked it up.' This is a joke about: | (A) the efficient-market hypothesis ✔; (B) littering; (C) sidewalks; (D) twenties | "pavement" made "sidewalk" in both places |
+   | 18 | *Time value.* $100 today or $100 in a year? | (A) in a year, I like surprises; (B) both, with a lawyer; (C) today, it can earn something meanwhile ✔; (D) neither, cash is dead | the right one moved to C |
+   | 19 | *Short selling.* You short a stock at $10 and it goes to $20. Your loss is: | (A) $0, you never owned it; (B) $10 a share, and it can grow ✔; (C) capped at $10; (D) spiritual | the right one moved to B; accurate, the borrowing's fee aside |
+   | 20 | *Shares.* A share of stock is: | (A) a loan you make to the company; (B) a voucher for the company's products; (C) a stock photo, usually of a handshake; (D) a small piece of the company, with a claim on its profits ✔ | new (decision 4): A the bond's answer, the pair of Q7; C the word's own pun |
+
+   No row names a real company, person or mark; the FDIC is a fact and no
+   parody. A finding for the owner, and no decision: in most questions the
+   right option is the one written straight among three jokes, so a careful
+   reader answers all nine. Six hold a wrong answer a reader could believe,
+   Q1's free nap, Q3's dollar that stays a dollar, Q11's earnings yield,
+   Q13's asset taken for the equity, Q16's cheaper borrowing and Q19's
+   capped loss; the rest teach by contrast. At $5,000 and $500 a correct
+   answer, most first firms may open near $9,500. The playtest pass would
+   show the spread, and the exam cannot be failed, by design.
+
+8. **The whys: twenty lines, each standing alone (rec).** A concept card
+   quotes a why apart from its question (`BUFFET.md` §10), so each reads
+   whole without it and names no option or letter. Each is one sentence of
+   at most 140 characters, the line the oracle holds, and says the concept
+   plainly, its deadpan clause after it where one fits. Where none fits,
+   `BD-2`'s reason is written here once: a why is the lesson, and clarity
+   comes first.
+
+   | | The concept | The why | Characters |
+   |---|---|---|---|
+   | 1 | Opportunity cost | Every choice costs the value of the best alternative you gave up, whether or not anyone sends an invoice. | 105 |
+   | 2 | Supply and demand | When more people want a thing than there is of it, its price rises until enough of them stop wanting it at that price. | 118 |
+   | 3 | Inflation | Rising prices shrink what idle cash buys: at 3% inflation, a dollar earning nothing buys about 3% less each year. | 113 |
+   | 4 | The rule of 72 | Divide 72 by the yearly rate in percent for the years money takes to double: 72 over 8 is 9, give or take a few days. | 117 |
+   | 5 | Risk and return | Investors demand a higher expected return for bearing more risk, so an offer of high return and low risk is usually missing one of the two. | 139 |
+   | 6 | Diversification | Owning things that do not all fall at once can lower the risk of the whole without lowering its expected return, a rare bargain. | 128 |
+   | 7 | Bonds | A bond is a loan: the borrower pays you interest on a schedule and repays the principal when it matures, barring the unforeseen. | 128 |
+   | 8 | Bonds and rates | When new bonds pay more, an old bond's fixed interest is worth less, so its price falls until it yields what the new ones do. | 125 |
+   | 9 | Liquidity | Liquidity is how quickly something turns into cash without a discount, and cash, conveniently, already is. | 106 |
+   | 10 | Bear market | By convention, a fall of 20% from a peak is a bear market, a fall of 10% a correction, and a fall of 2% a Tuesday. | 114 |
+   | 11 | Price to earnings | A price-to-earnings ratio of 20 means a share costs 20 times its yearly earnings: $20 for each dollar it earns in a year. | 121 |
+   | 12 | Moral hazard | When someone else will cover the losses, risk-taking grows; economists call this moral hazard, and banks call it a business model. | 130 |
+   | 13 | Leverage | Borrowing magnifies gains and losses alike: at ten times leverage, a 10% fall takes everything you put in. | 106 |
+   | 14 | Sunk cost | Money already spent is gone whatever you do next, so it should have no say in what you do next. | 95 |
+   | 15 | Deposit insurance **(check)**, as its question | The FDIC insures deposits up to $250,000 per depositor, per insured bank, for each ownership category; the cautious use more than one bank. | 139 |
+   | 16 | Central banks | Higher rates make borrowing cost more, so people and firms borrow and spend less, and prices rise more slowly, eventually. | 122 |
+   | 17 | Efficient markets | If prices already reflect what is known, beating the market takes knowing what others do not, which is rarer than it feels. | 123 |
+   | 18 | Time value | A dollar today can be invested to become more than a dollar by next year, so a dollar promised later is worth less than one now. | 128 |
+   | 19 | Short selling | A short seller sells borrowed shares and must buy them back at whatever the price becomes, and a price has no ceiling. | 118 |
+   | 20 | Shares | A share is a small piece of a company: a claim on its profits and usually a vote at its meetings, though seldom a parking space. | 128 |
+
+9. **The proctor's remarks: later, with the exam's flow (rec).** The draft
+   has one, Q1's "Correct. Also B." The exam as `GUARD.1`'s line has it
+   shows no answer on screen: a click asks the next question, and the whys
+   wait for the concept cards (`FRONT.5`). A remark is feedback for a
+   moment the exam does not have yet. The day `GUARD.1` decides the exam
+   answers a question on screen, the proctor's lines by moment, the start,
+   a right answer, a wrong one and the certificate, are a kind of their
+   own, Gary's (`MENU.4`'s proctor who is never promoted), and a question's
+   own remark, which names its own option as Q1's names B, a column of this
+   sheet then. The cost is the same either way, a field added to twenty
+   rows then, or nineteen empty ones carried from now and struck if never
+   shown, so the lean way wins. Q1's remark waits in `BUFFET.md`'s draft,
+   and decision 3 leaves Q1's options in their order, so its B is still the
+   prospectus. *The alternatives:* a column now, Q1's remark and nineteen
+   empty; a sheet of the proctor's lines now, read by nothing until
+   `GUARD.1`.
+
+10. **The source: the include, the call, the row shown and the notes
+    (rec).** `(include "content/questions.vla")` after Disclosures'
+    include; `(questions)` called after the Disclosures block, so the sheet
+    stands after it among the tabs, both hidden, before the devices; and
+    beside the call, the source's own, `M2`, the row shown, 1, with its
+    comment. The game's notes, a player's string under `BD-2`, gain the
+    bank: "...; the fine print, a disclosure a month; and the Series 777's
+    question bank, twenty questions awaiting an exam the regulator has yet
+    to schedule. Pick the Day, the Dice, the Market or the Stocks sheet to
+    watch, or the Disclosures or the Questions sheet among the hidden
+    sheets." The opening comment lists `MENU.2` among the dishes served.
+
+11. **The layout check (rec).** The rule holds as it stands, since
+    `questions.vla` is one macro named after its file whose body is one
+    call of `strings`; the content pin rises from 1 to 2; the control's
+    clean copy holds seven files, its mutant "a second content sheet past
+    its pin" becomes a third, and its fifteen mutants stand.
+
+12. **The oracle (rec).** In `oracle/tests/cartridge.rs`, the content
+    sheets two, `Disclosures` and `Questions`:
+    - Each content sheet is its file: the file read by the language's
+      reader, its call's fields and rows taken from it, and every row a row
+      of the sheet from row 2, its fields from column A and its vintage and
+      approver after them; the headers its fields' then `vintage` and
+      `approved by`; the count beside its label `rows`. A second reading of
+      the words that shares no walk with the library, for both sheets.
+    - The Questions sheet states its labels, down column L, and its row
+      shown, 1.
+    - Every question whole: each field a text and none empty; the four
+      options distinct; the answer `A`, `B`, `C` or `D`; the why at most
+      140 characters; the vintage a whole number; no letter the answer of
+      more than a third of the bank.
+    - Every field's picker at every row: the row shown written 1 to 20 as a
+      person's edit, and at each step the eight pickers that row's fields,
+      read off the sheet's own columns.
+    - A question added: the source expanded with a twenty-first question in
+      the content file's call differs from the cartridge in its ten cells,
+      the count and the eight pickers alone, loads, and shows the new
+      question at its row.
+    - Extended: the tripwire over both sheets, each count read beside its
+      label; every sheet bare, and Questions hidden after Disclosures; the
+      limit's scratch source written in the call's new shape.
+    - Disclosures' bytes: proved at the build by the cartridge's diff, in
+      which no Disclosures row moves, and held after by `MENU.1`'s five
+      tests.
+    - Kept: the cartridge its source expanded; `BD-7`'s scan and the
+      census's `(every-frame 0)`; the describe golden, blessed again and
+      read in its diff.
+    - The hand unchanged: the row shown is a constant until `GUARD.1`, and
+      the texts are the content's, written once.
+
+13. **The *How to add a row* (rec).** `src/content/README.md` names both
+    sheets, and says that a row is its vintage and its approver, then the
+    sheet's fields in the order its file names them at its top; it shows a
+    question's row a field a line beside the disclosure's one line; and it
+    says what a question needs: four options and one right; the answer its
+    letter; a why of one line, at most 140 characters, naming no option,
+    since a concept card quotes it alone; and the concept, the idea it
+    tests, which the exam never shows before the answer. The reviewer keeps
+    the letters spread. Still one page.
+
+14. **The hand test, the owner's, on the page built here:**
+    - Buffet at full screen; the strip's box reading twelve hidden sheets,
+      the ten twins, Disclosures and Questions; the Questions sheet opened,
+      its twenty rows whole with their vintage and approver, and `M3` to
+      `M10` the first question, *Opportunity cost*;
+    - `(cell "Questions" "M2" 17)` written in the drawer's edit row, and at
+      the next frame the card *Efficient markets*;
+    - the drawer's library box listing `src/content/questions.vla`, and
+      Build writing the cartridge byte for byte, compared with
+      `src/buffet.vla` by a command given at the handover.
+
+15. **The stale places, rewritten at the build.** In `OMAKASE.md`: the
+    contract's sentence (decision 4); `GUARD.1`'s line and `BACK.2`'s, a
+    dated sentence each, the twentieth's home and, on `GUARD.1`'s, the
+    stride's finding; `MISE.6`'s hoist row for `strings` and `picker`,
+    their second writing made and Disclosures' bytes standing. In
+    `BUFFET.md` §3, a dated line under the bank's heading: where the rows
+    stand, what was rewritten, and the twentieth's home. `kitchen.vla`'s
+    header and `strings`' comment; `check_layout.ps1`'s header; the
+    cartridge's notes; `src/content/README.md`. `MENU.2`'s first slice
+    leaves `OMAKASE.md` for this file with its commit, and its second
+    slices stay open there with `GUARD.2`.
+
+**The predictions, before any number.** The numbers column is filled at
+the build, P9 at the owner's hand test.
+
+| | What | Predicted | The number |
+|---|---|---|---|
+| P1 | the cartridge | 409 rows where 169 stood, the Questions sheet's 240: its row, nine widths, ten headers, ten labels, twenty rows of ten cells, the count, eight pickers and the source's row shown; 89 formula cells where 81; Disclosures' rows byte for byte, and the notes moved | *Measurement*, as predicted: the runner printed `(rows 409) (loads yes)`, the rows in the order listed, 89 formula cells; the cartridge's diff 241 lines in and one out, the notes, and no Disclosures row among them |
+| P2 | the describe golden | moved in the notes; the budget's formulas, 81 to 89 and 2,430 to 2,670 a second; the plan's shapes 30 to 38, texts 28 to 36, formulas 81 to 89 and alone 54 to 62, its levels, runs, lanes, every-frame and cycles unmoved; `(readers "Questions" 168)`, each picker's row shown and its twenty cells, indexed past sixteen and so with `(most 8)`, the row shown's eight readers, the least sure number here; eight shapes, each a picker alone at level 0; nothing else | *Measurement*, as predicted, `(most 8)` with the rest: the notes; `(budget 30 89 2670 2000000)`; shapes 38, texts 36, formulas 89 and alone 62, the levels 14, runs 6, lanes 27, every-frame 0 and cycles 0 unmoved; `(readers "Questions" 168 (most 8))`; shapes 30 to 37, `M3` to `M10`, each `(cells 1) (levels 0 0 1 1)`; nothing else |
+| P3 | the pass and the load | the pass under a millisecond longer; the load under a millisecond longer, 240 rows mostly of text where `MENU.1`'s 38 cost 0.08 to 0.10 ms | *Measurement*, a scratch runner over each tree, `3dd3eeb`'s and this one's, three runs each alternated, 200 passes and 200 loads a run, opted out of Windows' throttling and pinned to the performance cores, a fixed computation before and after steady: the pass 3.34 to 3.44 ms at p50 where it took 1.61 to 1.64, 1.7 to 1.8 ms more, **missed** by nearly double. The prediction scaled `MENU.1`'s 38 rows, whose difference stood inside the runs' noise; the limit's pass prices a row of one field at 13 µs through the old walk and 18 through the new, and the bank brings 240 rows, the walk a field at a time, and eight pickers' walks of twenty steps. The load 1.25 to 1.29 ms where it took 0.52 to 0.57, 0.7 ms more: inside |
+| P4 | the step | an ordinary frame and a day's first frame unmoved, the pickers reading nothing that moves; the first frame computing the eight pickers once, under 10 µs more | *Measurement*, the same runs, two years and two days at thirty frames a day: an ordinary frame 1.70 µs at p50 before and after; a day's first frame on which the fine print stays 11.3 to 11.4 µs where it took 11.2 to 11.3, and one on which it turns 12.0 to 12.1 where 11.8 to 11.9, inside; the first frame, which computes every formula once, 122 to 134 µs where it took 73 to 95, **missed**: some 40 µs where under 10 was predicted. No frame after the first computes a picker |
+| P5 | the limit | unmoved: a sheet of one field holds 1,547 rows and 1,548 are refused at the picker's line; the pass over 1,548 rows within the expander's 5,000 links and under 50 ms | *Measurement*: 1,547 rows load and 1,548 are refused at the picker's line, the test holding both through the new walk on every run; the pass over 1,548 rows 28.3 to 28.9 ms at p50 where it took 20.3 to 20.8, two fifths more and inside |
+| P6 | the suite | 38 tests green here, five of the cartridge more, and in CI on Linux; the suite under a quarter of a second longer than `3dd3eeb`'s at the median, nothing of the bank held at every frame | *Measurement*, here: 38 green, 14 of the crate and 24 of the cartridge. The cartridge's binary run alternately with `3dd3eeb`'s, built from that commit's tree in a target of its own, five rounds, the order turned each round, each run opted out and pinned, on eight threads: 4.02 to 4.75 s where it took 4.00 to 4.73, the medians 4.30 and 4.61 s. Inside: no difference five rounds can tell. Linux at the push |
+| P7 | the page | one block more, `library-content-questions`, about 9,000 characters; the page about 27,000 longer, the cartridge's block some 13,900, the content's 9,000, the library's 2,700 and the source's 1,200, near 1,623,000; Build writing the cartridge byte for byte | *Measurement*: 1,623,410 characters, 27,731 more, inside; the new block 9,094 characters, the file's 9,025 in its tag; the cartridge's block grew 13,655, the library's 3,411 where 2,700 was predicted, the source's 1,512 and Disclosures' 23. Build in the drawer at the owner's hand test, P9 |
+| P8 | the checks | 4 checks and 4 controls green; the layout control's clean copy seven files and its fifteen mutants each failing for its own reason; the offline control's fifteen unchanged | *Measurement*, as predicted: ALL GREEN, 4 checks and 4 controls; the layout control's clean copy seven files and its fifteen mutants, the third content sheet's among them, each failing for its own reason; the offline control's fifteen unchanged. `check_spdx` reads the tracked tree, so `questions.vla`, untracked, was held through a scratch index that tracked it: 40 files resolved, 7 headers read under `src/` |
+| P9 | the hand test | the box reading twelve hidden sheets; the card the first question from frame 1, and *Efficient markets* the frame after `M2` is written 17; Build "same bytes" | *Measurement*, the owner's screenshots and comparison, in the owner's Chrome at full screen: the box read "hidden sheets (12)", and the Questions sheet stood between Disclosures and Clock, its twin among the others after Input; its twenty rows whole, each its vintage 0 and its approver; at frame 2,068 the edit `(cell "Questions" "M2" 17)` written, and at frame 2,238 `M2` 17 and `M3` to `M10` *Efficient markets*'s eight fields, its answer A; the budget 89 formula cells a frame, 2,670 a second; and Build in the drawer, "same bytes". Inside. A third screenshot, the sheet as first opened at frame 1,395, before the edit, showed the card the first question, `M2` 1, *Opportunity cost* and its answer C, and every column at its width. The comparison, as the handover gave it, lost its backticks to the message's inline code, so it replaced "rn" with "n" in both texts where it meant CRLF with LF; both carried CRLF, the clipboard as the file does, and it printed 21,801, the file's 21,820 characters less its nineteen pairs of "rn": the two texts equal all the same |
+
+**What the build found.** The new walk expands the fine print to its bytes
+unchanged, the cartridge's diff its proof: 241 lines in and one out, the
+notes, and no Disclosures row moved. The new tests catch what they stand
+for, and not only through the cartridge's expansion: five mutants, each
+expanded into the cartridge before the suite ran, failed the tests written
+for them. Every picker over the next field's column failed eight, among them
+every field at every row, the first question shown, the question added and
+the fine print at every frame; an answer in lower case failed the whole
+question's test alone; a question of seven fields failed it, the file's
+reading and every field picked; the row shown written 0 failed the first
+question's test alone; and the vintage and the approver swapped failed the
+file's reading and both rows added, a placement no test of `MENU.1`'s held,
+since they read the texts' column and the count. The page's blocks followed
+by themselves, `build_web.ps1` and `check_web_offline.ps1` untouched, as
+`MENU.1`'s decision 10 foresaw, and the layout check wanted its pin and its
+control's copy and no new rule. The one cost that moved past its prediction
+is the pass's (P3), some 85 µs a question, so a bank of sixty would add about
+3.5 ms more to a pass that runs at a build and never at a frame.
+
+**Amended after the owner's hand test, 2026-10-15.** Before the commit the
+owner rewrote eighteen of the twenty questions in their own words, Liquidity
+and Leverage alone kept, and title-cased the bank's eight headers, `Concept`
+to `Why`. No answer's letter moved, so the letters stand five to each, and
+the rewrite keeps every rule the oracle holds, each why within 140
+characters and every option its own; the oracle's constant of the bank's
+fields followed the headers. Three texts now run past their columns on the
+hidden sheet, a matter of the widths, left as the owner left them: Q7's and
+Q20's last options, 75 and 92 characters in 62, and Q11's concept, 23 in
+20. The library's own words, `vintage`, `approved by` and the labels `rows`,
+`the row shown` and `shown`, keep their lower case, as the Disclosures
+sheet's `disclosure` does. The cartridge expanded from the amended file
+differs from the one the owner tested in seventy rows and nowhere else, the
+eight headers, the seven labels that repeat them and fifty-five cells of the
+eighteen questions, 409 rows still; the describe golden stands unmoved and
+the 38 tests green; the page, built again, holds 1,624,320 characters.
