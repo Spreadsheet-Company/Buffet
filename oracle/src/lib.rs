@@ -8,12 +8,13 @@
 //! frame to the hand.
 //!
 //! What it holds since `POT.1` (2026-10-14): the hand, [`buffet`], its
-//! calendar and its dice; the door the runners and the tests share, which
-//! reads a source of the repository and the texts it includes and hands
-//! them to the engine's pass, `alonzo::pass::expand`, as the engine's own
-//! runner does; and the smoke test of the pin, a two-row cartridge loaded
-//! through `alonzo` from crates.io and stepped. The crate is never
-//! published, so its tests read the repository beside it at run time.
+//! calendar and its dice, and since `POT.2` its market; the door the runners
+//! and the tests share, which reads a source of the repository and the texts
+//! it includes and hands them to the engine's pass, `alonzo::pass::expand`,
+//! as the engine's own runner does; and the smoke test of the pin, a two-row
+//! cartridge loaded through `alonzo` from crates.io and stepped. The crate
+//! is never published, so its tests read the repository beside it at run
+//! time.
 
 use std::collections::BTreeMap;
 use std::collections::BTreeSet;

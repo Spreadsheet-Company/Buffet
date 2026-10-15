@@ -8,10 +8,16 @@
 //! dice at every frame of two years and two days; the same dice on the same
 //! days at one frame a day; the frame read by the Day sheet alone (`BD-7`);
 //! `describe` held to its golden; and the library's draws held to Park and
-//! Miller's own published number.
+//! Miller's own published number. Since `POT.2`: the Market sheet's every
+//! formula cell held bit for bit at those frames too, the hand calling the
+//! same functions in the same order on the same platform; its settings
+//! held to the hand's constants; the difficulty written 0, playing tier 0
+//! through a year; and a hundred years at one frame a day, every day's index
+//! held. Nothing here commits a value derived from `SIN` or `^`: each is
+//! compared live, the module in the browser computing its own.
 
 use alonzo::cartridge::{Cartridge, Seed};
-use buffet_oracle::buffet::{self, Calendar};
+use buffet_oracle::buffet::{self, Calendar, Market, DIFFICULTY, LOOK_BACK, WAVES, YEAR};
 use buffet_oracle::{expand_source, lf, load, read, root, values};
 
 const SOURCE: &str = "src/buffet.source.vla";
@@ -29,9 +35,10 @@ fn seed(cart: &Cartridge) -> u64 {
     }
 }
 
-/// The Day and Dice sheets at this frame, each cell its value as the record
-/// prints it, held to the hand's calendar and dice for the same frame.
-fn held(cart: &Cartridge, cal: &Calendar, seed: u64) {
+/// The Day, Dice and Market sheets at this frame, each cell its value as the
+/// record prints it, held to the hand's calendar, dice and market for the
+/// same frame.
+fn held(cart: &Cartridge, cal: &Calendar, seed: u64, market: &Market) {
     let f = cal.frame;
     let day = values(cart, "Day", "B1:B7");
     let want = [
@@ -76,6 +83,52 @@ fn held(cart: &Cartridge, cal: &Calendar, seed: u64) {
         let z = buffet::exam_draw(seed, draw);
         die(&format!("B{}", draw + 7), z);
         uniform(&format!("C{}", draw + 7), z);
+    }
+    market_held(cart, cal, market, DIFFICULTY);
+}
+
+/// The Market sheet at this frame (`POT.2`): each wave's speed and tier 1's
+/// phases, the cycle on the first day, and every formula of the two columns,
+/// today and the look back, held bit for bit to the hand's market on the
+/// calendar's day at a difficulty. The hand's value has 0.0 added, which
+/// turns its rare -0 into the 0 a cell holds instead and moves nothing else.
+fn market_held(cart: &Cartridge, cal: &Calendar, market: &Market, difficulty: u64) {
+    let f = cal.frame;
+    let got = values(cart, "Market", "B7:E25");
+    let cell = |addr: &str, want: f64| {
+        let text = got
+            .get(addr)
+            .unwrap_or_else(|| panic!("frame {f}: Market!{addr} holds no value"));
+        let v: f64 = text
+            .parse()
+            .unwrap_or_else(|e| panic!("frame {f}: Market!{addr}, {text}: {e}"));
+        assert_eq!(
+            v.to_bits(),
+            (want + 0.0).to_bits(),
+            "frame {f}, day {}: Market!{addr} is {v} and the hand's {want}",
+            cal.day
+        );
+    };
+    let mut waves = vec![(YEAR, 0.0)];
+    waves.extend(WAVES.iter().copied().zip(market.phases));
+    for (row, (wave, phase)) in (7..).zip(&waves) {
+        cell(&format!("D{row}"), wave.speed());
+        if row > 7 {
+            cell(&format!("E{row}"), *phase);
+        }
+    }
+    cell("B22", market.first_cycle);
+    let today = cal.day as f64;
+    for (column, day) in [("B", today), ("C", today - LOOK_BACK as f64)] {
+        cell(&format!("{column}14"), day);
+        for (row, (wave, phase)) in (15..).zip(&waves) {
+            cell(&format!("{column}{row}"), wave.term(*phase, day));
+        }
+        cell(&format!("{column}20"), Market::trend(day));
+        cell(&format!("{column}21"), market.cycle(day));
+        cell(&format!("{column}23"), Market::tier0(day));
+        cell(&format!("{column}24"), market.tier1(day));
+        cell(&format!("{column}25"), market.index(difficulty, day));
     }
 }
 
@@ -135,18 +188,20 @@ fn the_dice_sheet_states_its_jumps() {
 
 /// Every frame of two years and two days, 21,960 frames, held to the hand:
 /// the calendar at every frame, the market's dice changing on a day's first
-/// frame and on no other, the exam's never.
+/// frame and on no other, the exam's never, and the market a function of the
+/// day, the same at every frame of a day.
 #[test]
-fn every_frame_of_two_years_is_the_calendar_and_the_dice_by_hand() {
+fn every_frame_of_two_years_is_the_calendar_the_dice_and_the_market_by_hand() {
     let mut cart = cartridge();
     let seed = seed(&cart);
+    let market = Market::new(seed);
     let mut cal = Calendar::new(buffet::FRAMES_A_DAY, buffet::DAYS_A_YEAR);
     let frames = (2 * buffet::DAYS_A_YEAR + 2) * buffet::FRAMES_A_DAY;
     for _ in 0..frames {
         let step = cart.step(0);
         cal.tick();
         assert!(step.done && step.frame == cal.frame, "{}", step.row());
-        held(&cart, &cal, seed);
+        held(&cart, &cal, seed, &market);
     }
     assert_eq!(
         (cal.year, cal.day_of_year),
@@ -157,13 +212,15 @@ fn every_frame_of_two_years_is_the_calendar_and_the_dice_by_hand() {
 
 /// At one frame a day, the Day sheet's setting written as a person's edit
 /// before the first frame, every frame is a day's first, and each day rolls
-/// the dice the same day rolls at thirty frames: the market is a function of
-/// the day and the seed, never of the frame (`BD-3`), so a floors fixture at
-/// one frame a day plays the game's own market (`MISE.4`).
+/// the dice the same day rolls at thirty frames and prices the same market:
+/// the market is a function of the day and the seed, never of the frame
+/// (`BD-3`), so a floors fixture at one frame a day plays the game's own
+/// market (`MISE.4`).
 #[test]
 fn at_one_frame_a_day_the_same_days_roll_the_same_dice() {
     let mut cart = cartridge();
     let seed = seed(&cart);
+    let market = Market::new(seed);
     cart.write("(cell \"Day\" \"B1\" 1)").unwrap_or_else(|r| {
         panic!(
             "the frames a day, written: {} {}",
@@ -175,7 +232,99 @@ fn at_one_frame_a_day_the_same_days_roll_the_same_dice() {
         cart.step(0);
         cal.tick();
         assert!(cal.boundary());
-        held(&cart, &cal, seed);
+        held(&cart, &cal, seed, &market);
+    }
+}
+
+/// The Market sheet states its settings and its waves, and they are the
+/// hand's constants: pi, the drift, the difficulty and the look back, each
+/// wave's period and amplitude, and the Kiddie Pool's fixed phase, 0.
+#[test]
+fn the_market_sheet_states_its_settings() {
+    let cart = cartridge();
+    let got = values(&cart, "Market", "B1:E11");
+    let number = |addr: &str| -> f64 {
+        got.get(addr)
+            .unwrap_or_else(|| panic!("Market!{addr} holds no value"))
+            .parse()
+            .unwrap_or_else(|e| panic!("Market!{addr}: {e}"))
+    };
+    let want = [
+        ("B1", buffet::PI),
+        ("B2", buffet::DRIFT),
+        ("B3", DIFFICULTY as f64),
+        ("B4", LOOK_BACK as f64),
+        ("E7", 0.0),
+    ];
+    for (addr, n) in want {
+        assert_eq!(number(addr).to_bits(), n.to_bits(), "Market!{addr}");
+    }
+    let waves = [YEAR, WAVES[0], WAVES[1], WAVES[2], WAVES[3]];
+    for (row, wave) in (7..).zip(waves) {
+        assert_eq!(
+            number(&format!("B{row}")),
+            wave.days as f64,
+            "Market!B{row}"
+        );
+        assert_eq!(
+            number(&format!("C{row}")).to_bits(),
+            wave.amplitude.to_bits(),
+            "Market!C{row}"
+        );
+    }
+}
+
+/// A person who writes 0 into the difficulty before the first frame plays
+/// tier 0, the Kiddie Pool, and every frame of a year is its market by hand,
+/// the index tier 0's and tier 1 computed beside it (`AD-6`: any cell is a
+/// person's to edit; `POT.6` makes this one a picker).
+#[test]
+fn at_difficulty_0_the_index_is_the_kiddie_pools() {
+    let mut cart = cartridge();
+    let market = Market::new(seed(&cart));
+    cart.write("(cell \"Market\" \"B3\" 0)")
+        .unwrap_or_else(|r| {
+            panic!(
+                "the difficulty, written: {} {}",
+                r.refusal.id, r.refusal.text
+            )
+        });
+    let mut cal = Calendar::new(buffet::FRAMES_A_DAY, buffet::DAYS_A_YEAR);
+    for _ in 0..buffet::DAYS_A_YEAR * buffet::FRAMES_A_DAY {
+        cart.step(0);
+        cal.tick();
+        market_held(&cart, &cal, &market, 0);
+    }
+}
+
+/// A hundred years at one frame a day, every frame a day's first: the index
+/// today and twenty days back held to the hand on every one of the 36,500
+/// days, across the whole range a long game reaches, the drift raised past
+/// the 36,000th power and the Kondratiev two turns on.
+#[test]
+fn a_hundred_years_at_one_frame_a_day_are_the_market_by_hand() {
+    let mut cart = cartridge();
+    let market = Market::new(seed(&cart));
+    cart.write("(cell \"Day\" \"B1\" 1)").unwrap_or_else(|r| {
+        panic!(
+            "the frames a day, written: {} {}",
+            r.refusal.id, r.refusal.text
+        )
+    });
+    for day in 0..100 * buffet::DAYS_A_YEAR {
+        cart.step(0);
+        let got = values(&cart, "Market", "B25:C25");
+        let today = day as f64;
+        for (addr, at) in [("B25", today), ("C25", today - LOOK_BACK as f64)] {
+            let v: f64 = got[addr]
+                .parse()
+                .unwrap_or_else(|e| panic!("day {day}: Market!{addr}: {e}"));
+            assert_eq!(
+                v.to_bits(),
+                (market.index(DIFFICULTY, at) + 0.0).to_bits(),
+                "day {day}: Market!{addr} is {v}"
+            );
+        }
     }
 }
 

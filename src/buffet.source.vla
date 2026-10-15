@@ -11,6 +11,9 @@
 ;   POT.1   the calendar and the dice: the Day sheet, the one sheet that reads the frame,
 ;           and the Dice sheet, the market's die, which rolls once a market day, and the
 ;           exam's, which rolls once a game.
+;   POT.2   the market: the Market sheet, tier 1's four waves and a drift and tier 0's one
+;           wave beside them, the index a function of the day alone, so that it moves at
+;           a day's first frame and at no other.
 ;
 ; The market's clock (BD-7). One tick is one market day, thirty frames at the manifest's
 ; rate of thirty, so a day a second and a year about six minutes. The Day sheet alone
@@ -31,8 +34,8 @@
 ; under 2^53 and exact in a double, as Park and Miller's own step is.
 
 ; The libraries whose macros this source calls, both beside it: the kit, Alonzo's
-; common.vla copied at the pin (sheets, labels, on, cells, formulas and hold), then
-; Buffet's own, kitchen.vla (draws).
+; common.vla copied at the pin (sheets, labels, headers, on, cells, formulas and
+; hold), then Buffet's own, kitchen.vla (draws).
 (include "common.vla")
 (include "kitchen.vla")
 
@@ -44,9 +47,9 @@
   (seed 777)
   (author "Spreadsheet Company")
   (license "AGPL-3.0-or-later AND CC-BY-SA-4.0")
-  (notes "Buffet: all you can sheet. The kitchen is open and the dining room is not: so far the market's calendar, a market day a second, and its dice, rolled once a day where anyone can watch them roll. Pick the Day or the Dice sheet to watch."))
+  (notes "Buffet: all you can sheet. The kitchen is open and the dining room is not: so far the market's calendar, a market day a second; its dice, rolled once a day where anyone can watch them roll; and the market itself, four waves and a drift, moving once a day. Pick the Day, the Dice or the Market sheet to watch."))
 
-(sheets "Screen" "Day" "Dice")
+(sheets "Screen" "Day" "Dice" "Market")
 
 ; ---- POT.1: the calendar ------------------------------------------------------------
 ; A block of settings and its workings, a label in column A beside each value in B. The
@@ -94,3 +97,55 @@
     ("F2" 86383)                    ; 16807^1017 modulo 2147483647
     ("F3" 1073741912)               ; the exam's jump: 2^30 + 88, the first past half the period whose multiplier is below 2^22
     ("F4" 1164196)))                ; 16807^1073741912 modulo 2147483647
+
+; ---- POT.2: the market --------------------------------------------------------------
+; Tier 1, four waves and a drift, and tier 0, one wave of a year, beside it, each a
+; function of the day alone, so that the market moves at a day's first frame and at no
+; other (BD-7), and the same days give the same market however many frames a day there
+; are (BD-3). The settings stand in column B beside their labels; the waves are a table,
+; a wave a row, each period a prime number of days, so that no two waves ever step
+; together and none keeps the calendar's year; then the workings, in two columns, B
+; today and C the look back, every formula of C being B's own fill, so that the index
+; twenty days back is the index's own formula at that day, recomputed and never
+; remembered. Tier 1 opens at 1 on the first day, so that a price opens at its rung. The
+; index today is B25 and twenty days back C25, the two cells every later dish reads.
+
+(on "Market"
+  (labels "A1" "pi" "the drift, a day" "the difficulty: 0 the Kiddie Pool, 1 the Day Trader" "the look back, in days")
+  (cells
+    ("B1" 3.141592653589793)        ; pi, a number, since PI() parses and is never evaluated
+    ("B2" 1.0002)                   ; the drift: the trend's growth a day, about 7.6% a year
+    ("B3" 1)                        ; the difficulty: tier 1, until POT.6 makes the cell a picker
+    ("B4" 20))                      ; the look back: how many days back the weather reads the index
+  (headers "A6" "the waves" "period, in days" "amplitude" "speed, radians a day" "phase, radians")
+  (labels "A7" "a year, the Kiddie Pool's one wave" "Kitchin, inventories" "Juglar, investment" "Kuznets, building" "Kondratiev, the long wave")
+  (cells
+    ("B7" 365)                      ; a year: tier 0's one wave, a whole cycle in a session's first year
+    ("C7" 0.1)                      ;   its amplitude, of the trend
+    ("E7" 0)                        ;   its phase, fixed: the same Kiddie Pool at every seed
+    ("B8" 1459)                     ; Kitchin: the prime nearest 4 years of 365 days
+    ("C8" 0.1)                      ;   the ripple a year shows
+    ("B9" 3271)                     ; Juglar: a prime 14 days from 9 years
+    ("C9" 0.15)                     ;   the business cycle, the largest swing a session lives through
+    ("B10" 6947)                    ; Kuznets: the prime nearest 19 years; at 18 it would be two Juglars
+    ("C10" 0.1)                     ;   the building cycle
+    ("B11" 18251)                   ; Kondratiev: the prime nearest 50 years
+    ("C11" 0.15))                   ;   the generation's; the four sum to 0.5, the cycle between 0.5 and 1.5
+  (formulas
+    ("D7:D11" "=2*$B$1/B7"))        ; each wave's speed: a turn over its period
+  (hold                             ; each of tier 1's phases, taken on the first day and kept:
+    "E8:E11"                        ;   its cells
+    "Day!$B$3=0"                    ;   when it is taken: the first day, day 0, and no other
+    "2*$B$1*Dice!$C2")              ;   what it is: a turn times the uniform of the market's draws 1 to 4
+  (headers "B13" "today" "the look back")
+  (labels "A14" "the day" "a year's wave" "the Kitchin" "the Juglar" "the Kuznets" "the Kondratiev" "the trend, the drift to the day" "the cycle: one and the four waves" "the cycle on the first day" "tier 0, the Kiddie Pool" "tier 1, the Day Trader" "the index")
+  (formulas
+    ("B14" "=Day!$B$3")                         ; the day, today
+    ("C14" "=B14-$B$4")                         ; the look back's day, before day 20 a day below zero
+    ("B15:C19" "=$C7*SIN($D7*B$14+$E7)")        ; each wave's term on its column's day
+    ("B20:C20" "=$B$2^B14")                     ; the trend: the drift raised to the day
+    ("B21:C21" "=1+B16+B17+B18+B19")            ; tier 1's cycle: one and the four waves
+    ("B22" "=1+C8*SIN(E8)+C9*SIN(E9)+C10*SIN(E10)+C11*SIN(E11)")   ; the cycle on day 0, by B21's operations in B21's order
+    ("B23:C23" "=B20*(1+B15)")                  ; tier 0, the Kiddie Pool: the trend and the year's wave
+    ("B24:C24" "=B20*B21/$B$22")                ; tier 1, the Day Trader: the trend and the cycle, exactly 1 on day 0
+    ("B25:C25" "=CHOOSE($B$3+1,B23,B24)")))     ; the index, as the difficulty picks it

@@ -13,6 +13,17 @@
 //! at each day's first frame, each jump one multiplication, and a chain of
 //! single steps beneath it; the hand finds a draw by its place in the stream
 //! from the seed, the multiplier raised to that place by squaring.
+//!
+//! The market (`POT.2`) cannot share nothing: a double's last bit is the
+//! order of the operations that made it, and the dialect's `SIN` and `^` are
+//! Rust's own `sin` and `powf`, whose last bit differs between platforms. So
+//! the market by hand is the Market sheet's formulas written a second time,
+//! each with the same functions in the same order, which holds every cell
+//! exactly on the platform both run on, Windows here and Linux in CI; its
+//! independence is the dice beneath it, found by place, and the day it is
+//! asked about, counted. The module in the browser computes its own `sin`
+//! and `powf`, so nothing unrounded is ever held against it, and money is
+//! rounded once to whole cents before anything holds it.
 
 /// Park and Miller's minimal standard (1988): a stream of whole numbers,
 /// each the last times the multiplier, modulo the modulus, a prime.
@@ -171,6 +182,162 @@ impl Calendar {
     }
 }
 
+/// Pi, the Market sheet's `B1`, written there as `3.141592653589793`, this
+/// constant's shortest spelling, since `PI()` parses in the dialect and is
+/// never evaluated.
+pub const PI: f64 = std::f64::consts::PI;
+/// The drift, `B2`: the trend's growth a day, about 7.6% a year.
+pub const DRIFT: f64 = 1.0002;
+/// The difficulty, `B3`: tier 1 until `POT.6` makes the cell a picker; a
+/// person who writes 0 plays tier 0.
+pub const DIFFICULTY: u64 = 1;
+/// The look back, `B4`: how many days back the weather reads the index.
+pub const LOOK_BACK: u64 = 20;
+
+/// A wave of the market: its period, a whole number of days, and its
+/// amplitude, a fraction of the trend.
+#[derive(Clone, Copy, Debug, PartialEq)]
+pub struct Wave {
+    pub days: u64,
+    pub amplitude: f64,
+}
+
+impl Wave {
+    /// Its speed in radians a day, a turn over its period: `=2*$B$1/B7`.
+    pub fn speed(self) -> f64 {
+        2.0 * PI / self.days as f64
+    }
+
+    /// Its term on `day` from `phase`, the amplitude times the sine of the
+    /// angle it has turned through: `=$C7*SIN($D7*B$14+$E7)`.
+    pub fn term(self, phase: f64, day: f64) -> f64 {
+        self.amplitude * (self.speed() * day + phase).sin()
+    }
+}
+
+/// Tier 0's one wave, a year's, its phase fixed at 0 so that the Kiddie Pool
+/// is the same market at every seed: the Market sheet's row 7.
+pub const YEAR: Wave = Wave {
+    days: DAYS_A_YEAR,
+    amplitude: 0.1,
+};
+
+/// Tier 1's four waves, rows 8 to 11: Kitchin's, Juglar's, Kuznets's and
+/// Kondratiev's, each period the prime number of days nearest 4, 9, 19 and
+/// 50 years (the Juglar's the lower of the two fourteen days from 9), the
+/// Kuznets moved off 18 years, where it would be two Juglars to within 1%.
+pub const WAVES: [Wave; 4] = [
+    Wave {
+        days: 1_459,
+        amplitude: 0.1,
+    },
+    Wave {
+        days: 3_271,
+        amplitude: 0.15,
+    },
+    Wave {
+        days: 6_947,
+        amplitude: 0.1,
+    },
+    Wave {
+        days: 18_251,
+        amplitude: 0.15,
+    },
+];
+
+/// Whether `n` is prime, by trial division.
+pub const fn is_prime(n: u64) -> bool {
+    if n < 2 {
+        return false;
+    }
+    let mut d = 2;
+    while d * d <= n {
+        if n % d == 0 {
+            return false;
+        }
+        d += 1;
+    }
+    true
+}
+
+// Each of tier 1's periods is a prime number of days, so no ratio between
+// two of them is a whole number and none is a whole number of years.
+const _: () = {
+    let mut k = 0;
+    while k < WAVES.len() {
+        assert!(is_prime(WAVES[k].days) && WAVES[k].days > DAYS_A_YEAR);
+        k += 1;
+    }
+};
+
+/// The market of a seed (`POT.2`): tier 1's four phases, each a turn times
+/// the uniform of the market's draw 1 to 4 on the first day, and tier 1's
+/// cycle on that day.
+#[derive(Clone, Copy, Debug, PartialEq)]
+pub struct Market {
+    /// Tier 1's phases in radians, Kitchin's first: the Market sheet's
+    /// `E8:E11`, taken on day 0 and kept.
+    pub phases: [f64; 4],
+    /// Tier 1's cycle on day 0, `B22`, which tier 1 divides by so that it
+    /// opens at 1.
+    pub first_cycle: f64,
+}
+
+impl Market {
+    /// The market of `seed`, its phases from the hand's own dice.
+    pub fn new(seed: u64) -> Market {
+        let phases = std::array::from_fn(|k| {
+            let draw = market_draw(seed, 0, k as u64 + 1);
+            2.0 * PI * uniform(draw)
+        });
+        let mut market = Market {
+            phases,
+            first_cycle: 1.0,
+        };
+        market.first_cycle = market.cycle(0.0);
+        market
+    }
+
+    /// Tier 1's four terms on `day`, Kitchin's first: `B16:B19` or `C16:C19`.
+    pub fn terms(&self, day: f64) -> [f64; 4] {
+        std::array::from_fn(|k| WAVES[k].term(self.phases[k], day))
+    }
+
+    /// Tier 1's cycle on `day`, one and its four waves: `=1+B16+B17+B18+B19`.
+    pub fn cycle(&self, day: f64) -> f64 {
+        let [kitchin, juglar, kuznets, kondratiev] = self.terms(day);
+        1.0 + kitchin + juglar + kuznets + kondratiev
+    }
+
+    /// The trend on `day`, the drift raised to the day: `=$B$2^B14`.
+    pub fn trend(day: f64) -> f64 {
+        DRIFT.powf(day)
+    }
+
+    /// Tier 0 on `day`, the Kiddie Pool, the trend times one and the year's
+    /// wave: `=B20*(1+B15)`.
+    pub fn tier0(day: f64) -> f64 {
+        Market::trend(day) * (1.0 + YEAR.term(0.0, day))
+    }
+
+    /// Tier 1 on `day`, the Day Trader, the trend times the cycle over the
+    /// cycle on the first day, so that it opens at exactly 1:
+    /// `=B20*B21/$B$22`.
+    pub fn tier1(&self, day: f64) -> f64 {
+        Market::trend(day) * self.cycle(day) / self.first_cycle
+    }
+
+    /// The index on `day`, as the difficulty picks, 0 tier 0 and 1 tier 1:
+    /// `=CHOOSE($B$3+1,B23,B24)`. A tier not yet built is `POT.6`'s to refuse.
+    pub fn index(&self, difficulty: u64, day: f64) -> f64 {
+        match difficulty {
+            0 => Market::tier0(day),
+            1 => self.tier1(day),
+            _ => panic!("tier {difficulty} is not built"),
+        }
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -235,5 +402,56 @@ mod tests {
         assert_eq!(market_die(777, 1), 1_933_266_100);
         assert_eq!(exam_die(777), 904_580_292);
         assert_eq!(exam_draw(777, 1), 1_244_230_531);
+    }
+
+    /// Seed 777's market on its first day: both tiers open at exactly 1, and
+    /// the Kitchin's phase is a turn times the first draw's uniform.
+    #[test]
+    fn seed_777s_market_opens_at_one() {
+        let market = Market::new(777);
+        assert_eq!(market.tier1(0.0).to_bits(), 1f64.to_bits());
+        assert_eq!(Market::tier0(0.0).to_bits(), 1f64.to_bits());
+        assert_eq!(market.phases[0], 2.0 * PI * uniform(650_051_262));
+    }
+
+    /// The four amplitudes sum to a half, so tier 1's cycle stays between a
+    /// half and three halves, never at or below zero, at any seed and day.
+    #[test]
+    fn the_amplitudes_keep_the_cycle_above_zero() {
+        let sum: f64 = WAVES.iter().map(|w| w.amplitude).sum();
+        assert!((sum - 0.5).abs() < 1e-15, "{sum}");
+    }
+
+    /// The two-peak test: two peaks of a sine give its period and every peak
+    /// after them, which makes a market of one wave arithmetic. No lag from
+    /// two years to a hundred carries seed 777's tier 1 onto itself: at every
+    /// such lag, the index over its trend that lag later differs from the
+    /// index over its trend on some day of the first Kitchin wave by at least
+    /// 0.02, where a path that repeated would differ by nothing.
+    #[test]
+    fn the_path_does_not_repeat_within_a_hundred_years() {
+        let market = Market::new(777);
+        let window = WAVES[0].days as usize;
+        let longest = (100 * DAYS_A_YEAR) as usize;
+        let level: Vec<f64> = (0..window + longest)
+            .map(|day| market.cycle(day as f64) / market.first_cycle)
+            .collect();
+        let (mut least, mut at) = (f64::INFINITY, 0);
+        for lag in 2 * DAYS_A_YEAR as usize..=longest {
+            let mut most = 0.0f64;
+            for (later, now) in level[lag..lag + window].iter().zip(&level[..window]) {
+                most = most.max((later - now).abs());
+                if most >= least {
+                    break;
+                }
+            }
+            if most < least {
+                (least, at) = (most, lag);
+            }
+        }
+        assert!(
+            least >= 0.02,
+            "{at} days later the path differs by {least} at most"
+        );
     }
 }

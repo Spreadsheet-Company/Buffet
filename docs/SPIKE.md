@@ -37,6 +37,10 @@ empty.*
 
   *Closed 2026-10-14.* Predicted `~days`; cost one session, which also copied the kit (`HOUSE.3`), laid the layout's first pieces (`MISE.1`) and founded the game by hand (`MISE.2`), each of those its own line. What landed: the source, `src/buffet.source.vla`, and its cartridge, `src/buffet.vla`, 41 rows; the library, `src/kitchen.vla`, and its first verb, `draws`; the hand, `oracle/src/buffet.rs`; eight tests of the cartridge in `oracle/tests/cartridge.rs` and four of the hand; the runner, `oracle/examples/expand.rs`; and the describe golden.
 
+- ✅ **`POT.2` — tier 1: four waves and a drift, prices a function of the day.** *Scoped, built and hand-tested 2026-10-14: the scoping, its sixteen decisions approved whole by the owner, every prediction beside its number, the owner's hand test and what it raised are under THE ITEMS, SCOPED.* The Market sheet, its name plain as the model's are: the index `=g^day * (1 + A1*SIN(w1*day+p1) + ... + A4*SIN(w4*day+p4))` over its own value on the first day, so that it opens at exactly 1 and a rung at its price, with Kitchin, Juglar, Kuznets and Kondratiev periods each a prime number of days, 1,459, 3,271, 6,947 and 18,251 (about 4, 9, 19 and 50 years, the Kuznets moved off 18, where it would be two Juglars), so that no ratio is a whole number; amplitudes 0.1, 0.15, 0.1 and 0.15; the drift 1.0002 a day; the phases the market's draws 1 to 4 of the first day, held. Tier 0, one wave of a year and the drift, the same at every seed, is written beside it as the picker's first rung, and the index is `CHOOSE` on the Difficulty cell from the first day, the cell a value of 1 until `POT.6` makes it a picker. No class row at course 0, stocks being the market itself; no price, the four rungs being `STATION.1`'s, each `=INT(<its start in cents>*<its multiplier>+0.5)`, the idiosyncratic factor tier 2's. A price is a function of the day alone, so a boundary recomputes the market once and the days between recompute nothing (`BD-7`), and the index twenty days back (`Market!C25` beside today's `B25`, the same fill, recomputed and not remembered) gives `FRONT.3` its weather word's slope until `POT.4`. *Oracle* (rewritten 2026-10-14 at the owner's word, as that day's measurement leaves it: `vla-lang` 0.9.3 computes `SIN` and `^` with Rust's std, whose results differ between platforms and from the module's in the last bit): the hand, `oracle/src/buffet.rs`, calls the same std functions as the cells, in each formula's order, so it holds the index and every price exactly natively, here on Windows and in CI on Linux; the tests compare the hand with the cartridge live, and no committed golden holds an unrounded value derived from `SIN` or `^`, so whatever a replay golden holds later is rounded once to what it shows, as money is; the two-peak test, the path not repeating within a hundred years; and `BD-7`, no formula outside the Day sheet reading the frame or the phase and the census keeping `(every-frame 0)`, so the market recomputes on a boundary and nowhere else. *Pays into:* the rungs' prices (`STATION.1`), the weather word (`FRONT.3`), the benchmark (`CRITIC.1`), the picker's first rung (`POT.6`). `~days`
+
+  *Closed 2026-10-14.* Predicted `~days`; cost one session, the scoping, the build and the owner's hand test. What landed: the Market sheet in the source and its cartridge, now 96 rows and 51 formula cells; the hand's market in `oracle/src/buffet.rs`, the same functions as the cells in each formula's order; the Market held inside the test of every frame of two years, three tests of the cartridge more (its settings, a year at difficulty 0, a hundred years at one frame a day) and three of the hand (both tiers opening at 1, the amplitudes, the two-peak test), twenty in all; the describe golden blessed again, moved by the Market alone; and, in the same commit at the owner's word, `Cargo.toml`'s comment naming the pin it holds, `alonzo` 0.1.1. Three of the eight predictions missed in part, each named beside its number: the nearest repeat's lag, seed 777's first year falling on every one of its days, and an ordinary frame 0.1 µs slower. The page held to the hand to the last bit in every one of the 70 cells the hand test showed.
+
 ## 🔪 MISE EN PLACE
 
 - ✅ **`MISE.3` — the first measurements: three probes, each a day in scratch, each deciding a spelling.** *Scoped, measured and hand-run 2026-10-14: the scoping, every number beside its prediction, the owner's hand run and what it found are under THE ITEMS, SCOPED.* Run over Alonzo's own page and runner with a Buffet-shaped scratch cartridge, before a row of the game is written, and each number written in `SPIKE.md` beside its prediction so that course 0's scoping cites them. (1) **The window's cost.** An 80 by 50 panel of texts and numbers drawn in Chrome at `(rate 30)`. The host draws from the full record until `ENGINE.8`'s second slice lands, and the record carries every formula's text: by `vla-lang` 0.9.3's release notes, an 80 by 50 window of one short formula costs 10.3 ms natively from the record and 1.7 to 1.9 ms from the `values` view (1.3 to 1.4 in the browser). A panel of many short formulas is Buffet's shape and nobody has measured it. The number decides whether course 0 ships over the record or asks Alonzo for the slice with the number in hand (`MISE.6`), and it is re-measured on the real window at first light (`HOUSE.4`). (2) **A number format with a glyph.** Whether the viewport honors a number format with a literal glyph in it (the record's `format` row carries a number format and `KERNEL.5`'s painter spells numbers by it; a `▲` in a format is (check)), which decides `FRONT.2`'s spelling of gains: a format, or a glyph cell beside the number. (3) **The picker's limit.** `CHOOSE` over references against the 8,192-character formula, about a thousand references, and the text join `&`, which the dialect has (the language's `Concat`, checked 2026-10-14), so that a ledger row's address may be joined from a count and not chosen; the number decides `MENU.1`'s picker and `PLATE.1`'s ledger ring. The fourth question the draft asked, the boundary frame against the ordinary frame, needs a model to measure and is answered by the first model: it is `POT.1`'s oracle. *Needs:* nothing. *Oracle:* the three numbers written beside their predictions. *Pays into:* `MISE.1`'s decisions, `FRONT.2`, `MENU.1`, `PLATE.1`, the ask of `ENGINE.8`. *Measured 2026-10-14, every number beside its prediction in `SPIKE.md`:* course 0's densest panel draws a frame in 1.5 to 1.7 ms in Chrome at full screen, so course 0 ships over the record; the spellings the numbers settle, approved by the owner the same day, stand as dated lines on `FRONT.1`, `FRONT.2`, `MENU.1`, `PLATE.1`, `MISE.1` and `MISE.6`; the owner's hand run in the owner's own Chrome made the browser number real, 1.4 ms a frame at p50. `~days`
@@ -463,3 +467,283 @@ each written as a dated line on its item in `OMAKASE.md`:
    arbitrary length, is an important item for Frazaro once it expands on
    Buffet's lessons, Julia's handling of number precision a reference;
    written into `MISE.6` as the owner's candidate for Frazaro.
+
+## `POT.2` — tier 1: four waves and a drift, prices a function of the day
+
+*Scoped 2026-10-14 at the owner's word, "Scope and build Buffet's POT.2,
+tier 1 of the market: four waves and a drift, prices a function of the
+day", from `OMAKASE.md`'s line, `BD-3`, `BD-7`, `BD-10` and `FRONT.2`'s
+money rule. Each decision carries its recommendation, for the owner to
+approve, amend or strike before the build. The predictions were written
+before any number was taken; each number goes beside its own at the build,
+marked a measurement or derived. Approved whole by the owner the same day,
+"Recommendations approved; fix the Cargo.toml comment to 0.1.1 and proceed
+with implementing POT.2 as scoped", and built that day.*
+
+**What it stands on, read in the code on the day** (`vla-lang` 0.9.3, the
+language `alonzo` 0.1.1 pins).
+- `SIN` is Rust's `f64::sin` and `^` is `f64::powf` (`src/calc/library.rs`,
+  `sin_of`; `src/calc/eval.rs`, `power`, which answers `0^0` with `#NUM!`
+  and 0 to a negative power with `#DIV/0!` before it calls `powf`). A
+  number in a formula is read by Rust's own `parse::<f64>`, correctly
+  rounded, so `1.0002` in a cell and in Rust are one double. The operators
+  associate to the left, a sign binds tighter than `^`, `SUM` adds in the
+  walk's order from -0.0, and every result passes `finite`, which turns -0
+  into 0 and a number no cell can hold into `#NUM!`.
+- One `arithmetic` serves a cell computed alone and a run computed by lanes
+  (`KERNEL.26`), and the lanes call the same `sin_of`, so a formula's value
+  is one double whichever path computes it.
+- std's `sin` and `powf` are the platform's: the Windows runtime's here,
+  glibc's in CI, the module's own in the browser. Measured 2026-10-14 on
+  146,000 inputs of Buffet's shape (four waves over a hundred years of days,
+  four drifts raised to the day): natively on Windows against the module,
+  `sin` differs on 1.6% of them, by at most one unit in the last place, and
+  `powf` on 9.7%; a price rounded once to whole cents differed on none,
+  unrounded on 8.8%. CI's Linux was not measured. A fix in the language
+  (`libm` on every target) is deferred and unminted, so this item is built
+  over std.
+- `describe`'s `(every-frame n)` counts the shapes the engine cannot follow a
+  change to (a defined name, a span of sheets, a broken reference:
+  `src/calc/census.rs`), not the shapes that read the frame, so it stays 0
+  for a market that reads the day by plain references.
+- `CHOOSE` reads its index down to a whole number and answers `#VALUE!`
+  outside 1 to its count. The kit's `hold` writes a range at once, each cell
+  over its own twin, `=IF(when,new,Sheet.last!first)` filled relative.
+- Alonzo's player at `v0.1.1` (`ENGINE.14`) answers the grid's sheet tabs,
+  so a hand test can watch a new sheet by its tab.
+
+**The decisions.**
+
+1. **The sheet: `Market`, plain.** Course 0's open decision, the kitchen's
+   names or plain (`OMAKASE.md`), recommends the kitchen's on the panels and
+   plain in the model; the model's sheets so far are Day and Dice, and
+   `BUFFET.md` §5 calls the market's sheet `Market`. Approving this settles
+   the model's half for every sheet after it, the panels' names staying
+   `FRONT.1`'s, and `POT.6`'s "one Pot sheet" becomes the Market sheet. Its
+   tab stands after Dice.
+2. **The layout: the settings, the waves, then two columns, today and the
+   look back.** A label in column A beside each thing, as Day and Dice have
+   it. Every formula of column C is column B's own fill, so the look back is
+   computed by the very formula that computes today:
+
+   | Row | A, the label | B | C | D | E |
+   |---|---|---|---|---|---|
+   | 1 to 4 | pi; the drift, a day; the difficulty; the look back, in days | `3.141592653589793`; `1.0002`; `1`; `20` | | | |
+   | 6 | the waves | period, in days | amplitude | speed, radians a day | phase, radians |
+   | 7 | a year, the Kiddie Pool's one wave | 365 | 0.1 | `=2*$B$1/B7`, one fill to `D11` | 0 |
+   | 8 to 11 | Kitchin, inventories; Juglar, investment; Kuznets, building; Kondratiev, the long wave | 1459; 3271; 6947; 18251 | 0.1; 0.15; 0.1; 0.15 | | `=IF(Day!$B$3=0,2*$B$1*Dice!$C2,Market.last!E8)`, one fill |
+   | 13 | | today | the look back | | |
+   | 14 | the day | `=Day!$B$3` | `=B14-$B$4` | | |
+   | 15 to 19 | each wave's term, the year's to Kondratiev's | `=$C7*SIN($D7*B$14+$E7)`, one fill over `B15:C19` | | | |
+   | 20 | the trend, the drift to the day | `=$B$2^B14` | the same fill | | |
+   | 21 | the cycle: one and the four waves | `=1+B16+B17+B18+B19` | the same fill | | |
+   | 22 | the cycle on the first day | `=1+C8*SIN(E8)+C9*SIN(E9)+C10*SIN(E10)+C11*SIN(E11)` | | | |
+   | 23 | tier 0, the Kiddie Pool | `=B20*(1+B15)` | the same fill | | |
+   | 24 | tier 1, the Day Trader | `=B20*B21/$B$22` | the same fill | | |
+   | 25 | the index, as the difficulty picks | `=CHOOSE($B$3+1,B23,B24)` | the same fill | | |
+
+   The index today is `Market!B25` and twenty days back `Market!C25`, the
+   two addresses every later dish reads. Pi is a literal, since `PI()`
+   parses but is never evaluated, and stands once in `B1` where the speeds
+   and the phases read it.
+3. **The periods: each a prime number of days, nearest 4, 9, 19 and 50 of
+   the game's 365-day years: 1,459, 3,271, 6,947 and 18,251.** A prime is a
+   whole multiple of no other period and of no year, so no ratio between two
+   waves is a whole number and no wave keeps the calendar's step (a Kitchin
+   of 1,460 days would peak on the same day of the year every fourth year).
+   The Kuznets is 19 years and not 18: at 18 it is two Juglars to within
+   0.8% (6,569 over 3,271 is 2.008, and the probe's Julian periods of the
+   same day, 1,461, 3,287, 6,575 and 18,263, had 2.0003), and the two would
+   move as one wave for a century, a whole ratio in all but name; at 19 it
+   is 2.124, the pair's relative phase turning an eighth of a turn a
+   Kuznets. Nineteen years is inside Kuznets's own fifteen to twenty-five.
+   The Juglar is the lower of the two primes fourteen days from nine years,
+   3,271 and 3,299, the one further from two Juglars a Kuznets. *Derived*,
+   by a scratch search: with these four, the Kitchin and the Juglar come
+   back within 5% of a whole cycle each after 36 years, the 4:9 of the
+   years themselves, whatever the primes; all four do only after 152 years.
+   The 18-year Kuznets is the alternative, if the owner prefers the
+   classical number and the lock.
+4. **The amplitudes: 0.1, 0.15, 0.1 and 0.15 of the trend,** the Juglar's,
+   the business cycle's, the largest swing a session lives through, the
+   Kitchin's the ripple a year shows, the Kondratiev's the generation's.
+   Their sum, 0.5, keeps the cycle between 0.5 and 1.5, never at or below
+   zero. At their steepest the waves move the cycle 0.043%, 0.029%, 0.009%
+   and 0.005% a day (*derived*, amplitude times speed), together four times
+   the drift's 0.02%, so the weather turns and the trend still shows.
+5. **The drift: 1.0002 a day,** about 7.6% a year (1.0002^365 is 1.0757), a
+   stock market's long-run price return, written as the daily factor the
+   formula raises to the day. A hundred years multiplies it about 1,480
+   times, a $100 rung then near $148,000, which whole cents hold exactly
+   below $90 trillion. The gentler 1.0001, 3.7% a year, is the alternative.
+6. **The phases: the market's draws 1 to 4 of the first day, each uniform
+   times 2π, held.** The kit's `hold` over `E8:E11`, taking each phase on day
+   0 and keeping its twin after, so the phases read the day and never the
+   frame (`BD-7`), are a function of the seed alone, and are the first dish
+   to read the market's draws, as `POT.1` left them. Every course plays the
+   same market on the same seed, and at one frame a day the first day is
+   the first frame and nothing else changes.
+7. **The index opens at 1.** Tier 1 is the trend times the cycle over the
+   cycle on the first day. `B22` computes that cycle from the phases with the
+   operations of `B21` at day 0 in the same order (a speed times 0 is 0, and
+   0 plus a phase is the phase), so the quotient on day 0 is exactly 1, and a
+   rung opens at its contract's price exactly, $1, $5, $25 and $100. The
+   roadmap's index, unnormalized, opens at the cycle's own level, anywhere
+   from 0.5 to 1.5 by seed. Computed from the parameters and not held, so
+   an edit of an amplitude or a period normalizes the whole path again: the
+   open book's first lab (`AD-6`).
+8. **Tier 0 beside tier 1, and the difficulty a value, 1, read by `CHOOSE`
+   now.** Tier 0, the Kiddie Pool: one wave of a year, 365 days, amplitude
+   0.1, phase 0, fixed and the same at every seed, over the same drift. It
+   rises through the year's first quarter, peaks on day 99 and bottoms on
+   day 268 (*measured* at the build, where the scoping wrote the sine's own
+   days, 91 and 274: the drift's slope delays the peak and hastens the
+   trough), a whole cycle in a session's first six minutes ("markets have
+   cycles", `BUFFET.md` §5), and needs no normalizing, its cycle on day 0
+   being 1. The roadmap has `CHOOSE` arrive with `POT.6`; it is written
+   now because the index is the address every price, the weather and the
+   benchmark read, so it stands at its last address from the first day,
+   and `POT.6` adds the picker and the names, not a cell every price reads.
+   A person's edit of `B3` to 0 already plays the Kiddie Pool; 2 or more is
+   `#VALUE!` until `POT.6` refuses it in words.
+9. **The look back: twenty days in a cell, recomputed and never
+   remembered.** `C14` is the day twenty days back, and column C is column
+   B's fill, so the index twenty days back is the index's own formula at
+   that day. Before day 20 the look back reads the model's own past, a day
+   below zero, which the waves and the drift define. The slope,
+   `=Market!B25-Market!C25`, and its word stay `FRONT.3`'s; a history ring
+   waits for `POT.5`, the first market whose next day is not a function of
+   the day.
+10. **The class row: none at course 0.** Stocks are the market at course 0:
+    their multiplier is the index itself, a beta of 1 and no wave of their
+    own, so the Investment Clock asks nothing of them. A class row of one
+    class is the index under another name, and an instrument with no
+    specimen waits for the course that has one (`METAMETALISP4.md` §8). The
+    row (a class's beta on the index, its own wave at the Kitchin's speed,
+    its phase the Kitchin's plus its quarter of the clock: reflation bonds,
+    recovery stocks, overheating commodities, stagflation cash) enters with
+    the first class priced off the market that is not the market itself.
+    The four rungs' betas are `STATION.1`'s, on the index. *The
+    alternative:* the row now, stocks at a beta of 1 and an amplitude of 0,
+    so the rungs read a class cell from the first day; six cells and a
+    formula.
+11. **The price: whole cents, one rounding, half up; the rows `STATION.1`'s.**
+    A vehicle's price is `=INT(<its start in cents>*<its multiplier>+0.5)`,
+    an integer from which every mark and gain is integer arithmetic
+    (`FRONT.2`'s rule). At tier 1 the multiplier is the index under the
+    rung's beta, and how a beta applies is `STATION.1`'s choice to make
+    knowing this: a beta on the index's level, `1+b*(index-1)`, goes negative
+    once the index falls below `1-1/b`, which a power, `index^b`, never does.
+    The idiosyncratic factor, `(1+idio)`, is written by `POT.5` when it
+    exists, never as `*(1+0)` now. `POT.2` writes no price: the four rungs
+    are `STATION.1`'s dish, and first light takes both (`OMAKASE.md`'s
+    critical path).
+12. **No wave verb yet.** The pattern, a wave's term at a day, is written
+    once, one fill of ten cells over five waves and both columns. The
+    ratchet brings a `wave` into `kitchen.vla` at its second writing:
+    `POT.3`'s rate cycle (course 1) or `STATION.4`'s harvests, whichever is
+    built first.
+13. **The hand calls the same std functions as the cells, in each formula's
+    order.** `oracle/src/buffet.rs` gains the market: the settings as
+    constants whose literals are the cells' (pi as `std::f64::consts::PI`,
+    whose shortest spelling is `B1`'s); each speed `2.0 * PI / period`; each
+    phase from the hand's own dice, the draw found by its place in the
+    stream (`market_draw`), and never the cartridge's chain; each term
+    `amplitude * (speed * day + phase).sin()`; the trend `DRIFT.powf(day)`;
+    the cycle `1.0 + t1 + t2 + t3 + t4`; the index as the cells divide it.
+    The calendar and the dice share no predicate with the cartridge; the
+    waves cannot, since a double's last bit is the order of its operations,
+    so the market's hand is the formulas written a second time in Rust, its
+    independence the dice beneath it and the day it is called on. The tests
+    compare bits after adding 0.0 to the hand's value, which turns its rare
+    -0 into the cell's 0 (`finite`) and moves nothing else.
+14. **The oracle, as the measurement leaves it** (`OMAKASE.md`'s line,
+    rewritten at the owner's word). The hand holds the index, and from
+    `STATION.1` every price, exactly natively, here on Windows and in CI on
+    Linux, both writings calling one platform's functions. The tests compare
+    the hand with the cartridge live and commit no unrounded value derived
+    from `SIN` or `^` (the describe golden holds formulas, never values), so
+    whatever a replay golden holds later is rounded once to what it shows,
+    as money is. The two-peak test: the path does not repeat within a
+    hundred years. `BD-7`: no formula outside the Day sheet reads the frame
+    or the phase, and the census keeps `(every-frame 0)`, so the market
+    recomputes on a boundary and nowhere else.
+15. **The tests.** Every frame of two years and two days, now with every
+    formula cell of the Market sheet held to the hand bit for bit; the
+    Market's settings held to the hand's constants; the difficulty written 0
+    before the first frame, playing the Kiddie Pool for a year; a hundred
+    years at one frame a day, every day's index, today and twenty days back,
+    held to the hand; and the two-peak test over the hand: for every lag
+    from two years to a hundred, the cycle that lag later differs from the
+    cycle somewhere in the first Kitchin by at least 0.02, where a path that
+    repeated would differ by nothing. The scans that stand (the frame read by
+    the Day sheet alone, the census) cover the new sheet unchanged.
+16. **The hand test in Alonzo's page, the player of `v0.1.1`**, since
+    Buffet's own page is `HOUSE.4`'s: the cartridge pasted into the drawer's
+    box and loaded, the Market tab watched as the days turn, the index read
+    at a paused day against the hand's, the difficulty written 0 and back,
+    the Clock's rate written 60.
+
+**The predictions, before any number.** The numbers column was filled at
+the build, the same day.
+
+| | What | Predicted | The number |
+|---|---|---|---|
+| P1 | the cartridge | 96 rows (41), 51 formula cells (19) in 22 shapes (11) of 20 texts (9), 13 levels (8), `(every-frame 0)`; the describe golden moves by the Market's readers, the eleven new shapes and the budget, `(budget 30 51 1530 2000000)` | *Measurement*, as predicted in every count; the golden's diff the notes, the budget, the plan, the readers (Day 9 to 11, Dice 6 to 7, the Market's 31, its twin's 1) and the eleven shapes, `POT.1`'s eleven unmoved. Not predicted: 2 runs of 9 lanes (the five speeds, and four of the ten terms), 42 cells computed alone |
+| P2 | the hand at every frame of two years and two days | every formula cell of the Market sheet equal bit for bit at all 21,960 frames, natively here and in CI on Linux | *Measurement*: equal at all 21,960 frames here, on Windows, at the first run. CI's Linux at the first push |
+| P3 | a hundred years at one frame a day | the index today and twenty days back equal at all 36,500 days; the test under 10 s in a debug build | *Measurement*: equal at all 36,500 days; the test 3.0 s alone in a debug build. Inside. The two years' test grew from 2.2 s to 5.1 s, the Market viewed at every frame |
+| P4 | the two-peak test | the smallest difference over the lags between 0.04 and 0.12 of the trend, at a lag within days of a whole number of Kitchins, near 36 or 100 years | *Measurement*, seed 777: 0.089 at a lag of 36,296 days, 99.4 years. Inside for the difference; **missed** for the lag, 24.88 Kitchins, not within days of a whole number of them: the nearest repeat is where the four waves' misses sum least, not where the Kitchin's alone is nothing. Five other seeds, 1, 2, 42, 1,000 and 123,456,789: 0.039 to 0.104, each above the test's 0.02 |
+| P5 | seed 777's first year | the index ends it between 0.85 and 1.05: the Kitchin opens past its peak, its phase 1.90 from the first draw's 0.3027 (`POT.1`'s published number), and falls 0.127 of the trend in the year (*derived*), against the drift's 7.6%; the look back's slope below zero on 50 to 90% of its days | *Measurement*: 0.904 on day 365, inside; the slope below zero on every one of the year's 365 days, **missed**. Seed 777 opens near a cyclical high, its first cycle 1.297, the Kitchin and the Juglar both past their peaks (phases 1.90 and 3.40), so the index falls without a turn to 0.866 on day 586, and the look back's slope first turns on day 597 |
+| P6 | seed 777's hundred years | the index ends between 900 and 2,200 (the drift's 1,480 times the cycle's ratio to its first day); its largest fall from a peak 20 to 45%; days up 55 to 70% | *Measurement*: 1,295 on day 36,500; the largest fall 30.0%, from day 2,784 to day 3,626 (years 7.6 to 9.9); days up 69.4%. Inside, each |
+| P7 | the step natively, a scratch runner in release | an ordinary frame no slower than `POT.1`'s cartridge's, the market computing nothing between boundaries; a day's first frame under 0.05 ms slower | *Measurement*, a scratch runner at opt-level 3, three rounds of a year of frames each cartridge, alternated, each run under a tenth of a second: a day's first frame 7.8 to 7.9 µs at the median against `POT.1`'s 3.4, 4.5 µs more, inside; an ordinary frame 1.5 µs against 1.4, **missed** by 0.1 µs, most likely the plan's walk, since the step passes every cell of the plan, computed or not (`POT.1`'s decision 10), 51 where it passed 19 |
+| P8 | the page against the hand, at the owner's paused day | the index equal to the hand's in its first 15 significant digits, its last digit differing on about one day in ten (`powf`'s 9.7%, `sin`'s 1.6%) | *Measurement*, the owner's three screenshots, read from crops at full resolution: equal to the hand to the last bit in all 70 cells they show, days 60, 84 and 100 with their look backs (30 sines, 6 powers and every cell built on them), the phases, the speeds and the cycle on the first day. Inside: the one difference the measured rates made likely in these 36 results did not come, a chance near one in three |
+
+**What the build found.**
+- Seed 777's first game opens on a fall. The index declines from 1 to 0.904
+  at the first year's report card (day 365) and to 0.866 on day 586, and the
+  look back's slope turns only on day 597, ten minutes into a game at a day a
+  second; it then rises to 1.339 by day 1,672. So every first game's first
+  year is a bear market of 9.6%, in which buy-and-hold loses and cash wins,
+  and a weather word read off the slope's sign alone would not change in it;
+  a word read off the slope's size changes as the fall steepens. The seed is
+  the contract's, 777, and its market is what its dice make it: the owner's
+  to keep, or to change by the contract's one number, which every course
+  would then play (`BD-3`).
+- Two peaks do not give the third, mostly. Over seed 777's hundred years the
+  index peaks 19 times, the gaps between peaks running from 1,112 to 3,055
+  days; a player who takes the last gap for the next comes within six weeks
+  of the peak twice in seventeen (18 and 35 days off) and misses by more than
+  a year ten times.
+- The first market costs a day's first frame 4.5 µs natively, and an
+  ordinary frame 0.1 µs, the plan's walk.
+
+**The owner's hand test, 2026-10-14,** in Alonzo's player as built in
+Alonzo's tree that day, its picker opening on an empty sheet (`ENGINE.15`'s,
+unreleased), over the module of `alonzo` 0.1.1 and `vla-lang` 0.9.3, as its
+log says; the cartridge pasted into the drawer's box and loaded. The log's
+budget line read 51 formula cells a frame at 30 frames a second, 1,530 a
+second; the Market tab showed the settings, the waves and both columns, the
+index moving once a second. Three screenshots, at days 60, 84 and 100: the
+speeds and the phases, which no `SIN` or `^` reaches, equal to the hand's in
+every digit, and every other cell they show too (P8);
+`(cell "Market" "B3" 0)`, written at frame 2,389, made the index the Kiddie
+Pool's from the next frame (on day 84, `B25` equal to `B23` and `C25` to
+`C23`), and `(cell "Market" "B3" 1)` at frame 2,891 gave tier 1 back (on
+day 100, `B25` equal to `B24`); and `(cell "Clock" "B2" 60)`, in the owner's
+words, "successfully doubles the pace of play". Passed.
+
+**What the hand test raised.** The owner, on seed 777's falling first year:
+"should the first year be a slight bull market to encourage new players with
+a hidden handicap? ... we do want to encourage new players to continue
+playing." The facts for the decision, measured by the hand the same day over
+the 3,700 seeds below a million that hold 777: 977 end their first year 5 to
+15% up; 580 of those climb without a turn of the slope, and 177 dip early
+and then climb; none climbs, dips and climbs again within the year, since
+tier 1's fastest wave is four years long and its slope turns at most once
+in a year. Among the early dips, seed 777395 falls 1.4% to day 90, its
+weather turns on day 101 and its report card reads +10.1%, and a steady
+climb, seed 252777, reads +10.0% with no dip. A kind first year chosen this
+way is the contract's own seed chosen in the open, never a hidden term in the
+model (`BD-3`, `BD-5`), and leaves the score untouched, since the score is
+alpha over buy-and-hold on the same seed (rec). The decision is the opening
+contract's, the owner's (`COURSE.0`).
