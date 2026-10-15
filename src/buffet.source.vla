@@ -1,13 +1,13 @@
 ; SPDX-License-Identifier: AGPL-3.0-or-later AND CC-BY-SA-4.0
 ; buffet.source.vla - Buffet, all you can sheet: an idle game in which you run an
-; asset-management firm, and a spreadsheet you are allowed to open (OMAKASE.md). The pass
-; expands this file into buffet.vla beside it, the rows the engine loads (SPEC.md section
-; 7.8): edit this one, then expand it again with
+; asset-management firm, and a spreadsheet you are allowed to open (docs/OMAKASE.md).
+; The pass expands this file into buffet.vla beside it, the rows the engine loads (SPEC.md
+; section 7.8): edit this one, then expand it again with
 ;   cargo run --release --example expand
 ; and the oracle's tests hold the cartridge to this file and every frame of it to the
 ; game written by hand, oracle/src/buffet.rs.
 ;
-; Course 0 is being cooked, a dish at a time (OMAKASE.md, COURSE.0). Served so far:
+; Course 0 is being cooked, a dish at a time (docs/OMAKASE.md, COURSE.0). Served so far:
 ;   POT.1   the calendar and the dice: the Day sheet, the one sheet that reads the frame,
 ;           and the Dice sheet, the market's die, which rolls once a market day, and the
 ;           exam's, which rolls once a game.

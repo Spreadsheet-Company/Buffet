@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 // SPDX-FileCopyrightText: 2026 Spreadsheet Company
 
-//! The pass at the command line (`OMAKASE.md`, `MISE.1`; Alonzo's `SPEC.md`
+//! The pass at the command line (`docs/OMAKASE.md`, `MISE.1`; Alonzo's `SPEC.md`
 //! section 7.8): each cartridge's source expanded by the engine's pass,
 //! `alonzo::pass::expand`, into the cartridge beside it, then the cartridge
 //! loaded, as an act of its own, to say whether it loads. Alonzo's own

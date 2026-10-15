@@ -4,7 +4,7 @@
 # own files, no directory moves: path globs resolve every file to one SPDX
 # identifier, later [[annotations]] tables winning when more than one matches
 # a file, so the specific entries sit below the general ones. The reasoning is
-# README.md's "The terms" and OMAKASE.md's HOUSE.1 (the owner's decision of
+# README.md's "The terms" and docs/OMAKASE.md's HOUSE.1 (the owner's decision of
 # 2026-10-14): the game that computes is AGPL-3.0-or-later, so that a fork
 # stays open under the same terms and a copy served from anyone's machines
 # publishes its changes, and a commercial license is sold to whoever wants out
@@ -14,7 +14,7 @@
 # content and its cartridge carries it; the kit copied from Alonzo keeps its
 # 0BSD; and the page's files, when they are vendored from Alonzo, keep their
 # Apache-2.0. The game lives in one folder, src/ (the owner's word of
-# 2026-10-14, OMAKASE.md, MISE.1): the source, the cartridge the pass writes
+# 2026-10-14, docs/OMAKASE.md, MISE.1): the source, the cartridge the pass writes
 # beside it, the library, the kit's copy, and later the content sheets and the
 # frozen courses. tools/check_spdx.ps1 verifies this map against the tree on
 # every push: every tracked file resolves to one identifier or expression,
@@ -56,7 +56,7 @@ SPDX-License-Identifier = "CC-BY-SA-4.0"
 
 # The kit: Alonzo's cartridges/common.vla, copied byte for byte at the
 # engine's pinned version to src/common.vla and held to it by a check
-# (OMAKASE.md, HOUSE.3), under the terms it came with.
+# (docs/OMAKASE.md, HOUSE.3), under the terms it came with.
 [[annotations]]
 path = ["src/common.vla"]
 SPDX-FileCopyrightText = "2026 Spreadsheet Company"
@@ -64,7 +64,7 @@ SPDX-License-Identifier = "0BSD"
 
 # The page: Alonzo's host shim, viewport, fake module and page template,
 # vendored at the engine's pinned version the day the game is drawn
-# (OMAKASE.md, HOUSE.4), under the terms they came with.
+# (docs/OMAKASE.md, HOUSE.4), under the terms they came with.
 [[annotations]]
 path = ["web/**"]
 SPDX-FileCopyrightText = "2026 Spreadsheet Company"

@@ -9,11 +9,12 @@ computes, CC-BY-SA-4.0 for what the diner reads, 0BSD for the kit copied
 from Alonzo and Apache-2.0 for the page's files vendored from it, and
 `AGPL-3.0-or-later AND CC-BY-SA-4.0` over the game's own files, whose
 source includes the content and whose cartridge carries it (README.md, "The
-terms"; OMAKASE.md, HOUSE.1). The game lives in one folder, src/ (the
-owner's word of 2026-10-14, OMAKASE.md, MISE.1). A map is worth what the last check of it was
-worth, and the day a file lands at a path the map does not name it has no
-license at all. This script is Alonzo's tools/check_spdx.ps1 adapted to this
-map by the same copyright holder, under this repository's terms.
+terms"; docs/OMAKASE.md, HOUSE.1). The game lives in one folder, src/ (the
+owner's word of 2026-10-14, docs/OMAKASE.md, MISE.1). A map is worth what
+the last check of it was worth, and the day a file lands at a path the map
+does not name it has no license at all. This script is Alonzo's
+tools/check_spdx.ps1 adapted to this map by the same copyright holder, under
+this repository's terms.
 
 WHAT IT HOLDS, four things, none needing a host:
   1. Every tracked file, except the license texts themselves (LICENSE and

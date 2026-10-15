@@ -1,5 +1,5 @@
 ; SPDX-License-Identifier: AGPL-3.0-or-later
-; kitchen.vla - Buffet's own library of template macros (OMAKASE.md, MISE.1): the
+; kitchen.vla - Buffet's own library of template macros (docs/OMAKASE.md, MISE.1): the
 ; patterns this game writes twice, beside the kit, Alonzo's common.vla, whose verbs it
 ; never writes again. Both stand in src/ beside the game's source, which includes the
 ; kit, then this file, each by its own line:
@@ -8,15 +8,17 @@
 ; and this file includes nothing. The pass resolves every include against the source's
 ; own folder, an included file's includes too (SPEC.md section 7.8), so an include of
 ; the kit written here would hold only for a source at one depth, and a frozen course
-; stands two folders deeper than the game's source, in src/courses/ (OMAKASE.md, MISE.1's
-; second slice), where its includes are "../../common.vla" and "../../kitchen.vla".
+; stands two folders deeper than the game's source, in src/courses/
+; (docs/OMAKASE.md, MISE.1's second slice), where its includes are "../../common.vla"
+; and "../../kitchen.vla".
 ;
-; The library grows by the ratchet (OMAKASE.md, "The service"): a pattern written twice
-; in Buffet comes here at its second writing; a pattern a second cartridge writes alike
-; goes to Alonzo's kit by a pull request there, the copy under kit/ following at the
-; next pin. The rules are the kit's, which are the language's: template macros alone,
-; no gensym and no eval; a parameter never the name of a row it writes; a verb's pieces
-; are strings, or &expand of strings and of the expand-time primitives.
+; The library grows by the ratchet (docs/OMAKASE.md, "The service"): a pattern written
+; twice in Buffet comes here at its second writing; a pattern a second cartridge writes
+; alike goes to Alonzo's kit by a pull request there, the copy, src/common.vla,
+; following at the next pin. The rules are the kit's, which are the language's:
+; template macros alone, no gensym and no eval; a parameter never the name of a row it
+; writes; a verb's pieces are strings, or &expand of strings and of the expand-time
+; primitives.
 ;
 ; Since POT.1 (2026-10-14): draws, a stream's draws down a column beneath its die.
 

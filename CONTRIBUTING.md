@@ -47,14 +47,14 @@ is merged, under four rules:
   never the fog. An exam question carries its one-line *why*.
 - **PG-13.** The audience includes classrooms.
 
-The voice is the design reference's (`BUFFET.md`, section 2): deadpan,
+The voice is the design reference's (`docs/BUFFET.md`, section 2): deadpan,
 understated, never a wink at the camera. A one-page *How to add a row*
-sits beside the content sheets the day they exist (`OMAKASE.md`,
+sits beside the content sheets the day they exist (`docs/OMAKASE.md`,
 `MENU.1`).
 
 ## What a change to the game needs
 
-- **A course is a game** (`OMAKASE.md`, `BD-1`). A change to an earlier
+- **A course is a game** (`docs/OMAKASE.md`, `BD-1`). A change to an earlier
   course's rows re-records that course's replay and says so; a later
   course's build never moves an earlier course's bytes, which the pass's
   check over every frozen course's source holds (`MISE.1`).
@@ -67,7 +67,7 @@ sits beside the content sheets the day they exist (`OMAKASE.md`,
   the frame, no price moved by an order, no hidden state a rule may read.
 - **The day is the clock** (`BD-7`). Only the Day sheet reads the frame;
   everything else reads the day.
-- **A roadmap ID** is minted in `OMAKASE.md`, in its family, and never
+- **A roadmap ID** is minted in `docs/OMAKASE.md`, in its family, and never
   reused; an item of Alonzo's or Frazaro's keeps its own ID.
 - **A commit** is titled `<ID>: <the claim, in plain English>`; its body
   gives the defect and the fix, then `Pins:`, `Floors:` and `Docs:`.

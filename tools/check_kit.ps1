@@ -2,7 +2,7 @@
 check_kit.ps1 - the kit's copy, held to the file it copies.
 
 WHY: Buffet's source includes the kit, Alonzo's cartridges/common.vla, the
-library of template macros every Alonzo cartridge is written in (OMAKASE.md,
+library of template macros every Alonzo cartridge is written in (docs/OMAKASE.md,
 HOUSE.3). The engine comes from crates.io, and its package carries no
 cartridges, so the kit cannot come with it: it is copied to src/common.vla,
 beside the game's source, at the tag the pin names, byte for byte, under the

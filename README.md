@@ -1,10 +1,9 @@
 <!-- SPDX-License-Identifier: CC-BY-SA-4.0 -->
 <!-- SPDX-FileCopyrightText: 2026 Spreadsheet Company -->
 
-# Buffet: all you can sheet
+# Buffet: "All You Can Sheet"
 
-*An idle game in which you run an asset-management firm, and a spreadsheet
-you are allowed to open. Written on Alonzo, Spreadsheet Company's game
+*A semi-idle game in which you run an asset-management firm inside a spreadsheet. Written on Alonzo, Spreadsheet Company's game
 engine, in VLA, its language: every number on every screen is a cell of a
 workbook the player may read, and by the late game the player has written a
 trading bot in formulas and nobody told them that was programming.*
@@ -23,10 +22,10 @@ the joke: the game is fun insofar as it is funny, and it is a tutorial
 because it cannot help it, the model being open by design.
 
 **Course 0 is being cooked.** The repository was founded on 2026-10-14. The
-design reference is [`BUFFET.md`](BUFFET.md); the roadmap is
-[`OMAKASE.md`](OMAKASE.md), the chef's order: eight courses, each a
+design reference is [`docs/BUFFET.md`](docs/BUFFET.md); the roadmap is
+[`docs/OMAKASE.md`](docs/OMAKASE.md), the chef's order: eight courses, each a
 playable game composed on the one before, and the kitchen's families of
-work; [`SPIKE.md`](SPIKE.md) is the ledger of what has been served, empty.
+work; [`docs/SPIKE.md`](docs/SPIKE.md) is the ledger of what has been served.
 
 ## The terms
 

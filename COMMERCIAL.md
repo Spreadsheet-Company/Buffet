@@ -56,5 +56,5 @@ Ask at english@spreadsheet.company.
 This file was written by the project on the day the repository was
 founded, 2026-10-14, as a statement of intent. The agreement itself, and
 this file's reading of the public licenses, are reviewed by counsel before
-the first sale (`OMAKASE.md`, `HOUSE.6`). Until then, the public terms are
+the first sale (`docs/OMAKASE.md`, `HOUSE.6`). Until then, the public terms are
 the only terms.

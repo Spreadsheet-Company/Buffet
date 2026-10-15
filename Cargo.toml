@@ -1,7 +1,7 @@
 # The Cargo workspace: the oracle, one member. The game itself is a
 # cartridge, rows the engine loads, and no crate; what the workspace holds is
 # the game written a second time by hand, the runners that play it and the
-# tests that hold every frame of the cartridge to it (OMAKASE.md, MISE.2),
+# tests that hold every frame of the cartridge to it (docs/OMAKASE.md, MISE.2),
 # all of it over the engine and the language consumed from crates.io and
 # never copied here, as a stranger consumes them.
 #

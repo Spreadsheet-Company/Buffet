@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 // SPDX-FileCopyrightText: 2026 Spreadsheet Company
 
-//! The game's cartridge, held (`OMAKASE.md`, `COURSE.0`): `src/buffet.vla`
+//! The game's cartridge, held (`docs/OMAKASE.md`, `COURSE.0`): `src/buffet.vla`
 //! loaded through the engine from crates.io, as a stranger loads it, and
 //! every frame of it held to the game written by hand, `buffet_oracle::buffet`.
 //! Since `POT.1`: the cartridge is its source expanded; the calendar and the

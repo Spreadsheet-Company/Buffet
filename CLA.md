@@ -9,7 +9,7 @@ content sheets or the documents, the paths resolved to `CC-BY-SA-4.0`
 alone, needs no agreement beyond the Developer Certificate of Origin
 (`CONTRIBUTING.md`). This text was written by the project at its founding,
 2026-10-14, and is reviewed by counsel before the first outside code
-contribution is merged (`OMAKASE.md`, `HOUSE.6`); it is a project's
+contribution is merged (`docs/OMAKASE.md`, `HOUSE.6`); it is a project's
 document and not legal advice.*
 
 ## Why there is one

@@ -42,10 +42,10 @@ values and never formulas (Alonzo's `AD-7`), so the game cannot write code
 at run time; the one place a formula enters at run time is a person's own
 act on the Strategy sheet, recorded by the replay as an edit. The market is
 a pure function of the seed, the difficulty and the scenario, and a replay
-reproduces every frame (`OMAKASE.md`, `BD-3`).
+reproduces every frame (`docs/OMAKASE.md`, `BD-3`).
 
 ## What this game is not
 
 Not advice, not a brokerage, not a feed. No real money is ever handled, no
 real market's data is ever read, and every model in it is a toy, labelled
-as one on the sheet the game keeps for that purpose (`OMAKASE.md`, `BD-5`).
+as one on the sheet the game keeps for that purpose (`docs/OMAKASE.md`, `BD-5`).

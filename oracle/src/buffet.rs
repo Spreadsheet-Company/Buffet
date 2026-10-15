@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 // SPDX-FileCopyrightText: 2026 Spreadsheet Company
 
-//! Buffet by hand (`OMAKASE.md`, `MISE.2`): the game written a second time,
+//! Buffet by hand (`docs/OMAKASE.md`, `MISE.2`): the game written a second time,
 //! in Rust, the way a person would write it, so that every frame of the
 //! cartridge is held to a rule written twice. Founded with `POT.1`, the
 //! calendar and the dice, and grown a dish at a time to the last course.

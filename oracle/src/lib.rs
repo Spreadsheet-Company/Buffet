@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: AGPL-3.0-or-later
 // SPDX-FileCopyrightText: 2026 Spreadsheet Company
 
-//! Buffet's oracle (`OMAKASE.md`, `MISE.2`): the game written a second time
+//! Buffet's oracle (`docs/OMAKASE.md`, `MISE.2`): the game written a second time
 //! by hand, the way a person would write it, so that the cartridge's frames
 //! are held to a rule written twice; the runners that play it, as examples;
 //! and the tests that load the cartridge through the engine and hold every

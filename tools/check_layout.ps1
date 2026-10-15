@@ -2,7 +2,7 @@
 check_layout.ps1 - the game's one folder, src/, held to the layout MISE.1 decided.
 
 WHY: the game lives in one folder, src/ (the owner's word of 2026-10-14,
-OMAKASE.md, MISE.1): the source a person edits, the cartridge the pass writes
+docs/OMAKASE.md, MISE.1): the source a person edits, the cartridge the pass writes
 beside it, Buffet's own library and the kit's copy, and later the content
 sheets and the frozen courses. A path is the dearest thing to move later,
 since the license map, the checks and the page's places name it, and a folder
