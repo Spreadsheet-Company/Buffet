@@ -29,12 +29,14 @@ WHAT IT HOLDS, neither needing a host or the network:
      src/<name>.vla beside its source src/<name>.source.vla, is a cartridge-
      block at that path with data-file <name>.vla, and its source a source-
      block at the source's path; every other .vla of src/ is a library-
-     block at its own path; each block's text is its file's with CRLF read as
-     LF; and no block of a kind the page reads (cartridge, source, replay,
-     golden, library, fixture) is there that no file is. So a page built
-     before an edit of the game, or with a library at a path the source's
-     includes do not resolve to, where Build in the drawer would refuse or
-     write other bytes, fails here and not at a hand test.
+     block at its own path, and each .vla of src/content/, a content sheet
+     (MENU.1), a library-content- block at its path; each block's text is its
+     file's with CRLF read as LF; and no block of a kind the page reads
+     (cartridge, source, replay, golden, library, fixture) is there that no
+     file is. So a page built before an edit of the game, or with a library
+     at a path the source's includes do not resolve to, where Build in the
+     drawer would refuse or write other bytes, fails here and not at a hand
+     test.
 Alonzo's list of the Web Audio calls its host never makes is not held here:
 it is Alonzo's charter on its own host (its docs/CHARTER.md section 8), held
 at the tag by Alonzo's check and here by the host's digest
@@ -42,14 +44,14 @@ at the tag by Alonzo's check and here by the host's digest
 
 -Control proves the check on scratch copies: the real template and scripts
 pass, and so does a page tools/build_web.ps1 builds in the scratch folder
-with -NoWasm; and fourteen mutants fail, each for its own reason. In the
+with -NoWasm; and fifteen mutants fail, each for its own reason. In the
 template: a script's src appended, a fetch, the viewport's place removed, an
 anchor, an image, a place naming a file, the blocks' place removed. In the
 scripts: a fetch appended to the viewport's source, and one to the host's.
 In the built page: the cartridge's block cut, a library block no file is,
-the template standing as a built page, a library block at another path, and
-the source's block one character from its file. Each built mutant proves it
-applied before the check is asked.
+the template standing as a built page, a library block at another path, the
+source's block one character from its file, and a content sheet's block cut.
+Each built mutant proves it applied before the check is asked.
 
 House style (tools/check_*.ps1): PowerShell 5.1 and pwsh alike, host-free,
 no network; exit 0 clean, exit 1 with every problem named.
@@ -99,6 +101,13 @@ function Get-OwedBlocks([string]$src) {
         $base = [System.IO.Path]::GetFileNameWithoutExtension($f.Name)
         if ($carts -contains $base) { continue }
         $owed['library-' + $base] = @{ File = $f.FullName; Path = ('src/' + $f.Name); DataFile = '' }
+    }
+    # The content sheets (MENU.1): each .vla of src/content/, a library block at its path, its id library-content-<name>.
+    $content = Join-Path $src 'content'
+    if (Test-Path -LiteralPath $content) {
+        foreach ($f in @(Get-ChildItem -LiteralPath $content -File | Where-Object { $_.Extension -eq '.vla' } | Sort-Object Name)) {
+            $owed['library-content-' + [System.IO.Path]::GetFileNameWithoutExtension($f.Name)] = @{ File = $f.FullName; Path = ('src/content/' + $f.Name); DataFile = '' }
+        }
     }
     return $owed
 }
@@ -211,19 +220,23 @@ if ($Control) {
         $nPage = $built
         if ($at -ge 0) { $cut = $srcBlock.Groups[1].Index + $at + '(include'.Length; $nPage = $built.Substring(0, $cut) + ' ' + $built.Substring($cut) }
         $n = Join-Path $tmp 'n.html'; [System.IO.File]::WriteAllText($n, $nPage, $utf8)
+        # a content sheet's block cut (MENU.1): the page built before the sheet existed
+        $o = Join-Path $tmp 'o.html'; [System.IO.File]::WriteAllText($o, (Remove-Block $built 'library-content-disclosures'), $utf8)
         $jApplied = ([System.IO.File]::ReadAllText($j)).Length -lt $built.Length
         $kApplied = ([System.IO.File]::ReadAllText($k)).Contains('id="library-nowhere"')
         $mApplied = ([regex]::Matches($built, [regex]::Escape($kitchenAt))).Count -eq 1 -and ([System.IO.File]::ReadAllText($m)).Contains('data-path="src/courses/kitchen.vla"')
         $nApplied = $at -ge 0 -and ([System.IO.File]::ReadAllText($n)).Length -eq $built.Length + 1 -and ([System.IO.File]::ReadAllText($n)).Contains('(include  "kitchen.vla")')
-        $rj = @(Test-Built $j); $rk = @(Test-Built $k); $rl = @(Test-Built $l); $rm = @(Test-Built $m); $rn = @(Test-Built $n)
+        $oApplied = $built.Contains('id="library-content-disclosures" data-path="src/content/disclosures.vla"') -and -not ([System.IO.File]::ReadAllText($o)).Contains('id="library-content-disclosures"')
+        $rj = @(Test-Built $j); $rk = @(Test-Built $k); $rl = @(Test-Built $l); $rm = @(Test-Built $m); $rn = @(Test-Built $n); $ro = @(Test-Built $o)
         $jHit = @($rj | Where-Object { $_ -like '*owes the built page the block cartridge-buffet*' }).Count
         $kHit = @($rk | Where-Object { $_ -like '*holds the block library-nowhere, and no file*' }).Count
         $lHit = @($rl | Where-Object { $_ -like '*has {{BLOCKS}} left in it*' }).Count
         $mHit = @($rm | Where-Object { $_ -like '*block library-kitchen stands at data-path*' }).Count
         $nHit = @($rn | Where-Object { $_ -like "*block source-buffet is not src/buffet.source.vla's text*" }).Count
-        Write-Output ("control: the real set has {0} problem(s) and the page built from it {1}; the script src {2}, the fetch {3}, the missing placeholder {4}, the anchor {5}, the image {6}, the place naming a file {7}, the blocks' place removed {8}, the fetch in the viewport {9}, the fetch in the host {10}; built, the cartridge's block cut ({11}) {12}, the stray library block ({13}) {14}, the template as a page {15}, the library at another path ({16}) {17}, the source one character off ({18}) {19}" -f $real.Count, $realBuilt.Count, $ra.Count, $rb.Count, $rc.Count, $rd.Count, $re.Count, $fHit, $hHit, $rg.Count, $iHit, $jApplied, $jHit, $kApplied, $kHit, $lHit, $mApplied, $mHit, $nApplied, $nHit)
-        if ($real.Count -eq 0 -and $realBuilt.Count -eq 0 -and $ra.Count -ge 1 -and $rb.Count -ge 1 -and $rc.Count -ge 1 -and $rd.Count -ge 1 -and $re.Count -ge 1 -and $fHit -ge 1 -and $hHit -ge 1 -and $rg.Count -ge 1 -and $iHit -ge 1 -and $jApplied -and $jHit -ge 1 -and $kApplied -and $kHit -ge 1 -and $lHit -ge 1 -and $mApplied -and $mHit -ge 1 -and $nApplied -and $nHit -ge 1) {
-            Write-Output 'OK: the check passes the template, the three scripts and a page built from them, and fails each of the fourteen mutants'
+        $oHit = @($ro | Where-Object { $_ -like '*owes the built page the block library-content-disclosures*' }).Count
+        Write-Output ("control: the real set has {0} problem(s) and the page built from it {1}; the script src {2}, the fetch {3}, the missing placeholder {4}, the anchor {5}, the image {6}, the place naming a file {7}, the blocks' place removed {8}, the fetch in the viewport {9}, the fetch in the host {10}; built, the cartridge's block cut ({11}) {12}, the stray library block ({13}) {14}, the template as a page {15}, the library at another path ({16}) {17}, the source one character off ({18}) {19}, the content sheet's block cut ({20}) {21}" -f $real.Count, $realBuilt.Count, $ra.Count, $rb.Count, $rc.Count, $rd.Count, $re.Count, $fHit, $hHit, $rg.Count, $iHit, $jApplied, $jHit, $kApplied, $kHit, $lHit, $mApplied, $mHit, $nApplied, $nHit, $oApplied, $oHit)
+        if ($real.Count -eq 0 -and $realBuilt.Count -eq 0 -and $ra.Count -ge 1 -and $rb.Count -ge 1 -and $rc.Count -ge 1 -and $rd.Count -ge 1 -and $re.Count -ge 1 -and $fHit -ge 1 -and $hHit -ge 1 -and $rg.Count -ge 1 -and $iHit -ge 1 -and $jApplied -and $jHit -ge 1 -and $kApplied -and $kHit -ge 1 -and $lHit -ge 1 -and $mApplied -and $mHit -ge 1 -and $nApplied -and $nHit -ge 1 -and $oApplied -and $oHit -ge 1) {
+            Write-Output 'OK: the check passes the template, the three scripts and a page built from them, and fails each of the fifteen mutants'
             exit 0
         }
         Write-Output 'FAIL: the control did not behave'

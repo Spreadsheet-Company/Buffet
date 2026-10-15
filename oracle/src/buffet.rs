@@ -442,9 +442,36 @@ impl Rung {
     }
 }
 
+/// The days a disclosure stands, the Disclosures sheet's `F5` (`MENU.1`): a
+/// month of market days, thirty seconds at the manifest's rate.
+pub const DAYS_A_DISCLOSURE: u64 = 30;
+
+/// The row of the Disclosures sheet the fine print shows on a day, from 1
+/// (`MENU.1`), when a disclosure stands `days` days among `rows`. The cell
+/// divides the day and takes the remainder; the hand counts the months the
+/// day has passed, each moving the row on one and the last back to the
+/// first. The texts are the content's, written once, in `src/content/`.
+pub fn disclosure(day: u64, rows: u64, days: u64) -> u64 {
+    let mut row = 1;
+    for _ in 0..day / days {
+        row = if row == rows { 1 } else { row + 1 };
+    }
+    row
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    /// The fine print's round: the first row for the first month, the next
+    /// from day 30, and the first again once every row has stood its month.
+    #[test]
+    fn the_fine_print_moves_on_a_row_a_month() {
+        let at = |day| disclosure(day, 8, DAYS_A_DISCLOSURE);
+        assert_eq!([at(0), at(29), at(30), at(59), at(60)], [1, 1, 2, 2, 3]);
+        assert_eq!([at(7 * 30 + 29), at(8 * 30), at(365)], [8, 1, 5]);
+        assert_eq!(disclosure(3, 2, 1), 2, "a day a disclosure, two rows");
+    }
 
     /// Park and Miller's own check, as their paper gives it: from 1, the
     /// 10,000th number of the stream is 1,043,618,065.

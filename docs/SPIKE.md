@@ -31,7 +31,7 @@ empty.*
 
 - ✅ **`HOUSE.4`, first slice — the page.** *Scoped, built and hand-tested 2026-10-15: the scoping, its ten decisions approved whole by the owner, every prediction beside its number, what the build found and the owner's hand test are under THE ITEMS, SCOPED.* Alonzo's page vendored unchanged at the tag the pin names, `v0.1.3` (`alonzo` =0.1.3, whose page draws the grid from the `values` view, `ENGINE.8`'s second slice): the template and its three scripts, `web/index.template.html`, `web/viewport.js`, `web/host.js` and `web/fake.js`, Apache-2.0 kept with their headers, and the kit copied again at the same tag; `tools/check_vendored.ps1`, grown from the kit's check, holding every copy to its SHA-256 at the tag and the tag to the pin. `tools/build_web.ps1`, Buffet's own, adapted from Alonzo's, fills the template's five places: the three scripts; the engine's module, built from the registry crate under the workspace's release profile; and `{{BLOCKS}}`, every text the page holds as a block (`ENGINE.15`): the page's name, the cartridge and its source, and the kit and the library at `src/common.vla` and `src/kitchen.vla`, the paths the source's includes resolve to, so that Build in the drawer writes the cartridge's bytes; the replay and golden blocks come at `COURSE.0`'s tasting. `tools/check_web_offline.ps1` adapted: the page loads nothing and links nowhere, and a built page's blocks are `src/`'s files both ways. The page is Alonzo's full-screen player (`ENGINE.14`), opening on the empty sheet with Buffet in the picker after it (`ENGINE.15`, the owner's word of 2026-10-14), and it shows the model's sheets live by their tabs before any panel exists, so first light is `FRONT.1`'s, the dish that completes it. The second slice, the loop oracle's cases and the JavaScript hand, is the tasting's. *Needs:* `HOUSE.2`. *Oracle, met:* the page built here carrying the module, the offline check green over it, and the owner's hand test on it; in CI at the push. *Pays into:* every hand test after it; first light; the playtest pass's browser half; the deploy at service. `~days`
 
-  *Closed 2026-10-15.* Predicted `~days`; cost one session, the scoping, the build and the owner's hand test, beside the dev profile's optimization (`00eb51c`, a commit of its own). What landed: the pin at `alonzo` 0.1.3 and its lock; the kit copied again and the page's four files copied, all at `v0.1.3`; `tools/check_vendored.ps1`, grown from `check_kit.ps1`, its control five mutants; `tools/build_web.ps1`; `tools/check_web_offline.ps1`, its control fourteen mutants; `run_checks.ps1`'s floor raised to 4; the page built in both CI jobs, the ratchets job's without the module. The cartridge's bytes and the describe golden stood. One of the seven predictions missed: the module came out 48 bytes larger than the 0.1.0 build it was set against, the engine's catalog citing `docs/SPEC.md` since 0.1.1. CI's numbers (P6) and the Linux half of P2 wait for the push.
+  *Closed 2026-10-15.* Predicted `~days`; cost one session, the scoping, the build and the owner's hand test, beside the dev profile's optimization (`00eb51c`, a commit of its own). What landed: the pin at `alonzo` 0.1.3 and its lock; the kit copied again and the page's four files copied, all at `v0.1.3`; `tools/check_vendored.ps1`, grown from `check_kit.ps1`, its control five mutants; `tools/build_web.ps1`; `tools/check_web_offline.ps1`, its control fourteen mutants; `run_checks.ps1`'s floor raised to 4; the page built in both CI jobs, the ratchets job's without the module. The cartridge's bytes and the describe golden stood. One of the seven predictions missed: the module came out 48 bytes larger than the 0.1.0 build it was set against, the engine's catalog citing `docs/SPEC.md` since 0.1.1. CI's numbers (P6) and the Linux half of P2 came with the push, run 38712895205, and were written into their cells with `MENU.1`.
 
 ## 🍽 THE COURSES
 
@@ -50,6 +50,12 @@ empty.*
 - ✅ **`STATION.1`, first slice — stocks: four rungs.** *Scoped and built 2026-10-14, hand-tested 2026-10-15: the scoping, its fifteen decisions approved whole by the owner, every prediction beside its number, what the build found and the owner's hand test are under THE ITEMS, SCOPED.* The Stocks sheet, its name plain as the model's are, a rung a row, cheapest first: four fictional rungs at $1, $5, $25 and $100, labeled `rung 1` to `rung 4`, the working labels (a penny stock, a small cap, a mid cap and a blue chip) kept in the docs and never in a cell until `MENU.3` names them, since real index and fund names are others' marks; each rung's start in whole cents, its beta and its dividend yield as values, and its workings one fill a column. A price is `=INT(<start>*Market!$B$25^<beta>+0.5)`, the index the difficulty picks to the rung's beta, whole cents, one rounding, half up: a power, so that a beta holds at every level of the index and no price reaches zero at any seed, none falling below 11, 96, 833 and 4,386 cents, a bound the hand holds; the betas 2, 1.5, 1 and 0.75, the third the market itself. Yesterday's price is the same formula over yesterday's index, `Market!D25`, the Market sheet's fills reaching a column D, recomputed and never remembered. The fourth rung pays a dividend, 2% a year, 50 cents a share fixed from its start, on the year's 91st, 182nd, 273rd and 364th days, so that income exists from the first quarter, the cell holding it all that day for `PLATE.1` to pay at the day's first frame. Written as rows and not yet a ladder, a rung at a time, in the order a walk over a list of rungs writes, since the ladder is the pattern's second appearance and enters the library with the bonds (`STATION.2`). *Oracle, met:* `buffet.rs`, every price today and yesterday, each dividend and the dividend today held at every frame of two years and two days and on every day of a hundred years at one frame a day; the opening exactly the starts; each rung's least at or above the bound; the dividend on exactly four days a year, the days the hand lists; `BD-7`'s scan and the census's `(every-frame 0)` kept; the owner's hand test in Alonzo's page, every cell it showed the hand's. *Pays into:* `PLATE.1`'s rows, one a rung; the Market panel's prices and their change; the ladder hoist at course 1, whose proof is that this slice expands to its bytes unchanged, which a scratch ladder of 24 lines has already met. `~days`
 
   *Closed 2026-10-15.* Predicted `~days`; cost one session, the scoping, the build and the owner's hand test. What landed: the Stocks sheet and the Market's column D in the source and its cartridge, now 131 rows and 79 formula cells; the hand's rungs, their prices, the dividend's days and the bound in `oracle/src/buffet.rs`; the Stocks sheet held inside the tests of two years, a year at difficulty 0, eight hundred days and a hundred years at one frame a day, two tests of the cartridge more (the rungs' settings, the opening) and three of the hand (the opening at both tiers, the bound, the dividend's days), 27 in all; the describe golden blessed again, moved as predicted; and, in the same commit at the owner's word, `POT.2`'s P2 cell, CI's Linux holding the market bit for bit at the first push. One of the eight predictions missed, and only at first: the suite took 11.6 s while the Stocks sheet's 56 cells were viewed at every frame and every day, and 7.4 s once the window held the four columns that compute, half again the old suite's time on the same machine under the same load. The build found that a cent is a wide step for a $1 share: the first rung's price moves on 25 of the first year's 365 days.
+
+## 📜 THE MENU CARD
+
+- ✅ **`MENU.1` — the strings sheets and the picker.** *Scoped, built and hand-tested 2026-10-15: the scoping, its fourteen decisions approved whole by the owner and amended at the hand test, every prediction beside its number, what the build found and the owner's hand test are under THE ITEMS, SCOPED.* The content sheets under `src/content/`, a file a sheet holding words alone, one macro named after the file whose body is one call of the library's `strings`, each sheet one kind of string, hidden after the model's sheets, its rows of text each with the course that added it, its vintage, and the reviewer who approved it; the source's manifest its first form, then every include, then the code, each content sheet's macro called where the sheet belongs (the owner's words at the hand test); the library's `picker`, `CHOOSE(k, ...)` over a sheet's rows, generated from the sheet's extent so that a row added needs no formula edited, one cell to 1,547 rows below the headers, the pages of 500 written by the dish whose sheet first passes 1,000 rows; the first sheet, the fine print as a rotating footer, the Disclosures sheet, eight rows in the owner's words, a disclosure a month from the day; and the one-page *How to add a row* in the folder, for a stranger with five minutes. Every other sheet arrives with the dish that reads it, named for it: `Questions` (`MENU.2`), `Headlines` (`FRONT.3`), `Memos` (the first of `MENU.4` and `GUARD.3`), `Firms` (`BACK.2`), `Awards` (`MENU.7`), `Errors` (`PLATE.6`) and `Exits` (`FRONT.7`). *Oracle, met:* the layout check's content rule and the source's order (`tools/check_layout.ps1`, the content sheets' pin raised from 0 to 1, its control fifteen mutants), their headers held by `check_spdx.ps1`; the page's content blocks (`tools/build_web.ps1`, `tools/check_web_offline.ps1`, its control fifteen mutants); the oracle's tests, the fine print held to the hand at every frame, the rows counted by their extent, every row picked in its turn, a row added expanding with no other edit, the one picker's limit and the tripwire before it, and every sheet written bare with the content hidden; and the owner's hand test in the page. *Pays into:* every string any view shows: the ticker (`FRONT.3`), the exam (`MENU.2`), the names (`MENU.3`), the errors (`PLATE.6`), the endings (`FRONT.7`); and the cheapest pull request there is. `~days`
+
+  *Closed 2026-10-15.* Predicted `~days`; cost one session, the scoping, the build, the owner's hand test and its amendment. What landed: `src/content/disclosures.vla` and its *How to add a row*, `src/content/README.md`; `strings` and `picker` in `src/kitchen.vla`; the source's include at its top, its call of the sheet and the fine print's index, and the game's notes rewritten for `BD-2`, the back office open and the front office not; the hand's rotation and five tests of the cartridge, 33 in all; the describe golden blessed again; the layout check's content rule; the page's content blocks; `CONTRIBUTING.md`'s fifth rule; and, in the same commit, the Linux cells CI's run 38712895205 answered for `STATION.1` and `HOUSE.4`. One of the nine predictions missed: the page grew 9,587 characters where about 5,000 were predicted, the library's own block forgotten; and P6 held at the median alone, one round of five past it. After the hand test passed, the owner rewrote seven of the eight rows, grouped every include together and set the manifest first, the includes after it and the code after them; the cartridge moved in those seven rows and nowhere else.
 
 ## 🔪 MISE EN PLACE
 
@@ -990,9 +996,9 @@ the build, the same day.
 | | What | Predicted | The number |
 |---|---|---|---|
 | P1 | the cartridge | 131 rows (96), 79 formula cells (51) in 28 shapes (22) of 26 texts (20), 14 levels (13), `(every-frame 0)`; the describe golden moved by the notes, the budget, `(budget 30 79 2370 2000000)`, the plan, the readers, the Market's six fills that reach D, and six new shapes | *Measurement*, as predicted in every count; the golden's diff the notes, the budget, the plan, the readers (Day 11 to 13, the Market's 31 to 34, the Stocks' 8), the Market's six fills, each a cell more and its shape's number one on since `D14` stands before them, and the six new shapes, `POT.1`'s and the rest of `POT.2`'s unmoved. Not predicted: 6 runs of 27 lanes (2 of 9), each of the Stocks' four fills one run of its four rows, and 52 cells computed alone (42) |
-| P2 | the hand at every frame of two years and two days | every price today and yesterday, each dividend, the dividend today and the Market's column D equal at all 21,960 frames, natively here and in CI on Linux | *Measurement*: equal at all 21,960 frames here, on Windows, at the first run. CI's Linux at the push |
+| P2 | the hand at every frame of two years and two days | every price today and yesterday, each dividend, the dividend today and the Market's column D equal at all 21,960 frames, natively here and in CI on Linux | *Measurement*: equal at all 21,960 frames here, on Windows, at the first run; and on Linux at the push, run 38712895205, the cartridge's 14 tests green, this one among them |
 | P3 | a hundred years at one frame a day | every price and the dividend today equal on all 36,500 days, the dividend paid on exactly 400 of them; the whole suite under 10 s in a debug build (about 5 now), 6 to 9 | *Measurement*: equal on all 36,500 days, the dividend paid on exactly 400. The suite first took 11.6 s, its two long tests 11.3 and 12.1 s alone, **missed**: the Stocks sheet's settings and workings, 56 cells, were viewed at every frame and every day, and a debug build's view is the cost, the hand's arithmetic microseconds. With the window narrowed to the four columns that compute and the settings read once by a test of their own, 7.4 s, the two long tests 7.4 and 6.6 s: inside. A suite's time is the machine's load as much as the code's: the next day, the processor half busy with another program, the cartridge's tests took 10.9 s against the old suite's 7.3 to 7.5 s, alternated in a worktree of the commit before, half again its time either way |
-| P4 | the opening | every price on day 0 exactly its start, 100, 500, 2,500 and 10,000, here and on Linux | *Measurement*: exactly the starts at every frame of day 0 here, and the hand's own at both tiers. Linux at the push |
+| P4 | the opening | every price on day 0 exactly its start, 100, 500, 2,500 and 10,000, here and on Linux | *Measurement*: exactly the starts at every frame of day 0 here, and the hand's own at both tiers; and on Linux at the push, run 38712895205 |
 | P5 | each rung's least price in the first game's hundred years | at the first year's low, near day 91: 97 to 99, 489 to 494, 2,465 to 2,480 and 9,905 to 9,925 cents; every price far above the bound's 11, 96, 833 and 4,386 | *Measurement*, by a scratch probe over the hand: 98, 492, 2,474 and 9,921 cents, inside each. The index's least is 0.98943 on day 91, and each rung reaches its least cent sooner, on days 44, 72, 75 and 82, and holds it through the low, a cent being a wide step at these prices. The bound as derived, 11, 96, 833 and 4,386 |
 | P6 | the largest fall from a peak in the first game's hundred years | the index's between 20 and 35% (seed 777's was 30.0%); each rung's `1-(1-f)^b` of it to a cent, so the first rung's 36 to 58%, the second's 28 to 48% and the fourth's 15 to 28% | *Measurement*: the index's 34.7%, from day 21,325 to day 22,159 (years 58.4 to 60.7), inside near the top of the range; the rungs' 57.3%, 47.2%, 34.7% and 27.3%, each `1-(1-f)^b` to four places, inside, three of their peaks a day earlier, where the rounding to a cent flattens the top |
 | P7 | the ladder | a scratch `ladder` of under 25 lines, a walk over a list of rungs, writes the table's 20 rows below its headers byte for byte from a call of a line a rung | *Measurement*: four template macros, 24 lines, a walk over the rungs handing its list on whole and the fills after it, wrote the 20 rows byte for byte through the engine's pass over the kit, from a call of a line a rung and a line a fill; deleted with the probe. Inside, by a line |
@@ -1230,11 +1236,11 @@ the build, the same day, P6 at the push and P7 at the owner's hand test.
 | | What | Predicted | The number |
 |---|---|---|---|
 | P1 | the pin | `alonzo` 0.1.3 from crates.io, the lock moving in its version and checksum alone | *Measurement*, as predicted: `cargo update -p alonzo` moved the lock from 0.1.1 to 0.1.3 and its checksum to `90c377d0…77610`, `vla-lang`'s entry unmoved |
-| P2 | the kit copied again | the cartridge the same bytes (`expand --check`), the describe golden unmoved, the 27 tests green here and in CI on Linux | *Measurement*, here: `expand --check` same, the describe golden unmoved, the 27 tests green, the suite 4.1 s. The kit copied CRLF, 409 lines, its LF text the tag's digest. Linux at the push |
+| P2 | the kit copied again | the cartridge the same bytes (`expand --check`), the describe golden unmoved, the 27 tests green here and in CI on Linux | *Measurement*, here: `expand --check` same, the describe golden unmoved, the 27 tests green, the suite 4.1 s. The kit copied CRLF, 409 lines, its LF text the tag's digest. On Linux at the push, run 38712895205: the 27 green, 13 of the crate and 14 of the cartridge |
 | P3 | the module | 749,386 bytes, the size of the 0.1.0 build here, differing from it only where the version and the registry folder's name are spelled | *Measurement*: 749,434 bytes, **missed** by 48. The prediction read 0.1.1 to 0.1.3 alone and set them against a build of 0.1.0, and since 0.1.1 the engine's catalog cites `docs/SPEC.md` where it cited `SPEC.md`, in ten references, 50 bytes of text more (Alonzo's `2e687f2`). The version and the registry folder's name are spelled at the same lengths, as predicted. 216 bytes more than Alonzo's own build of the same code, the registry's paths in the engine's three panic locations |
 | P4 | the page | 1.58 to 1.59 million characters: the template and the scripts 538,000, the module's base64 999,000, the five blocks about 47,000; written in under 2 s | *Measurement*: 1,585,014 characters, every one ASCII: the template and the scripts 538,044 once their five places are filled, the module's base64 999,248, the five blocks 47,722; written in 0.33 s under Windows PowerShell 5.1. Inside |
 | P5 | the checks | 4 checks and 4 controls green, the vendored check's 5 mutants and the offline check's 14 each failing by name | *Measurement*: ALL GREEN, 4 checks and 4 controls in 4.2 s, every mutant failing for its own reason. `check_spdx` reads 37 tracked files, the page's four Apache-2.0 |
-| P6 | CI | the crate job longer by the page and its check, under 10 s; the ratchets job by under 5 s | |
+| P6 | CI | the crate job longer by the page and its check, under 10 s; the ratchets job by under 5 s | *Measurement*, run 38712895205: the page built and held offline in a step of 3 s in the crate job, and built in a step of 4 s in the ratchets job, which took 22 s in all where it had taken 24. Inside. The crate job as a whole grew from 40 s to 74 s, but by the dev profile's optimization (`00eb51c`, pushed with this item), its build, lint and test step 51 s where it had been 19, the engine and the language compiled optimized on every run |
 | P7 | the hand test | the four prices moving on a day's first frame alone, as the hand has them; Build's text equal to the cartridge's LF bytes | *Measurement*, the owner's two screenshots and a clipboard comparison: paused at frame 1,394, day 46, the four prices today 98, 494, 2,480 and 9,941 cents and yesterday 98, 494, 2,481 and 9,942, the hand's to the cent, as `STATION.1`'s hand test had them at frame 1,389; Build's text in the drawer the cartridge's 5,607 LF characters, the comparison printing "same bytes". Inside. The screenshots hold one paused frame, so the moving itself was seen live and is not in them |
 
 **What the build found.** The engine's refusal texts are bytes of its
@@ -1424,3 +1430,413 @@ nothing that changes every frame (`BD-7`: only the Day sheet reads the
 frame, and the Day sheet, its phase moving every frame, is never still).
 Uncommitted there on 2026-10-15, awaiting the owner's `?blit=1` run and
 hand test; the views' item builds on its tree.
+
+## `MENU.1` — the strings sheets and the picker
+
+*Scoped 2026-10-15 at the owner's word, "Scope and implement MENU.1 in
+Buffet (Delta/Buffet): the strings sheets and the picker", to stop for the
+owner's approval before building: from `OMAKASE.md`'s line (`COURSE.0`'s
+item 11), the numbers behind it (`MISE.3`'s probe 3, P3.1 to P3.5) and the
+spelling the owner approved from them, and from what the same day changed,
+the workbook as the game's interface (`FRONT.1`) and `BD-2`'s amendment, no
+kitchen word in the game. Each decision carries its recommendation, for the
+owner to approve, amend or strike before the build. The predictions were
+written before any number was taken; each number goes beside its own at the
+build. Approved whole by the owner the same day, "Recommendations approved;
+proceed with implementing MENU.1 as scoped", and built that day. Alonzo's
+and Frazaro's trees, where peers built `ENGINE.18` and `KERNEL.42`, were
+read and never touched.*
+
+**What it stands on, read on the day** (`vla-lang` 0.9.3 and `alonzo`
+0.1.3 as the registry holds them; `web/` as vendored at `v0.1.3`).
+- The pass splices each top-level include at its own line, resolved
+  against the source's folder, so `(include "content/disclosures.vla")` in
+  `src/buffet.source.vla` is the text at `src/content/disclosures.vla`,
+  which the runner's `gather` reads and the page's Build finds by a block
+  at that path. The pass defines every `defmacro` first and copies the
+  first other form, unexpanded, as the manifest (`alonzo::pass`), so a file
+  that writes rows is included after the manifest: the kit and the library
+  before it, the content after.
+- A sheet stands among the tabs where a row first names it, and the
+  devices after every sheet the cartridge names (`ensure_sheet`; `HOUSE.4`'s
+  hand test read Screen, Day, Dice, Market, Stocks, Clock, File and Input);
+  `(sheet "X" hidden)` hides one. The machine makes a twin, `X.last`, for
+  every sheet, hidden, and the record lists every sheet in tab order with
+  its state, the twins among them. The vendored viewport leaves a hidden
+  sheet out of the strip and lists it under a box, "hidden sheets (n)", a
+  click away (`viewport.js`, `_renderTabs`); today the box holds Buffet's
+  eight twins.
+- A name a formula writes bare, by `vla-lang`'s quote rule (`refers.rs`,
+  `sheet_needs_quotes`, Excel's): letters, digits, `_` and `.`, no leading
+  digit, and not itself a cell, as `FY2026` is, or an R1C1 reference, as
+  `R2C3` is. Excel caps a sheet's name at 31 characters.
+- The expander has what a walk needs: `quote-if`, `null?`, `car`, `cdr`,
+  `cddr`, the comparisons, `+expand`, `-expand`, `quotient-expand`,
+  `mod-expand`, `&expand` and `address-expand`. A chain stops at 5,000
+  links, an application and an unwrapped `begin` each (the kit's header),
+  so a walk that writes a row's cells in a `begin` and recurses takes two
+  links a row and stops near 2,500 rows.
+- `MISE.3`'s walker, still in that session's scratchpad: `picker` and
+  `picker-walk`, `=CHOOSE(` and the index, then a reference a row joined
+  onto the text so far under `unquote`, rows `first` to `last`, the formula
+  written once the row passes `last`. On its content sheet, its references
+  bare and its index `B1`, it held 1,548 rows, `A1` to `A1548`, 8,191
+  characters past the `=`.
+- The page keys a library by its block's id less `library-`, and at Build
+  hands the pass every library as its path and its text
+  (`index.template.html`, `libraryPairs`); `check_web_offline.ps1` reads a
+  block's id as `[a-z0-9_-]`. Both writers of `src/`'s blocks,
+  `build_web.ps1` and the check's `Get-OwedBlocks`, read `src/`'s top level
+  alone.
+- `check_layout.ps1` pins content sheets at 0, wants the source's includes
+  to be exactly `common.vla` then `kitchen.vla`, and counts a content sheet
+  before its pin among its control's seven mutants. `check_spdx.ps1`
+  already holds every text file under `src/`, a `.md` among them, to the
+  map's header, `CC-BY-SA-4.0` for `src/content/**`.
+- The cartridge is committed, and `the_cartridge_is_its_source_expanded`
+  fails after any edit of what the source includes until the pass runs
+  again: a stranger who adds a row in GitHub's editor, without Rust, leaves
+  that test red.
+- The game's notes still read "Buffet: all you can sheet. The kitchen is
+  open and the dining room is not", against `BD-2`'s amendment and the
+  tagline's settled spelling, "All You Can Sheet"; `FRONT.1`'s rescoping
+  claims their rewrite, and waits on Alonzo.
+- `ENGINE.18`, 🟡 in Alonzo's tree: a grid cartridge opens on the sheet
+  `Camera!B3` names, else on the first visible sheet in tab order, and
+  every sheet shown is drawn from the `values` view after frame 0. So a
+  hidden content sheet never opens the game, and one a player opens moves
+  no formula's text.
+
+**The decisions.**
+
+1. **One sheet now, the fine print's, and every other with the dish that
+   reads it (rec).** `FRONT.1`'s rule, that no sheet stands empty waiting
+   for its dish, holds as well for a sheet whose rows nothing reads, and
+   the one string course 0 reads through this item is the fine print. So
+   `MENU.1` builds the verbs, the folder's rules, the page's blocks, the
+   tests, the *How to add a row* and one content sheet; the question bank
+   comes with `MENU.2`, the headlines with `FRONT.3`, the memos with the
+   first of `MENU.4` and `GUARD.3`, the firms' names with `BACK.2`, the
+   error values' jokes with `PLATE.6`, the awards with `MENU.7` and the
+   exits with `FRONT.7`, each a file, an include and an index, named by
+   decision 2's rule. *The alternative:* all eight now, seeded from
+   `BUFFET.md`'s appendix, their rows read by no cell until their dishes.
+
+2. **The names: a fund manager's word for the one kind of string a sheet
+   holds, written bare, colliding with no view and no model's sheet
+   (rec).** One kind a sheet, since a sheet's rows are read by one picker
+   and a row added moves no other: a sheet of every kind of joke would want
+   a picker a kind, each over a stretch that a row added in its middle
+   moves. The line's eight, checked:
+
+   | The line's name | What it holds, and what reads it | The verdict | The sheet | With |
+   |---|---|---|---|---|
+   | Jokes | the fine print, `BUFFET.md`'s rotating footer, which its appendix files under Jokes; read at every view's foot (`FRONT.1`) | renamed: a fund's workbook keeps no sheet of jokes, and keeps its fine print as its disclosures, where these jokes sit deadpan | `Disclosures` | `MENU.1` |
+   | Exam | the bank: a question, four options, the answer and the why; read by the Exam view (`GUARD.1`) | renamed: it cannot sit beside the Exam view | `Questions` | `MENU.2` |
+   | Headlines | the ticker's headline of the day; read by the Overview (`FRONT.3`) | kept: a terminal's own word | `Headlines` | `FRONT.3` |
+   | Memos | Mildred's memos; read by the audit and the events (`GUARD.3`, `MENU.4`) | kept: an office's own word | `Memos` | the first of `MENU.4` and `GUARD.3` |
+   | Names | the firms' four, by archetype (`BACK.2`); later the rivals and every vehicle (`MENU.3`) | renamed: "Names" is Excel's word for its defined names, which is what a spreadsheet's user reads in it first, and it would hold several kinds; a rung's name belongs on the rung's own row of the Stocks sheet | `Firms` | `BACK.2` |
+   | Achievements | the achievements and their triggers; read by the Overview (`MENU.7`) | renamed: a game's word, where a fund wins awards | `Awards` | `MENU.7` |
+   | Errors | an error value's joke, where the error lands (`PLATE.6`) | kept: plain, and what they are | `Errors` | `PLATE.6` |
+   | Endings | the endings (`FRONT.7`) | renamed: a fund ends by its exit | `Exits` | `FRONT.7` |
+
+   Each is bare by `refers.rs`'s rule and under 31 characters, and none is
+   a view's name as `FRONT.1` lists them (Portfolio, Market, Overview, Exam,
+   Work), a model's sheet's (Day, Dice, Market, Stocks) or a device's.
+   `Disclosures` alone is built; the others are this scoping's
+   recommendations to their dishes, each dish's scoping free to amend its
+   own. The headers over a sheet's columns are a fund's words too
+   (decision 4).
+
+3. **Hidden, after the model's sheets (rec).** A content sheet is the
+   workbook's reference data, which a fund's workbook keeps hidden at the
+   back: the strip shows the views and the model, and the strings are a
+   click away under the strip's box, so nothing is locked (`AD-6`), and the
+   exam's answers, later, are not the first thing a player stumbles on.
+   Hidden, a content sheet never opens the game under `ENGINE.18`'s rule.
+   The library's `strings` writes the sheet's `(sheet "<name>" hidden)`
+   row, so the rule is written once, and the sheet stands among the tabs
+   where the source's include of it stands: after the `(sheets ...)` row,
+   which names every view and model's sheet, so after all of them and
+   before the devices. *The alternative:* visible, after the model's sheets
+   as the model's own are, `FRONT.1`'s reading of `AD-6`.
+
+4. **A content file holds words alone, one call of the library's `strings`
+   (rec).** `src/content/disclosures.vla`, `CC-BY-SA-4.0` by its header,
+   holds one form, `(strings "Disclosures" "disclosure" ...)`: the sheet,
+   the word for a row of it, which heads its texts' column, then the rows,
+   a row a line, each `(<vintage> "<approved by>" "<text>")`, under a
+   comment naming the three columns, the two short fields first so that
+   they stand in columns and the text runs to the line's end. No
+   `defmacro`, no include and no formula stands in a content file (decision
+   9 holds it): the code that writes the rows is the library's,
+   `AGPL-3.0-or-later`, and what a sheet's rows mean to the game is the
+   source's, so the line between the words and the code is the line between
+   the two licenses. The library gains two verbs at their first writing,
+   where the ratchet waits for a second, since a content file can hold no
+   code; the second sheet is their second writing:
+   - `strings`, the sheet: its `(sheet ... hidden)` row; column A 100
+     characters wide and C 20; the headers in row 1, the word for a row,
+     `vintage` and `approved by`; a row of the call a row of the sheet from
+     row 2, the text in A, the vintage in B and the approver in C; and beside
+     the table, labels in E and values in F: `rows` in `F1`, the count the
+     walk made, a value; `the row shown` in `F2`, which the dish that reads
+     the sheet writes; and `shown` in `F3`, the picker. A walk over the
+     call's rows, its list handed on whole, two links of the chain a row.
+   - `picker`, `MISE.3`'s walker with the sheet's name taken out of its
+     references: `=CHOOSE(F2,A2,A3,...)` in one cell, a reference a row
+     joined a step under `unquote`. `strings` calls it over `A2` to the last
+     row, and a dish may call it over another column of the same rows, as
+     `MENU.2`'s question bank will, a picker a field.
+
+   So a row added is a line of the call: the row's three cells, the count
+   and the picker move, and no formula is edited (the oracle holds it,
+   decision 11). A view reads `Disclosures!F3` and never holds the text, as
+   `MISE.3`'s approved spelling has it. A quote inside a text is a single
+   quote, since a double one is written `\"`. *The alternatives:* the text
+   first and its two fields after it, where a stranger's eye finds them at
+   a ragged line's end; or a picker the source writes over a count the
+   source states, an edit beside every row added.
+
+5. **The picker: one cell to 1,547 rows, and the pages of 500 when a sheet
+   nears it (rec).** On this layout one picker holds 1,547 rows, one fewer
+   than `MISE.3`'s 1,548, since row 1 holds the headers (*derived*:
+   `CHOOSE(F2,A2,...,A1548)` is 8,188 characters past its `=`, and one row
+   more 8,194, past the 8,192). No sheet nears it for courses: the question
+   bank aims at 40 to 60 rows, the fine print at dozens. So the walk writes
+   the one cell, a test holds the limit, and the pages of 500, the spelling
+   the owner approved, are written by the dish whose sheet first passes
+   1,000 rows, which a tripwire in the oracle names with this decision
+   (`OMAKASE.md`'s rule, that an instrument with no specimen waits for the
+   course that has one). *The alternative:* the pages now, one cell to
+   1,547 rows and pages of 500 past it, a walk that counts by `mod-expand`
+   and a test of 2,000 rows as `MISE.3`'s was: some twenty lines of the
+   library more, which no row of course 0 runs.
+
+6. **The fine print: a disclosure a month, from the day (rec).** The source
+   writes the Disclosures sheet's index beside its include: `days a
+   disclosure stands` in `E5` and 30 in `F5`, a value, the teacher's dial as
+   `Day!B1` is; and `F2`, `=MOD(INT(Day!$B$3/F5),F1)+1`, the month of the
+   day round the rows, row 1 on the first day. It reads the day and never
+   the frame or the phase (`BD-7`), so it computes on a day's first frame
+   alone, and the picker only when its index moves, once in thirty days. A
+   month is thirty seconds at `(rate 30)`: long enough to read, and twelve a
+   year, so that each of eight is seen once or twice in the first year. The
+   cell stays on its sheet until `FRONT.1`'s views read it at their foot.
+   *The alternatives:* a week, 7, every disclosure in the first minute and
+   again in every minute after; a day, 1, a new one a second, too fast to
+   read.
+
+7. **The rows: the appendix's eight fine prints, two rewritten (rec).**
+   Checked against `BD-2`'s amendment and the policy's four rules:
+
+   | The seed (`BUFFET.md`, Appendix A) | The verdict | The row |
+   |---|---|---|
+   | "Past performance is not indicative of future results, but it is all we have." | kept | as written |
+   | "Buffet is not a financial advisor. Buffet is barely a game." | kept: the title is the one name allowed, and the joke is on ourselves | as written |
+   | "All investments carry risk. Some carry a lunch tray." | rewritten: a lunch tray is the buffet's | "All investments carry risk. Some also carry a load." (a load, a fund's sales charge) |
+   | "Securities are not FDIC insured. Neither are your feelings." | kept | as written |
+   | "Diversification does not ensure a profit; it ensures you will be wrong in several places at once." | kept | as written |
+   | "Forward-looking statements are statements of hope wearing a tie." | kept | as written |
+   | "This is not a recommendation to buy or sell. It is barely a recommendation to breathe." | kept | as written |
+   | "Your capital is at risk. So is the office microwave." | rewritten: the break room's appliance, a kitchen's, and no financial joke | "Your capital is at risk. Our fees are not." |
+
+   The rest of the appendix was read the same day, for the dishes that will
+   seed from it: the headlines, the renames, the error values, the rivals,
+   the endings and all the memos but one hold no kitchen word (a soybean is
+   a commodity there and ice cream a business; the rivals and the renames
+   keep their `(check)` for a living mark). Two more fall: Mildred's
+   "Reminder: the break-room refrigerator is not an asset class.", the
+   kitchen's flavor again, for which "Reminder: petty cash is not a
+   liquidity facility." is offered to `MENU.4`; and the achievement "Greedy
+   When Others Were Fearful", no kitchen's but the investor's own
+   quotation, which `BUFFET.md` §1 keeps out of the game, for `MENU.7` to
+   rename. `BUFFET.md` stays the brief: one dated line under its appendix's
+   heading names what fell and where the rows stand. The eight rows'
+   approver is the owner, who approves them by approving this scoping,
+   under the GitHub name that commits here, `prestoncolejohnson` (rec; the
+   owner's to name).
+
+8. **The stranger's five minutes (rec).** `src/content/README.md`, "How to
+   add a row", one page, where GitHub shows it beneath the folder's files:
+   open the sheet's file and press edit; copy the row above yours onto a
+   line below it; write your text, keep the vintage, and leave the approver
+   `""`; keep the voice (a fund's compliance department, deadpan; the humor
+   financial and economic; punch up; fictional names; PG-13; no kitchen
+   word); a single quote inside a text; commit signed off, and open the
+   pull request. Then, plainly: one check stays red until the cartridge is
+   expanded again, which the reviewer does with the approval, writing their
+   name in the row's `approved by`; and, for a person with Rust, the two
+   commands that do both at home. GitHub signs off a browser's commit by
+   itself once the repository requires it, a setting of the owner's
+   (`MENU.6`'s path). The vintage is the course the row enters, 0 until
+   course 0 is served, and a number, so that `MISE.1`'s second slice can
+   keep a frozen course's bytes when a later course adds rows to a live
+   content file, either by keeping each course's rows to its vintage or by
+   copying the content into the frozen folder, which is that slice's
+   decision. No check holds the approver filled, so a stranger's checks go
+   green once the cartridge is expanded. *The alternatives:* a check that
+   every row has its approver, red until approval, a sign-off a newcomer
+   reads as a failure; a bot that expands a content pull request, an action
+   writing to strangers' branches.
+
+9. **The layout check's content rule (rec).** `tools/check_layout.ps1`
+   holds:
+   - `src/content/` holds content sheets, each `<name>.vla` named in
+     lower-case letters, digits and hyphens, the block id the page needs
+     (decision 10), and its `README.md`; anything else is stray.
+   - The content sheets' pin raised from 0 to 1.
+   - The source includes `common.vla`, then `kitchen.vla`, then each
+     content sheet once as `content/<name>.vla`, each by a line of its own;
+     an include of a content sheet that is not there fails, and so does a
+     content sheet the source does not include.
+   - A content sheet includes nothing and defines no macro (decision 4).
+
+   `-Control`: the clean copy, six files now, and eleven mutants: the
+   seven, the content sheet's become a second sheet past the pin, and four
+   more, a content sheet the source does not include, one that includes,
+   one that defines a macro, and one with a capital letter in its name.
+
+10. **The page: a content sheet a library block of its own (rec).**
+    `tools/build_web.ps1` writes, after the top level's libraries, each
+    `.vla` of `src/content/` as `library-content-<name>` at
+    `src/content/<name>.vla`, so that Build in the page's drawer hands the
+    pass the text the source's include resolves to and still writes the
+    cartridge byte for byte, as `HOUSE.4`'s decision 4 foresaw; the id's
+    `content-` keeps a sheet from colliding with a library of its name.
+    `tools/check_web_offline.ps1`'s `Get-OwedBlocks` owes the same blocks,
+    both ways, and its control's fourteen mutants become fifteen, a page
+    whose content block is cut. The drawer's library box then lists
+    `src/content/disclosures.vla`, where a row can be tried and built in the
+    page. *The alternative:* `library-<name>`, a content sheet free to
+    collide with a library by name.
+
+11. **The oracle (rec).** In `oracle/`:
+    - The hand, `buffet.rs`: the days a disclosure stands, 30, and the row
+      shown on a day, the day over 30 round the rows, from 1; never the
+      texts, which are the content's, written once.
+    - At every frame of two years and two days and of 800 days at one
+      frame a day: the Disclosures sheet's `F2` the hand's row and `F3`
+      that row's text, read off the sheet's own column A.
+    - The count: `F1` the number of rows the sheet holds, by its extent.
+    - Every index: the days a disclosure stands written 1, at one frame a
+      day, eight days pick the eight rows in turn.
+    - A row added: the source expanded with one row more in the content
+      file's call, handed to the pass as that file's text, differs from the
+      cartridge in the new row's three cells, `F1` and `F3` alone, loads,
+      and picks the new row at its index.
+    - The limit: a scratch sheet of `strings` at 1,547 rows loads and at
+      1,548 is refused, `calc-formula-too-long`; and the tripwire, every
+      content sheet under 1,000 rows, failing with decision 5's name.
+    - Every sheet bare: each sheet of the cartridge its own spelling under
+      `refers.rs`'s quote rule, no two the same without case, and every
+      content sheet hidden.
+    - Kept: the cartridge its source expanded; `BD-7`'s scan and the
+      census's `(every-frame 0)`, which hold the two new formulas; the
+      describe golden, blessed again and read in its diff.
+
+12. **The words (rec).** `CONTRIBUTING.md`'s content policy gains the
+    amendment as its fifth rule, *A fund manager's words*: the game looks
+    and feels like a fund manager's workbook, its humor financial and
+    economic, and no kitchen word reaches it, the kitchen naming the work in
+    the developers' documents alone; the title, "Buffet", and the tagline,
+    "All You Can Sheet", are the only exceptions. Its voice paragraph names
+    a fund's compliance department as the voice, its promise of the *How to
+    add a row* becomes a link to it, and its names' paragraph spells the
+    tagline as the README's title does. And the game's notes are rewritten
+    now, a string of the game being this family's and `BD-2` in force:
+    "Buffet: All You Can Sheet. The back office is open and the front office
+    is not: so far ...", the rest as it stands, the fine print added, "and
+    the fine print, a disclosure a month", and the Disclosures sheet named
+    among the hidden ones. `FRONT.1` then finds its notes done. *The
+    alternative:* the notes left to `FRONT.1`, which waits on Alonzo.
+    `NOTICE` and `TRADEMARK.md` keep the tagline in lower case: legal texts,
+    the owner's and counsel's (`HOUSE.6`).
+
+13. **The hand test, the owner's, on the page built here:**
+    - Buffet run at full screen; the strip's box ticked, "hidden sheets";
+      the Disclosures sheet opened, its eight rows with their vintage and
+      approver, and `F3`, `shown`, the first disclosure;
+    - `F3` turning to the second on day 30, at frame 901, thirty seconds
+      in;
+    - the drawer's library box listing `src/content/disclosures.vla`, and
+      Build writing the cartridge byte for byte, compared with
+      `src/buffet.vla` by a command given at the handover.
+
+14. **The stale places, rewritten at the build.** `OMAKASE.md`'s `MENU.1`
+    line (the one sheet, the names, the pages' trigger), its open decision
+    on the sheet names, and `MISE.6`'s hoist table (`strings` and `picker`
+    into `src/kitchen.vla`, no cartridge's bytes yet to stand); the source's
+    opening comment, which lists the dishes served. `MISE.1`'s line in this
+    file names the verb `picker` at `MENU.1`, and stands. And in the same
+    commit, as `POT.2`'s P2 rode in `STATION.1`'s, the Linux cells CI's run
+    38712895205 answered: `STATION.1`'s P2 and P4, and `HOUSE.4`'s P2 and
+    P6 with its closing note.
+
+**The predictions, before any number.** The numbers column was filled at
+the build, the same day, P9 at the owner's hand test.
+
+| | What | Predicted | The number |
+|---|---|---|---|
+| P1 | the cartridge | 169 rows where 131 stood: the sheet's row, two widths, three headers, three labels, eight rows of three cells, the count, the picker, and the source's label, setting and index; 81 formula cells where 79 | *Measurement*, as predicted: the runner printed `(rows 169) (loads yes)`, the rows in the order listed, 81 formula cells |
+| P2 | the describe golden | moved in the notes; the budget's formulas, 79 to 81 and 2,370 to 2,430 a second; the plan's shapes, texts, formulas and alone, 2 more each, its levels, runs, lanes, every-frame and cycles unmoved; the Day sheet's readers one more; a readers row and two shapes for the Disclosures sheet; nothing else | *Measurement*, as predicted: the notes; `(budget 30 81 2430 2000000)`; shapes 30, texts 28, formulas 81 and alone 54, the levels 14, runs 6, lanes 27, every-frame 0 and cycles 0 unmoved; `(readers "Day" 14)`; `(readers "Disclosures" 11)` and two shapes, the row shown at level 1 and the picker at level 2; nothing else |
+| P3 | the pass and the load | the pass under a millisecond longer; the load under 0.1 ms longer, a picker of eight references where `MISE.3`'s 552 cost 2.3 to 2.5 ms | *Measurement*, a scratch runner of the pass and the load, three runs of 200 each, opted out of Windows' throttling and pinned to the performance cores: the pass 1.45 to 1.51 ms at p50 where it took 1.41 to 1.45, 0.02 to 0.09 more; the load 0.58 to 0.59 ms where it took 0.48 to 0.51, 0.08 to 0.10 more. Inside, the load by a hair |
+| P4 | the step | an ordinary frame unmoved; a day's first frame computing the index and, once in thirty days, the picker, under a microsecond more | *Measurement*, the same runs, two years at thirty frames a day: an ordinary frame 1.8 µs at p50 before and after; a day's first frame on which the fine print stays 11.8 µs where it took 11.6 to 11.8; a day's first frame on which it moves, day 30 and every thirtieth after, 12.5 to 12.6 µs where the same frames took 11.6 to 11.9, 0.6 to 0.9 µs more. Inside |
+| P5 | the limit | 1,547 rows load and 1,548 are refused, `calc-formula-too-long` at the picker's line; the pass over 1,548 rows under 50 ms | *Measurement*, as derived: 1,547 rows load, the picker 8,188 characters past its `=`; 1,548 are refused, `calc-formula-too-long` at the picker's line, its 8,194 characters; the pass over 1,548 rows 20.7 to 21.0 ms at p50. Inside, and the test holds the limit on every run |
+| P6 | the suite | 33 tests green here, five of the cartridge and one of the hand more, and in CI on Linux; the suite under a second longer than `bea77bc`'s, alternated against it in a worktree | *Measurement*, here: 33 green, 14 of the crate and 19 of the cartridge. The cartridge's binary run alternately with `bea77bc`'s from a worktree, five rounds, each opted out and pinned, on eight threads: 3.93 to 4.76 s where it took 3.63 to 4.37, the medians 4.27 and 3.85 s; the rounds 0.13, 0.17, 0.25 and 0.30 s apart, and the first 1.09. Inside at the median, one round of five past it. Linux at the push |
+| P7 | the page | one block more, `library-content-disclosures`, and the page about 5,000 characters longer, near 1,590,000; Build in the drawer writing the cartridge byte for byte | *Measurement*: 1,594,601 characters, 9,587 more, **missed** by nearly double: the prediction forgot the library's own block, which grew 4,217 characters with its two verbs and their comments. The cartridge's block grew 2,031, the source's 1,652, and the new block holds 1,578 in a tag of 109. Written in 0.34 s. Build in the drawer at the owner's hand test, P9 |
+| P8 | the checks | 4 checks and 4 controls green; the layout check's control eleven mutants and the offline check's fifteen, each failing by name | *Measurement*, as predicted: ALL GREEN, 4 checks and 4 controls; the layout check's eleven mutants and the offline check's fifteen each failing for its own reason. `check_spdx` reads the tracked tree, and the two new files were held through a scratch index that tracked them: 39 files resolved, 6 headers read under `src/` |
+| P9 | the hand test | the box counting ten hidden sheets, the nine twins and Disclosures; `F3` the first disclosure from frame 1 and the second from frame 901 | *Measurement*, the owner's screenshot and comparison, in the owner's Chrome at full screen: the box read "hidden sheets (10)", and the Disclosures sheet stood between Stocks and Clock, the twins after Input; its eight rows with their vintage and approver, `F1` 8 and `F5` 30; at frame 2,845, day 94, `F2` 4 and `F3` "Securities are not FDIC insured. Neither are your feelings.", the hand's row for the day, the round three months on; and Build in the drawer writing the cartridge's 7,638 LF characters, "same bytes". Inside. The first turn, at frame 901, is in no screenshot, and the fourth row on day 94 says the round turned three times; Build, which refuses a source whose include it cannot find, says the content's block was in the page |
+
+**What the build found.** The new tests catch what they stand for, and not
+only through the cartridge's expansion test: three mutants of the cartridge,
+the days a disclosure stands written 7, the picker one reference short, and
+the row shown read off the frame, failed five, six and seven tests, among
+them the fine print held at every frame, every index in its turn, and
+`BD-7`'s scan. A row whose approver is left empty, `""`, as a stranger
+leaves it, expands and loads, so the *How to add a row* holds. The tab order
+the record prints is the one decision 3 predicted: Screen, Day, Dice,
+Market and Stocks, visible; Disclosures, hidden; Clock, File and Input; then
+the nine twins, hidden, each in its sheet's order. And `check_spdx.ps1`
+reads the tracked tree alone, so a content file is held to its header from
+its first `git add` and not before: a stranger's file is tracked in their
+pull request, and only a working copy goes unread.
+
+**Amended at the owner's hand test, 2026-10-15.** Three changes, each the
+owner's. First, the rows: the owner rewrote seven of the eight fine prints
+in their own words, the second alone kept, so that the content file holds
+the owner's rows and not the appendix's. Second, the includes: "I would
+argue that all (include ...) forms should be grouped together at the start
+of the file like most other programming languages so a missed/failed import
+throws an error at the top of the file." The pass already refuses a missing
+include while it splices, before anything expands
+(`vla-include-cannot-read`, wherever the include stands), so what the
+grouping moves is the refusal's line, to the top, and every dependency into
+one place. It met one fact of the pass: an include is spliced where it
+stands, and the first form that is no include and no macro is the manifest,
+so a file included among the source's first forms may define macros alone.
+So a content file defines its rows and the source uses them, as an import
+defines and a body uses in most languages: each file is one macro named
+after it, `(defmacro (disclosures) ...)`, whose body is the one call of
+`strings`, and the source calls `(disclosures)` where the include had
+stood, so that the sheet keeps its place among the tabs. Third, the order:
+"I think the (cartridge ...) form should always be the first form, since
+it's the cartridge's metaform, followed by (include ...) forms, then
+whatever cartridge code comes after includes." The pass reads that order
+as it reads the other, so the source opens on its manifest, its three
+includes follow it, and its code follows them, as do the two sources the
+oracle's tests write; Alonzo's eight sources, which open on their include,
+take the same order in a lint pass of Alonzo's own, at the owner's word.
+Decision 4's "no `defmacro`" became "one macro named after the file, and
+nothing else", and decision 9's rule followed: the manifest the source's
+first form, then every include, then the code; a content sheet one form, a
+macro of its file's name, its body one call of `strings`; and the source
+calling it once. The layout check's control grew from eleven mutants to
+fifteen, a second macro, a macro bearing another file's name, the source's
+call gone, an include among the code and an include before the manifest,
+each failing for its own reason; a first cut of two of them refused to
+apply until a pipeline that handed `Get-LfLines`' array on whole was split.
+The cartridge expanded from the amended files differs from the one the
+owner tested in the seven rows the owner wrote and nowhere else, 169 rows
+still, the describe golden unmoved and the 33 tests green; the page, built
+again, holds 1,595,679 characters.

@@ -16,11 +16,14 @@ page", ENGINE.15). The blocks are written in this order: the page's name
 (page-name, Buffet); each cartridge, src/<name>.vla beside its source
 src/<name>.source.vla, the cartridge's block with data-file, the name a load
 passes on, and then its source's, since Build in the drawer runs the pass
-over the texts the page holds (cartridge-, source-); and every other .vla of
+over the texts the page holds (cartridge-, source-); every other .vla of
 src/, a library at its own path (library-): today src/common.vla, the kit,
-and src/kitchen.vla, Buffet's own, the paths the source's includes resolve
-to against the source's folder, so that Build writes the bytes `cargo run
---release --example expand` writes. Every text is inlined with its line
+and src/kitchen.vla, Buffet's own; and each .vla of src/content/, a content
+sheet (MENU.1), a library block of its own at its path, its id
+library-content-<name>, so that a sheet named as a library never collides
+with it. Those are the paths the source's includes resolve to against the
+source's folder, so that Build writes the bytes `cargo run --release
+--example expand` writes. Every text is inlined with its line
 endings normalized to LF, so that the page holds the bytes the checks pin,
 and a text holding '</script' would end its block in the page and is
 refused. A template with a place naming a file, {{KIND:name}}, is refused,
@@ -41,10 +44,9 @@ game's page without it plays nothing, the double, web/fake.js, reading a
 cartridge's manifest and no row after it and holding no pass. -NoWasm builds
 a page without the module anyway, for the ratchets job, which has no cargo,
 and for tools/check_web_offline.ps1's control. The replay and golden blocks
-come with COURSE.0's tasting, with their files; MENU.1's content sheets,
-under src/content/, will want library blocks at their paths, and the rule
-above widens then. tools/check_web_offline.ps1 holds the page this writes:
-its markup, and each block its file's path and text, both ways.
+come with COURSE.0's tasting, with their files. tools/check_web_offline.ps1
+holds the page this writes: its markup, and each block its file's path and
+text, both ways.
 
 House style (tools/*.ps1): PowerShell 5.1 and pwsh alike, host-free, no
 network; exit 0 with the output named, exit 1 with the reason.
@@ -95,6 +97,10 @@ foreach ($name in $cartridges) {
     if (-not (Test-Path -LiteralPath (Join-Path $srcDir ($name + '.vla')))) { Write-Output ("FAIL: src/{0}.source.vla has no cartridge beside it, src/{0}.vla: expand it first (cargo run --release --example expand)" -f $name); exit 1 }
 }
 $libraries = @($vla | Where-Object { -not $_.Name.EndsWith('.source.vla') -and $cartridges -notcontains [System.IO.Path]::GetFileNameWithoutExtension($_.Name) })
+# The content sheets (MENU.1): each .vla of src/content/, a library block of its own at its path.
+$contentDir = Join-Path $srcDir 'content'
+$contents = @()
+if (Test-Path -LiteralPath $contentDir) { $contents = @(Get-ChildItem -LiteralPath $contentDir -File | Where-Object { $_.Extension -eq '.vla' } | Sort-Object Name) }
 
 # The texts, '</script' refused in every one.
 function Read-Inlined([string]$path, [bool]$normalize) {
@@ -121,6 +127,9 @@ try {
     foreach ($lib in $libraries) {
         $blocks.Add((New-Block ('library-' + [System.IO.Path]::GetFileNameWithoutExtension($lib.Name)) ('src/' + $lib.Name) (Read-Inlined $lib.FullName $true)))
     }
+    foreach ($sheet in $contents) {
+        $blocks.Add((New-Block ('library-content-' + [System.IO.Path]::GetFileNameWithoutExtension($sheet.Name)) ('src/content/' + $sheet.Name) (Read-Inlined $sheet.FullName $true)))
+    }
 } catch { Write-Output ("FAIL: " + $_.Exception.Message); exit 1 }
 
 # The engine's module, base64; required unless -NoWasm.
@@ -146,5 +155,5 @@ foreach ($ph in @('{{VIEWPORT_JS}}', '{{FAKE_JS}}', '{{HOST_JS}}', '{{ALONZO_WAS
 $outDir = Split-Path -Parent $Out
 if ($outDir -ne '' -and -not (Test-Path -LiteralPath $outDir)) { New-Item -ItemType Directory -Path $outDir | Out-Null }
 [System.IO.File]::WriteAllText($Out, $page, (New-Object System.Text.UTF8Encoding($false)))
-Write-Output ("OK: wrote {0} ({1:N0} characters): the viewport, the fake module and the host, {2} block(s): the page's name, {3} cartridge(s) with their source(s) and {4} librar{5}, {6}" -f $Out, $page.Length, $blocks.Count, $cartridges.Count, $libraries.Count, $(if ($libraries.Count -eq 1) { 'y' } else { 'ies' }), $wasmNote)
+Write-Output ("OK: wrote {0} ({1:N0} characters): the viewport, the fake module and the host, {2} block(s): the page's name, {3} cartridge(s) with their source(s), {4} librar{5} and {6} content sheet(s), {7}" -f $Out, $page.Length, $blocks.Count, $cartridges.Count, $libraries.Count, $(if ($libraries.Count -eq 1) { 'y' } else { 'ies' }), $contents.Count, $wasmNote)
 exit 0

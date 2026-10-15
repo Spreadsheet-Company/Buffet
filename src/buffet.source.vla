@@ -17,6 +17,9 @@
 ;   STATION.1 the first station: the Stocks sheet, four rungs of shares priced off the
 ;             index in whole cents, today and yesterday, and the dearest rung's dividend
 ;             on four fixed days of the year.
+;   MENU.1  the strings: the content sheets, each a file of src/content/ that holds the
+;           words alone, and the first of them, the Disclosures sheet, the fine print,
+;           a disclosure a month.
 ;
 ; The market's clock (BD-7). One tick is one market day, thirty frames at the manifest's
 ; rate of thirty, so a day a second and a year about six minutes. The Day sheet alone
@@ -36,12 +39,6 @@
 ; more than a million days. Each jump is a multiplier below 2^22, so every product stays
 ; under 2^53 and exact in a double, as Park and Miller's own step is.
 
-; The libraries whose macros this source calls, both beside it: the kit, Alonzo's
-; common.vla copied at the pin (sheets, labels, headers, on, cells, formulas and
-; hold), then Buffet's own, kitchen.vla (draws).
-(include "common.vla")
-(include "kitchen.vla")
-
 (cartridge "buffet"
   (spec 3)
   (title "Buffet")
@@ -50,7 +47,19 @@
   (seed 791886)                     ; every first game's market: a first year that dips early and closes 10% up
   (author "Spreadsheet Company")
   (license "AGPL-3.0-or-later AND CC-BY-SA-4.0")
-  (notes "Buffet: all you can sheet. The kitchen is open and the dining room is not: so far the market's calendar, a market day a second; its dice, rolled once a day where anyone can watch them roll; the market itself, four waves and a drift, moving once a day; and four stocks priced off it in whole cents, the dearest paying a dividend four days a year. Pick the Day, the Dice, the Market or the Stocks sheet to watch."))
+  (notes "Buffet: All You Can Sheet. The back office is open and the front office is not: so far the market's calendar, a market day a second; its dice, rolled once a day where anyone can watch them roll; the market itself, four waves and a drift, moving once a day; four stocks priced off it in whole cents, the dearest paying a dividend four days a year; and the fine print, a disclosure a month. Pick the Day, the Dice, the Market or the Stocks sheet to watch, or the Disclosures sheet among the hidden sheets."))
+
+; The libraries whose macros this source calls, both beside it: the kit, Alonzo's
+; common.vla copied at the pin (sheets, labels, headers, on, cells, formulas and
+; hold), then Buffet's own, kitchen.vla (draws, strings and picker); then the content
+; sheets, each a file of src/content/ that defines one macro of its rows, called where
+; its sheet belongs. The manifest stands first, the cartridge's own form, then every
+; include, then the code (the owner's word, 2026-10-15), so that a file missing is
+; refused at the top; and each include defines macros alone, since the pass takes the
+; first form that is no include and no macro for the manifest.
+(include "common.vla")
+(include "kitchen.vla")
+(include "content/disclosures.vla")
 
 (sheets "Screen" "Day" "Dice" "Market" "Stocks")
 
@@ -200,3 +209,26 @@
     ("F5:F8" "=INT(B5*Market!$D$25^C5+0.5)")      ; the price yesterday: the same over yesterday's index
     ("G5:G8" "=INT(B5*D5/$B$1+0.5)")              ; a dividend: the year's yield on the start, over the dividends a year, in whole cents
     ("H5:H8" "=IF(MOD(Day!$B$7,$B$2)=0,G5,0)")))  ; the dividend today: a dividend on its days, all day, and nothing on the others
+
+; ---- MENU.1: the strings ------------------------------------------------------------
+; The content sheets, each a file of src/content/ that holds the words alone, a
+; stranger's cheapest pull request: one macro of its rows, named after its file, whose
+; body is one call of the library's strings, which writes the sheet, hidden, its rows,
+; their count and their picker. Each file is included at the top with the libraries,
+; and its macro is called here, after the sheets row, which names every view and model
+; sheet, so that the sheet stands after them among the tabs; and what the game does
+; with it is written beside the call: the row it shows, from the day and never the
+; frame (BD-7).
+;
+; The fine print: the Disclosures sheet, a disclosure a month at the foot of every view
+; (FRONT.1's views read Disclosures!F3), round the rows from the first on the first day,
+; so that a row added joins the round with no formula edited.
+
+(disclosures)                       ; the Disclosures sheet: its headers, its rows, their count and their picker
+
+(on "Disclosures"
+  (labels "E5" "days a disclosure stands")
+  (cells
+    ("F5" 30))                      ; a month: thirty market days, thirty seconds at the manifest's rate
+  (formulas
+    ("F2" "=MOD(INT(Day!$B$3/F5),F1)+1")))   ; the row shown: the day's month round the rows, the first on the first day

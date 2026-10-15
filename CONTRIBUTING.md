@@ -36,7 +36,7 @@ available to everyone under the public terms.
 
 The game is fun insofar as it is funny, and every player-visible string is
 a row of a content sheet. A row is reviewed by one named human before it
-is merged, under four rules:
+is merged, under five rules:
 
 - **Punch up.** Institutions, archetypes, jargon and ourselves. Never a
   named individual, never people who lost their savings.
@@ -46,10 +46,18 @@ is merged, under four rules:
 - **Clarity first.** The game teaches. A joke may be the vehicle; it is
   never the fog. An exam question carries its one-line *why*.
 - **PG-13.** The audience includes classrooms.
+- **A fund manager's words.** The game looks and feels like a fund
+  manager's workbook, and its humor is financial and economic. No kitchen
+  word reaches the game: the kitchen names the work in the developers'
+  documents alone. The title, "Buffet", and the tagline, "All You Can
+  Sheet", are the only exceptions (`docs/OMAKASE.md`, `BD-2`, amended
+  2026-10-15).
 
-The voice is the design reference's (`docs/BUFFET.md`, section 2): deadpan,
-understated, never a wink at the camera. A one-page *How to add a row*
-sits beside the content sheets the day they exist (`docs/OMAKASE.md`,
+The voice is a fund's compliance department's, as the design reference
+has it (`docs/BUFFET.md`, section 2): deadpan, understated, never a wink at
+the camera. *How to add a row* is `src/content/README.md`, beside the
+sheets: one line in one file, its approver left empty for the reviewer,
+who writes their GitHub name there on approving the row (`docs/OMAKASE.md`,
 `MENU.1`).
 
 ## What a change to the game needs
@@ -90,6 +98,6 @@ Do not open a public issue for a vulnerability. See `SECURITY.md`.
 
 ## The names
 
-"Buffet" and "all you can sheet" are names held by Spreadsheet Company; see
+"Buffet" and "All You Can Sheet" are names held by Spreadsheet Company; see
 `TRADEMARK.md`. A fork is welcome under the licenses above and needs its
 own name.

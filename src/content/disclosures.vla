@@ -1,0 +1,23 @@
+; SPDX-License-Identifier: CC-BY-SA-4.0
+; disclosures.vla - the fine print: the Disclosures sheet, a disclosure a row, of which
+; the game shows one a month at the foot of its views (docs/OMAKASE.md, MENU.1). Words
+; alone: one macro named after this file, whose body is one call of the library's
+; strings. The source includes this file after its manifest, with every other include,
+; and calls (disclosures) where the sheet's rows belong. To add a row, read README.md
+; beside this file: one line, in the voice of a fund's compliance department, approved
+; by a reviewer.
+
+(defmacro (disclosures)
+  "the fine print: the Disclosures sheet, a disclosure a row"
+  (strings "Disclosures"            ; the sheet, hidden among the tabs
+    "disclosure"                    ; what a row of it is: the header over its texts
+    ; each row: its vintage, the course that added it; its approver; and the disclosure
+    (0 "prestoncolejohnson" "Past performance is not indicative of future results, but history has proven (slightly) less coy than the future.")
+    (0 "prestoncolejohnson" "Buffet is not a financial advisor. Buffet is barely a game.")
+    (0 "prestoncolejohnson" "All investments carry risk; some investments also carry a reward.")
+    (0 "prestoncolejohnson" "Buffet is not FDIC-insured. Is the FDIC FDIC-insured? Food for thought.")
+    (0 "prestoncolejohnson" "Diversification does not ensure a profit; it ensures you will be wrong in several places simultaneously.")
+    (0 "prestoncolejohnson" "Forward-looking statements are predictions about the future. (see also: divintion, prognostication, augury, etc.)")
+    (0 "prestoncolejohnson" "This is not a recommendation to buy or sell. 'Ursi et tauri, cavete!'.")
+    (0 "prestoncolejohnson" "Your capital is at risk, but our fees are not.")
+    ))                              ; the sheet's end: a row added goes on a line above this one

@@ -861,6 +861,8 @@ The game written by hand in the engine's tests, every frame held; closed forms (
 
 *Seeds, not copy: each is a candidate for a row in the `Jokes` sheet. (check) marks a parody of a living company or a real mark: a lawyer's glance before shipping.*
 
+*Read 2026-10-15 against `BD-2`'s amendment, at `MENU.1`'s scoping (`SPIKE.md`): the fine print's "a lunch tray" and "the office microwave" fell, rewritten in `src/content/disclosures.vla`, where the fine print stands as the Disclosures sheet; Mildred's "break-room refrigerator" falls for `MENU.4` to rewrite, and the achievement "Greedy When Others Were Fearful", the investor's own quotation (§1), for `MENU.7`. Each seed goes to the sheet of its own kind, named in `OMAKASE.md`'s `MENU.1`.*
+
 ### Fine print (a rotating footer)
 
 - "Past performance is not indicative of future results, but it is all we have."

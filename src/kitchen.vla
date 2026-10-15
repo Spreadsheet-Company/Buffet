@@ -21,6 +21,10 @@
 ; primitives.
 ;
 ; Since POT.1 (2026-10-14): draws, a stream's draws down a column beneath its die.
+; Since MENU.1 (2026-10-15): strings, a content sheet from a file of src/content/, and
+; picker, CHOOSE over a column of a sheet's rows. Both entered at their first writing,
+; where the ratchet waits for a second, since a content file holds its words alone:
+; the second content sheet is their second writing.
 
 ; ---- the dice (POT.1) ---------------------------------------------------------------
 ; A stream is a die and its draws. The die is one cell, the stream's state, which the
@@ -45,3 +49,64 @@
   (formula sheet
     (&expand (address-expand row (+expand column 1)) ":" (address-expand (+expand row (-expand many 1)) (+expand column 1)))
     (&expand "=" (address-expand row column) "/2147483647")))
+
+; ---- the strings (MENU.1) -----------------------------------------------------------
+; A content sheet holds one kind of string the game shows, a string a row, and a file of
+; src/content/ defines it, words alone: one macro named after the file, whose body is
+; one call of strings, naming the sheet, the word for a row of it and then the rows,
+; each its vintage, the course that added it; its approver, the reviewer who approved
+; it; and its text. The source includes the file after its manifest, with every
+; include, and calls its macro where the sheet belongs. The sheet is hidden, as a
+; workbook keeps its reference data at the back, and stands among the tabs where the
+; source's call of its macro stands. Its table holds the headers in row 1 and a row of
+; the call a row of the sheet from row 2, the text in column A, the vintage in B and
+; the approver in C; beside the table, a label in column E beside each value in F: the
+; rows counted in F1, a value; the row shown in F2, which the dish that reads the sheet
+; writes; and in F3 the text shown, the picker, which a view reads through a reference
+; and never holds, since its formula would ride in every frame's record. So a row added
+; is a line of the call, and no formula is edited.
+
+(defmacro (strings content word & rows)
+  "a content sheet, hidden: the headers in row 1, then a row of the sheet a row of the call, its text in A, its vintage in B and its approver in C; the rows counted in F1, and the text shown in F3, picked by the row shown in F2, which the dish writes"
+  (sheet content hidden)
+  (column content "A" 100 shown none)
+  (column content "C" 20 shown none)
+  (headers content "A1" word "vintage" "approved by")
+  (labels content "E1" "rows" "the row shown" "shown")
+  (quasiquote (strings-from (unquote content) 2 (unquote rows))))
+
+(defmacro (strings-from content row rows)
+  "strings' walk, its list handed on whole: a row of the call a row of the sheet, then the count and the picker over the rows written"
+  (quote-if (null? rows)
+    (begin
+      (cell content "F1" (-expand row 2))
+      (picker content "F3" "F2" "A" 2 (-expand row 1)))
+    (begin
+      (strings-row content row (car rows))
+      (strings-from content (+expand row 1) (cdr rows)))))
+
+(defmacro (strings-row content row entry)
+  "one row of the call, its vintage, its approver and its text, a row of the sheet: the text in A, the vintage in B, the approver in C"
+  (cell content (address-expand row 1) (car (cddr entry)))
+  (cell content (address-expand row 2) (car entry))
+  (cell content (address-expand row 3) (car (cdr entry))))
+
+; ---- the picker (MENU.1) ------------------------------------------------------------
+; CHOOSE over references, the dialect having no INDEX until KERNEL.8 computes one: the
+; index, then a reference a row down one column, bare, so the picker stands on the sheet
+; whose rows it picks, where it holds the most (MISE.3, probe 3: 1,547 rows below a row
+; of headers, within the 8,192 characters a formula may hold). The formula is joined a
+; reference a step by a walk that carries the text so far under unquote, so that each
+; step hands on a text and never a form, and written once the row passes the last.
+; Past 1,547 rows a picker refuses the whole cartridge at its load, and a sheet that
+; nears it takes the pages of 500 the owner approved (MENU.1's decision 5).
+
+(defmacro (picker sheet at index letters first last)
+  "a picker in one cell: =CHOOSE(index,<letters><first>,...,<letters><last>), its references bare"
+  (quasiquote (picker-from (unquote sheet) (unquote at) (unquote (&expand "=CHOOSE(" index)) (unquote letters) (unquote first) (unquote last))))
+
+(defmacro (picker-from sheet at text letters row last)
+  "picker's walk: a reference a row joined onto the text so far, then the formula once the row passes the last"
+  (quote-if (>expand row last)
+    (formula sheet at (&expand text ")"))
+    (quasiquote (picker-from (unquote sheet) (unquote at) (unquote (&expand text "," letters row)) (unquote letters) (unquote (+expand row 1)) (unquote last)))))

@@ -19,19 +19,30 @@
 //! settings; the opening at the starts; the least price of every rung at or
 //! above the bound no seed passes; and the dividend on exactly four days a
 //! year. Nothing here commits a value derived from `SIN` or `^`: each is
-//! compared live, the module in the browser computing its own.
+//! compared live, the module in the browser computing its own. Since
+//! `MENU.1`: the Disclosures sheet, the fine print, its row shown and the
+//! text it picks held at every one of those frames, the row the hand's; its
+//! rows counted by its extent; every row picked in its turn; a row added to
+//! the content file expanding with no other edit; the one picker's limit and
+//! the tripwire before it; and every sheet written bare, the content hidden.
 
-use std::collections::BTreeMap;
+use std::collections::{BTreeMap, BTreeSet};
 
 use alonzo::cartridge::{Cartridge, Seed};
 use buffet_oracle::buffet::{
-    self, least_index, Calendar, Market, DIFFICULTY, DIVIDEND_DAYS, LOOK_BACK, RUNGS, WAVES, YEAR,
+    self, disclosure, least_index, Calendar, Market, DAYS_A_DISCLOSURE, DIFFICULTY, DIVIDEND_DAYS,
+    LOOK_BACK, RUNGS, WAVES, YEAR,
 };
-use buffet_oracle::{expand_source, lf, load, read, root, values};
+use buffet_oracle::{expand_source, gather, lf, load, read, root, values};
+use vla_lang::machine::Viewed;
 
 const SOURCE: &str = "src/buffet.source.vla";
 const CARTRIDGE: &str = "src/buffet.vla";
 const DESCRIBE: &str = "oracle/testdata/describe/buffet.vla";
+/// The fine print's content file, and the sheet its call writes (`MENU.1`).
+const DISCLOSURES: &str = "src/content/disclosures.vla";
+/// The content sheets, each a file of `src/content/`, hidden among the tabs.
+const CONTENT_SHEETS: [&str; 1] = ["Disclosures"];
 
 fn cartridge() -> Cartridge {
     load(CARTRIDGE).unwrap_or_else(|e| panic!("{CARTRIDGE} loads: {e}"))
@@ -44,10 +55,50 @@ fn seed(cart: &Cartridge) -> u64 {
     }
 }
 
+/// The Disclosures sheet's texts, its column A below the headers, row 2 first:
+/// the content's, written once, in `src/content/`.
+fn disclosure_texts(cart: &Cartridge) -> Vec<String> {
+    let got = values(cart, "Disclosures", "A2:A2000");
+    let mut rows: Vec<(u64, String)> = got
+        .into_iter()
+        .map(|(addr, text)| (addr[1..].parse().expect("a row of column A"), text))
+        .collect();
+    rows.sort();
+    for (k, (row, _)) in rows.iter().enumerate() {
+        assert_eq!(
+            *row,
+            k as u64 + 2,
+            "the Disclosures sheet's rows run on from row 2"
+        );
+    }
+    rows.into_iter().map(|(_, text)| text).collect()
+}
+
+/// The fine print at this frame (`MENU.1`): the row shown, `F2`, the hand's
+/// for the calendar's day, and the text shown, `F3`, that row's.
+fn disclosures_held(cart: &Cartridge, cal: &Calendar, texts: &[String], days: u64) {
+    let got = values(cart, "Disclosures", "F2:F3");
+    let row = disclosure(cal.day, texts.len() as u64, days);
+    assert_eq!(
+        got.get("F2"),
+        Some(&row.to_string()),
+        "frame {}, day {}: Disclosures!F2",
+        cal.frame,
+        cal.day
+    );
+    assert_eq!(
+        got.get("F3"),
+        Some(&texts[row as usize - 1]),
+        "frame {}, day {}: Disclosures!F3",
+        cal.frame,
+        cal.day
+    );
+}
+
 /// The Day, Dice and Market sheets at this frame, each cell its value as the
 /// record prints it, held to the hand's calendar, dice and market for the
-/// same frame.
-fn held(cart: &Cartridge, cal: &Calendar, seed: u64, market: &Market) {
+/// same frame; and the Stocks and the Disclosures sheets with them.
+fn held(cart: &Cartridge, cal: &Calendar, seed: u64, market: &Market, texts: &[String]) {
     let f = cal.frame;
     let day = values(cart, "Day", "B1:B7");
     let want = [
@@ -95,6 +146,7 @@ fn held(cart: &Cartridge, cal: &Calendar, seed: u64, market: &Market) {
     }
     market_held(cart, cal, market, DIFFICULTY);
     stocks_held(cart, cal, market, DIFFICULTY);
+    disclosures_held(cart, cal, texts, DAYS_A_DISCLOSURE);
 }
 
 /// The Market sheet at this frame (`POT.2`): each wave's speed and tier 1's
@@ -256,13 +308,14 @@ fn every_frame_of_two_years_is_the_calendar_the_dice_and_the_market_by_hand() {
     let mut cart = cartridge();
     let seed = seed(&cart);
     let market = Market::new(seed);
+    let texts = disclosure_texts(&cart);
     let mut cal = Calendar::new(buffet::FRAMES_A_DAY, buffet::DAYS_A_YEAR);
     let frames = (2 * buffet::DAYS_A_YEAR + 2) * buffet::FRAMES_A_DAY;
     for _ in 0..frames {
         let step = cart.step(0);
         cal.tick();
         assert!(step.done && step.frame == cal.frame, "{}", step.row());
-        held(&cart, &cal, seed, &market);
+        held(&cart, &cal, seed, &market, &texts);
     }
     assert_eq!(
         (cal.year, cal.day_of_year),
@@ -288,12 +341,13 @@ fn at_one_frame_a_day_the_same_days_roll_the_same_dice() {
             r.refusal.id, r.refusal.text
         )
     });
+    let texts = disclosure_texts(&cart);
     let mut cal = Calendar::new(1, buffet::DAYS_A_YEAR);
     for _ in 0..800 {
         cart.step(0);
         cal.tick();
         assert!(cal.boundary());
-        held(&cart, &cal, seed, &market);
+        held(&cart, &cal, seed, &market, &texts);
     }
 }
 
@@ -567,6 +621,271 @@ fn describe_holds_its_golden() {
     );
 }
 
+/// The Disclosures sheet (`MENU.1`): its headers and labels as the library's
+/// `strings` writes them, the days a disclosure stands as the hand has them,
+/// and its rows counted in `F1`, the number of texts its column A holds below
+/// the headers, so that the count is the sheet's extent and no number a
+/// person keeps beside it.
+#[test]
+fn the_disclosures_sheet_counts_its_rows() {
+    let cart = cartridge();
+    let texts = disclosure_texts(&cart);
+    let got = values(&cart, "Disclosures", "A1:F5");
+    let want = [
+        ("A1", "disclosure"),
+        ("B1", "vintage"),
+        ("C1", "approved by"),
+        ("E1", "rows"),
+        ("E2", "the row shown"),
+        ("E3", "shown"),
+        ("E5", "days a disclosure stands"),
+    ];
+    for (addr, text) in want {
+        assert_eq!(
+            got.get(addr).map(String::as_str),
+            Some(text),
+            "Disclosures!{addr}"
+        );
+    }
+    assert!(!texts.is_empty());
+    assert_eq!(
+        got.get("F1"),
+        Some(&texts.len().to_string()),
+        "Disclosures!F1"
+    );
+    assert_eq!(
+        got.get("F5"),
+        Some(&DAYS_A_DISCLOSURE.to_string()),
+        "Disclosures!F5"
+    );
+}
+
+/// The picker picks every row in its turn (`MENU.1`): a disclosure a day at
+/// one frame a day, each written as a person's edit before the first frame,
+/// so that the days walk the rows from the first, twice round.
+#[test]
+fn the_picker_picks_every_row_in_turn() {
+    let mut cart = cartridge();
+    let texts = disclosure_texts(&cart);
+    for edit in ["(cell \"Day\" \"B1\" 1)", "(cell \"Disclosures\" \"F5\" 1)"] {
+        cart.write(edit)
+            .unwrap_or_else(|r| panic!("{edit}: {} {}", r.refusal.id, r.refusal.text));
+    }
+    let mut cal = Calendar::new(1, buffet::DAYS_A_YEAR);
+    for _ in 0..2 * texts.len() {
+        cart.step(0);
+        cal.tick();
+        disclosures_held(&cart, &cal, &texts, 1);
+    }
+}
+
+/// A row added is a line of the content file's call and nothing else
+/// (`MENU.1`): the source expanded with one row more differs from the
+/// cartridge in that row's three cells, the count and the picker alone, the
+/// cartridge loads, and the new row is shown in its turn. Its approver is
+/// left empty, as a stranger leaves it for the reviewer (`src/content/README.md`).
+#[test]
+fn a_row_added_expands_with_no_other_edit() {
+    let text = lf(&read(DISCLOSURES));
+    let mut lines: Vec<&str> = text.lines().collect();
+    let close = lines
+        .iter()
+        .rposition(|l| l.trim_start().starts_with(')'))
+        .expect("the line that closes the call");
+    let added_text = "A row added by the oracle.";
+    let row = format!("  (0 \"\" \"{added_text}\")");
+    lines.insert(close, &row);
+    let added = lines.join("\n") + "\n";
+    let source = read(SOURCE);
+    let mut files = gather(&root(), SOURCE, &source);
+    let at = files
+        .iter()
+        .position(|(path, _)| path == DISCLOSURES)
+        .expect("the source includes the content file");
+    files[at].1 = added;
+    let ex = alonzo::pass::expand(&source, SOURCE, &files)
+        .unwrap_or_else(|r| panic!("line {}: {} {}", r.line, r.refusal.id, r.refusal.text));
+
+    let cart = cartridge();
+    let n = disclosure_texts(&cart).len();
+    let picker = |rows: usize| {
+        let refs: Vec<String> = (2..rows + 2).map(|r| format!("A{r}")).collect();
+        format!(
+            "(formula \"Disclosures\" \"F3\" \"=CHOOSE(F2,{})\")",
+            refs.join(",")
+        )
+    };
+    let new_row = n + 2;
+    let held = lf(&read(CARTRIDGE));
+    let before: BTreeSet<&str> = held.lines().collect();
+    let after: BTreeSet<&str> = ex.text.lines().collect();
+    let gone: BTreeSet<String> = before.difference(&after).map(|l| l.to_string()).collect();
+    let came: BTreeSet<String> = after.difference(&before).map(|l| l.to_string()).collect();
+    let want_gone: BTreeSet<String> =
+        [format!("(cell \"Disclosures\" \"F1\" {n})"), picker(n)].into();
+    let want_came: BTreeSet<String> = [
+        format!("(cell \"Disclosures\" \"A{new_row}\" \"{added_text}\")"),
+        format!("(cell \"Disclosures\" \"B{new_row}\" 0)"),
+        format!("(cell \"Disclosures\" \"C{new_row}\" \"\")"),
+        format!("(cell \"Disclosures\" \"F1\" {})", n + 1),
+        picker(n + 1),
+    ]
+    .into();
+    assert_eq!(gone, want_gone, "the rows the added row took away");
+    assert_eq!(came, want_came, "the rows the added row brought");
+
+    let mut grown = Cartridge::load(&ex.text, "buffet.vla", ex.text.len())
+        .unwrap_or_else(|r| panic!("line {}: {} {}", r.line, r.refusal.id, r.refusal.text));
+    let texts = disclosure_texts(&grown);
+    assert_eq!(texts.len(), n + 1);
+    assert_eq!(texts[n], added_text);
+    for edit in ["(cell \"Day\" \"B1\" 1)", "(cell \"Disclosures\" \"F5\" 1)"] {
+        grown
+            .write(edit)
+            .unwrap_or_else(|r| panic!("{edit}: {} {}", r.refusal.id, r.refusal.text));
+    }
+    let mut cal = Calendar::new(1, buffet::DAYS_A_YEAR);
+    for _ in 0..=n {
+        grown.step(0);
+        cal.tick();
+        disclosures_held(&grown, &cal, &texts, 1);
+    }
+}
+
+/// The one picker's limit on a content sheet (`MENU.1`'s decision 5): a sheet
+/// of the library's `strings` holds 1,547 rows below its headers, and 1,548
+/// are refused at the picker's line, its formula past the 8,192 characters a
+/// formula may hold. And the tripwire before it: every content sheet stays
+/// under 1,000 rows, the day one passes being the day its dish writes the
+/// pages of 500 the owner approved.
+#[test]
+fn one_picker_holds_1547_rows_and_no_more() {
+    let source = |rows: usize| {
+        let mut s = String::from(concat!(
+            "; SPDX-License-Identifier: AGPL-3.0-or-later\n",
+            "(cartridge \"bank\"\n",
+            "  (spec 3)\n",
+            "  (title \"Bank\")\n",
+            "  (rate 0)\n",
+            "  (screen grid 1 1)\n",
+            "  (seed 1))\n",
+            "(include \"common.vla\")\n",
+            "(include \"kitchen.vla\")\n",
+            "(sheet \"Screen\" visible)\n",
+            "(strings \"Bank\" \"row\"\n",
+        ));
+        for k in 1..=rows {
+            s.push_str(&format!("  (0 \"\" \"row {k}\")\n"));
+        }
+        s.push_str("  )\n");
+        s
+    };
+    let files: Vec<(String, String)> = ["src/common.vla", "src/kitchen.vla"]
+        .iter()
+        .map(|p| (p.to_string(), read(p)))
+        .collect();
+    for (rows, loads) in [(1_547, true), (1_548, false)] {
+        let ex = alonzo::pass::expand(&source(rows), "src/bank.source.vla", &files).unwrap_or_else(
+            |r| {
+                panic!(
+                    "{rows} rows: line {}: {} {}",
+                    r.line, r.refusal.id, r.refusal.text
+                )
+            },
+        );
+        let picker = ex
+            .text
+            .lines()
+            .position(|l| l.starts_with("(formula \"Bank\" \"F3\" "))
+            .expect("the picker's line");
+        match Cartridge::load(&ex.text, "bank.vla", ex.text.len()) {
+            Ok(_) => assert!(loads, "{rows} rows loaded"),
+            Err(r) => {
+                assert!(
+                    !loads,
+                    "{rows} rows: line {}: {} {}",
+                    r.line, r.refusal.id, r.refusal.text
+                );
+                assert_eq!(r.refusal.id, "calc-formula-too-long", "{rows} rows");
+                assert_eq!(
+                    r.line as usize,
+                    picker + 1,
+                    "{rows} rows: refused at the picker's line"
+                );
+            }
+        }
+    }
+    let cart = cartridge();
+    for sheet in CONTENT_SHEETS {
+        let count: usize = values(&cart, sheet, "F1:F1")["F1"]
+            .parse()
+            .expect("a count");
+        assert!(
+            count < 1_000,
+            "the {sheet} sheet holds {count} rows: past 1,000 its dish writes the pages of 500 (MENU.1's decision 5)"
+        );
+    }
+}
+
+/// Every sheet is written bare, as a formula writes a name without quotes and
+/// the kit's verbs need, and no two are the same without case; the views and
+/// the model's sheets stand first, visible, then the content sheets, hidden,
+/// then the devices; and the twins after every sheet (`MENU.1`'s decisions 2
+/// and 3).
+#[test]
+fn every_sheet_is_written_bare_and_the_strings_hidden() {
+    let cart = cartridge();
+    let Ok(Viewed::Text(record)) = cart.view("values", "Day", Some("A1:A1")) else {
+        panic!("the Day sheet's record");
+    };
+    let sheets: Vec<(&str, &str)> = record
+        .lines()
+        .filter_map(|l| {
+            l.strip_prefix("(sheet \"")?
+                .strip_suffix(')')?
+                .split_once("\" ")
+        })
+        .collect();
+    let mut folded = BTreeSet::new();
+    for (name, _) in &sheets {
+        assert_eq!(
+            vla_lang::refers::quote_sheet(name),
+            *name,
+            "{name} is written bare"
+        );
+        assert!(
+            folded.insert(name.to_ascii_lowercase()),
+            "{name} twice, without case"
+        );
+    }
+    let own: Vec<(&str, &str)> = sheets
+        .iter()
+        .copied()
+        .filter(|(name, _)| !name.ends_with(".last"))
+        .collect();
+    let want = [
+        ("Screen", "visible"),
+        ("Day", "visible"),
+        ("Dice", "visible"),
+        ("Market", "visible"),
+        ("Stocks", "visible"),
+        ("Disclosures", "hidden"),
+        ("Clock", "visible"),
+        ("File", "visible"),
+        ("Input", "visible"),
+    ];
+    assert_eq!(own, want, "the sheets in tab order, each with its state");
+    for (name, state) in &sheets[own.len()..] {
+        assert!(
+            name.ends_with(".last") && *state == "hidden",
+            "the twins after every sheet: {name} {state}"
+        );
+    }
+    for sheet in CONTENT_SHEETS {
+        assert!(own.contains(&(sheet, "hidden")), "{sheet} hidden");
+    }
+}
+
 /// The library's verb, `draws`, ten thousand of them beneath a die of 1: the
 /// last is Park and Miller's own published check, 1,043,618,065, computed by
 /// the engine's step a cell at a time.
@@ -574,13 +893,13 @@ fn describe_holds_its_golden() {
 fn the_draws_verb_meets_park_and_millers_ten_thousandth() {
     let source = concat!(
         "; SPDX-License-Identifier: AGPL-3.0-or-later\n",
-        "(include \"kitchen.vla\")\n",
         "(cartridge \"stream\"\n",
         "  (spec 3)\n",
         "  (title \"Stream\")\n",
         "  (rate 0)\n",
         "  (screen grid 1 1)\n",
         "  (seed 1))\n",
+        "(include \"kitchen.vla\")\n",
         "(sheet \"Screen\" visible)\n",
         "(cell \"Stream\" \"B1\" 1)\n",
         "(draws \"Stream\" \"B2\" 10000)\n",
