@@ -18,8 +18,8 @@ its cartridge carries it.
 
 The kit, src/common.vla, is copied from Alonzo, Spreadsheet Company's game
 engine, under the BSD Zero Clause License it came with, and the page's
-files under web/, when they are vendored from Alonzo, keep their Apache
-License, Version 2.0. The engine itself and VLA, its language, are
+files under web/, vendored from Alonzo, keep their Apache License,
+Version 2.0. The engine itself and VLA, its language, are
 consumed as crates from crates.io and never copied here; their terms are
 their own. See LICENSES/ for the full texts and REUSE.toml for the
 per-file map.

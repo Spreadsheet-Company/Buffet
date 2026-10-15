@@ -1,24 +1,29 @@
 # The checks, on every push to main and every pull request, in Alonzo's
-# shape, two jobs. The ratchets job runs tools/run_checks.ps1 under Windows
-# PowerShell 5.1, the house's floor for every check, with the floor on the
-# count and the controls that prove each check on mutants (HOUSE.1). The
-# crate job builds, formats, lints and tests the workspace over the engine
-# and the language from crates.io, every cargo step that resolves held to the
-# committed Cargo.lock and its checksums by --locked (rustfmt reads no lock
-# and refuses the flag), and builds the engine's module from the registry
-# crate for the browser under the workspace's release profile, as the page
-# will carry it (HOUSE.2, HOUSE.4). Its tests run over the engine and the
-# language compiled optimized, the dev profile's own setting in Cargo.toml
-# and not this job's, the oracle crate unoptimized; nothing is cached, so
-# the job compiles the two crates optimized on every run, a dearer build
-# for a suite that runs in half the time. The oracle crate's tests are
-# where the game is held: the cartridge loaded through the engine, held to
-# its source expanded and to its describe golden, and every frame held to
-# the game written by hand (MISE.2). What Alonzo's crate job runs and this
-# one does not, until Buffet has it: the package's own tests from its
-# tarball (the oracle is never published), the frames runner (MISE.4's
-# floors) and the page (HOUSE.4). The actions are at their Node 24 majors,
-# v7.
+# shape, two jobs. The ratchets job builds the game's page without the
+# engine's module (tools/build_web.ps1 -NoWasm; the job has no cargo), so
+# that the builder runs under Windows PowerShell 5.1, the house's floor for
+# every check, and the offline check holds the page's blocks there, then
+# runs tools/run_checks.ps1 under the same shell, with the floor on the
+# count and the controls that prove each check on mutants (HOUSE.1,
+# HOUSE.4). The crate job builds, formats, lints and tests the workspace over
+# the engine and the language from crates.io, every cargo step that resolves
+# held to the committed Cargo.lock and its checksums by --locked (rustfmt
+# reads no lock and refuses the flag), builds the engine's module from the
+# registry crate for the browser under the workspace's release profile, and
+# builds the page with the module in it and holds it to the offline check
+# under pwsh on Linux, as a stranger's machine would build it (HOUSE.2,
+# HOUSE.4). Its tests run over the engine and the language compiled
+# optimized, the dev profile's own setting in Cargo.toml and not this job's,
+# the oracle crate unoptimized; nothing is cached, so the job compiles the
+# two crates optimized on every run, a dearer build for a suite that runs in
+# half the time. The oracle crate's tests are where the game is held: the
+# cartridge loaded through the engine, held to its source expanded and to
+# its describe golden, and every frame held to the game written by hand
+# (MISE.2). What Alonzo's crate job runs and this one does not, until Buffet
+# has it: the package's own tests from its tarball (the oracle is never
+# published) and the frames runner (MISE.4's floors). No artifact is kept:
+# the page is deployed at a release (HOUSE.5). The actions are at their
+# Node 24 majors, v7.
 name: checks
 on:
   push:
@@ -29,6 +34,11 @@ jobs:
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v7
+      - name: build the game's page without the engine's module, under Windows PowerShell 5.1 (HOUSE.4)
+        shell: pwsh
+        run: |
+          & powershell -NoProfile -ExecutionPolicy Bypass -File tools/build_web.ps1 -NoWasm
+          exit $LASTEXITCODE
       - name: every tools/check_*.ps1 under Windows PowerShell 5.1, the floor and the controls
         shell: pwsh
         run: |
@@ -48,5 +58,12 @@ jobs:
           cargo fmt --all -- --check
           cargo clippy --workspace --all-targets --locked -- -D warnings
           cargo test --workspace --locked
-      - name: build the engine's module from the registry crate, as the page will carry it (HOUSE.4)
+      - name: build the engine's module from the registry crate, as the page carries it (HOUSE.4)
         run: cargo build --release --locked -p alonzo --target wasm32-unknown-unknown
+      - name: build the game's page with the module in it, and hold it offline, under pwsh (HOUSE.4)
+        shell: pwsh
+        run: |
+          pwsh -NoProfile -File tools/build_web.ps1
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          pwsh -NoProfile -File tools/check_web_offline.ps1
+          exit $LASTEXITCODE

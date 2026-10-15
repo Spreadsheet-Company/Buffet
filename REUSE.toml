@@ -12,9 +12,9 @@
 # the documents, is CC-BY-SA-4.0, so that a stranger's joke needs no paperwork
 # but the DCO; the game's own files carry both, since its source includes the
 # content and its cartridge carries it; the kit copied from Alonzo keeps its
-# 0BSD; and the page's files, when they are vendored from Alonzo, keep their
-# Apache-2.0. The game lives in one folder, src/ (the owner's word of
-# 2026-10-14, docs/OMAKASE.md, MISE.1): the source, the cartridge the pass writes
+# 0BSD; and the page's files, vendored from Alonzo, keep their Apache-2.0.
+# The game lives in one folder, src/ (the owner's word of 2026-10-14,
+# docs/OMAKASE.md, MISE.1): the source, the cartridge the pass writes
 # beside it, the library, the kit's copy, and later the content sheets and the
 # frozen courses. tools/check_spdx.ps1 verifies this map against the tree on
 # every push: every tracked file resolves to one identifier or expression,
@@ -63,8 +63,10 @@ SPDX-FileCopyrightText = "2026 Spreadsheet Company"
 SPDX-License-Identifier = "0BSD"
 
 # The page: Alonzo's host shim, viewport, fake module and page template,
-# vendored at the engine's pinned version the day the game is drawn
-# (docs/OMAKASE.md, HOUSE.4), under the terms they came with.
+# vendored unchanged at the tag of the engine's pinned version
+# (docs/OMAKASE.md, HOUSE.4) and held to it by tools/check_vendored.ps1,
+# under the terms they came with. The page tools/build_web.ps1 writes from
+# them, web/index.html, is a build artifact and never tracked.
 [[annotations]]
 path = ["web/**"]
 SPDX-FileCopyrightText = "2026 Spreadsheet Company"

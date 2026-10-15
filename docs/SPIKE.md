@@ -29,6 +29,10 @@ empty.*
 
   *Closed 2026-10-14, at the first push.* Predicted `~hours` to close; cost one commit, `765e06f`, and its first run, 38628730253, green in 31 seconds on Linux: `alonzo` 0.1.0 and `vla-lang` 0.9.3 downloaded from crates.io under the lock's checksums and compiled, the 14 tests passing, and the engine's module built from the registry crate. The oracle's first run on Linux, where the engine's own first run had found a path defect (Alonzo's `fc6dc4f`), found none.
 
+- ✅ **`HOUSE.4`, first slice — the page.** *Scoped, built and hand-tested 2026-10-15: the scoping, its ten decisions approved whole by the owner, every prediction beside its number, what the build found and the owner's hand test are under THE ITEMS, SCOPED.* Alonzo's page vendored unchanged at the tag the pin names, `v0.1.3` (`alonzo` =0.1.3, whose page draws the grid from the `values` view, `ENGINE.8`'s second slice): the template and its three scripts, `web/index.template.html`, `web/viewport.js`, `web/host.js` and `web/fake.js`, Apache-2.0 kept with their headers, and the kit copied again at the same tag; `tools/check_vendored.ps1`, grown from the kit's check, holding every copy to its SHA-256 at the tag and the tag to the pin. `tools/build_web.ps1`, Buffet's own, adapted from Alonzo's, fills the template's five places: the three scripts; the engine's module, built from the registry crate under the workspace's release profile; and `{{BLOCKS}}`, every text the page holds as a block (`ENGINE.15`): the page's name, the cartridge and its source, and the kit and the library at `src/common.vla` and `src/kitchen.vla`, the paths the source's includes resolve to, so that Build in the drawer writes the cartridge's bytes; the replay and golden blocks come at `COURSE.0`'s tasting. `tools/check_web_offline.ps1` adapted: the page loads nothing and links nowhere, and a built page's blocks are `src/`'s files both ways. The page is Alonzo's full-screen player (`ENGINE.14`), opening on the empty sheet with Buffet in the picker after it (`ENGINE.15`, the owner's word of 2026-10-14), and it shows the model's sheets live by their tabs before any panel exists, so first light is `FRONT.1`'s, the dish that completes it. The second slice, the loop oracle's cases and the JavaScript hand, is the tasting's. *Needs:* `HOUSE.2`. *Oracle, met:* the page built here carrying the module, the offline check green over it, and the owner's hand test on it; in CI at the push. *Pays into:* every hand test after it; first light; the playtest pass's browser half; the deploy at service. `~days`
+
+  *Closed 2026-10-15.* Predicted `~days`; cost one session, the scoping, the build and the owner's hand test, beside the dev profile's optimization (`00eb51c`, a commit of its own). What landed: the pin at `alonzo` 0.1.3 and its lock; the kit copied again and the page's four files copied, all at `v0.1.3`; `tools/check_vendored.ps1`, grown from `check_kit.ps1`, its control five mutants; `tools/build_web.ps1`; `tools/check_web_offline.ps1`, its control fourteen mutants; `run_checks.ps1`'s floor raised to 4; the page built in both CI jobs, the ratchets job's without the module. The cartridge's bytes and the describe golden stood. One of the seven predictions missed: the module came out 48 bytes larger than the 0.1.0 build it was set against, the engine's catalog citing `docs/SPEC.md` since 0.1.1. CI's numbers (P6) and the Linux half of P2 wait for the push.
+
 ## 🍽 THE COURSES
 
 ## 🍲 THE STOCK POT
@@ -1027,3 +1031,238 @@ cell they show the hand's (P8). Passed. The last two steps asked, the
 difficulty written back to 1 and the rate written 60, are not among the
 screenshots; neither is new here, `POT.2`'s hand test having passed both, and
 the tests hold the stocks at both difficulties and at one frame a day.
+
+## `HOUSE.4`, first slice — the page
+
+*Scoped 2026-10-15 at the owner's word, "scope and build HOUSE.4, first
+slice: the page", from `OMAKASE.md`'s line (`COURSE.0`'s item 6) and
+Alonzo's `web/README.md`, "A game's page" (`ENGINE.15`). The owner's prompt
+was written before `alonzo` 0.1.3 was published and named `v0.1.2`; the
+owner said so at the session's start, and decision 1 reads the newer tag.
+Each decision carries its recommendation, for the owner to approve, amend
+or strike before the build. The predictions were written before any number
+was taken; each number goes beside its own at the build. Approved whole by
+the owner the same day, "HOUSE.4 recommendations approved; proceed with
+implementing as scoped", and built that day, over `00eb51c`, the dev
+profile's optimization.*
+
+**What it stands on, read on the day** (Alonzo's tags `v0.1.2`, `47066cf`,
+and `v0.1.3`, `78aa82e`).
+- `alonzo` 0.1.3 was released on 2026-10-15: tagged, published to crates.io
+  by Trusted Publishing, its page deployed. It pins `vla-lang` =0.9.3, as
+  0.1.1 and 0.1.2 do. Its engine is 0.1.1's code: `git diff v0.1.1 v0.1.3
+  -- engine/src` is one line, the version a test of `abi.rs` expects, so the
+  oracle's 27 tests run over the same engine.
+- What 0.1.3 adds is in the page alone, `ENGINE.8`'s second slice
+  (`5b72e68`): from frame 1 the host draws the Screen from the `values`
+  view, the grid record less its formula rows, and at frame 0 from the grid
+  record (`host.js` 12 lines in and 8 out, `fake.js` 6 and 4, `viewport.js`
+  15 and 1, the template 79 and 31, its oracle among them). A sheet shown by
+  its tab, Stocks or Market, is still viewed as the grid record.
+  `build_web.ps1` and `check_web_offline.ps1` are the same file at both tags.
+- The kit is one file at `v0.1.1`, `v0.1.2` and `v0.1.3`: SHA-256
+  `323AAB61…D8B30A2` over 23,897 LF bytes. Buffet's copy is `v0.1.0`'s,
+  `315D3611…BFFC16C9` over 23,787. `HOUSE.2` moved the pin to 0.1.1 and did
+  not copy the kit again, and `check_kit.ps1` could not see it, its baseline
+  naming the tag only in a comment. The 22 lines that differ are comments
+  and docstrings, "SPEC.md" become "docs/SPEC.md" (Alonzo's `2e687f2`); no
+  macro's body moved.
+- The template names no game's file (`ENGINE.15`). Every text is a block
+  its builder writes at `{{BLOCKS}}`, `<script type="text/plain"
+  id="KIND-NAME" data-path="PATH">`, beside four places more, the three
+  scripts and the module. The page always opens on the empty sheet, its
+  picker set to it and no query or hash naming another, with its cartridges
+  after it by their manifests' titles. Every bench mode refuses on a page
+  without Alonzo's eight cartridges, its library and its seven records, and
+  says what it lacks.
+- Build in the drawer runs the module's pass over the source's box with the
+  source block's path and every library block as a path and a text
+  (`host.expand`). The command line's runner passes `src/buffet.source.vla`
+  and the source's includes resolved against its folder, `src/common.vla`
+  and `src/kitchen.vla` (`oracle/src/lib.rs`, `gather`). Blocks at those
+  paths make Build write the same bytes.
+- The double, `web/fake.js`, reads a cartridge's manifest and never a row
+  after it, evaluates nothing and holds no pass: a page without the
+  engine's module cannot play the game or build it.
+- The module is the step CI has run since `HOUSE.2`, `cargo build --release
+  --locked -p alonzo --target wasm32-unknown-unknown`, written to
+  `target/wasm32-unknown-unknown/release/alonzo.wasm`. Built here from 0.1.0
+  on 2026-10-14 it was 749,386 bytes; Alonzo's own build of 0.1.2 and 0.1.3
+  is 749,218, its own sources' paths shorter than the registry's.
+- `.gitattributes` checks out `*.js` and `*.html` LF, `REUSE.toml` already
+  gives `web/**` Apache-2.0, and `.gitignore` already ignores
+  `web/index.html`.
+
+**The decisions.**
+
+1. **The pin: `alonzo` =0.1.3 (rec), `vla-lang` =0.9.3 kept.** The newest
+   release, its engine the code Buffet has run since 0.1.1, so no frame can
+   move; its page draws the grid from the `values` view, the slice
+   `MISE.6` would have asked for at 1,000 formula cells, met before it was
+   asked. The lock moves in `alonzo`'s version and checksum. *The
+   alternative:* =0.1.2, the prompt's: the same engine and the page drawing
+   from the full record, with a second pin move to come for no change of
+   Buffet's.
+2. **Every copy at that one tag, `v0.1.3`.** The kit again, its 22 lines;
+   the template and the three scripts unchanged, each with its Apache-2.0
+   header, at the paths Alonzo gives them, `web/index.template.html`,
+   `web/host.js`, `web/fake.js` and `web/viewport.js`, so each diffs against
+   Alonzo's by name. Not the bench's records, which no mode of a game's page
+   reads, and not `web/README.md`, whose section "A game's page" this
+   scoping cites. The template is never edited here. `NOTICE` and
+   `REUSE.toml` say "vendored" in the present tense, and `README.md`'s
+   Building names the pin and the page's two commands.
+3. **One check holds every copy: `tools/check_kit.ps1` grown and renamed
+   `tools/check_vendored.ps1` (rec).** One table, a row a file, the kit and
+   the page's four, each its SHA-256 over its LF text and its length in LF
+   bytes, and the tag written once, `v0.1.3`, and held equal to
+   `Cargo.toml`'s pin of `alonzo`, so that a pin moved without the copies
+   fails, the drift `HOUSE.2` left and no check saw. And `web/` holding
+   nothing but the four files and the page the builder writes there:
+   `REUSE.toml` gives everything under `web/` Apache-2.0, and a file of
+   Buffet's own put there would take the wrong terms. `-Control`: the clean
+   copies pass; a byte changed in the kit, a byte changed in `host.js`, a
+   copy missing, the pin moved and not the tag, and a stray file under
+   `web/` each fail by name, five mutants. *The alternatives:* the name
+   kept, the page's files held by a check named for the kit; or a check of
+   the page's own beside it, two baselines each naming the tag, free to
+   disagree.
+4. **The builder: `tools/build_web.ps1`, Buffet's own (rec).** Alonzo's at
+   `v0.1.3`, adapted by the same copyright holder under this repository's
+   terms, as `oracle/examples/expand.rs` was. It fills the same five
+   places, each once, and refuses a template with a place naming a file.
+   It inlines `{{VIEWPORT_JS}}`, `{{FAKE_JS}}` and `{{HOST_JS}}` whole, and
+   writes `{{BLOCKS}}` in this order:
+   - `page-name`, Buffet;
+   - for each `src/<name>.source.vla` (one, today), `cartridge-<name>` at
+     `src/<name>.vla` with `data-file` `<name>.vla`, then `source-<name>` at
+     its own path;
+   - every other `.vla` of `src/` a library at its own path,
+     `library-common` at `src/common.vla` and `library-kitchen` at
+     `src/kitchen.vla`, the paths the source's includes resolve to.
+
+   Each text is read with CRLF as LF, and a text holding `</script` is
+   refused. The page is written UTF-8 without a byte-order mark to
+   `web/index.html`. There is no order list, the page holding one
+   cartridge, and no records. The replay and golden places come with
+   `COURSE.0`'s tasting, with their files; `MENU.1`'s content sheets, under
+   `src/content/`, will want library blocks at their paths, and the
+   builder's rule widens then.
+5. **The module required (rec).** `{{ALONZO_WASM}}` is the base64 of
+   `target/wasm32-unknown-unknown/release/alonzo.wasm`. Alonzo's builder
+   writes a page with no module when none is built, so that a machine
+   without Rust still builds its bench, whose cases run over the double. A
+   game's page without the module plays nothing, so Buffet's builder
+   refuses without it and names the cargo command that builds it; `-NoWasm`
+   builds a page anyway, for the ratchets job and the check's control. *The
+   alternative:* Alonzo's way, a page whose bar says it carries no module.
+6. **The offline check: `tools/check_web_offline.ps1`, Alonzo's adapted
+   (rec).** It holds the template and the three scripts to no reference
+   that reaches out: a script's `src`, a link, an image, a frame, a form, an
+   anchor, `@import`, `url(`, `http://`, `https://`, `fetch`,
+   `XMLHttpRequest`, `WebSocket`, `EventSource`, `sendBeacon`, a dynamic
+   `import(` and `importScripts`. It also holds a charset, the five places
+   once each, and no place naming a file. That keeps `SD-13` in Buffet's
+   own CI whatever a later tag brings. When a built page stands beside the
+   template, the check holds it too:
+   - the same markup;
+   - no place left;
+   - its blocks are `src/`'s files both ways, each block at its file's path
+     with its file's LF text, so that a page built before an edit of the
+     source fails here and not at a hand test.
+
+   Alonzo's list of Web Audio calls is left out. It is Alonzo's charter on
+   its own host (its `CHARTER.md` §8), held at the tag by Alonzo's check
+   and here by the digest. `-Control` passes the real template and scripts,
+   and a page the builder writes in a scratch folder with `-NoWasm`.
+   Fourteen mutants each fail by name:
+   - in the template: a script's `src`, a `fetch`, the viewport's place
+     removed, an anchor, an image, a place naming a file, and the blocks'
+     place removed;
+   - in the scripts: a `fetch` in the viewport and one in the host;
+   - in a built page: the cartridge's block cut, a library block for no
+     file, the template standing as a page, a library block at another
+     path, and a block whose text is not its file's.
+
+   `run_checks.ps1`'s floor rises from 3 to 4, and the control joins
+   `-WithExtras`.
+7. **CI (rec).** The crate job, after the module: the page built under
+   `pwsh`, then the offline check over it under `pwsh`, so the page with the
+   module in it is held on Linux. The ratchets job, under Windows
+   PowerShell 5.1: the page built with `-NoWasm` before `run_checks.ps1
+   -WithExtras`, so that the builder and the check run under the house's
+   floor too and the blocks are held there. No artifact is kept: the deploy
+   is `HOUSE.5`'s. *The alternative for the ratchets job:* no page, the
+   check holding the template alone and saying it found no built page.
+8. **The opening: the empty sheet, Buffet in the picker after it (rec, for
+   now).** `ENGINE.15`'s page opens on the empty sheet whatever it holds,
+   the owner's word of 2026-10-14, and the copied template is never edited.
+   A candidate row in `MISE.6`: a block naming the cartridge a page opens
+   on, asked of Alonzo before `HOUSE.5` serves the page, since a diner
+   opening the deployed game should be seated at it; not asked now. *The
+   alternative:* ask now, an `ENGINE` item there.
+9. **The stale places, rewritten at the build.** `OMAKASE.md`'s `HOUSE.4`
+   line went stale in three places:
+   - its places, now `{{BLOCKS}}`;
+   - its *Needs*: `FRONT.1` struck, since the page shows the model's sheets
+     live by their tabs before any panel exists, and "Alonzo's next tag"
+     met by `v0.1.3`;
+   - first light, which moves to `FRONT.1`, the dish that completes it, and
+     `MISE.3`'s re-measure of the window with it.
+
+   `MISE.6`'s `ENGINE.14` row is met in 0.1.1 and vendored here. Its
+   `ENGINE.8` row is met unasked in 0.1.3, so the re-measure at first light
+   is of the `values` view. The critical path's fifth step and the sentence
+   on `ENGINE.8` in "What Buffet does not wait for" follow. The deploy,
+   `pages.yml`, stays `HOUSE.5`'s.
+10. **The hand test, the owner's, on the page built here:**
+    - the page opened from disk in Chrome, at full screen;
+    - its bar named Buffet, its log naming `alonzo` 0.1.3 over `vla-lang`
+      0.9.3;
+    - Buffet picked and run at `(rate 30)`, the Stocks tab's four prices
+      moving on a day's first frame;
+    - Build in the drawer writing the cartridge byte for byte, compared with
+      `src/buffet.vla` by a command given at the handover.
+
+**The predictions, before any number.** The numbers column was filled at
+the build, the same day, P6 at the push and P7 at the owner's hand test.
+
+| | What | Predicted | The number |
+|---|---|---|---|
+| P1 | the pin | `alonzo` 0.1.3 from crates.io, the lock moving in its version and checksum alone | *Measurement*, as predicted: `cargo update -p alonzo` moved the lock from 0.1.1 to 0.1.3 and its checksum to `90c377d0…77610`, `vla-lang`'s entry unmoved |
+| P2 | the kit copied again | the cartridge the same bytes (`expand --check`), the describe golden unmoved, the 27 tests green here and in CI on Linux | *Measurement*, here: `expand --check` same, the describe golden unmoved, the 27 tests green, the suite 4.1 s. The kit copied CRLF, 409 lines, its LF text the tag's digest. Linux at the push |
+| P3 | the module | 749,386 bytes, the size of the 0.1.0 build here, differing from it only where the version and the registry folder's name are spelled | *Measurement*: 749,434 bytes, **missed** by 48. The prediction read 0.1.1 to 0.1.3 alone and set them against a build of 0.1.0, and since 0.1.1 the engine's catalog cites `docs/SPEC.md` where it cited `SPEC.md`, in ten references, 50 bytes of text more (Alonzo's `2e687f2`). The version and the registry folder's name are spelled at the same lengths, as predicted. 216 bytes more than Alonzo's own build of the same code, the registry's paths in the engine's three panic locations |
+| P4 | the page | 1.58 to 1.59 million characters: the template and the scripts 538,000, the module's base64 999,000, the five blocks about 47,000; written in under 2 s | *Measurement*: 1,585,014 characters, every one ASCII: the template and the scripts 538,044 once their five places are filled, the module's base64 999,248, the five blocks 47,722; written in 0.33 s under Windows PowerShell 5.1. Inside |
+| P5 | the checks | 4 checks and 4 controls green, the vendored check's 5 mutants and the offline check's 14 each failing by name | *Measurement*: ALL GREEN, 4 checks and 4 controls in 4.2 s, every mutant failing for its own reason. `check_spdx` reads 37 tracked files, the page's four Apache-2.0 |
+| P6 | CI | the crate job longer by the page and its check, under 10 s; the ratchets job by under 5 s | |
+| P7 | the hand test | the four prices moving on a day's first frame alone, as the hand has them; Build's text equal to the cartridge's LF bytes | *Measurement*, the owner's two screenshots and a clipboard comparison: paused at frame 1,394, day 46, the four prices today 98, 494, 2,480 and 9,941 cents and yesterday 98, 494, 2,481 and 9,942, the hand's to the cent, as `STATION.1`'s hand test had them at frame 1,389; Build's text in the drawer the cartridge's 5,607 LF characters, the comparison printing "same bytes". Inside. The screenshots hold one paused frame, so the moving itself was seen live and is not in them |
+
+**What the build found.** The engine's refusal texts are bytes of its
+module: Alonzo's move of its documents into `docs/` (`2e687f2`, in 0.1.1)
+changed ten of the catalog's sentences, and with them the module's size,
+without a line of code (P3). A module's size witnesses everything the
+engine embeds, its catalog as much as its code, so a prediction of it
+reads every embedded file between the two versions it compares.
+
+The pass writes CRLF whatever the line endings it reads: from the page's
+LF texts at their `src/` paths it writes the checked-out cartridge's own
+5,749 bytes, the CRLF file, whose LF text, 5,607 bytes, is the block the
+page holds (a scratch test of the oracle crate, run natively before the
+hand test and deleted). So Build in the drawer is compared with the file as
+the runner's `--check` compares it, line endings read as LF.
+
+**The owner's hand test, 2026-10-15,** on the page built here, opened from
+disk in Chrome. It opened on the empty sheet, the bar named Buffet and the
+picker set to "An empty sheet", Frame 0 and the budget of 0 formula cells a
+step: decision 8's opening, which the owner noted, the candidate row in
+`MISE.6` asking before service for a block that names the opening
+cartridge. Buffet picked and run at full screen, paused at frame 1,394, day
+46, the Stocks tab read the hand's prices today and yesterday (P7), the
+dividends a year 4 and the days between two 91, the fourth rung's dividend
+50 cents and the dividend today 0, day 46 being no dividend day; the tabs
+Screen, Day, Dice, Market, Stocks, Clock, File and Input. Build in the
+drawer wrote the cartridge's bytes, "same bytes: 5607 LF characters". The
+log's line naming `alonzo` 0.1.3 over `vla-lang` 0.9.3 is in no
+screenshot; a headless load of the same page read it before the handover,
+and Build, which only the engine's module can run, says the module was
+there. Passed.

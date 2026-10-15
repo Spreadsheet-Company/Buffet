@@ -80,7 +80,9 @@ each check on mutants; beside it the Cargo oracle, `cargo build --workspace`,
 `cargo test --workspace`. CI runs both on every push and pull request
 (`.github/workflows/checks.yml`): the checks under Windows PowerShell 5.1,
 and the Cargo half on Linux with `--locked`, the engine's module built for
-the browser beside it (`HOUSE.2`).
+the browser beside it and the page built with it and held offline
+(`HOUSE.2`, `HOUSE.4`). A page you built before an edit of `src/` fails the
+offline check until `tools/build_web.ps1` builds it again.
 
 ## Security
 

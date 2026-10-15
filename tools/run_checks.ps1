@@ -24,7 +24,7 @@ THE SHELL. Each check runs in its own process under Windows PowerShell 5.1
 shell is named in the header.
 
 -WithExtras runs the hardcoded list below of the verifiers that take
-arguments, today the three controls, each proving its check on mutants, and says so
+arguments, today the four controls, each proving its check on mutants, and says so
 separately: pretending a control is interchangeable with a plain pass/fail
 scan would hide what it asserts.
 
@@ -65,7 +65,13 @@ $selfName = Split-Path -Leaf $PSCommandPath
 # holds exactly the source, its cartridge and the two libraries, each kind at
 # its pinned count; the cartridge's banner names its source; the source
 # includes the kit, then the library, which includes nothing).
-$expectedAtLeast = 3
+# 2026-10-15, HOUSE.4, the page: 4 - check_kit.ps1 grown into
+# check_vendored.ps1 (the kit and the page's four files are Alonzo's at the
+# tag Cargo.toml's pin names, and web/ holds nothing else), the count
+# unchanged by it; and check_web_offline.ps1 (the page's template and
+# scripts load nothing and link nowhere, and a built page's blocks are
+# src/'s files both ways, each at its path with its text).
+$expectedAtLeast = 4
 if ($Floor -gt 0) { $expectedAtLeast = $Floor }
 
 # --- The other verifiers, each with the arguments it needs. ---
@@ -73,8 +79,9 @@ if ($Floor -gt 0) { $expectedAtLeast = $Floor }
 # quietly stop covering something the day a file was renamed.
 $extras = @(
     @{ Script = 'check_spdx.ps1'; Args = @('-Control'); What = 'HOUSE.1 license map: a clean scratch tree passes, five mutants fail' },
-    @{ Script = 'check_kit.ps1'; Args = @('-Control'); What = 'HOUSE.3 the kit copied: a clean copy passes, two mutants fail' },
-    @{ Script = 'check_layout.ps1'; Args = @('-Control'); What = 'MISE.1 the layout: a clean copy passes, seven mutants fail' }
+    @{ Script = 'check_vendored.ps1'; Args = @('-Control'); What = 'HOUSE.3, HOUSE.4 the copies from Alonzo: clean copies pass, five mutants fail' },
+    @{ Script = 'check_layout.ps1'; Args = @('-Control'); What = 'MISE.1 the layout: a clean copy passes, seven mutants fail' },
+    @{ Script = 'check_web_offline.ps1'; Args = @('-Control'); What = 'HOUSE.4 the page offline: the real set and a built page pass, fourteen mutants fail' }
 )
 
 # --- The shell each check runs under. ---

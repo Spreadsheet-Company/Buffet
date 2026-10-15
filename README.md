@@ -71,9 +71,17 @@ cargo test --workspace
 tools\run_checks.ps1
 ```
 
-Both pins, `alonzo = "=0.1.0"`, Alonzo's first release, and
-`vla-lang = "=0.9.3"`, the language it pins, resolve from crates.io, and
-`Cargo.lock` is committed.
+Both pins, `alonzo = "=0.1.3"` and `vla-lang = "=0.9.3"`, the language
+that release pins, resolve from crates.io, and `Cargo.lock` is committed.
+
+The page is Alonzo's player, its template and scripts vendored unchanged
+in `web/` at the tag the pin names, filled with the engine's module and the
+game's texts into one file that runs from disk and fetches nothing:
+
+```text
+cargo build --release --locked -p alonzo --target wasm32-unknown-unknown
+tools\build_web.ps1                       # web/index.html: open it, pick Buffet
+```
 
 ## Not advice
 
