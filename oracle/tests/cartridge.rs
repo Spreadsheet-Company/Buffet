@@ -13,11 +13,20 @@
 //! same functions in the same order on the same platform; its settings
 //! held to the hand's constants; the difficulty written 0, playing tier 0
 //! through a year; and a hundred years at one frame a day, every day's index
-//! held. Nothing here commits a value derived from `SIN` or `^`: each is
+//! held. Since `STATION.1`: the index yesterday beside it, and the Stocks
+//! sheet, every rung's price today and yesterday, its dividend and the
+//! dividend today, held at every one of those frames and days; the rungs'
+//! settings; the opening at the starts; the least price of every rung at or
+//! above the bound no seed passes; and the dividend on exactly four days a
+//! year. Nothing here commits a value derived from `SIN` or `^`: each is
 //! compared live, the module in the browser computing its own.
 
+use std::collections::BTreeMap;
+
 use alonzo::cartridge::{Cartridge, Seed};
-use buffet_oracle::buffet::{self, Calendar, Market, DIFFICULTY, LOOK_BACK, WAVES, YEAR};
+use buffet_oracle::buffet::{
+    self, least_index, Calendar, Market, DIFFICULTY, DIVIDEND_DAYS, LOOK_BACK, RUNGS, WAVES, YEAR,
+};
 use buffet_oracle::{expand_source, lf, load, read, root, values};
 
 const SOURCE: &str = "src/buffet.source.vla";
@@ -85,13 +94,15 @@ fn held(cart: &Cartridge, cal: &Calendar, seed: u64, market: &Market) {
         uniform(&format!("C{}", draw + 7), z);
     }
     market_held(cart, cal, market, DIFFICULTY);
+    stocks_held(cart, cal, market, DIFFICULTY);
 }
 
 /// The Market sheet at this frame (`POT.2`): each wave's speed and tier 1's
-/// phases, the cycle on the first day, and every formula of the two columns,
-/// today and the look back, held bit for bit to the hand's market on the
-/// calendar's day at a difficulty. The hand's value has 0.0 added, which
-/// turns its rare -0 into the 0 a cell holds instead and moves nothing else.
+/// phases, the cycle on the first day, and every formula of the three
+/// columns, today, the look back and yesterday (`STATION.1`'s), held bit for
+/// bit to the hand's market on the calendar's day at a difficulty. The
+/// hand's value has 0.0 added, which turns its rare -0 into the 0 a cell
+/// holds instead and moves nothing else.
 fn market_held(cart: &Cartridge, cal: &Calendar, market: &Market, difficulty: u64) {
     let f = cal.frame;
     let got = values(cart, "Market", "B7:E25");
@@ -119,7 +130,12 @@ fn market_held(cart: &Cartridge, cal: &Calendar, market: &Market, difficulty: u6
     }
     cell("B22", market.first_cycle);
     let today = cal.day as f64;
-    for (column, day) in [("B", today), ("C", today - LOOK_BACK as f64)] {
+    let days = [
+        ("B", today),
+        ("C", today - LOOK_BACK as f64),
+        ("D", today - 1.0),
+    ];
+    for (column, day) in days {
         cell(&format!("{column}14"), day);
         for (row, (wave, phase)) in (15..).zip(&waves) {
             cell(&format!("{column}{row}"), wave.term(*phase, day));
@@ -130,6 +146,43 @@ fn market_held(cart: &Cartridge, cal: &Calendar, market: &Market, difficulty: u6
         cell(&format!("{column}24"), market.tier1(day));
         cell(&format!("{column}25"), market.index(difficulty, day));
     }
+}
+
+/// The Stocks sheet's workings at this frame (`STATION.1`): each rung's price
+/// today and yesterday, its dividend and the dividend today, held to the
+/// hand's rungs on the calendar's day at a difficulty, whole cents compared
+/// as the record prints them. The window is the four columns that compute:
+/// a view costs a debug build a tenth of a millisecond or more, the more the
+/// more cells it holds, at every one of the frames the tests walk, and the
+/// settings never move (`the_stocks_sheet_states_its_rungs` reads them).
+/// The values read, for a caller that counts them.
+fn stocks_held(
+    cart: &Cartridge,
+    cal: &Calendar,
+    market: &Market,
+    difficulty: u64,
+) -> BTreeMap<String, String> {
+    let f = cal.frame;
+    let got = values(cart, "Stocks", "E5:H8");
+    let cents = |addr: &str, want: u64| {
+        assert_eq!(
+            got.get(addr),
+            Some(&want.to_string()),
+            "frame {f}, day {}: Stocks!{addr}",
+            cal.day
+        );
+    };
+    let today = cal.day as f64;
+    for (row, rung) in (5..).zip(&RUNGS) {
+        cents(&format!("E{row}"), rung.price(market, difficulty, today));
+        cents(
+            &format!("F{row}"),
+            rung.price(market, difficulty, today - 1.0),
+        );
+        cents(&format!("G{row}"), rung.dividend);
+        cents(&format!("H{row}"), rung.dividend_on(cal.day_of_year));
+    }
+    got
 }
 
 /// The cartridge is the pass's expansion of its source, byte for byte but
@@ -282,10 +335,68 @@ fn the_market_sheet_states_its_settings() {
     }
 }
 
+/// The Stocks sheet states its rungs, and they are the hand's: each rung's
+/// label, its start in cents, its beta and its dividend yield; the dividends
+/// a year; and, once the first frame has computed it, the days between two,
+/// the hand's first dividend day. A rung's label is its place on the ladder,
+/// and no name, until `MENU.3`'s first slice names the four.
+#[test]
+fn the_stocks_sheet_states_its_rungs() {
+    let mut cart = cartridge();
+    cart.step(0);
+    let got = values(&cart, "Stocks", "A1:D8");
+    let number = |addr: &str| -> f64 {
+        got.get(addr)
+            .unwrap_or_else(|| panic!("Stocks!{addr} holds no value"))
+            .parse()
+            .unwrap_or_else(|e| panic!("Stocks!{addr}: {e}"))
+    };
+    assert_eq!(number("B1"), buffet::DIVIDENDS_A_YEAR as f64, "Stocks!B1");
+    assert_eq!(number("B2"), DIVIDEND_DAYS[0] as f64, "Stocks!B2");
+    for (row, (k, rung)) in (5..).zip(RUNGS.iter().enumerate()) {
+        assert_eq!(
+            got.get(&format!("A{row}")),
+            Some(&format!("rung {}", k + 1)),
+            "Stocks!A{row}"
+        );
+        assert_eq!(
+            number(&format!("B{row}")),
+            rung.start as f64,
+            "Stocks!B{row}"
+        );
+        assert_eq!(
+            number(&format!("C{row}")).to_bits(),
+            rung.beta.to_bits(),
+            "Stocks!C{row}"
+        );
+        assert_eq!(
+            number(&format!("D{row}")).to_bits(),
+            rung.dividend_yield.to_bits(),
+            "Stocks!D{row}"
+        );
+    }
+}
+
+/// On day 0 every rung is at its start, at every frame of the first day: the
+/// index is exactly 1, and 1 to any beta is 1, here and on Linux.
+#[test]
+fn on_day_0_every_rung_is_at_its_start() {
+    let mut cart = cartridge();
+    for frame in 1..=buffet::FRAMES_A_DAY {
+        cart.step(0);
+        let got = values(&cart, "Stocks", "E5:E8");
+        let prices: Vec<&str> = (5..=8)
+            .map(|row| got[&format!("E{row}")].as_str())
+            .collect();
+        assert_eq!(prices, ["100", "500", "2500", "10000"], "frame {frame}");
+    }
+}
+
 /// A person who writes 0 into the difficulty before the first frame plays
 /// tier 0, the Kiddie Pool, and every frame of a year is its market by hand,
-/// the index tier 0's and tier 1 computed beside it (`AD-6`: any cell is a
-/// person's to edit; `POT.6` makes this one a picker).
+/// the index tier 0's and tier 1 computed beside it, and every rung priced
+/// off it (`AD-6`: any cell is a person's to edit; `POT.6` makes this one a
+/// picker).
 #[test]
 fn at_difficulty_0_the_index_is_the_kiddie_pools() {
     let mut cart = cartridge();
@@ -302,13 +413,17 @@ fn at_difficulty_0_the_index_is_the_kiddie_pools() {
         cart.step(0);
         cal.tick();
         market_held(&cart, &cal, &market, 0);
+        stocks_held(&cart, &cal, &market, 0);
     }
 }
 
 /// A hundred years at one frame a day, every frame a day's first: the index
-/// today and twenty days back held to the hand on every one of the 36,500
+/// today, twenty days back and yesterday, and every rung's price today and
+/// yesterday and its dividend, held to the hand on every one of the 36,500
 /// days, across the whole range a long game reaches, the drift raised past
-/// the 36,000th power and the Kondratiev two turns on.
+/// the 36,000th power and the Kondratiev two turns on. No rung's price falls
+/// below the bound no seed passes, and the dearest rung pays its dividend on
+/// exactly four days a year.
 #[test]
 fn a_hundred_years_at_one_frame_a_day_are_the_market_by_hand() {
     let mut cart = cartridge();
@@ -319,11 +434,21 @@ fn a_hundred_years_at_one_frame_a_day_are_the_market_by_hand() {
             r.refusal.id, r.refusal.text
         )
     });
+    let mut cal = Calendar::new(1, buffet::DAYS_A_YEAR);
+    let mut least = [u64::MAX; RUNGS.len()];
+    let mut paid = 0;
     for day in 0..100 * buffet::DAYS_A_YEAR {
         cart.step(0);
-        let got = values(&cart, "Market", "B25:C25");
+        cal.tick();
+        assert_eq!(cal.day, day);
+        let got = values(&cart, "Market", "B25:D25");
         let today = day as f64;
-        for (addr, at) in [("B25", today), ("C25", today - LOOK_BACK as f64)] {
+        let days = [
+            ("B25", today),
+            ("C25", today - LOOK_BACK as f64),
+            ("D25", today - 1.0),
+        ];
+        for (addr, at) in days {
             let v: f64 = got[addr]
                 .parse()
                 .unwrap_or_else(|e| panic!("day {day}: Market!{addr}: {e}"));
@@ -333,7 +458,26 @@ fn a_hundred_years_at_one_frame_a_day_are_the_market_by_hand() {
                 "day {day}: Market!{addr} is {v}"
             );
         }
+        let stocks = stocks_held(&cart, &cal, &market, DIFFICULTY);
+        for (k, row) in (5..).take(RUNGS.len()).enumerate() {
+            for column in ["E", "F"] {
+                let cents: u64 = stocks[&format!("{column}{row}")].parse().unwrap();
+                least[k] = least[k].min(cents);
+            }
+        }
+        if stocks["H8"] != "0" {
+            paid += 1;
+        }
     }
+    let bound: Vec<u64> = RUNGS.iter().map(|r| r.price_at(least_index())).collect();
+    for (k, (least, bound)) in least.iter().zip(&bound).enumerate() {
+        assert!(
+            least >= bound && *bound >= 1,
+            "rung {}: its least, {least} cents, against the bound, {bound}",
+            k + 1
+        );
+    }
+    assert_eq!(paid, 100 * DIVIDEND_DAYS.len(), "the dividend's days");
 }
 
 /// `BD-7`: the Day sheet alone reads the frame, `Clock!B1`, and its phase,

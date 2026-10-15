@@ -41,6 +41,12 @@ empty.*
 
   *Closed 2026-10-14.* Predicted `~days`; cost one session, the scoping, the build and the owner's hand test. What landed: the Market sheet in the source and its cartridge, now 96 rows and 51 formula cells; the hand's market in `oracle/src/buffet.rs`, the same functions as the cells in each formula's order; the Market held inside the test of every frame of two years, three tests of the cartridge more (its settings, a year at difficulty 0, a hundred years at one frame a day) and three of the hand (both tiers opening at 1, the amplitudes, the two-peak test), twenty in all; the describe golden blessed again, moved by the Market alone; and, in the same commit at the owner's word, `Cargo.toml`'s comment naming the pin it holds, `alonzo` 0.1.1. Three of the eight predictions missed in part, each named beside its number: the nearest repeat's lag, seed 777's first year falling on every one of its days, and an ordinary frame 0.1 µs slower. The page held to the hand to the last bit in every one of the 70 cells the hand test showed.
 
+## 🍳 THE STATIONS
+
+- ✅ **`STATION.1`, first slice — stocks: four rungs.** *Scoped and built 2026-10-14, hand-tested 2026-10-15: the scoping, its fifteen decisions approved whole by the owner, every prediction beside its number, what the build found and the owner's hand test are under THE ITEMS, SCOPED.* The Stocks sheet, its name plain as the model's are, a rung a row, cheapest first: four fictional rungs at $1, $5, $25 and $100, labeled `rung 1` to `rung 4`, the working labels (a penny stock, a small cap, a mid cap and a blue chip) kept in the docs and never in a cell until `MENU.3` names them, since real index and fund names are others' marks; each rung's start in whole cents, its beta and its dividend yield as values, and its workings one fill a column. A price is `=INT(<start>*Market!$B$25^<beta>+0.5)`, the index the difficulty picks to the rung's beta, whole cents, one rounding, half up: a power, so that a beta holds at every level of the index and no price reaches zero at any seed, none falling below 11, 96, 833 and 4,386 cents, a bound the hand holds; the betas 2, 1.5, 1 and 0.75, the third the market itself. Yesterday's price is the same formula over yesterday's index, `Market!D25`, the Market sheet's fills reaching a column D, recomputed and never remembered. The fourth rung pays a dividend, 2% a year, 50 cents a share fixed from its start, on the year's 91st, 182nd, 273rd and 364th days, so that income exists from the first quarter, the cell holding it all that day for `PLATE.1` to pay at the day's first frame. Written as rows and not yet a ladder, a rung at a time, in the order a walk over a list of rungs writes, since the ladder is the pattern's second appearance and enters the library with the bonds (`STATION.2`). *Oracle, met:* `buffet.rs`, every price today and yesterday, each dividend and the dividend today held at every frame of two years and two days and on every day of a hundred years at one frame a day; the opening exactly the starts; each rung's least at or above the bound; the dividend on exactly four days a year, the days the hand lists; `BD-7`'s scan and the census's `(every-frame 0)` kept; the owner's hand test in Alonzo's page, every cell it showed the hand's. *Pays into:* `PLATE.1`'s rows, one a rung; the Market panel's prices and their change; the ladder hoist at course 1, whose proof is that this slice expands to its bytes unchanged, which a scratch ladder of 24 lines has already met. `~days`
+
+  *Closed 2026-10-15.* Predicted `~days`; cost one session, the scoping, the build and the owner's hand test. What landed: the Stocks sheet and the Market's column D in the source and its cartridge, now 131 rows and 79 formula cells; the hand's rungs, their prices, the dividend's days and the bound in `oracle/src/buffet.rs`; the Stocks sheet held inside the tests of two years, a year at difficulty 0, eight hundred days and a hundred years at one frame a day, two tests of the cartridge more (the rungs' settings, the opening) and three of the hand (the opening at both tiers, the bound, the dividend's days), 27 in all; the describe golden blessed again, moved as predicted; and, in the same commit at the owner's word, `POT.2`'s P2 cell, CI's Linux holding the market bit for bit at the first push. One of the eight predictions missed, and only at first: the suite took 11.6 s while the Stocks sheet's 56 cells were viewed at every frame and every day, and 7.4 s once the window held the four columns that compute, half again the old suite's time on the same machine under the same load. The build found that a cent is a wide step for a $1 share: the first rung's price moves on 25 of the first year's 365 days.
+
 ## 🔪 MISE EN PLACE
 
 - ✅ **`MISE.3` — the first measurements: three probes, each a day in scratch, each deciding a spelling.** *Scoped, measured and hand-run 2026-10-14: the scoping, every number beside its prediction, the owner's hand run and what it found are under THE ITEMS, SCOPED.* Run over Alonzo's own page and runner with a Buffet-shaped scratch cartridge, before a row of the game is written, and each number written in `SPIKE.md` beside its prediction so that course 0's scoping cites them. (1) **The window's cost.** An 80 by 50 panel of texts and numbers drawn in Chrome at `(rate 30)`. The host draws from the full record until `ENGINE.8`'s second slice lands, and the record carries every formula's text: by `vla-lang` 0.9.3's release notes, an 80 by 50 window of one short formula costs 10.3 ms natively from the record and 1.7 to 1.9 ms from the `values` view (1.3 to 1.4 in the browser). A panel of many short formulas is Buffet's shape and nobody has measured it. The number decides whether course 0 ships over the record or asks Alonzo for the slice with the number in hand (`MISE.6`), and it is re-measured on the real window at first light (`HOUSE.4`). (2) **A number format with a glyph.** Whether the viewport honors a number format with a literal glyph in it (the record's `format` row carries a number format and `KERNEL.5`'s painter spells numbers by it; a `▲` in a format is (check)), which decides `FRONT.2`'s spelling of gains: a format, or a glyph cell beside the number. (3) **The picker's limit.** `CHOOSE` over references against the 8,192-character formula, about a thousand references, and the text join `&`, which the dialect has (the language's `Concat`, checked 2026-10-14), so that a ledger row's address may be joined from a count and not chosen; the number decides `MENU.1`'s picker and `PLATE.1`'s ledger ring. The fourth question the draft asked, the boundary frame against the ordinary frame, needs a model to measure and is answered by the first model: it is `POT.1`'s oracle. *Needs:* nothing. *Oracle:* the three numbers written beside their predictions. *Pays into:* `MISE.1`'s decisions, `FRONT.2`, `MENU.1`, `PLATE.1`, the ask of `ENGINE.8`. *Measured 2026-10-14, every number beside its prediction in `SPIKE.md`:* course 0's densest panel draws a frame in 1.5 to 1.7 ms in Chrome at full screen, so course 0 ships over the record; the spellings the numbers settle, approved by the owner the same day, stand as dated lines on `FRONT.1`, `FRONT.2`, `MENU.1`, `PLATE.1`, `MISE.1` and `MISE.6`; the owner's hand run in the owner's own Chrome made the browser number real, 1.4 ms a frame at p50. `~days`
@@ -690,7 +696,7 @@ the build, the same day.
 | | What | Predicted | The number |
 |---|---|---|---|
 | P1 | the cartridge | 96 rows (41), 51 formula cells (19) in 22 shapes (11) of 20 texts (9), 13 levels (8), `(every-frame 0)`; the describe golden moves by the Market's readers, the eleven new shapes and the budget, `(budget 30 51 1530 2000000)` | *Measurement*, as predicted in every count; the golden's diff the notes, the budget, the plan, the readers (Day 9 to 11, Dice 6 to 7, the Market's 31, its twin's 1) and the eleven shapes, `POT.1`'s eleven unmoved. Not predicted: 2 runs of 9 lanes (the five speeds, and four of the ten terms), 42 cells computed alone |
-| P2 | the hand at every frame of two years and two days | every formula cell of the Market sheet equal bit for bit at all 21,960 frames, natively here and in CI on Linux | *Measurement*: equal at all 21,960 frames here, on Windows, at the first run. CI's Linux at the first push |
+| P2 | the hand at every frame of two years and two days | every formula cell of the Market sheet equal bit for bit at all 21,960 frames, natively here and in CI on Linux | *Measurement*: equal at all 21,960 frames here, on Windows, at the first run; and CI's Linux held the market bit for bit at the first push, run 38689162382, its 22 tests green, the two years and the hundred years among them |
 | P3 | a hundred years at one frame a day | the index today and twenty days back equal at all 36,500 days; the test under 10 s in a debug build | *Measurement*: equal at all 36,500 days; the test 3.0 s alone in a debug build. Inside. The two years' test grew from 2.2 s to 5.1 s, the Market viewed at every frame |
 | P4 | the two-peak test | the smallest difference over the lags between 0.04 and 0.12 of the trend, at a lag within days of a whole number of Kitchins, near 36 or 100 years | *Measurement*, seed 777: 0.089 at a lag of 36,296 days, 99.4 years. Inside for the difference; **missed** for the lag, 24.88 Kitchins, not within days of a whole number of them: the nearest repeat is where the four waves' misses sum least, not where the Kitchin's alone is nothing. Five other seeds, 1, 2, 42, 1,000 and 123,456,789: 0.039 to 0.104, each above the test's 0.02 |
 | P5 | seed 777's first year | the index ends it between 0.85 and 1.05: the Kitchin opens past its peak, its phase 1.90 from the first draw's 0.3027 (`POT.1`'s published number), and falls 0.127 of the trend in the year (*derived*), against the drift's 7.6%; the look back's slope below zero on 50 to 90% of its days | *Measurement*: 0.904 on day 365, inside; the slope below zero on every one of the year's 365 days, **missed**. Seed 777 opens near a cyclical high, its first cycle 1.297, the Kitchin and the Juglar both past their peaks (phases 1.90 and 3.40), so the index falls without a turn to 0.866 on day 586, and the look back's slope first turns on day 597 |
@@ -769,3 +775,255 @@ profiled: 507887, a dip to day 81 and five years without a fall of 5%;
 manifest's seed moved alone, the hand naming it (`SEED`), a test holding
 the manifest to it, another holding the first year kind; the two-peak test
 reads the first game's market, its least difference 0.089 at 52.2 years.
+
+## `STATION.1`, first slice — stocks: four rungs
+
+*Scoped 2026-10-14 at the owner's word, "Scope and build Buffet's
+STATION.1, first slice: stocks, four rungs", from `OMAKASE.md`'s line
+(`COURSE.0`'s item 4), `BD-1`, `BD-3`, `BD-7`, `BD-10`, `FRONT.2`'s money
+rule and `POT.2`'s decision 11. Each decision carries its recommendation,
+for the owner to approve, amend or strike before the build. The predictions
+were written before any number was taken; each number goes beside its own
+at the build, marked a measurement or derived. Approved whole by the owner
+the same day, "Recommendations approved; proceed with implementing STATION.1
+as scoped", and built that day.*
+
+**What it stands on, read in the code on the day** (`vla-lang` 0.9.3, the
+language `alonzo` 0.1.1 pins).
+- `^` is `power`, which answers `0^0` with `#NUM!` and 0 to a negative power
+  with `#DIV/0!` and else calls `powf`; `INT` is `floor`, and `MOD(n,d)` is
+  `n-d*INT(n/d)`; every result passes `finite` (`src/calc/eval.rs`,
+  `src/calc/library.rs`). So `=INT(<start>*<index>^<beta>+0.5)` is `powf`, a
+  product, a sum and a floor, in that order, and the hand writes them in it.
+- The index is above zero at every seed, on every day a price reads and at
+  both tiers (*derived*). Tier 1 is the trend times the cycle over the cycle
+  on the first day, each cycle between 0.5 and 1.5 since the amplitudes sum
+  to a half, so the quotient is at least a third; the trend is at least
+  1.0002^-1, on day -1, yesterday's on day 0 and the earliest day a price
+  reads; tier 0 is at least nine tenths of the trend. So the index to any
+  beta is a positive number, and never `0^b`'s error.
+- The index is exactly 1 on day 0 (`POT.2`'s decision 7), and `pow(1, y)` is
+  1 for every `y` by Annex F of the C standard, which the platforms'
+  libraries keep (check: the opening test holds it here and on Linux), so a
+  rung opens at its start exactly.
+- The record prints a number as its shortest round trip, so a whole number
+  of cents prints as its digits, `10000`, and the tests compare it as text,
+  as the dice's draws are compared.
+- The kit's `cells` writes its entries in the order given, `headers` along a
+  row and `labels` down a column (`src/common.vla`). The pass carries no
+  comment of the source into the cartridge, its header line and its banner
+  aside.
+- The Market sheet's column D is empty below row 11, and every fill of its
+  workings reaches columns B and C (`POT.2`'s decision 2).
+- Alonzo's player at `v0.1.2` (`ENGINE.15`), deployed by its pages run
+  38687332704 to https://spreadsheet-company.github.io/Alonzo/, loads a
+  cartridge pasted into the drawer's box, pauses, and takes a person's edit,
+  a row at a time, in the drawer.
+
+**The decisions.**
+
+1. **The sheet: `Stocks`, plain, its tab after Market.** The class's own
+   word (`BUFFET.md` §6), as Day, Dice and Market are plain (`POT.2`'s
+   decision 1 settled the model's half); a sheet a station, so `STATION.2`'s
+   Bonds and `STATION.3`'s Cash will stand beside it; the panel's name is
+   `FRONT.1`'s.
+2. **The labels: `rung 1` to `rung 4`, and no name in a cell.** The working
+   labels, a penny stock, a small cap, a mid cap and a blue chip, stay in the
+   docs (`BUFFET.md` §6, `OMAKASE.md`'s line, this file) until `MENU.3`'s
+   first slice, with `BACK.2`, names the four, fictional, as rows of the
+   Names sheet. The source's comments say what each rung is without them. A
+   rung's number is its place on the ladder, cheapest first, the word every
+   station's ladder shares.
+3. **The layout: two settings, then a table, a rung a row.** A label beside
+   each setting, as on the Day, Dice and Market sheets; a rung's settings
+   left of its workings; every formula of a column one fill over the four
+   rows:
+
+   | Row | A | B | C | D | E | F | G | H |
+   |---|---|---|---|---|---|---|---|---|
+   | 1 | dividends a year | `4` | | | | | | |
+   | 2 | the days between two | `=INT(Day!$B$2/B1)`, 91 | | | | | | |
+   | 4 | the rungs | start, in cents | beta | dividend yield, a year | price today, in cents | price yesterday, in cents | a dividend, in cents a share | the dividend today, in cents a share |
+   | 5 to 8 | rung 1 to rung 4 | `100`; `500`; `2500`; `10000` | `2`; `1.5`; `1`; `0.75` | `0`; `0`; `0`; `0.02` | `=INT(B5*Market!$B$25^C5+0.5)` | `=INT(B5*Market!$D$25^C5+0.5)` | `=INT(B5*D5/$B$1+0.5)` | `=IF(MOD(Day!$B$7,$B$2)=0,G5,0)` |
+
+   The prices today are `Stocks!E5:E8`, the cells the Market panel and
+   `PLATE.1` read; every cell that holds money holds whole cents (`FRONT.2`).
+4. **The starts: 100, 500, 2,500 and 10,000 cents,** the contract's $1, $5,
+   $25 and $100 a share, in cents, so that the price's one product is cents
+   and its one rounding makes them whole.
+5. **How a beta applies: a power of the index, `index^b` (rec).** A rung's
+   price is its start times the index to its beta, so its beta holds for all
+   time in the logarithm: a day's move of the index by 1% moves the rung by
+   about b%, at any level, and a fall of the index by a fraction f between
+   two days is a fall of exactly `1-(1-f)^b` for the rung between the same
+   days. A power of a positive index is positive, and it is one `^`, written
+   by the cell and the hand in the same order. The level form,
+   `1+b*(index-1)`, goes negative once the index falls below `1-1/b`, a half
+   at a beta of 2, which the index's bound, a third, allows; and its beta
+   fades toward 1 as the index grows: at an index of 10, a beta of 2 moves
+   the price 1.05% for the index's 1%. What the power also does, said
+   plainly: it raises the drift to the beta, so a rung's trend is the drift
+   to b times the day, 15.7%, 11.6%, 7.6% and 5.6% a year at decision 6's
+   betas (*derived*), a hundred years multiplying the first rung 2.2 million
+   times and the fourth 239. A higher risk earns a higher long-run return,
+   the security market line, and at tier 1 no rung has a risk of its own,
+   `POT.5`'s idiosyncratic factor: a row for `MENU.5`, at tier 1 no stock
+   goes bust.
+6. **The betas: 2, 1.5, 1 and 0.75 (rec), the cheapest the wildest.**
+   `BUFFET.md` §6's barbell, price and risk separate axes: the rung is the
+   price scale and the beta the risk. The third rung, a beta of 1, is the
+   market itself, the broad rung whose buy-and-hold `CRITIC.1` scores
+   against. On the first game's first year (*derived* from `POT.2`'s index,
+   1.1016 on day 365 and near 0.989 at the low of day 91), the four rungs end
+   it up 21.4%, 15.6%, 10.2% and 7.5%, their dips 2.2%, 1.7%, 1.1% and 0.8%,
+   and the fourth's dividends add 2% more. *The alternative:* 1.5, 1.25, 1
+   and 0.75, gentler, the first rung's swing half again the index's and not
+   twice it.
+7. **The price: `=INT(<start>*Market!$B$25^<beta>+0.5)`, over the index the
+   difficulty picks (rec).** `POT.2`'s decision 11: whole cents, one
+   rounding, half up; the idiosyncratic factor `POT.5`'s, never `*(1+0)`
+   now. `B25`, so that at difficulty 0 the Kiddie Pool prices the rungs and
+   the picker changes the market a diner trades; `B24`, tier 1 always, would
+   let the picker change the Market sheet and not one price.
+8. **No price at or below zero, at any seed, ever: a bound, and a test.**
+   From the index's bound, a third of 1.0002^-1 (*derived*, above), no
+   seed's price falls below 11, 96, 833 and 4,386 cents on any day a price
+   reads, at either tier built (*derived*, and the hand's to hold). A whole
+   cent stays exact in a double below 2^53 cents, $90 trillion, which the
+   first rung reaches no sooner than two centuries in, at the cycle's top
+   (*derived*, 205 years): `PLATE.6`'s limit, not this item's. The hand
+   states the bound, a test holds every rung's price at it to a cent or
+   more, and the first game's hundred years are held on every day.
+9. **Yesterday's price: recomputed, the Market sheet's column D (rec).**
+   `POT.2`'s decision 9's rule: a function of the day is recomputed and never
+   remembered. The Market's six fills over `B:C` reach `B:D`, its header row
+   gains "yesterday", and `D14` is `=B14-1`, so the index yesterday,
+   `Market!D25`, is the index's own formula at the day before, as the look
+   back, `C25`, is at twenty days back; a rung's yesterday is its price's
+   formula over `D25`. The change, today less yesterday in whole cents,
+   exact, is the Market panel's one subtraction before its one division by
+   100 (`FRONT.2`), its glyph `FRONT.2`'s; on day 0 yesterday is the model's
+   own day -1, as the look back's days below zero are. *The alternatives:*
+   remembered, the kit's `hold` of today's price at a day's first frame,
+   reads a twin, opens day 0 on a yesterday of 0, a change of the whole
+   price, and carries a person's edit of the difficulty in mid-day into the
+   next day's change; left to the panels, it puts a market's formula into a
+   view, or brings a panel's dish back to the Market sheet after more dishes
+   read it. `PLATE.1`'s fill at the price shown is the price's twin, the last
+   frame's quote, a cell of its own and not this one. *The cost:* `POT.2`'s
+   six fills change their ranges, inside course 0, which `BD-1` leaves free
+   until the course is served.
+10. **The dividend: the fourth rung's, 2% a year, 50 cents a share on the
+    91st, 182nd, 273rd and 364th days of each year (rec).** A yield for every
+    rung, 0 for three, since a rung that pays none says so in a cell and the
+    table's rows stay alike, the column a later station's income fills (the
+    bonds' coupons, course 1). Its amount fixed in whole cents from the
+    start, `=INT(<start>*<yield>/$B$1+0.5)`, 50, the dividends a year its
+    divisor; and not a yield on the day's price: a dividend is a sum a board
+    declares, so its yield rises as the price falls, which is the income
+    lesson, and it grows only with `STATION.1`'s second slice (dividend
+    growth, course 6). Its days: each day of the year that is a multiple of
+    the days between two, `INT(365/4)`, 91, four fixed days of the calendar,
+    game days 90, 181, 272 and 363 in the first year, the first on the eve of
+    the first game's low (`POT.2`: 1.1% to day 91). With a beta of 0.75, the
+    fourth rung's trend is 5.6% a year and its income 2%, the market's 7.6%
+    with three quarters of its swing (*derived*). *The alternatives:* 3%, 75
+    cents, a total of 8.6%, more than the market at less risk; a yield on the
+    day's price, a dividend that falls in a storm.
+11. **What holds it: the dividend today, a share, a function of the day
+    (rec).** `=IF(MOD(Day!$B$7,$B$2)=0,<a dividend>,0)`: the amount on its
+    day, all thirty frames of it, and 0 on every other day, so nothing
+    accumulates. `PLATE.1` pays it once, at that day's first frame, to the
+    shares a pocket held as the day before closed (the twin, the record date,
+    `PLATE.1`'s to scope), into that pocket's cash with a ledger row; until
+    `PLATE.1` no share is held and nothing is paid. The report card's income
+    line (`CRITIC.1`, course 1) sums the pockets' dividend rows, never this
+    cell.
+12. **The rows in a ladder's order, and no verb (rec).** The table written by
+    the kit's verbs alone, `headers`, `cells` and `formulas`, a rung at a
+    time: each rung's four values across its row, then the next rung's
+    (where `labels` would write a column first), then one fill a computed
+    column, E to H. That is the order a walk over a list of rungs writes, so
+    `STATION.2`'s `ladder` (course 1), a station's rungs as rows from a list,
+    can rewrite course 0's rows byte for byte, `BD-1`'s first catch. A
+    scratch `ladder` measures that at the build and is never committed:
+    `kitchen.vla` gains nothing before the second writing.
+13. **The hand.** `oracle/src/buffet.rs` gains `Rung`, its start in cents,
+    its beta, its yield and its dividend in cents, and the four as `RUNGS`,
+    the contract's numbers; a price, `(start * index.powf(beta) +
+    0.5).floor()` over `Market::index`, the power, the product, the sum and
+    the floor in the cell's order (`POT.2`'s decision 13: a double's last bit
+    is its operations'); and the dividend's days as a list, 91, 182, 273 and
+    364, where the cell divides by `MOD`, and each dividend the contract's
+    whole cents, 50, where the cell computes it from the yield, so the
+    dividend shares no predicate with the cell. The bound of decision 8 is a
+    function of the hand, with its test.
+14. **The tests.** Every frame of two years and two days (the walk that
+    stands): every rung's price today and yesterday, its dividend and the
+    dividend today, and the Market's column D beside B and C, held to the
+    hand; the Stocks sheet's settings, starts, betas and yields held to the
+    hand's constants; on day 0 every price exactly its start; a year at
+    difficulty 0, the prices the Kiddie Pool's; a hundred years at one frame
+    a day, every price today and yesterday and the dividend today held on
+    every one of the 36,500 days, the least of each rung at or above the
+    bound, and the dividend paid on exactly 400 days, each a day the hand
+    lists; the bound's own test. `BD-7`'s scan and the census's
+    `(every-frame 0)` stand unchanged and cover the new sheet: the rungs read
+    the index and the day of the year, never the frame or the phase.
+15. **The hand test in Alonzo's player at `v0.1.2` (rec),** the deployed
+    page, since Buffet's own page is `HOUSE.4`'s: the cartridge pasted into
+    the drawer's box and loaded, the Stocks tab read on day 0 (the starts),
+    at a day paused against the hand's prices, across the first dividend's
+    day, at difficulty 0 and back, and at the Clock's rate written 60.
+
+*With it, in its commit:* `POT.2`'s P2 cell filled, CI's Linux holding the
+market bit for bit at the first push, run 38689162382, its 22 tests green,
+the two years and the hundred years among them.
+
+**The predictions, before any number.** The numbers column was filled at
+the build, the same day.
+
+| | What | Predicted | The number |
+|---|---|---|---|
+| P1 | the cartridge | 131 rows (96), 79 formula cells (51) in 28 shapes (22) of 26 texts (20), 14 levels (13), `(every-frame 0)`; the describe golden moved by the notes, the budget, `(budget 30 79 2370 2000000)`, the plan, the readers, the Market's six fills that reach D, and six new shapes | *Measurement*, as predicted in every count; the golden's diff the notes, the budget, the plan, the readers (Day 11 to 13, the Market's 31 to 34, the Stocks' 8), the Market's six fills, each a cell more and its shape's number one on since `D14` stands before them, and the six new shapes, `POT.1`'s and the rest of `POT.2`'s unmoved. Not predicted: 6 runs of 27 lanes (2 of 9), each of the Stocks' four fills one run of its four rows, and 52 cells computed alone (42) |
+| P2 | the hand at every frame of two years and two days | every price today and yesterday, each dividend, the dividend today and the Market's column D equal at all 21,960 frames, natively here and in CI on Linux | *Measurement*: equal at all 21,960 frames here, on Windows, at the first run. CI's Linux at the push |
+| P3 | a hundred years at one frame a day | every price and the dividend today equal on all 36,500 days, the dividend paid on exactly 400 of them; the whole suite under 10 s in a debug build (about 5 now), 6 to 9 | *Measurement*: equal on all 36,500 days, the dividend paid on exactly 400. The suite first took 11.6 s, its two long tests 11.3 and 12.1 s alone, **missed**: the Stocks sheet's settings and workings, 56 cells, were viewed at every frame and every day, and a debug build's view is the cost, the hand's arithmetic microseconds. With the window narrowed to the four columns that compute and the settings read once by a test of their own, 7.4 s, the two long tests 7.4 and 6.6 s: inside. A suite's time is the machine's load as much as the code's: the next day, the processor half busy with another program, the cartridge's tests took 10.9 s against the old suite's 7.3 to 7.5 s, alternated in a worktree of the commit before, half again its time either way |
+| P4 | the opening | every price on day 0 exactly its start, 100, 500, 2,500 and 10,000, here and on Linux | *Measurement*: exactly the starts at every frame of day 0 here, and the hand's own at both tiers. Linux at the push |
+| P5 | each rung's least price in the first game's hundred years | at the first year's low, near day 91: 97 to 99, 489 to 494, 2,465 to 2,480 and 9,905 to 9,925 cents; every price far above the bound's 11, 96, 833 and 4,386 | *Measurement*, by a scratch probe over the hand: 98, 492, 2,474 and 9,921 cents, inside each. The index's least is 0.98943 on day 91, and each rung reaches its least cent sooner, on days 44, 72, 75 and 82, and holds it through the low, a cent being a wide step at these prices. The bound as derived, 11, 96, 833 and 4,386 |
+| P6 | the largest fall from a peak in the first game's hundred years | the index's between 20 and 35% (seed 777's was 30.0%); each rung's `1-(1-f)^b` of it to a cent, so the first rung's 36 to 58%, the second's 28 to 48% and the fourth's 15 to 28% | *Measurement*: the index's 34.7%, from day 21,325 to day 22,159 (years 58.4 to 60.7), inside near the top of the range; the rungs' 57.3%, 47.2%, 34.7% and 27.3%, each `1-(1-f)^b` to four places, inside, three of their peaks a day earlier, where the rounding to a cent flattens the top |
+| P7 | the ladder | a scratch `ladder` of under 25 lines, a walk over a list of rungs, writes the table's 20 rows below its headers byte for byte from a call of a line a rung | *Measurement*: four template macros, 24 lines, a walk over the rungs handing its list on whole and the fills after it, wrote the 20 rows byte for byte through the engine's pass over the kit, from a call of a line a rung and a line a fill; deleted with the probe. Inside, by a line |
+| P8 | the page against the hand at the owner's paused day | every price, yesterday's and the dividend equal to the hand's, since money is rounded once and a last bit moves a price only within a few units in the last place of a half cent, a chance below one in 10^10 a price; the Market's column D equal to the hand's in its first 15 digits at least | *Measurement*, the owner's five screenshots, read from crops at full resolution: equal to the hand to the last digit in every cell they show. The Stocks sheet on days 46 and 90, 34 formula cells, 16 prices each a power among them, and the dividend paid on day 90 alone; the Market sheet on day 90 at difficulty 1 and day 111 at difficulty 0, 43 formula cells each (the speeds, the phases, the days and 31 workings, column D among them), 34 sines and 6 powers and every cell built on them. Inside: the prices as predicted, and the index to the last bit, where the prediction allowed the 16th digit |
+
+**What the build found.**
+- A cent is a wide step for a cheap share. In the first year the four rungs'
+  prices move on 25, 93, 231 and 316 of its 365 days (*measured* by the same
+  probe), since a day's move of the index is a few hundredths of a percent
+  and a cent is 1% of the first rung: the $1 rung shows no change on
+  fourteen days in fifteen of the first year, and ends it 21 cents up. Over
+  the hundred years, as the prices grow, the rungs move on 32,327 to 35,853
+  of the 36,500 days. Whole cents are `FRONT.2`'s rule and the starts the contract's;
+  the step is a fact for the Market panel's glyph (`=` most days on the
+  first rung) and a row for `MENU.5`, a penny stock moving a penny at a time.
+- Yesterday on day 0 is the model's day -1, and the market fell into day 0:
+  the first frame shows the third and fourth rungs a cent and two cents
+  down, their yesterdays 2,501 and 10,002.
+- A view of a sheet in a debug build costs tests more than anything they
+  compute (P3).
+
+**The owner's hand test, 2026-10-15,** in Alonzo's player at `v0.1.2`,
+deployed, its log naming `alonzo` 0.1.2 over `vla-lang` 0.9.3; the cartridge
+pasted into the drawer's box and loaded. The budget line read 79 formula
+cells a frame at 30 frames a second, 2,370 a second; the Stocks tab stood
+after Market. At frame 1,389, day 46, the four rungs at 98, 494, 2,480 and
+9,941 cents and their yesterdays at 98, 494, 2,481 and 9,942.
+`(cell "Clock" "B2" 3)`, written at frame 2,463, made a day ten seconds; paused
+at frame 2,711, day 90, the day of the year 91, the fourth rung's dividend
+today read 50 and the others' nothing, the prices 98, 492, 2,474 and 9,921
+today and yesterday alike, and the Market sheet showed its new column,
+yesterday, day 89. `(cell "Clock" "B2" 30)` at frame 2,712 gave back a day a
+second, and `(cell "Market" "B3" 0)` at frame 3,084 made the index the Kiddie
+Pool's, at frame 3,353, day 111, in all three columns. Five screenshots, every
+cell they show the hand's (P8). Passed. The last two steps asked, the
+difficulty written back to 1 and the rate written 60, are not among the
+screenshots; neither is new here, `POT.2`'s hand test having passed both, and
+the tests hold the stocks at both difficulties and at one frame a day.

@@ -24,6 +24,13 @@
 //! asked about, counted. The module in the browser computes its own `sin`
 //! and `powf`, so nothing unrounded is ever held against it, and money is
 //! rounded once to whole cents before anything holds it.
+//!
+//! The stocks (`STATION.1`) share the price's formula with the cell, as the
+//! waves do: the index to the rung's beta, times its start, plus a half,
+//! rounded down, in the cell's order. They share nothing of the dividend:
+//! the cell asks whether the day of the year is a multiple of the days
+//! between two and computes a dividend from the yield; the hand lists the
+//! four days and states the contract's whole cents.
 
 /// Park and Miller's minimal standard (1988): a stream of whole numbers,
 /// each the last times the multiplier, modulo the modulus, a prime.
@@ -343,6 +350,98 @@ impl Market {
     }
 }
 
+/// The least the index can be on any day a price reads, at any seed and at
+/// either tier built (`STATION.1`'s decision 8): tier 1's cycle and its
+/// cycle on the first day are each between one less and one more than the
+/// amplitudes' sum, a half, so their quotient is at least a third; the trend
+/// is at least the drift to the day -1, yesterday's on day 0, the earliest
+/// day a price reads; and tier 0 is never below nine tenths of its trend.
+pub fn least_index() -> f64 {
+    let swing: f64 = WAVES.iter().map(|w| w.amplitude).sum();
+    Market::trend(-1.0) * (1.0 - swing) / (1.0 + swing)
+}
+
+/// A rung of a station's ladder (`STATION.1`): its start, a share's price on
+/// day 0 in whole cents; its beta, the power of the index its price follows;
+/// its dividend yield, a year; and its dividend, the whole cents a share it
+/// pays on each dividend day, as the contract states it, where the Stocks
+/// sheet computes it from the yield.
+#[derive(Clone, Copy, Debug, PartialEq)]
+pub struct Rung {
+    pub start: u64,
+    pub beta: f64,
+    pub dividend_yield: f64,
+    pub dividend: u64,
+}
+
+/// The stocks' four rungs, cheapest first, the Stocks sheet's rows 5 to 8:
+/// $1, $5, $25 and $100 a share, the cheapest the wildest, the third the
+/// market itself, and the dearest paying 2% a year, 50 cents a share on each
+/// of the year's four dividend days.
+pub const RUNGS: [Rung; 4] = [
+    Rung {
+        start: 100,
+        beta: 2.0,
+        dividend_yield: 0.0,
+        dividend: 0,
+    },
+    Rung {
+        start: 500,
+        beta: 1.5,
+        dividend_yield: 0.0,
+        dividend: 0,
+    },
+    Rung {
+        start: 2_500,
+        beta: 1.0,
+        dividend_yield: 0.0,
+        dividend: 0,
+    },
+    Rung {
+        start: 10_000,
+        beta: 0.75,
+        dividend_yield: 0.02,
+        dividend: 50,
+    },
+];
+
+/// The dividends a year, the Stocks sheet's `B1`: one a quarter.
+pub const DIVIDENDS_A_YEAR: u64 = 4;
+
+/// The days of the year a dividend falls on, from 1: the year's 91st, 182nd,
+/// 273rd and 364th, each quarter's last but the year's, listed here where the
+/// Stocks sheet asks whether the day of the year is a multiple of 91.
+pub const DIVIDEND_DAYS: [u64; DIVIDENDS_A_YEAR as usize] = [91, 182, 273, 364];
+
+// The dearest rung's dividend is its yield's: four dividends of 50 cents a
+// year are $2, 2% of a $100 share.
+const _: () = assert!(RUNGS[3].dividend * DIVIDENDS_A_YEAR * 100 == RUNGS[3].start * 2);
+
+impl Rung {
+    /// The rung's price in whole cents at an index: its start times the
+    /// index to its beta, plus a half, rounded down, `=INT(B5*<index>^C5+0.5)`,
+    /// the power, the product, the sum and the floor in the cell's order.
+    pub fn price_at(&self, index: f64) -> u64 {
+        (self.start as f64 * index.powf(self.beta) + 0.5).floor() as u64
+    }
+
+    /// The rung's price on `day` at a difficulty: over the index today,
+    /// `Stocks!E5:E8`, or over yesterday's, `F5:F8`, on the day before.
+    pub fn price(&self, market: &Market, difficulty: u64, day: f64) -> u64 {
+        self.price_at(market.index(difficulty, day))
+    }
+
+    /// What the rung pays a share on a day of the year, from 1, `H5:H8`: its
+    /// dividend on a dividend day and nothing on any other.
+    pub fn dividend_on(&self, day_of_year: u64) -> u64 {
+        if DIVIDEND_DAYS.contains(&day_of_year) {
+            self.dividend
+        } else {
+            0
+        }
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -486,5 +585,45 @@ mod tests {
             "the weather first turns on day {turn:?}"
         );
         assert!(index(365) >= 1.05, "the report card reads {}", index(365));
+    }
+
+    /// Every rung opens at its start exactly, at both tiers: the index is 1
+    /// on day 0, and 1 to any power is 1.
+    #[test]
+    fn every_rung_opens_at_its_start() {
+        let market = Market::new(SEED);
+        for difficulty in [0, 1] {
+            let opening: Vec<u64> = RUNGS
+                .iter()
+                .map(|r| r.price(&market, difficulty, 0.0))
+                .collect();
+            assert_eq!(opening, [100, 500, 2_500, 10_000], "tier {difficulty}");
+        }
+    }
+
+    /// No seed prices a rung at or below zero (`STATION.1`'s decision 8):
+    /// at the least the index can be, a third of the drift to -1, the four
+    /// rungs are 11, 96, 833 and 4,386 cents.
+    #[test]
+    fn no_seed_prices_a_rung_at_or_below_zero() {
+        let least = least_index();
+        assert!((least - 1.0 / 3.0 / DRIFT).abs() < 1e-15, "{least}");
+        let floor: Vec<u64> = RUNGS.iter().map(|r| r.price_at(least)).collect();
+        assert_eq!(floor, [11, 96, 833, 4_386]);
+    }
+
+    /// The dividend falls four times a year, 91 days apart, its last inside
+    /// the year, and only the dearest rung pays it.
+    #[test]
+    fn the_dividend_falls_four_times_a_year() {
+        for pair in DIVIDEND_DAYS.windows(2) {
+            assert_eq!(pair[1] - pair[0], 91, "{pair:?}");
+        }
+        assert!(DIVIDEND_DAYS[3] <= DAYS_A_YEAR);
+        let paid: Vec<u64> = RUNGS
+            .iter()
+            .map(|r| (1..=DAYS_A_YEAR).map(|day| r.dividend_on(day)).sum())
+            .collect();
+        assert_eq!(paid, [0, 0, 0, 200], "cents a share a year");
     }
 }
