@@ -28,6 +28,25 @@ repository = "https://github.com/Spreadsheet-Company/Buffet"
 alonzo = "=0.1.1"
 vla-lang = "=0.9.3"
 
+[profile.dev.package."*"]
+# The engine and the language, every package that is not the workspace's,
+# compiled optimized in the dev profile, the one cargo test builds: the
+# suite's time goes to the engine stepping and viewing its sheets, which an
+# unoptimized build makes the dearest thing the tests do (STATION.1), and
+# not to the hand. The oracle crate stays unoptimized, so the hand runs as
+# it is written and an edit of it rebuilds as quickly as before. Debug
+# assertions and overflow checks stay on, the profile's own. Rust never
+# contracts floating point, and the engine's sine and power are the
+# platform's library calls on a cell's value, so the engine optimized and
+# the hand unoptimized agree to the bit, which the tests hold at every
+# frame. Measured 2026-10-15 on the owner's machine, alternated against the
+# commit before: the warm suite 7.5 s became 3.7 s; from an empty target
+# folder the build took 8.3 s where it took 4.3, about 12.3 s to a green
+# suite either way; an edit of the oracle rebuilt in about a second either
+# way. Alonzo optimizes its whole dev profile in CI alone (its checks.yml);
+# here the manifest holds it, so every machine's runs gain.
+opt-level = 3
+
 [profile.release]
 # Alonzo's own release profile, copied so that a build of the engine's
 # module from this workspace (cargo build --release -p alonzo --target
