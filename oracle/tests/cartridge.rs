@@ -169,6 +169,14 @@ fn a_day_is_a_second_at_the_manifests_rate() {
     );
 }
 
+/// Every first game plays the contract's seed, the hand's: the manifest's
+/// `(seed ...)` is `buffet::SEED`, chosen by the owner for a kind first year,
+/// which the hand's own test holds (`COURSE.0`'s contract, 2026-10-14).
+#[test]
+fn the_first_game_plays_the_contracts_seed() {
+    assert_eq!(seed(&cartridge()), buffet::SEED);
+}
+
 /// The Dice sheet states each jump in draws beside the multiplier that makes
 /// it, and both are the hand's, whose own test raises 16807 to each.
 #[test]

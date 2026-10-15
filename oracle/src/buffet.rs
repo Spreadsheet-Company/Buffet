@@ -65,6 +65,11 @@ const _: () = assert!(MODULUS - 1 - EXAM_OFFSET > 1_000_000_000);
 pub const FRAMES_A_DAY: u64 = 30;
 /// The days a year, every day a market day.
 pub const DAYS_A_YEAR: u64 = 365;
+/// The seed of every first game, the manifest's `(seed 791886)`: one market
+/// and one exam for every first player, chosen by the owner on 2026-10-14
+/// for a kind first year, the index dipping 1.1% to day 91 and closing the
+/// year 10.2% up (`COURSE.0`'s contract, where the draft had 777).
+pub const SEED: u64 = 791_886;
 
 /// The first jump at or past `from` draws whose multiplier, 16807 to that
 /// power modulo [`MODULUS`], is below 2^22: a jump one multiplication makes,
@@ -393,8 +398,8 @@ mod tests {
         );
     }
 
-    /// Seed 777's first die and draw, the numbers the Dice sheet shows on the
-    /// first frame of the first game.
+    /// Seed 777's first die and draw, the numbers `POT.1`'s hand test read on
+    /// the Dice sheet, 777 being the contract's seed until 2026-10-14.
     #[test]
     fn seed_777_opens_on_these_dice() {
         assert_eq!(market_die(777, 0), 67_119_591);
@@ -424,13 +429,13 @@ mod tests {
 
     /// The two-peak test: two peaks of a sine give its period and every peak
     /// after them, which makes a market of one wave arithmetic. No lag from
-    /// two years to a hundred carries seed 777's tier 1 onto itself: at every
-    /// such lag, the index over its trend that lag later differs from the
-    /// index over its trend on some day of the first Kitchin wave by at least
-    /// 0.02, where a path that repeated would differ by nothing.
+    /// two years to a hundred carries the first game's tier 1 onto itself: at
+    /// every such lag, the index over its trend that lag later differs from
+    /// the index over its trend on some day of the first Kitchin wave by at
+    /// least 0.02, where a path that repeated would differ by nothing.
     #[test]
     fn the_path_does_not_repeat_within_a_hundred_years() {
-        let market = Market::new(777);
+        let market = Market::new(SEED);
         let window = WAVES[0].days as usize;
         let longest = (100 * DAYS_A_YEAR) as usize;
         let level: Vec<f64> = (0..window + longest)
@@ -453,5 +458,33 @@ mod tests {
             least >= 0.02,
             "{at} days later the path differs by {least} at most"
         );
+    }
+
+    /// The first game's year is kind, as the owner chose its seed to be: the
+    /// index dips no more than 2% and only in the first four months, the
+    /// weather turns within them, and the report card at day 365 reads at
+    /// least 5% up. A change to the waves that spoils the first year fails
+    /// here, and the seed is chosen again with it.
+    #[test]
+    fn the_first_game_opens_on_a_kind_year() {
+        let market = Market::new(SEED);
+        let index = |day: i64| market.tier1(day as f64);
+        let (mut low, mut low_day) = (f64::INFINITY, 0);
+        for day in 0..=365 {
+            if index(day) < low {
+                (low, low_day) = (index(day), day);
+            }
+        }
+        assert!(
+            low > 0.98 && low_day <= 120,
+            "the year's low, {low}, on day {low_day}"
+        );
+        let turns = |day: i64| index(day) >= index(day - 20);
+        let turn = (1..=365).find(|&day| turns(day) != turns(day - 1));
+        assert!(
+            turn.is_some_and(|day| day <= 130),
+            "the weather first turns on day {turn:?}"
+        );
+        assert!(index(365) >= 1.05, "the report card reads {}", index(365));
     }
 }

@@ -747,3 +747,25 @@ way is the contract's own seed chosen in the open, never a hidden term in the
 model (`BD-3`, `BD-5`), and leaves the score untouched, since the score is
 alpha over buy-and-hold on the same seed (rec). The decision is the opening
 contract's, the owner's (`COURSE.0`).
+
+*Settled the same day.* The owner: "Why does the seed need to contain 777?"
+It need not: the scoping had kept the contract's 777 for the Series 777
+pun, a restriction it should have named. Over every seed below a million,
+613 dip early and then climb (a dip of 1 to 3% before day 120, the weather
+turning once by day 130, the report card 7 to 13% up), 2 of them holding
+777; every one of the 613 then climbs for five years with no fall past 4%,
+since an early dip means the short waves bottom together. A gentle first
+year followed by a fall of 10% or more from a peak in years 2 or 3 is
+common, 81,702 seeds; an early dip and then such a storm is rarer, 184 with
+the report card 4 to 16% up. The owner, on the dip: "a subtle teaching
+moment about dollar cost averaging, at the risk of deterring new players
+with 'losing' money in the first few minutes of play. C'est la vie,
+friends", and chose seed 791886 from four profiled: the index dips 1.1% to
+day 91, the weather turns on day 102, the report card reads +10.2%, then a
+climb to 1.696 by day 1,094 and a fall of 10.4% to day 1,670, the weather
+turning on days 102, 1,105 and 1,681 in the first five years. The others
+profiled: 507887, a dip to day 81 and five years without a fall of 5%;
+10, no dip and a fall of 31.8% from day 627 to day 1,407; 777 itself. The
+manifest's seed moved alone, the hand naming it (`SEED`), a test holding
+the manifest to it, another holding the first year kind; the two-peak test
+reads the first game's market, its least difference 0.089 at 52.2 years.

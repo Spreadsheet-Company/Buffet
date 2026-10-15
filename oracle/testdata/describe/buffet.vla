@@ -2,7 +2,7 @@
 (title "Buffet")
 (rate 30)
 (screen grid 80 50)
-(seed 777)
+(seed 791886)
 (author "Spreadsheet Company")
 (license "AGPL-3.0-or-later AND CC-BY-SA-4.0")
 (notes "Buffet: all you can sheet. The kitchen is open and the dining room is not: so far the market's calendar, a market day a second; its dice, rolled once a day where anyone can watch them roll; and the market itself, four waves and a drift, moving once a day. Pick the Day, the Dice or the Market sheet to watch.")
