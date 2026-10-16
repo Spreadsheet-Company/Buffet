@@ -57,6 +57,10 @@ empty.*
 
   *Closed 2026-10-16.* Predicted `~days`; cost two sessions, the first scoping and the rescoping, then the build, its measurements and the owner's hand test. What landed: the source's version, notes, hidden Screen, tab order and the Portfolio's section, and its cartridge, 429 rows and 107 formula cells; caveat 12 rewritten; the hand's `dollars` and `as_of` and a test of them; three tests of the cartridge more and three extended, the two years', the eight hundred days' and the tab order's, 45 in all; the describe golden blessed again. Four of the nine predictions missed in part, each named beside its number: an ordinary frame 0.1 µs dearer, five shapes more for the step's own flags; the suite 0.77 s longer at the median where half a second was predicted, a view held at every frame; the source's block 3,243 characters longer where about 2,600; and in the browser the still frame a step of the clock above its prediction and the main thread past it, a frame now about a seventh of `MISE.3`'s.
 
+- ✅ **`FRONT.2`, first slice — the glyph: which way each change went, beside it.** *Scoped 2026-10-16 as the looks, Lovelace Lavender on the views and the glyphs in the owner's colors, a text color to be asked of Frazaro and Alonzo; approved the same day with every color deferred to an aesthetic pass at the owner's word, and so built as the glyph alone, and hand-tested that day: the scoping, the approval, every prediction beside its number and the owner's hand test are under THE ITEMS, SCOPED.* On the Portfolio, a 3-character column `D` beside each stock's change since yesterday, `▲`, `▼` or `=` by `=IF(C5>0,"▲",IF(C5<0,"▼","="))`: the direction of the number beside it, read off it, so that the two never disagree, a whole number of cents over 100 keeping its sign; a view reading its own cells and read by nothing; no header, no look and no color. *Oracle, met:* the hand's glyph, comparing whole cents and sharing no comparison with the cell, held at every frame of two years and two days and on every one of eight hundred days at one frame a day, each of the three shown on some day; `BD-7`'s scan and nothing reads a view; the describe golden blessed again, a view's first `readers` row among its changes; five mutants, each caught by the test written for it; the cost re-measured natively, in headless Chrome and in the owner's; and the owner's hand test in the page. *Pays into:* every figure a later view shows with its direction, the market's view (`PLATE.1`), the overview (`FRONT.3`), the report card (`CRITIC.1`); and the second slice, the looks, which stays in `OMAKASE.md`. `~hours`
+
+  *Closed 2026-10-16.* Predicted `~days` for the whole dish; the first slice cost one session, the scoping, its approval, the build, its measurements and the owner's hand test, beside the pin's move to `alonzo` 0.1.5, a `HOUSE.2` commit of its own. What landed: the Portfolio's column `D` and the glyph's fill in the source and its cartridge, 431 rows and 111 formula cells; the hand's `glyph` and its test; the Portfolio held over `A1:D10`; 46 tests; the describe golden blessed again. Five of the nine predictions missed in part, each named beside its number: the cartridge's characters by three, each escaped glyph counted short; the load under its range and a day's first frame where the fine print stays a tenth under it, both inside the noise; the source's block under its range, its comments shorter than priced; and the main thread's least a hundredth under. The colors stand as the second slice, an aesthetic pass, the scoping's findings with them.
+
 ## 📜 THE MENU CARD
 
 - ✅ **`MENU.1` — the strings sheets and the picker.** *Scoped, built and hand-tested 2026-10-15: the scoping, its fourteen decisions approved whole by the owner and amended at the hand test, every prediction beside its number, what the build found and the owner's hand test are under THE ITEMS, SCOPED.* The content sheets under `src/content/`, a file a sheet holding words alone, one macro named after the file whose body is one call of the library's `strings`, each sheet one kind of string, hidden after the model's sheets, its rows of text each with the course that added it, its vintage, and the reviewer who approved it (*the vintage and the reviewer struck 2026-10-15 at the owner's word, a row's review its pull request's and no course a freeze, `BD-1` amended: `MENU.2`'s amendments after its close*); the source's manifest its first form, then every include, then the code, each content sheet's macro called where the sheet belongs (the owner's words at the hand test); the library's `picker`, `CHOOSE(k, ...)` over a sheet's rows, generated from the sheet's extent so that a row added needs no formula edited, one cell to 1,547 rows below the headers, the pages of 500 written by the dish whose sheet first passes 1,000 rows; the first sheet, the fine print as a rotating footer, the Disclosures sheet, eight rows in the owner's words, a disclosure a month from the day; and the one-page *How to add a row* in the folder, for a stranger with five minutes. Every other sheet arrives with the dish that reads it, named for it: `Questions` (`MENU.2`), `Headlines` (`FRONT.3`), `Memos` (the first of `MENU.4` and `GUARD.3`), `Firms` (`BACK.2`), `Awards` (`MENU.7`), `Errors` (`PLATE.6`) and `Exits` (`FRONT.7`). *Oracle, met:* the layout check's content rule and the source's order (`tools/check_layout.ps1`, the content sheets' pin raised from 0 to 1, its control fifteen mutants), their headers held by `check_spdx.ps1`; the page's content blocks (`tools/build_web.ps1`, `tools/check_web_offline.ps1`, its control fifteen mutants); the oracle's tests, the fine print held to the hand at every frame, the rows counted by their extent, every row picked in its turn, a row added expanding with no other edit, the one picker's limit and the tripwire before it, and every sheet written bare with the content hidden; and the owner's hand test in the page. *Pays into:* every string any view shows: the ticker (`FRONT.3`), the exam (`MENU.2`), the names (`MENU.3`), the errors (`PLATE.6`), the endings (`FRONT.7`); and the cheapest pull request there is. `~days`
@@ -3214,3 +3218,403 @@ caveat's explanation too; the test now holds a sentence that denies advice,
 a `not`, `no` or `never` before the word. And the census's `most` is the
 most readers one changed cell is checked against, in an index by row that a
 row of sixteen splits again by column (P2).
+
+## `FRONT.2` — the looks: Lovelace Lavender on the views, and a glyph beside each change
+
+*Scoped 2026-10-16 at the owner's word, "Scope and implement FRONT.2 in
+Buffet (Delta/Buffet): the looks, Lovelace Lavender on the views and a
+glyph beside each change, upward in a minty green and downward in a
+burgundy", to stop for the owner's approval before building, and to draft
+any other repository's item as a `MISE.6` row and a starting prompt, both
+in chat: from `OMAKASE.md`'s line (`COURSE.0`'s item 7) with `MISE.3`'s
+approved spelling and `FRONT.1`'s note on it; `FRONT.1`'s rescoping and
+record; `MISE.3`'s probe 2; `BD-2`, `BD-5`, `BD-6` with its amendment and
+`BD-7`; Alonzo's `SPEC.md` §3.1, §4.3 and §7.3 and the kit's looks; and the
+owner's words of the same day: "upward glyphs should be a minty green like
+#ADEBB3, while downward glyphs should be a burgundy like #800020, but
+obviously any hex code can be used by authors to customize their color."
+It comes now because `FRONT.1` closed (`965d141`): the Portfolio shows each
+stock's change since yesterday as a bare number, a loss by its minus sign,
+and every number a view shows from here takes these looks, `PLATE.1`'s
+market view and `FRONT.3`'s overview among them. While it was being scoped
+`alonzo` 0.1.5 reached crates.io, and the pin moved in the tree at the
+owner's word, a change of its own awaiting its commit (below). Each
+decision carries its recommendation, for the owner to approve, amend or
+strike. The predictions were written before any number was taken. Alonzo's
+and Frazaro's trees were read and never touched; a peer's uncommitted work
+stands in Frazaro's `vla-lang`.*
+
+**What it stands on, read on the day** (`vla-lang` 0.9.4 and `alonzo` 0.1.4
+and 0.1.5 as the registry holds them; `web/` as vendored; Buffet at
+`965d141`, its main nine commits ahead of its remote).
+- *The pin at `alonzo` 0.1.5.* The release is `ENGINE.7`, edit and
+  continue; its crate's code is 0.1.4's and its pin `vla-lang` =0.9.4; its
+  page alone changed, the template and `host.js`, while `viewport.js`,
+  `fake.js` and the kit stand as at `v0.1.4`. Moved in the tree as
+  `bd93434` moved it to 0.1.4: the pin and its comment, the lock, the
+  README's line, the two files copied at `v0.1.5` (`fb3b2a4`),
+  `check_vendored.ps1`'s tag and two digests, and `MISE.6`'s row for
+  `ENGINE.7`, met. The 45 tests green, the cartridge its source expanded
+  and the describe golden standing; ALL GREEN, 4 checks and 4 controls; the
+  page 1,821,787 characters where 1,787,808 stood, its module 766,267
+  bytes, unchanged. What it means here: the drawer's Apply the source
+  writes the cell and formula rows a rebuilt source changed into the running
+  game, and for any other row, a format, a look or a column's width among
+  them, it offers Load (its `RELEASES.md`).
+- *A format* (`vla-lang`'s `machine/load.rs`, `format`; `sheet.rs`,
+  `Style`): `(format <index> "<RRGGBB>"|none general|text wrap|nowrap)`, a
+  fill, a number format and wrap, and nothing else: no text color, no font,
+  no border. Formats are the workbook's and not a sheet's, up to 65,536 of
+  them, and a cell, a column or a look names one by its index. A `style`
+  row gives one cell its format, a single cell an earlier row wrote, never a
+  range; a `look` row maps a value on one sheet to a format, a text by its
+  characters, and a second look for the same value naming another format
+  is refused at load; a `column` row gives a column its format; a sheet's
+  `gridlines` are on or off.
+- *The draw* (`web/viewport.js`, `formatOf` and `_paintCell`): a cell draws
+  with its look's format when its value has one, else with its own
+  style's, else, an empty cell alone, with its column's, else with format
+  0. The fills are painted first, the gridlines over them in the page's own
+  `#D9D9D2`, and every value's text last in the page's `#1D1D1B`, a
+  formula before its first value in `#0A6B4F`. Found by reading, and not
+  seen at `MISE.3`, whose background probe was timed and never looked at: a
+  cell that holds anything never takes its column's format, so the approved
+  spelling of a view's background, "its columns' format and never a filled
+  cell", colors the empty cells alone, and every text and number of the
+  view would stand in a white hole unless it carried a `style` row of the
+  same fill.
+- *Every frame* (`vla-lang`'s `view.rs`): the values record is the grid's
+  without its `formula` rows, its `format`, `look` and `style` rows kept,
+  and a window's changes print each changed cell's rows as the values do,
+  its `style` row with it (`KERNEL.42`), which the viewport lays on its
+  model by the same reading; a look or a style holds at every frame.
+- *What `describe` prints* (`alonzo`'s `cartridge.rs`): the manifest, the
+  devices, the budget and the census, and no `format`, `look` or `style`
+  row. The line's oracle, "the record's `look` and `format` rows held by
+  the describe golden", cannot hold them; a test over the view's own record
+  can.
+- *The kit's looks* (`src/common.vla`, `looks`): a look map from the numbers
+  0 to n, each to a format of its own fill, the Palette's twin in a grid, as
+  Kairos keys its blocks; no use to a glyph keyed on its own text.
+- *The Portfolio* (`FRONT.1`): `A1` the date; `A4:C4` the headers; rows 5 to
+  8 a stock each, its name, its price in `B` and its change in dollars in
+  `C`, `=(Stocks!E5-Stocks!F5)/100`; `A10` the fine print; widths 22, 12
+  and 12; the default row height; gridlines on; no format; fourteen formula
+  cells, read by no formula. Caveat 12's `Where` is `Portfolio!B5:C8`.
+- *The dialect*: fourteen functions, no `SIGN`; `IF` and the comparisons; a
+  text result runs as a number does, as the names' `=Stocks!A5` runs.
+  `MISE.3`'s probe 2 carried `▲` and `▼` through the pass, the load, the
+  record, the page's own Build and Buffet's checks, and drew them crisp in a
+  3-character column, shaded by looks keyed on their texts.
+- *The owner's colors, by WCAG 2's formula* (*derived*, by a scratch script;
+  the bars 4.5:1 for text and 3:1 for a graphic, WCAG's 1.4.3 and 1.4.11).
+  The mint, `#ADEBB3`, is light, its luminance 0.716; the burgundy,
+  `#800020`, is dark, 0.047, near the view's own ink's 0.012:
+
+  | | on white | on the whisper, `#F7F4FC` | on `#E2D8F6` | under the view's ink | under a white ink |
+  |---|---|---|---|---|---|
+  | the mint as the glyph's own color | 1.37 | 1.26 | 1.00 | | |
+  | the burgundy as the glyph's own color | 10.83 | 9.96 | 7.94 | | |
+  | the mint as the glyph's fill | 1.37 against the sheet | | | 12.31 | 1.37 |
+  | the burgundy as the glyph's fill | 10.83 against the sheet | | | 1.56 | 10.83 |
+
+  No one background lets both read at 3:1 as glyphs: the mint wants one of
+  luminance 0.205 or less and the burgundy one of 0.241 or more, and the
+  best between them, the gray `#828282`, reads each at 2.81:1. A light color
+  is a fill and a dark one an ink, as Excel's own presets pair them, "Green
+  Fill with Dark Green Text", `#C6EFCE` under `#006100`, and "Light Red
+  Fill with Dark Red Text", `#FFC7CE` under `#9C0006` (*exhibit*, the
+  defaults as XlsxWriter's documentation copies them): the owner's mint
+  stands near the first fill, and the burgundy near the second ink.
+- *Excel's ways of coloring a glyph* (*exhibit*). A number format's color
+  code names one of eight colors or `[Color1]` to `[Color56]`, a slot of the
+  workbook's palette, which a workbook may redefine (`Workbook.Colors`, the
+  styles part's `indexedColors`), a route Excel's dialogs no longer offer.
+  A cell style's font color takes any RGB, and so does a conditional
+  format's, which is the look's twin, a format a cell takes by its value.
+  Only a font color takes a hex code as its own spelling. A sheet's gridline
+  color is a palette index, `colorId`, never an RGB.
+- *The convention* (*exhibit*): mainland China and Taiwan show a gain in red
+  and a loss in green; Korea a gain in red and a loss in blue; Japan's sites
+  differ; Hong Kong shows a gain in green, as the US and Europe do.
+- *The frame now* (`FRONT.1`'s P8, over the page at `v0.1.4`): on the
+  Portfolio at the owner's full screen, a still frame's tick 0.2 ms at p50
+  and 0.3 at p95, a market day's patch 0.5, 580 of 600 frames still, the
+  main thread 0.74 to 0.78 ms a frame.
+- *What a text color would touch* (read in Frazaro's tree, untouched): the
+  language's `Style`, whose three fields are public and which
+  `frazaro-core` builds by struct literal (`build.rs`, `sheet/merge.rs`,
+  `sheet/ooxml.rs`), so a fourth field is a break in a 0.9 release (the
+  owner's rule: an API break is rare, and the owner's call); the loader's
+  `format`, which takes exactly four items; the record's `format_row`; the
+  core's writer, whose styles part holds one font, Calibri 11, every
+  format's `fontId` 0. The core's reader prints no format row. And in
+  Alonzo, the viewport's reader, which reads a format's first four items
+  and would pass over a fifth, its painter, `SPEC.md` §7.3 and a version.
+
+**The decisions.**
+
+1. **The glyph's color: each of the owner's two in the role its lightness
+   can play (rec).** A gain's `▲` drawn in the view's own dark ink on a
+   fill of the mint, 12.31:1, and a loss's `▼` drawn in the burgundy on the
+   sheet's own white, 10.83:1, no fill; a flat day's `=` in the view's ink
+   on white, 16.88:1. Each color is the owner's hex and each is legible: the
+   mint is a light green as Excel uses one, a fill behind dark text, and the
+   burgundy a dark red as Excel uses one, the text itself. The record says
+   the first today and cannot say the second, which is the ask (decision
+   2). The direction never rests on a color: the glyph's shape says it
+   (WCAG's 1.4.1), and the pair's lightness, 0.716 against 0.047, tells
+   them apart to a person who cannot tell red from green.
+   *The alternatives, each with its contrast:*
+   - (a) *The owner's words to the letter, each glyph in its color:* the
+     burgundy at 10.83:1 on white and the mint at 1.37:1, a gain nearly
+     invisible, and 1.00:1 on a light lavender; a dark sheet turns it about,
+     the mint at 12.65:1 on the night `#1C1828` and the burgundy at 1.60:1.
+     It needs the ask too.
+   - (b) *Both as fills, today, no ask:* the `▲` at 12.31:1 on the mint and
+     the `▼` at 1.56:1 on the burgundy, a dark block whose glyph cannot be
+     read.
+   - (c) *Both as fills, each under the ink that reads on it:* the mint
+     under the view's ink, 12.31:1, and the burgundy under a white ink,
+     10.83:1, two cells of one shape; the ask, as (rec) is. The loss's block
+     outweighs the gain's, the burgundy at 10.83:1 against the sheet and the
+     mint at 1.37:1.
+   - (d) *No ask, the shades moved to fit fills:* the burgundy given up for
+     a light red the view's ink reads on, Excel's own `#FFC7CE` at 11.51:1.
+   - (e) *An ask of Alonzo alone:* the painter drawing a value white over a
+     dark fill by its luminance, (c) with no change to the record; but no
+     ink an author names by its hex, and an ink nobody declared (`SD-32`).
+
+2. **The ask, and the dish split by it (rec).** A format's text color, any
+   hex, beside its fill: Excel's font color, in the language's format, the
+   record and the core's writer (Frazaro), then in the viewport's painter,
+   a `SPEC.md` version and the pin (Alonzo), each repository minting its
+   own item; drafted as a `MISE.6` row and Frazaro's starting prompt, both
+   in chat, for the owner to ask. `FRONT.2` is then split by what the record
+   can say:
+   - *the first slice, now:* the glyph column and its formula, the gain's
+     mint, the flat day's `=`, the band of Lovelace Lavender and the house's
+     formats in one place, the loss's `▼` in the view's ink, 16.88:1, until
+   - *the second slice, at the pin that brings the text color:* the loss's
+     burgundy, one format and one look, with a short scoping of its own
+     beside this one, its predictions and the owner's hand test; and the
+     band deepened under a white ink, if the owner's eye asks for it
+     (decision 6).
+
+   The first slice holds nothing the second takes back, the mint being a
+   fill under every legible choice of decision 1. *The alternatives:*
+   `FRONT.2` gated whole on the ask (🔒), the glyph, its colors and the
+   lavender landing together after two releases, as the owner has chosen
+   for an engine's item before ("the whole slice waits"); or split as the
+   owner's prompt framed it, the glyph and the lavender now and both colors
+   at the second slice, so that the pair is first judged together; or no
+   ask, decision 1's (d).
+
+3. **The colors live in the source's format rows, in one place (rec).** The
+   house's formats in a section of their own before the views, each a row
+   with its hex and a comment naming its role, in the record's own
+   spelling, so that a person reading the cartridge sees the hex an author
+   edits:
+
+   ```text
+   ; ---- FRONT.2: the looks -----------------------------------------------------------
+   ; The house's formats, the workbook's own: each a fill as six hex digits, the
+   ; record's spelling, named by its index wherever a view's style or look draws
+   ; with it, so that an author recolors every view here and nowhere else.
+
+   (format 1 "A080E0" general nowrap)   ; the band under a view's headers: Lovelace Lavender, the logo's own
+   (format 2 "ADEBB3" general nowrap)   ; a gain's glyph: a minty green behind the view's dark ink
+   ```
+
+   A view's styles and looks name them by index. No verb enters the
+   library: a view writes its glyph's look by hand, and the second view that
+   writes one, `PLATE.1`'s market view, hoists the pattern into
+   `kitchen.vla`, as the ratchet has it; the kit's numeric `looks` stays
+   unused. A player cannot change a color: a format is a row the load reads,
+   and a person's act writes a cell or a formula and nothing else (`SPEC.md`
+   §4.3). A player who wants another color becomes its author: the page's
+   drawer holds the source, and its Build and a Load play the colors from
+   the first frame, since Apply the source carries no format and no look
+   (0.1.5). *The alternative:* a library verb taking the colors as its
+   arguments now, at their first writing.
+
+4. **The glyph reads the change beside it (rec).**
+   `=IF(C5>0,"▲",IF(C5<0,"▼","="))`, filled over `D5:D8`: the glyph says
+   what the number beside it says, exactly, since a whole number of cents
+   over 100 keeps its sign, and the pattern is any figure's direction,
+   which every later figure takes, a gain, a return, alpha. A view may read
+   its own cells (`FRONT.1`'s decision 10), so nothing reads a view still
+   holds; `describe` gains `(readers "Portfolio" 1)`, the view's own read,
+   where no readers row named a view before, and a level, the glyph's 15.
+   The flat day's `=` takes no look. *The alternatives:* the glyph from the
+   model's cents, `=IF(Stocks!E5>Stocks!F5,"▲",IF(Stocks!E5<Stocks!F5,"▼","="))`,
+   no readers row for a view and no level more, but the comparison the
+   change holds written a second time, two cells read a glyph; or a flat
+   day blank, `""`.
+
+5. **The glyph column: `D`, right of the change, 3 characters, no header
+   (rec).** The figure and then its direction, `0.37 ▲`, the number
+   right-aligned at `C`'s edge and the glyph at `D`'s: nothing of `FRONT.1`
+   moves, no cell and no test, and caveat 12's `Where`, `Portfolio!B5:C8`,
+   stays true. 3 characters, 21 pixels, as `MISE.3` drew it. Its header an
+   empty text in `D4`, so that the band spans the table, the change's header
+   naming both columns. *The alternatives:* the glyph before the change,
+   `▲ 0.37`, as a ticker writes it, the change moved to `D` and its tests
+   and the caveat's `Where` with it; or no cell in `D4`, the band stopping
+   at `C`.
+
+6. **Lovelace Lavender on the Portfolio: a band under the headers, the sheet
+   white, gridlines on (rec, by the owner's eye at the hand test).** The
+   band over `A4:D4` in Lovelace Lavender itself, `#A080E0`, the logo's
+   (`BD-6`), the view's ink on it at 5.35:1: one format and four `style`
+   rows. The sheet stays white, a workbook's: a background behind a view
+   takes a `style` row for every cell that holds something and a `column`
+   row for every column in view, some 38 at the owner's full screen, and
+   stops at the last column written. Gridlines on, in the page's gray: the
+   record holds no gridline color, and Excel keeps a sheet's as a palette
+   index. The shade is one hex, judged at the hand test: `#E2D8F6`, lighter,
+   12.37:1; or, at the second slice, `#6B4FC8` under a white ink, 5.87:1,
+   the dark header band of Excel's tables. *The alternatives:* the table's
+   body in the whisper, `#F7F4FC`, sixteen `style` rows more, 15.52:1 under
+   the ink; gridlines off, a report's page. With it, `MISE.3`'s approved
+   spelling amended, dated: a view's background is its columns' format for
+   its empty cells and a `style` row of the same fill for each cell that
+   holds something.
+
+7. **What of the line's rest goes where (rec).** Struck from `FRONT.2` when
+   its line is rewritten at the build, each with its reason: "the look map
+   (`looks`)", the kit's numeric map, the house's formats in its place;
+   "the panels' backgrounds", since a panel is a view (`FRONT.1`) and a
+   view's lavender is its band, each later view taking the house's formats
+   at its dish; "the chosen tab", the page's own strip (Alonzo's
+   `viewport.js`, its `tabActive`), which no cartridge colors, a candidate
+   for Alonzo's page if the owner wants the strip in lavender; "the chosen
+   pocket", `PLATE.2`'s selector, its look with it; "a number format with a
+   glyph instead", answered at `MISE.3`; and the oracle's "held by the
+   describe golden", which prints no look (decision 9).
+
+8. **No caveat owed (rec).** A caveat is a simplification of the world, and
+   a color is a convention of one's own market, which the glyph's shape
+   states whatever its color. Offered for the owner's taste, a thirteenth
+   row in the house's voice, its `Where` the glyphs:
+
+   | The field | The draft |
+   |---|---|
+   | Things this game gets wrong | A gain is green and a loss is burgundy. |
+   | In the real world | In mainland China and Taiwan a gain is red, the color of good fortune, and a loss is green. |
+   | Management's response | Management, advised that red is good news in Shanghai, has asked to report from there. |
+   | Where | `Portfolio!D5:D8` |
+
+9. **The oracle (rec).** In `oracle/src/buffet.rs` and
+   `oracle/tests/cartridge.rs`:
+   - *The hand's glyph*: `glyph(now, was)`, which way whole cents went,
+     sharing nothing with the cell's comparison of the dollars' change with
+     0; and its test, the three cases, and over the seed's two years each
+     glyph shown on some day.
+   - *The glyphs at every frame*: `portfolio_held`'s window `A1:D10`, each of
+     `D5:D8` the hand's glyph on a day's first frame and the record byte
+     for byte through the day, so at every frame of two years and two days
+     and on every one of eight hundred days at one frame a day.
+   - *The looks, drawn*: a test over the Portfolio's own record, which prints
+     its formats, looks and styles, drawing each cell's format by the
+     viewport's rule, a look by the value first, then the cell's style, then
+     for an empty cell its column's: the band under `A4:D4`; under each
+     glyph the formula can show, the house's fill for it, the mint under `▲`
+     and none under `▼` and `=` (the second slice's ink then), the glyphs
+     themselves held to the hand at every frame above; no other cell filled;
+     no look on a view keyed on a number, which would shade every cell
+     holding it (`MISE.3`); and every format a view's cell draws with
+     reading at 4.5:1 or more, its ink, the view's `#1D1D1B` until the second
+     slice gives one, over its fill or the sheet's white. The last holds an
+     author's hex to legibility; an author who wants a color past it lowers
+     the bar in the same commit.
+   - *Kept*: the cartridge its source expanded; `BD-7`'s scan and the
+     census's `(every-frame 0)`; nothing reads a view, the Portfolio's
+     formula cells 18 of its 1,000; the describe golden blessed again and
+     read in its diff with the shapes' numbers stripped.
+   - *Mutants*, each written into the source by one anchor and expanded
+     before the suite runs, each failing the test written for it: the glyph
+     reversed; the flat day lost, `>=` for `>`; the glyph reading the frame;
+     a look keyed on a number, `1`; `D4`'s band dropped; the gain's fill the
+     burgundy, under the view's ink at 1.56:1; the glyph's look on the
+     Stocks sheet; the band in `#6B4FC8` under the view's ink, 2.88:1.
+
+10. **The looks' cost, re-measured on the real view (rec).** As `FRONT.1`
+    took it: natively, a scratch runner pinning itself to the performance
+    cores and opting itself out of Windows' throttling, alternated against a
+    `git archive` of `965d141` built in a target of its own, its pin
+    `alonzo` 0.1.4, whose code 0.1.5 carries unchanged but for its version
+    test (P3 to P5); in the browser, `FRONT.1`'s instruments over the page
+    built here, three runs of 600 frames in headless Chrome at the owner's
+    full screen, 2,560 by 1,440 at 1.5, every process opted out and pinned,
+    each tick filed by what its frame drew, `965d141`'s cartridge first on
+    the same 0.1.5 page, so that the page's own change is not counted as the
+    looks', and the probe copy in the owner's own Chrome (P8).
+
+11. **The hand test, the owner's, on the page built here at 0.1.5:** the
+    band across `A4:D4`, its shade by eye, one hex to change; each stock's
+    glyph beside its change, `▲` on the mint on a gain, `▼` and `=` in the
+    view's ink, each agreeing with its change's sign, every glyph seen
+    within a minute; Build in the drawer, its text compared with
+    `src/buffet.vla` by a command given at the handover, since the page
+    prints no "same bytes"; the probe copy's corner, one screenshot after a
+    minute.
+
+12. **The stale places, rewritten at the build.** In `OMAKASE.md`: `FRONT.2`'s
+    line, 🟡 from the approval, its text as decisions 1, 2 and 7 leave it,
+    the first slice's close dated on it; `MISE.6`, the ask's row; `MISE.3`'s
+    spelling of a background amended on its line (decision 6). The source's
+    opening comment, the formats' section and the Portfolio's section;
+    `oracle/src/buffet.rs`'s module comment and `glyph`; the module comment
+    of `oracle/tests/cartridge.rs`; the describe golden; `Delta/CLAUDE.md`'s
+    map, a format or a look among the edits that trip a test; the memory.
+    The first slice's record goes under this scoping, and `FRONT.2` leaves
+    `OMAKASE.md` for the ledger when its second slice closes. Not this item:
+    the other views and their bands, each its dish's; the strip's colors,
+    Alonzo's page; the pocket's look, `PLATE.2`'s; number formats in the
+    record, `MISE.6`'s candidate; the replay golden, the tasting's.
+
+**The predictions, before any number**: amended at the approval, below,
+to the build approved, the colors deferred, before any number was taken
+(the colored slice had predicted 439 rows, ten lines in). The numbers
+column is filled at the build, P9 at the owner's hand test; P3 to P5 and P8
+as decision 10 says.
+
+| | What | Predicted | The number |
+|---|---|---|---|
+| P1 | the cartridge | 431 rows where 429 stand: `D`'s width and the glyph's fill; 111 formula cells where 107; the diff two lines in and none out, 104 characters, no other row moved | *Measurement*, as predicted but for the characters: the runner printed `(rows 431) (loads yes)`; 111 formula cells; the diff two lines in and none out, `D`'s width and the glyph's fill, no other row moved. **Missed** in the characters: 107 where 104, each quoted glyph five characters with its escapes, counted as four |
+| P2 | the describe golden | `(budget 30 111 3330 2000000)`; `(plan (shapes 48) (texts 46) (formulas 111) (levels 16) (runs 10) (lanes 43) (alone 68) (every-frame 0) (cycles 0))`; `(readers "Portfolio" 1)` first among the readers, the rest unmoved; a shape 4, `"Portfolio" "D5"`, `(cells 4) (levels 15 15 1 4) (runs 1 4 4 4) (alone 0) (reads lookup)`; `A10` shape 5 and every shape after it one more, its `same` with it; nothing else | *Measurement*, as predicted in every count: `(budget 30 111 3330 2000000)`; `(plan (shapes 48) (texts 46) (formulas 111) (levels 16) (runs 10) (lanes 43) (alone 68) (every-frame 0) (cycles 0))`; `(readers "Portfolio" 1)` first among the readers; shape 4, `"Portfolio" "D5"`, `(cells 4) (levels 15 15 1 4) (runs 1 4 4 4) (alone 0) (reads lookup)`; `A10` shape 5 and the 42 shapes after it their own rows but for their numbers, `(same 12)` and `(same 13)` where 11 and 12 stood |
+| P3 | the pass and the load | the pass 0.01 to 0.1 ms longer, two rows calling no picker; the load 0.01 to 0.06 ms longer | *Measurement*, a scratch runner over each tree, `965d141`'s and this one's, each in a target of its own under the profile the tests use, three runs each alternated, 200 passes and 200 loads a run, every run pinning itself to the performance cores and opting itself out of Windows' throttling, a fixed computation before and after within 2.5%: the pass 4.40 to 4.47 ms at p50 where it took 4.43 to 4.49, the medians 4.46 and 4.44, 0.02 apart, inside; the load 1.50 to 1.53 ms where 1.51 to 1.54, the medians 1.52 and 1.53. **Missed** in the load, below the range: two rows' load is inside the noise |
+| P4 | the step | an ordinary frame unmoved, within 0.1 µs, one shape more; a day's first frame 0.5 to 2 µs more, four glyphs; the first frame 2 to 8 µs more | *Measurement*, the same runs, two years and two days at thirty frames a day: an ordinary frame 2.0 µs at p50 in every run of this tree, where it took 1.9 to 2.0, unmoved; a day's first frame on which the fine print turns 15.8 to 16.1 µs where 15.0 to 16.5, the medians 0.6 apart, inside; the first frame 80.0 to 82.9 µs where 78.9 to 82.5, the medians 2.2 apart, inside. **Missed** at the median in one: a day's first frame on which the fine print stays 15.0 to 15.1 µs where 14.0 to 15.1, the medians 0.4 apart, a tenth under the range, the runs overlapping |
+| P5 | the suite | 46 tests green, the hand's glyph's test more, and in CI on Linux; within 0.3 s of `965d141`'s at the median | *Measurement*, here: 46 green, 16 of the crate and 30 of the cartridge. Each tree's suite run alternately, five rounds, the order turned each round, each run pinned and opted out: on eight threads 4.76 to 4.85 s where it took 4.73 to 5.71, the medians 4.78 and 4.76, 0.02 apart; on one thread 8.65 to 9.11 where 8.55 to 8.86, the medians 0.09 apart: inside. A first alternation on eight threads had the commit before's rounds at 5.51 to 5.70 s and this one's at 4.61 to 5.20, faster though it holds more, which no test timed alone bore out: alone, the longest test is 0.17 s dearer here, 4.69 against 4.52, and the thirty 0.26 s dearer in sum, so the first round's gap was the machine's. Linux at the push |
+| P6 | the page | the cartridge's block 104 characters longer, its two rows, and the source's 800 to 2,000: the page near 1,823,200 where the pin left 1,821,787; Build writing the cartridge byte for byte | *Measurement*: 1,822,477 characters, 690 more than the pin's 1,821,787, the cartridge's block 107 longer and the source's 583. **Missed** in both: the cartridge's by the three characters of P1, and the source's under its range, its comments shorter than priced, so the page grew 690 where 904 to 2,104 was predicted. Build writing the cartridge byte for byte, 25,808 characters, checked headlessly over the probe copy |
+| P7 | the checks | 4 checks and 4 controls green, no check edited, no file added under `src/` | *Measurement*, as predicted: ALL GREEN, 4 checks and 4 controls, the layout control's fourteen mutants and the offline control's fifteen as they stood; no check edited by this item, the pin's change to `check_vendored.ps1` being its own; no file added under `src/` |
+| P8 | the glyph's cost in Chrome at full screen | `965d141`'s cartridge on the 0.1.5 page as `FRONT.1` measured it on 0.1.4's; then with the glyphs, a still frame's tick 0.2 ms at p50 and 0.3 at p95, nothing painted; a market day's patch 0.5 to 0.6 at p50, up to four cells more; 580 of 600 frames still and 20 patched, a glyph moving on a day's first frame alone; the main thread 0.72 to 0.82 ms a frame; the owner's Chrome a tenth faster or so | *Measurement*, six runs of 600 frames alternated in headless Chrome at 2,560 by 1,440 CSS pixels at 1.5, its eleven processes opted out and pinned, the clock within 1.0%: `965d141`'s cartridge on the 0.1.5 page, a still frame's tick 0.2 ms at p50 and 0.3 at p95, at its longest 0.4 to 0.5; a patch 0.5, at its longest 0.6 to 0.7; 581 of 600 frames still and 20 patched; the main thread 0.70 to 0.72 ms a frame. With the glyphs, the same at every percentile, at their longest 0.4 to 0.6 and 0.7; 580 or 581 still and 20 patched; the main thread 0.71 to 0.74: the glyphs cost nothing the page's clock, in steps of 0.1 ms, can see. **Missed**, by a hundredth, in the main thread's least, 0.71 where the range began at 0.72. The owner's own Chrome, the probe copy at full screen for 4,120 frames: still 0.2 ms at p50 and 0.3 at p95, at its longest 0.7; patched 0.4 and 0.6, at its longest 1.4; 3,981 still and 137 patched, and one other frame, a full paint, 1.3 ms: `FRONT.1`'s own within a tenth, and the patch a tenth under headless, as predicted |
+| P9 | the hand test | every glyph beside its change, whole in its 3-character column and agreeing with its change's sign; Build's bytes the file's, checked headlessly | *Measurement*, the owner's two screenshots, in the owner's Chrome: the page windowed at frame 709, day 24 of the first year, rungs 1 to 3 at a change of 0 beside `=` and rung 4 at −0.01 beside `▼`; then the probe copy at full screen at frame 4,248, day 142, rungs 1 to 3 at 0 beside `=` and rung 4 at 0.01 beside `▲`; each glyph whole in its column and agreeing with its sign; and the owner's word, "Tests pass; commit." Not in the screenshots, checked over the probe copy in headless Chrome at the owner's full screen: Build in the drawer, the same bytes as `src/buffet.vla`, 25,808 characters; `B19` the sheet shown and the pointer's `B11` and `B12`, as at `FRONT.1` |
+
+*Scoped 2026-10-16. Approved by the owner the same day with the colors
+deferred: "Ignore colors for now; proceed with FRONT.2 as originally
+scoped. COlors can e added later as an aesthetic pass." So the first slice
+is the glyph alone. Decisions 4, 5 (with no cell in `D4`, the band it was
+to carry deferred), 9's glyph half, 10, 11 and 12 stand, and 7's strikes;
+decisions 1, 2, 3, 6 and 8 and 9's looks wait for the aesthetic pass, the
+second slice, its place in the order the owner's. The ask is not made, its
+row a candidate in `MISE.6`.*
+
+**What the build found.** The glyph is two rows of the cartridge and one
+shape of the plan: a view reading its own cells gives the census its first
+`readers` row for a view, and a level, the sixteenth; the rule that nothing
+reads a view holds, its test passing over a view's own reads. On the page
+built here the live glyphs agree with their changes (headlessly, on days 23,
+26 and 28 of the first year: `=` beside 0, `▼` beside −0.01 and −0.02), and
+Build writes the file's bytes. Five mutants, each written into the source by
+one anchor and expanded into the cartridge before the suite ran, each failed
+the test written for it: the glyph reversed, the flat day lost to `>=` and
+the flat day respelled, the two years' frames; the glyph reading the frame,
+whose values do not move, `BD-7`'s scan alone; a model's sheet reading the
+glyph, nothing reads a view. And a lesson in reading a suite's time: the
+first alternation on eight threads had the commit before slower by 0.86 s at
+the median, though this one holds more, and each test timed alone in both
+trees found the opposite and where it lies, the two years' test 0.17 s
+dearer, so the eight threads' difference was the machine's and a second
+alternation agreed (P5).

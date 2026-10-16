@@ -430,6 +430,7 @@
 (column "Portfolio" "A" 22 shown none)
 (column "Portfolio" "B" 12 shown none)
 (column "Portfolio" "C" 12 shown none)
+(column "Portfolio" "D" 3 shown none)
 (formula "Portfolio" "A1" "=\"As of year \"&Day!$B$6&\", day \"&Day!$B$7&\" (unaudited)\"")
 (cell "Portfolio" "A4" "Security")
 (cell "Portfolio" "B4" "Price ($)")
@@ -437,4 +438,5 @@
 (formula "Portfolio" "A5:A8" "=Stocks!A5")
 (formula "Portfolio" "B5:B8" "=Stocks!E5/100")
 (formula "Portfolio" "C5:C8" "=(Stocks!E5-Stocks!F5)/100")
+(formula "Portfolio" "D5:D8" "=IF(C5>0,\"▲\",IF(C5<0,\"▼\",\"=\"))")
 (formula "Portfolio" "A10" "=Disclosures!$D$3")

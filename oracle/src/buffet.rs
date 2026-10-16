@@ -37,7 +37,9 @@
 //! quotient as its shortest round trip; the hand spells the same cents by
 //! text, the dollars, a point and the cents less their trailing zeros, so
 //! that the tests hold what `MISE.3` derived, that whole cents over 100 draw
-//! their own two decimals at their shortest.
+//! their own two decimals at their shortest. The glyph beside each change
+//! (`FRONT.2`) shares no comparison with its cell: the cell reads the sign of
+//! the change the view shows, the hand compares the two prices in cents.
 
 /// Park and Miller's minimal standard (1988): a stream of whole numbers,
 /// each the last times the multiplier, modulo the modulus, a prime.
@@ -492,6 +494,18 @@ pub fn as_of(cal: &Calendar) -> String {
     )
 }
 
+/// Which way a stock went since yesterday, as the Portfolio shows it beside
+/// its change (`FRONT.2`): up, down or flat, by its price today in whole
+/// cents against yesterday's. The cell reads the sign of the change the view
+/// shows; the hand compares the two prices the change was taken from.
+pub fn glyph(now: i64, was: i64) -> &'static str {
+    match now.cmp(&was) {
+        std::cmp::Ordering::Greater => "▲",
+        std::cmp::Ordering::Less => "▼",
+        std::cmp::Ordering::Equal => "=",
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -521,6 +535,29 @@ mod tests {
             [dollars(1230), dollars(2500), dollars(-3), dollars(0)],
             ["12.3", "25", "-0.03", "0"]
         );
+    }
+
+    /// Which way a stock went (`FRONT.2`): up, down and flat each; and over
+    /// the first game's two years and two days, each of the three shown on
+    /// some day by some stock, so that the Portfolio held to the hand at
+    /// every frame holds every branch of the cell's formula too.
+    #[test]
+    fn a_glyph_says_which_way_the_cents_went() {
+        assert_eq!(
+            [glyph(1_230, 1_229), glyph(1_229, 1_230), glyph(25, 25)],
+            ["▲", "▼", "="]
+        );
+        let market = Market::new(SEED);
+        let mut shown = std::collections::BTreeSet::new();
+        for day in 0..2 * DAYS_A_YEAR + 2 {
+            for rung in &RUNGS {
+                let today = day as f64;
+                let now = rung.price(&market, DIFFICULTY, today) as i64;
+                let was = rung.price(&market, DIFFICULTY, today - 1.0) as i64;
+                shown.insert(glyph(now, was));
+            }
+        }
+        assert_eq!(shown.len(), 3, "the glyphs shown: {shown:?}");
     }
 
     /// The fine print's round: the first row for the first month, the next

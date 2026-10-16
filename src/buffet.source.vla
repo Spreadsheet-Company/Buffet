@@ -29,6 +29,8 @@
 ;   FRONT.1 the views: the Portfolio, the game's first view and the sheet it opens on,
 ;           the day and the four stocks, each its price and its change since yesterday
 ;           in dollars, and the fine print at its foot; the views first among the tabs.
+;   FRONT.2 the glyphs: beside each change on the Portfolio, which way it went, up,
+;           down or flat, read off the change itself.
 ;
 ; The market's clock (BD-7). One tick is one market day, thirty frames at the manifest's
 ; rate of thirty, so a day a second and a year about six minutes. The Day sheet alone
@@ -308,12 +310,16 @@
 ; The Portfolio: the sheet the game opens on, the first visible among the tabs, until
 ; the Exam exists (GUARD.1). Its date; then a row a stock, on the Stocks sheet's own
 ; rows, each its name, the model's, its price today and its change since yesterday, in
-; dollars; and the fine print at its foot, a disclosure a month.
+; dollars, and beside the change which way it went (FRONT.2), a glyph read off the
+; change itself, so the two never disagree: a whole number of cents over 100 keeps its
+; sign. The glyph has no color yet, the looks waiting for an aesthetic pass. And the
+; fine print at its foot, a disclosure a month.
 
 (on "Portfolio"
   (column "A" 22 shown none)        ; the names; the date and the fine print spill past them
   (column "B" 12 shown none)        ; the price, in dollars
   (column "C" 12 shown none)        ; the change since yesterday, in dollars
+  (column "D" 3 shown none)         ; which way the change went, a glyph (FRONT.2)
   (formulas
     ("A1" "=\"As of year \"&Day!$B$6&\", day \"&Day!$B$7&\" (unaudited)\""))   ; the date, from the day: unaudited, as every number here is until the examiner calls (GUARD.3)
   (headers "A4" "Security" "Price ($)" "Change ($)")
@@ -321,4 +327,5 @@
     ("A5:A8" "=Stocks!A5")                      ; each stock's name, the model's, until MENU.3 names them
     ("B5:B8" "=Stocks!E5/100")                  ; its price today: whole cents over 100, once
     ("C5:C8" "=(Stocks!E5-Stocks!F5)/100")      ; its change since yesterday: a difference of cents, over 100 once
+    ("D5:D8" "=IF(C5>0,\"▲\",IF(C5<0,\"▼\",\"=\"))")   ; which way it went: up, down or flat, read off the change beside it
     ("A10" "=Disclosures!$D$3")))               ; the fine print, a disclosure a month (MENU.1)

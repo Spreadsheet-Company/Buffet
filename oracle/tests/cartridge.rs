@@ -37,7 +37,9 @@
 //! and the fine print at its foot held at every one of those frames and days,
 //! its headers, and its names the Stocks sheet's; the game opening on it,
 //! written to the page's version 4, with no Camera and the Screen hidden; and
-//! no formula reading a view, each holding at most 1,000 formula cells.
+//! no formula reading a view, each holding at most 1,000 formula cells. Since
+//! `FRONT.2`: beside each change, which way it went, the hand's glyph at every
+//! one of those frames and days.
 
 use std::collections::{BTreeMap, BTreeSet};
 
@@ -303,7 +305,9 @@ fn held(
 /// yesterday, the whole cents of the Stocks sheet's same frame, which
 /// `stocks_held` has just held to the hand, spelled as dollars by text, so
 /// that a cell spelled any other way than its whole cents over 100 fails
-/// here; and the fine print at its foot, the row the hand picks for the day.
+/// here; beside the change, which way it went (`FRONT.2`), the hand's glyph
+/// of the same two prices; and the fine print at its foot, the row the hand
+/// picks for the day.
 /// On every other frame of the day its record is the one held at the day's
 /// first frame, byte for byte, as `BD-7` keeps a view still between days:
 /// the same cells held at a view's cost, where parsing and spelling them
@@ -315,7 +319,7 @@ fn portfolio_held(
     texts: &[String],
     view: &mut Option<String>,
 ) {
-    let Ok(Viewed::Text(record)) = cart.view("values", "Portfolio", Some("A1:C10")) else {
+    let Ok(Viewed::Text(record)) = cart.view("values", "Portfolio", Some("A1:D10")) else {
         panic!("the Portfolio's record");
     };
     if !cal.boundary() {
@@ -329,7 +333,7 @@ fn portfolio_held(
             return;
         }
     }
-    let got = values(cart, "Portfolio", "A1:C10");
+    let got = values(cart, "Portfolio", "A1:D10");
     let text = |addr: &str, want: &str| {
         assert_eq!(
             got.get(addr).map(String::as_str),
@@ -349,6 +353,7 @@ fn portfolio_held(
         let (now, was) = (cents("E"), cents("F"));
         text(&format!("B{row}"), &buffet::dollars(now));
         text(&format!("C{row}"), &buffet::dollars(now - was));
+        text(&format!("D{row}"), buffet::glyph(now, was));
     }
     let shown = disclosure(cal.day, texts.len() as u64, DAYS_A_DISCLOSURE);
     text("A10", &texts[shown as usize - 1]);
