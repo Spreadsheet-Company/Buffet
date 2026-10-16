@@ -32,7 +32,12 @@
 //! each content sheet in the state its source writes, the Caveats sheet the
 //! one shown; every caveat whole, the first the plain statement that the game
 //! is not advice; every caveat's cells holding a value; its first row shown;
-//! and its every field picked at every row.
+//! and its every field picked at every row. Since `FRONT.1`: the Portfolio,
+//! the game's first view, its date, every stock's price and change in dollars
+//! and the fine print at its foot held at every one of those frames and days,
+//! its headers, and its names the Stocks sheet's; the game opening on it,
+//! written to the page's version 4, with no Camera and the Screen hidden; and
+//! no formula reading a view, each holding at most 1,000 formula cells.
 
 use std::collections::{BTreeMap, BTreeSet};
 
@@ -78,6 +83,13 @@ const CAVEAT_FIELDS: [&str; 4] = [
     "Management's response",
     "Where",
 ];
+/// The game's views, each a sheet of its own (`FRONT.1`), standing first
+/// among the tabs: the workbook's outputs, which read the model and which no
+/// formula reads. A view enters this list with the dish that fills it.
+const VIEWS: [&str; 1] = ["Portfolio"];
+/// The Portfolio's headers over its columns from A, in row 4 (`FRONT.1`'s
+/// decision 6).
+const PORTFOLIO_HEADERS: [&str; 3] = ["Security", "Price ($)", "Change ($)"];
 
 fn cartridge() -> Cartridge {
     load(CARTRIDGE).unwrap_or_else(|e| panic!("{CARTRIDGE} loads: {e}"))
@@ -224,8 +236,17 @@ fn disclosures_held(cart: &Cartridge, cal: &Calendar, texts: &[String], days: u6
 
 /// The Day, Dice and Market sheets at this frame, each cell its value as the
 /// record prints it, held to the hand's calendar, dice and market for the
-/// same frame; and the Stocks and the Disclosures sheets with them.
-fn held(cart: &Cartridge, cal: &Calendar, seed: u64, market: &Market, texts: &[String]) {
+/// same frame; and the Stocks and the Disclosures sheets with them, and the
+/// Portfolio, the view of them all, its record held at the day's first frame
+/// kept in `view` for the frames after it.
+fn held(
+    cart: &Cartridge,
+    cal: &Calendar,
+    seed: u64,
+    market: &Market,
+    texts: &[String],
+    view: &mut Option<String>,
+) {
     let f = cal.frame;
     let day = values(cart, "Day", "B1:B7");
     let want = [
@@ -272,8 +293,66 @@ fn held(cart: &Cartridge, cal: &Calendar, seed: u64, market: &Market, texts: &[S
         uniform(&format!("C{}", draw + 7), z);
     }
     market_held(cart, cal, market, DIFFICULTY);
-    stocks_held(cart, cal, market, DIFFICULTY);
+    let stocks = stocks_held(cart, cal, market, DIFFICULTY);
     disclosures_held(cart, cal, texts, DAYS_A_DISCLOSURE);
+    portfolio_held(cart, cal, &stocks, texts, view);
+}
+
+/// The Portfolio at this frame (`FRONT.1`), held whole on a day's first
+/// frame: its date, the hand's; each stock's price today and its change since
+/// yesterday, the whole cents of the Stocks sheet's same frame, which
+/// `stocks_held` has just held to the hand, spelled as dollars by text, so
+/// that a cell spelled any other way than its whole cents over 100 fails
+/// here; and the fine print at its foot, the row the hand picks for the day.
+/// On every other frame of the day its record is the one held at the day's
+/// first frame, byte for byte, as `BD-7` keeps a view still between days:
+/// the same cells held at a view's cost, where parsing and spelling them
+/// again at every frame took the suite's longest test 0.85 s more.
+fn portfolio_held(
+    cart: &Cartridge,
+    cal: &Calendar,
+    stocks: &BTreeMap<String, String>,
+    texts: &[String],
+    view: &mut Option<String>,
+) {
+    let Ok(Viewed::Text(record)) = cart.view("values", "Portfolio", Some("A1:C10")) else {
+        panic!("the Portfolio's record");
+    };
+    if !cal.boundary() {
+        if let Some(day) = view.as_deref() {
+            assert!(
+                record == day,
+                "frame {}, day {}: the Portfolio moved within the day",
+                cal.frame,
+                cal.day
+            );
+            return;
+        }
+    }
+    let got = values(cart, "Portfolio", "A1:C10");
+    let text = |addr: &str, want: &str| {
+        assert_eq!(
+            got.get(addr).map(String::as_str),
+            Some(want),
+            "frame {}, day {}: Portfolio!{addr}",
+            cal.frame,
+            cal.day
+        );
+    };
+    text("A1", &buffet::as_of(cal));
+    for row in 5..5 + RUNGS.len() {
+        let cents = |column: &str| -> i64 {
+            stocks[&format!("{column}{row}")]
+                .parse()
+                .expect("whole cents")
+        };
+        let (now, was) = (cents("E"), cents("F"));
+        text(&format!("B{row}"), &buffet::dollars(now));
+        text(&format!("C{row}"), &buffet::dollars(now - was));
+    }
+    let shown = disclosure(cal.day, texts.len() as u64, DAYS_A_DISCLOSURE);
+    text("A10", &texts[shown as usize - 1]);
+    *view = Some(record);
 }
 
 /// The Market sheet at this frame (`POT.2`): each wave's speed and tier 1's
@@ -438,11 +517,12 @@ fn every_frame_of_two_years_is_the_calendar_the_dice_and_the_market_by_hand() {
     let texts = disclosure_texts(&cart);
     let mut cal = Calendar::new(buffet::FRAMES_A_DAY, buffet::DAYS_A_YEAR);
     let frames = (2 * buffet::DAYS_A_YEAR + 2) * buffet::FRAMES_A_DAY;
+    let mut view = None;
     for _ in 0..frames {
         let step = cart.step(0);
         cal.tick();
         assert!(step.done && step.frame == cal.frame, "{}", step.row());
-        held(&cart, &cal, seed, &market, &texts);
+        held(&cart, &cal, seed, &market, &texts, &mut view);
     }
     assert_eq!(
         (cal.year, cal.day_of_year),
@@ -470,11 +550,12 @@ fn at_one_frame_a_day_the_same_days_roll_the_same_dice() {
     });
     let texts = disclosure_texts(&cart);
     let mut cal = Calendar::new(1, buffet::DAYS_A_YEAR);
+    let mut view = None;
     for _ in 0..800 {
         cart.step(0);
         cal.tick();
         assert!(cal.boundary());
-        held(&cart, &cal, seed, &market, &texts);
+        held(&cart, &cal, seed, &market, &texts, &mut view);
     }
 }
 
@@ -951,27 +1032,40 @@ fn one_picker_holds_1547_rows_and_no_more() {
     }
 }
 
-/// Every sheet is written bare, as a formula writes a name without quotes and
-/// the kit's verbs need, and no two are the same without case; the views and
-/// the model's sheets stand first, visible, then the content sheets, each in
-/// the state its source writes, the reference data hidden and the caveats
-/// shown, then the devices; and the twins after every sheet (`MENU.1`'s
-/// decisions 2 and 3, `MENU.5`'s decision 2). A state the source forgot would
-/// leave its sheet visible, which the engine makes a sheet first named by a
-/// cell.
-#[test]
-fn every_sheet_is_written_bare_and_each_content_sheet_in_its_state() {
-    let cart = cartridge();
+/// Every sheet of a cartridge and its state, `visible` or `hidden`, in tab
+/// order, as the record's sheet rows list them: the cartridge's own, then the
+/// engine's devices, then every twin.
+fn tabs(cart: &Cartridge) -> Vec<(String, String)> {
     let Ok(Viewed::Text(record)) = cart.view("values", "Day", Some("A1:A1")) else {
         panic!("the Day sheet's record");
     };
-    let sheets: Vec<(&str, &str)> = record
+    record
         .lines()
         .filter_map(|l| {
-            l.strip_prefix("(sheet \"")?
+            let (name, state) = l
+                .strip_prefix("(sheet \"")?
                 .strip_suffix(')')?
-                .split_once("\" ")
+                .split_once("\" ")?;
+            Some((name.to_string(), state.to_string()))
         })
+        .collect()
+}
+
+/// Every sheet is written bare, as a formula writes a name without quotes and
+/// the kit's verbs need, and no two are the same without case; the Screen
+/// hidden, then the views and the model's sheets, visible, then the content
+/// sheets, each in the state its source writes, the reference data hidden and
+/// the caveats shown, then the devices; and the twins after every sheet
+/// (`MENU.1`'s decisions 2 and 3, `MENU.5`'s decision 2, `FRONT.1`'s 4 and
+/// 5). A state the source forgot would leave its sheet visible, which the
+/// engine makes a sheet first named by a cell.
+#[test]
+fn every_sheet_is_written_bare_and_each_content_sheet_in_its_state() {
+    let cart = cartridge();
+    let all = tabs(&cart);
+    let sheets: Vec<(&str, &str)> = all
+        .iter()
+        .map(|(name, state)| (name.as_str(), state.as_str()))
         .collect();
     let mut folded = BTreeSet::new();
     for (name, _) in &sheets {
@@ -991,7 +1085,8 @@ fn every_sheet_is_written_bare_and_each_content_sheet_in_its_state() {
         .filter(|(name, _)| !name.ends_with(".last"))
         .collect();
     let want = [
-        ("Screen", "visible"),
+        ("Screen", "hidden"),
+        ("Portfolio", "visible"),
         ("Day", "visible"),
         ("Dice", "visible"),
         ("Market", "visible"),
@@ -1012,6 +1107,134 @@ fn every_sheet_is_written_bare_and_each_content_sheet_in_its_state() {
     }
     for (sheet, _, state) in CONTENT {
         assert!(own.contains(&(sheet, state)), "{sheet} {state}");
+    }
+}
+
+/// The game opens on the Portfolio (`FRONT.1`'s decisions 2 to 5). The
+/// cartridge is written to the page's version 4, whose host opens a grid
+/// cartridge on the sheet its Camera's third row names, else on the first
+/// visible sheet of its own order (Alonzo's `SPEC.md` section 3.1): it has no
+/// Camera, so that rule names the Portfolio, the first visible sheet, and the
+/// hidden Screen before it is never opened on.
+#[test]
+fn the_game_opens_on_the_portfolio() {
+    let cart = cartridge();
+    assert_eq!(
+        cart.manifest().spec,
+        4,
+        "the page's version 4: a game's views on sheets of their own"
+    );
+    assert!(
+        cart.machine().find_sheet("Camera").is_none(),
+        "a Camera's third row would name the sheet the game opens on (GUARD.1 brings one)"
+    );
+    let all = tabs(&cart);
+    let first = all.iter().find(|(_, state)| state == "visible");
+    assert_eq!(
+        first.map(|(name, _)| name.as_str()),
+        Some(VIEWS[0]),
+        "the first visible sheet, where the game opens"
+    );
+    assert!(
+        all.iter()
+            .any(|(name, state)| name == "Screen" && state == "hidden"),
+        "the Screen hidden: the views are sheets of their own"
+    );
+}
+
+/// The cells of a cell or a range as a cartridge's row writes it, `A5` or
+/// `A5:C8`.
+fn cells_in(range: &str) -> u64 {
+    let corner = |a: &str| -> (u64, u64) {
+        let digits = a.trim_start_matches(|ch: char| ch.is_ascii_uppercase());
+        let letters = &a[..a.len() - digits.len()];
+        let column = letters
+            .bytes()
+            .fold(0, |n, b| n * 26 + u64::from(b - b'A' + 1));
+        (digits.parse().expect("a row"), column)
+    };
+    let (first, last) = range.split_once(':').unwrap_or((range, range));
+    let ((r1, c1), (r2, c2)) = (corner(first), corner(last));
+    (r2 - r1 + 1) * (c2 - c1 + 1)
+}
+
+/// A view is read by nothing (`FRONT.1`'s decision 10): no formula on a sheet
+/// that is not that view names it or its twin, read without case, so the
+/// views are the workbook's outputs and a dish lays one out again without
+/// moving a formula; a view may read its own cells. And each view holds at
+/// most 1,000 formula cells, the cap the owner approved from `MISE.3`'s
+/// numbers, its frame 6.4 ms at p95 in Chrome where the bar of 8.3 falls near
+/// 1,400: the day a view passes it is the day its dish measures again.
+#[test]
+fn nothing_reads_a_view_and_each_holds_at_most_1000_formula_cells() {
+    let text = lf(&read(CARTRIDGE));
+    let mut held: BTreeMap<&str, u64> = VIEWS.iter().map(|v| (*v, 0)).collect();
+    for row in text.lines() {
+        let Some(rest) = row.strip_prefix("(formula \"") else {
+            continue;
+        };
+        let Some((sheet, rest)) = rest.split_once("\" \"") else {
+            panic!("{row}: a formula row names its sheet, then its cells");
+        };
+        let Some((range, formula)) = rest.split_once('"') else {
+            panic!("{row}: a formula row names its cells, then its formula");
+        };
+        if let Some(n) = held.get_mut(sheet) {
+            *n += cells_in(range);
+        }
+        let formula = formula.to_ascii_lowercase();
+        for view in VIEWS.iter().filter(|v| **v != sheet) {
+            let name = view.to_ascii_lowercase();
+            for read in [format!("{name}!"), format!("{name}.last!")] {
+                assert!(
+                    !formula.contains(&read),
+                    "{row}: the {sheet} sheet reads the {view} view"
+                );
+            }
+        }
+    }
+    for (view, n) in held {
+        assert!(n > 0, "the {view} view holds no formula");
+        assert!(
+            n <= 1_000,
+            "the {view} view holds {n} formula cells, past the 1,000 a view may hold (FRONT.1)"
+        );
+    }
+}
+
+/// The Portfolio's columns (`FRONT.1`'s decisions 6 and 9): its headers, and
+/// each stock's name the Stocks sheet's, read by a formula and never held as
+/// the view's own text, so that the day `MENU.3` names the stocks the view
+/// follows with no edit.
+#[test]
+fn the_portfolio_heads_its_columns_and_names_its_stocks_from_the_model() {
+    let mut cart = cartridge();
+    cart.step(0);
+    let got = values(&cart, "Portfolio", "A4:C8");
+    for (k, header) in PORTFOLIO_HEADERS.iter().enumerate() {
+        let at = address(4, k + 1);
+        assert_eq!(
+            got.get(&at).map(String::as_str),
+            Some(*header),
+            "Portfolio!{at}"
+        );
+    }
+    let names = values(&cart, "Stocks", "A5:A8");
+    let Ok(Viewed::Text(grid)) = cart.view("grid", "Portfolio", Some("A5:A8")) else {
+        panic!("the Portfolio's record");
+    };
+    for row in 5..=8 {
+        let at = format!("A{row}");
+        assert!(
+            names.contains_key(&at) && got.get(&at) == names.get(&at),
+            "Portfolio!{at}, the Stocks sheet's name"
+        );
+        let head = format!("(formula \"Portfolio\" \"{at}\" ");
+        assert!(
+            grid.lines()
+                .any(|l| l.starts_with(&head) && l.contains("Stocks!")),
+            "Portfolio!{at} reads the name on the Stocks sheet and holds none of its own"
+        );
     }
 }
 

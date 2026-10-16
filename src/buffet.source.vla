@@ -26,6 +26,9 @@
 ;   MENU.5  the caveats: the Caveats sheet, the things this game gets wrong, each beside
 ;           what the real world does and Management's response, the first the plain
 ;           statement that the game is not advice; the one content sheet in the strip.
+;   FRONT.1 the views: the Portfolio, the game's first view and the sheet it opens on,
+;           the day and the four stocks, each its price and its change since yesterday
+;           in dollars, and the fine print at its foot; the views first among the tabs.
 ;
 ; The market's clock (BD-7). One tick is one market day, thirty frames at the manifest's
 ; rate of thirty, so a day a second and a year about six minutes. The Day sheet alone
@@ -46,14 +49,14 @@
 ; under 2^53 and exact in a double, as Park and Miller's own step is.
 
 (cartridge "buffet"
-  (spec 3)
+  (spec 4)                          ; the page's version 4: a game's views on sheets of their own, and a click on any of them the game's
   (title "Buffet")
   (rate 30)
   (screen grid 80 50)
   (seed 791886)                     ; every first game's market: a first year that dips early and closes 10% up
   (author "Spreadsheet Company")
   (license "AGPL-3.0-or-later AND CC-BY-SA-4.0")
-  (notes "Buffet: All You Can Sheet. The back office is open and the front office is not: so far the market's calendar, a market day a second; its dice, rolled once a day where anyone can watch them roll; the market itself, four waves and a drift, moving once a day; four stocks priced off it in whole cents, the dearest paying a dividend four days a year; the fine print, a disclosure a month; the Series 777's question bank, twenty questions awaiting an exam the regulator has yet to schedule; and the model's caveats, the things this game gets wrong, each with Management's response. Pick the Day, the Dice, the Market or the Stocks sheet to watch, or the Caveats sheet to read, or the Disclosures or the Questions sheet among the hidden sheets."))
+  (notes "Buffet: All You Can Sheet. The front office is open, though not yet for business: the game opens on the Portfolio, the day and four stocks on it, each its price and its change since yesterday, a market day a second, with the fine print at its foot. Behind it, the back office: the market's calendar; its dice, rolled once a day where anyone can watch them roll; the market itself, four waves and a drift; four stocks priced off it in whole cents, the dearest paying a dividend four days a year; the fine print, a disclosure a month; the Series 777's question bank, twenty questions awaiting an exam the regulator has yet to schedule; and the model's caveats, the things this game gets wrong, each with Management's response. Pick the Day, the Dice, the Market or the Stocks sheet to watch the model work, or the Caveats sheet to read, or the Disclosures or the Questions sheet among the hidden sheets."))
 
 ; The libraries whose macros this source calls, both beside it: the kit, Alonzo's
 ; common.vla copied at the pin (sheets, labels, headers, on, cells, formulas and
@@ -69,7 +72,16 @@
 (include "content/questions.vla")
 (include "content/caveats.vla")
 
-(sheets "Screen" "Day" "Dice" "Market" "Stocks")
+; The tabs. The Screen, the device a game draws its frame on, holds nothing here, the
+; game's views being sheets of their own (FRONT.1), so it is hidden, and nothing views it
+; until a game shows it, an ending (FRONT.7); the manifest's screen line is the window it
+; would be drawn through. Then the views, first, the game opening on the first visible
+; sheet (Alonzo's SPEC.md section 3.1, version 4); then the model's sheets, visible, a
+; spreadsheet a player may open (AD-6); the content sheets stand after them, where each
+; is called below, and the engine's devices last.
+
+(sheet "Screen" hidden)             ; the framebuffer, unused: each view is a sheet of its own
+(sheets "Portfolio" "Day" "Dice" "Market" "Stocks")
 
 ; ---- POT.1: the calendar ------------------------------------------------------------
 ; A block of settings and its workings, a label in column A beside each value in B. The
@@ -282,3 +294,31 @@
   (column "F" 21 shown none)        ; the labels' column, as wide as its longest label, Management's response
   (cells
     ("G2" 1)))                      ; the row shown: the first, the plain statement that the game is not advice
+
+; ---- FRONT.1: the views -------------------------------------------------------------
+; The game's views, each a sheet of its own with its own widths, heights, looks and
+; gridlines, reached by the workbook's tabs, where they stand first, the sheets row above
+; naming them before the model (the owner's word, 2026-10-15: "the UI is a workbook").
+; A view shows the model and holds none of it: its formulas read the model's sheets and
+; the day, never the frame (BD-7), and no formula reads a view, so a dish lays a view out
+; again without moving a formula. Money reaches a view as whole cents divided by 100
+; once, which draws its own decimals at their shortest, 12.3 for $12.30 (FRONT.2's rule,
+; MISE.3), and a change is a difference of two prices in cents, divided once.
+;
+; The Portfolio: the sheet the game opens on, the first visible among the tabs, until
+; the Exam exists (GUARD.1). Its date; then a row a stock, on the Stocks sheet's own
+; rows, each its name, the model's, its price today and its change since yesterday, in
+; dollars; and the fine print at its foot, a disclosure a month.
+
+(on "Portfolio"
+  (column "A" 22 shown none)        ; the names; the date and the fine print spill past them
+  (column "B" 12 shown none)        ; the price, in dollars
+  (column "C" 12 shown none)        ; the change since yesterday, in dollars
+  (formulas
+    ("A1" "=\"As of year \"&Day!$B$6&\", day \"&Day!$B$7&\" (unaudited)\""))   ; the date, from the day: unaudited, as every number here is until the examiner calls (GUARD.3)
+  (headers "A4" "Security" "Price ($)" "Change ($)")
+  (formulas
+    ("A5:A8" "=Stocks!A5")                      ; each stock's name, the model's, until MENU.3 names them
+    ("B5:B8" "=Stocks!E5/100")                  ; its price today: whole cents over 100, once
+    ("C5:C8" "=(Stocks!E5-Stocks!F5)/100")      ; its change since yesterday: a difference of cents, over 100 once
+    ("A10" "=Disclosures!$D$3")))               ; the fine print, a disclosure a month (MENU.1)

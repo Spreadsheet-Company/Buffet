@@ -31,6 +31,13 @@
 //! the cell asks whether the day of the year is a multiple of the days
 //! between two and computes a dividend from the yield; the hand lists the
 //! four days and states the contract's whole cents.
+//!
+//! The views (`FRONT.1`) share no formatter with the record. A view draws
+//! money as whole cents divided by 100 once, and the record spells the
+//! quotient as its shortest round trip; the hand spells the same cents by
+//! text, the dollars, a point and the cents less their trailing zeros, so
+//! that the tests hold what `MISE.3` derived, that whole cents over 100 draw
+//! their own two decimals at their shortest.
 
 /// Park and Miller's minimal standard (1988): a stream of whole numbers,
 /// each the last times the multiplier, modulo the modulus, a prime.
@@ -442,7 +449,7 @@ impl Rung {
     }
 }
 
-/// The days a disclosure stands, the Disclosures sheet's `F5` (`MENU.1`): a
+/// The days a disclosure stands, the Disclosures sheet's `D5` (`MENU.1`): a
 /// month of market days, thirty seconds at the manifest's rate.
 pub const DAYS_A_DISCLOSURE: u64 = 30;
 
@@ -459,9 +466,62 @@ pub fn disclosure(day: u64, rows: u64, days: u64) -> u64 {
     row
 }
 
+/// Whole cents written as their dollars (`FRONT.1`), as the Portfolio draws
+/// them: the dollars, then a point and the cents less their trailing zeros,
+/// no point when none is left, and a minus before a loss. Spelled by text,
+/// never through a double.
+pub fn dollars(cents: i64) -> String {
+    let sign = if cents < 0 { "-" } else { "" };
+    let c = cents.unsigned_abs();
+    let (whole, part) = (c / 100, c % 100);
+    if part == 0 {
+        format!("{sign}{whole}")
+    } else if part % 10 == 0 {
+        format!("{sign}{whole}.{}", part / 10)
+    } else {
+        format!("{sign}{whole}.{part:02}")
+    }
+}
+
+/// The Portfolio's date at a frame (`FRONT.1`): the year and the day of the
+/// year, each from 1, as of which its numbers stand, none of them audited.
+pub fn as_of(cal: &Calendar) -> String {
+    format!(
+        "As of year {}, day {} (unaudited)",
+        cal.year, cal.day_of_year
+    )
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    /// The record's spelling of a view's money is the hand's (`FRONT.1`): a
+    /// number as its shortest round trip, Rust's own `{}` (Alonzo's `SPEC.md`
+    /// section 3.1), of whole cents over 100 is their dollars by text, for
+    /// every count of cents from -200,000 to 2,000,000 and beside every power
+    /// of two to 2^52 cents, past $45 trillion: below 2^46 dollars two doubles
+    /// stand closer than a cent, so no shorter spelling names the same double
+    /// (`MISE.3`, *derived*).
+    #[test]
+    fn whole_cents_over_100_spell_their_own_dollars() {
+        let spelled = |k: i64| {
+            assert_eq!(format!("{}", k as f64 / 100.0), dollars(k), "{k} cents");
+        };
+        for k in -200_000..=2_000_000 {
+            spelled(k);
+        }
+        for p in 21..=52 {
+            for d in -101..=101 {
+                spelled((1i64 << p) + d);
+                spelled(-(1i64 << p) - d);
+            }
+        }
+        assert_eq!(
+            [dollars(1230), dollars(2500), dollars(-3), dollars(0)],
+            ["12.3", "25", "-0.03", "0"]
+        );
+    }
 
     /// The fine print's round: the first row for the first month, the next
     /// from day 30, and the first again once every row has stood its month.

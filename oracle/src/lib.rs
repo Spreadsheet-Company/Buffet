@@ -8,8 +8,9 @@
 //! frame to the hand.
 //!
 //! What it holds since `POT.1` (2026-10-14): the hand, [`buffet`], its
-//! calendar and its dice, since `POT.2` its market, and since `STATION.1`
-//! the stocks' four rungs and their dividend; the door the runners
+//! calendar and its dice, since `POT.2` its market, since `STATION.1` the
+//! stocks' four rungs and their dividend, and since `FRONT.1` the
+//! Portfolio's date and its dollars spelled by text; the door the runners
 //! and the tests share, which reads a source of the repository and the texts
 //! it includes and hands them to the engine's pass, `alonzo::pass::expand`,
 //! as the engine's own runner does; and the smoke test of the pin, a two-row

@@ -51,6 +51,12 @@ empty.*
 
   *Closed 2026-10-15.* Predicted `~days`; cost one session, the scoping, the build and the owner's hand test. What landed: the Stocks sheet and the Market's column D in the source and its cartridge, now 131 rows and 79 formula cells; the hand's rungs, their prices, the dividend's days and the bound in `oracle/src/buffet.rs`; the Stocks sheet held inside the tests of two years, a year at difficulty 0, eight hundred days and a hundred years at one frame a day, two tests of the cartridge more (the rungs' settings, the opening) and three of the hand (the opening at both tiers, the bound, the dividend's days), 27 in all; the describe golden blessed again, moved as predicted; and, in the same commit at the owner's word, `POT.2`'s P2 cell, CI's Linux holding the market bit for bit at the first push. One of the eight predictions missed, and only at first: the suite took 11.6 s while the Stocks sheet's 56 cells were viewed at every frame and every day, and 7.4 s once the window held the four columns that compute, half again the old suite's time on the same machine under the same load. The build found that a cent is a wide step for a $1 share: the first rung's price moves on 25 of the first year's 365 days.
 
+## 🛎 THE FRONT OF HOUSE
+
+- ✅ **`FRONT.1`, first slice — the workbook: the game's views, each a sheet of its own.** *Scoped 2026-10-15, first as panels on the Screen and then, at the owner's word, as the game's views on sheets of their own, gated on Alonzo; rescoped at the page's version 4 the same day, once `ENGINE.18` was released, its seventeen decisions approved whole by the owner on 2026-10-16, and built and hand-tested that day: both scopings, every prediction beside its number, what the build found and the owner's hand test are under THE ITEMS, SCOPED.* Buffet is played full-screen as a workbook: each of the game's views a sheet of its own, with its own widths, heights, looks and gridlines, reached by the workbook's own tabs and standing first among them, the model's sheets after them, visible (`AD-6`), every name a fund manager's and no tab numbered (`BD-2`'s amendment). The cartridge is written to the page's version 4, `(spec 4)`: the game opens on its first visible sheet with no Camera, which enters with `GUARD.1`; a click on any cell of the sheet shown is the game's, `Input!B19`, `B11` and `B12`, which the first button reads (`BACK.1`); and its Screen, holding nothing, is hidden, the manifest's screen line kept for a Screen a game may show (`FRONT.7`). The first view, the Portfolio: its date, "As of year 1, day 1 (unaudited)"; a row a stock on the Stocks sheet's own rows, each its name read from that sheet, its price today and its change since yesterday in dollars, whole cents over 100 once and the change a difference of cents; and the fine print at its foot, `Disclosures!D3`. Fourteen formula cells, reading the model and the day and never the frame (`BD-7`), and read by nothing, a view being the workbook's output; widths 22, 12 and 12 characters, the default row height, 15 points, kept by the owner's eye, gridlines on, and no background until `FRONT.2`. The caveat on number formats rewritten in the same commit, the first view to show dollars taking it (`BD-5`). Each later view enters with its dish: the Exam with `GUARD.1`, the Overview with `FRONT.3`, Work with `BACK.1`, the market's view with `PLATE.1`, the curve's at course 1. *Oracle, met:* the Portfolio held to the hand at every frame of two years and two days, whole on a day's first frame and byte for byte still through the day, and on every one of eight hundred days at one frame a day, its dollars the Stocks sheet's cents spelled by text, which a test of the hand holds to the record's own spelling from −200,000 cents to 2^52; its headers, and its names the model's; the game opening on it, written to version 4 with no Camera and the Screen hidden; no formula reading a view, each at most 1,000 formula cells; `BD-7`'s scan and the census's `(every-frame 0)`; the describe golden blessed again; eight mutants, each caught by the test written for it; `MISE.3`'s first number re-measured on the real view, in headless Chrome and in the owner's; and the owner's hand test in the page. *Pays into:* every view after it, each a sheet; every button (`BACK.1`, `PLATE.1`, `GUARD.1`), each a click on the sheet shown; the looks (`FRONT.2`), whose glyph column stands beside the change. `~days`
+
+  *Closed 2026-10-16.* Predicted `~days`; cost two sessions, the first scoping and the rescoping, then the build, its measurements and the owner's hand test. What landed: the source's version, notes, hidden Screen, tab order and the Portfolio's section, and its cartridge, 429 rows and 107 formula cells; caveat 12 rewritten; the hand's `dollars` and `as_of` and a test of them; three tests of the cartridge more and three extended, the two years', the eight hundred days' and the tab order's, 45 in all; the describe golden blessed again. Four of the nine predictions missed in part, each named beside its number: an ordinary frame 0.1 µs dearer, five shapes more for the step's own flags; the suite 0.77 s longer at the median where half a second was predicted, a view held at every frame; the source's block 3,243 characters longer where about 2,600; and in the browser the still frame a step of the clock above its prediction and the main thread past it, a frame now about a seventh of `MISE.3`'s.
+
 ## 📜 THE MENU CARD
 
 - ✅ **`MENU.1` — the strings sheets and the picker.** *Scoped, built and hand-tested 2026-10-15: the scoping, its fourteen decisions approved whole by the owner and amended at the hand test, every prediction beside its number, what the build found and the owner's hand test are under THE ITEMS, SCOPED.* The content sheets under `src/content/`, a file a sheet holding words alone, one macro named after the file whose body is one call of the library's `strings`, each sheet one kind of string, hidden after the model's sheets, its rows of text each with the course that added it, its vintage, and the reviewer who approved it (*the vintage and the reviewer struck 2026-10-15 at the owner's word, a row's review its pull request's and no course a freeze, `BD-1` amended: `MENU.2`'s amendments after its close*); the source's manifest its first form, then every include, then the code, each content sheet's macro called where the sheet belongs (the owner's words at the hand test); the library's `picker`, `CHOOSE(k, ...)` over a sheet's rows, generated from the sheet's extent so that a row added needs no formula edited, one cell to 1,547 rows below the headers, the pages of 500 written by the dish whose sheet first passes 1,000 rows; the first sheet, the fine print as a rotating footer, the Disclosures sheet, eight rows in the owner's words, a disclosure a month from the day; and the one-page *How to add a row* in the folder, for a stranger with five minutes. Every other sheet arrives with the dish that reads it, named for it: `Questions` (`MENU.2`), `Headlines` (`FRONT.3`), `Memos` (the first of `MENU.4` and `GUARD.3`), `Firms` (`BACK.2`), `Awards` (`MENU.7`), `Errors` (`PLATE.6`) and `Exits` (`FRONT.7`). *Oracle, met:* the layout check's content rule and the source's order (`tools/check_layout.ps1`, the content sheets' pin raised from 0 to 1, its control fifteen mutants), their headers held by `check_spdx.ps1`; the page's content blocks (`tools/build_web.ps1`, `tools/check_web_offline.ps1`, its control fifteen mutants); the oracle's tests, the fine print held to the hand at every frame, the rows counted by their extent, every row picked in its turn, a row added expanding with no other edit, the one picker's limit and the tripwire before it, and every sheet written bare with the content hidden; and the owner's hand test in the page. *Pays into:* every string any view shows: the ticker (`FRONT.3`), the exam (`MENU.2`), the names (`MENU.3`), the errors (`PLATE.6`), the endings (`FRONT.7`); and the cheapest pull request there is. `~days`
@@ -1438,6 +1444,457 @@ nothing that changes every frame (`BD-7`: only the Day sheet reads the
 frame, and the Day sheet, its phase moving every frame, is never still).
 Uncommitted there on 2026-10-15, awaiting the owner's `?blit=1` run and
 hand test; the views' item builds on its tree.
+
+## `FRONT.1`, rescoped — the Portfolio and first light: the game's first view, a sheet of its own, at version 4
+
+*Rescoped 2026-10-15 at the owner's word, "Scope and implement FRONT.1 in
+Buffet (Delta/Buffet): the workbook, the game's views each a sheet of its
+own, and first light", to stop for the owner's approval before building:
+from `OMAKASE.md`'s line (`COURSE.0`'s item 5) with its note of the release
+and the numbers the owner approved from `MISE.3`; the first scoping above,
+the stacked panels struck, the owner's two readings and "What `FRONT.1`
+becomes"; `BD-2` with both its dated notes, `BD-5`, `BD-6`, `BD-7` and
+`BD-8`; `MISE.3`'s numbers and spellings; and Alonzo's `SPEC.md` at
+version 4 (§3.1, §3.3, §3.8 and decision 36), with `ENGINE.18`'s scoping
+and record in its `REARVIEW.md`. It comes now because `alonzo` 0.1.4
+released `ENGINE.18`, and with it `ENGINE.19` and `ENGINE.20`, a frame read
+and painted by its changes, and Buffet's pins moved there the same day, the
+page copied again at `v0.1.4` (`HOUSE.2`, `bd93434`): the gate is open, and
+this rescoping is the dish's first act. Every course-0 dish after it needs a
+view or a click on one (`BACK.1`, `PLATE.1`, `PLATE.2`, `FRONT.3`,
+`GUARD.1`). Each decision carries its recommendation, for the owner to
+approve, amend or strike; the texts a player reads are drafts, for the owner
+to approve or rewrite. The predictions were written before any number was
+taken. Alonzo's tree was read and never touched.*
+
+**What it stands on, read on the day** (`alonzo` 0.1.4 and `vla-lang`
+0.9.4 as the registry holds them; `web/` as vendored at `v0.1.4`; Buffet at
+`b11bcd7`, its tree clean, its main eight commits ahead of its remote).
+- *The version.* Version 4's rows and behaviors are a `(spec 4)`
+  cartridge's alone (`SPEC.md` decision 36). Buffet says `(spec 3)`, so
+  today the page opens it on its Screen, empty and first among the tabs, a
+  click off the Screen is 0, and its Input sheet holds eighteen rows. At
+  `(spec 4)` the engine takes the Input sheet to `A1:E19` and the Camera to
+  `A1:B3`, makes the Input's nineteenth label, `sheet`, and `describe`
+  prints the Input's extent as `A1:E19` (`cartridge.rs`, `Device::layout`,
+  `INPUT_SHEET_LABEL`).
+- *The opening* (`host.js`, `_open`): the sheet the Camera's third row
+  names at the load, else the first visible sheet of the cartridge's own
+  order. Buffet has no Camera, so a Portfolio listed first among the visible
+  sheets opens the game with none, `ENGINE.18`'s own reading of Buffet (its
+  decision 2). A hidden Screen is never viewed until it is shown (§3.1).
+- *The sheet shown and the click* (§3.3). At `(spec 4)` the host writes
+  `Input!B19`, the name of the sheet its viewport shows, among the Input
+  rows that changed (`ENGINE.19`); `B11` and `B12` are the pointer's column
+  and row on that sheet, any cell in view, and 0 off the cells; a button is
+  `B19`, `B11`, `B12` and the rising edge of `B13`. The wheel scrolls a
+  view. The drawer's viewer shows any sheet beside the player's, the Input
+  sheet among them, so `B19` can be read while the Portfolio shows.
+- *The draw* (§3.1, §5). Every sheet drawn is the values record after
+  frame 0 (`ENGINE.18`); a frame whose window holds no change is neither
+  viewed nor painted, a still frame (`ENGINE.17`, `ENGINE.19`); and a patch
+  naming at most a quarter of the cells in view, 2,720 at the owner's full
+  screen, is repainted by its cells alone (`ENGINE.20`; `viewport.js`,
+  `REPAINT_SHARE`). The drawer counts them, "S of N frames still and P
+  patched". Measured in Alonzo's record over Buffet's Stocks shown in the
+  Screen's place: a still frame's main thread 0.42 to 0.46 ms, a market
+  day's 0.6 to 0.8.
+- *What a view declares* (`vla-lang`'s `machine/load.rs`; the viewport's
+  `readRecord`): a column's width in characters and its format, `(column
+  ...)`; a row's height in points, one `(row ...)` a row; `(gridlines
+  "<sheet>" on|off)`; a format's fill, `general` or `text`, wrap or not; a
+  cell's style and a value's look. No font, weight, text color or
+  alignment: a number stands right and a text left, and a text spills only
+  into the empty cells on its right. The default cell is 64 by 20 pixels,
+  Excel's 8.43 characters and 15 points, about 7 pixels a character.
+- *The cells a view reads.* The year and the day of the year, `Day!B6` and
+  `B7`, each from 1 and each moving on a day's first frame alone; the
+  stocks' names, `Stocks!A5:A8`, `rung 1` to `rung 4`, the working labels
+  until `MENU.3` names them; the prices today and yesterday in whole cents,
+  `Stocks!E5:F8`, the change between them a view's to compute (`STATION.1`'s
+  source: "the change between them, and its glyph, are a panel's"), and
+  yesterday's on the first day being day −1's, so that the first day's
+  change is the start less day −1's price; and the fine print,
+  `Disclosures!D3`, a disclosure a month.
+- *Money* (`FRONT.2`'s rule, approved at `MISE.3`): whole cents in every
+  model cell, reaching a view by one division by 100, which draws its own
+  decimals at their shortest, 12.3 for $12.30 and 25 for $25.00, below $70
+  trillion (*derived*). The caveats' row 12 says money reads in cents, "9921
+  for $99.21", its `Where` `Stocks!D5:F8` in a column 13 characters wide;
+  `BD-5`'s owed list gives its rewrite to `FRONT.2`, and the owner's prompt
+  for this item to whichever dish first shows dollars.
+- *The census* (`vla-lang`'s `calc/shape.rs`, `Shapes::of`, and
+  `calc/reach.rs`): shapes are numbered walking the sheets in tab order and
+  each sheet's cells by row, so a view standing before the model renumbers
+  every shape after it; a sheet's readers are each shape's references to it,
+  single cells side by side in one row read as one; and from sixteen readers
+  a sheet keeps them indexed by where a changed cell stands, `(most k)`.
+- *The names taken.* The devices; the model's sheets, Day, Dice, Market and
+  Stocks; the content sheets built, Disclosures, Questions and Caveats, and
+  those recommended to their dishes. The market's view and the model's
+  Market sheet cannot share a name, `PLATE.1`'s to settle (the first
+  scoping).
+- *The page.* The player opens on its empty sheet, Buffet in the picker
+  after it (`ENGINE.15`), and runs a cartridge the moment it is picked; its
+  strip shows the visible sheets in tab order and lists the hidden in its
+  box, "hidden sheets (13)" today. Build in the drawer writes the cartridge
+  from the source's block.
+- *The number this re-measures*, `MISE.3`'s probe 1: course 0's densest lean
+  panel, 95 formula cells drawn from the full record at every frame, a
+  frame's tick 1.5 to 1.7 ms at p50 and 2.4 to 2.7 at p95 in headless
+  Chrome at full screen; in the owner's own Chrome 1.4, 2.2 and 2.7.
+- *No replay is committed*: the tasting records the first.
+
+**The decisions.**
+
+1. **One view, the Portfolio (rec).** The line's plan: the Portfolio first,
+   the sheet the game opens on until the Exam exists, and each later view
+   entering with the dish that fills it, the Exam with `GUARD.1`, the
+   Overview with `FRONT.3`, Work with `BACK.1` and the market's view with
+   `PLATE.1`, so that no sheet stands empty waiting and each view's scoping
+   lays out its own. No verb enters the library: the first view is written
+   by hand, and a pattern two views write alike enters `kitchen.vla` at the
+   second, where `MISE.1` had a `panel` verb waiting for the second panel.
+   *The alternative:* every course-0 view now, an empty Market, Overview,
+   Exam and Work beside the Portfolio, each a title read by nothing until
+   its dish.
+
+2. **The page's version 4, `(spec 4)` (rec).** The views need it: at
+   version 3 the page opens Buffet on its Screen and takes no click off it.
+   What moves with it: the manifest's line; `describe`'s Input extent; the
+   Input sheet the engine makes, its nineteenth row written by the host
+   with the sheet shown; the pointer, the game's over any cell of the sheet
+   shown, though no formula reads it until `BACK.1`'s button; and a
+   replay's header, `(spec 4)`, with forty-nine Input rows at its first
+   frame. No replay is committed, so none moves; the tasting records the
+   first at version 4. The contract's `(spec 3)` in `OMAKASE.md` becomes
+   `(spec 4)`, dated. The oracle's scratch cartridges, the smoke test's, the
+   picker's limit's and the draws', keep `(spec 3)`: they hold the pin, the
+   library and the kit, which version 4 does not touch. *The alternative:*
+   none that builds a view.
+
+3. **The opening: the Portfolio, the first visible sheet, and no Camera yet
+   (rec).** Listed first among the visible sheets, the Portfolio opens the
+   game under `ENGINE.18`'s rule with no Camera at all. The Camera enters
+   with `GUARD.1`, the first dish whose game shows a sheet, its exam ending
+   on the Portfolio by its third row's change,
+   `=IF(<the exam done>,"Portfolio","Exam")`. *The alternative:* a Camera
+   now, the kit's
+   `camera` at row 1 and column 1 and `B3` "Portfolio", a value: the
+   opening stated in a cell a player can read, and a save opening where its
+   game stood (`ENGINE.5`, course 7), at six rows and a device's tab in the
+   strip that nothing reads until `GUARD.1`.
+
+4. **The Screen hidden, first, where it stands (rec).** `(sheet "Screen"
+   hidden)`, a row of its own before the sheets row, version 3's own
+   spelling (`SPEC.md` decision 41): the strip keeps it in its box, nothing
+   views it until it is shown, it holds no cell, and the manifest's `(screen
+   grid 80 50)` keeps its words, the window a Screen shown is drawn
+   through, so that an ending or a crash can be a Screen the game shows
+   (`FRONT.7`). *The alternatives:* no Screen, which loads (`ENGINE.18`'s
+   substrate) but leaves the manifest's line describing nothing and
+   `describe` without its row; or hidden after the content sheets, beside
+   the devices it is one of.
+
+5. **The tab order: the views, the model, the content, the devices (rec).**
+   `(sheets "Portfolio" "Day" "Dice" "Market" "Stocks")`: the views first,
+   then the model's sheets, visible, the spreadsheet a player may open
+   (`AD-6`); then the content sheets where the source calls them, each in
+   the state its source writes, the Disclosures and the Questions hidden
+   and the Caveats shown; then the engine's Clock, File and Input. The strip
+   reads Portfolio, Day, Dice, Market, Stocks, Caveats, Clock, File and
+   Input, and its box "hidden sheets (15)": the Screen, the Disclosures,
+   the Questions and twelve twins. A later view stands among the views, its
+   place its dish's, and no tab is numbered (`BD-2`'s amendment). *The
+   alternative:* the model's sheets hidden behind the views, a back office
+   out of the strip, open by `AD-6` but no longer in plain sight.
+
+6. **First light: the date, the four stocks, each its price and its change
+   since yesterday, and the fine print at the foot (rec).** The Portfolio
+   laid out as a fund's holdings report, its stocks on the Stocks sheet's
+   own rows, so that a stock's row in the view is its row in the model:
+
+   | | A | B | C |
+   |---|---|---|---|
+   | 1 | the date, `As of year 1, day 1 (unaudited)` | | |
+   | 4 | `Security` | `Price ($)` | `Change ($)` |
+   | 5 to 8 | each stock's name, `rung 1` to `rung 4` today | its price today, in dollars | its change since yesterday, in dollars |
+   | 10 | the fine print, a disclosure a month | | |
+
+   The date and the fine print spill over the empty cells beside them. The
+   shares, the cost, the value and the gain are `PLATE.1`'s columns beside
+   the change, and the pockets' block is `PLATE.2`'s, laid out by that
+   dish. The source writes the view last, a section of its own after the
+   caveats', since it reads the sheets before it; its sheet stands first
+   because the sheets row names it first:
+
+   ```text
+   (on "Portfolio"
+     (column "A" 22 shown none)                 ; the names; the date and the fine print spill past it
+     (column "B" 12 shown none)                 ; the price, in dollars
+     (column "C" 12 shown none)                 ; the change since yesterday, in dollars
+     (formulas
+       ("A1" "=\"As of year \"&Day!$B$6&\", day \"&Day!$B$7&\" (unaudited)\""))   ; the date, from the day
+     (headers "A4" "Security" "Price ($)" "Change ($)")
+     (formulas
+       ("A5:A8" "=Stocks!A5")                   ; each stock's name, the model's
+       ("B5:B8" "=Stocks!E5/100")               ; its price today: whole cents over 100, once
+       ("C5:C8" "=(Stocks!E5-Stocks!F5)/100")   ; its change since yesterday: a difference of cents, over 100 once
+       ("A10" "=Disclosures!$D$3")))            ; the fine print, a disclosure a month
+   ```
+
+   Fourteen formula cells, where a view may hold 1,000 in view. The date's
+   *unaudited* is the sheet's one joke, an interim statement's own word and
+   true of every number on it until the examiner calls (`GUARD.3`); the
+   headers name their columns and carry none, which is their reason
+   (`BD-2`). *The alternatives:* the date as two labels and two values,
+   `year` and `day`, as the model's sheets write a setting; `Day 1` alone,
+   the line's "the day"; the table from row 3, its rows not the model's.
+
+7. **Dollars: whole cents over 100, once (rec).** A price is
+   `=Stocks!E5/100` and a change `=(Stocks!E5-Stocks!F5)/100`, the
+   difference taken in whole cents, exactly, and divided once: `FRONT.2`'s
+   rule as approved, no money cell a difference or a product of dollar
+   amounts, so none draws binary noise or `#`s. A number cell draws its
+   shortest spelling, right-aligned, its decimal points out of line; two
+   decimals kept would take a joined text of 140 characters a cell, which
+   the owner kept for a sentence and not a column (`MISE.3`). *The
+   alternative:* cents, as the Stocks sheet shows them, `Price (cents)`, no
+   caveat moved, a fund's report in pennies.
+
+8. **The change a number; the glyph and its shade `FRONT.2`'s (rec).** A
+   loss reads its minus sign and a gain none, as a plain cell does.
+   `FRONT.2`, the next dish, brings the glyph cell, `▲`, `▼` or `=` in a
+   3-character column, and the shade keyed on its text together, a glyph
+   without its shade being half of one look; nothing reads a view (decision
+   10), so it inserts its column where it likes. *The alternatives:* both
+   now, the glyph's cell unshaded and `FRONT.2` bringing the shades alone;
+   or the change in percent beside it, `=INT(10000*(E5-F5)/F5+0.5)/100`,
+   hundredths of a percent rounded once, which reads a $1 share's cent, 1%,
+   more truly beside a $100 share's 37 cents, 0.37%: a column the line does
+   not name.
+
+9. **The names the model's (rec).** `=Stocks!A5`, filled down: the view
+   shows the Stocks sheet's names, `rung 1` to `rung 4` until `MENU.3` names
+   them on their own rows ("a rung's name belongs on the rung's own row of
+   the Stocks sheet", `MENU.1`'s decision 2), and holds none of its own, so
+   the day they are named the view follows with no edit. The header over
+   them is `Security`, a holdings report's word, under which a bond's row
+   also stands at course 1. Four cells computed once, their inputs values.
+   *The alternative:* the names as the view's own texts, two places to
+   rename.
+
+10. **A view reads the model and the day, and nothing reads a view (rec).**
+    Every formula of the Portfolio reads the Day, the Stocks or the
+    Disclosures sheet, and none the frame, `Clock!B1`, or the phase,
+    `Day!B4`: `BD-7`'s scan holds it as it stands, the census keeps
+    `(every-frame 0)`, and the view moves on a day's first frame alone, a
+    still frame on every other. And no formula outside a view reads a view:
+    the views are the workbook's outputs, the model its workings and the
+    Input sheet its inputs, ICAEW's tenth principle as `SPEC.md` §3 cites
+    it, so that any dish may lay a view out again without moving a
+    formula, and a view costs what it shows. A view may read its own cells,
+    a total of its own column. `describe` shows the rule: no `readers` row
+    names the Portfolio. Held by a test, with the approved cap beside it, a
+    view holding at most 1,000 formula cells, a tripwire as the picker's
+    1,000 rows are. *The alternative:* views free to read one another, the
+    Overview reading the Portfolio's totals; a view then a model too, its
+    layout dear to change.
+
+11. **The view's own widths; the default height; gridlines on; no
+    background (rec).** Widths A 22, B 12 and C 12 characters, `MISE.3`'s
+    probe's name and number columns, so that a name, a price and a change
+    each read whole and a name of twenty characters fits; set by hand,
+    `ENGINE.21`'s fit being unbuilt. The height the default, 15 points, no
+    `row` row written: the 20 points approved at `MISE.3` were for a
+    fifty-row panel to fill a full screen, a premise a sheet that scrolls no
+    longer holds, and the owner judges by eye at the hand test, 20 points
+    being then a `row` row for each of the view's ten rows. Gridlines the
+    default, on, a workbook's; no background, the looks being `FRONT.2`'s,
+    whose approved spelling is the columns' format and never a filled cell.
+    *The alternatives:* 20 points now; gridlines off, a report's page,
+    which leaves the table floating until `FRONT.2`'s fills.
+
+12. **The caveat on number formats rewritten here (rec).** The first view
+    to show dollars takes `BD-5`'s owed rewrite: row 12 in its own file and
+    in this commit, its `Where` the Portfolio's money, the field's width
+    raised from 13 to 15 to hold it.
+
+    | The field | Now | Rewritten |
+    |---|---|---|
+    | Things this game gets wrong | Numbers have no formats: a price reads in cents, 9921 for $99.21, and a yield of 2% reads 0.02. | Numbers have no formats: $12.30 reads 1230 in the model's cents, 12.3 on the Portfolio; 2% reads 0.02. |
+    | In the real world | A workbook formats its numbers for people: $99.21, 2.00%, 1,000,000. | A workbook formats its numbers for people: $12.30, 2.00%, 1,000,000. |
+    | Management's response | The decimal point has been furloughed pending a review of number formats. | kept |
+    | Where | `Stocks!D5:F8` | `Portfolio!B5:C8` |
+
+    `BD-5`'s owed list gains a dated line: the dollars' caveat taken by
+    `FRONT.1`. No other simplification enters with this dish. *The
+    alternative:* the row left to `FRONT.2`, as `BD-5` has it, the Portfolio
+    showing dollars one dish before its caveat says so.
+
+13. **The notes: the front office open, though not yet for business
+    (rec).** The manifest's notes, a player's string (`BD-2`) the drawer
+    shows, rewritten: "Buffet: All You Can Sheet. The front office is open,
+    though not yet for business: the game opens on the Portfolio, the day
+    and four stocks on it, each its price and its change since yesterday, a
+    market day a second, with the fine print at its foot. Behind it, the back
+    office: the market's calendar; its dice, rolled once a day where anyone
+    can watch them roll; the market itself, four waves and a drift; four
+    stocks priced off it in whole cents, the dearest paying a dividend four
+    days a year; the fine print, a disclosure a month; the Series 777's
+    question bank, twenty questions awaiting an exam the regulator has yet
+    to schedule; and the model's caveats, the things this game gets wrong,
+    each with Management's response. Pick the Day, the Dice, the Market or
+    the Stocks sheet to watch the model work, or the Caveats sheet to read,
+    or the Disclosures or the Questions sheet among the hidden sheets." *Open
+    for business* is the course's own name, and the front office opens a
+    dish before the first order can be placed (`PLATE.1`). The source's
+    opening comment lists `FRONT.1` among the dishes served.
+
+14. **The oracle (rec).** In `oracle/src/buffet.rs` and
+    `oracle/tests/cartridge.rs`:
+    - *The hand's dollars, spelled by text*: `dollars(cents)`, whole cents
+      written as their dollars, a point and the cents less their trailing
+      zeros, a minus before a loss, sharing nothing with the record's
+      formatter; and its test, that it is Rust's own `{}` of the cents over
+      100, the record's spelling (`SPEC.md` §3.1), for every count of cents
+      from −200,000 to 2,000,000 and at each power of two to 2^46, so that
+      `MISE.3`'s derived claim is held on the platform. And `as_of`, the
+      date's text from the calendar.
+    - *The Portfolio at every frame*, inside `held`, so at every frame of
+      two years and two days and on every one of eight hundred days at one
+      frame a day: `A1` the hand's date; `B5:B8` and `C5:C8`, each rung's
+      price and change, `dollars` of the hand's cents; `A10` the fine print
+      the hand picks.
+    - *Its columns*: the headers in `A4:C4`; the names in `A5:A8` the Stocks
+      sheet's, after the first frame.
+    - *The opening and the tabs*: the manifest's `(spec 4)`; every sheet in
+      its order and its state, the Screen hidden first and the Portfolio the
+      first visible, so that the game opens on it under `ENGINE.18`'s rule;
+      and no Camera, which would open another (the tab order's test, its
+      list rewritten).
+    - *Nothing reads a view, and the cap*: no formula of a sheet that is no
+      view names a view, read without case; every view at most 1,000
+      formula cells, counted from the cartridge's rows.
+    - *Kept*: the cartridge its source expanded; `BD-7`'s scan and the
+      census's `(every-frame 0)`; every caveat whole and its `Where` holding
+      a value, row 12's now on the Portfolio; the describe golden, blessed
+      again and read in its diff, where every shape's number moves by five,
+      the Portfolio's five first.
+    - *Mutants*, each expanded into the cartridge before the suite runs and
+      failing the test written for it: a price in cents, `=Stocks!E5`; a
+      change of dollar amounts, `=Stocks!E5/100-Stocks!F5/100`, the noise
+      `MISE.3` found; the date reading the frame, `Clock!B1`; a model's
+      sheet reading the Portfolio; the Screen visible; the Portfolio after
+      the Day sheet; and a Camera naming the Day sheet.
+
+15. **`MISE.3`'s first number, re-measured on the real view (rec).**
+    `MISE.3`'s instrument over the real page: Buffet's own page built here,
+    a scratch copy reaching the host by one line, `window.__host = host;`,
+    Buffet picked and run in real time in headless Chrome over the DevTools
+    protocol at the owner's full screen, 2,560 by 1,440 CSS pixels at a
+    ratio of 1.5, on the GPU, every process of its profile opted out of
+    Windows' throttling and pinned to the performance cores; each tick timed
+    by a wrapper on `host.tick` and filed by what its frame drew, a market
+    day's patch or a still frame, by the drawer's counters; the main
+    thread's whole from `Performance.getMetrics`; three runs of 600 frames,
+    twenty market days each. In-page times are Chrome's, in steps of 0.1
+    ms. And the owner's own Chrome at the hand test: a probe copy printing
+    the same numbers in a corner every five seconds, read by one
+    screenshot, as `MISE.3`'s hand run made its browser number real. The
+    number goes into `MISE.6`'s row for `ENGINE.8`, and decides nothing
+    course 0 waits on. *The alternatives:* headless alone; or the Stocks
+    sheet's numbers in Alonzo's record standing for the view's.
+
+16. **The hand test, the owner's, on the page built here:**
+    - the page built by the commands given at the handover in a fenced
+      block, opened in Chrome at full screen, Buffet picked: the game opens
+      on the Portfolio, not the Screen;
+    - the strip reading Portfolio, Day, Dice, Market, Stocks, Caveats,
+      Clock, File and Input, its box "hidden sheets (15)", the Screen
+      among them;
+    - the Portfolio: the date moving a day a second; the four names, prices
+      and changes in dollars, each whole in its column; the fine print in
+      row 10, turning every thirty seconds; the rows' height judged by eye,
+      the default or 20 points;
+    - the drawer: its line's still frames rising twenty-nine a second and
+      its patched one; its viewer on the Input sheet reading `B19`
+      "Portfolio", "Stocks" once the Stocks tab is clicked, and `B11` and
+      `B12` the Portfolio's column and row under the pointer;
+    - the Caveats sheet's row 12 rewritten, its texts whole;
+    - Build in the drawer, "same bytes";
+    - the probe copy's corner, one screenshot after a minute.
+
+17. **The stale places, rewritten at the build.** In `OMAKASE.md`:
+    `FRONT.1`'s line, 🟡 from the approval; the contract's `(spec 3)`;
+    `BD-5`'s owed list (decision 12); `FRONT.2`'s line, a dated sentence,
+    its glyph column beside the Portfolio's change and its caveat taken;
+    `COURSE.0`'s critical path, step 5's first light, dated; and `MISE.6`'s
+    row for `ENGINE.8`, the number re-measured, and the views' row, its
+    first view built. The source's opening comment, the notes, the Screen's
+    row, the sheets row and the Portfolio's section;
+    `src/content/caveats.vla`'s row 12 and its `Where`'s width; `oracle/src/buffet.rs`'s
+    module comment, its two functions, and `DAYS_A_DISCLOSURE`'s comment,
+    which names `F5` where the days have stood in `D5` since the vintage was
+    struck; the module comments of `oracle/src/lib.rs` and
+    `oracle/tests/cartridge.rs`; the describe golden; `Delta/CLAUDE.md`'s
+    map, a view's cells among the edits that trip a test; the memory.
+    `FRONT.1` leaves `OMAKASE.md` for this file with its commit, in a room
+    of its own, 🛎 THE FRONT OF HOUSE. Not this item: the other views, the
+    Camera (`GUARD.1`), the glyph and the looks (`FRONT.2`), a click the
+    game reads (`BACK.1`), the market view's name (`PLATE.1`), key chords
+    and the fit (Alonzo's, `ENGINE.21`), a sheet's default row height
+    (`MISE.6`'s candidate), the replay golden (the tasting) and the loop
+    oracle over Buffet's page (`HOUSE.4`'s second slice).
+
+**The predictions, before any number.** The numbers column is filled at the
+build, P9 at the owner's hand test. P3, P4 and P5 are measured as
+`MENU.2`'s and `MENU.5`'s were: a scratch runner opted out of Windows' power
+throttling and pinned to the performance cores, alternated against a `git
+archive` of the commit before this one's, `b11bcd7`, built in a target of
+its own; P8 as decision 15 says.
+
+| | What | Predicted | The number |
+|---|---|---|---|
+| P1 | the cartridge | 429 rows where 417 stand, the Portfolio's twelve: its sheet's row, three widths, five formula rows and three headers; 107 formula cells where 93; the diff the manifest's version and notes, the Screen's row made hidden in place and the Portfolio's after it, caveat 12's three cells and the `Where`'s width in place, and the Portfolio's eleven rows at the end; no other row moved | *Measurement*, as predicted: the runner printed `(rows 429) (loads yes)`; 107 formula cells in 47 formula rows; the diff seven lines out and nineteen in, those listed, no other row moved |
+| P2 | the describe golden | moved in the version, the notes, `(device "Input" "A1:E19" input)` and `(budget 30 107 3210 2000000)`; the plan `(shapes 47) (texts 45) (formulas 107) (levels 15) (runs 9) (lanes 39) (alone 68)`, every-frame and cycles 0; `(readers "Day" 16 (most 6))`, the Day sheet indexed at its sixteenth reader, the day's row 3 the most read; `(readers "Stocks" 11)`, the change's two cells side by side one reader; `(readers "Disclosures" 12)`; the rest unmoved, and no row for the Portfolio; five shapes first, the Portfolio's: `A1` alone at level 2, `A5`, `B5` and `C5` each a run of four, at levels 0, 14 and 14, and `A10` alone at level 3; every other shape's number five more, its `same` with it; nothing else | *Measurement*, as predicted in every count: the version, the notes, `(device "Input" "A1:E19" input)` and `(budget 30 107 3210 2000000)`; `(plan (shapes 47) (texts 45) (formulas 107) (levels 15) (runs 9) (lanes 39) (alone 68) (every-frame 0) (cycles 0))`; `(readers "Day" 16 (most 6))`, `(readers "Stocks" 11)` and `(readers "Disclosures" 12)`, no row for the Portfolio; its five shapes first, `A1` and `A10` alone at levels 2 and 3, `A5`, `B5` and `C5` each `(runs 1 4 4 4)` at levels 0, 14 and 14; the 42 shapes after them their own rows but for their numbers, `(same 11)` and `(same 12)` where 6 and 7 stood |
+| P3 | the pass and the load | the pass 0.1 to 0.3 ms longer, twelve rows that call no picker; the load 0.05 to 0.15 ms longer | *Measurement*, a scratch runner over each tree, `b11bcd7`'s and this one's, each in a target of its own under the profile the tests use, three runs each alternated, 200 passes and 200 loads a run, every run pinning itself to the performance cores and opting itself out of Windows' throttling, a fixed computation before and after within 1.1%: the pass 4.52 to 4.63 ms at p50 where it took 4.42 to 4.44, 0.09 to 0.21 more, inside; the load 1.58 to 1.62 ms where it took 1.46 to 1.50, 0.08 to 0.16 more, the medians 0.11 apart, inside at the median |
+| P4 | the step | an ordinary frame unmoved, nothing new reading the frame; a day's first frame 1 to 4 µs more, the date, four prices and four changes, on which the fine print stays and on which it turns; the first frame 5 to 15 µs more, fourteen cells computed once | *Measurement*, the same runs, two years and two days at thirty frames a day: a day's first frame on which the fine print stays 15.0 to 15.8 µs where it took 12.3 to 12.5, 2.5 to 3.5 more, inside; one on which it turns 16.3 to 17.6 where 13.2 to 13.4, the medians 3.1 apart, inside at the median; the first frame 85 to 91 µs where 76 to 79, 6 to 15 more, inside. **Missed** in one: an ordinary frame 2.0 to 2.1 µs where it took 1.9 at every run, the step's own work by shape, two flags a shape cleared at every frame's end (`vla-lang`'s `machine/mod.rs`, `whole` and `recheck`), for five shapes more (*by reading*) |
+| P5 | the suite | 45 tests green here, the crate's 15 and the cartridge's 30, and in CI on Linux; within half a second of the commit before's at the median, the Portfolio viewed at 22,760 frames | *Measurement*, here: 45 green, the crate's 15 and the cartridge's 30. **Missed**: each tree's binary run alternately, five rounds, the order turned each round, each run pinned and opted out, on eight threads, 4.81 to 5.68 s where it took 4.17 to 4.96, the medians 5.18 and 4.41, 0.77 apart; the suite's longest test alone, alternated, 4.70 to 4.79 s where it took 4.15 to 4.21, about 0.55 more. The view parsed and spelled at every frame by the oracle's unoptimized helpers cost that test 0.85 s at its first writing; held whole at a day's first frame and byte for byte still through the day, the same cells held, it costs the 0.55 measured. Linux at the push |
+| P6 | the page | the cartridge's block about 900 characters longer, the source's about 2,600 and the caveats' a few dozen: the page near 1,787,300 where 1,783,841 stands; Build writing the cartridge byte for byte | *Measurement*: 1,787,808 characters, 3,967 more, the cartridge's block 714 longer, the source's 3,243 and the caveats' 10, the three adding to the page's growth exactly; **missed** in the source's block, its comments longer than priced, and so the page 508 past its "near"; Build writing the cartridge byte for byte, 25,701 characters (P9) |
+| P7 | the checks | 4 checks and 4 controls green, no check edited, no file added under `src/` | *Measurement*, as predicted: ALL GREEN, 4 checks and 4 controls, the layout control's fourteen mutants and the offline control's fifteen as they stood |
+| P8 | `MISE.3`'s first number, on the real view | in headless Chrome at full screen, the Portfolio shown: a still frame's tick under the clock's step at p50, 0 or 0.1 ms, and at most 0.3 at p95; a market day's 0.3 to 0.9 ms; the main thread's whole a frame 0.35 to 0.6 ms over a run; the drawer, 580 of 600 frames still and 19 patched; against `MISE.3`'s densest lean panel, 1.5 to 1.7 ms at p50 and 2.4 to 2.7 at p95; the owner's Chrome a tenth faster or so | *Measurement*, three runs of 600 frames in headless Chrome 155 at 2,560 by 1,440 CSS pixels at 1.5, its eleven processes opted out and pinned, the clock within 1.7%: a still frame's tick 0.2 ms at p50 and 0.3 at p95, at its longest 0.6 to 0.8; a market day's patch 0.5 at p50, at its longest 0.6 to 1.0; 580 or 581 of the 600 frames still and 20 patched; the main thread's whole 0.74 to 0.78 ms a frame. **Missed** in two: the still tick one step of the clock above, and the main thread past 0.6, a frame at thirty a second holding two of the display's sixty ticks of the browser's own work (*derived*). Against `MISE.3`'s densest lean panel a frame is now about a seventh. The owner's own Chrome, the probe copy at full screen for 23,265 frames: still 0.2 ms at p50 and 0.3 at p95, at its longest 0.7; patched 0.4 and 0.6, at its longest 1.3; 22,488 still and 775 patched, as headless within a tenth |
+| P9 | the hand test | the game opening on the Portfolio; the strip, and the box "hidden sheets (15)"; every name, price and change whole in its column; `B19` "Portfolio"; Build "same bytes" | *Measurement*, the owner's three screenshots, in the owner's Chrome, the page windowed with the drawer open and then the probe copy at full screen: the Portfolio shown, the strip Portfolio, Day, Dice, Market, Stocks, Caveats, Clock, File and Input, its box "hidden sheets (15)"; the date, the four names, prices and changes in dollars and the fine print at row 10, each whole in its column; the drawer's "2,102 of 2,176 frames still and 72 patched"; the Caveats sheet's rewritten caveat whole; and the rows' height, the owner's word: "15px row height looks like Excel's standard, so it's fine for now." Not in the screenshots, checked over the probe copy in headless Chrome at the owner's full screen: Build in the drawer, the same bytes as `src/buffet.vla`, 25,701 characters; `B19` "Portfolio", "Stocks" once the Stocks tab is clicked, "Portfolio" again; and a real pointer over the Portfolio's `B5` writing `B11` 2 and `B12` 5, and 0 and 0 over its column's header. The handover had said the page reports "same bytes", which it does not: `MENU.5`'s came from a command that compared the box with the file |
+
+*Scoped 2026-10-15. Approved whole by the owner on 2026-10-16,
+"Recommendations approved; proceed with implementing FRONT.1 as scoped.",
+and built the same day.*
+
+**What the build found.** A view asks nothing of the library: one `on`
+block of the kit's `formulas` and `headers` and three `column` rows, so the
+ratchet waits for the second view, as decision 1 had it. The census numbers
+shapes walking the sheets in tab order, so a view standing before the model
+renumbers every shape after it: the describe golden's diff is five rows new
+and forty-two renumbered, read by stripping the numbers, each moved shape
+its own row but for them. The view held at every frame through the
+oracle's unoptimized helpers, its record parsed and nine values spelled
+again on frames that cannot change, cost the suite's longest test 0.85 s;
+held whole on a day's first frame and byte for byte the same record through
+the day, the same cells held as `BD-7` keeps them, it costs about 0.55 s
+(P5). The names' test at its first writing asked only that each name be a
+formula, which a name the view computes for itself, `="rung "&(ROW()-4)`,
+would pass; found by reading before the mutants ran, it now asks for a
+formula reading the Stocks sheet. Eight mutants, each written into the
+source by one anchor and expanded into the cartridge before the suite ran,
+each failed the test written for it: a price in cents and a change of
+dollar amounts, the two years' frames; the date reading the frame, `BD-7`'s
+scan; a model's sheet reading the Portfolio, nothing reads a view; the
+Screen visible, the Portfolio after the Day sheet and a Camera naming the
+Day sheet, the opening; and the name the view computes, the names' test.
+And in Alonzo's player, found in the owner's first screenshot: the frame's
+line names "the window A1:CB50", the Screen's, while the Portfolio shows,
+a version 4 cartridge's Screen being hidden; a finding for Alonzo, the
+owner's to pass on.
 
 ## `MENU.1` — the strings sheets and the picker
 

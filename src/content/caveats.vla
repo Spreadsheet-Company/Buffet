@@ -16,7 +16,7 @@
     ("Things this game gets wrong" 104   ; its fields, each its header and its width in characters: the simplification, plainly
      "In the real world" 115        ;   what the world does, plainly, which a finance educator reads before a release
      "Management's response" 103    ;   the joke: the model's owner answering the finding
-     "Where" 13)                    ;   the cell or range it qualifies, as a formula writes one, or empty for the whole game
+     "Where" 15)                    ;   the cell or range it qualifies, as a formula writes one, or empty for the whole game
     ; each row: its fields in the order above, the first beside its opening parenthesis and the rest a line each
     ("You. It knows nothing of your goals, your means or your timeline."
      "Advice starts from those three, from someone licensed to give it. This game is not financial advice."
@@ -62,8 +62,8 @@
      "A real stock near $1 can swing several percent a day, and under $1 it may be quoted to a hundredth of a cent."
      "Analysts rate it a Hold, which it does."
      "Stocks!E5")
-    ("Numbers have no formats: a price reads in cents, 9921 for $99.21, and a yield of 2% reads 0.02."
-     "A workbook formats its numbers for people: $99.21, 2.00%, 1,000,000."
+    ("Numbers have no formats: $12.30 reads 1230 in the model's cents, 12.3 on the Portfolio; 2% reads 0.02."
+     "A workbook formats its numbers for people: $12.30, 2.00%, 1,000,000."
      "The decimal point has been furloughed pending a review of number formats."
-     "Stocks!D5:F8")
+     "Portfolio!B5:C8")
     ))                              ; the sheet's end: a caveat added goes above this line
