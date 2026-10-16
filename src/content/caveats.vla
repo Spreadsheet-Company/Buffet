@@ -1,0 +1,69 @@
+; SPDX-License-Identifier: CC-BY-SA-4.0
+; caveats.vla - the model's caveats: the Caveats sheet, a thing this game gets wrong a
+; row, each beside what the real world does, Management's response and the cell it
+; qualifies (docs/OMAKASE.md, MENU.5 and BD-5). Words alone: one macro named after this
+; file, whose body is one call of the library's strings. The source includes this file
+; after its manifest, with every other include, and calls (caveats) where the sheet's
+; rows belong, the one content sheet it shows among the tabs, since a player reads it
+; whole. Its first row is the game's plain statement that it is not advice, which the
+; certificate quotes (GUARD.1), so a row added goes at the end. To add a row, read
+; README.md beside this file: a row of a field a line, its real world accurate, in the
+; voice of a model's owner answering a finding, approved by a reviewer.
+
+(defmacro (caveats)
+  "the model's caveats: the Caveats sheet, a thing this game gets wrong a row"
+  (strings "Caveats"                ; the sheet, which the source shows among the tabs
+    ("Things this game gets wrong" 104   ; its fields, each its header and its width in characters: the simplification, plainly
+     "In the real world" 115        ;   what the world does, plainly, which a finance educator reads before a release
+     "Management's response" 103    ;   the joke: the model's owner answering the finding
+     "Where" 13)                    ;   the cell or range it qualifies, as a formula writes one, or empty for the whole game
+    ; each row: its fields in the order above, the first beside its opening parenthesis and the rest a line each
+    ("You. It knows nothing of your goals, your means or your timeline."
+     "Advice starts from those three, from someone licensed to give it. This game is not financial advice."
+     "Any resemblance to financial advice, living or dead, is purely coincidental."
+     "")
+    ("Every day is a market day: 365 a year, weekends and holidays included."
+     "US exchanges close on weekends and about ten holidays a year, leaving about 252 trading days."
+     "Weekends are available from the rank of Partner."
+     "Day!B2")
+    ("Tomorrow's price is a formula of the seed and the day, and anyone can read it."
+     "No one knows tomorrow's price, and anyone who says otherwise is selling something."
+     "Reading ahead is not insider trading, since everyone can. Compliance finds this unsettling."
+     "Market!B25")
+    ("The market is four waves and a drift, and each wave keeps its period to the day."
+     "Real business cycles vary in length and depth, and economists still argue whether the longest ones exist at all."
+     "The Kondratiev wave is fitted to a handful of 50-year cycles. Statistics has requested a larger sample."
+     "Market!A8:E11")
+    ("Day to day, the market barely moves: no news, no noise, no crash."
+     "A broad index can move 1% on an ordinary day, and on October 19, 1987, US stocks fell more than 20%."
+     "Trading in news has been halted, pending an announcement."
+     "Market!B25")
+    ("Beneath the waves, the market grows 7.6% a year, every year, forever."
+     "US stocks have returned about 10% a year over a century, dividends included, but unevenly: 2000 to 2009 lost money."
+     "Here, past performance is indicative of future results. Management asks that this not get around."
+     "Market!B2")
+    ("All four stocks follow the one index: none can go bust, and owning all four spreads no risk."
+     "Each company has news of its own; owning many cancels much of it, and some companies do go to zero."
+     "Management is pleased to report a 0% default rate, and is investigating why."
+     "Stocks!E5:E8")
+    ("The riskier the stock, the faster it grows: a beta of 2 trends 15.7% a year, a beta of 0.75 trends 5.6%."
+     "Riskier stocks have not reliably earned more: over long stretches, low-volatility stocks did as well or better."
+     "Management has decided that risk will be rewarded, and has asked the data to comply."
+     "Stocks!C5:C8")
+    ("The dividend is free: a share's price does not fall on the day it pays."
+     "A share's price usually falls by about the dividend on the day it goes ex, since that cash has left the company."
+     "Accounting has been asked not to look into it."
+     "Stocks!H8")
+    ("Money comes in whole cents: every price is rounded once, to the nearest cent."
+     "Ledgers keep fractions of a cent: interest accrues in them daily, and the rounding comes last."
+     "Fractions of a cent are swept into an account named 'Rounding (do not open)'."
+     "Stocks!E5:F8")
+    ("A $1 share moves a penny at a time, and on most days not at all."
+     "A real stock near $1 can swing several percent a day, and under $1 it may be quoted to a hundredth of a cent."
+     "Analysts rate it a Hold, which it does."
+     "Stocks!E5")
+    ("Numbers have no formats: a price reads in cents, 9921 for $99.21, and a yield of 2% reads 0.02."
+     "A workbook formats its numbers for people: $99.21, 2.00%, 1,000,000."
+     "The decimal point has been furloughed pending a review of number formats."
+     "Stocks!D5:F8")
+    ))                              ; the sheet's end: a caveat added goes above this line

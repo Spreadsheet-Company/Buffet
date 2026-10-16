@@ -28,7 +28,11 @@
 //! Since `MENU.2`: each content sheet held to its file, read by the
 //! language's own reader and not by the library's walk; the exam's bank, its
 //! first question shown, every question whole, every field picked at every
-//! row, and a question added expanding with no other edit.
+//! row, and a question added expanding with no other edit. Since `MENU.5`:
+//! each content sheet in the state its source writes, the Caveats sheet the
+//! one shown; every caveat whole, the first the plain statement that the game
+//! is not advice; every caveat's cells holding a value; its first row shown;
+//! and its every field picked at every row.
 
 use std::collections::{BTreeMap, BTreeSet};
 
@@ -49,14 +53,30 @@ const DESCRIBE: &str = "oracle/testdata/describe/buffet.vla";
 const DISCLOSURES: &str = "src/content/disclosures.vla";
 /// The exam's bank's content file, and the sheet its call writes (`MENU.2`).
 const QUESTIONS: &str = "src/content/questions.vla";
-/// The content sheets, each written by a file of `src/content/` and hidden
-/// among the tabs: the sheet, and its file.
-const CONTENT: [(&str, &str); 2] = [("Disclosures", DISCLOSURES), ("Questions", QUESTIONS)];
+/// The caveats' content file, and the sheet its call writes (`MENU.5`).
+const CAVEATS: &str = "src/content/caveats.vla";
+/// The content sheets, each written by a file of `src/content/`: the sheet,
+/// its file, and the state the source writes before its call, hidden as a
+/// workbook keeps its reference data at the back, or visible for the one a
+/// player reads whole (`MENU.5`'s decision 2).
+const CONTENT: [(&str, &str, &str); 3] = [
+    ("Disclosures", DISCLOSURES, "hidden"),
+    ("Questions", QUESTIONS, "hidden"),
+    ("Caveats", CAVEATS, "visible"),
+];
 /// The exam's bank's fields, in their columns from A (`MENU.2`'s decision 1,
 /// the headers title-cased by the owner after the hand test): the order
 /// `GUARD.1`'s view reads them in.
 const QUESTION_FIELDS: [&str; 8] = [
     "Concept", "Question", "Option A", "Option B", "Option C", "Option D", "Answer", "Why",
+];
+/// The caveats' fields, in their columns from A (`MENU.5`'s decision 3): the
+/// simplification, what the world does, the joke, and the cells it qualifies.
+const CAVEAT_FIELDS: [&str; 4] = [
+    "Things this game gets wrong",
+    "In the real world",
+    "Management's response",
+    "Where",
 ];
 
 fn cartridge() -> Cartridge {
@@ -919,7 +939,7 @@ fn one_picker_holds_1547_rows_and_no_more() {
         }
     }
     let cart = cartridge();
-    for (sheet, path) in CONTENT {
+    for (sheet, path, _) in CONTENT {
         let at = address(1, content(path).fields.len() + 3);
         let count: usize = values(&cart, sheet, &format!("{at}:{at}"))[&at]
             .parse()
@@ -933,11 +953,14 @@ fn one_picker_holds_1547_rows_and_no_more() {
 
 /// Every sheet is written bare, as a formula writes a name without quotes and
 /// the kit's verbs need, and no two are the same without case; the views and
-/// the model's sheets stand first, visible, then the content sheets, hidden,
-/// then the devices; and the twins after every sheet (`MENU.1`'s decisions 2
-/// and 3).
+/// the model's sheets stand first, visible, then the content sheets, each in
+/// the state its source writes, the reference data hidden and the caveats
+/// shown, then the devices; and the twins after every sheet (`MENU.1`'s
+/// decisions 2 and 3, `MENU.5`'s decision 2). A state the source forgot would
+/// leave its sheet visible, which the engine makes a sheet first named by a
+/// cell.
 #[test]
-fn every_sheet_is_written_bare_and_the_strings_hidden() {
+fn every_sheet_is_written_bare_and_each_content_sheet_in_its_state() {
     let cart = cartridge();
     let Ok(Viewed::Text(record)) = cart.view("values", "Day", Some("A1:A1")) else {
         panic!("the Day sheet's record");
@@ -975,6 +998,7 @@ fn every_sheet_is_written_bare_and_the_strings_hidden() {
         ("Stocks", "visible"),
         ("Disclosures", "hidden"),
         ("Questions", "hidden"),
+        ("Caveats", "visible"),
         ("Clock", "visible"),
         ("File", "visible"),
         ("Input", "visible"),
@@ -986,8 +1010,8 @@ fn every_sheet_is_written_bare_and_the_strings_hidden() {
             "the twins after every sheet: {name} {state}"
         );
     }
-    for (sheet, _) in CONTENT {
-        assert!(own.contains(&(sheet, "hidden")), "{sheet} hidden");
+    for (sheet, _, state) in CONTENT {
+        assert!(own.contains(&(sheet, state)), "{sheet} {state}");
     }
 }
 
@@ -997,13 +1021,13 @@ fn every_sheet_is_written_bare_and_the_strings_hidden() {
 /// table ending at its last row; the headers its fields'; each field's width;
 /// and beside the table, past one empty column, the labels, `rows`, `the row
 /// shown`, `shown` and each later field's header down the column, with the
-/// rows counted beside `rows`. The fine print and the exam's bank alike, one
-/// field and eight.
+/// rows counted beside `rows`. The fine print, the exam's bank and the caveats
+/// alike, one field, eight and four.
 #[test]
 fn each_content_sheet_is_its_file() {
     let cart = cartridge();
     let text = lf(&read(CARTRIDGE));
-    for (sheet, path) in CONTENT {
+    for (sheet, path, _) in CONTENT {
         let file = content(path);
         assert_eq!(file.sheet, sheet, "{path} writes the {sheet} sheet");
         let n = file.fields.len();
@@ -1137,27 +1161,35 @@ fn every_question_is_whole() {
     }
 }
 
-/// A picker a field picks every question in its turn (`MENU.2`): the row
-/// shown written from 1 to the bank's last as a person's edit, and at each
-/// step the eight pickers that row's fields, read off the sheet's own columns.
+/// A picker a field picks every row in its turn (`MENU.2`, `MENU.5`): on each
+/// sheet whose row shown is a value the source writes, the exam's bank and the
+/// caveats, the row shown written from 1 to the sheet's last row as a person's
+/// edit, and at each step every picker that row's field, read off the sheet's
+/// own columns. An empty text, as the first caveat's `Where` is, reads empty on
+/// both sides.
 #[test]
 fn every_field_is_picked_at_every_row() {
-    let mut cart = cartridge();
-    let n = content(QUESTIONS).rows.len();
-    let table = values(&cart, "Questions", &format!("A2:H{}", n + 1));
-    for k in 1..=n {
-        let edit = format!("(cell \"Questions\" \"K2\" {k})");
-        cart.write(&edit)
-            .unwrap_or_else(|r| panic!("{edit}: {} {}", r.refusal.id, r.refusal.text));
-        cart.step(0);
-        let got = values(&cart, "Questions", "K3:K10");
-        for field in 1..=8 {
-            assert_eq!(
-                got.get(&format!("K{}", field + 2)),
-                table.get(&address(k + 1, field)),
-                "the row shown {k}: Questions!K{}",
-                field + 2
-            );
+    for (sheet, path) in [("Questions", QUESTIONS), ("Caveats", CAVEATS)] {
+        let mut cart = cartridge();
+        let file = content(path);
+        let (n, rows) = (file.fields.len(), file.rows.len());
+        let at = n + 3;
+        let table = values(&cart, sheet, &format!("A2:{}", address(rows + 1, n)));
+        for k in 1..=rows {
+            let edit = format!("(cell \"{sheet}\" \"{}\" {k})", address(2, at));
+            cart.write(&edit)
+                .unwrap_or_else(|r| panic!("{edit}: {} {}", r.refusal.id, r.refusal.text));
+            cart.step(0);
+            let window = format!("{}:{}", address(3, at), address(n + 2, at));
+            let got = values(&cart, sheet, &window);
+            for field in 1..=n {
+                let shown = address(field + 2, at);
+                assert_eq!(
+                    got.get(&shown).map_or("", String::as_str),
+                    table.get(&address(k + 1, field)).map_or("", String::as_str),
+                    "the row shown {k}: {sheet}!{shown}"
+                );
+            }
         }
     }
 }
@@ -1239,6 +1271,124 @@ fn a_question_added_expands_with_no_other_edit() {
     let got = values(&cart, "Questions", "K3:K10");
     let shown: Vec<&str> = (3..=10).map(|r| got[&format!("K{r}")].as_str()).collect();
     assert_eq!(shown, added, "the question added, shown at its row");
+}
+
+/// The caveats show their first row (`MENU.5`'s decisions 4 and 5): the row
+/// shown, `G2`, a value the source writes, 1; and from the first frame the four
+/// pickers, `G3` to `G6`, the first row's fields, the plain statement that the
+/// game is not advice and its joke among them, which the certificate reads
+/// through a reference (`GUARD.1`).
+#[test]
+fn the_caveats_sheet_shows_its_first_row() {
+    let mut cart = cartridge();
+    cart.step(0);
+    let got = values(&cart, "Caveats", "A1:G6");
+    assert_eq!(
+        got.get("G2").map(String::as_str),
+        Some("1"),
+        "Caveats!G2, the row shown"
+    );
+    let first: Vec<&str> = (1..=4)
+        .map(|k| got.get(&address(2, k)).map_or("", String::as_str))
+        .collect();
+    let shown: Vec<&str> = (3..=6)
+        .map(|r| got.get(&format!("G{r}")).map_or("", String::as_str))
+        .collect();
+    assert_eq!(shown, first, "Caveats!G3:G6, the first row");
+}
+
+/// Every caveat is whole (`MENU.5`'s decisions 3 and 4): the sheet's four
+/// fields in their order; each caveat four texts, the first three never
+/// empty; every text one line of at most 140 characters, as a why is, and no
+/// wider than its field's column, so that it reads whole on a sheet a player
+/// reads; and the first caveat the plain statement that the game is not
+/// advice, which the certificate reads, so that a caveat added goes after it:
+/// a sentence of it that denies advice, a `not`, `no` or `never` before the
+/// word, since the word alone stands in the caveat's explanation too.
+#[test]
+fn every_caveat_is_whole() {
+    let caveats = content(CAVEATS);
+    let headers: Vec<&str> = caveats.fields.iter().map(|(h, _)| h.as_str()).collect();
+    assert_eq!(
+        headers, CAVEAT_FIELDS,
+        "the caveats' fields, in their order"
+    );
+    for (c, row) in (1..).zip(&caveats.rows) {
+        assert_eq!(row.words.len(), 4, "caveat {c}: four fields");
+        for (k, ((field, width), word)) in caveats.fields.iter().zip(&row.words).enumerate() {
+            let n = word.chars().count();
+            assert!(
+                !word.contains('\n') && n <= 140,
+                "caveat {c}: its {field} is no line of at most 140 characters, but {n}"
+            );
+            assert!(
+                n as u64 <= *width,
+                "caveat {c}: its {field} runs {n} characters, past its column's {width}: widen the field at the top of its file"
+            );
+            assert!(
+                k == 3 || !word.trim().is_empty(),
+                "caveat {c}: its {field} is empty"
+            );
+        }
+    }
+    let first = caveats.rows.first().expect("a caveat").words.join(" ");
+    let denies = first.to_lowercase().split('.').any(|sentence| {
+        let words: Vec<&str> = sentence
+            .split(|ch: char| !ch.is_alphanumeric())
+            .filter(|w| !w.is_empty())
+            .collect();
+        words
+            .iter()
+            .position(|w| ["not", "no", "never"].contains(w))
+            .is_some_and(|at| words[at..].iter().any(|w| w.starts_with("advice")))
+    });
+    assert!(
+        denies,
+        "the first caveat is the plain statement that the game is not advice, which the certificate reads: {first}"
+    );
+}
+
+/// Every caveat's `Where` holds a value (`MENU.5`'s decision 3): each that is
+/// not empty is a sheet of the cartridge, `!`, and a cell or a range, as a
+/// formula writes a reference, which after the first frame holds a value; so
+/// a caveat cannot outlive the cells it qualifies when a model's sheet moves.
+#[test]
+fn every_caveat_points_at_cells_that_hold_a_value() {
+    let mut cart = cartridge();
+    cart.step(0);
+    let cell = |text: &str| {
+        let digits = text.trim_start_matches(|ch: char| ch.is_ascii_uppercase());
+        digits.len() < text.len()
+            && !digits.is_empty()
+            && digits.chars().all(|ch| ch.is_ascii_digit())
+    };
+    for (c, row) in (1..).zip(&content(CAVEATS).rows) {
+        let place = row.words[3].as_str();
+        if place.is_empty() {
+            continue;
+        }
+        let Some((sheet, range)) = place.split_once('!') else {
+            panic!("caveat {c}: its Where, {place:?}, is no reference, a sheet then a cell");
+        };
+        let ends: Vec<&str> = range.split(':').collect();
+        assert!(
+            ends.len() <= 2 && ends.iter().all(|e| cell(e)),
+            "caveat {c}: its Where, {place:?}, names no cell or range"
+        );
+        let Ok(Viewed::Text(record)) = cart.view("values", sheet, Some(range)) else {
+            panic!("caveat {c}: its Where, {place:?}, is no range of a sheet of the cartridge");
+        };
+        let held = [
+            format!("(value \"{sheet}\" "),
+            format!("(cell \"{sheet}\" "),
+        ];
+        assert!(
+            record
+                .lines()
+                .any(|l| held.iter().any(|h| l.starts_with(h.as_str()))),
+            "caveat {c}: {place} holds no value"
+        );
+    }
 }
 
 /// The library's verb, `draws`, ten thousand of them beneath a die of 1: the

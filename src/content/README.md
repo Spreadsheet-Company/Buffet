@@ -10,8 +10,9 @@ cheapest pull request there is.*
 ## The five minutes
 
 1. Open the sheet's file in this folder and press the pencil to edit it on
-   GitHub: `disclosures.vla` holds the fine print, a disclosure a row, and
-   `questions.vla` the exam's bank, a question a row.
+   GitHub: `disclosures.vla` holds the fine print, a disclosure a row;
+   `questions.vla` the exam's bank, a question a row; and `caveats.vla` the
+   things this game gets wrong, a caveat a row.
 2. Add your row above the file's last line, the one that opens with `))`.
    A row is the sheet's fields, in the order the file names them above its
    rows. A disclosure is one line:
@@ -20,7 +21,7 @@ cheapest pull request there is.*
    ("Your text here.")
    ```
 
-   and a question a field a line:
+   and a question or a caveat a field a line:
 
    ```text
    ("The concept it tests"
@@ -31,6 +32,11 @@ cheapest pull request there is.*
     "the fourth option"
     "B"
     "Why the right option is right, in one line.")
+
+   ("What this game simplifies, plainly."
+    "What the real world does, plainly and accurately."
+    "Management's response."
+    "Market!B2")
    ```
 
    Write each text between the double quotes, with single quotes inside it
@@ -39,7 +45,14 @@ cheapest pull request there is.*
    option's letter, a capital from A to D. Its why is one line of at most
    140 characters that names no option, since a concept card quotes it on
    its own; and its concept is the idea it tests, which the exam never shows
-   before the question is answered.
+   before the question is answered. A caveat says what the game gets wrong,
+   then what the real world does, which a finance educator checks before a
+   release, then Management's response, the joke, as a model's owner answers
+   a finding, then where: the cell or range it qualifies, as a formula
+   writes one, or empty for the game as a whole. Each of its texts is one
+   line within its column's width, which the file sets at its top; and it
+   goes after the first caveat, the plain statement that the game is not
+   advice.
 4. Keep the voice, below.
 5. Commit with a sign-off, a last line in the commit's description that
    reads `Signed-off-by: Your Name <you@example.com>`, which certifies the
@@ -69,9 +82,9 @@ One check stays red at first, and that is expected. The game's cartridge,
 sheet it includes, committed so that anyone loads the game without building
 it, so a row added changes it. The repository's reviewer expands it again on
 your branch, reads your row against the policy, keeps the bank's answers
-spread over the four letters, and approves and merges the pull request:
-that approval is the row's review, and the row names no reviewer. Your row
-ships with the next release, shown in its turn.
+spread over the four letters and a caveat's real world true, and approves
+and merges the pull request: that approval is the row's review, and the row
+names no reviewer. Your row ships with the next release, shown in its turn.
 
 With Rust installed, you can expand the cartridge yourself and run the
 game's oracle, which holds every frame of the game and every row whole:

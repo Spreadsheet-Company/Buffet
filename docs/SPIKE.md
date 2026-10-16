@@ -61,6 +61,10 @@ empty.*
 
   *Closed 2026-10-15.* Predicted `~days`; cost one session, the scoping, the build and the owner's hand test. What landed: `src/content/questions.vla`; `strings` of several fields in `src/kitchen.vla`, the Disclosures file's one line of fields respelled; the source's include, call and row shown, and the game's notes; five tests of the cartridge more and three extended, 38 in all; the describe golden blessed again; the layout check's pin and control; the *How to add a row* for a sheet of several fields; and, in `OMAKASE.md`, the contract's sentence, `GUARD.1`'s and `BACK.2`'s notes and the hoist ledger's row. Two of the nine predictions missed: the pass took 1.7 ms more where under one was predicted, a cost paid at a build and never at a frame, and the first frame some 40 µs more where under 10 was predicted; every frame after it held. After the hand test passed, the owner rewrote eighteen of the twenty questions and title-cased the bank's headers; the cartridge moved in seventy rows of text and nowhere else. After the close, the same day and at the owner's word, the approver and then the vintage were struck from every row of both sheets, a row's review its pull request's and no course a freeze of the rows before it (`BD-1`, amended); the cartridge lost 62 rows, 347 where 409 stood (THE ITEMS, SCOPED).
 
+- ✅ **`MENU.5` — the accuracy sheet: *Things this game gets wrong*, and *not advice*.** *Scoped, built and hand-tested 2026-10-15: the scoping, its fifteen decisions approved whole by the owner with the name the owner preferred, the amendment the approval and the moving base made, every prediction beside its number, what the build found and the owner's hand test are under THE ITEMS, SCOPED.* The Caveats sheet, `src/content/caveats.vla`, the one content sheet shown among the tabs, after the model's sheets, since a player reads it whole and no view can show a sheet's rows whole: a caveat a row, its fields what the game gets wrong, what the real world does, Management's response, the joke in the voice of a model's owner answering a finding, and where, the cells it qualifies as a formula writes them, held to a range that holds a value. Its first row is the plain statement that the game is not advice, beside its joke, *Any resemblance to financial advice, living or dead, is purely coincidental*, which the certificate reads, `Caveats!G4:G5`, at the row shown the source writes, 1. Course 0's twelve rows, three of them correcting lessons tier 1 would teach by accident, that the future can be read, that holding the four stocks spreads risk and that risk always pays; four claims of the world marked for a finance educator's read before the release (`BD-5`). The library's `strings` writes no sheet's state, the engine taking one a sheet: the source writes each content sheet's beside its call, hidden but for this one. The README and `SECURITY.md` say it plainly, in American English, and `BD-5` names the sheet and the nine caveats later dishes owe. *Oracle, met:* each content sheet held to its file and in the state its source writes; every caveat whole, the first the plain statement; every caveat's cells holding a value; the first row shown; every field picked at every row; the layout check's content pin raised from 2 to 3, its control fourteen mutants over eight files; the describe golden blessed again; seven mutants, each caught by the test written for it; and the owner's hand test in the page. *Pays into:* every later simplification has a row to go to; the certificate's plain statement (`GUARD.1`). `~hours`
+
+  *Closed 2026-10-15.* Predicted `~hours`; cost one session, the scoping, the build and the owner's hand test, the content rows' strike committed beneath the build (`adc1bc7`), which was built on a snapshot of it in a scratch worktree and moved onto the commit unchanged. What landed: `src/content/caveats.vla`; `strings` without a sheet's state, in `src/kitchen.vla`; the source's include, the three states, the call, the row shown, the labels' width and the game's notes; three tests of the cartridge more and two extended, 41 in all; the describe golden blessed again; the layout check's pin and control; the *How to add a row* for the third sheet; the README's and `SECURITY.md`'s statements, their British spellings respelled; and, in `OMAKASE.md`, `BD-5`'s line, `GUARD.1`'s note and the hoist ledger's row, and `BUFFET.md` §10's line. Two of the nine predictions missed in part: the describe golden's `most`, 8 where 4 was predicted, the census indexing a sheet's readers by row; and the source's block in the page, 2,062 characters where 1,400. A mutant found the test of the plain statement too weak at its first writing, the word *advice* standing in the caveat's explanation too, and it was strengthened before the hand test.
+
 ## 🔪 MISE EN PLACE
 
 - ✅ **`MISE.3` — the first measurements: three probes, each a day in scratch, each deciding a spelling.** *Scoped, measured and hand-run 2026-10-14: the scoping, every number beside its prediction, the owner's hand run and what it found are under THE ITEMS, SCOPED.* Run over Alonzo's own page and runner with a Buffet-shaped scratch cartridge, before a row of the game is written, and each number written in `SPIKE.md` beside its prediction so that course 0's scoping cites them. (1) **The window's cost.** An 80 by 50 panel of texts and numbers drawn in Chrome at `(rate 30)`. The host draws from the full record until `ENGINE.8`'s second slice lands, and the record carries every formula's text: by `vla-lang` 0.9.3's release notes, an 80 by 50 window of one short formula costs 10.3 ms natively from the record and 1.7 to 1.9 ms from the `values` view (1.3 to 1.4 in the browser). A panel of many short formulas is Buffet's shape and nobody has measured it. The number decides whether course 0 ships over the record or asks Alonzo for the slice with the number in hand (`MISE.6`), and it is re-measured on the real window at first light (`HOUSE.4`). (2) **A number format with a glyph.** Whether the viewport honors a number format with a literal glyph in it (the record's `format` row carries a number format and `KERNEL.5`'s painter spells numbers by it; a `▲` in a format is (check)), which decides `FRONT.2`'s spelling of gains: a format, or a glyph cell beside the number. (3) **The picker's limit.** `CHOOSE` over references against the 8,192-character formula, about a thousand references, and the text join `&`, which the dialect has (the language's `Concat`, checked 2026-10-14), so that a ledger row's address may be joined from a count and not chosen; the number decides `MENU.1`'s picker and `PLATE.1`'s ledger ring. The fourth question the draft asked, the boundary frame against the ordinary frame, needs a model to measure and is answered by the first model: it is `POT.1`'s oracle. *Needs:* nothing. *Oracle:* the three numbers written beside their predictions. *Pays into:* `MISE.1`'s decisions, `FRONT.2`, `MENU.1`, `PLATE.1`, the ask of `ENGINE.8`. *Measured 2026-10-14, every number beside its prediction in `SPIKE.md`:* course 0's densest panel draws a frame in 1.5 to 1.7 ms in Chrome at full screen, so course 0 ships over the record; the spellings the numbers settle, approved by the owner the same day, stand as dated lines on `FRONT.1`, `FRONT.2`, `MENU.1`, `PLATE.1`, `MISE.1` and `MISE.6`; the owner's hand run in the owner's own Chrome made the browser number real, 1.4 ms a frame at p50. `~days`
@@ -2303,3 +2307,453 @@ row shown and picker in `D1:D3`, the source's days a disclosure stands in
 rows more, 347: the 28 vintages and their two headers. The describe golden
 moved in its ten shapes' addresses alone; the 38 tests green, the checks and
 their controls green; the page, built again, holds 1,620,721 characters.
+
+## `MENU.5` — the accuracy sheet: *Things this game gets wrong*, and *not advice*
+
+*Scoped 2026-10-15 at the owner's word, "Scope and implement MENU.5 in
+Buffet (Delta/Buffet): the accuracy sheet, "Things this game gets wrong",
+and "not advice". It is the game's third content sheet.", to stop for the
+owner's approval before building: from `OMAKASE.md`'s line (`COURSE.0`'s
+item 18), `BD-5`, `BUFFET.md` §10's accuracy policy and §5's fifth
+principle, a toy labeled as one, and `MENU.1`'s and `MENU.2`'s scopings,
+build records and amendments, which set the shape a content sheet takes.
+It comes now because Alonzo's `ENGINE.18` is committed and unreleased,
+`ENGINE.19` closed and `ENGINE.20` next, so `FRONT.1` and every dish with a
+button still wait, and this item needs nothing of Alonzo's; and because it
+is the first content sheet written since `strings` learned several fields,
+the ratchet's check that the shape holds for a sheet that is not a
+question bank. It is written over the shape `MENU.2`'s amendment after its
+close left in the working tree, uncommitted, the approver struck from
+every row at the owner's word, and its build starts from that amendment's
+commit. Each decision carries its recommendation, for the owner to
+approve, amend or strike; the rows are drafts, for the owner to approve or
+rewrite, as the owner rewrote seven of `MENU.1`'s eight and eighteen of
+`MENU.2`'s twenty. The predictions were written before any number was
+taken. Approved whole by the owner the same day, "Decisions approved;
+proceed.", with the name the owner preferred, "I'd prefer the title
+Caveats, but Limitations is fine if Caveats is too vague": `Caveats`, the
+first field's header leaving it no vaguer than a sheet's name may be; and
+built that day, the amendment before the predictions recording what the
+approval and the moving base changed. Alonzo's tree, where `ENGINE.20` is
+scoped, was read and never touched.*
+
+**What it stands on, read on the day** (`vla-lang` 0.9.3 and `alonzo`
+0.1.3 as the registry holds them; `web/` as vendored at `v0.1.3`; Buffet at
+`8775818` with the approver's amendment in the working tree).
+- The content shape: a file is one macro named after it, whose body is one
+  call, `(strings "Sheet" ("Header" width ...) rows...)`, each row its
+  vintage, then its fields in the list's order; the source includes the
+  file after its manifest and calls the macro where the sheet belongs. The
+  table runs from column A, the vintage after the fields at the default
+  width; past one empty column stand labels in the column the fields'
+  count plus three and values in the next: the count, the row shown, then
+  a picker a field, the first labeled `shown` and each later one by its
+  header. `check_layout.ps1`'s content pin is at 2, its control fifteen
+  mutants over a clean copy of seven files.
+- `strings` writes its sheet's state first, `(sheet "<name>" hidden)`
+  (`kitchen.vla`, `strings-sheet`). The engine refuses a second `sheet`
+  row that gives a sheet another state, as a row given twice (`vla-lang`'s
+  `machine/load.rs`), and a sheet first named by any other row stands
+  visible (`Sheet::new`). So no source can show a sheet that `strings`
+  hid: a visible content sheet needs its state written some other way.
+  The kit's header says how a hidden sheet is written: "as its own row,
+  (sheet "X" hidden)" (`common.vla`).
+- The names taken. The devices: Screen, Palette, Input, Keys, Clock,
+  Audio, File, Camera and Write (`alonzo` 0.1.3, `DEVICES`). The views
+  `FRONT.1` lists: Portfolio, Market, Overview, Exam and Work. The model's
+  sheets: Day, Dice, Market and Stocks. The content sheets built or
+  recommended to their dishes (`MENU.1`'s decision 2): Disclosures,
+  Questions, Headlines, Memos, Firms, Awards, Errors and Exits, `Errors`,
+  the nearest word to this sheet's, being `PLATE.6`'s. A name is bare by
+  `refers.rs`'s rule: letters, digits, `_` and `.`, no leading digit,
+  neither a cell nor R1C1's shape.
+- The dialect has no `INDEX`, `OFFSET` or `MATCH`, so a view reads a
+  content sheet through a picker one row at a time (`MISE.3`'s spelling),
+  and no view can show a sheet's rows whole: only the sheet can, where its
+  rows stand.
+- The page's strip shows a visible sheet in tab order and lists a hidden
+  one in the box beneath it, "hidden sheets (12)" today. A text spills
+  only into empty cells on its right (`viewport.js`, `_paintCell`), so a
+  label longer than its column is clipped by the value beside it, as the
+  Disclosures sheet's `the row shown` is. `ENGINE.18`, committed and
+  unreleased, opens a grid cartridge on the sheet `Camera!B3` names, else
+  on its first visible sheet: while the Screen stands first, no sheet
+  after it opens the game.
+- What the record set aside for this sheet: the four waves, the drift and
+  the whole-cent world (`OMAKASE.md`'s line); every day a market day, 365
+  a year (`POT.1`'s decision 4); at tier 1 no stock has a risk of its own,
+  so none goes bust (`STATION.1`'s decision 5); a $1 share moving a penny
+  at a time, on 25 of the first year's 365 days (`STATION.1`'s build);
+  money drawn at its shortest spelling, 12.3 for $12.30, until number
+  formats exist (`MISE.3`); and `BUFFET.md` §10's examples, one of them
+  course 0's, the Kondratiev wave, which tier 1 carries, and three of
+  later courses: volatility's clustering (`POT.5`), the curve's six points
+  (`POT.3`) and real banks (`STATION.3`). `POT.9`'s scenario packs promise
+  a row each. The record holds no other row for `MENU.5`.
+- The game says it is not advice already, twice, in the owner's fine
+  print: "Buffet is not a financial advisor. Buffet is barely a game." and
+  "This is not a recommendation to buy or sell. 'Ursi et tauri, cavete!'."
+  Both are rows of a hidden sheet, turning at every view's foot once
+  `FRONT.1`'s views read it. `README.md`'s "Not advice" is plain and has no
+  joke, and it writes "labelled", "Licences" and "licence" twice where the
+  house writes American English; `SECURITY.md`'s "What this game is not"
+  writes "labelled" too, and points at "the sheet the game keeps for that
+  purpose" without naming it. The certificate panel is `GUARD.1`'s, gated
+  on Alonzo.
+- The describe golden carries the manifest's notes and every formula's
+  shape, and `strings` writes a picker a field, so a content sheet brings
+  formulas whatever its source writes beside it: the golden moves with
+  this item, blessed again and read in its diff.
+- The first game's market, measured for the rows by a scratch script over
+  the source's formulas and held to the record where the two meet (the
+  index 1.1016 on day 365; the $1 rung moving on 25 days of the first
+  year): the index's daily move 0.031% at the median over a hundred years
+  and 0.113% at its largest, 0.027% and 0.074% in the first year; the $1
+  rung's largest day one cent, 1.02%; the drift 7.57% a year, and the
+  drift raised to the rungs' betas 15.72%, 11.57%, 7.57% and 5.63%. A
+  rung's price is its start times the index to its beta, to the cent, so
+  the four move together exactly but for the rounding.
+- The world, read on the day for the rows: the S&P 500's total return was
+  −0.95% a year from 2000 to 2009 (Dimensional Fund Advisors), and about
+  10% a year with dividends since 1926; the SEC's Rule 612 lets a quote
+  below $1.00 go to $0.0001; low-volatility and low-beta portfolios earned
+  high average returns with small drawdowns from 1968 to 2008 (Baker,
+  Bradley and Wurgler, *Financial Analysts Journal*, 2011).
+
+**The decisions.**
+
+1. **The name: `Limitations` (rec).** A model's documentation keeps
+   exactly this list under this word: what the model gets wrong, written
+   down, each limitation answered by the model's owner, and the first of
+   them the limits on its use. One word, bare, a fund's workbook's, and it
+   collides with no view, model sheet, device or content sheet:
+
+   | The candidate | The verdict |
+   |---|---|
+   | `Limitations` | recommended: the model's own list, whose first entry, on its use, is *not advice* (decision 4) |
+   | `Caveats` | the alternative: shorter, a research note's word, and the same verb as the fine print's *cavete*; but a caveat warns, and nobody answers it (decision 3's third field) |
+   | `Assumptions` | struck: a financial model's inputs tab, where a spreadsheet person looks for the drift and the betas, which stand on the Market and the Stocks sheets |
+   | `Errors` | taken: `PLATE.6`'s error values |
+   | `Errata` | struck: a publisher's corrections, made after printing |
+   | `Disclaimers` | struck: beside `Disclosures`, two names for the fine print |
+   | `Footnotes` | struck: the running gag's footnote, which grows (`BUFFET.md` §2), and the fine print's place |
+   | `Findings` | struck: the audit's (`GUARD.3`) |
+   | `Risks` | struck: a prospectus's risk factors, which a player would read as the game's risk |
+
+   *Things this game gets wrong* cannot be a sheet's name, and stays in
+   the game as the header over the sheet's first field (decision 3).
+
+2. **Visible, after the model's sheets (rec).** The sheet is meant to be
+   read, and read whole, which no view can do (above): hidden, it is one of
+   thirteen sheets in the box beneath the strip, and `BD-5`'s own reason
+   names that, *a simplification hidden is a liability*. Visible, it stands
+   in the strip beside the model it qualifies, Screen, Day, Dice, Market,
+   Stocks, Limitations, Clock, File, Input, and behind `FRONT.1`'s views
+   when they lead the strip; never first, so never the sheet the game
+   opens on. The way, since the engine refuses a second state: `strings`
+   writes none (decision 6), and the source writes each content sheet's
+   state as a row of its own before the sheet's call, as it writes the row
+   shown after it, in the kit's own spelling: `(sheet "Disclosures"
+   hidden)` before `(disclosures)` and `(sheet "Questions" hidden)` before
+   `(questions)`, each the row `strings` wrote, in the place it stood, so
+   both sheets stand byte for byte; and `(sheet "Limitations" visible)`
+   before `(limitations)`. Whether a sheet shows is the game's to say,
+   which is the source's (`MENU.1`'s decision 4: "what a sheet's rows mean
+   to the game is the source's"), and not the words'. A state forgotten
+   leaves its sheet visible, and the oracle's tab order names it (decision
+   10). This amends `MENU.1`'s decision 3, which had `strings` write every
+   content sheet's hidden row, once: the rule stands, a content sheet
+   hidden as a workbook keeps its reference data at the back, with its one
+   exception, a sheet meant to be read, written where each sheet is
+   called. *The alternatives:* hidden, as `MENU.1`'s decision 3 has it, the
+   library unmoved and the sheet found in the box; or the state a word of
+   the call, `(strings "Limitations" visible ...)`, each content file
+   stating its own, a switch of the game's presentation one word from a
+   stranger's row.
+
+3. **The fields: what the game gets wrong, what the world does,
+   Management's response, and where (rec).**
+   - `Things this game gets wrong`: the simplification, plainly; the
+     header carries `BD-5`'s name for the sheet into the game.
+   - `In the real world`: what the world does, plainly; the field a
+     finance educator reads before a release (`BD-5`).
+   - `Management's response`: the joke, in the voice of a model's owner
+     answering a finding, deadpan (`BD-2`): "noted", "under review", "not
+     our department". The header tells a stranger the voice before they
+     read a row.
+   - `Where`: the cell or range the row qualifies, as a formula writes a
+     reference, `Market!B2`; empty when a row qualifies the game as a
+     whole. `AD-6`'s open book, from the limitation to its cell; and held
+     by the oracle to a range of the cartridge that holds a value (decision
+     10), so that a limitation cannot outlive its cell when a later course
+     moves a model's sheet.
+
+   Every text is one line of at most 140 characters, as a why is, since a
+   later view may quote any field alone; and each field is as wide as its
+   longest drafted text, 104, 115, 103 and 13 characters, so that every
+   text reads whole on a sheet meant to be read: the four columns and the
+   vintage's about 2,430 pixels at the page's 7 a character, inside the
+   owner's full screen. The table runs from A to E, the labels stand in G
+   and the values in H: the count `H1`, the row shown `H2`, the pickers
+   `H3` to `H6`. *The alternatives:* three fields, no `Where`, lighter for
+   a stranger, but a view that later shows a figure's limitation beside the
+   figure would want the field added to every row, which is `MENU.2`'s
+   decision 1's reason to write a field once; or the joke under
+   `Footnote`, the running gag's word, which answers nobody.
+
+4. **Not advice: the sheet's first row, and the README (rec).** The plain
+   statement is the model's first limitation, the limit on its use, where a
+   model's documentation states it; and the row says it in the sheet's own
+   kind, what the game gets wrong, which here is the person playing it:
+   *You. It knows nothing of your goals, your means or your timeline.*,
+   then *Advice starts from those three, from someone licensed to give it.
+   This game is not financial advice.*, then *Any resemblance to financial
+   advice, living or dead, is purely coincidental.*, and no cell. So the
+   statement is in the game from course 0's first frame, on a sheet a
+   player opens from the strip, its joke beside it, as `BD-5` and the line
+   ask. With the row shown at 1 (decision 5) the pickers hold it, so the
+   certificate (`GUARD.1`) shows the plain statement and its joke by a
+   reference, `Limitations!H4:H5`, with nothing more written. A row is
+   added above the file's last line (the *How to add a row*'s step 2), so
+   the first stays first, and the oracle holds it there. The README says
+   the same in prose, the plain statement and the same joke (decision 11).
+   *The alternatives:* a kind of its own, a sheet of one row that no
+   stranger adds to, read by nothing until the certificate, whose strings
+   `GUARD.1` lays out (`MENU.2`'s decision 4 sent the archetype's question
+   to its dish so); or the README alone, the game then saying so only in
+   two fine prints, hidden until `FRONT.1`'s views read them, and plainly
+   nowhere until `GUARD.1`.
+
+5. **What reads the sheet: the row shown, a value, 1 (rec).** The source
+   writes `H2`, 1, as it writes `Questions!L2`: the pickers show the first
+   row, the plain statement and its joke, from the first frame, for the
+   certificate, and a person reads the rest on the sheet itself. No
+   rotation: the fine print already turns at every view's foot, and a
+   second footer turning beside it would teach nothing the sheet does not.
+   *The alternatives:* a rotation, a limitation a month, `H2` reading the
+   day as `Disclosures!E2` does, a formula more and the Day sheet's readers
+   one more, turning where nothing reads it; or nothing written, every
+   picker `CHOOSE` of an empty index, an error value on a sheet meant to be
+   read.
+
+6. **The library: `strings` writes no state (rec).** `strings-sheet` loses
+   its first row, `(sheet content hidden)`, and its comment and the
+   library's header say that the source writes each sheet's state beside
+   its call (decision 2). `picker` and every walk stand. The proof is the
+   cartridge's diff, in which no row of the Disclosures or the Questions
+   sheet moves, as `MENU.2`'s decision 6's was.
+
+7. **The rows: course 0's twelve (rec).** A row a block, its vintage
+   beside its first field and then a field a line, as the bank's rows are
+   laid out; every vintage 0. Each was checked against `BD-2` (no kitchen
+   word, the humor financial or economic, punch up, fictional names,
+   PG-13, clarity first), for accuracy against the game (the measurements
+   above) and the world (`BD-5`; **(check)** where a finance educator
+   confirms before the release), and for American English; a quote inside
+   a text is a single quote. The order walks the game: its player, the
+   calendar, the market, the stocks, the money, the page.
+
+   | | Things this game gets wrong | In the real world | Management's response | Where | The verdict |
+   |---|---|---|---|---|---|
+   | 1 | You. It knows nothing of your goals, your means or your timeline. | Advice starts from those three, from someone licensed to give it. This game is not financial advice. | Any resemblance to financial advice, living or dead, is purely coincidental. | | decision 4; the joke a film's credits' disclaimer, turned on advice |
+   | 2 | Every day is a market day: 365 a year, weekends and holidays included. | US exchanges close on weekends and about ten holidays a year, leaving about 252 trading days. | Weekends are available from the rank of Partner. | `Day!B2` | `POT.1`'s decision 4; 252 is the convention for a US trading year, the NYSE closing for ten holidays since Juneteenth joined them in 2022 |
+   | 3 | Tomorrow's price is a formula of the seed and the day, and anyone can read it. | No one knows tomorrow's price, and anyone who says otherwise is selling something. | Reading ahead is not insider trading, since everyone can. Compliance finds this unsettling. | `Market!B25` | new: `BD-3`'s open book, `BUFFET.md` §5's design fact, said to the player; the joke accurate, insider trading being trade on what is not public |
+   | 4 | The market is four waves and a drift, and each wave keeps its period to the day. | Real business cycles vary in length and depth, and economists still argue whether the longest ones exist at all. | The Kondratiev wave is fitted to a handful of 50-year cycles. Statistics has requested a larger sample. | `Market!A8:E11` | the line's; §10's "a crime against statistics" rewritten, since the wave bears the name of an economist tried and shot in 1938, and a crime with its counsel stands too near a named man (`BD-2`'s first rule) |
+   | 5 | Day to day, the market barely moves: no news, no noise, no crash. | A broad index can move 1% on an ordinary day, and on October 19, 1987, US stocks fell more than 20%. | Trading in news has been halted, pending an announcement. | `Market!B25` | new: the index's median day 0.03% and its largest in a century 0.11% (measured); the S&P 500 fell 20.5% that day; noise and shocks are tier 2's (`POT.5`) |
+   | 6 | Beneath the waves, the market grows 7.6% a year, every year, forever. | US stocks have returned about 10% a year over a century, dividends included, but unevenly: 2000 to 2009 lost money. | Here, past performance is indicative of future results. Management asks that this not get around. | `Market!B2` | the line's; 1.0002 a day is 7.57% a year; **(check)** about 10% a year with dividends since 1926, and −0.95% a year from 2000 to 2009 |
+   | 7 | All four stocks follow the one index: none can go bust, and owning all four spreads no risk. | Each company has news of its own; owning many cancels much of it, and some companies do go to zero. | Management is pleased to report a 0% default rate, and is investigating why. | `Stocks!E5:E8` | `STATION.1`'s decision 5 and what it implies: the four move together exactly, so the exam's *Diversification* question teaches what tier 1 cannot show; a stock's own risk is `POT.5`'s |
+   | 8 | The riskier the stock, the faster it grows: a beta of 2 trends 15.7% a year, a beta of 0.75 trends 5.6%. | Riskier stocks have not reliably earned more: over long stretches, low-volatility stocks did as well or better. | Management has decided that risk will be rewarded, and has asked the data to comply. | `Stocks!C5:C8` | new: `STATION.1`'s decision 5, "a higher risk earns a higher long-run return", measured 15.72% and 5.63%; **(check)** the low-volatility anomaly, as Baker, Bradley and Wurgler found it from 1968 to 2008 |
+   | 9 | The dividend is free: a share's price does not fall on the day it pays. | A share's price usually falls by about the dividend on the day it goes ex, since that cash has left the company. | Accounting has been asked not to look into it. | `Stocks!H8` | new: no price formula holds the dividend; the fall is textbook, "about" since taxes and the day's news blur it |
+   | 10 | Money comes in whole cents: every price is rounded once, to the nearest cent. | Ledgers keep fractions of a cent: interest accrues in them daily, and the rounding comes last. | Fractions of a cent are swept into an account named 'Rounding (do not open)'. | `Stocks!E5:F8` | the line's: `FRONT.2`'s rule and the contract's; a sweep is a bank's own word |
+   | 11 | A $1 share moves a penny at a time, and on most days not at all. | A real stock near $1 can swing several percent a day, and under $1 it may be quoted to a hundredth of a cent. | Analysts rate it a Hold, which it does. | `Stocks!E5` | `STATION.1`'s build, 25 of 365 days, measured again here; **(check)** Rule 612's $0.0001 below $1.00 |
+   | 12 | Numbers have no formats: a price reads in cents, 9921 for $99.21, and a yield of 2% reads 0.02. | A workbook formats its numbers for people: $99.21, 2.00%, 1,000,000. | The decimal point has been furloughed pending a review of number formats. | `Stocks!D5:F8` | `MISE.3`'s, as the game shows money today, in cents on the Stocks sheet; the dish that first shows dollars, 12.3 for $12.30, rewrites it (decision 13) |
+
+   No row names a real company, person or mark but the economist the wave
+   is named for, whom the Market sheet's label names already, and the SEC's
+   rule, a fact and no parody. Four claims of the world are marked for the
+   educator; the game's claims are measured. And three rows teach against
+   lessons tier 1 would teach by accident: that the future can be read
+   (3), that spreading money among the four stocks spreads risk (7), and
+   that risk always pays (8).
+
+8. **The source: the include, the states, the call, the row shown, the
+   labels' width and the notes (rec).** `(include
+   "content/limitations.vla")` after the bank's; the two hidden states
+   before their calls (decision 2); and a block after `MENU.2`'s, as
+   `MENU.1`'s and `MENU.2`'s are: its comment, `(sheet "Limitations"
+   visible)`, `(limitations)`, then `H2`, 1, with its comment, and the
+   labels' column, G, 21 characters wide, `Management's response` being the
+   longest label, so that the labels read whole beside their values on a
+   sheet meant to be read, where the hidden sheets' are clipped and nobody
+   reads them. The game's notes, a player's string under `BD-2`, gain the
+   sheet: "...; the Series 777's question bank, twenty questions awaiting
+   an exam the regulator has yet to schedule; and the model's
+   limitations, the things this game gets wrong, each with Management's
+   response. Pick the Day, the Dice, the Market or the Stocks sheet to
+   watch, or the Limitations sheet to read, or the Disclosures or the
+   Questions sheet among the hidden sheets." The opening comment lists
+   `MENU.5` among the dishes served.
+
+9. **The layout check (rec).** The rule holds as it stands, since
+   `limitations.vla` is one macro named after its file whose body is one
+   call of `strings`, and a state row in the source is code after the
+   includes; the content pin rises from 2 to 3; the control's clean copy
+   holds eight files, its mutant "a third content sheet past its pin"
+   becomes a fourth, and its fifteen mutants stand.
+
+10. **The oracle (rec).** In `oracle/tests/cartridge.rs`, the content
+    sheets three:
+    - Held by the list already: each content sheet is its file, read by
+      the language's reader (`MENU.2`); the tripwire under 1,000 rows.
+    - The tab order: Limitations visible after Questions, and each content
+      sheet in the state the source writes, Disclosures and Questions
+      hidden and Limitations visible; the test that has every content sheet
+      hidden says so instead.
+    - Every limitation whole: the four fields in their order; the first
+      three texts of every row not empty; every text one line of at most
+      140 characters and no wider than its field; the vintage a whole
+      number; and the first row's texts naming advice, so that the
+      statement the certificate reads stays first.
+    - Every limitation's cells: after the first frame, each `Where` that is
+      not empty a sheet of the cartridge, `!`, and a cell or a range of it
+      that holds a value.
+    - The first row shown: `H2` 1, and from the first frame `H3` to `H6`
+      the first row's fields.
+    - Every field picked at every row: `MENU.2`'s test over the Limitations
+      sheet too, its row shown written 1 to 12.
+    - A row added: no third test of it. The walk and the call are
+      `MENU.2`'s, held by two such tests; this sheet's own rows are seen in
+      the cartridge's diff at the build.
+    - Kept: the cartridge its source expanded; `BD-7`'s scan and the
+      census's `(every-frame 0)`; the describe golden, blessed again and
+      read in its diff. The hand unchanged: no rotation, and the texts are
+      the content's, written once.
+
+11. **The README and `SECURITY.md` (rec).** `README.md`'s "Not advice"
+    rewritten: Buffet is a game, and nothing in it is financial advice,
+    since advice starts from a person's goals, means and timeline and the
+    game knows none of them; it is no brokerage and holds no real money;
+    its market is a formula of a seed and a day, fed by no real market's
+    data; and every model in it is a toy, labeled as one on its Limitations
+    sheet, *Things this game gets wrong*; then the joke, the row's own,
+    *Any resemblance to financial advice, living or dead, is purely
+    coincidental.* The README's "Licences", "licence" (twice) and
+    "labelled", and `SECURITY.md`'s "labelled", respelled American;
+    `SECURITY.md`'s line names the sheet.
+
+12. **The *How to add a row* (rec).** `src/content/README.md` names the
+    third sheet, `limitations.vla`, a limitation a row, laid out as a
+    question is: what the game gets wrong, what the real world does,
+    Management's response, and where, a reference as a formula writes one,
+    or empty. What a limitation needs: the world's half accurate, since a
+    finance educator reads it before a release (`BD-5`); each text one
+    line, within its column's width at the top of the file; and the voice,
+    a model's owner answering a finding. Still one page.
+
+13. **Every later simplification has a row to go to (rec).** `BD-5`
+    gains a dated line: the sheet is `Limitations`, its first row the plain
+    statement, and a dish that brings a simplification brings its row in
+    its own commit, its scoping naming the row. Owed already, each to the
+    dish that makes it true: an order filled at the price shown, with no
+    spread and no commission (`PLATE.1`, until `PLATE.5`); cash that earns
+    nothing and loses nothing to inflation (`PLATE.2`, until `POT.3`'s
+    rates); money in dollars at its shortest spelling, row 12 rewritten
+    (`FRONT.2`); an exam of ten questions that cannot be failed
+    (`GUARD.1`); no taxes (`PLATE.7`); volatility that clusters neatly
+    (`POT.5`); a curve of six points (`POT.3`); real banks, which are worse
+    (`STATION.3`); and each scenario pack (`POT.9`).
+
+14. **The hand test, the owner's, on the page built here:**
+    - Buffet at full screen: the strip reading Screen, Day, Dice, Market,
+      Stocks, Limitations, Clock, File and Input, and its box "hidden
+      sheets (13)", the eleven twins, Disclosures and Questions;
+    - the Limitations sheet opened from the strip: its twelve rows whole,
+      each text inside its column, the vintage beside them; `H1` 12, `H2`
+      1, and `H3` to `H6` the first row, the plain statement and its joke;
+      the labels in G whole;
+    - Build in the drawer writing the cartridge byte for byte, compared
+      with `src/buffet.vla` by a command given at the handover in a fenced
+      block, since `MENU.2`'s, given inline, lost its backticks in the
+      copy.
+
+15. **The stale places, rewritten at the build.** In `OMAKASE.md`:
+    `MENU.5`'s line (the sheet's name; the certificate's reference; "the
+    folder's README", written when the game was a folder of Alonzo's, now
+    the repository's); `BD-5`'s dated line (decision 13); `GUARD.1`'s line,
+    a dated sentence, the certificate reading `Limitations!H4:H5`; and
+    `MISE.6`'s hoist row for `strings`, its state moved to the source. In
+    `BUFFET.md` §10, a dated line under the accuracy policy: where the
+    sheet stands, its first row, and the Kondratiev joke rewritten.
+    `kitchen.vla`'s header and `strings`' comment; `check_layout.ps1`'s
+    header; the source's opening comment and the cartridge's notes;
+    `src/content/README.md`. `MENU.5` leaves `OMAKASE.md` for this file
+    with its commit. Past the files the owner's prompt foresaw, the build
+    touches the library (decision 6), `SECURITY.md` (decision 11) and
+    `BD-5`; the page's blocks follow by themselves, as `MENU.2`'s did.
+
+**Amended at the approval, 2026-10-15, before the build.** Three changes,
+none of a decision's substance. First, the name: `Caveats`, the owner's
+preference, read for `Limitations` wherever the decisions name the sheet;
+the first field's header keeps *Things this game gets wrong* in the game,
+so the name needs to say no more. Second, the base: between the scoping and
+the build the vintage was struck from every row too, at the owner's word,
+and both strikes were committed as `adc1bc7`. A row is now its fields
+alone, so the table runs from A to D, the labels stand in F and the values
+in G, the labels' column the source widens is F, and the certificate reads
+`Caveats!G4:G5`. The same commit struck the layout check's courses kind and
+its mutant, so its control holds fourteen mutants where P8 counted fifteen;
+P1's base is 347 rows where 377 stood with the vintage, the sheet bringing
+70 rows where 83 were counted, its twelve vintage cells and their header
+gone; and P3, P4 and P6 are measured against a `git archive` of `adc1bc7`.
+Third, the owner's question at the approval, what the item is for beyond
+excessive humility, the sheet reading "like talking to the player as though
+they were a toddler", unless it is a legal hedge, answered in chat: the
+first row is the legal hedge and earns its place either way; rows 3, 7 and
+8 correct three lessons tier 1 would teach by accident; and rows 2, 10 and
+12, the calendar, the cents and the formats, are the trivia, the first to
+cut when the owner rewrites rows. The build went in a scratch worktree on a
+snapshot of the uncommitted strike, and moved onto `adc1bc7` once it was
+committed, every game file of the snapshot equal to the commit's.
+
+**The predictions, before any number.** The numbers column is filled at
+the build, P9 at the owner's hand test. P3, P4 and P6 are measured as
+`MENU.2`'s were: a scratch runner opted out of Windows' power throttling
+and pinned to the performance cores, alternated against a `git archive` of
+the commit before this one's, `8775818` with the approver's amendment once
+it is committed, built in a target of its own.
+
+| | What | Predicted | The number |
+|---|---|---|---|
+| P1 | the cartridge | 460 rows where 377 stood, the Limitations sheet's 83: its state, four widths, five headers, six labels, twelve rows of five cells, the count, four pickers, and the source's row shown and labels' width; 93 formula cells where 89; the Disclosures and the Questions sheets' rows byte for byte, their states now the source's in the same places; and the notes moved | *Measurement*, on the base the approval restated: the runner printed `(rows 417) (loads yes)`, 347 and the sheet's 70, in the order listed; 93 formula cells; the cartridge's diff one line out, the notes, and 71 in, the notes and the sheet's 70, no row of the Disclosures or the Questions sheet among them |
+| P2 | the describe golden | moved in the notes; the budget's formulas, 89 to 93 and 2,670 to 2,790 a second; the plan's shapes 38 to 42, texts 36 to 40, formulas 89 to 93 and alone 62 to 66, its levels, runs, lanes, every-frame and cycles unmoved; `(readers "Limitations" 52 (most 4))`, each picker's row shown and its twelve cells; four shapes, each a picker alone at level 0; nothing else | *Measurement*, as predicted but for one count, **missed** in it: the notes; `(budget 30 93 2790 2000000)`; shapes 42, texts 40, formulas 93 and alone 66, the levels 14, runs 6, lanes 27, every-frame 0 and cycles 0 unmoved; shapes 38 to 41, `G3` to `G6`, each `(cells 1) (levels 0 0 1 1)`; nothing else; but `(readers "Caveats" 52 (most 8))` where `(most 4)` was predicted. The census indexes a sheet's readers by row, and a row again by column only once it holds sixteen (`vla-lang`'s `calc/reach.rs`, `most`): row 2 holds the row shown's four readers and the first row's four cells, eight. The Questions sheet's row 2 held sixteen, the row shown's eight and the first question's eight, indexed again by column, where the row shown's eight are the most: why `MENU.2`'s reading of its own 8 held there |
+| P3 | the pass and the load | the pass 0.3 to 0.8 ms longer, at `MENU.2`'s price of a cell and of a picker's step; the load 0.2 to 0.4 ms longer | *Measurement*, a scratch runner over each tree, `adc1bc7`'s and this one's, three runs each alternated, 200 passes and 200 loads a run, the runner pinning itself to the performance cores and opting itself out of Windows' throttling, a fixed computation before and after steady: the pass 3.81 to 3.84 ms at p50 where it took 3.24 to 3.27, 0.54 to 0.60 ms more, inside; the load 1.36 to 1.38 ms where it took 1.13 to 1.17, 0.19 to 0.24 more, inside at its lower edge |
+| P4 | the step | an ordinary frame and a day's first frame unmoved, the pickers reading nothing that moves; the first frame computing four pickers once, 5 to 20 µs more | *Measurement*, the same runs, two years and two days at thirty frames a day: an ordinary frame 1.70 µs at p50 before and after; a day's first frame on which the fine print stays 11.4 to 11.5 µs where it took 11.3 to 11.6, and one on which it turns 12.2 to 12.6 where 11.9 to 12.6: unmoved; the first frame 131 to 149 µs where it took 95 to 125, the medians 131 and 122, about 10 µs more: inside |
+| P5 | the limit | unmoved: a sheet of one field holds 1,547 rows and 1,548 are refused at the picker's line, the scratch sheet now visible and nothing else of it moved; the pass over 1,548 rows under 50 ms | *Measurement*: 1,547 rows load and 1,548 are refused at the picker's line, the test holding both on every run; the pass over 1,548 rows 18.5 to 18.8 ms at p50 on both trees, inside, and lighter than `MENU.2`'s 28.3 to 28.9 since `adc1bc7`'s rows carry one cell where they carried three |
+| P6 | the suite | 41 tests green here, three of the cartridge more and two extended, and in CI on Linux; within a quarter of a second of the commit before's at the median | *Measurement*, here: 41 green, 14 of the crate and 27 of the cartridge. The cartridge's binary run alternately with `adc1bc7`'s, built from that commit's tree in a target of its own, five rounds, the order turned each round, each run pinned and opted out, on eight threads: 4.18 to 5.07 s where it took 4.11 to 4.84, the medians 4.41 and 4.23 s, 0.18 s apart: inside. Linux at the push |
+| P7 | the page | one block more, `library-content-limitations`, about 4,900 characters; the cartridge's block some 6,500 longer, the source's 1,400 and the library's a few hundred; the page about 13,000 longer, near 1,635,000 where the approver's amendment left 1,622,074; Build writing the cartridge byte for byte | *Measurement*: 1,634,034 characters, 13,313 more than `adc1bc7`'s 1,620,721, inside; the new block, `library-content-caveats`, 5,239 characters; the cartridge's block 5,403 longer where some 6,500 was predicted with the vintage, the library's 508, and the source's 2,062 where 1,400 was predicted, **missed**: its comments ran longer than priced. Build in the drawer at the owner's hand test, P9 |
+| P8 | the checks | 4 checks and 4 controls green; the layout control's clean copy eight files and its fifteen mutants each failing for its own reason, the fourth content sheet's among them; the offline control's fifteen unchanged | *Measurement*: ALL GREEN, 4 checks and 4 controls; the layout control's clean copy eight files and its fourteen mutants, the fourth content sheet's among them, each failing for its own reason, fifteen having been counted before `adc1bc7` struck the courses mutant; the offline control's fifteen unchanged. `check_spdx` reads the tracked tree, so `caveats.vla`, untracked, was held through a scratch index that tracked it: 41 files resolved, 8 headers read under `src/` |
+| P9 | the hand test | the strip showing Limitations between Stocks and Clock and the box "hidden sheets (13)"; the twelve rows whole within their columns; `H3` to `H6` the first row from the first frame; Build "same bytes" | *Measurement*, the owner's screenshot and comparison, in the owner's Chrome at full screen, on the page built in the scratch worktree, byte for byte the shared tree's: the strip read Screen, Day, Dice, Market, Stocks, Caveats, Clock, File and Input, the box "hidden sheets (13)"; the Caveats sheet's twelve rows whole, every text inside its column and every reference inside D; at frame 950, `G1` 12, `G2` 1, `G3` to `G5` the first row, its texts spilling over the empty columns to their right, and `G6` empty; every label in F whole, `Management's response` among them; the budget line 93 formula cells a frame, 2,790 a second; and Build in the drawer, "same bytes (24985 characters)". Inside, the addresses the approval's |
+
+**What the build found.** The content shape holds for a sheet that is not
+a question bank: `caveats.vla` is the bank's shape in four fields, and the
+library changed only by the state it no longer writes, the cartridge's diff
+decision 6's proof, one line out, the notes, and 71 in, no row of the
+Disclosures or the Questions sheet among them. The engine takes one state a
+sheet, refusing a second `sheet` row that gives another, so the state is
+the source's row, and a sheet whose state the source forgot stands visible,
+which the tab order names. A text spills only into empty cells on its
+right, so the labels' column at the default width clips a long label beside
+its value; the source widens the Caveats sheet's F to 21, its longest
+label's, and the hidden sheets' labels stay clipped where nobody reads
+them. The new tests catch what they stand for: seven mutants, each expanded
+into the cartridge before the suite ran, failed the test written for them.
+The Questions sheet's state forgotten and the Caveats sheet hidden failed
+the tab order; a caveat pointing at an empty cell, and one at no sheet,
+the cells' test; a caveat past its column, the whole test; the row shown
+written 2, the first row's test; and the first caveat stripped of its plain
+statement, the whole test, at its second writing only. The first writing
+looked for the word, which passed the mutant, since *advice* stands in the
+caveat's explanation too; the test now holds a sentence that denies advice,
+a `not`, `no` or `never` before the word. And the census's `most` is the
+most readers one changed cell is checked against, in an index by row that a
+row of sixteen splits again by column (P2).

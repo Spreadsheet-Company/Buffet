@@ -724,6 +724,8 @@ It can, because the properties that make it a game (determinism, inspectability,
 
 ### Accuracy policy (rec)
 
+*Built 2026-10-15 as `MENU.5` (`SPIKE.md`): the sheet stands as `Caveats`, `src/content/caveats.vla`, the one content sheet shown among the tabs, after the model's sheets; a caveat a row, its fields what the game gets wrong, what the real world does, Management's response (the joke, as a model's owner answers a finding) and the cells it qualifies. Its first row is the plain statement that the game is not advice, beside its joke, "Any resemblance to financial advice, living or dead, is purely coincidental", which the README repeats and the certificate will quote. Course 0's twelve rows stand there; the seeds below for later courses go to their dishes (`BD-5`, amended). "The Kondratiev wave is a crime against statistics" was rewritten: the wave bears the name of an economist tried and shot in 1938, so the crime stood too near a named man, and the sheet's version has Statistics request a larger sample.*
+
 - **Toy models, labeled.** Every simplification is on a sheet called *Things this game gets wrong* (funny and honest): "volatility does not cluster this neatly; the Kondratiev wave is a crime against statistics; the yield curve has six points; real banks are worse".
 - **Not advice.** A plain statement, and the joke version beside it.
 - **Reviewed.** A finance educator reads the concept cards. (The owner's degree is tingling for a reason.)

@@ -13,10 +13,10 @@ trading bot in formulas and nobody told them that was programming.*
 ## What it is
 
 You begin with a pencil, an exam and a small pile of other people's money.
-The market breathes in cycles you can learn but not solve. Licences open
+The market breathes in cycles you can learn but not solve. Licenses open
 the stations one at a time, stocks first, then bonds, the firm, leverage,
 derivatives, the Strategy sheet, the rest of the menu and the rivals, so
-that the first five minutes are checkers and the chess arrives one licence
+that the first five minutes are checkers and the chess arrives one license
 at a time. Every mechanic is cells you can read, which is the lesson and
 the joke: the game is fun insofar as it is funny, and it is a tutorial
 because it cannot help it, the model being open by design.
@@ -38,7 +38,7 @@ work; [`docs/SPIKE.md`](docs/SPIKE.md) is the ledger of what has been served.
 | the page's files, vendored from Alonzo | `web/` | Apache-2.0 |
 
 Why this shape, in three sentences. The game's cells are open by design, so
-nothing in it can be protected by secrecy, and the licence is the only
+nothing in it can be protected by secrecy, and the license is the only
 protection there is: the AGPL keeps a fork open under the same terms and
 makes a copy served from anyone's machines publish its changes, which is
 the deterrent against a rebrand with a larger budget. The content is
@@ -85,5 +85,11 @@ tools\build_web.ps1                       # web/index.html: open it, pick Buffet
 
 ## Not advice
 
-Not advice, not a brokerage, not a feed: no real money, no real market's
-data, and every model a toy, labelled as one.
+Buffet is a game, and nothing in it is financial advice: advice starts from
+a person's goals, means and timeline, and the game knows none of yours. It
+is no brokerage and holds no real money; its market is a formula of a seed
+and a day, fed by no real market's data; and every model in it is a toy,
+labeled as one on its Caveats sheet, *Things this game gets wrong*.
+
+*Any resemblance to financial advice, living or dead, is purely
+coincidental.*

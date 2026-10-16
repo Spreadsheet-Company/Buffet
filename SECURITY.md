@@ -47,5 +47,6 @@ reproduces every frame (`docs/OMAKASE.md`, `BD-3`).
 ## What this game is not
 
 Not advice, not a brokerage, not a feed. No real money is ever handled, no
-real market's data is ever read, and every model in it is a toy, labelled
-as one on the sheet the game keeps for that purpose (`docs/OMAKASE.md`, `BD-5`).
+real market's data is ever read, and every model in it is a toy, labeled as
+one on its Caveats sheet, whose first row says plainly that the game is not
+financial advice (`docs/OMAKASE.md`, `BD-5`, `MENU.5`).

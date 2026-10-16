@@ -27,6 +27,8 @@
 ; bytes unchanged; picker unchanged, a picker a field. The same day, at the owner's
 ; word, the approver and the vintage struck from every row: a row's review is its pull
 ; request's, and a course is no freeze of the rows before it (BD-1, amended).
+; Since MENU.5 (2026-10-15): strings writes no state, and the source writes each content
+; sheet's beside its call, hidden but for a sheet a player reads whole, the caveats.
 
 ; ---- the dice (POT.1) ---------------------------------------------------------------
 ; A stream is a die and its draws. The die is one cell, the stream's state, which the
@@ -52,7 +54,7 @@
     (&expand (address-expand row (+expand column 1)) ":" (address-expand (+expand row (-expand many 1)) (+expand column 1)))
     (&expand "=" (address-expand row column) "/2147483647")))
 
-; ---- the strings (MENU.1, MENU.2) ---------------------------------------------------
+; ---- the strings (MENU.1, MENU.2, MENU.5) -------------------------------------------
 ; A content sheet holds one kind of string the game shows, a row of fields a row, and a
 ; file of src/content/ defines it, words alone: one macro named after the file, whose
 ; body is one call of strings, naming the sheet; then its fields, as a list of each
@@ -62,22 +64,26 @@
 ; repository's named reviewer, and a course is a tranche of features, no freeze of the
 ; rows before it (the owner's words, 2026-10-15; BD-1, amended). The source includes
 ; the file after its manifest, with every include, and calls its macro where the sheet
-; belongs. The sheet is hidden, as a workbook keeps its reference data at the back, and
-; stands among the tabs where the source's call of its macro stands. Its table holds
-; the headers in row 1 and a row of the call a row of the sheet from row 2, its fields
-; from column A. Beside the table, past one empty column, a label beside each value: the
-; rows counted, a value; the row shown, which the dish that reads the sheet writes; then
-; a picker a field, the first labeled shown, as a sheet of one field labels its only
-; picker, and each later one by its field's header, down the column. So the fine
-; print, one field wide, holds its text in A, its count, row shown and picker in D1, D2
-; and D3; and the exam's bank, eight fields wide, its table in A to H and its values in
-; K1 to K10. A view reads a picker through a reference and never holds its text, since
-; its formula would ride in every frame's record. So a row added is a row of the call,
-; and no formula is edited. The expander has no length of a list, so strings counts the
-; fields first, a walk that hands the count on to the macro that lays the sheet out.
+; belongs, after a row of its own that gives the sheet's state: hidden, as a workbook
+; keeps its reference data at the back, or visible for a sheet a player reads whole, as
+; the caveats are (MENU.5). Whether a sheet shows is the game's to say, and the engine
+; takes one state a sheet, so strings writes none, and the sheet stands among the tabs
+; where the source's row names it. Its table holds the headers in row 1 and a row of
+; the call a row of the sheet from row 2, its fields from column A. Beside the table,
+; past one empty column, a label beside each value: the rows counted, a value; the row
+; shown, which the dish that reads the sheet writes; then a picker a field, the first
+; labeled shown, as a sheet of one field labels its only picker, and each later one by
+; its field's header, down the column. So the fine print, one field wide, holds its
+; text in A, its count, row shown and picker in D1, D2 and D3; the exam's bank, eight
+; fields wide, its table in A to H and its values in K1 to K10; and the caveats, four
+; fields wide, their table in A to D and their values in G1 to G6. A view reads a picker
+; through a reference and never holds its text, since its formula would ride in every
+; frame's record. So a row added is a row of the call, and no formula is edited. The
+; expander has no length of a list, so strings counts the fields first, a walk that
+; hands the count on to the macro that lays the sheet out.
 
 (defmacro (strings content fields & rows)
-  "a content sheet, hidden: its fields from column A, each a header and a width; a row of the call a row of the sheet from row 2; beside the table, the rows counted, the row shown, which the dish writes, and a picker a field"
+  "a content sheet, its state the source's: its fields from column A, each a header and a width; a row of the call a row of the sheet from row 2; beside the table, the rows counted, the row shown, which the dish writes, and a picker a field"
   (quasiquote (strings-count (unquote content) (unquote fields) (unquote rows) (unquote fields) 0)))
 
 (defmacro (strings-count content fields rows rest n)
@@ -87,8 +93,7 @@
     (strings-count content fields rows (cddr rest) (+expand n 1))))
 
 (defmacro (strings-sheet content fields rows n)
-  "the sheet of n fields: its hidden row, its widths, its headers and its labels, then its rows, their count and a picker a field"
-  (sheet content hidden)
+  "the sheet of n fields: its widths, its headers and its labels, then its rows, their count and a picker a field; its state is the source's row, before the call"
   (strings-widths content fields 1)
   (strings-headers content fields 1)
   (labels-from content 1 (+expand n 2) "rows" "the row shown" "shown")
