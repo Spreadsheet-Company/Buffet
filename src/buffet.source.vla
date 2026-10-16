@@ -31,6 +31,9 @@
 ;           in dollars, and the fine print at its foot; the views first among the tabs.
 ;   FRONT.2 the glyphs: beside each change on the Portfolio, which way it went, up,
 ;           down or flat, read off the change itself.
+;   BACK.1  the side hustle: Gigs, the game's second view, where a prospectus is
+;           proofread for $25 by a click on its button or by P, once a market day and
+;           four times a run, and the Hustle sheet, its books; the first button.
 ;
 ; The market's clock (BD-7). One tick is one market day, thirty frames at the manifest's
 ; rate of thirty, so a day a second and a year about six minutes. The Day sheet alone
@@ -58,16 +61,17 @@
   (seed 791886)                     ; every first game's market: a first year that dips early and closes 10% up
   (author "Spreadsheet Company")
   (license "AGPL-3.0-or-later AND CC-BY-SA-4.0")
-  (notes "Buffet: All You Can Sheet. The front office is open, though not yet for business: the game opens on the Portfolio, the day and four stocks on it, each its price and its change since yesterday, a market day a second, with the fine print at its foot. Behind it, the back office: the market's calendar; its dice, rolled once a day where anyone can watch them roll; the market itself, four waves and a drift; four stocks priced off it in whole cents, the dearest paying a dividend four days a year; the fine print, a disclosure a month; the Series 777's question bank, twenty questions awaiting an exam the regulator has yet to schedule; and the model's caveats, the things this game gets wrong, each with Management's response. Pick the Day, the Dice, the Market or the Stocks sheet to watch the model work, or the Caveats sheet to read, or the Disclosures or the Questions sheet among the hidden sheets."))
+  (notes "Buffet: All You Can Sheet. The front office is open, though not yet for business: the game opens on the Portfolio, the day and four stocks on it, each its price and its change since yesterday, a market day a second, with the fine print at its foot. Beside it, Gigs, where a prospectus is proofread for $25, by a click on its button or by P, once a market day and four times a run, Compliance permitting. Behind them, the back office: the market's calendar; its dice, rolled once a day where anyone can watch them roll; the market itself, four waves and a drift; four stocks priced off it in whole cents, the dearest paying a dividend four days a year; the hustle's books, every prospectus counted; the fine print, a disclosure a month; the Series 777's question bank, twenty questions awaiting an exam the regulator has yet to schedule; and the model's caveats, the things this game gets wrong, each with Management's response. Pick the Day, the Dice, the Market, the Stocks or the Hustle sheet to watch the model work, or the Caveats sheet to read, or the Disclosures or the Questions sheet among the hidden sheets."))
 
 ; The libraries whose macros this source calls, both beside it: the kit, Alonzo's
-; common.vla copied at the pin (sheets, labels, headers, on, cells, formulas and
-; hold), then Buffet's own, kitchen.vla (draws, strings and picker); then the content
-; sheets, each a file of src/content/ that defines one macro of its rows, called where
-; its sheet belongs. The manifest stands first, the cartridge's own form, then every
-; include, then the code (the owner's word, 2026-10-15), so that a file missing is
-; refused at the top; and each include defines macros alone, since the pass takes the
-; first form that is no include and no macro for the manifest.
+; common.vla copied at the pin (sheets, labels, headers, on, cells, formulas, hold,
+; pressed and count), then Buffet's own, kitchen.vla (draws, strings, picker, as-of
+; and fine-print); then the content sheets, each a file of src/content/ that defines
+; one macro of its rows, called where its sheet belongs. The manifest stands first, the
+; cartridge's own form, then every include, then the code (the owner's word,
+; 2026-10-15), so that a file missing is refused at the top; and each include defines
+; macros alone, since the pass takes the first form that is no include and no macro
+; for the manifest.
 (include "common.vla")
 (include "kitchen.vla")
 (include "content/disclosures.vla")
@@ -80,10 +84,11 @@
 ; would be drawn through. Then the views, first, the game opening on the first visible
 ; sheet (Alonzo's SPEC.md section 3.1, version 4); then the model's sheets, visible, a
 ; spreadsheet a player may open (AD-6); the content sheets stand after them, where each
-; is called below, and the engine's devices last.
+; is called below, then the Keys, the one device the game writes, and the engine's own
+; devices last.
 
 (sheet "Screen" hidden)             ; the framebuffer, unused: each view is a sheet of its own
-(sheets "Portfolio" "Day" "Dice" "Market" "Stocks")
+(sheets "Portfolio" "Gigs" "Day" "Dice" "Market" "Stocks" "Hustle")
 
 ; ---- POT.1: the calendar ------------------------------------------------------------
 ; A block of settings and its workings, a label in column A beside each value in B. The
@@ -232,6 +237,43 @@
     ("G5:G8" "=INT(B5*D5/$B$1+0.5)")              ; a dividend: the year's yield on the start, over the dividends a year, in whole cents
     ("H5:H8" "=IF(MOD(Day!$B$7,$B$2)=0,G5,0)")))  ; the dividend today: a dividend on its days, all day, and nothing on the others
 
+; ---- BACK.1: the hustle -------------------------------------------------------------
+; The side hustle's books: prospectuses proofread at $25 apiece, a claim a market day
+; and four a run, by a click on Gigs' button or by its key. The settings first, each a
+; value beside its label: the fee in whole cents, the claims a run, and the button's
+; place, its sheet, column and row, which a layout of the view moves as values and no
+; formula. Then the workings. A press is two cells that hold 0 between presses, so that
+; nothing else reads the pointer (SPEC.md section 2's rule 3): a click, the left
+; button's rising edge on the button while its sheet shows, and a key, the a button's
+; rising edge, which the Keys sheet holds by P while that sheet shows. A claim is a
+; press while the last frame showed the hustle open, shut's twin, the state the person
+; saw, since the claim moves this frame's; so it counts against the last frame's day,
+; as an order fills at the price shown, and a press in the frame a day turns is the day
+; before's. Open from day holds the day after the day a claim counted against, from 0,
+; so that a game opens open, and shut compares it with today: the day moving opens the
+; hustle again, and nothing reads the boundary (BD-7). The fees are the claims times
+; the fee, which the pockets read when they come (PLATE.2).
+
+(on "Hustle"
+  (labels "A1" "a prospectus's fee, in cents" "claims a run" "the button's sheet" "its column" "its row")
+  (cells
+    ("B1" 2500)                     ; $25 a prospectus, whole cents
+    ("B2" 4)                        ; claims a run: four, and then Compliance says no
+    ("B3" "Gigs")                   ; the button: its view,
+    ("B4" 1)                        ;   its column, A,
+    ("B5" 5))                       ;   and its row, values a layout moves, and no formula
+  (labels "A7" "clicked" "keyed" "claimed" "claims" "open from day" "shut" "earned, in cents")
+  (formulas
+    ("B7" "=IF(AND(Input!$B$19=$B$3,Input!$B$11=$B$4,Input!$B$12=$B$5,Input!$B$13=1,Input.last!$B$13=0),1,0)"))   ; a click: the left button's rising edge on the button, its sheet shown
+  (pressed "B8" "Input!B5")         ; a key: the a button's rising edge, held by P
+  (formulas
+    ("B9" "=IF(AND(OR(B7=1,B8=1),Hustle.last!B12=0),1,0)"))   ; a claim: a press while the last frame showed it open
+  (count "B10" "B9")                ; the claims so far
+  (hold "B11" "B9=1" "Day.last!$B$3+1")   ; open from day: after a claim, the day after the day shown
+  (formulas
+    ("B12" "=IF(OR(B10>=$B$2,B11>Day!$B$3),1,0)")   ; shut: the run's claims spent, or today's made
+    ("B13" "=B10*$B$1")))           ; earned, in whole cents
+
 ; ---- MENU.1: the strings ------------------------------------------------------------
 ; The content sheets, each a file of src/content/ that holds the words alone, a
 ; stranger's cheapest pull request: one macro of its rows, named after its file, whose
@@ -313,19 +355,60 @@
 ; dollars, and beside the change which way it went (FRONT.2), a glyph read off the
 ; change itself, so the two never disagree: a whole number of cents over 100 keeps its
 ; sign. The glyph has no color yet, the looks waiting for an aesthetic pass. And the
-; fine print at its foot, a disclosure a month.
+; fine print at its foot, a disclosure a month. The date and the fine print are every
+; view's, the library's two verbs since the second view wrote them again (BACK.1).
 
 (on "Portfolio"
   (column "A" 22 shown none)        ; the names; the date and the fine print spill past them
   (column "B" 12 shown none)        ; the price, in dollars
   (column "C" 12 shown none)        ; the change since yesterday, in dollars
   (column "D" 3 shown none)         ; which way the change went, a glyph (FRONT.2)
-  (formulas
-    ("A1" "=\"As of year \"&Day!$B$6&\", day \"&Day!$B$7&\" (unaudited)\""))   ; the date, from the day: unaudited, as every number here is until the examiner calls (GUARD.3)
+  (as-of "A1")                      ; the date, from the day: unaudited, as every number here is until the examiner calls (GUARD.3)
   (headers "A4" "Security" "Price ($)" "Change ($)")
   (formulas
     ("A5:A8" "=Stocks!A5")                      ; each stock's name, the model's, until MENU.3 names them
     ("B5:B8" "=Stocks!E5/100")                  ; its price today: whole cents over 100, once
     ("C5:C8" "=(Stocks!E5-Stocks!F5)/100")      ; its change since yesterday: a difference of cents, over 100 once
-    ("D5:D8" "=IF(C5>0,\"▲\",IF(C5<0,\"▼\",\"=\"))")   ; which way it went: up, down or flat, read off the change beside it
-    ("A10" "=Disclosures!$D$3")))               ; the fine print, a disclosure a month (MENU.1)
+    ("D5:D8" "=IF(C5>0,\"▲\",IF(C5<0,\"▼\",\"=\"))"))   ; which way it went: up, down or flat, read off the change beside it
+  (fine-print "A10"))                           ; the fine print, a disclosure a month (MENU.1)
+
+; ---- BACK.1: the gigs ---------------------------------------------------------------
+; Gigs, the game's second view, where the side hustle is worked: its button, the key
+; beside it, the prospectuses proofread, what remains of the run's four, the fees, and
+; where the hustle stands, in a sentence. The button is a text in brackets, no look
+; drawing one yet (FRONT.2's second slice), in a column as wide as its text, so that a
+; click on any of it is a click on the button: a text spills only into the empty cells
+; on its right, and a click there is the next cell's. The Hustle sheet names the
+; button's place in values, so that this sheet is laid out again with no formula moved;
+; the gigs to come, each its own speed, cooldown and pay, are later dishes' (the owner's
+; word, 2026-10-16, naming the sheet). Then the Keys, written last so that the sheet
+; stands with the devices: a key is bound on its own view alone, each code a formula of
+; the sheet shown, which the host reads after every step (SPEC.md section 3.4), so that
+; every view may bind keys of its own and the workbook is not held to one set of them
+; (the owner's word at the hand test, 2026-10-16: "keybindings should be scoped to each
+; tab to avoid limiting the entire application to 26 key commands"). P is Gigs', on the
+; a button; on any other sheet P is unbound, and the viewport's, which takes no letter,
+; as every key the Keys sheet leaves unbound is: the arrows, Enter and Space among them.
+
+(on "Gigs"
+  (column "A" 26 shown none)        ; the button and the labels: as wide as the button's text
+  (column "B" 12 shown none)        ; the counts, and the button's key
+  (as-of "A1")                      ; the date, every view's
+  (cells
+    ("A3" "Proofreading prospectuses at $25 apiece, paid by the prospectus and not by the page.")
+    ("A5" "[ Proofread a prospectus ]")   ; the button: Hustle!B3:B5 name this cell
+    ("B5" "or press P"))            ; its key, the Keys sheet's B5
+  (labels "A7" "Proofread" "Left this run" "Fees earned ($)")
+  (formulas
+    ("B7" "=Hustle!B10")            ; the prospectuses proofread
+    ("B8" "=Hustle!B2-Hustle!B10")  ; what remains of the run's claims
+    ("B9" "=Hustle!B13/100")        ; the fees: whole cents over 100, once
+    ("A11" "=IF(Hustle!B10>=Hustle!B2,\"Compliance has approved \"&Hustle!B2&\" a run, and you have proofread \"&Hustle!B10&\".\",IF(Hustle!B12=1,\"Done for today: the next prospectus arrives tomorrow.\",\"A prospectus awaits. Nobody else has read one either.\"))"))   ; where the hustle stands: the run spent, today's made, or open
+  (fine-print "A13"))               ; the fine print, every view's
+
+(sheet "Keys" visible)              ; the keys: the one device the game writes, among the engine's
+(on "Keys"
+  (cells
+    ("A5" "a"))                     ; the Input sheet's fifth button,
+  (formulas
+    ("B5" "=IF(Input!$B$19=Hustle!$B$3,\"KeyP\",\"\")")))   ;   held by P while the button's sheet shows, and by nothing elsewhere

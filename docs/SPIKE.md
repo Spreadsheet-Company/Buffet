@@ -51,6 +51,12 @@ empty.*
 
   *Closed 2026-10-15.* Predicted `~days`; cost one session, the scoping, the build and the owner's hand test. What landed: the Stocks sheet and the Market's column D in the source and its cartridge, now 131 rows and 79 formula cells; the hand's rungs, their prices, the dividend's days and the bound in `oracle/src/buffet.rs`; the Stocks sheet held inside the tests of two years, a year at difficulty 0, eight hundred days and a hundred years at one frame a day, two tests of the cartridge more (the rungs' settings, the opening) and three of the hand (the opening at both tiers, the bound, the dividend's days), 27 in all; the describe golden blessed again, moved as predicted; and, in the same commit at the owner's word, `POT.2`'s P2 cell, CI's Linux holding the market bit for bit at the first push. One of the eight predictions missed, and only at first: the suite took 11.6 s while the Stocks sheet's 56 cells were viewed at every frame and every day, and 7.4 s once the window held the four columns that compute, half again the old suite's time on the same machine under the same load. The build found that a cent is a wide step for a $1 share: the first rung's price moves on 25 of the first year's 365 days.
 
+## 🧽 THE BACK OF HOUSE
+
+- ✅ **`BACK.1` — the dish pit: the side hustle, the first button.** *Scoped 2026-10-16, approved the same day with the view named by the owner, built and hand-tested that day, and amended at the hand test, the key bound on its view alone: the scoping, the approval, every prediction beside its number, what the build found and the owner's hand test are under THE ITEMS, SCOPED.* Gigs, the game's second view, the owner's name for "the sheet where various clicker jobs can produce cash at varying speeds, cooldowns, and pay rates", and its one job at course 0, proofreading a prospectus: a button cell, `[ Proofread a prospectus ]` in a column as wide as its text, pressed by a click on it while Gigs shows, the pointer on the cell and the left button's rising edge, or by P while Gigs shows, the Keys sheet binding P on that view alone by a formula of the sheet shown, so that every view binds keys of its own (the owner's word at the hand test: "keybindings should be scoped to each tab to avoid limiting the entire application to 26 key commands"); each press a cell that holds 0 between presses; $25 a claim, once a market day, at most four claims a run, the owner's cap over a claim a day for good, four claims being $100, about twice a perfect trader's first year on the personal pocket's $100. A claim is judged by what the last frame showed and counts against the day shown, as an order fills at the price shown; its books stand on the Hustle sheet, the fee, the cap and the button's place as values, so that a layout of the view moves no formula; the fees are the claims times the fee, which `PLATE.2`'s personal pocket reads when it comes; the day moving reopens the hustle, and nothing reads the boundary. The views' date and fine print entered `kitchen.vla` at their second writing, `as-of` and `fine-print`, the Portfolio expanding over them to its bytes unchanged. *Oracle, met:* every frame of a scripted session of clicks and keys, written as the host writes them and the Keys sheet read after every step as the host reads it, held to the hand, the cap, the day a press counts against, the reset and the key's binding among them; Gigs at rest on every day of two years and two days and of eight hundred at one frame a day; the settings, the button at their place and the one key bound on its view; nothing reads a view, `BD-7`'s scan and the census's `(every-frame 0)` kept; the describe golden blessed again; nine mutants, each caught by the test written for it; a click's cost natively and in Chrome at full screen, a claim shown 48 to 50 ms after the click at p95, the contract's 100 ms met by half; and the owner's hand test in the page, twice. *Pays into:* `PLATE.1`'s six buttons a rung and `GUARD.1`'s four options a question, each a press's cell, its place values of the model and its keys its view's; the gigs to come, each its own speed, cooldown and pay. `~days`
+
+  *Closed 2026-10-16.* Predicted `~days`; cost one session, the scoping, its approval, the build, its measurements, the owner's hand test and its amendment. What landed: Gigs, the Hustle sheet and the Keys sheet's one key in the source and its cartridge, 474 rows and 125 formula cells; `as-of` and `fine-print` in `src/kitchen.vla`; the hand's hustle and its test; the scripted session and the binding's test, 49 tests in all; the describe golden blessed again; and, in the same commit, the five Linux cells run 38939138517 answered, `MENU.1`'s, `MENU.2`'s, `MENU.5`'s, `FRONT.1`'s and `FRONT.2`'s. Five of the nine predictions missed in part, each named beside its number: the describe golden's shapes, the views' date and fine print being one shape over two sheets; the step after a write of the Input rows; the cartridge's block in the page; P beside a click in Chrome; and the key, bound on every sheet as decision 9 had it until the owner's word at the hand test. The build found that every record lists every sheet, so that each sheet a dish adds makes the oracle's long tests dearer; and the owner, playing the game, asked before any other dish for an hour a second and the market's trading hours, recorded with the hand test for the item that takes it.
+
 ## 🛎 THE FRONT OF HOUSE
 
 - ✅ **`FRONT.1`, first slice — the workbook: the game's views, each a sheet of its own.** *Scoped 2026-10-15, first as panels on the Screen and then, at the owner's word, as the game's views on sheets of their own, gated on Alonzo; rescoped at the page's version 4 the same day, once `ENGINE.18` was released, its seventeen decisions approved whole by the owner on 2026-10-16, and built and hand-tested that day: both scopings, every prediction beside its number, what the build found and the owner's hand test are under THE ITEMS, SCOPED.* Buffet is played full-screen as a workbook: each of the game's views a sheet of its own, with its own widths, heights, looks and gridlines, reached by the workbook's own tabs and standing first among them, the model's sheets after them, visible (`AD-6`), every name a fund manager's and no tab numbered (`BD-2`'s amendment). The cartridge is written to the page's version 4, `(spec 4)`: the game opens on its first visible sheet with no Camera, which enters with `GUARD.1`; a click on any cell of the sheet shown is the game's, `Input!B19`, `B11` and `B12`, which the first button reads (`BACK.1`); and its Screen, holding nothing, is hidden, the manifest's screen line kept for a Screen a game may show (`FRONT.7`). The first view, the Portfolio: its date, "As of year 1, day 1 (unaudited)"; a row a stock on the Stocks sheet's own rows, each its name read from that sheet, its price today and its change since yesterday in dollars, whole cents over 100 once and the change a difference of cents; and the fine print at its foot, `Disclosures!D3`. Fourteen formula cells, reading the model and the day and never the frame (`BD-7`), and read by nothing, a view being the workbook's output; widths 22, 12 and 12 characters, the default row height, 15 points, kept by the owner's eye, gridlines on, and no background until `FRONT.2`. The caveat on number formats rewritten in the same commit, the first view to show dollars taking it (`BD-5`). Each later view enters with its dish: the Exam with `GUARD.1`, the Overview with `FRONT.3`, Work with `BACK.1`, the market's view with `PLATE.1`, the curve's at course 1. *Oracle, met:* the Portfolio held to the hand at every frame of two years and two days, whole on a day's first frame and byte for byte still through the day, and on every one of eight hundred days at one frame a day, its dollars the Stocks sheet's cents spelled by text, which a test of the hand holds to the record's own spelling from −200,000 cents to 2^52; its headers, and its names the model's; the game opening on it, written to version 4 with no Camera and the Screen hidden; no formula reading a view, each at most 1,000 formula cells; `BD-7`'s scan and the census's `(every-frame 0)`; the describe golden blessed again; eight mutants, each caught by the test written for it; `MISE.3`'s first number re-measured on the real view, in headless Chrome and in the owner's; and the owner's hand test in the page. *Pays into:* every view after it, each a sheet; every button (`BACK.1`, `PLATE.1`, `GUARD.1`), each a click on the sheet shown; the looks (`FRONT.2`), whose glyph column stands beside the change. `~days`
@@ -1864,7 +1870,7 @@ its own; P8 as decision 15 says.
 | P2 | the describe golden | moved in the version, the notes, `(device "Input" "A1:E19" input)` and `(budget 30 107 3210 2000000)`; the plan `(shapes 47) (texts 45) (formulas 107) (levels 15) (runs 9) (lanes 39) (alone 68)`, every-frame and cycles 0; `(readers "Day" 16 (most 6))`, the Day sheet indexed at its sixteenth reader, the day's row 3 the most read; `(readers "Stocks" 11)`, the change's two cells side by side one reader; `(readers "Disclosures" 12)`; the rest unmoved, and no row for the Portfolio; five shapes first, the Portfolio's: `A1` alone at level 2, `A5`, `B5` and `C5` each a run of four, at levels 0, 14 and 14, and `A10` alone at level 3; every other shape's number five more, its `same` with it; nothing else | *Measurement*, as predicted in every count: the version, the notes, `(device "Input" "A1:E19" input)` and `(budget 30 107 3210 2000000)`; `(plan (shapes 47) (texts 45) (formulas 107) (levels 15) (runs 9) (lanes 39) (alone 68) (every-frame 0) (cycles 0))`; `(readers "Day" 16 (most 6))`, `(readers "Stocks" 11)` and `(readers "Disclosures" 12)`, no row for the Portfolio; its five shapes first, `A1` and `A10` alone at levels 2 and 3, `A5`, `B5` and `C5` each `(runs 1 4 4 4)` at levels 0, 14 and 14; the 42 shapes after them their own rows but for their numbers, `(same 11)` and `(same 12)` where 6 and 7 stood |
 | P3 | the pass and the load | the pass 0.1 to 0.3 ms longer, twelve rows that call no picker; the load 0.05 to 0.15 ms longer | *Measurement*, a scratch runner over each tree, `b11bcd7`'s and this one's, each in a target of its own under the profile the tests use, three runs each alternated, 200 passes and 200 loads a run, every run pinning itself to the performance cores and opting itself out of Windows' throttling, a fixed computation before and after within 1.1%: the pass 4.52 to 4.63 ms at p50 where it took 4.42 to 4.44, 0.09 to 0.21 more, inside; the load 1.58 to 1.62 ms where it took 1.46 to 1.50, 0.08 to 0.16 more, the medians 0.11 apart, inside at the median |
 | P4 | the step | an ordinary frame unmoved, nothing new reading the frame; a day's first frame 1 to 4 µs more, the date, four prices and four changes, on which the fine print stays and on which it turns; the first frame 5 to 15 µs more, fourteen cells computed once | *Measurement*, the same runs, two years and two days at thirty frames a day: a day's first frame on which the fine print stays 15.0 to 15.8 µs where it took 12.3 to 12.5, 2.5 to 3.5 more, inside; one on which it turns 16.3 to 17.6 where 13.2 to 13.4, the medians 3.1 apart, inside at the median; the first frame 85 to 91 µs where 76 to 79, 6 to 15 more, inside. **Missed** in one: an ordinary frame 2.0 to 2.1 µs where it took 1.9 at every run, the step's own work by shape, two flags a shape cleared at every frame's end (`vla-lang`'s `machine/mod.rs`, `whole` and `recheck`), for five shapes more (*by reading*) |
-| P5 | the suite | 45 tests green here, the crate's 15 and the cartridge's 30, and in CI on Linux; within half a second of the commit before's at the median, the Portfolio viewed at 22,760 frames | *Measurement*, here: 45 green, the crate's 15 and the cartridge's 30. **Missed**: each tree's binary run alternately, five rounds, the order turned each round, each run pinned and opted out, on eight threads, 4.81 to 5.68 s where it took 4.17 to 4.96, the medians 5.18 and 4.41, 0.77 apart; the suite's longest test alone, alternated, 4.70 to 4.79 s where it took 4.15 to 4.21, about 0.55 more. The view parsed and spelled at every frame by the oracle's unoptimized helpers cost that test 0.85 s at its first writing; held whole at a day's first frame and byte for byte still through the day, the same cells held, it costs the 0.55 measured. Linux at the push |
+| P5 | the suite | 45 tests green here, the crate's 15 and the cartridge's 30, and in CI on Linux; within half a second of the commit before's at the median, the Portfolio viewed at 22,760 frames | *Measurement*, here: 45 green, the crate's 15 and the cartridge's 30. **Missed**: each tree's binary run alternately, five rounds, the order turned each round, each run pinned and opted out, on eight threads, 4.81 to 5.68 s where it took 4.17 to 4.96, the medians 5.18 and 4.41, 0.77 apart; the suite's longest test alone, alternated, 4.70 to 4.79 s where it took 4.15 to 4.21, about 0.55 more. The view parsed and spelled at every frame by the oracle's unoptimized helpers cost that test 0.85 s at its first writing; held whole at a day's first frame and byte for byte still through the day, the same cells held, it costs the 0.55 measured. Linux at the push, run 38939138517, which tested its head, `ec069e8`, two commits on: the 46 green, 16 of the crate and 30 of the cartridge, the cartridge's in 8.25 s, this item's tests among them as `FRONT.2` grew them |
 | P6 | the page | the cartridge's block about 900 characters longer, the source's about 2,600 and the caveats' a few dozen: the page near 1,787,300 where 1,783,841 stands; Build writing the cartridge byte for byte | *Measurement*: 1,787,808 characters, 3,967 more, the cartridge's block 714 longer, the source's 3,243 and the caveats' 10, the three adding to the page's growth exactly; **missed** in the source's block, its comments longer than priced, and so the page 508 past its "near"; Build writing the cartridge byte for byte, 25,701 characters (P9) |
 | P7 | the checks | 4 checks and 4 controls green, no check edited, no file added under `src/` | *Measurement*, as predicted: ALL GREEN, 4 checks and 4 controls, the layout control's fourteen mutants and the offline control's fifteen as they stood |
 | P8 | `MISE.3`'s first number, on the real view | in headless Chrome at full screen, the Portfolio shown: a still frame's tick under the clock's step at p50, 0 or 0.1 ms, and at most 0.3 at p95; a market day's 0.3 to 0.9 ms; the main thread's whole a frame 0.35 to 0.6 ms over a run; the drawer, 580 of 600 frames still and 19 patched; against `MISE.3`'s densest lean panel, 1.5 to 1.7 ms at p50 and 2.4 to 2.7 at p95; the owner's Chrome a tenth faster or so | *Measurement*, three runs of 600 frames in headless Chrome 155 at 2,560 by 1,440 CSS pixels at 1.5, its eleven processes opted out and pinned, the clock within 1.7%: a still frame's tick 0.2 ms at p50 and 0.3 at p95, at its longest 0.6 to 0.8; a market day's patch 0.5 at p50, at its longest 0.6 to 1.0; 580 or 581 of the 600 frames still and 20 patched; the main thread's whole 0.74 to 0.78 ms a frame. **Missed** in two: the still tick one step of the clock above, and the main thread past 0.6, a frame at thirty a second holding two of the display's sixty ticks of the browser's own work (*derived*). Against `MISE.3`'s densest lean panel a frame is now about a seventh. The owner's own Chrome, the probe copy at full screen for 23,265 frames: still 0.2 ms at p50 and 0.3 at p95, at its longest 0.7; patched 0.4 and 0.6, at its longest 1.3; 22,488 still and 775 patched, as headless within a tenth |
@@ -2252,7 +2258,7 @@ the build, the same day, P9 at the owner's hand test.
 | P3 | the pass and the load | the pass under a millisecond longer; the load under 0.1 ms longer, a picker of eight references where `MISE.3`'s 552 cost 2.3 to 2.5 ms | *Measurement*, a scratch runner of the pass and the load, three runs of 200 each, opted out of Windows' throttling and pinned to the performance cores: the pass 1.45 to 1.51 ms at p50 where it took 1.41 to 1.45, 0.02 to 0.09 more; the load 0.58 to 0.59 ms where it took 0.48 to 0.51, 0.08 to 0.10 more. Inside, the load by a hair |
 | P4 | the step | an ordinary frame unmoved; a day's first frame computing the index and, once in thirty days, the picker, under a microsecond more | *Measurement*, the same runs, two years at thirty frames a day: an ordinary frame 1.8 µs at p50 before and after; a day's first frame on which the fine print stays 11.8 µs where it took 11.6 to 11.8; a day's first frame on which it moves, day 30 and every thirtieth after, 12.5 to 12.6 µs where the same frames took 11.6 to 11.9, 0.6 to 0.9 µs more. Inside |
 | P5 | the limit | 1,547 rows load and 1,548 are refused, `calc-formula-too-long` at the picker's line; the pass over 1,548 rows under 50 ms | *Measurement*, as derived: 1,547 rows load, the picker 8,188 characters past its `=`; 1,548 are refused, `calc-formula-too-long` at the picker's line, its 8,194 characters; the pass over 1,548 rows 20.7 to 21.0 ms at p50. Inside, and the test holds the limit on every run |
-| P6 | the suite | 33 tests green here, five of the cartridge and one of the hand more, and in CI on Linux; the suite under a second longer than `bea77bc`'s, alternated against it in a worktree | *Measurement*, here: 33 green, 14 of the crate and 19 of the cartridge. The cartridge's binary run alternately with `bea77bc`'s from a worktree, five rounds, each opted out and pinned, on eight threads: 3.93 to 4.76 s where it took 3.63 to 4.37, the medians 4.27 and 3.85 s; the rounds 0.13, 0.17, 0.25 and 0.30 s apart, and the first 1.09. Inside at the median, one round of five past it. Linux at the push |
+| P6 | the suite | 33 tests green here, five of the cartridge and one of the hand more, and in CI on Linux; the suite under a second longer than `bea77bc`'s, alternated against it in a worktree | *Measurement*, here: 33 green, 14 of the crate and 19 of the cartridge. The cartridge's binary run alternately with `bea77bc`'s from a worktree, five rounds, each opted out and pinned, on eight threads: 3.93 to 4.76 s where it took 3.63 to 4.37, the medians 4.27 and 3.85 s; the rounds 0.13, 0.17, 0.25 and 0.30 s apart, and the first 1.09. Inside at the median, one round of five past it. Linux at the push, run 38939138517, which tested its head, `ec069e8`, nine commits on: the 46 green, 16 of the crate and 30 of the cartridge, the cartridge's in 8.25 s, this item's tests among them as later dishes grew them |
 | P7 | the page | one block more, `library-content-disclosures`, and the page about 5,000 characters longer, near 1,590,000; Build in the drawer writing the cartridge byte for byte | *Measurement*: 1,594,601 characters, 9,587 more, **missed** by nearly double: the prediction forgot the library's own block, which grew 4,217 characters with its two verbs and their comments. The cartridge's block grew 2,031, the source's 1,652, and the new block holds 1,578 in a tag of 109. Written in 0.34 s. Build in the drawer at the owner's hand test, P9 |
 | P8 | the checks | 4 checks and 4 controls green; the layout check's control eleven mutants and the offline check's fifteen, each failing by name | *Measurement*, as predicted: ALL GREEN, 4 checks and 4 controls; the layout check's eleven mutants and the offline check's fifteen each failing for its own reason. `check_spdx` reads the tracked tree, and the two new files were held through a scratch index that tracked them: 39 files resolved, 6 headers read under `src/` |
 | P9 | the hand test | the box counting ten hidden sheets, the nine twins and Disclosures; `F3` the first disclosure from frame 1 and the second from frame 901 | *Measurement*, the owner's screenshot and comparison, in the owner's Chrome at full screen: the box read "hidden sheets (10)", and the Disclosures sheet stood between Stocks and Clock, the twins after Input; its eight rows with their vintage and approver, `F1` 8 and `F5` 30; at frame 2,845, day 94, `F2` 4 and `F3` "Securities are not FDIC insured. Neither are your feelings.", the hand's row for the day, the round three months on; and Build in the drawer writing the cartridge's 7,638 LF characters, "same bytes". Inside. The first turn, at frame 901, is in no screenshot, and the fourth row on day 94 says the round turned three times; Build, which refuses a source whose include it cannot find, says the content's block was in the page |
@@ -2690,7 +2696,7 @@ the build, P9 at the owner's hand test.
 | P3 | the pass and the load | the pass under a millisecond longer; the load under a millisecond longer, 240 rows mostly of text where `MENU.1`'s 38 cost 0.08 to 0.10 ms | *Measurement*, a scratch runner over each tree, `3dd3eeb`'s and this one's, three runs each alternated, 200 passes and 200 loads a run, opted out of Windows' throttling and pinned to the performance cores, a fixed computation before and after steady: the pass 3.34 to 3.44 ms at p50 where it took 1.61 to 1.64, 1.7 to 1.8 ms more, **missed** by nearly double. The prediction scaled `MENU.1`'s 38 rows, whose difference stood inside the runs' noise; the limit's pass prices a row of one field at 13 µs through the old walk and 18 through the new, and the bank brings 240 rows, the walk a field at a time, and eight pickers' walks of twenty steps. The load 1.25 to 1.29 ms where it took 0.52 to 0.57, 0.7 ms more: inside |
 | P4 | the step | an ordinary frame and a day's first frame unmoved, the pickers reading nothing that moves; the first frame computing the eight pickers once, under 10 µs more | *Measurement*, the same runs, two years and two days at thirty frames a day: an ordinary frame 1.70 µs at p50 before and after; a day's first frame on which the fine print stays 11.3 to 11.4 µs where it took 11.2 to 11.3, and one on which it turns 12.0 to 12.1 where 11.8 to 11.9, inside; the first frame, which computes every formula once, 122 to 134 µs where it took 73 to 95, **missed**: some 40 µs where under 10 was predicted. No frame after the first computes a picker |
 | P5 | the limit | unmoved: a sheet of one field holds 1,547 rows and 1,548 are refused at the picker's line; the pass over 1,548 rows within the expander's 5,000 links and under 50 ms | *Measurement*: 1,547 rows load and 1,548 are refused at the picker's line, the test holding both through the new walk on every run; the pass over 1,548 rows 28.3 to 28.9 ms at p50 where it took 20.3 to 20.8, two fifths more and inside |
-| P6 | the suite | 38 tests green here, five of the cartridge more, and in CI on Linux; the suite under a quarter of a second longer than `3dd3eeb`'s at the median, nothing of the bank held at every frame | *Measurement*, here: 38 green, 14 of the crate and 24 of the cartridge. The cartridge's binary run alternately with `3dd3eeb`'s, built from that commit's tree in a target of its own, five rounds, the order turned each round, each run opted out and pinned, on eight threads: 4.02 to 4.75 s where it took 4.00 to 4.73, the medians 4.30 and 4.61 s. Inside: no difference five rounds can tell. Linux at the push |
+| P6 | the suite | 38 tests green here, five of the cartridge more, and in CI on Linux; the suite under a quarter of a second longer than `3dd3eeb`'s at the median, nothing of the bank held at every frame | *Measurement*, here: 38 green, 14 of the crate and 24 of the cartridge. The cartridge's binary run alternately with `3dd3eeb`'s, built from that commit's tree in a target of its own, five rounds, the order turned each round, each run opted out and pinned, on eight threads: 4.02 to 4.75 s where it took 4.00 to 4.73, the medians 4.30 and 4.61 s. Inside: no difference five rounds can tell. Linux at the push, run 38939138517, which tested its head, `ec069e8`, eight commits on: the 46 green, 16 of the crate and 30 of the cartridge, the cartridge's in 8.25 s, this item's tests among them as later dishes grew them |
 | P7 | the page | one block more, `library-content-questions`, about 9,000 characters; the page about 27,000 longer, the cartridge's block some 13,900, the content's 9,000, the library's 2,700 and the source's 1,200, near 1,623,000; Build writing the cartridge byte for byte | *Measurement*: 1,623,410 characters, 27,731 more, inside; the new block 9,094 characters, the file's 9,025 in its tag; the cartridge's block grew 13,655, the library's 3,411 where 2,700 was predicted, the source's 1,512 and Disclosures' 23. Build in the drawer at the owner's hand test, P9 |
 | P8 | the checks | 4 checks and 4 controls green; the layout control's clean copy seven files and its fifteen mutants each failing for its own reason; the offline control's fifteen unchanged | *Measurement*, as predicted: ALL GREEN, 4 checks and 4 controls; the layout control's clean copy seven files and its fifteen mutants, the third content sheet's among them, each failing for its own reason; the offline control's fifteen unchanged. `check_spdx` reads the tracked tree, so `questions.vla`, untracked, was held through a scratch index that tracked it: 40 files resolved, 7 headers read under `src/` |
 | P9 | the hand test | the box reading twelve hidden sheets; the card the first question from frame 1, and *Efficient markets* the frame after `M2` is written 17; Build "same bytes" | *Measurement*, the owner's screenshots and comparison, in the owner's Chrome at full screen: the box read "hidden sheets (12)", and the Questions sheet stood between Disclosures and Clock, its twin among the others after Input; its twenty rows whole, each its vintage 0 and its approver; at frame 2,068 the edit `(cell "Questions" "M2" 17)` written, and at frame 2,238 `M2` 17 and `M3` to `M10` *Efficient markets*'s eight fields, its answer A; the budget 89 formula cells a frame, 2,670 a second; and Build in the drawer, "same bytes". Inside. A third screenshot, the sheet as first opened at frame 1,395, before the edit, showed the card the first question, `M2` 1, *Opportunity cost* and its answer C, and every column at its width. The comparison, as the handover gave it, lost its backticks to the message's inline code, so it replaced "rn" with "n" in both texts where it meant CRLF with LF; both carried CRLF, the clipboard as the file does, and it printed 21,801, the file's 21,820 characters less its nineteen pairs of "rn": the two texts equal all the same |
@@ -3190,7 +3196,7 @@ it is committed, built in a target of its own.
 | P3 | the pass and the load | the pass 0.3 to 0.8 ms longer, at `MENU.2`'s price of a cell and of a picker's step; the load 0.2 to 0.4 ms longer | *Measurement*, a scratch runner over each tree, `adc1bc7`'s and this one's, three runs each alternated, 200 passes and 200 loads a run, the runner pinning itself to the performance cores and opting itself out of Windows' throttling, a fixed computation before and after steady: the pass 3.81 to 3.84 ms at p50 where it took 3.24 to 3.27, 0.54 to 0.60 ms more, inside; the load 1.36 to 1.38 ms where it took 1.13 to 1.17, 0.19 to 0.24 more, inside at its lower edge |
 | P4 | the step | an ordinary frame and a day's first frame unmoved, the pickers reading nothing that moves; the first frame computing four pickers once, 5 to 20 µs more | *Measurement*, the same runs, two years and two days at thirty frames a day: an ordinary frame 1.70 µs at p50 before and after; a day's first frame on which the fine print stays 11.4 to 11.5 µs where it took 11.3 to 11.6, and one on which it turns 12.2 to 12.6 where 11.9 to 12.6: unmoved; the first frame 131 to 149 µs where it took 95 to 125, the medians 131 and 122, about 10 µs more: inside |
 | P5 | the limit | unmoved: a sheet of one field holds 1,547 rows and 1,548 are refused at the picker's line, the scratch sheet now visible and nothing else of it moved; the pass over 1,548 rows under 50 ms | *Measurement*: 1,547 rows load and 1,548 are refused at the picker's line, the test holding both on every run; the pass over 1,548 rows 18.5 to 18.8 ms at p50 on both trees, inside, and lighter than `MENU.2`'s 28.3 to 28.9 since `adc1bc7`'s rows carry one cell where they carried three |
-| P6 | the suite | 41 tests green here, three of the cartridge more and two extended, and in CI on Linux; within a quarter of a second of the commit before's at the median | *Measurement*, here: 41 green, 14 of the crate and 27 of the cartridge. The cartridge's binary run alternately with `adc1bc7`'s, built from that commit's tree in a target of its own, five rounds, the order turned each round, each run pinned and opted out, on eight threads: 4.18 to 5.07 s where it took 4.11 to 4.84, the medians 4.41 and 4.23 s, 0.18 s apart: inside. Linux at the push |
+| P6 | the suite | 41 tests green here, three of the cartridge more and two extended, and in CI on Linux; within a quarter of a second of the commit before's at the median | *Measurement*, here: 41 green, 14 of the crate and 27 of the cartridge. The cartridge's binary run alternately with `adc1bc7`'s, built from that commit's tree in a target of its own, five rounds, the order turned each round, each run pinned and opted out, on eight threads: 4.18 to 5.07 s where it took 4.11 to 4.84, the medians 4.41 and 4.23 s, 0.18 s apart: inside. Linux at the push, run 38939138517, which tested its head, `ec069e8`, six commits on: the 46 green, 16 of the crate and 30 of the cartridge, the cartridge's in 8.25 s, this item's tests among them as later dishes grew them |
 | P7 | the page | one block more, `library-content-limitations`, about 4,900 characters; the cartridge's block some 6,500 longer, the source's 1,400 and the library's a few hundred; the page about 13,000 longer, near 1,635,000 where the approver's amendment left 1,622,074; Build writing the cartridge byte for byte | *Measurement*: 1,634,034 characters, 13,313 more than `adc1bc7`'s 1,620,721, inside; the new block, `library-content-caveats`, 5,239 characters; the cartridge's block 5,403 longer where some 6,500 was predicted with the vintage, the library's 508, and the source's 2,062 where 1,400 was predicted, **missed**: its comments ran longer than priced. Build in the drawer at the owner's hand test, P9 |
 | P8 | the checks | 4 checks and 4 controls green; the layout control's clean copy eight files and its fifteen mutants each failing for its own reason, the fourth content sheet's among them; the offline control's fifteen unchanged | *Measurement*: ALL GREEN, 4 checks and 4 controls; the layout control's clean copy eight files and its fourteen mutants, the fourth content sheet's among them, each failing for its own reason, fifteen having been counted before `adc1bc7` struck the courses mutant; the offline control's fifteen unchanged. `check_spdx` reads the tracked tree, so `caveats.vla`, untracked, was held through a scratch index that tracked it: 41 files resolved, 8 headers read under `src/` |
 | P9 | the hand test | the strip showing Limitations between Stocks and Clock and the box "hidden sheets (13)"; the twelve rows whole within their columns; `H3` to `H6` the first row from the first frame; Build "same bytes" | *Measurement*, the owner's screenshot and comparison, in the owner's Chrome at full screen, on the page built in the scratch worktree, byte for byte the shared tree's: the strip read Screen, Day, Dice, Market, Stocks, Caveats, Clock, File and Input, the box "hidden sheets (13)"; the Caveats sheet's twelve rows whole, every text inside its column and every reference inside D; at frame 950, `G1` 12, `G2` 1, `G3` to `G5` the first row, its texts spilling over the empty columns to their right, and `G6` empty; every label in F whole, `Management's response` among them; the budget line 93 formula cells a frame, 2,790 a second; and Build in the drawer, "same bytes (24985 characters)". Inside, the addresses the approval's |
@@ -3586,7 +3592,7 @@ as decision 10 says.
 | P2 | the describe golden | `(budget 30 111 3330 2000000)`; `(plan (shapes 48) (texts 46) (formulas 111) (levels 16) (runs 10) (lanes 43) (alone 68) (every-frame 0) (cycles 0))`; `(readers "Portfolio" 1)` first among the readers, the rest unmoved; a shape 4, `"Portfolio" "D5"`, `(cells 4) (levels 15 15 1 4) (runs 1 4 4 4) (alone 0) (reads lookup)`; `A10` shape 5 and every shape after it one more, its `same` with it; nothing else | *Measurement*, as predicted in every count: `(budget 30 111 3330 2000000)`; `(plan (shapes 48) (texts 46) (formulas 111) (levels 16) (runs 10) (lanes 43) (alone 68) (every-frame 0) (cycles 0))`; `(readers "Portfolio" 1)` first among the readers; shape 4, `"Portfolio" "D5"`, `(cells 4) (levels 15 15 1 4) (runs 1 4 4 4) (alone 0) (reads lookup)`; `A10` shape 5 and the 42 shapes after it their own rows but for their numbers, `(same 12)` and `(same 13)` where 11 and 12 stood |
 | P3 | the pass and the load | the pass 0.01 to 0.1 ms longer, two rows calling no picker; the load 0.01 to 0.06 ms longer | *Measurement*, a scratch runner over each tree, `965d141`'s and this one's, each in a target of its own under the profile the tests use, three runs each alternated, 200 passes and 200 loads a run, every run pinning itself to the performance cores and opting itself out of Windows' throttling, a fixed computation before and after within 2.5%: the pass 4.40 to 4.47 ms at p50 where it took 4.43 to 4.49, the medians 4.46 and 4.44, 0.02 apart, inside; the load 1.50 to 1.53 ms where 1.51 to 1.54, the medians 1.52 and 1.53. **Missed** in the load, below the range: two rows' load is inside the noise |
 | P4 | the step | an ordinary frame unmoved, within 0.1 µs, one shape more; a day's first frame 0.5 to 2 µs more, four glyphs; the first frame 2 to 8 µs more | *Measurement*, the same runs, two years and two days at thirty frames a day: an ordinary frame 2.0 µs at p50 in every run of this tree, where it took 1.9 to 2.0, unmoved; a day's first frame on which the fine print turns 15.8 to 16.1 µs where 15.0 to 16.5, the medians 0.6 apart, inside; the first frame 80.0 to 82.9 µs where 78.9 to 82.5, the medians 2.2 apart, inside. **Missed** at the median in one: a day's first frame on which the fine print stays 15.0 to 15.1 µs where 14.0 to 15.1, the medians 0.4 apart, a tenth under the range, the runs overlapping |
-| P5 | the suite | 46 tests green, the hand's glyph's test more, and in CI on Linux; within 0.3 s of `965d141`'s at the median | *Measurement*, here: 46 green, 16 of the crate and 30 of the cartridge. Each tree's suite run alternately, five rounds, the order turned each round, each run pinned and opted out: on eight threads 4.76 to 4.85 s where it took 4.73 to 5.71, the medians 4.78 and 4.76, 0.02 apart; on one thread 8.65 to 9.11 where 8.55 to 8.86, the medians 0.09 apart: inside. A first alternation on eight threads had the commit before's rounds at 5.51 to 5.70 s and this one's at 4.61 to 5.20, faster though it holds more, which no test timed alone bore out: alone, the longest test is 0.17 s dearer here, 4.69 against 4.52, and the thirty 0.26 s dearer in sum, so the first round's gap was the machine's. Linux at the push |
+| P5 | the suite | 46 tests green, the hand's glyph's test more, and in CI on Linux; within 0.3 s of `965d141`'s at the median | *Measurement*, here: 46 green, 16 of the crate and 30 of the cartridge. Each tree's suite run alternately, five rounds, the order turned each round, each run pinned and opted out: on eight threads 4.76 to 4.85 s where it took 4.73 to 5.71, the medians 4.78 and 4.76, 0.02 apart; on one thread 8.65 to 9.11 where 8.55 to 8.86, the medians 0.09 apart: inside. A first alternation on eight threads had the commit before's rounds at 5.51 to 5.70 s and this one's at 4.61 to 5.20, faster though it holds more, which no test timed alone bore out: alone, the longest test is 0.17 s dearer here, 4.69 against 4.52, and the thirty 0.26 s dearer in sum, so the first round's gap was the machine's. Linux at the push, run 38939138517 at this commit, `ec069e8`: the 46 green, 16 of the crate and 30 of the cartridge, the cartridge's in 8.25 s |
 | P6 | the page | the cartridge's block 104 characters longer, its two rows, and the source's 800 to 2,000: the page near 1,823,200 where the pin left 1,821,787; Build writing the cartridge byte for byte | *Measurement*: 1,822,477 characters, 690 more than the pin's 1,821,787, the cartridge's block 107 longer and the source's 583. **Missed** in both: the cartridge's by the three characters of P1, and the source's under its range, its comments shorter than priced, so the page grew 690 where 904 to 2,104 was predicted. Build writing the cartridge byte for byte, 25,808 characters, checked headlessly over the probe copy |
 | P7 | the checks | 4 checks and 4 controls green, no check edited, no file added under `src/` | *Measurement*, as predicted: ALL GREEN, 4 checks and 4 controls, the layout control's fourteen mutants and the offline control's fifteen as they stood; no check edited by this item, the pin's change to `check_vendored.ps1` being its own; no file added under `src/` |
 | P8 | the glyph's cost in Chrome at full screen | `965d141`'s cartridge on the 0.1.5 page as `FRONT.1` measured it on 0.1.4's; then with the glyphs, a still frame's tick 0.2 ms at p50 and 0.3 at p95, nothing painted; a market day's patch 0.5 to 0.6 at p50, up to four cells more; 580 of 600 frames still and 20 patched, a glyph moving on a day's first frame alone; the main thread 0.72 to 0.82 ms a frame; the owner's Chrome a tenth faster or so | *Measurement*, six runs of 600 frames alternated in headless Chrome at 2,560 by 1,440 CSS pixels at 1.5, its eleven processes opted out and pinned, the clock within 1.0%: `965d141`'s cartridge on the 0.1.5 page, a still frame's tick 0.2 ms at p50 and 0.3 at p95, at its longest 0.4 to 0.5; a patch 0.5, at its longest 0.6 to 0.7; 581 of 600 frames still and 20 patched; the main thread 0.70 to 0.72 ms a frame. With the glyphs, the same at every percentile, at their longest 0.4 to 0.6 and 0.7; 580 or 581 still and 20 patched; the main thread 0.71 to 0.74: the glyphs cost nothing the page's clock, in steps of 0.1 ms, can see. **Missed**, by a hundredth, in the main thread's least, 0.71 where the range began at 0.72. The owner's own Chrome, the probe copy at full screen for 4,120 frames: still 0.2 ms at p50 and 0.3 at p95, at its longest 0.7; patched 0.4 and 0.6, at its longest 1.4; 3,981 still and 137 patched, and one other frame, a full paint, 1.3 ms: `FRONT.1`'s own within a tenth, and the patch a tenth under headless, as predicted |
@@ -3618,3 +3624,504 @@ the median, though this one holds more, and each test timed alone in both
 trees found the opposite and where it lies, the two years' test 0.17 s
 dearer, so the eight threads' difference was the machine's and a second
 alternation agreed (P5).
+
+## `BACK.1` — the side hustle, the first button: a prospectus proofread for $25, by a click or a key
+
+*Scoped 2026-10-16 at the owner's word, "Scope and implement BACK.1 in
+Buffet (Delta/Buffet): the side hustle, the first button", to stop for the
+owner's approval before building: from `OMAKASE.md`'s line (`COURSE.0`'s
+item 8), the opening contract's hustle ($25 a claim, once a market day, at
+most four a run; personal cash $100; money in whole cents) and the open
+decisions' row "the hustle's cap, four a run or once a day for good", which
+this scoping puts to the owner (decision 1); `FRONT.1`'s rescoping and
+`FRONT.2`'s scoping and their records; `MISE.3`'s probe 3 and `PLATE.1`'s
+approved spelling, which copies this dish's button six times a rung;
+`BD-2`, `BD-7`, `BD-8` and `BD-9`; Alonzo's `SPEC.md` §2's rule 3, §3.3,
+§3.4 and §3.9; the kit's verbs; and the owner's rule of the same day, that
+Alonzo, Buffet and Frazaro are keyboard-first, every act a key and a button
+its convenience, Alt reserved for the chords. It comes now because
+`FRONT.2` closed (`ec069e8`, pushed): the Portfolio shows the day and four
+stocks, and nothing a player does reaches the model yet. This is the first
+tongs, the smallest click-to-cell pattern there is, which `PLATE.1`'s
+buttons and `GUARD.1`'s four options a question copy. Each decision carries
+its recommendation, for the owner to approve, amend or strike; the texts a
+player reads are drafts, for the owner to approve or rewrite. The
+predictions were written before any number was taken. Alonzo's and
+Frazaro's trees were read and never touched.*
+
+**What it stands on, read on the day** (`alonzo` 0.1.5 and `vla-lang` 0.9.4
+as the registry holds them; `web/` as vendored at `v0.1.5`; Buffet at
+`ec069e8`, level with its remote, its tree clean).
+- *The cartridge.* `(spec 4)`, 431 rows, 111 formula cells in 48 formula
+  rows. No formula reads the Input sheet and there is no Keys sheet, so no
+  key is the game's. The tabs: the Screen hidden, then the Portfolio, Day,
+  Dice, Market and Stocks, the Disclosures and the Questions hidden, the
+  Caveats, and the engine's Clock, File and Input; the box "hidden sheets
+  (15)".
+- *The press* (`SPEC.md` §3.3 at version 4; `host.js`, `_inputRows` and
+  `_pointerFromGrid`). The host writes `Input!B19`, the sheet its viewport
+  shows; `B11` and `B12`, the pointer's column and row on it, 0 off its
+  cells; and `B13`, the left button held; each only when it changed
+  (`ENGINE.19`), as `(cell "Input" "<cell>" <value>)` rows of one write. A
+  button is `B19`, `B11`, `B12` and the rising edge of `B13`, kept once in a
+  cell that holds 0 between presses (§2's rule 3: no raw pointer in a
+  cell's formula, a term that moves going through a cell that holds still).
+  The buttons follow the pointer: `B13` is 0 over a tab, a header or a
+  scrollbar and 1 over a cell while the button is held, so a press on a tab
+  is never the game's, and a drag that enters a cell with the button held
+  raises `B13` there, a press by the rule.
+- *The keys* (§3.4; `host.js`, `_readKeys`, `keyDown` and `_listenGrid`;
+  `viewport.js`, `_keyDown`). The Keys sheet is `A1:E10`, column A a
+  button's label in the Input sheet's order and columns B to E the
+  `KeyboardEvent.code` that holds it for players 1 to 4, read by the host
+  after each step; while a bound key is held, its button's Input cell is 1.
+  A bound key is the game's whatever sheet shows, taken before the viewport
+  sees it; every other key reaches the viewport, which moves by the arrows,
+  Page Up and Down, Home and End, and opens a cell by Enter. No key moves
+  between sheets until the chords (`SPEC.md` decision 44). The host hears a
+  key only while the focus is in the grid, and a cartridge picked leaves it
+  on the picker, so the first click in the grid gives the game its keys.
+  The kit's `default-keys` binds the arrows, Z, X, A, S, Enter and Space.
+  `B17` and `B18` are the last key of a frame, any key, bound or not, for
+  that frame alone, the browser repeating a key held.
+- *The Keys device* (`alonzo`'s `cartridge.rs`). A cartridge's own sheet,
+  an effect, its cells anywhere in `A1:E10`, no label required, the engine
+  checking the Input sheet's alone; `describe` prints `(device "Keys"
+  "A1:E10" effect)` after the Input's once it exists.
+- *State* (the kit's `count`, `hold` and `pressed`; §2). A formula's twin
+  holds no value until the first step's end, so a count reads 0 at the
+  first frame, as the input card's counts do. The step follows a cell to its
+  readers only when its value's bits change (`FRONT.1`'s first scoping), so
+  a cell that holds 0 between presses shields its readers from every move of
+  the pointer, and `describe`'s `every-frame` counts no shape for reading
+  the Input sheet. A Write row lands a frame late (`MISE.3`'s probe 3), the
+  ledger's (`PLATE.1`); nothing here needs one.
+- *The dialect* (`vla-lang`'s `calc/library.rs` and `calc/eval.rs`). `IF`,
+  `AND`, `OR`, `NOT`, `SUM`, `MIN`, `MAX`, `ABS`, `INT`, `MOD`, `ROW`,
+  `COLUMN`, `CHOOSE` and `SIN`. Two texts compare without case, so
+  `Input!B19="Gigs"` holds however the record spells the name. A cell
+  cannot read a cell it moves in the same frame: a claim judged by the
+  claims it changes is a cycle the load refuses.
+- *A name.* A sheet's name is written bare in a formula, as the kit's verbs
+  need and `every_sheet_is_written_bare_...` holds: one word, no space.
+- *The pockets.* None: the personal and the firm's are `PLATE.2`'s, the
+  plate and the ledger `PLATE.1`'s.
+- *The cap against the first year's trades* (*derived*, by the hand,
+  `buffet.rs`, in a scratch runner: seed 791886, whole shares, whole cents,
+  an order at the day's price, no costs). A hundred dollars held from day 0
+  to the report card's day 365 earns $21.00 in rung 1, $15.60 in rung 2,
+  $10.16 in rung 3, the index's own year, and $9.52 in rung 4, its four
+  dividends of 50 cents a share among them; perfect foresight, the cash
+  whole each day in the rung whose next day pays most or else in cash,
+  earns $52.14, invested on 252 of the 365 days. Four claims are $100: twice
+  a perfect trader's first year on the pocket's $100, five times the best
+  holding's. A claim a day for good is $9,125 a year: 175 times the perfect
+  trader's, 434 times the best holding's. And the brief of the design
+  reference, the owner's (`BUFFET.md` §8): avoid "the inevitable monotony of
+  clicking and waiting for time to pass".
+- *The loop* (`host.js`, `tick`). An animation frame's tick steps a frame
+  each time its accumulator passes 33.3 ms at `(rate 30)`, so a press waits
+  for the next stepping tick, between 0 and 33.3 ms, is stepped, viewed and
+  painted inside it, and reaches the screen with the browser's next frame.
+  On the Portfolio now (`FRONT.2`'s P8): a still frame's tick 0.2 ms at p50,
+  a market day's patch 0.5, the main thread 0.71 to 0.74 ms a frame.
+- *CI* at the last push: run 38939138517 green on both jobs at `ec069e8`,
+  the crate job's 16 and 30 tests on Linux, the cartridge's in 8.25 s,
+  written into `FRONT.1`'s and `FRONT.2`'s P5 cells in this item's commit.
+
+**The decisions.**
+
+1. **The cap: four claims a run (rec), the owner's open decision.** At most
+   four claims, $100, so that the hustle doubles the personal pocket's $100
+   once and is a bridge to the market and never its loop: four claims
+   outearn a perfect trader's first year twice over and are spent in four
+   days, where a claim a day for good outearns the perfect trader 175 times
+   over and is the clicking the brief rules out. A run is a game from its
+   load; a save (`ENGINE.5`, course 7) keeps the count, being a cell. The
+   cap is a value of the model, `Hustle!B2`, so a person's edit raises it
+   (`AD-6`), which is how the instrument times many claims (decision 13).
+   *The alternatives:* once a market day for good, $9,125 a year; or four a
+   year, which no line names.
+
+2. **The view: Sideline, second among the views (rec).** A fund manager's
+   word, and one word, as a sheet's name must be: a sideline is a second
+   line of work, and cash on the sidelines is money out of the market,
+   where the fees sit until `PLATE.1` can put them to work. It stands after
+   the Portfolio, which stays the first visible sheet and the game's
+   opening; a later view takes the place its dish gives it. *The
+   alternatives:* Work, the docs' working name since `FRONT.1`'s first
+   scoping; Moonlighting; Proofreading. *(Amended at the approval,
+   2026-10-16, the owner's name: "I submit "Gigs" as the name of the sheet
+   where various clicker jobs can produce cash at varying speeds,
+   cooldowns, and pay rates." So the view is Gigs, second among the views,
+   and every later mention of it in this scoping reads Gigs; the gigs to
+   come, each its own speed, cooldown and pay, are later dishes', and the
+   view's layout theirs to change, the button's place being values of the
+   model (decision 5).)*
+
+3. **The layout: the button, its key, the claims and the cap, in a
+   workbook's plain cells (rec).**
+
+   | | A | B |
+   |---|---|---|
+   | 1 | the date, the Portfolio's line (decision 10) | |
+   | 3 | `Proofreading prospectuses at $25 apiece, paid by the prospectus and not by the page.` | |
+   | 5 | the button, `[ Proofread a prospectus ]` | its key, `or press P` |
+   | 7 | `Proofread` | the claims made |
+   | 8 | `Left this run` | what remains of the cap |
+   | 9 | `Fees earned ($)` | the claims' fees, whole cents over 100 once |
+   | 11 | where the hustle stands, a sentence | |
+   | 13 | the fine print (decision 10) | |
+
+   Column A 26 characters, as wide as the button's text, so that every
+   character of it is the button: a text spills only into the empty cells on
+   its right, and a click on the spill is a click on the cell beside it.
+   Column B 12; the default height; gridlines on; no look, the looks being
+   `FRONT.2`'s second slice, so the brackets draw the button. The sentence,
+   three drafts, the counts joined from the model: open, "A prospectus
+   awaits. Nobody else has read one either."; done for the day, "Done for
+   today: the next prospectus arrives tomorrow."; the cap reached,
+   "Compliance has approved 4 a run, and you have proofread 4." The jokes:
+   the job's line, a prospectus being long; the open line, a prospectus
+   being unread; and Compliance, the house's voice (`BUFFET.md` §2). Six
+   formula cells, read by nothing. *The alternatives:* the claims as `1 of 4`
+   in one cell; the state a label and a word, `Today` and `Open`; the key
+   inside the button, `[ Proofread a prospectus (P) ]`, a column of 30.
+
+4. **The hustle's state: a model sheet of its own, Hustle, after the Stocks
+   (rec).** Settings, then workings, each a label in A beside its value in B
+   as the model's sheets hold them, visible (`AD-6`); its section after the
+   Stocks' and before the content sheets', the views reading it after both:
+
+   ```text
+   ; ---- BACK.1: the hustle --------------------------------------------------------------
+   (on "Hustle"
+     (labels "A1" "a prospectus's fee, in cents" "claims a run" "the button's sheet" "its column" "its row")
+     (cells
+       ("B1" 2500)                     ; $25 a prospectus, whole cents
+       ("B2" 4)                        ; claims a run: four, and then Compliance says no
+       ("B3" "Gigs")                   ; the button: its view,
+       ("B4" 1)                        ;   its column, A,
+       ("B5" 5))                       ;   and its row, values a layout moves, and no formula
+     (labels "A7" "clicked" "keyed" "claimed" "claims" "open from day" "shut" "earned, in cents")
+     (formulas
+       ("B7" "=IF(AND(Input!$B$19=$B$3,Input!$B$11=$B$4,Input!$B$12=$B$5,Input!$B$13=1,Input.last!$B$13=0),1,0)"))   ; a click: the left button's rising edge on the button, its sheet shown
+     (pressed "B8" "Input!B5")         ; a key: the a button's rising edge, held by P (decision 9)
+     (formulas
+       ("B9" "=IF(AND(OR(B7=1,B8=1),Hustle.last!B12=0),1,0)"))   ; a claim: a press while the last frame showed it open
+     (count "B10" "B9")                ; the claims so far
+     (hold "B11" "B9=1" "Day.last!$B$3+1")   ; open from day: after a claim, the day after the day shown
+     (formulas
+       ("B12" "=IF(OR(B10>=$B$2,B11>Day!$B$3),1,0)")   ; shut: the run's claims spent, or today's made
+       ("B13" "=B10*$B$1")))           ; earned, in whole cents
+   ```
+
+   Seven formula cells, each moving at a press alone. *The alternative:* the
+   state on the view, which nothing could then read, `PLATE.2`'s pocket
+   among the readers.
+
+5. **The press: two cells that hold 0 between presses, the button's place
+   values of the model (rec).** `B7` is §3.3's button, the sheet, the column
+   and the row compared with the settings and never written into the
+   formula, so that laying Gigs out again moves three values and no
+   formula of the model, a test holding the view's cell at that place to the
+   button's text; `B8` is the kit's `pressed` over the key's button. Each is
+   1 in a press's frame alone, and everything else reads them and never the
+   pointer. A drag onto the button with the button held is a press, as the
+   host writes it. *The alternatives:* the place written into the formula,
+   `Input!$B$11=1,Input!$B$12=5`, so that every layout moves a formula of
+   the model; one cell for the click and the key.
+
+6. **The day a press counts against: the day shown (rec).** A claim is a
+   press while `shut`'s twin is 0, the last frame's, which is the state the
+   person saw, since the claim cannot read this frame's `shut`, which it
+   moves. So it counts against the last frame's day, `Day.last!$B$3`, as an
+   order fills at the price shown, the last frame's quote (the contract). On
+   a boundary frame, the day before: a press in the frame the day turns,
+   while yesterday showed open, is yesterday's claim, and today opens after
+   it; one while yesterday showed done is refused, as it showed. One cell,
+   `shut`, is what the view shows and what the next press is judged by.
+   *The alternative:* the frame's own day, `Day!$B$3`: a press on a boundary
+   frame claiming a day the person had not yet seen, and the rule written
+   twice, the claim's over the twins and this frame's day, the view's over
+   this frame's cells.
+
+7. **The once-a-day reset: the day moving, and nothing written (rec).**
+   `Open from day` holds, after a claim, the day after the day it counted
+   against, from 0, so that a game opens open; `shut` compares it with
+   today. At a boundary the day reaches it and Gigs opens: no cell
+   reads the boundary, the frame or the phase (`BD-7`), and nothing resets.
+   A press is an edge, so a button or a key held across a boundary claims
+   once. *The alternative:* a flag that a claim sets and the boundary,
+   `Day!B5`, clears, its press on a boundary frame then needing an order of
+   the two.
+
+8. **The dollars: the claims alone, the fees a product (rec).** `Earned` is
+   the claims times the fee, in whole cents, which the view shows over 100
+   once. No cash cell enters: `PLATE.2` makes the personal pocket, its $100
+   and its flows, and reads the hustle's claim or its fees into it, the
+   ledger's rows being `PLATE.1`'s, and nothing here is taken over. *The
+   alternative:* the personal cash cell now, `=10000+Hustle!B13`, the
+   contract's $100 shown from today, the pocket's place and spelling settled
+   a dish before `PLATE.2`.
+
+9. **The key: P, on the `a` button, the one row this dish needs (rec).**
+   `(sheet "Keys" visible)`, then `Keys!A5` `a` and `Keys!B5` `KeyP`,
+   written last, so that the sheet stands after the Caveats with the
+   engine's devices: P for the prospectus, a letter the viewport never
+   takes; never an arrow, which the viewport moves by, nor Enter, which opens
+   a cell, nor Alt, the chords'. It presses whatever sheet shows, the host's
+   rule for a bound key and the only rule that leaves the act a key's while
+   no key moves between sheets: P on the Portfolio proofreads, the claim
+   landing on Gigs. Beside the button, `or press P`, a text a test
+   holds to the code bound. The kit's whole ten-row sheet would take the
+   arrows, Enter and Space from the viewport for buttons nothing reads.
+   *The alternatives:* the ten labels with the one code; H or W; the key
+   read from `Input!B18`, which the viewport also sees and the browser
+   repeats. *(Amended at the hand test, 2026-10-16, the owner's words:
+   "Pressing P anywhere in the workbook triggers the prospectus gig, but
+   clearly keybindings should be scoped to each tab to avoid limiting the
+   entire application to 26 key commands." So a key is bound on its own view
+   alone: `Keys!B5` is a formula of the sheet shown,
+   `=IF(Input!$B$19=Hustle!$B$3,"KeyP","")`, which the host reads after every
+   step (`SPEC.md` §3.4: a cartridge may rebind keys by formula), so that P
+   is Gigs' and on any other sheet unbound and the viewport's, and each later
+   view binds keys of its own.)*
+
+10. **The view's frame into the library at its second writing: `as-of` and
+    `fine-print` (rec).** Gigs writes the Portfolio's date and fine
+    print a second time, so by the ratchet they enter `kitchen.vla`, each a
+    verb of one formula row taking a sheet and a cell, and the Portfolio is
+    rewritten over them, expanding to its bytes unchanged, the hoist's
+    proof. *The alternative:* written by hand again and hoisted at the third
+    view.
+
+11. **The notes and the comments (rec).** The manifest's notes gain a
+    sentence after the Portfolio's: "Beside it, Gigs, where a
+    prospectus is proofread for $25, by a click on its button or by P, once
+    a market day and four times a run, Compliance permitting." The source's
+    opening comment lists `BACK.1`.
+
+12. **The oracle (rec).** In `oracle/src/buffet.rs` and
+    `oracle/tests/cartridge.rs`:
+    - *The hand's hustle*: the fee and the claims a run as the contract's
+      constants; the claims as the days each counted against, in order; a
+      press read from a frame's inputs and the last frame's as the host
+      writes them, a click the left button rising on `Gigs!A5`
+      while it shows, a key the `a` button rising; a claim when the run has
+      claims left and the day shown has none. It shares no predicate with
+      the cells, which judge `shut`'s twin where the hand reads its list's
+      length and its last day. Its own test: four claims on four days, a
+      second the same day refused, a fifth refused.
+    - *A scripted session*, every frame of it held: the Input rows written as
+      the host writes them, its changed rows alone, the key through the Keys
+      sheet as the host finds it, the code's row read from the cartridge; at
+      every frame `Hustle!B7:B13` and `Gigs!B7:B9` and `A11` held
+      to the hand. Its presses, over about ten days: a click claiming; a
+      second click and a key the same day refused; a click on the boundary
+      frame after a claimed day refused, and the next frame's claiming; a
+      click on `B5`, beside the button; a click at `A5` while the Portfolio
+      shows; P from the Portfolio claiming; the button held across a
+      boundary claiming once, and the key; a click and a key in one frame
+      claiming once; a click on the boundary frame after an open day claiming
+      that day, and the new day open after it; a drag onto the button
+      claiming; the fourth claim, and every press after it refused.
+    - *At rest*: Gigs held whole on each day's first frame inside
+      `held`, so on every day of two years and two days and of eight hundred
+      at one frame a day: no claim, four left, nothing earned, a prospectus
+      awaiting, its date and its fine print the Portfolio's. Between days it
+      cannot move without an input, which `BD-7`'s scan and the census hold,
+      and the session holds every frame of the active path: about a tenth of
+      a second, where holding it at every frame of the two years would cost
+      about half a second (`FRONT.1`'s P5).
+    - *The settings and the binding*: the Hustle's settings the hand's; the
+      Gigs sheet's cell at the button's place its button text; the Keys sheet
+      binding one code, `KeyP`, on the row `B8` reads, no arrow, Enter, Space
+      or Alt bound, and the text beside the button naming it.
+    - *Kept*: the cartridge its source expanded, the Portfolio's bytes
+      unmoved by the hoist; `BD-7`'s scan and the census's `(every-frame 0)`;
+      nothing reads a view, `VIEWS` naming Gigs, each view at most
+      1,000 formula cells; the tab order's list; the game opening on the
+      Portfolio; the describe golden blessed again and read in its diff with
+      the shapes' numbers stripped.
+    - *Mutants*, each written into the source by one anchor and expanded
+      before the suite runs, each failing the test written for it: a press
+      counted twice, the click's edge lost, so that a held button claims
+      again the next day; a press off the button counted, the column's test
+      lost; the cap lost; the reset lost, `B11>0` for `B11>Day!$B$3`; the key
+      unbound, `Keys!B5` gone; a press while another sheet shows counted, the
+      sheet's test lost; the frame's own day, `Day!$B$3` for `Day.last!$B$3`;
+      and a refused press counted, the claims counting presses.
+
+13. **What a click costs, measured (rec).** Natively, as `FRONT.2` took it:
+    a scratch runner pinning itself to the performance cores and opting
+    itself out of Windows' throttling, alternated against a `git archive` of
+    `ec069e8` built in a target of its own: the pass, the load, the first
+    frame, an ordinary frame and a day's first in both trees; and in this
+    one, the cap raised by a write, a frame whose pointer moved, a press's
+    frame that claims, a refused press's frame and the frame after a claim,
+    each its write and its step timed apart. Each test of the suite timed
+    alone in both trees before a difference in the suite's whole time is
+    read. In the browser, `FRONT.2`'s instruments copied into this session's
+    scratchpad: the page built here, its probe copy raising the cap by a
+    person's edit at its start; three runs in headless Chrome at the owner's
+    full screen, 2,560 by 1,440 CSS pixels at 1.5, every process opted out
+    and pinned; in each, forty real clicks on the Gigs sheet's button through
+    the DevTools protocol, one a day at a random point of the frame, then
+    forty presses of P; each timed from the event's own timestamp to the end
+    of the tick that painted its claim, and to the start of the next
+    animation frame, the frame the browser shows it in; p50, p95 and the
+    longest, against the contract's 100 ms at p95, the number `MISE.5` will
+    time; and the still and patched ticks with Gigs shown. In-page
+    times are Chrome's, in steps of 0.1 ms. And the owner's own Chrome, the
+    probe copy printing the same in a corner.
+
+14. **The hand test, the owner's, on the page built here:** the strip and
+    its box; Gigs as laid out, the button whole in its column; a
+    click claiming within a frame, and a second click before the date turns
+    claiming nothing; P after the date turns, from Gigs, then from
+    the Portfolio; a click at the Portfolio's `A5` claiming nothing; the
+    fourth claim, the cap's sentence, and nothing after it; the drawer's
+    viewer on the Hustle sheet; Build's text compared with `src/buffet.vla`
+    by a command given at the handover, since the page prints no "same
+    bytes"; the probe copy's corner after a minute of a click or a P each
+    second.
+
+15. **No caveat owed (rec).** The hustle claims nothing of the world but a
+    fee, and the fee is fictional. Offered for the owner's taste, a
+    thirteenth row in the house's voice, its claim marked for `MENU.8`'s
+    read:
+
+    | The field | The draft |
+    |---|---|
+    | Things this game gets wrong | A side job needs nobody's permission. |
+    | In the real world | A registered representative gives the firm written notice before taking on an outside business activity (FINRA Rule 3270). |
+    | Management's response | Management acknowledges receipt of this caveat, in writing. |
+    | Where | `Gigs!A5` |
+
+16. **The stale places, rewritten at the build.** In `OMAKASE.md`: `BACK.1`'s
+    line, 🟡 from the approval, its text as decisions 1 to 9 leave it, the
+    claims alone where it had the personal pocket's cash cell; the
+    contract's hustle, the cap settled, dated; the open decisions' row,
+    answered, dated; `PLATE.1`'s line, the click's pattern hoisted at its
+    second writing and the keys its acts will want; `GUARD.1`'s line, its
+    options' keys; `MISE.6`'s views row, the click met. The source's opening
+    comment, notes, sheets row and two sections; `kitchen.vla`'s two verbs;
+    `oracle/src/buffet.rs`'s module comment and the hand's hustle; the module
+    comments of `oracle/src/lib.rs` and `oracle/tests/cartridge.rs`; the
+    describe golden; `FRONT.1`'s and `FRONT.2`'s P5 cells, CI's Linux;
+    `Delta/CLAUDE.md`'s map, the Keys sheet and a button's place among the
+    edits that trip a test; the memory. `BACK.1` leaves `OMAKASE.md` for this
+    file with its commit, in a room of its own, 🧽 THE BACK OF HOUSE. Not
+    this item: the pockets (`PLATE.2`), the plate and the ledger
+    (`PLATE.1`), the hustle's later rungs (the opening bell, the intern's
+    autoclick, `BACK.5`), the looks (`FRONT.2`'s second slice), the chords,
+    and the replay golden (the tasting).
+
+**Found at the scoping**, measured or read, none minted:
+- *A game's keys wait for the grid's focus* (Alonzo's page). A cartridge
+  picked leaves the focus on the picker, so P does nothing until a click in
+  the grid, and a letter typed meanwhile reaches the picker, which may pick
+  and load another cartridge, an "A" naming "An empty sheet" (read; to be
+  confirmed in headless Chrome at the build). A finding for Alonzo, the
+  owner's to pass on.
+- *Ten buttons for course 0's acts* (`SPEC.md` §3.4). `PLATE.1`'s six
+  buttons a rung, twenty-four, and `GUARD.1`'s four options outnumber the
+  Keys sheet's ten, four of which are the arrows the viewport moves by.
+  Keyboard-first then needs the key rows, `B17` and `B18`, which the
+  viewport also sees and the browser repeats, or the chords (decision 44):
+  `PLATE.1`'s scoping's question, and a candidate row for `MISE.6`. *(The
+  owner, at the approval: "The Alonzo session is scoping a Control + Shift
+  + Backtick command palette CLI instead of Alt + keychord to avoid
+  colliding with system defaults, so keyboard shortcuts may need to be
+  deferred until that session implements a solution." So the keys for
+  `PLATE.1`'s acts wait for that palette, and no item is asked here.)*
+- *A key by its place* (§3.3). `KeyP` is the key where QWERTY's P stands:
+  P on QWERTY, AZERTY and QWERTZ, and L on Dvorak; the text beside the
+  button says P.
+
+**The predictions, before any number.** The numbers column is filled at the
+build, P9 at the owner's hand test; P3 to P5 and P8 as decision 13 says.
+
+| | What | Predicted | The number |
+|---|---|---|---|
+| P1 | the cartridge | 474 rows where 431 stand, 43 more: the sheets row's two names; the Hustle's 24, twelve labels, five values and seven formulas; Gigs' 14, two widths, three texts, three labels and six formulas; the Keys' three; 124 formula cells where 111; the diff the notes' line and the sheets row's two lines in place, the Hustle's rows after the Stocks', Gigs' and the Keys' at the end; the Portfolio's rows unmoved | *Measurement*, as predicted: the runner printed `(rows 474) (loads yes)`; 124 formula cells in 61 formula rows; the diff one line out and 44 in, the notes' line, Gigs and Hustle in place in the sheets' rows, the Hustle's 24 rows after the Stocks', Gigs' 14 and the Keys' three at the end; the Portfolio's rows unmoved, the two verbs writing them byte for byte |
+| P2 | the describe golden | the notes; `(device "Keys" "A1:E10" effect)` after the Input's; `(budget 30 124 3720 2000000)`; the plan's shapes 61, texts 57, formulas 124, alone 81, levels 16, runs 10, lanes 43, every-frame and cycles 0; readers rows new for the Hustle, 19 to 21 with its own reads, past sixteen and so indexed, `(most 5)` or `(most 6)` its row 10, the claims; its twin's 3, the Input's 5, the Input's twin's 2 and the Day's twin's 1; the Day's `(readers "Day" 19 (most 7))`, its row 3 read by `shut` too, and the Disclosures' 13; no row for Gigs; its six shapes after the Portfolio's, its date `(same 0)` and its fine print `(same 5)`; the Hustle's seven after the Stocks', single cells; every other shape's row unmoved but for its number and its `same` | *Measurement*: the notes; `(device "Keys" "A1:E10" effect)` after the Input's; `(budget 30 124 3720 2000000)`; `(plan (shapes 59) (texts 57) (formulas 124) (levels 16) (runs 10) (lanes 43) (alone 81) (every-frame 0) (cycles 0))`; `(readers "Hustle" 19 (most 5))`, `(readers "Input" 5)`, `(readers "Day.last" 1)`, `(readers "Hustle.last" 3)` and `(readers "Input.last" 2)`; `(readers "Day" 17 (most 7))`; no row for Gigs; Gigs' four other shapes after the Portfolio's and the Hustle's seven after the Stocks', single cells; every other shape's row its own but for its number. **Missed** in three, of one cause: Gigs' date and fine print are no shapes of their own but the Portfolio's two, each now a shape of two cells over two sheets, `(cells 2) ... (sheets 2)`, where `(same 0)` and `(same 5)` were predicted; so 59 shapes where 61, the Day's readers 17 where 19, and the Disclosures' 12, unmoved, where 13 |
+| P3 | the pass and the load | the pass 0.2 to 0.5 ms longer, forty-three rows and two verbs; the load 0.1 to 0.25 ms longer | *Measurement*, this tree's runner over both cartridges, the commit before's texts copied into its tree for the runs marked before, three runs each alternated, 200 passes and 200 loads a run, every run pinning itself to the performance cores and opting itself out of Windows' throttling, a fixed computation before and after within 3.7%: the pass 4.94 to 4.96 ms at p50 where it took 4.53 to 4.60, 0.34 to 0.43 more, inside; the load 1.81 to 1.85 where 1.55 to 1.60, the medians 0.25 apart, inside at its edge. Each tree's own runner, alternated first, agreed within 0.06 ms; its fixed computation read 120 ms in the commit before's binary and 140 in this one's at every run, two layouts of one loop and not the machine, which is why one runner timed both |
+| P4 | the step | an ordinary frame 0.1 to 0.3 µs dearer, thirteen shapes' flags; a day's first frame 0.5 to 2 µs more, Gigs' date and `shut`; the first frame 5 to 15 µs more. In this tree: a pointer's move, its two rows' write 2 to 6 µs and its step 2.1 to 2.8; a claim's write 1 to 3 µs and its step 3.5 to 7, about ten cells; a refused press's step 2.3 to 3.5; the frame after a claim 2.5 to 4.5 | *Measurement*, the same runs, two years and two days at thirty frames a day: an ordinary frame 2.1 µs at every run where it took 2.0, 0.1 more, inside at its edge; a day's first frame on which the fine print stays 17.2 to 17.7 µs where 15.3 to 15.9, the medians 1.7 apart, inside; one on which it turns 18.2 to 19.6 where 16.3 to 17.4, the medians 2.0 apart, inside at its edge; the first frame 97.7 to 99.7 µs where 83.4 to 89.0, the medians 12.1 apart, inside. In this tree, the run's claims raised by a write and 360 days played, each day a move onto the button, a claim, the frame after it, a release, a refused press, a release and a move away: a move's two rows' write 3.6 to 3.7 µs, inside; a claim's write 2.1 µs and its step 5.2 to 5.3, inside; the frame after a claim 4.1 to 4.2, inside. **Missed** in two: a move's step 3.5 µs where 2.1 to 2.8, and a refused press's step 3.6 to 3.7 where 2.3 to 3.5, a frame after a write of the Input rows costing about 1.4 µs over an ordinary one where the cells it computes were priced alone; not looked into |
+| P5 | the suite | 49 tests green, the crate's 17 and the cartridge's 32, and in CI on Linux; within 0.4 s of `ec069e8`'s at the median | *Measurement*, here: 49 green, the crate's 17 and the cartridge's 32. Each tree's suite run alternately, five rounds, the order turned each round, each run pinned and opted out, on eight threads: 5.07 to 5.46 s where it took 4.82 to 5.11, the medians 5.13 and 4.87, 0.26 apart: inside. Each test timed alone first, two rounds alternated, one thread: the two years' test 5.03 s where 4.78, 0.25 dearer, the hundred years' 2.68 where 2.48, the eight hundred days' 0.27 where 0.23, the year at difficulty 0 1.37 where 1.34; the session 0.02 s and the binding's test 0.01, new; every other within a hundredth. The long tests' cost is the oracle's own: every record lists every sheet, 30 sheet rows where 24 stood, Gigs, Hustle, the Keys and their twins, and the oracle's `values` reads each record whole, so every held frame pays for each sheet a dish adds. Linux at the push |
+| P6 | the page | the cartridge's block 2,800 to 3,800 characters longer, the source's 5,000 to 8,000 and the library's 800 to 1,500: the page between 1,831,000 and 1,836,000 where 1,822,477 stands; Build writing the cartridge byte for byte | *Measurement*: 1,831,874 characters, 9,397 more than `ec069e8`'s 1,822,477: the cartridge's block 2,248 longer, the source's 5,882 and the library's 1,267, the three adding to the page's growth exactly; the page, the source's block and the library's inside their ranges; Build writing the cartridge byte for byte, 28,056 characters, checked headlessly (P9). **Missed** in the cartridge's block, under its range: its rows shorter than priced |
+| P7 | the checks | 4 checks and 4 controls green, no check edited, no file added under `src/` | *Measurement*, as predicted: ALL GREEN, 4 checks and 4 controls, the layout control's fourteen mutants and the offline control's fifteen as they stood; no check edited; no file added under `src/` |
+| P8 | a click's cost in Chrome at full screen | click to painted 13 to 20 ms at p50 and 30 to 34 at p95, at its longest under 38; to the next frame about 16.7 more, 46 to 51 at p95: the contract's 100 ms met by half; P within a millisecond of a click; a still tick with Gigs shown 0.2 ms at p50 and 0.3 at p95, a claim's patch 0.4 to 0.7; the main thread 0.70 to 0.80 ms a frame; the owner's Chrome within a tenth | *Measurement*, three runs in headless Chrome at 2,560 by 1,440 CSS pixels at 1.5, its eleven processes opted out and pinned, the clock within 0.3%; in each, 40 real clicks on Gigs' button and then 40 presses of P through the DevTools protocol, one a market day at a random point of the day, the run's claims raised by a person's edit and every press claiming: a click to painted 16.0 to 18.1 ms at p50 and 32.0 to 33.2 at p95, at its longest 33.1 to 33.9; to the next frame, the claim shown, 32.0 to 34.4 at p50 and 48.2 to 49.3 at p95, at its longest 49.3 to 50.2: the contract's 100 ms at p95 met by half. P to painted 17.7 to 19.8 at p50 and 32.0 to 33.8 at p95; shown 48.2 to 49.9 at p95. A claim's patch 0.4 to 0.5 ms at p50 and 0.6 to 0.7 at p95. With Gigs shown and nothing pressed, three runs of 600 frames: a still tick 0.2 ms at p50 and 0.3 at p95, at its longest 0.4 to 0.5; a patch 0.4 to 0.5, at its longest 0.5 to 0.6; 580 or 581 still and 20 patched; the main thread 0.77 to 0.80 ms a frame, inside (0.96 to 0.98 while the instrument polled the day every 5 ms). **Missed** in one: P within a millisecond of a click, where its p50s stood 0.3 to 3.8 ms apart, forty presses a run, each waiting up to a frame's 33 ms, telling no finer difference; and one P of 120 at 45.0 ms. The owner's own Chrome, the probe copy at full screen for 2,297 frames, 31 clicks: painted 11.4 ms at p50 and 30.3 at p95, at its longest 33.0; shown 27.7 and 46.8, at its longest 49.2; one press claiming nothing; no P pressed; a still tick 0.2 ms at p50 and 0.3 at p95, at its longest 0.6; a patch 0.5 and 0.6, at its longest 1.3; 2,188 frames still and 106 patched: headless's p95s within 2 ms, the p50 lower over its 31 |
+| P9 | the hand test | the strip, Portfolio, Gigs, Day, Dice, Market, Stocks, Hustle, Caveats, Keys, Clock, File and Input, and the box "hidden sheets (18)"; a click claiming within a frame and a second claiming nothing; P from either view; the cap's sentence after the fourth; Build's bytes the file's, checked headlessly | *Headlessly*, over the page built here, before the owner's test: the strip and its box as predicted; a click claiming within a frame and a second claiming nothing; P the next day claiming from Gigs; on the Portfolio a click on its `A5` claiming nothing and P claiming; the fourth claim and the cap's sentence, a click and P after it claiming nothing; Build's bytes the file's, 28,056 characters. *Measurement*, the owner's three screenshots, in the owner's Chrome: Gigs on the first year's day 16, a prospectus proofread, three left and $25 earned, a prospectus awaiting again the next day; day 66, the fourth claim, none left, $100 and Compliance's sentence, the drawer's viewer on the Hustle sheet, its settings and its claims 4; and the probe copy at full screen (P8). **Missed** in one, by the owner's word: P claimed from the Portfolio as from Gigs, as decision 9 had it, where "keybindings should be scoped to each tab"; amended the same day, the key bound on its view alone, and checked headlessly over the page built again: P on the Portfolio claiming nothing, P on Gigs claiming, Build's bytes the file's, 28,097 characters; then the owner's re-test, a screenshot in the owner's Chrome, Gigs on day 30 with one prospectus proofread and the drawer's viewer on the Keys sheet, `B5` reading `KeyP` while Gigs shows, and the owner's word, "Tests pass; commit." |
+
+*Scoped 2026-10-16. Approved by the owner the same day with the view named
+Gigs (decision 2's amendment): "All other recommendations are approved;
+proceed with implementing BACK.1 as scoped." So the cap is four claims a
+run (decision 1), the key P stands (decision 9), and no caveat is added
+(decision 15). The predictions were amended to the name before any number
+was taken; the name moves characters and no row.*
+
+**What the build found.** The ratchet's proof held: the Portfolio written
+over the two new verbs, `as-of` and `fine-print`, expands to its bytes
+unchanged. The census makes one shape of a formula written alike on two
+sheets, its cells counted over both, `(sheets 2)`: the views' date and fine
+print are one shape each, whichever views write them, so a view's frame
+costs the plan no shape (P2's one miss). A formula over an empty cell's twin
+holds 0 in the record, so the claims and the day the hustle opens read 0
+from the first frame and a game opens open. The scripted session passed at
+its first run, and each of the eight mutants, written into the source by one
+anchor and expanded into the cartridge before the suite ran, failed it: the
+click's edge lost, a held button claiming again the next day; the column's
+test lost, a click beside the button claiming; the cap lost; the reset lost;
+the key unbound, which failed the binding's test too; the sheet's test lost,
+a click at the button's address on the Portfolio claiming; the frame's own
+day, the boundary's claim counting against a day the person had not seen;
+and the claims counting presses. Every record the engine views lists every
+sheet, so each sheet a dish adds makes every frame the oracle holds dearer,
+its `values` reading a record whole: three sheets and their twins cost the
+two years' test 0.25 s and the hundred years' 0.21 (P5), a cost of the
+oracle's and none of the game's. On the page, a real click's claim is
+painted within the frame that answers it and shown at the browser's next,
+48 to 50 ms at p95 at the owner's full screen, the contract's 100 ms met by
+half, and the button's 26 characters draw in 228 of the column's 273 device
+pixels. And the scoping's finding stands, confirmed headlessly: a pick
+leaves the focus on the picker, where an "a" typed picks "An empty sheet"
+and loads it, the game gone, a finding for Alonzo's page, the owner's to
+pass on.
+
+**The owner's hand test, and what it changed.** The hand test passed but for
+the key (P9): P claimed from the Portfolio as from Gigs, and the owner's word
+was that "keybindings should be scoped to each tab to avoid limiting the
+entire application to 26 key commands". Amended the same day, decision 9's
+dated note: the Keys sheet's `B5` a formula of the sheet shown, P bound while
+Gigs shows and on no other sheet. What moved: 474 rows still and 125 formula
+cells; the describe golden's `(budget 30 125 3750 2000000)`, `(plan (shapes
+60) (texts 58) (formulas 125) ... (alone 82) ...)`, `(readers "Hustle" 20
+(most 5))` and `(readers "Input" 6)`; the hand's key a press only while
+bound, by the sheet the last frame showed, which the host's keymap read after
+the last step; the session's script, P on the Portfolio unbound and claiming
+nothing, P on Gigs claiming, and P held on the Portfolio while Gigs is shown
+under it, a press the frame the key is bound, refused there, the day claimed,
+the session holding at every frame the keys the cartridge binds to the hand's;
+a ninth mutant, the key bound on every sheet, caught with the eight by the
+session and the binding's test; the page 1,832,337 characters, its
+cartridge's block 28,097, Build byte for byte. Found with it: a key held
+while its view is shown under it presses the frame it is bound, the host
+holding keys and its keymap changing beneath them; and the drawer's line of
+help names the kit's default keys, "the arrows, Z, X, A, S, Enter and Space
+are player 1's", whatever a cartridge's Keys sheet binds, a finding for
+Alonzo's page, the owner's to pass on.
+
+The owner's word with it, for the next item and before any other dish: "Also,
+it has become clear that one second per market day is too fast to
+conceptualize. The game should run at one real-world second per hour of
+in-game market play. I also think the market should have trading hours and
+non-trading hours, so the player has time between trading days to focus on
+other game tasks. I understand this is outside the scope of BACK.1, but after
+playing the game as-is a few times these are necessary changes before
+anything else gets built." What it moves, read on the day and decided at its
+scoping: `POT.1`'s calendar and the contract's thirty frames a market day;
+`BD-7`'s day as the market's clock; the hustle's once a market day; the
+views' date; the fine print's month; and the oracle's runs, a year of 365
+days at thirty frames an hour being 262,800 frames.

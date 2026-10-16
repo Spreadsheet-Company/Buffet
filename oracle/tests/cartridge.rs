@@ -39,14 +39,19 @@
 //! written to the page's version 4, with no Camera and the Screen hidden; and
 //! no formula reading a view, each holding at most 1,000 formula cells. Since
 //! `FRONT.2`: beside each change, which way it went, the hand's glyph at every
-//! one of those frames and days.
+//! one of those frames and days. Since `BACK.1`: the side hustle, Gigs at rest
+//! on each of those days, and every frame of a scripted session of clicks and
+//! keys, written as the host writes them, held to the hand, the cap, the day a
+//! press counts against and the day's reset among them; the hustle's settings,
+//! its button at the place they name, and the one key the Keys sheet binds,
+//! on its view alone.
 
 use std::collections::{BTreeMap, BTreeSet};
 
 use alonzo::cartridge::{Cartridge, Seed};
 use buffet_oracle::buffet::{
-    self, disclosure, least_index, Calendar, Market, DAYS_A_DISCLOSURE, DIFFICULTY, DIVIDEND_DAYS,
-    LOOK_BACK, RUNGS, WAVES, YEAR,
+    self, disclosure, least_index, Calendar, Hustle, Inputs, Market, DAYS_A_DISCLOSURE, DIFFICULTY,
+    DIVIDEND_DAYS, LOOK_BACK, RUNGS, WAVES, YEAR,
 };
 use buffet_oracle::{expand_source, gather, lf, load, read, root, values};
 use vla_lang::form::Form;
@@ -87,8 +92,12 @@ const CAVEAT_FIELDS: [&str; 4] = [
 ];
 /// The game's views, each a sheet of its own (`FRONT.1`), standing first
 /// among the tabs: the workbook's outputs, which read the model and which no
-/// formula reads. A view enters this list with the dish that fills it.
-const VIEWS: [&str; 1] = ["Portfolio"];
+/// formula reads. A view enters this list with the dish that fills it: Gigs
+/// with `BACK.1`, the side hustle's.
+const VIEWS: [&str; 2] = ["Portfolio", "Gigs"];
+/// Gigs' labels down its column A from row 7 (`BACK.1`'s decision 3), beside
+/// the prospectuses proofread, what remains of the run's claims and the fees.
+const GIGS_LABELS: [&str; 3] = ["Proofread", "Left this run", "Fees earned ($)"];
 /// The Portfolio's headers over its columns from A, in row 4 (`FRONT.1`'s
 /// decision 6).
 const PORTFOLIO_HEADERS: [&str; 3] = ["Security", "Price ($)", "Change ($)"];
@@ -298,6 +307,42 @@ fn held(
     let stocks = stocks_held(cart, cal, market, DIFFICULTY);
     disclosures_held(cart, cal, texts, DAYS_A_DISCLOSURE);
     portfolio_held(cart, cal, &stocks, texts, view);
+    gigs_held(cart, cal, texts);
+}
+
+/// Gigs at rest (`BACK.1`), held on each day's first frame: its date and its
+/// fine print the Portfolio's, the hand's; no prospectus proofread, the run's
+/// claims all left, nothing earned, and a prospectus waiting. Between two days
+/// nothing moves it but an input, and these runs write none: `BD-7`'s scan
+/// and the census keep the frame out of every view, and the scripted session
+/// holds every frame of the hustle at work
+/// (`a_scripted_session_holds_the_hustle_at_every_frame`), where holding the
+/// view at every frame of two years here would cost the longest test about
+/// half a second (`FRONT.1`'s P5).
+fn gigs_held(cart: &Cartridge, cal: &Calendar, texts: &[String]) {
+    if !cal.boundary() {
+        return;
+    }
+    let got = values(cart, "Gigs", "A1:B13");
+    let rest = Hustle::default();
+    let shown = disclosure(cal.day, texts.len() as u64, DAYS_A_DISCLOSURE);
+    let want = [
+        ("A1", buffet::as_of(cal)),
+        ("B7", "0".to_string()),
+        ("B8", rest.cap.to_string()),
+        ("B9", buffet::dollars(0)),
+        ("A11", rest.status(cal.day)),
+        ("A13", texts[shown as usize - 1].clone()),
+    ];
+    for (addr, text) in want {
+        assert_eq!(
+            got.get(addr),
+            Some(&text),
+            "frame {}, day {}: Gigs!{addr}",
+            cal.frame,
+            cal.day
+        );
+    }
 }
 
 /// The Portfolio at this frame (`FRONT.1`), held whole on a day's first
@@ -1060,10 +1105,11 @@ fn tabs(cart: &Cartridge) -> Vec<(String, String)> {
 /// the kit's verbs need, and no two are the same without case; the Screen
 /// hidden, then the views and the model's sheets, visible, then the content
 /// sheets, each in the state its source writes, the reference data hidden and
-/// the caveats shown, then the devices; and the twins after every sheet
-/// (`MENU.1`'s decisions 2 and 3, `MENU.5`'s decision 2, `FRONT.1`'s 4 and
-/// 5). A state the source forgot would leave its sheet visible, which the
-/// engine makes a sheet first named by a cell.
+/// the caveats shown, then the devices, the Keys the game writes before the
+/// engine's own; and the twins after every sheet (`MENU.1`'s decisions 2 and
+/// 3, `MENU.5`'s decision 2, `FRONT.1`'s 4 and 5, `BACK.1`'s 2, 4 and 9). A
+/// state the source forgot would leave its sheet visible, which the engine
+/// makes a sheet first named by a cell.
 #[test]
 fn every_sheet_is_written_bare_and_each_content_sheet_in_its_state() {
     let cart = cartridge();
@@ -1092,13 +1138,16 @@ fn every_sheet_is_written_bare_and_each_content_sheet_in_its_state() {
     let want = [
         ("Screen", "hidden"),
         ("Portfolio", "visible"),
+        ("Gigs", "visible"),
         ("Day", "visible"),
         ("Dice", "visible"),
         ("Market", "visible"),
         ("Stocks", "visible"),
+        ("Hustle", "visible"),
         ("Disclosures", "hidden"),
         ("Questions", "hidden"),
         ("Caveats", "visible"),
+        ("Keys", "visible"),
         ("Clock", "visible"),
         ("File", "visible"),
         ("Input", "visible"),
@@ -1241,6 +1290,361 @@ fn the_portfolio_heads_its_columns_and_names_its_stocks_from_the_model() {
             "Portfolio!{at} reads the name on the Stocks sheet and holds none of its own"
         );
     }
+}
+
+/// What a scripted session sets at a frame (`BACK.1`'s decision 12), each
+/// held until another act sets it again: the sheet shown, the pointer's cell
+/// on it, the left button, and the key the Keys sheet binds.
+#[derive(Clone, Copy)]
+enum Act {
+    Show(&'static str),
+    Point(u64, u64),
+    Left(bool),
+    Key(bool),
+}
+
+/// The Input sheet's rows as the host writes them at version 4 (Alonzo's
+/// `host.js`, `_inputRows`): ten buttons for four players, each 1 while the
+/// key its cell of the Keys sheet names is held; the pointer's column and row
+/// on the sheet shown, that sheet's own cell, 0 off its cells; its three
+/// buttons; the wheel; the key that went down this frame and its code; and the
+/// sheet shown. The one key a session holds is the hustle's.
+fn input_rows(keys: &BTreeMap<String, String>, now: &Inputs, went_down: bool) -> Vec<String> {
+    let mut rows = Vec::new();
+    for button in 1..=10 {
+        for player in ["B", "C", "D", "E"] {
+            let at = format!("{player}{button}");
+            let held = now.key && keys.get(&at).map(String::as_str) == Some(buffet::KEY_CODE);
+            rows.push(format!("(cell \"Input\" \"{at}\" {})", u8::from(held)));
+        }
+    }
+    let (key, code) = if went_down {
+        ("p", buffet::KEY_CODE)
+    } else {
+        ("", "")
+    };
+    rows.extend([
+        format!("(cell \"Input\" \"B11\" {})", now.column),
+        format!("(cell \"Input\" \"B12\" {})", now.row),
+        format!("(cell \"Input\" \"B13\" {})", u8::from(now.left)),
+        "(cell \"Input\" \"B14\" 0)".to_string(),
+        "(cell \"Input\" \"B15\" 0)".to_string(),
+        "(cell \"Input\" \"B16\" 0)".to_string(),
+        format!("(cell \"Input\" \"B17\" \"{key}\")"),
+        format!("(cell \"Input\" \"B18\" \"{code}\")"),
+        format!("(cell \"Input\" \"B19\" \"{}\")", now.sheet),
+    ]);
+    rows
+}
+
+/// The hustle at this frame (`BACK.1`): the Hustle sheet's workings, each a
+/// cell the hand states, the press's two cells from the frame's inputs and the
+/// last frame's, the claim, the claims, the day after the last claim's day,
+/// whether the hustle is shut today, and the fees; and Gigs' counts, its fees
+/// in dollars and its sentence.
+fn hustle_held(
+    cart: &Cartridge,
+    cal: &Calendar,
+    h: &Hustle,
+    now: &Inputs,
+    last: &Inputs,
+    claim: bool,
+) {
+    let flag = |b: bool| u8::from(b).to_string();
+    let got = values(cart, "Hustle", "B7:B13");
+    let want = [
+        ("B7", flag(Hustle::clicked(now, last))),
+        ("B8", flag(Hustle::keyed(now, last))),
+        ("B9", flag(claim)),
+        ("B10", h.claims.len().to_string()),
+        ("B11", h.claims.last().map_or(0, |d| d + 1).to_string()),
+        ("B12", flag(!h.open(cal.day))),
+        ("B13", h.earned().to_string()),
+    ];
+    for (addr, text) in want {
+        assert_eq!(
+            got.get(addr),
+            Some(&text),
+            "frame {}, day {}: Hustle!{addr}",
+            cal.frame,
+            cal.day
+        );
+    }
+    let view = values(cart, "Gigs", "A7:B11");
+    let want = [
+        ("B7", h.claims.len().to_string()),
+        ("B8", (h.cap - h.claims.len()).to_string()),
+        ("B9", buffet::dollars(h.earned() as i64)),
+        ("A11", h.status(cal.day)),
+    ];
+    for (addr, text) in want {
+        assert_eq!(
+            view.get(addr),
+            Some(&text),
+            "frame {}, day {}: Gigs!{addr}",
+            cal.frame,
+            cal.day
+        );
+    }
+}
+
+/// The side hustle at work, every frame of a scripted session held to the
+/// hand (`BACK.1`'s decisions 5 to 9 and 12, the key bound on its view alone
+/// since the owner's hand test): six days at thirty frames a day, the Input
+/// rows written before each step as the host writes them, the rows that
+/// changed alone (`ENGINE.19`), the key through the Keys sheet as the host
+/// reads it after every step, which at every frame binds P as the hand says,
+/// while Gigs showed and on no other sheet; and at every frame the Hustle
+/// sheet's workings and Gigs' counts and sentence the hand's. Its presses: a
+/// click claiming; a second click and P the same day refused; a click in the
+/// frame the next day turns, the claimed day shown, refused; a click beside the
+/// button, one at the button's address while the Portfolio shows, and P there,
+/// unbound, no press; P on Gigs claiming; P held on the Portfolio as Gigs is
+/// shown under it, a press the frame the key is bound, refused; the button and
+/// the key held on a claimed day across the turn into an open day, claiming
+/// nothing; a click in the frame a day turns, the open day before shown,
+/// claiming that day, and the new day open after it; a click and P in one frame
+/// claiming once; then the run's four spent, a click, P and a drag onto the
+/// button each a press refused, on that day and the next.
+#[test]
+fn a_scripted_session_holds_the_hustle_at_every_frame() {
+    use Act::{Key, Left, Point, Show};
+    let script: &[(u64, &[Act])] = &[
+        (1, &[Show("Portfolio")]),
+        (3, &[Show("Gigs")]),
+        (4, &[Point(1, 5)]),
+        (5, &[Left(true)]), // a click: the first claim, day 0's
+        (6, &[Left(false)]),
+        (8, &[Left(true)]), // a second click on day 0: refused
+        (9, &[Left(false)]),
+        (10, &[Key(true)]), // P on Gigs, day 0: refused
+        (11, &[Key(false)]),
+        (31, &[Left(true)]), // day 1's first frame, day 0 shown, claimed: refused
+        (32, &[Left(false)]),
+        (33, &[Point(2, 5)]), // the pointer on B5, beside the button
+        (34, &[Left(true)]),  // no press
+        (35, &[Left(false)]),
+        (36, &[Show("Portfolio"), Point(1, 5)]), // the button's address, on another sheet
+        (37, &[Left(true)]),                     // no press
+        (38, &[Left(false)]),
+        (40, &[Key(true)]), // P on the Portfolio, unbound there: no press
+        (41, &[Key(false)]),
+        (43, &[Show("Gigs")]),
+        (45, &[Key(true)]), // P on Gigs: the second claim, day 1's
+        (46, &[Key(false)]),
+        (47, &[Show("Portfolio")]),
+        (48, &[Key(true)]),    // P held on the Portfolio, unbound,
+        (49, &[Show("Gigs")]), // and Gigs shown under it: bound the frame after, a press, refused
+        (51, &[Key(false)]),
+        (53, &[Left(true)]), // day 1 claimed: refused, and held across day 2's turn
+        (55, &[Key(true)]),  // the same, by the key
+        (65, &[Left(false)]),
+        (66, &[Key(false)]),
+        (91, &[Left(true)]), // day 3's first frame, day 2 shown, open: the third claim, day 2's
+        (92, &[Left(false)]),
+        (95, &[Left(true), Key(true)]), // a click and P in one frame: the fourth claim, once
+        (96, &[Left(false), Key(false)]),
+        (125, &[Left(true)]), // day 4, the run's four spent: refused
+        (126, &[Left(false)]),
+        (130, &[Key(true)]), // refused
+        (131, &[Key(false)]),
+        (135, &[Point(0, 0)]),             // the pointer over a header
+        (136, &[Point(1, 5), Left(true)]), // dragged onto the button, held: a press, refused
+        (138, &[Left(false)]),
+        (151, &[Left(true)]), // day 5's first frame: refused
+        (152, &[Left(false)]),
+    ];
+    let mut cart = cartridge();
+    // The keymap the host holds: the Keys sheet as it read it after the last
+    // step, and none at the load, before any formula of it holds a value.
+    let mut keys: BTreeMap<String, String> = BTreeMap::new();
+    let mut cal = Calendar::new(buffet::FRAMES_A_DAY, buffet::DAYS_A_YEAR);
+    let mut hustle = Hustle::default();
+    let mut now = Inputs::default();
+    let mut written: Option<Vec<String>> = None;
+    let mut acts = script.iter().peekable();
+    for frame in 1..=6 * buffet::FRAMES_A_DAY {
+        let last = now.clone();
+        while let Some((_, set)) = acts.next_if(|(at, _)| *at == frame) {
+            for act in set.iter() {
+                match *act {
+                    Show(sheet) => now.sheet = sheet.to_string(),
+                    Point(column, row) => (now.column, now.row) = (column, row),
+                    Left(down) => now.left = down,
+                    Key(down) => now.key = down,
+                }
+            }
+        }
+        // P bound as the hand says, by the sheet the last frame showed, which
+        // the last step's Keys sheet read; and the cartridge's keymap the same.
+        now.bound = Hustle::binds(&last.sheet);
+        let bound: Vec<(&str, &str)> = keys
+            .iter()
+            .filter(|(_, code)| !code.is_empty())
+            .map(|(addr, code)| (addr.as_str(), code.as_str()))
+            .collect();
+        let want: &[(&str, &str)] = if now.bound {
+            &[("B5", buffet::KEY_CODE)]
+        } else {
+            &[]
+        };
+        assert_eq!(
+            bound, want,
+            "frame {frame}: the keys bound after {:?} showed",
+            last.sheet
+        );
+        let rows = input_rows(&keys, &now, now.key && !last.key);
+        let changed: Vec<&str> = match &written {
+            None => rows.iter().map(String::as_str).collect(),
+            Some(before) => rows
+                .iter()
+                .zip(before)
+                .filter(|(row, was)| row != was)
+                .map(|(row, _)| row.as_str())
+                .collect(),
+        };
+        if !changed.is_empty() {
+            cart.write(&changed.join("\n")).unwrap_or_else(|r| {
+                panic!(
+                    "frame {frame}: the Input rows: {} {}",
+                    r.refusal.id, r.refusal.text
+                )
+            });
+        }
+        written = Some(rows);
+        let shown = cal.day; // the day the person saw, the last frame's
+        let step = cart.step(0);
+        cal.tick();
+        assert!(step.done && step.frame == cal.frame, "{}", step.row());
+        keys = values(&cart, "Keys", "B1:E10");
+        let claim = hustle.frame(&now, &last, shown);
+        hustle_held(&cart, &cal, &hustle, &now, &last, claim);
+    }
+    assert!(acts.next().is_none(), "every act of the script played");
+    assert_eq!(
+        hustle.claims,
+        [0, 1, 2, 3],
+        "the claims, by the days they counted against"
+    );
+}
+
+/// The hustle's settings and its button (`BACK.1`'s decisions 3, 4, 5 and
+/// 9): the Hustle sheet's fee, claims a run and the button's place, the
+/// hand's; Gigs' cell at that place the button's text, no longer than its
+/// column is wide, so that every character of it is the button, the key's
+/// name beside it, and the labels below; and the Keys sheet binding one code,
+/// P's, on the `a` button, the row the key's press reads, while the button's
+/// view shows and nothing on any other sheet (the owner's word at the hand
+/// test, 2026-10-16: each tab its own keys), no key the viewport moves by and
+/// no Alt, the text beside the button naming the key bound.
+#[test]
+fn the_hustle_states_its_settings_and_binds_one_key() {
+    let mut cart = cartridge();
+    cart.step(0);
+    let (sheet, column, row) = buffet::BUTTON;
+    let settings = values(&cart, "Hustle", "B1:B5");
+    let want = [
+        ("B1", buffet::FEE.to_string()),
+        ("B2", buffet::CLAIMS_A_RUN.to_string()),
+        ("B3", sheet.to_string()),
+        ("B4", column.to_string()),
+        ("B5", row.to_string()),
+    ];
+    for (addr, text) in want {
+        assert_eq!(settings.get(addr), Some(&text), "Hustle!{addr}");
+    }
+    let view = values(&cart, sheet, "A1:B13");
+    let (column, row) = (column as usize, row as usize);
+    assert_eq!(
+        view.get(&address(row, column)).map(String::as_str),
+        Some(buffet::BUTTON_TEXT),
+        "{sheet}!{}: the button, at the place the Hustle sheet names",
+        address(row, column)
+    );
+    assert_eq!(
+        view.get(&address(row, column + 1)).map(String::as_str),
+        Some(buffet::KEY_TEXT),
+        "the key's name beside the button"
+    );
+    for (k, label) in GIGS_LABELS.iter().enumerate() {
+        assert_eq!(
+            view.get(&format!("A{}", 7 + k)).map(String::as_str),
+            Some(*label),
+            "{sheet}!A{}",
+            7 + k
+        );
+    }
+    let text = lf(&read(CARTRIDGE));
+    let head = format!("(column \"{sheet}\" \"{}\" ", letters(column));
+    let width: usize = text
+        .lines()
+        .find_map(|l| l.strip_prefix(head.as_str()))
+        .and_then(|rest| rest.split(' ').next())
+        .and_then(|w| w.parse().ok())
+        .expect("the button's column's width");
+    assert!(
+        buffet::BUTTON_TEXT.chars().count() <= width,
+        "the button's text runs past its column of {width} characters, and a click on the spill is the next cell's"
+    );
+
+    let mut codes: Vec<(String, String)> = Vec::new();
+    for (shown, bound) in [(sheet, true), ("Portfolio", false)] {
+        let edit = format!("(cell \"Input\" \"B19\" \"{shown}\")");
+        cart.write(&edit)
+            .unwrap_or_else(|r| panic!("{edit}: {} {}", r.refusal.id, r.refusal.text));
+        cart.step(0);
+        let keys = values(&cart, "Keys", "A1:E10");
+        let held: Vec<(String, String)> = keys
+            .iter()
+            .filter(|(addr, code)| !addr.starts_with('A') && !code.is_empty())
+            .map(|(addr, code)| (addr.clone(), code.clone()))
+            .collect();
+        let want: Vec<(String, String)> = if bound {
+            vec![("B5".to_string(), buffet::KEY_CODE.to_string())]
+        } else {
+            Vec::new()
+        };
+        assert_eq!(
+            held, want,
+            "the keys bound while {shown} shows: P on the a button, on its view alone"
+        );
+        assert_eq!(
+            keys.get("A5").map(String::as_str),
+            Some("a"),
+            "Keys!A5, its button"
+        );
+        codes.extend(held);
+    }
+    for (_, code) in &codes {
+        let moves = [
+            "ArrowUp",
+            "ArrowDown",
+            "ArrowLeft",
+            "ArrowRight",
+            "PageUp",
+            "PageDown",
+            "Home",
+            "End",
+            "Enter",
+            "Space",
+        ];
+        assert!(
+            !moves.contains(&code.as_str()) && !code.starts_with("Alt"),
+            "{code} is the viewport's or the chords'"
+        );
+    }
+    assert!(
+        buffet::KEY_TEXT.ends_with(&buffet::KEY_CODE["Key".len()..]),
+        "the text beside the button names the key bound"
+    );
+    let press = text
+        .lines()
+        .find(|l| l.starts_with("(formula \"Hustle\" \"B8\" "))
+        .expect("the key's press");
+    assert!(
+        press.contains("Input!B5=1") && press.contains("Input.last!B5=0"),
+        "the key's press reads the button the Keys sheet binds: {press}"
+    );
 }
 
 /// Each content sheet is its file (`MENU.2`): the file read by the language's

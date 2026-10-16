@@ -29,6 +29,9 @@
 ; request's, and a course is no freeze of the rows before it (BD-1, amended).
 ; Since MENU.5 (2026-10-15): strings writes no state, and the source writes each content
 ; sheet's beside its call, hidden but for a sheet a player reads whole, the caveats.
+; Since BACK.1 (2026-10-16): as-of and fine-print, a view's date and its fine print, at
+; their second writing, Gigs writing them after the Portfolio, which expands over them
+; to its bytes unchanged.
 
 ; ---- the dice (POT.1) ---------------------------------------------------------------
 ; A stream is a die and its draws. The die is one cell, the stream's state, which the
@@ -170,3 +173,20 @@
   (quote-if (>expand row last)
     (formula sheet at (&expand text ")"))
     (quasiquote (picker-from (unquote sheet) (unquote at) (unquote (&expand text "," letters row)) (unquote letters) (unquote (+expand row 1)) (unquote last)))))
+
+; ---- the views' frame (BACK.1) ------------------------------------------------------
+; Every view opens on its date and closes on the fine print (FRONT.1, MENU.1). The
+; Portfolio wrote both first and Gigs, the second view, wrote them again, so they come
+; here at their second writing, each a verb of one formula row taking the view's sheet
+; and a cell. The date is the calendar's year and day of the year, each from 1, and
+; unaudited, as every number of a view is until the examiner calls (GUARD.3); the fine
+; print is the Disclosures sheet's picker, a disclosure a month, read through a
+; reference, so that no view holds its text in a formula.
+
+(defmacro (as-of sheet at)
+  "a view's date in one cell, from the Day sheet's year and day of the year: As of year 1, day 1 (unaudited)"
+  (formula sheet at "=\"As of year \"&Day!$B$6&\", day \"&Day!$B$7&\" (unaudited)\""))
+
+(defmacro (fine-print sheet at)
+  "a view's fine print in one cell: the Disclosures sheet's disclosure of the month, read through a reference"
+  (formula sheet at "=Disclosures!$D$3"))

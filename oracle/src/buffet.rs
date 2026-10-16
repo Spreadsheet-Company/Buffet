@@ -40,6 +40,11 @@
 //! their own two decimals at their shortest. The glyph beside each change
 //! (`FRONT.2`) shares no comparison with its cell: the cell reads the sign of
 //! the change the view shows, the hand compares the two prices in cents.
+//!
+//! The side hustle (`BACK.1`) shares none with its cells either. The cells
+//! judge a press by the twin of the cell that says the hustle is shut, and
+//! keep the day after the last claim; the hand keeps the days its claims
+//! counted against, in order, and reads the list's length and its last day.
 
 /// Park and Miller's minimal standard (1988): a stream of whole numbers,
 /// each the last times the multiplier, modulo the modulus, a prime.
@@ -506,6 +511,123 @@ pub fn glyph(now: i64, was: i64) -> &'static str {
     }
 }
 
+/// The fee a prospectus proofread pays (`BACK.1`), in whole cents, the
+/// Hustle sheet's `B1`: $25, the contract's.
+pub const FEE: u64 = 2_500;
+/// The claims a run, the Hustle sheet's `B2`: four, the contract's cap, the
+/// owner's choice of 2026-10-16 over a claim a day for good.
+pub const CLAIMS_A_RUN: usize = 4;
+/// The view the hustle's button stands on, and the button's column and row
+/// there, the Hustle sheet's `B3:B5`: Gigs' `A5`.
+pub const BUTTON: (&str, u64, u64) = ("Gigs", 1, 5);
+/// The button's text, in its cell.
+pub const BUTTON_TEXT: &str = "[ Proofread a prospectus ]";
+/// The key that holds the hustle's button while the button's view shows, as
+/// the Keys sheet binds it, a `KeyboardEvent.code`; and its name beside the
+/// button.
+pub const KEY_CODE: &str = "KeyP";
+pub const KEY_TEXT: &str = "or press P";
+
+/// What the host writes into the Input sheet in a frame, as far as the
+/// hustle reads it (Alonzo's `SPEC.md` section 3.3, version 4): the sheet
+/// shown; the pointer's column and row on it, 0 off its cells; the left
+/// button held; whether the key is held; and whether it was bound when the
+/// row was written, by the Keys sheet the host read after the last step.
+#[derive(Clone, Debug, Default, PartialEq, Eq)]
+pub struct Inputs {
+    pub sheet: String,
+    pub column: u64,
+    pub row: u64,
+    pub left: bool,
+    pub key: bool,
+    pub bound: bool,
+}
+
+/// The side hustle by hand (`BACK.1`): the days its claims counted against,
+/// in the order they were made. The cells judge a press by `shut`'s twin and
+/// keep the day after the last claim; the hand keeps the list and reads its
+/// length and its last day.
+#[derive(Clone, Debug, PartialEq, Eq)]
+pub struct Hustle {
+    /// The claims a run, [`CLAIMS_A_RUN`] unless a person's edit raised it.
+    pub cap: usize,
+    pub claims: Vec<u64>,
+}
+
+impl Default for Hustle {
+    fn default() -> Hustle {
+        Hustle {
+            cap: CLAIMS_A_RUN,
+            claims: Vec::new(),
+        }
+    }
+}
+
+impl Hustle {
+    /// A click this frame: the left button going down over the button's cell
+    /// while its view shows, as the host writes the pointer.
+    pub fn clicked(now: &Inputs, last: &Inputs) -> bool {
+        let (sheet, column, row) = BUTTON;
+        now.left
+            && !last.left
+            && now.sheet.eq_ignore_ascii_case(sheet)
+            && now.column == column
+            && now.row == row
+    }
+
+    /// Whether the Keys sheet binds the key while `sheet` shows: on the
+    /// button's view alone, so that each view binds keys of its own (the
+    /// owner's word at the hand test, 2026-10-16).
+    pub fn binds(sheet: &str) -> bool {
+        sheet.eq_ignore_ascii_case(BUTTON.0)
+    }
+
+    /// The key's button going down this frame: the key held and bound, where
+    /// the last frame's was not both.
+    pub fn keyed(now: &Inputs, last: &Inputs) -> bool {
+        now.key && now.bound && !(last.key && last.bound)
+    }
+
+    /// Whether a press would claim on `day`: the run has a claim left, and
+    /// no claim counted against `day` yet.
+    pub fn open(&self, day: u64) -> bool {
+        self.claims.len() < self.cap && self.claims.last() != Some(&day)
+    }
+
+    /// A frame of the hustle, its inputs beside the last frame's: a press
+    /// claims when the hustle was open on the day the person saw, the last
+    /// frame's, and counts against that day. Whether a claim was made.
+    pub fn frame(&mut self, now: &Inputs, last: &Inputs, day_shown: u64) -> bool {
+        let pressed = Hustle::clicked(now, last) || Hustle::keyed(now, last);
+        let claim = pressed && self.open(day_shown);
+        if claim {
+            self.claims.push(day_shown);
+        }
+        claim
+    }
+
+    /// The fees earned, in whole cents.
+    pub fn earned(&self) -> u64 {
+        self.claims.len() as u64 * FEE
+    }
+
+    /// What Gigs says of the hustle on `day`: the run's claims spent, today's
+    /// made, or a prospectus waiting.
+    pub fn status(&self, day: u64) -> String {
+        if self.claims.len() >= self.cap {
+            format!(
+                "Compliance has approved {} a run, and you have proofread {}.",
+                self.cap,
+                self.claims.len()
+            )
+        } else if !self.open(day) {
+            "Done for today: the next prospectus arrives tomorrow.".to_string()
+        } else {
+            "A prospectus awaits. Nobody else has read one either.".to_string()
+        }
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -558,6 +680,96 @@ mod tests {
             }
         }
         assert_eq!(shown.len(), 3, "the glyphs shown: {shown:?}");
+    }
+
+    /// The hustle by hand (`BACK.1`): a press claims once a day, against the
+    /// day the person saw, and four times a run. A key's press on day 0
+    /// claims and a second is refused; a key held is no press; days 1 to 3
+    /// claim, and the fifth press is refused; a claim counted against the
+    /// day before, as in the frame a day turns, leaves today open; the fees
+    /// are $25 a claim; the key is bound on the button's view alone, and a key
+    /// held while unbound is no press; and the button's click is a press only
+    /// on its own cell of its own view, the button going down.
+    #[test]
+    fn the_hustle_claims_once_a_day_and_four_a_run() {
+        let up = Inputs::default();
+        let key = Inputs {
+            key: true,
+            bound: true,
+            ..Inputs::default()
+        };
+        let unbound = Inputs {
+            key: true,
+            ..Inputs::default()
+        };
+        assert!(Hustle::binds(BUTTON.0) && Hustle::binds("gigs") && !Hustle::binds("Portfolio"));
+        assert!(!Hustle::keyed(&unbound, &up), "a key held while unbound");
+        assert!(
+            Hustle::keyed(&key, &unbound),
+            "a key held as it is bound presses"
+        );
+        let mut h = Hustle::default();
+        assert_eq!(
+            h.status(0),
+            "A prospectus awaits. Nobody else has read one either."
+        );
+        assert!(h.frame(&key, &up, 0), "day 0's first press claims");
+        assert_eq!(
+            h.status(0),
+            "Done for today: the next prospectus arrives tomorrow."
+        );
+        assert!(!h.frame(&key, &up, 0), "a second press on day 0 is refused");
+        assert!(!h.frame(&key, &key, 1), "a key held is no press");
+        for day in 1..=3 {
+            assert!(h.frame(&key, &up, day), "day {day} claims");
+        }
+        assert_eq!(h.claims, [0, 1, 2, 3]);
+        assert!(!h.frame(&key, &up, 4), "the fifth press is refused");
+        assert_eq!(h.earned(), 4 * FEE);
+        assert_eq!(
+            h.status(9),
+            "Compliance has approved 4 a run, and you have proofread 4."
+        );
+
+        let mut turning = Hustle::default();
+        assert!(turning.frame(&key, &up, 6), "a press shown day 6");
+        assert!(turning.open(7), "day 7 open after day 6's claim");
+
+        let (sheet, column, row) = BUTTON;
+        let at = |sheet: &str, column: u64, row: u64, left: bool| Inputs {
+            sheet: sheet.to_string(),
+            column,
+            row,
+            left,
+            ..Inputs::default()
+        };
+        assert!(Hustle::clicked(
+            &at(sheet, column, row, true),
+            &at(sheet, column, row, false)
+        ));
+        assert!(Hustle::clicked(
+            &at("gigs", column, row, true),
+            &at("gigs", column, row, false)
+        ));
+        for (now, last, why) in [
+            (
+                at(sheet, column + 1, row, true),
+                at(sheet, column + 1, row, false),
+                "beside the button",
+            ),
+            (
+                at("Portfolio", column, row, true),
+                at("Portfolio", column, row, false),
+                "on another view",
+            ),
+            (
+                at(sheet, column, row, true),
+                at(sheet, column, row, true),
+                "the button held",
+            ),
+        ] {
+            assert!(!Hustle::clicked(&now, &last), "{why}");
+        }
     }
 
     /// The fine print's round: the first row for the first month, the next
