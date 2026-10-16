@@ -4,9 +4,9 @@ version = 3
 
 [[package]]
 name = "alonzo"
-version = "0.1.3"
+version = "0.1.4"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "90c377d03c57dbf9ca18ad3ddc7b00889dc33a4d9c642f5d4b6d8df29c377610"
+checksum = "c402a09d1f697b861f6175f828571cf053f18db63ca9582ef22e71e79a43fb1b"
 dependencies = [
  "vla-lang",
 ]
@@ -21,6 +21,6 @@ dependencies = [
 
 [[package]]
 name = "vla-lang"
-version = "0.9.3"
+version = "0.9.4"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "0321b8a463c0d22a1b642dac3cea9a34ffad3eeec8e44140210979c85fbd0541"
+checksum = "c94867ca8e60b046913d60307ce7626f6c6e043217219ac7be158ae2389c97b8"

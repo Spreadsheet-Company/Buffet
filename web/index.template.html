@@ -13,9 +13,13 @@
   include (SPEC.3), and each FIXTURE place
   with a record the door printed, and writes web/index.html, one file that runs
   from disk. The page loads nothing from the network, writes nothing anywhere and
-  executes nothing but the scripts below: tools/check_web_offline.ps1 holds this
-  file and the three scripts to that doctrine on every push, as Frazaro's page is
-  held.
+  executes nothing but the scripts below and its cartridges' hands, each a block
+  the builder writes as a script (ENGINE.16): tools/check_web_offline.ps1 holds
+  this file, the three scripts and the hands to that doctrine on every push, as
+  Frazaro's page is held. A page that does not hold Alonzo's own cartridges and
+  records is a game's: its loop oracle runs the cases that need nothing of
+  Alonzo's own files over its own blocks and hands, and says of every other case,
+  and of every other mode of the bench, that it is not on the page (ENGINE.16).
 
   Seven modes, one page: the player, and the bench (ENGINE.14). Opened plainly,
   it is the player, the window the game's: a cartridge picked or pasted, Life, the
@@ -88,8 +92,8 @@
   never a shared runner. With ?frames=1 it is the frame floors' instrument (CART.1):
   the engine's module stepped over the benchmark's two fixtures, Life's soup and the
   glider gun, and since CART.2 Sand's opening, synchronously at the page's load, each
-  frame timed alone and held to the page's own Life or Sand (sandStep, the page's
-  sand by hand), or, where a frame reads under twenty steps of the page's
+  frame timed alone and held to the page's own Life or Sand (Sand's hand's rule,
+  SandHand.step, since ENGINE.16), or, where a frame reads under twenty steps of the page's
   clock, the frames timed in runs, back to back, the last held and every frame held on a
   second instance stepped untimed (CART.1, 2026-10-10; ENGINE.9), and the clock read before
   each fixture's frames and after them (CART.1, 2026-10-12); since ENGINE.9 Life and
@@ -361,9 +365,10 @@
     return out;
   }
   // A cartridge's manifest, read for the page alone: the title the picker shows and the notes the drawer
-  // shows, the cartridge's own words for what it is and how it is played.
+  // shows, the cartridge's own words for what it is and how it is played; and since ENGINE.16 its screen's
+  // mode and its rate, by which the loop oracle's grid case finds a game's grid cartridges.
   function manifestOf(text) {
-    var out = { title: '', notes: '' };
+    var out = { title: '', notes: '', mode: '', rate: -1 };
     try {
       var forms = VP ? VP.readForms(text) : [];
       for (var i = 0; i < forms.length; i++) {
@@ -372,6 +377,8 @@
         for (var j = 2; j < f.length; j++) {
           var d = f[j];
           if (Array.isArray(d) && d[0] && (d[0].sym === 'title' || d[0].sym === 'notes') && typeof d[1] === 'string') out[d[0].sym] = d[1];
+          if (Array.isArray(d) && d[0] && d[0].sym === 'screen' && d[1] && typeof d[1].sym === 'string') out.mode = d[1].sym;
+          if (Array.isArray(d) && d[0] && d[0].sym === 'rate' && d[1] && d[1].num !== undefined) out.rate = +d[1].num;
         }
         break;
       }
@@ -386,7 +393,7 @@
     var carts = blocksOf('cartridge');
     for (var i = 0; i < carts.length; i++) {
       var b = carts[i], m = manifestOf(b.text);
-      var c = { name: b.name, text: b.text, file: b.file || b.name + '.vla', path: b.path, title: m.title || b.name, notes: m.notes };
+      var c = { name: b.name, text: b.text, file: b.file || b.name + '.vla', path: b.path, title: m.title || b.name, notes: m.notes, mode: m.mode, rate: m.rate };
       var src = document.getElementById('source-' + b.name), rp = document.getElementById('replay-' + b.name), gd = document.getElementById('golden-' + b.name);
       if (src) { c.source = src.textContent; c.sourcePath = src.getAttribute('data-path') || ''; }
       if (rp && gd) { c.replay = rp.textContent; c.replayPath = rp.getAttribute('data-path') || ''; c.golden = gd.textContent; }
@@ -402,6 +409,19 @@
   (function () {
     var libs = blocksOf('library');
     for (var i = 0; i < libs.length; i++) { LIBRARIES[libs[i].name] = { text: libs[i].text, path: libs[i].path }; LIBRARY_ORDER.push(libs[i].name); }
+  })();
+  // The hands (ENGINE.16): a game's own JavaScript, each a block of its own, hand-NAME, which the builder writes
+  // as a script the page runs where it stands, before this one, never through eval; each registers one
+  // constructor under its cartridge's name in window.AlonzoHands, read here once. The replay case answers a hand
+  // each frame of its cartridge's committed replay (caseReplay) and holds the registry to the blocks.
+  var HANDS = {}, HAND_BLOCKS = [];
+  (function () {
+    var reg = window.AlonzoHands || {}, els = document.getElementsByTagName('script');
+    for (var i = 0; i < els.length; i++) {
+      var el = els[i];
+      if (el.id.indexOf('hand-') === 0 && (el.type === '' || el.type === 'text/javascript')) HAND_BLOCKS.push({ name: el.id.slice(5), path: el.getAttribute('data-path') || '' });
+    }
+    for (var n in reg) if (Object.prototype.hasOwnProperty.call(reg, n)) HANDS[n] = reg[n];
   })();
   // The page's name, its builder's: Alonzo for the engine's own page, a game's for its own.
   var PAGE_NAME = embedded('page-name').trim() || 'Alonzo';
@@ -580,8 +600,8 @@
     // The sheet the viewer shows, viewed again through the cells in view with its scroll and selection kept
     // (ENGINE.8, decision 5; ENGINE.14): never while the drawer is closed, a sheet nobody sees being viewed for
     // nothing. Its old windows, 20 by 20 at the Camera for the Screen and every other sheet whole, would print
-    // Sand's Stay, 34 MB, five times a second.
-    function refreshViewer() { if (!drawer.hidden) host.refreshSheet(dvp); }
+    // Sand's Stay, 34 MB, five times a second. A record still the one it last loaded is not loaded again (ENGINE.17).
+    function refreshViewer() { if (!drawer.hidden) host.refreshSheet(dvp, false, true); }
     // After a load, the sheet the person last chose when the new grid holds it, read off a record's sheet rows,
     // else the Clock, which every grid holds.
     function showViewer() {
@@ -606,7 +626,9 @@
       var many = function (n, one, more) { return n + ' ' + (n === 1 ? one : more); };
       // a replay playing says where it is in it (ENGINE.3's second slice); the bar the frame alone, the drawer the whole line
       frameShort.textContent = e.replay ? 'Replaying ' + thousands(e.frame) + ' of ' + thousands(e.replay) : 'Frame ' + thousands(e.frame);
-      frameEl.textContent = (e.replay ? 'Replaying frame ' + e.frame + ' of ' + e.replay : 'Frame ' + e.frame) + ', the window ' + e.window + ', ' + (mode === 'grid' ? 'drawn by the viewport' : (e.scale ? e.scale + ' device pixels a cell' : 'no canvas')) + '; ' + many(c.derivedApplied, 'derived write', 'derived writes') + ' landed and ' + c.derivedRefused + ' refused, ' + many(c.edits, 'edit', 'edits') + ' written, ' + many(c.yields, 'yield', 'yields') + '.' +
+      // a grid's frames found still, neither read nor painted again (ENGINE.17), of the frames since the load
+      // and since ENGINE.19 those patched, drawn from their changes alone
+      frameEl.textContent = (e.replay ? 'Replaying frame ' + e.frame + ' of ' + e.replay : 'Frame ' + e.frame) + ', the window ' + e.window + ', ' + (mode === 'grid' ? 'drawn by the viewport, ' + thousands(c.stills) + ' of ' + thousands(c.frames) + ' frames still and ' + thousands(c.patches) + ' patched' : (e.scale ? e.scale + ' device pixels a cell' : 'no canvas')) + '; ' + many(c.derivedApplied, 'derived write', 'derived writes') + ' landed and ' + c.derivedRefused + ' refused, ' + many(c.edits, 'edit', 'edits') + ' written, ' + many(c.yields, 'yield', 'yields') + '.' +
         // while the sound is on, the frames sounded and the timeline's restarts and skips (ENGINE.4, decision 1)
         (host.soundIs() ? ' The sound: ' + many(c.sounded, 'frame', 'frames') + ' sounded, ' + many(c.restarts, 'restart', 'restarts') + ', ' + c.skipped + ' skipped.' : '');
       // about five times a second while the loop runs, so every frame of a cartridge slower than that
@@ -625,7 +647,9 @@
       // the box the mode draws in shown, the other hidden; the viewport, made while its box was hidden,
       // measured again now that it shows
       planeBox.hidden = mode === 'grid'; screenGrid.hidden = mode !== 'grid';
-      if (mode === 'grid' && host.vp) host.vp.redraw();
+      // and a sheet a version 4 cartridge opens on viewed again through the region the shown box now holds,
+      // the load having viewed it over a box not yet laid out (ENGINE.18); the Screen is the frame's own
+      if (mode === 'grid' && host.vp) { host.vp.redraw(); host.refreshSheet(host.vp); }
       frameEl.className = 'frame-line';
       frameShort.textContent = 'Frame 0';
       frameEl.textContent = 'Frame 0, the window ' + e.window + ', ' + (mode === 'grid' ? 'drawn by the viewport' : (e.scale ? e.scale + ' device pixels a cell' : 'no canvas')) + ': the cartridge as loaded, nothing computed until ' + (e.rate ? 'the first step.' : 'an edit steps it.');
@@ -752,18 +776,25 @@
   // ---- the player, opened plainly (ENGINE.14) ----
   if (MODE === 'page') { player(); return; }
 
-  // ---- the bench is Alonzo's own (ENGINE.15) ----
-  // Its modes run over Alonzo's eight cartridges, the common library and the seven records by name, so a page
-  // that does not hold them, a game's, says what its bench lacks and runs none of them.
+  // ---- the bench: Alonzo's own, and a game's (ENGINE.15, ENGINE.16) ----
+  // A page that holds everything the bench names, Alonzo's eight cartridges, the common library and the seven
+  // records, is Alonzo's own, and every mode runs over them by name. Any other page is a game's: its loop
+  // oracle runs the cases that need nothing of Alonzo's own files over the page's own blocks, and each of the
+  // rest says in one line that it is not on the page; every other mode is Alonzo's own and says so.
   var BENCH = ['life', 'gun', 'testcard', 'inputcard', 'soundcard', 'sand', 'gridcard', 'kairos'], lacks = [];
   for (var bi = 0; bi < BENCH.length; bi++) if (!CARTRIDGES[BENCH[bi]]) lacks.push('the cartridge ' + BENCH[bi]);
   if (!LIBRARIES.common) lacks.push('the library common');
   for (var bf in FIXTURES) if (Object.prototype.hasOwnProperty.call(FIXTURES, bf) && !fixtureText(bf).trim()) lacks.push('the record ' + bf);
-  if (lacks.length) {
-    var benchWhy = 'the bench runs over Alonzo\'s own page, and this one lacks ' + lacks.join(', ');
-    if (MODE === 'oracle' || MODE === 'loop' || MODE === 'blit' || MODE === 'frames') document.getElementById(MODE).textContent = MODE + ' failed: ' + benchWhy;
-    aboutEl.textContent = 'The bench is not on this page: ' + benchWhy + '.';
-    return;
+  var OWN = !lacks.length;
+  if (!OWN) {
+    var benchWhy = 'it runs over Alonzo\'s own cartridges and records, and this page lacks ' + lacks.join(', ');
+    if (MODE !== 'loop') {
+      var modeEl = document.getElementById(MODE);
+      if (modeEl) modeEl.textContent = MODE + ': not on this page: ' + benchWhy + (MODE === 'blit' || MODE === 'frames' ? '; a game\'s own fixtures are a later slice' : '');
+      aboutEl.textContent = 'The bench\'s mode ' + MODE + ' is not on this page: ' + benchWhy + '.';
+      return;
+    }
+    aboutEl.textContent = 'A game\'s page: its loop oracle runs the cases that need nothing of Alonzo\'s own files over this page\'s cartridges and hands, and says of each other case that it is not on this page.';
   }
 
   // ---- the bench's viewport over the fixtures (?viewport=1; KERNEL.5's page, its own mode since ENGINE.14) ----
@@ -885,6 +916,7 @@
     this.held = {}; this.lastKey = null; this.pointer = { col: 0, row: 0, left: 0, right: 0, middle: 0 }; this.notches = 0;
     this.edits = []; this.pending = []; this.windows = []; this.progress = []; this.saveValue = 0; this.stateEditFrame = 0;
     this.calls = 0; this.yields = 0; this.inputs = 0; this.applied = 0; this.refused = 0; this.editsOk = 0; this.editsRefused = 0; this.saves = 0;
+    this.lastRows = null; this.inputsKept = 0;   // the Input rows last written, and the frames that wrote none (ENGINE.19)
     this.refusedBy = {};   // the derived writes refused, by the cell they named
     this.cam = { row: 1, col: 1 };   // the Camera of the frame last drawn, which places the pointer (ENGINE.3)
     if (m[2] === 'plane') this.windows.push(this.windowNow());   // the load draws frame 0 through the Camera's window
@@ -921,12 +953,19 @@
       this.refusedBy[rows[i].where] = (this.refusedBy[rows[i].where] || 0) + 1;
     }
   };
+  // Step 3 (ENGINE.19, decision 5): the Input rows that differ from the rows last written, none when none does, all of
+  // them at the first frame and after a person's edit of the Input sheet, the sheet named without case.
   Model.prototype.begin = function () {
     this.issueDerived();
-    if (this.rate > 0) { this.write(this.inputRows()); this.inputs++; this.notches = 0; this.lastKey = null; }
+    if (this.rate > 0) {
+      var rows = this.inputRows().split('\n'), last = this.lastRows, changed = rows.filter(function (r, i) { return !last || last[i] !== r; });
+      if (!changed.length) this.inputsKept++;
+      else this.lastRows = this.write(changed.join('\n')).status === 0 ? rows : null;
+      this.inputs++; this.notches = 0; this.lastKey = null;
+    }
     while (this.edits.length) {
       var row = this.edits.shift();
-      if (this.write(row).status === 0) { this.editsOk++; if (row.indexOf('"State"') >= 0 && !this.stateEditFrame) this.stateEditFrame = this.frame + 1; }
+      if (this.write(row).status === 0) { this.editsOk++; if (row.indexOf('"State"') >= 0 && !this.stateEditFrame) this.stateEditFrame = this.frame + 1; if (/^\((?:cell|formula) "input" /i.test(row)) this.lastRows = null; }
       else this.editsRefused++;
     }
     this.inFrame = true; this.evaluated = 0;
@@ -1031,6 +1070,7 @@
     function eq(what, got, exp) { if (got !== exp) P.push(what + ' ' + got + ', the log says ' + exp); }
     eq('the frames', hc.frame, M.frame); eq('the step calls', hc.calls, M.calls); eq('the yields', hc.yields, M.yields);
     eq('the Input writes', hc.inputs, M.inputs); eq('the derived writes landed', hc.derivedApplied, M.applied); eq('the derived writes refused', hc.derivedRefused, M.refused);
+    eq('the frames whose Input rows all stood as last written', hc.inputsKept, M.inputsKept);
     eq('the edits written', hc.edits, M.editsOk); eq('the edits refused', hc.editsRefused, M.editsRefused); eq('the save edges', hc.saves, M.saves);
     if (st.windows.join(' ') !== M.windows.join(' ')) P.push('the plane was viewed through ' + st.windows.length + ' windows, not the log\'s ' + M.windows.length + ' in its order');
     var dh = r.fake.digest(hc.handle), dm = M.fake.digest(M.h);
@@ -1060,7 +1100,7 @@
     var st2 = r.fake.stats();
     if (st2.live !== 0) P.push(st2.live + ' allocation(s) live after the unload');
     if (st2.misfrees !== 0) P.push(st2.misfrees + ' free(s) of a pointer or a length the module never gave');
-    return { frames: hc.frame, calls: hc.calls, yields: hc.yields, inputs: hc.inputs, applied: hc.derivedApplied, refused: hc.derivedRefused, edits: hc.edits, windows: hc.windows, sentences: said.length, live: st2.live, misfrees: st2.misfrees, detaches: st2.detaches, digest: dh };
+    return { frames: hc.frame, calls: hc.calls, yields: hc.yields, inputs: hc.inputs, inputsKept: hc.inputsKept, applied: hc.derivedApplied, refused: hc.derivedRefused, edits: hc.edits, windows: hc.windows, sentences: said.length, live: st2.live, misfrees: st2.misfrees, detaches: st2.detaches, digest: dh };
   }
   // Rate 30: keys, the pointer, the wheel, the Camera moved by edits, an edit that wins over a
   // derived write, a refused edit, a Camera cell that is not a number, and a stall of a second.
@@ -1253,7 +1293,7 @@
     }
     if (lifeText.split('(rate 30)').length !== 2 || lifeText.split('(spec 2)').length !== 2) P.push('the anchors (rate 30) and (spec 2) are not in the cartridge exactly once');
     expectLoad(host.load(lifeText.replace('(rate 30)', ''), 'life.vla'), 'cart-manifest-invalid');
-    expectLoad(host.load(lifeText.replace('(spec 2)', '(spec 4)'), 'life.vla'), 'cart-spec-unsupported');
+    expectLoad(host.load(lifeText.replace('(spec 2)', '(spec 5)'), 'life.vla'), 'cart-spec-unsupported');
     expectLoad(host.loadBytes(new Uint8Array([0x28, 0xff, 0xfe, 0x29]), 'bad.vla'), 'is not UTF-8');
     var ok = host.load(lifeText, 'life.vla');
     if (!ok.ok) P.push('Life did not load: ' + ok.sentence);
@@ -1359,93 +1399,8 @@
       next[i] = (others === 3 || (me === 1 && others === 2)) ? 1 : 0;
     }
   }
-  // Sand by hand (CART.2, decisions 13 and 21), the page's own, a third beside the engine's and the Rust
-  // one, engine/src/sand.rs: the rule of cartridges/sand/sand.vla as a person writes a falling-sand toy,
-  // each row's grains, sand and water alike, proposing a move and the cells beneath them claiming it,
-  // from the bottom row up, in three passes: straight down, then each grain's first diagonal, then its
-  // second, the first to the right on an even row; a cell is claimed once, by the first grain to ask.
-  // Then the row's water that stayed claims a cell of its row left free, in two passes, the side its
-  // row's direction names first. The codes are the cartridge's, 0 empty, 1 wall, 2 sand and 3 water; the
-  // interior is C2:LF199, the walls two cells wide down each side, row 1 empty and row 200 the floor,
-  // which shows the swatch. A plane as Life's.
-  var SAND_TOP = 2, SAND_BOTTOM = LIFE_H - 1, SAND_LEFT = 3, SAND_RIGHT = LIFE_W - 2;
-  function sandEmpty(swatch) {
-    var b = new Uint8Array(LIFE_W * LIFE_H), r, c;
-    for (r = 1; r <= LIFE_H; r++) { var at = (r - 1) * LIFE_W; b[at] = b[at + 1] = b[at + LIFE_W - 2] = b[at + LIFE_W - 1] = 1; }
-    for (c = SAND_LEFT; c <= SAND_RIGHT; c++) b[(LIFE_H - 1) * LIFE_W + (c - 1)] = swatch;
-    return b;
-  }
-  // The opening: Life's soup as grains, Life's own arithmetic over the interior's top third, rows 2 to
-  // 67 (CART.2's playtest pass), sand where the soup's square is under three sixteenths of the prime and
-  // water where it is under three eighths.
-  var SAND_RAIN = 67;
-  function sandOpening(seed) {
-    var P = 67108859, T = 25165822, TS = 12582911, b = sandEmpty(2);
-    for (var r = SAND_TOP; r <= SAND_RAIN; r++) for (var c = SAND_LEFT; c <= SAND_RIGHT; c++) {
-      var a = (seed * 1103515 + r * 1597334 + c * 1830421 + 12345) % P;
-      var d = (seed * 2012345 + r * 1209487 + c * 1949213 + 54321) % P;
-      var h = (a * d) % P, sq = (h * h) % P;
-      if (sq < TS) b[(r - 1) * LIFE_W + (c - 1)] = 2;
-      else if (sq < T) b[(r - 1) * LIFE_W + (c - 1)] = 3;
-    }
-    return b;
-  }
-  // One frame of the rule over the last frame's board, the floor showing the swatch: the row beneath
-  // known after its departures and its water's sideways moves, occupied or not and what it holds, the
-  // floor first. A brush, { row, col, radius, material }, paints the cells of the interior its disc
-  // covers (CART.2's second slice, as engine/src/sand.rs paints them): a painted cell holds its paint at
-  // the frame's end and is occupied when the paint is not empty, while the grain it held still moves as
-  // the rule says, falling or moving sideways.
-  function sandStep(old, swatch, brush) {
-    var W = LIFE_W, next = old.slice(), occ = new Uint8Array(W + 1), holds = new Uint8Array(W + 1);
-    var claimed = new Uint8Array(W + 1), moved = new Uint8Array(W + 1), arrives = new Uint8Array(W + 1), r, c, pass, p;
-    var taken = new Uint8Array(W + 1), went = new Uint8Array(W + 1);
-    // the paint at a cell, or -1 where the disc does not reach or there is no brush
-    function paint(pr, pc) {
-      if (!brush || pr < SAND_TOP || pr > SAND_BOTTOM || pc < SAND_LEFT || pc > SAND_RIGHT) return -1;
-      var dr = pr - brush.row, dc = pc - brush.col;
-      return dr * dr + dc * dc <= brush.radius * brush.radius ? brush.material : -1;
-    }
-    for (c = SAND_LEFT; c <= SAND_RIGHT; c++) next[(LIFE_H - 1) * W + (c - 1)] = swatch;
-    for (c = 1; c <= W; c++) { occ[c] = 1; holds[c] = 1; }
-    for (r = SAND_BOTTOM; r >= SAND_TOP; r--) {
-      var row = (r - 1) * W, rightFirst = r % 2 === 0;
-      claimed.fill(0); moved.fill(0); arrives.fill(0);
-      for (pass = 0; pass < 3; pass++) for (c = SAND_LEFT; c <= SAND_RIGHT; c++) {
-        var g = old[row + c - 1];
-        if (g < 2 || moved[c]) continue;
-        var t = pass === 0 ? c : ((pass === 1) === rightFirst ? c + 1 : c - 1);
-        if (!occ[t] && !claimed[t]) { claimed[t] = 1; moved[c] = 1; arrives[t] = g; }
-      }
-      if (r < SAND_BOTTOM) for (c = SAND_LEFT; c <= SAND_RIGHT; c++) { p = paint(r + 1, c); next[row + W + c - 1] = p >= 0 ? p : occ[c] ? holds[c] : arrives[c]; }
-      // this row after its departures
-      for (c = 1; c <= W; c++) {
-        var m = old[row + c - 1];
-        p = paint(r, c);
-        if (p >= 0) { occ[c] = p !== 0 ? 1 : 0; holds[c] = p; continue; }
-        if (c < SAND_LEFT || c > SAND_RIGHT) { occ[c] = 1; holds[c] = m; continue; }
-        var stays = m === 1 || (m >= 2 && !moved[c]);
-        occ[c] = stays ? 1 : 0; holds[c] = stays ? m : 0;
-      }
-      // its water that stayed, into a cell of the row left free, its direction's side first; a grain
-      // moving out frees no cell for another this frame
-      taken.fill(0); went.fill(0);
-      for (pass = 0; pass < 2; pass++) for (c = SAND_LEFT; c <= SAND_RIGHT; c++) {
-        if (!occ[c] || old[row + c - 1] !== 3 || went[c]) continue;
-        var s = (pass === 0) === rightFirst ? c + 1 : c - 1;
-        if (!occ[s] && !taken[s]) { taken[s] = 1; went[c] = 1; }
-      }
-      // this row after its sideways moves, a painted cell holding its paint whatever moved
-      for (c = SAND_LEFT; c <= SAND_RIGHT; c++) {
-        if (went[c]) { occ[c] = 0; holds[c] = 0; }
-        if (taken[c]) { occ[c] = 1; holds[c] = 3; }
-        p = paint(r, c);
-        if (p >= 0) { occ[c] = p !== 0 ? 1 : 0; holds[c] = p; }
-      }
-    }
-    for (c = SAND_LEFT; c <= SAND_RIGHT; c++) { p = paint(SAND_TOP, c); next[(SAND_TOP - 1) * W + c - 1] = p >= 0 ? p : occ[c] ? holds[c] : 0; }
-    return next;
-  }
+  // Sand by hand (CART.2, decisions 13 and 21) is its hand since ENGINE.16, cartridges/sand/sand.hand.js, the block
+  // hand-sand: the replay case answers it each frame, and the frames instrument reads its rule off it.
   function liveOf(bytes) { var n = 0; for (var i = 0; i < bytes.length; i++) if (bytes[i] === 1) n++; return n; }
   // The first byte two planes differ at, by the row and column of a plane w wide, Life's unless named.
   function firstDiff(a, b, w) {
@@ -1541,7 +1496,7 @@
       var D = new Driver({ exports: exports }), out = [];
       function load(text) { return D.call('alonzo_load', [], [text, 'life.vla']); }
       out.push(['a manifest without its rate', load(lifeText.replace('(rate 30)', ''))]);
-      out.push(['a (spec 4)', load(lifeText.replace('(spec 2)', '(spec 4)'))]);
+      out.push(['a (spec 5)', load(lifeText.replace('(spec 2)', '(spec 5)'))]);
       out.push(['bytes that are not UTF-8', D.call('alonzo_load', [], [new Uint8Array([0x28, 0xff, 0xfe, 0x29]), 'bad.vla'])]);
       var L = load(lifeText), m = /^\(cartridge (\d+) /.exec(L.text);
       if (!m) { P.push('Life did not load for the parity: ' + L.id + ' ' + L.text); return out; }
@@ -1932,7 +1887,25 @@
   // cell; a pixel of each kind of fill; and the selection a person made is kept. plan: edits[f], the person's
   // edits before frame f; before(f, host) and after(f, host), a person's acts around frame f; window(f), the
   // cartridge's own window; offset(f), the rows the person scrolled; selected, { from, cell }; check(f, at,
-  // m, host), a frame's own pins; end(host, t), a person's acts after the last frame; strict, no refusal said.
+  // m, host), a frame's own pins; end(host, t), a person's acts after the last frame; strict, no refusal said;
+  // tick, the milliseconds between ticks, 34 unless given, whose surplus over a frame at 30 a second, 0.67 ms a
+  // tick, owes a second frame in one tick near the fiftieth (ENGINE.17's still card, the first run that long).
+  // A sheet other than the Screen shown in the host's own viewport, held as the record of the window it was viewed
+  // through (ENGINE.18): the values record after frame 0 and the grid record at frame 0, the grid record less its
+  // formula rows being the values record (KERNEL.37's law), the record the host last loaded into its viewport the
+  // one due, and the sheet drawn cell for cell. The due record's text, or null and a problem said.
+  function heldSheetDrawn(host, D, h, f, at, measure, P, k) {
+    var vp = host.vp, sh = vp.sheet(), model = vp.model(), wt = model ? model.windowText : '';
+    if (!model || !wt) { P.push(at + ': the viewport holds no record of ' + (sh || 'any sheet')); return null; }
+    var G = D.call('alonzo_view', [h], ['grid', sh, wt]).text, V = D.call('alonzo_view', [h], ['values', sh, wt]).text;
+    if (V !== gqLessFormulas(G)) { P.push(at + ': the values record of ' + sh + '!' + wt + ' is not its grid record less its formula rows'); return null; }
+    var due = f > 0 ? V : G, loaded = host._lastLoad(vp).text;
+    if (loaded !== due) { P.push(at + ': the host drew the ' + (loaded === G ? 'grid' : (loaded === V ? 'values' : 'unknown')) + ' record of ' + sh + '!' + wt + ', where the ' + (f > 0 ? 'values' : 'grid') + ' record is due'); return null; }
+    var m = gqRead(due), E = gqExpect(m, gqLayout(m, vp.geometry()), measure);
+    if (!gqCompare(E, vp.draws(), at, P, k)) return null;
+    if (f > 0) k.values++;
+    return due;
+  }
   function gridRun(exports, label, text, file, frames, plan, k, P) {
     var stage = document.getElementById('stage'), box = document.createElement('div');
     box.style.cssText = 'width:' + GRID_BOX.w + 'px;height:' + GRID_BOX.h + 'px;position:relative;background:#fff;';
@@ -1952,11 +1925,20 @@
           if (plan.before) plan.before(f, host);
           var evs = (plan.edits && plan.edits[f]) || [];
           for (var e = 0; e < evs.length; e++) host.edit(evs[e]);
-          t += 34; host.tick(t);
+          t += plan.tick || 34; host.tick(t);
           if (host.counters().frame !== f) { P.push(label + ': after tick ' + f + ' the host is at frame ' + host.counters().frame); break; }
         }
         var at = label + ' frame ' + f;
-        var cam = recordValues(D.call('alonzo_view', [h], ['grid', 'Camera', '']).text);
+        // a cartridge written to version 4 that shows a sheet other than its Screen, at the opening or by its
+        // Camera (ENGINE.18): that sheet held as the record of the window it was viewed through, cell for cell
+        var shownSheet = host.vp.sheet();
+        if (shownSheet && shownSheet.toLowerCase() !== 'screen') {
+          if (heldSheetDrawn(host, D, h, f, at + ', ' + shownSheet, measure, P, k) !== null) k.equal++;
+          if (plan.after) plan.after(f, host);
+          continue;
+        }
+        // a cartridge without a Camera sheet (a game's, ENGINE.16) is drawn through A1's window
+        var camView = D.call('alonzo_view', [h], ['grid', 'Camera', '']), cam = camView.status === 0 ? recordValues(camView.text) : {};
         var row = cam.B1 && cam.B1.num !== undefined ? cam.B1.num : 1, col = cam.B2 && cam.B2.num !== undefined ? cam.B2.num : 1;
         var want = lqRange(row, col, ld.h, ld.w), win = host.counters().window;
         if (plan.window && plan.window(f) !== want) P.push(at + ': the Camera\'s record places ' + want + ' where the card and its edits place ' + plan.window(f));
@@ -1985,7 +1967,7 @@
         k.equal++;
         if (plan.after) plan.after(f, host);
       }
-      k.frames = host.counters().frame;
+      k.frames = host.counters().frame; k.patches = host.counters().patches;   // the frames drawn by their changes (ENGINE.19)
       if (plan.end) plan.end(host, t);
       var refusals = host.sentences().filter(function (sn) { return sn.refusal; });
       if (plan.strict && refusals.length) P.push(label + ': the host was refused: ' + refusals[0].text);
@@ -2006,8 +1988,9 @@
   // frame 0's formulas as their texts, a value and a formula written into the window at frame 6 and seen in
   // that frame, a cell selected and kept, and a person's scroll of two rows kept through the Camera's move at
   // frame 20. Every frame after the first is drawn from the values projection (the second slice), and a
-  // values record written here is read whole by a viewport of its own (gqLone).
-  function caseGrid() {
+  // values record written here is read whole by a viewport of its own (gqLone). Alonzo's own half since
+  // ENGINE.16, run by caseGrid on Alonzo's page alone.
+  function gridOwn() {
     var P = [], kf = { frames: 0, equal: 0, windows: 0, texts: 0, wraps: 0, fills: 0, looks: 0, styles: 0, columns: 0, unvalued: 0, hidden: 0, probes: 0, kept: 0, cleared: 0, values: 0 };
     var km = { frames: 0, equal: 0, windows: 0, texts: 0, wraps: 0, fills: 0, looks: 0, styles: 0, columns: 0, unvalued: 0, hidden: 0, probes: 0, kept: 0, cleared: 0, values: 0 };
     var x = { pointer: 0, key: 0, edited: 0, waits: 0, edits: 0, followed: 0, lone: 0 }, module = 0;
@@ -2080,7 +2063,30 @@
     }
     return { counters: { fakeFrames: kf.frames, fakeEqual: kf.equal, fakeWindows: kf.windows, fakeTexts: kf.texts, fakeLooks: kf.looks, fakeUnvalued: kf.unvalued, fakeProbes: kf.probes, fakeKept: kf.kept, fakeCleared: kf.cleared, fakeValues: kf.values,
                          pointer: x.pointer, key: x.key, edited: x.edited, waits: x.waits, lone: x.lone, module: module, frames: km.frames, equal: km.equal, windows: km.windows, texts: km.texts, wraps: km.wraps, fills: km.fills, looks: km.looks, styles: km.styles,
-                         columns: km.columns, unvalued: km.unvalued, hidden: km.hidden, probes: km.probes, kept: km.kept, followed: x.followed, edits: x.edits, cleared: km.cleared, hashes: km.hashes || 0, values: km.values, live: st.live, misfrees: st.misfrees }, problems: P };
+                         columns: km.columns, unvalued: km.unvalued, hidden: km.hidden, probes: km.probes, kept: km.kept, followed: x.followed, edits: x.edits, cleared: km.cleared, hashes: km.hashes || 0, values: km.values,
+                         fakePatches: kf.patches || 0, patches: km.patches || 0, live: st.live, misfrees: st.misfrees }, problems: P };
+  }
+  // ENGINE.16's half, a game's page's and Alonzo's alike: every grid cartridge the page holds, by its manifest,
+  // on the engine's module, a short run with no edits, frame 0 and GAME_GRID_FRAMES more (frame 0 alone at rate
+  // zero, where only an edit steps), each frame's drawn window held to the record of that window as gridRun
+  // holds it, the values record after frame 0, and no refusal said. On Alonzo's own page the grid card, after
+  // Alonzo's own half, so that the code a game's page runs is held here on every push.
+  var GAME_GRID_FRAMES = 12;
+  function caseGrid() {
+    var res = OWN ? gridOwn() : { counters: {}, problems: [] }, k = res.counters, P = res.problems;
+    k.grids = 0; k.gridFrames = 0; k.gridEqual = 0; k.gridValues = 0; k.gridTexts = 0; k.gridCleared = 0;
+    var wasm = builtModule();
+    if (!wasm) return res;
+    var bytes = bytesOfBase64(wasm);
+    k.module = bytes.length;
+    for (var i = 0; i < ORDER.length; i++) {
+      var c = CARTRIDGES[ORDER[i]];
+      if (c.mode !== 'grid') continue;
+      var g = { frames: 0, equal: 0, windows: 0, texts: 0, wraps: 0, fills: 0, looks: 0, styles: 0, columns: 0, unvalued: 0, hidden: 0, probes: 0, kept: 0, cleared: 0, values: 0 };
+      gridRun(HOST.instantiateSync(bytes), c.name, c.text, c.file, c.rate > 0 ? GAME_GRID_FRAMES : 0, { strict: true }, g, P);
+      k.grids++; k.gridFrames += g.frames; k.gridEqual += g.equal; k.gridValues += g.values; k.gridTexts += g.texts; k.gridCleared += g.cleared;
+    }
+    return res;
   }
   // A values record read whole (ENGINE.8's second slice, KERNEL.37) by a viewport of its own: a formula known by
   // its value alone, drawn as a formula's value through its look, its text not in the record; a text value; and
@@ -2160,7 +2166,8 @@
         var model = vp.model(), win = model ? model.windowText : '', R = VP.parseRange(win), v = inView();
         if (vp.sheet() !== shown || !model || model.sheet !== shown) { P.push(where + ': the viewport shows ' + (vp.sheet() || 'nothing') + ', where ' + shown + '\'s tab was clicked'); return false; }
         if (!R || v.top < R.top || v.left < R.left || v.bottom > R.bottom || v.right > R.right) { P.push(where + ': ' + shown + ' was viewed through ' + (win || 'no window') + ', which does not hold the cells in view, ' + VP.rangeText(v)); return false; }
-        var m = gqRead(D.call('alonzo_view', [h], ['grid', shown, win]).text), L = gqLayout(m, vp.geometry()), E = gqExpect(m, L, measure);
+        // the record the host draws a sheet from, the values record after frame 0 (ENGINE.18, decision 3)
+        var m = gqRead(D.call('alonzo_view', [h], [host.counters().frame > 0 ? 'values' : 'grid', shown, win]).text), L = gqLayout(m, vp.geometry()), E = gqExpect(m, L, measure);
         if (!gqCompare(E, vp.draws(), where, P, k)) return false;
         k.held++;
         return true;
@@ -2333,6 +2340,806 @@
     if (wasm) k.engine = onEmpty(HOST.instantiateSync(bytesOfBase64(wasm)), 'the engine\'s module', true);
     return { counters: k, problems: P };
   }
+  // ---- ENGINE.17: a still frame not drawn again ----
+  // The still card, the page's own as the empty sheet is, written here and never a file: Buffet's BD-7 in small.
+  // Its Day sheet alone reads the Clock, the day Buffet's, 30 frames long, beside a phase that moves every frame;
+  // its Screen's 401 formulas and its Board's 26, as Buffet's Market and Stocks, read only the day, so that their
+  // records change at a day's boundary and at a person's act, and at no other frame.
+  var STILL = { file: 'still.vla',
+                text: '(cartridge "still"\n  (spec 3)\n  (title "A still card")\n  (rate 30)\n  (screen grid 80 50)\n  (seed 1))\n' +
+                      '(sheet "Screen" visible)\n(sheet "Day" visible)\n(sheet "Board" visible)\n(sheet "Camera" visible)\n' +
+                      '(cell "Camera" "A1" "row")\n(cell "Camera" "B1" 1)\n(cell "Camera" "A2" "column")\n(cell "Camera" "B2" 1)\n' +
+                      '(cell "Day" "A1" "day")\n(formula "Day" "B1" "=INT((Clock!$B$1-1)/30)")\n(cell "Day" "A2" "phase")\n(formula "Day" "B2" "=MOD(Clock!$B$1-1,30)")\n' +
+                      '(cell "Board" "A1" "the day")\n(formula "Board" "B1" "=Day!$B$1")\n(formula "Board" "A2:E6" "=Day!$B$1*100+ROW()*10+COLUMN()")\n' +
+                      '(cell "Screen" "A1" "day")\n(formula "Screen" "B1" "=Day!$B$1")\n(formula "Screen" "A2:T21" "=Day!$B$1*10000+ROW()*100+COLUMN()")\n' };
+  var STILL_FRAMES = 90, STILL_REPLACED = 81;
+  // The still card over the engine's module, frames 1 to 90, through gridRun: every frame's drawn window held to its
+  // record as the grid case holds it, a still frame's kept draw list included; and from frame 1 the host's choice
+  // held to the oracle's own, a draw when the record differs from the frame before's or the viewport no longer
+  // holds the model the host drew, a still frame otherwise, and exactly one of the two. The day's boundaries, 31
+  // and 61, drawn with the new day; a person's selection before frame 3 and scroll of two rows after frame 12 kept
+  // through the still frames, the viewport painting them itself; an edit into the Screen at frame 45 drawn in its
+  // frame, and the same edit at 50, which changes nothing, still; the Camera moved a column at 70, drawn; before
+  // frame 81 the window's sheet and window rows alone loaded into the host's viewport, as a page might, and frame
+  // 81 drawn though its record is frame 80's; the timing's shape at a still frame and a drawn one; and redraw()
+  // after frame 90 counted a draw. Then the sheets (stillSheets). Without the engine's module, nothing: the
+  // double computes no formula.
+  function caseStill() {
+    var P = [], k = { module: 0, frames: 0, equal: 0, drawn: 0, stills: 0, decided: 0, boundaries: 0, edited: 0, unchanged: 0, moved: 0, replaced: 0, kept: 0, timed: 0, redrawn: 0, cleared: 0,
+                      sheets: 0, sheetStills: 0, viewer: 0, viewerStills: 0, turned: 0, daily: 0, back: 0 };
+    var wasm = builtModule();
+    if (!wasm) return { counters: k, problems: P };
+    var bytes = bytesOfBase64(wasm), before = null, prev = null, timed = { still: 0, drawn: 0 };
+    var g = { frames: 0, equal: 0, windows: 0, texts: 0, wraps: 0, fills: 0, looks: 0, styles: 0, columns: 0, unvalued: 0, hidden: 0, probes: 0, kept: 0, cleared: 0, values: 0 };
+    k.module = bytes.length;
+    gridRun(HOST.instantiateSync(bytes), 'still', STILL.text, STILL.file, STILL_FRAMES, {
+      tick: 1000 / 30,   // on the grid of the frame's interval, a frame a tick for all ninety
+      window: function (f) { return lqRange(1, f >= 70 ? 2 : 1, 50, 80); },
+      edits: { 45: ['(cell "Screen" "V3" 7)'], 50: ['(cell "Screen" "V3" 7)'], 70: ['(cell "Camera" "B2" 2)'] },
+      selected: { from: 3, cell: 'C5' },
+      before: function (f, host) {
+        if (f === 3) host.vp.select('C5');
+        // as a page might: a record of the window's sheet and window rows alone, no cell, loaded into the host's viewport
+        if (f === STILL_REPLACED && prev) host.vp.load(prev.split('\n').filter(function (l) { return /^\((sheet|window) /.test(l); }).join('\n') + '\n', { keep: true });
+        before = host.counters();
+      },
+      after: function (f, host) { if (f === 12) { var sc = host.vp.scrolled(); host.vp.scrollTo(sc.top + 2, sc.left); } },
+      offset: function (f) { return f > 12 ? 2 : 0; },
+      check: function (f, at, m, E, host, G) {
+        var due = f > 0 ? gqLessFormulas(G) : G, now = host.counters(), was = prev, t = host.timing;
+        prev = due;
+        if (f === 0) { if (now.draws !== 1 || now.stills !== 0) P.push(at + ': the load counted ' + now.draws + ' draw(s) and ' + now.stills + ' still frame(s), where it draws once'); return; }
+        var drew = now.draws - before.draws, stood = now.stills - before.stills, owed = due !== was || f === STILL_REPLACED;
+        if (drew + stood !== 1) { P.push(at + ': the host counted ' + drew + ' draw(s) and ' + stood + ' still frame(s), where a frame is one or the other'); return; }
+        if (drew && !owed) { P.push(at + ': the record is frame ' + (f - 1) + '\'s, and the host drew it again'); return; }
+        if (!drew && owed) { P.push(at + ': ' + (due !== was ? 'the record changed since frame ' + (f - 1) : 'the viewport no longer holds the model the host drew') + ', and the host counted a still frame'); return; }
+        k.decided++;
+        if (drew) k.drawn++; else k.stills++;
+        // the timing's shape: a still frame's the view, a draw of 0 and skipped; a drawn frame's not skipped
+        if (!drew && !timed.still) { if (!t || t.skipped !== true || t.draw !== 0 || typeof t.view !== 'number') P.push(at + ': a still frame\'s timing is ' + JSON.stringify(t) + ', where it holds the view, a draw of 0 and skipped'); else timed.still = 1; }
+        if (drew && !timed.drawn) { if (!t || t.skipped) P.push(at + ': a drawn frame\'s timing is ' + JSON.stringify(t) + ', where it is not skipped'); else timed.drawn = 1; }
+        var d6 = E.texts['6,4'], v3 = E.texts['3,22'], day = Math.floor((f - 1) / 30);
+        if (f === 31 || f === 61) { if (!drew || !d6 || d6.text !== String(day * 10000 + 604)) P.push(at + ': the day\'s boundary is not drawn: D6 shows ' + (d6 ? '"' + d6.text + '"' : 'nothing') + ', where day ' + day + ' puts ' + (day * 10000 + 604)); else k.boundaries++; }
+        if (f === 45) { if (!drew || !v3 || v3.text !== '7') P.push(at + ': the edit of V3 to 7 is not drawn in its frame'); else k.edited++; }
+        if (f === 50) { if (drew || !v3 || v3.text !== '7') P.push(at + ': the edit of V3 to the 7 it holds, which changes nothing, is not a still frame'); else k.unchanged++; }
+        if (f === 70) { if (!drew || now.window !== 'B1:CC50') P.push(at + ': the Camera\'s move to B1:CC50 is not drawn in its frame'); else k.moved++; }
+        if (f === STILL_REPLACED) k.replaced++;
+      },
+      end: function (host) {
+        var b = host.counters();
+        host.redraw();
+        var a = host.counters(), t = host.timing;
+        if (a.draws - b.draws !== 1 || a.stills !== b.stills || !t || t.skipped) P.push('still: redraw() over the unchanged frame ' + STILL_FRAMES + ' counted ' + (a.draws - b.draws) + ' draw(s) and ' + (a.stills - b.stills) + ' still frame(s), where it always draws');
+        else k.redrawn = 1;
+      },
+      strict: true
+    }, g, P);
+    k.frames = g.frames; k.equal = g.equal; k.kept = g.kept; k.cleared = g.cleared; k.timed = timed.still + timed.drawn;
+    stillSheets(HOST.instantiateSync(bytes), k, P);
+    return { counters: k, problems: P };
+  }
+  // A sheet shown in the Screen's place, and in a viewer of the page's own as the drawer's is, refreshed at every
+  // frame and loaded only when its record changed (ENGINE.17, the owner's word). The still card's Board, whose
+  // cells read only the day, shown by its tab before frame 5 and in the viewer: at every frame from 5 to 40 each
+  // viewport's sheet held cell for cell to the record of the window it was viewed through, viewed here, and the
+  // viewport's model replaced exactly when that record differs from the frame before's, a still frame counted in
+  // the host's own viewport otherwise and the viewer's refresh counted nowhere; the day's boundary, 31, loaded in
+  // both. The Day, its phase moving every frame, shown before frame 41: loaded at frames 41 to 44. The Screen's tab
+  // before frame 45 gives the window back, and frame 45 is still.
+  function stillSheets(exports, k, P) {
+    var stage = document.getElementById('stage'), box = document.createElement('div'), box2 = document.createElement('div');
+    box.style.cssText = 'width:' + GRID_BOX.w + 'px;height:' + GRID_BOX.h + 'px;position:relative;background:#fff;';
+    box2.style.cssText = 'width:640px;height:300px;position:relative;background:#fff;';
+    stage.appendChild(box); stage.appendChild(box2);
+    var host = new HOST({ drive: 'manual', budget: 0, now: frozen, grid: box }), dv = new VP(box2);
+    var D = new Driver({ exports: exports }), measure = document.createElement('canvas').getContext('2d'), gk = { texts: 0, wraps: 0, fills: 0, looks: 0, styles: 0, columns: 0, unvalued: 0 };
+    try {
+      var a = host.attach(exports);
+      if (!a.ok) { P.push('still sheets: the host refused the module: ' + a.sentence); return; }
+      var ld = host.load(STILL.text, STILL.file);
+      if (!ld.ok) { P.push('still sheets: the still card did not load: ' + ld.sentence); return; }
+      var h = ld.handle, t = 1000, vp = host.vp, shown = '', was = null, wasViewer = null;
+      // a viewport's sheet drawn cell for cell as the record of the window it was viewed through: that record's
+      // text, viewed here, or null and a problem said
+      function held(v, where) {
+        // the record the host draws a sheet from, the values record after frame 0 (ENGINE.18, decision 3)
+        var model = v.model(), text = model ? D.call('alonzo_view', [h], [host.counters().frame > 0 ? 'values' : 'grid', v.sheet(), model.windowText]).text : '';
+        var m = gqRead(text);
+        return model && gqCompare(gqExpect(m, gqLayout(m, v.geometry()), measure), v.draws(), where, P, gk) ? text : null;
+      }
+      function click(name) { var b = vp.tabs.querySelector('[data-sheet="' + name + '"]'); if (b) b.click(); return vp.sheet() === name; }
+      host.start(); host.tick(t);
+      for (var f = 1; f <= 45; f++) {
+        var at = 'still sheets frame ' + f;
+        if (f === 5 || f === 41 || f === 45) {
+          shown = f === 5 ? 'Board' : (f === 41 ? 'Day' : 'Screen');
+          if (!click(shown)) { P.push(at + ': the tab ' + shown + ', clicked, did not show its sheet: the viewport shows ' + (vp.sheet() || 'nothing')); break; }
+          if (f === 5) { host.showSheet(dv, 'Board'); wasViewer = held(dv, at + ', the viewer at the click'); }
+          if (f < 45) was = held(vp, at + ', at the click');
+        }
+        // a load replaces the model, and a patch (ENGINE.19) lays the record's changes on it in place, counted by the
+        // host and by the viewport: either is the record taken again
+        var m0 = vp.model(), p0 = vp.patches(), c0 = host.counters();
+        t += 1000 / 30; host.tick(t);
+        if (host.counters().frame !== f) { P.push(at + ': after tick ' + f + ' the host is at frame ' + host.counters().frame); break; }
+        var c1 = host.counters(), drew = c1.draws - c0.draws, stood = c1.stills - c0.stills;
+        if (f === 45) { if (vp.sheet() !== 'Screen' || drew !== 0 || stood !== 1) P.push(at + ': the frame after the Screen\'s tab counted ' + drew + ' draw(s) and ' + stood + ' still frame(s), where its record is the one the tab drew'); else k.back = 1; continue; }
+        if (f < 5) continue;
+        var text = held(vp, at), patched = vp.patches() !== p0, loaded = vp.model() !== m0 || patched, owed = text !== was;
+        if (patched !== (c1.patches - c0.patches === 1)) P.push(at + ': the viewport took ' + (vp.patches() - p0) + ' patch(es), and the host counted ' + (c1.patches - c0.patches));
+        if (text !== null) {
+          if (loaded !== owed || drew !== (owed ? 1 : 0) || stood !== (owed ? 0 : 1)) P.push(at + ': ' + shown + '\'s record ' + (owed ? 'changed since the frame before' : 'is the frame before\'s') + ', and the host ' + (loaded ? 'loaded it' : 'kept it') + ', counting ' + drew + ' draw(s) and ' + stood + ' still frame(s)');
+          else { k.sheets++; if (!owed) k.sheetStills++; if (owed && f === 31) k.turned++; if (owed && shown === 'Day') k.daily++; }
+        }
+        was = text;
+        // the page's viewer, refreshed as the drawer refreshes it, may be still too, and counts no frame of the host's
+        var d0 = dv.model(), q0 = dv.patches();
+        host.refreshSheet(dv, false, true);
+        var vtext = held(dv, at + ', the viewer'), vloaded = dv.model() !== d0 || dv.patches() !== q0, vowed = vtext !== wasViewer, c2 = host.counters();
+        if (vtext !== null) {
+          if (vloaded !== vowed || c2.draws !== c1.draws || c2.stills !== c1.stills) P.push(at + ': the viewer\'s Board ' + (vowed ? 'changed since the frame before' : 'is the frame before\'s') + ', and the host ' + (vloaded ? 'loaded it' : 'kept it') + (c2.stills !== c1.stills || c2.draws !== c1.draws ? ', counting it as a frame of its own viewport' : ''));
+          else { k.viewer++; if (!vowed) k.viewerStills++; if (vowed && f === 31) k.turned++; }
+        }
+        wasViewer = vtext;
+      }
+    } finally { host.destroy(); dv.destroy(); stage.removeChild(box); stage.removeChild(box2); }
+  }
+  // ---- ENGINE.18: a grid cartridge's views on its own sheets ----
+  // The views card, the page's own as the still card is, written here and never a file, at version 4: its Screen
+  // listed first and hidden; a Desk whose button at C5 a cell counts, a press its rising edge over Desk!C5 by the
+  // sheet shown and the pointer's cell; a Ledger of 240 formulas reading only the day; a Day; and a Camera whose
+  // third row names no sheet until frame 40, the Ledger from 40 and the Screen from 70.
+  var VIEWS = { file: 'views.vla',
+                text: '(cartridge "views"\n  (spec 4)\n  (title "A views card")\n  (rate 30)\n  (screen grid 20 10)\n  (seed 1))\n' +
+                      '(sheet "Screen" hidden)\n(sheet "Desk" visible)\n(sheet "Ledger" visible)\n(sheet "Day" visible)\n(sheet "Camera" visible)\n' +
+                      '(cell "Camera" "A1" "row")\n(cell "Camera" "B1" 1)\n(cell "Camera" "A2" "column")\n(cell "Camera" "B2" 1)\n(cell "Camera" "A3" "sheet")\n' +
+                      '(formula "Camera" "B3" "=IF(Clock!$B$1>=70,\\"Screen\\",IF(Clock!$B$1>=40,\\"Ledger\\",\\"\\"))")\n' +
+                      '(cell "Day" "A1" "day")\n(formula "Day" "B1" "=INT((Clock!$B$1-1)/30)")\n' +
+                      '(cell "Desk" "A1" "the button")\n(cell "Desk" "C5" "press")\n(cell "Desk" "A2" "presses")\n' +
+                      '(formula "Desk" "B2" "=Desk.last!B2+IF(AND(Input!B19=\\"Desk\\",Input!B11=3,Input!B12=5,Input!B13=1,Input.last!B13=0),1,0)")\n' +
+                      '(cell "Ledger" "A1" "the day")\n(formula "Ledger" "B1" "=Day!$B$1")\n(formula "Ledger" "A2:H31" "=Day!$B$1*1000+ROW()*10+COLUMN()")\n' +
+                      '(cell "Screen" "A1" "the Screen")\n(formula "Screen" "B1" "=Day!$B$1")\n' };
+  var VIEWS_FRAMES = 90;
+  // Points of the page over a viewport: the middle of a cell of the sheet shown, of its column header and of the
+  // tab strip, as tabsRun finds them; and a mouse event at one, its buttons held as given.
+  function viewPoints(vp) {
+    function cell(r, c) { var g = vp.geometry(), rect = vp.box.getBoundingClientRect(); return { x: rect.left + (g.rhW + g.colX[c] - g.scrollX + g.colW[c] / 2) / g.dpr, y: rect.top + (g.headH + (r - 1) * g.rowH - g.scrollY + g.rowH / 2) / g.dpr }; }
+    return {
+      cell: cell,
+      header: function (c) { var p = cell(1, c), g = vp.geometry(); return { x: p.x, y: vp.box.getBoundingClientRect().top + g.headH / 2 / g.dpr }; },
+      strip: function (c) { var p = cell(1, c), s = vp.tabs.getBoundingClientRect(); return { x: p.x, y: s.top + s.height / 2 }; },
+      mouse: function (target, type, p, buttons) { target.dispatchEvent(new MouseEvent(type, { bubbles: true, clientX: p.x, clientY: p.y, buttons: buttons })); },
+      tab: function (name) { return vp.tabs.querySelector('[data-sheet="' + name + '"]'); }
+    };
+  }
+  function viewsNum(v) { return v && v.num !== undefined ? v.num : 0; }
+  // The views card over the engine's module, frames 0 to 90, its viewport in a box of the stage. Frame 0 opens on
+  // the Desk, its first visible sheet, and the hidden Screen is never viewed until the Camera shows it. At every
+  // frame the sheet the plan puts on view is drawn cell for cell from the values record after frame 0, the record
+  // the host last loaded the one due, and the Input sheet's B19 names the sheet shown before the frame. A press
+  // over Desk!C5 from frame 10 to 12 writes 3, 5 and 1 and is counted once; a press over the column header before
+  // frame 15 and over the tab strip before 17 write 0, 0 and 0. The person's tab to the Ledger before frame 20,
+  // where a press over Ledger!C5 before 22 counts nothing on the Desk, and back to the Desk before 30. The Camera's
+  // Ledger shown at frame 40; the person's Desk before 50, kept through 69 while the Camera says Ledger; the
+  // Camera's Screen at 70, drawn through its window; the person's Desk before 80. The run's replay, version 4's,
+  // the sheet shown among its rows, played on a fresh host to every frame's Input rows and count. Then a second
+  // load whose Camera's formula carries a value row naming the Ledger, opened there and not moved by the empty
+  // first value; and the still card, written to version 3, opened on its Screen, its pointer 0 over Board, its
+  // Input sheet of eighteen rows and its replay version 3's.
+  function caseViews() {
+    var P = [], k = { module: 0, frames: 0, opened: 0, held: 0, values: 0, screen: 0, hidden: 0, inputs: 0, pressed: 0, unpressed: 0, tabs: 0, shows: 0, kept: 0,
+                      replayed: 0, replayFrames: 0, replayInputs: 0, valueRow: 0, unmoved: 0, older: 0, texts: 0, wraps: 0, fills: 0, looks: 0, styles: 0, columns: 0, unvalued: 0 };
+    var wasm = builtModule();
+    if (!wasm) return { counters: k, problems: P };
+    var bytes = bytesOfBase64(wasm);
+    k.module = bytes.length;
+    viewsRun(bytes, k, P);
+    viewsValueRow(bytes, k, P);
+    viewsOlder(bytes, k, P);
+    return { counters: k, problems: P };
+  }
+  function viewsRun(bytes, k, P) {
+    var stage = document.getElementById('stage'), box = document.createElement('div');
+    box.style.cssText = 'width:' + GRID_BOX.w + 'px;height:' + GRID_BOX.h + 'px;position:relative;background:#fff;';
+    stage.appendChild(box);
+    var exports = HOST.instantiateSync(bytes), host = new HOST({ drive: 'manual', budget: 0, now: frozen, grid: box });
+    var D = new Driver({ exports: exports }), measure = document.createElement('canvas').getContext('2d'), live = {};
+    try {
+      if (!host.attach(exports).ok) { P.push('views: the host refused the module'); return; }
+      var ld = host.load(VIEWS.text, VIEWS.file);
+      if (!ld.ok) { P.push('views: the views card did not load: ' + ld.sentence); return; }
+      var h = ld.handle, vp = host.vp, sc = vp.scroller, pt = viewPoints(vp), t = 1000;
+      function vals(sheet, win) { return recordValues(D.call('alonzo_view', [h], ['grid', sheet, win || '']).text); }
+      // the sheet each frame draws by the plan, and the sheet the Input rows of a frame name, the one shown before
+      // its step, so that the Camera's shows at frames 40 and 70 are read a frame later
+      function due(f) { return f < 20 ? 'Desk' : f < 30 ? 'Ledger' : f < 40 ? 'Desk' : f < 50 ? 'Ledger' : f < 70 ? 'Desk' : f < 80 ? 'Screen' : 'Desk'; }
+      function named(f) { return f === 40 || f === 70 ? due(f - 1) : due(f); }
+      // the Screen through the Camera's window, the values record drawn cell for cell
+      function heldScreen(f, at) {
+        var win = host.counters().window, want = lqRange(1, 1, ld.h, ld.w);
+        if (win !== want) { P.push(at + ': the host drew the Screen through ' + win + ', where the Camera places ' + want); return false; }
+        var G = D.call('alonzo_view', [h], ['grid', 'Screen', win]).text, V = D.call('alonzo_view', [h], ['values', 'Screen', win]).text;
+        if (host.record !== V) { P.push(at + ': the host drew the ' + (host.record === G ? 'grid' : 'unknown') + ' record of the Screen, where the values record is due'); return false; }
+        var m = gqRead(V);
+        return gqCompare(gqExpect(m, gqLayout(m, vp.geometry()), measure), vp.draws(), at, P, k);
+      }
+      if (vp.sheet() !== 'Desk') { P.push('views frame 0: the host opened on ' + (vp.sheet() || 'nothing') + ', where the card opens on its first visible sheet, the Desk'); return; }
+      if (heldSheetDrawn(host, D, h, 0, 'views frame 0', measure, P, k) !== null) k.opened++;
+      if (host.counters().windows === 0) k.hidden++;
+      host.start(); host.tick(t);
+      for (var f = 1; f <= VIEWS_FRAMES; f++) {
+        var at = 'views frame ' + f;
+        // the person's acts before the frame
+        if (f === 10 || f === 22) { var pc = pt.cell(5, 3); pt.mouse(sc, 'mousemove', pc, 0); pt.mouse(sc, 'mousedown', pc, 1); }
+        if (f === 13 || f === 23) pt.mouse(sc, 'mouseup', pt.cell(5, 3), 0);
+        if (f === 15) { var ph = pt.header(3); pt.mouse(sc, 'mousemove', ph, 0); pt.mouse(sc, 'mousedown', ph, 1); }
+        if (f === 16) pt.mouse(sc, 'mouseup', pt.header(3), 0);
+        if (f === 17) { var ps = pt.strip(3); pt.mouse(vp.tabs, 'mousemove', ps, 0); pt.mouse(vp.tabs, 'mousedown', ps, 1); }
+        if (f === 18) pt.mouse(vp.tabs, 'mouseup', pt.strip(3), 0);
+        if (f === 20 || f === 30 || f === 50 || f === 80) {
+          var name = f === 20 ? 'Ledger' : 'Desk', b = pt.tab(name);
+          if (!b) { P.push(at + ': no tab ' + name + ' in the strip'); break; }
+          b.click(); k.tabs++;
+        }
+        var c0 = host.counters();
+        t += 1000 / 30; host.tick(t);
+        var c1 = host.counters();
+        if (c1.frame !== f) { P.push(at + ': after tick ' + f + ' the host is at frame ' + c1.frame); break; }
+        // what the game read of the person's acts: the Input rows of the frame, and the Desk's count, kept for the
+        // replay whatever the frame drew
+        var inp = vals('Input', 'A11:B19'), b19 = inp.B19, b11 = viewsNum(inp.B11), b12 = viewsNum(inp.B12), b13 = viewsNum(inp.B13), presses = viewsNum(vals('Desk', 'B2').B2);
+        live[f] = { b11: b11, b12: b12, b13: b13, b19: b19, presses: presses };
+        // the sheet drawn, and how it came to be shown
+        var want = due(f), shows = c1.shows - c0.shows;
+        if (vp.sheet() !== want) P.push(at + ': the viewport shows ' + (vp.sheet() || 'nothing') + ', where ' + (f === 40 || f === 70 ? 'the Camera shows ' : (f > 50 && f < 70 ? 'the person\'s tab is kept while the Camera holds still, on ' : 'the plan shows ')) + want);
+        else if (want === 'Screen') { if (heldScreen(f, at)) k.screen++; }
+        else if (heldSheetDrawn(host, D, h, f, at, measure, P, k) !== null) k.held++;
+        if (shows !== (f === 40 || f === 70 ? 1 : 0)) P.push(at + ': the host counted ' + shows + ' show(s) of the Camera\'s sheet, where its third row ' + (f === 40 || f === 70 ? 'changed once' : 'holds still'));
+        else if (shows) k.shows++;
+        if (f > 50 && f < 70 && vp.sheet() === 'Desk') k.kept++;
+        if (f < 70) { if (c1.windows !== 0) P.push(at + ': the host viewed the hidden Screen, which nothing shows before frame 70'); else k.hidden++; }
+        if (b19 !== named(f)) P.push(at + ': Input!B19 holds ' + JSON.stringify(b19) + ', where the sheet shown before the frame is ' + named(f));
+        else k.inputs++;
+        if (presses !== (f >= 10 ? 1 : 0)) P.push(at + ': the Desk counted ' + presses + ' press(es), where its button at C5 was pressed once, at frame 10');
+        if (f === 10) { if (b11 !== 3 || b12 !== 5 || b13 !== 1) P.push(at + ': the press over Desk!C5 was written as column ' + b11 + ', row ' + b12 + ' and button ' + b13 + ', not 3, 5 and 1'); else k.pressed++; }
+        if (f === 15 || f === 17) { if (b11 !== 0 || b12 !== 0 || b13 !== 0) P.push(at + ': the press over ' + (f === 15 ? 'the column header' : 'the tab strip') + ' was written as column ' + b11 + ', row ' + b12 + ' and button ' + b13 + ', not 0, 0 and 0'); else k.unpressed++; }
+        if (f === 22) { if (b19 !== 'Ledger' || b11 !== 3 || b12 !== 5 || b13 !== 1) P.push(at + ': the press over Ledger!C5 was written as ' + JSON.stringify(b19) + ', column ' + b11 + ', row ' + b12 + ' and button ' + b13 + ', not "Ledger", 3, 5 and 1'); else k.unpressed++; }
+      }
+      k.frames = host.counters().frame;
+      // the run's replay: version 4's, the sheet shown among its rows, played on a fresh host to every frame's
+      // Input rows and count
+      var text = host.replayText() || '';
+      if (!/^\(replay "views" \(spec 4\) /.test(text)) P.push('views: the replay\'s header is ' + text.split('\n')[0] + ', where a version 4 cartridge\'s replay names version 4');
+      else if (text.indexOf('(cell "Input" "B19" "Ledger")') < 0) P.push('views: the replay logs no row of the sheet shown, Input!B19');
+      else {
+        var ex2 = HOST.instantiateSync(bytes), M = new HOST({ drive: 'manual', budget: 0, now: frozen }), MD = new Driver({ exports: ex2 }), off = '';
+        try {
+          if (!M.attach(ex2).ok || !M.load(VIEWS.text, VIEWS.file).ok) P.push('views: a fresh host did not load the views card');
+          else {
+            M.on('frame', function (e) {
+              var hh = M.counters().handle, iv = recordValues(MD.call('alonzo_view', [hh], ['grid', 'Input', 'A11:B19']).text), pv = recordValues(MD.call('alonzo_view', [hh], ['grid', 'Desk', 'B2']).text), L = live[e.frame];
+              var same = !!L && viewsNum(iv.B11) === L.b11 && viewsNum(iv.B12) === L.b12 && viewsNum(iv.B13) === L.b13 && iv.B19 === L.b19 && viewsNum(pv.B2) === L.presses;
+              if (same) k.replayInputs++; else if (!off) off = 'frame ' + e.frame;
+            });
+            var pm = M.play(text, true);
+            if (!pm.ok || pm.frames !== VIEWS_FRAMES) P.push('views: the replay played on a fresh host stopped at frame ' + pm.frames);
+            else if (off) P.push('views: the replay played on a fresh host is not the live run at ' + off + ': its Input rows or its count differ');
+            else { k.replayed = 1; k.replayFrames = pm.frames; }
+          }
+        } finally { M.destroy(); }
+      }
+      var refusals = host.sentences().filter(function (sn) { return sn.refusal; });
+      if (refusals.length) P.push('views: the host was refused: ' + refusals[0].text);
+    } finally { host.destroy(); stage.removeChild(box); }
+  }
+  // The views card, its Camera's formula given a value row naming the Ledger: opened there, and the formula's first
+  // value, empty at frame 1, names no sheet and moves nothing.
+  function viewsValueRow(bytes, k, P) {
+    var stage = document.getElementById('stage'), box = document.createElement('div');
+    box.style.cssText = 'width:640px;height:300px;position:relative;background:#fff;';
+    stage.appendChild(box);
+    var exports = HOST.instantiateSync(bytes), host = new HOST({ drive: 'manual', budget: 0, now: frozen, grid: box });
+    try {
+      var b3 = '(formula "Camera" "B3" ', at = VIEWS.text.indexOf(b3), end = at < 0 ? -1 : VIEWS.text.indexOf('\n', at);
+      if (end < 0) { P.push('views, a value row: the views card holds no formula in Camera!B3'); return; }
+      var text = VIEWS.text.slice(0, end + 1) + '(value "Camera" "B3" "Ledger")\n' + VIEWS.text.slice(end + 1);
+      if (!host.attach(exports).ok || !host.load(text, VIEWS.file).ok) { P.push('views, a value row: the card did not load'); return; }
+      if (host.vp.sheet() !== 'Ledger') { P.push('views, a value row, frame 0: the host opened on ' + (host.vp.sheet() || 'nothing') + ', where the Camera\'s value row names the Ledger'); return; }
+      k.valueRow = 1;
+      host.start(); host.tick(1000); host.tick(1000 + 1000 / 30);
+      var c = host.counters();
+      if (c.frame !== 1 || host.vp.sheet() !== 'Ledger' || c.shows !== 0) P.push('views, a value row, frame 1: the viewport shows ' + host.vp.sheet() + ' after ' + c.shows + ' show(s), where the empty first value names no sheet and moves nothing');
+      else k.unmoved = 1;
+    } finally { host.destroy(); stage.removeChild(box); }
+  }
+  // The still card, written to version 3: opened on its Screen; its Board's tab clicked and a press over Board!B2
+  // written as 0, 0 and 0, a version 3 cartridge's pointer being 0 off the Screen (ENGINE.14's decision 4); its
+  // Input sheet of eighteen rows; and its replay's header version 3's.
+  function viewsOlder(bytes, k, P) {
+    var stage = document.getElementById('stage'), box = document.createElement('div');
+    box.style.cssText = 'width:' + GRID_BOX.w + 'px;height:' + GRID_BOX.h + 'px;position:relative;background:#fff;';
+    stage.appendChild(box);
+    var exports = HOST.instantiateSync(bytes), host = new HOST({ drive: 'manual', budget: 0, now: frozen, grid: box }), D = new Driver({ exports: exports });
+    try {
+      var ld = host.attach(exports).ok ? host.load(STILL.text, STILL.file) : { ok: false };
+      if (!ld.ok) { P.push('views, version 3: the still card did not load'); return; }
+      var vp = host.vp, pt = viewPoints(vp), t = 1000;
+      if (vp.sheet() !== 'Screen') { P.push('views, version 3, frame 0: the still card opened on ' + (vp.sheet() || 'nothing') + ', where a version 3 cartridge opens on its Screen'); return; }
+      host.start(); host.tick(t);
+      var b = pt.tab('Board');
+      if (!b) { P.push('views, version 3: no tab Board in the still card\'s strip'); return; }
+      b.click();
+      var p = pt.cell(2, 2); pt.mouse(vp.scroller, 'mousemove', p, 0); pt.mouse(vp.scroller, 'mousedown', p, 1);
+      t += 1000 / 30; host.tick(t);
+      var inp = recordValues(D.call('alonzo_view', [ld.handle], ['grid', 'Input', 'A11:B19']).text);
+      if (viewsNum(inp.B11) !== 0 || viewsNum(inp.B12) !== 0 || viewsNum(inp.B13) !== 0) P.push('views, version 3 frame 1: the press over Board!B2 was written as column ' + viewsNum(inp.B11) + ', row ' + viewsNum(inp.B12) + ' and button ' + viewsNum(inp.B13) + ', where a version 3 cartridge\'s pointer is 0 off the Screen');
+      else if (inp.A19 !== undefined || inp.B19 !== undefined) P.push('views, version 3: the Input sheet holds a nineteenth row, ' + JSON.stringify(inp.A19) + ' and ' + JSON.stringify(inp.B19));
+      else if (!/^\(replay "still" \(spec 3\) /.test(host.replayText() || '')) P.push('views, version 3: the replay\'s header is ' + (host.replayText() || '').split('\n')[0] + ', where a version 3 cartridge\'s names version 3');
+      else k.older = 1;
+    } finally { host.destroy(); stage.removeChild(box); }
+  }
+  // ---- ENGINE.19: a frame read by its changes ----
+  // The changes card, the page's own as the still card is, written here and never a file, so that the case runs on a
+  // game's page too (ENGINE.16): a Screen of 20 by 10 holding the frame's number, a cell of every seventh frame, a text
+  // long on even frames and short on odd ones, a value an edit rewrites, and a fill of 64 formulas reading only the day,
+  // 20 frames long, so that a day's boundary changes 64 cells, under the room the language keeps for a frame's changes;
+  // a Day, its phase moving at every frame and a value the Write sheet lands in it at every frame; a Camera; a Keys sheet
+  // binding KeyZ to player 1's a; and a File whose save cell rises every 25th frame. Every value is plain, since a
+  // formula whose value turns to an error or a reason makes its frame whole (the scoping's measurement).
+  // Since ENGINE.20 the Screen holds the cells a repaint must get right, the fill moved to C3:J10 to make room: a number
+  // turning to #s every third frame (M1); a look's fill on and off (N1); the long text growing and shrinking (K2); a
+  // constant long text cut by a neighbor that fills on even frames and spilling again when it empties (L6, N6); a wrapped
+  // text in a tall row, two lines and three, every line in the row (B7); a cell in a hidden row (A9); and a cell in the
+  // columns the view freezes (A5).
+  var CHANGES = { file: 'changes.vla',
+                  text: '(cartridge "changes"\n  (spec 3)\n  (title "A changes card")\n  (rate 30)\n  (screen grid 20 10)\n  (seed 1))\n' +
+                        '(sheet "Screen" visible)\n(sheet "Day" visible)\n(sheet "Camera" visible)\n(sheet "Keys" visible)\n(sheet "Write" visible)\n' +
+                        '(cell "Camera" "A1" "row")\n(cell "Camera" "B1" 1)\n(cell "Camera" "A2" "column")\n(cell "Camera" "B2" 1)\n(cell "Keys" "A5" "a")\n(cell "Keys" "B5" "KeyZ")\n' +
+                        '(cell "Day" "A1" "day")\n(formula "Day" "B1" "=INT((Clock!$B$1-1)/20)")\n(cell "Day" "A2" "phase")\n(formula "Day" "B2" "=MOD(Clock!$B$1-1,20)")\n(cell "Day" "A3" "written")\n(cell "Day" "B3" 0)\n' +
+                        '(cell "Write" "A1" "sheet")\n(cell "Write" "B1" "address")\n(cell "Write" "C1" "value")\n(cell "Write" "A2" "Day")\n(cell "Write" "B2" "B3")\n(formula "Write" "C2" "=Clock!$B$1")\n' +
+                        '(formula "File" "B3" "=IF(MOD(Clock!$B$1,25)=0,1,0)")\n' +
+                        '(format 1 "F7F4FC" general wrap)\n(format 2 "C8E6C9" general nowrap)\n(look "Screen" "on" 2)\n(row "Screen" 7 45 shown)\n(row "Screen" 9 none hidden)\n' +
+                        '(cell "Screen" "A1" "frame")\n(formula "Screen" "B1" "=Clock!$B$1")\n(cell "Screen" "J1" "seventh")\n(formula "Screen" "K1" "=INT(Clock!$B$1/7)")\n' +
+                        '(formula "Screen" "M1" "=IF(MOD(Clock!$B$1,3)=0,1234567890123,Clock!$B$1)")\n(formula "Screen" "N1" "=IF(MOD(Clock!$B$1,2)=0,\\"on\\",\\"off\\")")\n' +
+                        '(cell "Screen" "J2" "text")\n(formula "Screen" "K2" "=IF(MOD(Clock!$B$1,2)=0,\\"a text much longer than its column\\",\\"short\\")")\n' +
+                        '(cell "Screen" "K4" 1)\n(formula "Screen" "A5" "=MOD(Clock!$B$1,10)")\n' +
+                        '(cell "Screen" "L6" "a constant text much longer than its column")\n(formula "Screen" "N6" "=IF(MOD(Clock!$B$1,2)=0,\\"x\\",\\"\\")")\n' +
+                        '(formula "Screen" "B7" "=IF(MOD(Clock!$B$1,2)=0,\\"wrapped in two\\",\\"and in three lines\\")")\n(style "Screen" "B7" 1)\n' +
+                        '(formula "Screen" "A9" "=Clock!$B$1")\n(formula "Screen" "C3:J10" "=Day!$B$1*100+ROW()*10+COLUMN()")\n' };
+  var CHANGES_FRAMES = 60, CHANGES_DEVICES = ['Camera', 'Keys', 'File', 'Write', 'Clock'];
+  // The person's acts before each frame: the pointer over three cells, a bound key pressed and let go, an edit of the
+  // Input sheet, the Keys rebound and the new key pressed and let go, the value's edit, a notch of the wheel, the Camera
+  // moved a column, and a formula written into the window.
+  var CHANGES_PLAN = {
+    10: [['pointer', 3, 3]], 11: [['pointer', 4, 4]], 12: [['pointer', 5, 5]], 15: [['down', 'KeyZ', 'z']], 16: [['up', 'KeyZ']],
+    20: [['edit', '(cell "Input" "C5" 1)']], 25: [['edit', '(cell "Keys" "B5" "KeyX")']], 27: [['down', 'KeyX', 'x']], 28: [['up', 'KeyX']],
+    30: [['edit', '(cell "Screen" "K4" 2)']], 33: [['wheel', 1]], 40: [['edit', '(cell "Camera" "B2" 2)']], 50: [['edit', '(formula "Screen" "L4" "=K4*2")']]
+  };
+  // ENGINE.20: the view's own acts before a frame, on the host's viewport: its panes frozen two by two at 25 and thawed at
+  // 36; the window scrolled out of view at 44, every cell of it, and back at 49. Its selection over K1:M2 and its mark
+  // over L6:O6 stand from frame 0.
+  var CHANGES_VIEW = { 25: 'freeze', 36: 'thaw', 44: 'away', 49: 'back' };
+  var CHANGES_MARK = { fill: 'rgba(255, 200, 0, 0.35)', border: '#c08000' };
+  // A viewport's canvas as numbers, a pixel each.
+  function pixelsOf(vp) { var c = vp.canvas; return new Uint32Array(c.getContext('2d').getImageData(0, 0, c.width, c.height).data.buffer); }
+  // Where two canvases differ, in words: '' when they are one, pixel for pixel; else the count and the first pixel, with
+  // the cell under it in the second viewport.
+  function pixelsDiff(a, b, vp) {
+    if (a.length !== b.length) return 'canvases of ' + a.length + ' and ' + b.length + ' pixels';
+    var n = 0, first = -1;
+    for (var i = 0; i < a.length; i++) if (a[i] !== b[i]) { if (first < 0) first = i; n++; }
+    if (!n) return '';
+    var w = vp.canvas.width, x = first % w, y = Math.floor(first / w), r = vp.box.getBoundingClientRect(), dpr = vp.geometry().dpr;
+    var cell = vp.cellAt(r.left + (x + 0.5) / dpr, r.top + (y + 0.5) / dpr);
+    return n + ' pixel(s), the first at ' + x + ',' + y + (cell ? ' in ' + cell.address : ' off the cells');
+  }
+  // Where two draw lists differ, in words: '' when they are one, op for op.
+  function drawsDiff(a, b) {
+    for (var i = 0; i < Math.max(a.length, b.length); i++) {
+      var p = JSON.stringify(a[i]), q = JSON.stringify(b[i]);
+      if (p !== q) return 'op ' + i + ' of ' + a.length + ' is ' + (p ? p.slice(0, 200) : 'none') + ', where the full paint\'s ' + b.length + ' have ' + (q ? q.slice(0, 200) : 'none');
+    }
+    return '';
+  }
+  // A full paint of a record in a viewport's state (ENGINE.20): the twin loads the record and takes the viewport's frozen
+  // panes, selection and scroll, each a full paint; the marks it is given at its making, as the viewport's were.
+  function twinPaint(twin, vp, text) {
+    twin.load(text, { keep: twin.sheet() !== '' });
+    var fz = vp.frozen(), tf = twin.frozen();
+    if (fz.rows !== tf.rows || fz.cols !== tf.cols) twin.freeze(fz.rows, fz.cols);
+    if (twin.selection().text !== vp.selection().text) twin.select(vp.selection().text);
+    if (twin.scroller.scrollLeft !== vp.scroller.scrollLeft || twin.scroller.scrollTop !== vp.scroller.scrollTop) twin.scrollToPixels(vp.scroller.scrollLeft, vp.scroller.scrollTop);
+  }
+  // A module's exports with its view and write calls logged, each view by its projection, sheet and window and each
+  // write by its rows, read off the module's memory at the call: what the host asked, never what it says it asked.
+  function loggedExports(exports, log) {
+    var x = {}, td = new TextDecoder();
+    for (var key in exports) if (Object.prototype.hasOwnProperty.call(exports, key)) x[key] = exports[key];
+    function text(p, n) { return td.decode(new Uint8Array(exports.memory.buffer, p >>> 0, n >>> 0)); }
+    x.alonzo_view = function (h, pp, pn, sp, sn, wp, wn, out) { log.push({ call: 'view', projection: text(pp, pn), sheet: text(sp, sn), window: text(wp, wn) }); return exports.alonzo_view(h, pp, pn, sp, sn, wp, wn, out); };
+    x.alonzo_write = function (h, p, n, out) { log.push({ call: 'write', rows: text(p, n) }); return exports.alonzo_write(h, p, n, out); };
+    return x;
+  }
+  // A changes answer's header read here, the oracle's own: { sheet, range, since, at, whole, n }, or null.
+  function changesHead(text) {
+    var m = /^\(changes "((?:[^"\\]|\\.)*)" "([^"]*)" (\d+) (\d+) (whole|\d+)\)/.exec(text);
+    return m ? { sheet: m[1], range: m[2], since: +m[3], at: +m[4], whole: m[5] === 'whole', n: m[5] === 'whole' ? -1 : +m[5] } : null;
+  }
+  // A record's cells by their rows, the oracle's own: { key: { addr, r, c, rows } } and the keys in row-major order.
+  function rowsByCell(text) {
+    var cells = {}, order = [];
+    text.split('\n').forEach(function (l) {
+      var m = /^\((?:cell|value|style|sentence|formula) "(?:[^"\\]|\\.)*" "([A-Z]+)(\d+)"/.exec(l);
+      if (!m) return;
+      var r = +m[2], c = VP.colIndex(m[1]), key = r * 32768 + c;
+      if (!cells[key]) { cells[key] = { addr: m[1] + m[2], r: r, c: c, rows: '' }; order.push(key); }
+      cells[key].rows += l + '\n';
+    });
+    return cells;
+  }
+  // Where two models of a record differ, a viewport's patched one and a fresh read's, in words; '' when they are one,
+  // every cell and every count, the read's time aside.
+  function modelDiff(a, b) {
+    var keys = ['sheet', 'windowText', 'extentText', 'gridlines', 'rows', 'cols', 'lines'], i;
+    for (i = 0; i < keys.length; i++) if (a[keys[i]] !== b[keys[i]]) return keys[i] + ' ' + JSON.stringify(a[keys[i]]) + ' against ' + JSON.stringify(b[keys[i]]);
+    var parts = ['sheets', 'columns', 'formats', 'looks', 'rowSettings', 'counts'];
+    for (i = 0; i < parts.length; i++) if (JSON.stringify(a[parts[i]]) !== JSON.stringify(b[parts[i]])) return parts[i] + ' ' + JSON.stringify(a[parts[i]]) + ' against ' + JSON.stringify(b[parts[i]]);
+    if (a.cells.size !== b.cells.size) return 'the cells, ' + a.cells.size + ' against ' + b.cells.size;
+    var bad = '';
+    b.cells.forEach(function (e, key) { if (!bad && JSON.stringify(a.cells.get(key)) !== JSON.stringify(e)) bad = e.address + ', ' + JSON.stringify(a.cells.get(key)) + ' against ' + JSON.stringify(e); });
+    return bad;
+  }
+  // A device sheet's cells off its grid record, the oracle's own reading of what the host keeps: a cell or value row's
+  // value as the host reads one (a text, a number, true or false, an error as { error }), a formula with no value null.
+  function deviceCells(text) {
+    var forms = VP.readForms(text), out = {};
+    for (var i = 0; i < forms.length; i++) {
+      var f = forms[i], head = Array.isArray(f) && f[0] ? f[0].sym : null;
+      if ((head !== 'cell' && head !== 'value' && head !== 'formula') || typeof f[2] !== 'string') continue;
+      var d = f[3], v = null;
+      if (head !== 'formula') v = typeof d === 'string' ? d : (d && d.num !== undefined ? d.num : (d && d.sym === 'true' ? true : (d && d.sym === 'false' ? false : (Array.isArray(d) && d[0] && d[0].sym === 'error' ? { error: d[1] } : null))));
+      out[f[2].toUpperCase()] = v;
+    }
+    return out;
+  }
+  function canonCells(cells) { return JSON.stringify(Object.keys(cells).sort().map(function (a) { return [a, cells[a]]; })); }
+  // The host's patch, pure, over a record written here (decision 8's third part): an empty row takes its cell out, a new
+  // cell goes in at its place, a value and its style are replaced together, a cell loses its style, several cells at
+  // once, and the header is untouched; and a whole answer patches nothing. Each laid on a viewport's model too, which
+  // stays the same object, counts the patch and is the model a load of the patched record makes, every cell and count.
+  // Since ENGINE.20 each is repainted by its cells, the canvas pixel for pixel and the draw list op for op a fresh
+  // viewport's full paint of the record after it; and a patch of every cell of a window of 8 by 8, more than a quarter of
+  // the cells in view, is painted whole, held the same way.
+  function changesCrafted(P) {
+    var head = '(sheet "Crafted" visible)\n(window "Crafted" "A1:D4")\n(extent "Crafted" "A1:D4")\n(gridlines "Crafted" on)\n(format 0 none general nowrap)\n(format 2 "00AA00" general nowrap)\n';
+    var a1 = '(cell "Crafted" "A1" "a")\n', b1 = '(value "Crafted" "B1" 1)\n(style "Crafted" "B1" 2)\n', c2 = '(value "Crafted" "C2" 3)\n', d4 = '(cell "Crafted" "D4" 4)\n';
+    var rec = head + a1 + b1 + c2 + d4, held = 0;
+    function changes(n, rows) { return '(changes "Crafted" "A1:D4" 1 2 ' + n + ')\n' + rows; }
+    var cases = [
+      ['an empty row', changes(1, '(empty "Crafted" "C2")\n'), head + a1 + b1 + d4],
+      ['a new cell', changes(1, '(value "Crafted" "A2" 9)\n'), head + a1 + b1 + '(value "Crafted" "A2" 9)\n' + c2 + d4],
+      ['a value and its style', changes(1, '(value "Crafted" "B1" 5)\n(style "Crafted" "B1" 2)\n'), head + a1 + '(value "Crafted" "B1" 5)\n(style "Crafted" "B1" 2)\n' + c2 + d4],
+      ['a style lost', changes(1, '(value "Crafted" "B1" 1)\n'), head + a1 + '(value "Crafted" "B1" 1)\n' + c2 + d4],
+      ['several cells', changes(3, '(cell "Crafted" "A1" "b")\n(empty "Crafted" "C2")\n(value "Crafted" "D3" 7)\n'), head + '(cell "Crafted" "A1" "b")\n' + b1 + '(value "Crafted" "D3" 7)\n' + d4]
+    ];
+    var stage = document.getElementById('stage'), box = document.createElement('div'), box2 = document.createElement('div');
+    box.style.cssText = box2.style.cssText = 'width:640px;height:200px;position:relative;background:#fff;';
+    stage.appendChild(box); stage.appendChild(box2);
+    // both read back at every patch, so painted on the CPU from the first (ENGINE.20's catch)
+    var vp = new VP(box, { willReadFrequently: true }), fresh = new VP(box2, { willReadFrequently: true });
+    // the patch painted as owed, by its cells or whole, and the canvas a full paint's of the record after it
+    function painted(at, after, repaints) {
+      fresh.load(after);
+      var pd = pixelsDiff(pixelsOf(vp), pixelsOf(fresh), fresh), od = pd ? '' : drawsDiff(vp.draws(), fresh.draws());
+      if (vp.repaints() !== repaints) P.push(at + ': the viewport ' + (vp.repaints() > repaints ? 'repainted the patch by its cells, where it is painted whole' : 'painted the patch whole, where its cells are repainted alone'));
+      else if (pd) P.push(at + ': the canvas is not a full paint\'s of the record after the patch: ' + pd);
+      else if (od) P.push(at + ': the draw list is not a full paint\'s of the record after the patch: ' + od);
+      else return true;
+      return false;
+    }
+    try {
+      for (var i = 0; i < cases.length; i++) {
+        var c = cases[i], at = 'crafted, ' + c[0], got = HOST.patchRecord(rec, c[1]);
+        if (got !== c[2]) { P.push(at + ': the host\'s patch gives ' + JSON.stringify(got) + ', where the record after it is ' + JSON.stringify(c[2])); continue; }
+        vp.load(rec);
+        var m0 = vp.model(), p0 = vp.patches(), rp0 = vp.repaints(), r = vp.patch(c[1]);
+        if (!r || vp.model() !== m0 || vp.patches() !== p0 + 1) { P.push(at + ': the viewport ' + (r ? 'replaced its model or counted no patch' : 'refused the patch')); continue; }
+        var diff = modelDiff(vp.model(), VP.readRecord(c[2]));
+        if (diff) { P.push(at + ': the viewport\'s patched model is not the one a load of the record after it makes: ' + diff); continue; }
+        if (painted(at, c[2], rp0 + 1)) held++;
+      }
+      var whole = '(changes "Crafted" "A1:D4" 1 2 whole)\n';
+      vp.load(rec);
+      if (HOST.patchRecord(rec, whole) !== null) P.push('crafted: the host patched a record by a whole answer');
+      else if (vp.patch(whole) !== false) P.push('crafted: the viewport patched its model by a whole answer');
+      else held++;
+      // a patch of every cell of a window of 8 by 8, more than a quarter of the 80 or so cells in view: painted whole
+      var big = '(sheet "Crafted" visible)\n(window "Crafted" "A1:H8")\n(extent "Crafted" "A1:H8")\n(gridlines "Crafted" on)\n(format 0 none general nowrap)\n', b0 = big, rows = '';
+      for (var br = 1; br <= 8; br++) for (var bc = 1; bc <= 8; bc++) { b0 += '(cell "Crafted" "' + VP.colName(bc) + br + '" ' + (br * 10 + bc) + ')\n'; rows += '(cell "Crafted" "' + VP.colName(bc) + br + '" ' + (br * 1000 + bc) + ')\n'; }
+      vp.load(b0);
+      var rb = vp.repaints();
+      if (!vp.patch('(changes "Crafted" "A1:H8" 1 2 64)\n' + rows)) P.push('crafted, a patch of every cell: the viewport refused it');
+      else if (painted('crafted, a patch of every cell', big + rows, rb)) held++;
+    } finally { vp.destroy(); fresh.destroy(); stage.removeChild(box); stage.removeChild(box2); }
+    return held;
+  }
+  // The double's changes (decision 6), driven here with no host between and held to the oracle's own diff of its values
+  // records: a grid of 20 by 12, frames 1 to 9, the Screen's window and the State and Write sheets' extents. At each frame
+  // the answer names exactly the cells whose values rows differ from the frame before's, row by row, an empty one's as
+  // (empty ...); whole before the first frame, at a frame whose sheet's extent changed (the Write sheet's rule of the
+  // frame at 7 and 8), and, for a formula written before frame 5, from the write until and at that frame's end. Between
+  // frames 3 and 4 a value written into State answers whole for State while the Screen keeps frame 3's answer.
+  function changesDouble(P) {
+    // the double reads a manifest alone: one written here, so that a game's page, which holds no Life, runs it too
+    var fake = FAKE.create({}), D = new Driver(fake), held = 0, manifest = '(cartridge "double"\n  (spec 3)\n  (title "The double\'s grid")\n  (rate 30)\n  (screen grid 20 12)\n  (seed 1))\n';
+    var ld = /^\(cartridge (\d+) /.exec(D.call('alonzo_load', [], [manifest, 'double.vla']).text);
+    if (!ld) { P.push('the double did not load a grid of 20 by 12'); return 0; }
+    var h = +ld[1], wins = [['Screen', 'A1:T12'], ['State', ''], ['Write', '']], last = {}, answered = {};
+    function extentOf(text) { var m = /^\(extent "[^"]*" (?:"([^"]*)"|none)\)$/m.exec(text); return m ? (m[1] || 'none') : '?'; }
+    function look(f, why) {
+      wins.forEach(function (w) {
+        var at = 'the double, frame ' + f + ', ' + w[0], V = D.call('alonzo_view', [h], ['values', w[0], w[1]]).text, C = D.call('alonzo_view', [h], ['changes', w[0], w[1]]).text, ch = changesHead(C);
+        var prev = last[w[0]], whole = why || (prev && extentOf(prev) !== extentOf(V) ? 'its extent changed' : '');
+        last[w[0]] = V; answered[w[0]] = C;
+        if (!ch || ch.at !== f || ch.since !== (f > 0 ? f - 1 : 0)) { P.push(at + ': the answer\'s header is ' + C.split('\n')[0] + ', where it names frames ' + (f > 0 ? f - 1 : 0) + ' and ' + f); return; }
+        if (whole) { if (!ch.whole) P.push(at + ': the answer names ' + ch.n + ' cell(s), where it is whole, ' + whole); else held++; return; }
+        if (ch.whole) { P.push(at + ': the answer is whole, where it names the cells that changed'); return; }
+        var a = rowsByCell(prev), b = rowsByCell(V), keys = {}, want = [];
+        Object.keys(a).concat(Object.keys(b)).forEach(function (key) { keys[key] = true; });
+        Object.keys(keys).map(Number).sort(function (x, y) { return x - y; }).forEach(function (key) {
+          var was = a[key] ? a[key].rows : '', now = b[key] ? b[key].rows : '';
+          if (was !== now) want.push(now || '(empty "' + w[0] + '" "' + (a[key] || b[key]).addr + '")\n');
+        });
+        var body = C.slice(C.indexOf('\n') + 1);
+        if (ch.n !== want.length || body !== want.join('')) P.push(at + ': the answer names ' + ch.n + ' cell(s), ' + JSON.stringify(body.slice(0, 80)) + ', where the values records differ in ' + want.length + ', ' + JSON.stringify(want.join('').slice(0, 80)));
+        else held++;
+      });
+    }
+    look(0, 'before the first frame');
+    for (var f = 1; f <= 9; f++) {
+      if (f === 4) {
+        var screen3 = answered.Screen;
+        D.call('alonzo_write', [h], ['(cell "State" "B1" 99)']);
+        var s1 = changesHead(D.call('alonzo_view', [h], ['changes', 'State', '']).text), s2 = D.call('alonzo_view', [h], ['changes', 'Screen', 'A1:T12']).text;
+        if (!s1 || !s1.whole) P.push('the double, between frames 3 and 4: State answers ' + (s1 ? s1.n + ' cell(s)' : 'nothing') + ' while a value written since lies in it, where it is whole');
+        else if (s2 !== screen3) P.push('the double, between frames 3 and 4: the Screen, which no write reached, answers ' + s2.split('\n')[0] + ', not frame 3\'s answer');
+        else held++;
+      }
+      if (f === 5) {
+        D.call('alonzo_write', [h], ['(formula "State" "C1" "=1")']);
+        var s3 = changesHead(D.call('alonzo_view', [h], ['changes', 'Screen', 'A1:T12']).text);
+        if (!s3 || !s3.whole) P.push('the double, between frames 4 and 5: the Screen answers ' + (s3 ? s3.n + ' cell(s)' : 'nothing') + ' after a formula was written, where it is whole until the next frame\'s end');
+        else held++;
+      }
+      D.call('alonzo_step', [h, 0], []);
+      look(f, f === 5 ? 'a formula written before the frame' : '');
+    }
+    return held;
+  }
+  // The changes card over the engine's module, frames 1 to 60, its viewport in a box of the stage and the module's view
+  // and write calls logged. At every frame: the host's choice for the Screen, a whole view, a patch or a still frame, is
+  // the oracle's own from its own changes after the frame, and the counters move by it; host.record is the values view
+  // byte for byte; the viewport's model is the one a load of that record makes, cell for cell and every count; and the
+  // window drawn is held to the record. No values or grid view on a still or patched frame, a changes view for each
+  // device the host holds, and a device's grid view only where its changes said whole. The host's device state is a
+  // whole read's: the cells it keeps, the window, the key map, the derived writes, the rate and the save edges. The
+  // Input rows written are exactly those that differ from the rows last written, all of them at the first frame and after
+  // the person's edit of Input!C5 at 20. The value's edit at 30 is patched; the Camera's move at 40 views whole, the
+  // window being new, and the patches start again at 41; the formula at 50 is whole. A page's viewer of the Day,
+  // refreshed at every frame, is patched from frame 2 but at 50; a second viewer, of the Screen, refreshed every third
+  // frame, views whole each time. The run's replay, played on a fresh host without a viewport, reaches every frame's
+  // Input sheet and Screen record.
+  // Since ENGINE.20, at every frame, the host's viewport's canvas is a full paint's of the record in the viewport's state,
+  // pixel for pixel, and its draw list op for op, the full paint a twin's: a viewport beside it that loads host.record
+  // and takes its frozen panes, selection, scroll and mark. A patched frame is repainted by its cells, and no other frame
+  // is. The view acts between frames (CHANGES_VIEW): its panes frozen from 25 to 35, the window held to the record cell
+  // for cell at every other frame; and at 44 to 48 every cell of the window out of view, each patch then repainting
+  // nothing, the canvas as the frame before left it. Both viewports paint on the CPU from the first (the catch).
+  function changesRun(bytes, k, P) {
+    var stage = document.getElementById('stage'), box = document.createElement('div'), dayBox = document.createElement('div'), screenBox = document.createElement('div'), twinBox = document.createElement('div');
+    box.style.cssText = twinBox.style.cssText = 'width:' + GRID_BOX.w + 'px;height:' + GRID_BOX.h + 'px;position:relative;background:#fff;';
+    dayBox.style.cssText = 'width:640px;height:200px;position:relative;background:#fff;';
+    screenBox.style.cssText = 'width:1500px;height:300px;position:relative;background:#fff;';
+    stage.appendChild(box); stage.appendChild(dayBox); stage.appendChild(screenBox); stage.appendChild(twinBox);
+    var raw = HOST.instantiateSync(bytes), log = [], D = new Driver({ exports: raw }), measure = document.createElement('canvas').getContext('2d');
+    var host = new HOST({ drive: 'manual', budget: 0, now: frozen, grid: box, viewport: { willReadFrequently: true } }), dayView = new VP(dayBox), screenView = new VP(screenBox);
+    var twin = new VP(twinBox, { willReadFrequently: true });
+    var gk = { texts: 0, wraps: 0, fills: 0, looks: 0, styles: 0, columns: 0, unvalued: 0 }, live = {};
+    try {
+      if (!host.attach(loggedExports(raw, log)).ok) { P.push('changes: the host refused the module'); return; }
+      var ld = host.load(CHANGES.text, CHANGES.file);
+      if (!ld.ok) { P.push('changes: the changes card did not load: ' + ld.sentence); return; }
+      var h = ld.handle, vp = host.vp, t = 1000;
+      function grid(sheet, win) { return D.call('alonzo_view', [h], ['grid', sheet, win || '']).text; }
+      function values(sheet, win) { return D.call('alonzo_view', [h], ['values', sheet, win || '']).text; }
+      function answer(sheet, win) { return changesHead(D.call('alonzo_view', [h], ['changes', sheet, win || '']).text); }
+      function num(v) { return v && v.num !== undefined ? v.num : null; }
+      // the oracle's own reading of what the host reads after a frame: the Camera's corner and the key map
+      function camera() { var c = recordValues(grid('Camera')); return { row: num(c.B1) || 1, col: num(c.B2) || 1 }; }
+      function keymap() { var c = recordValues(grid('Keys')), km = []; for (var b = 0; b < 10; b++) { km.push([]); for (var p = 0; p < 4; p++) { var v = c['BCDE'.charAt(p) + (b + 1)]; km[b].push(typeof v === 'string' ? v : ''); } } return km; }
+      // the oracle's own Input rows (docs/SPEC.md section 3.3, version 3's eighteen) from its own log of the person
+      var held = {}, ptr = { col: 0, row: 0 }, notches = 0, lastKey = null, cam = camera(), km = keymap(), lastRows = null, saves = 0, saveWas = 0;
+      function inputRows() {
+        var out = [];
+        for (var b = 0; b < 10; b++) for (var p = 0; p < 4; p++) { var code = km[b][p]; out.push('(cell "Input" "' + 'BCDE'.charAt(p) + (b + 1) + '" ' + (code && held[code] ? 1 : 0) + ')'); }
+        var on = ptr.col > 0 && ptr.row > 0;
+        out.push('(cell "Input" "B11" ' + (on ? cam.col + ptr.col - 1 : 0) + ')', '(cell "Input" "B12" ' + (on ? cam.row + ptr.row - 1 : 0) + ')');
+        out.push('(cell "Input" "B13" 0)', '(cell "Input" "B14" 0)', '(cell "Input" "B15" 0)', '(cell "Input" "B16" ' + notches + ')');
+        out.push('(cell "Input" "B17" ' + lqQuote(lastKey ? lastKey.key : '') + ')', '(cell "Input" "B18" ' + lqQuote(lastKey ? lastKey.code : '') + ')');
+        return out;
+      }
+      // the record the host holds for its own viewport, as the oracle follows it: its frame, window and projection
+      var oHeld = { frame: 0, window: lqRange(1, 1, ld.h, ld.w), values: false }, oLast = host.record, deviceHeld = { Camera: true, Keys: true };
+      // the page's viewers, shown at frame 0 as a page shows one, before the first frame
+      if (!host.showSheet(dayView, 'Day') || !host.showSheet(screenView, 'Screen')) { P.push('changes: a page\'s viewer did not show its sheet'); return; }
+      var dayHeld = 0, screenHeld = 0;
+      // the view's state from frame 0 (ENGINE.20): a selection over K1:M2 and a mark over L6:O6, both translucent, the twin's alike
+      vp.select('K1:M2'); vp.mark('changes', ['L6:O6'], CHANGES_MARK); twin.mark('changes', ['L6:O6'], CHANGES_MARK);
+      var backTo = null;
+      host.start(); host.tick(t);
+      for (var f = 1; f <= CHANGES_FRAMES; f++) {
+        var at = 'changes frame ' + f, evs = CHANGES_PLAN[f] || [], edits = [], act = CHANGES_VIEW[f];
+        // the view's own act before the frame, a full paint
+        if (act === 'freeze') vp.freeze(2, 2);
+        else if (act === 'thaw') vp.freeze(0, 0);
+        else if (act === 'away') { backTo = { x: vp.scroller.scrollLeft, y: vp.scroller.scrollTop }; vp.scrollToPixels(1e6, 1e6); }
+        else if (act === 'back') vp.scrollToPixels(backTo.x, backTo.y);
+        var unseen = f >= 44 && f < 49, shot = unseen ? pixelsOf(vp) : null, rp0 = vp.repaints();
+        for (var e = 0; e < evs.length; e++) {
+          var ev = evs[e];
+          if (ev[0] === 'pointer') { host.pointerAt(ev[1], ev[2]); ptr = { col: ev[1], row: ev[2] }; }
+          else if (ev[0] === 'down') { host.keyDown(ev[1], ev[2]); held[ev[1]] = true; lastKey = { key: ev[2], code: ev[1] }; }
+          else if (ev[0] === 'up') { host.keyUp(ev[1]); delete held[ev[1]]; }
+          else if (ev[0] === 'wheel') { host.wheel(ev[1]); notches += ev[1]; }
+          else if (ev[0] === 'edit') { host.edit(ev[1]); edits.push(ev[1]); }
+        }
+        // the rows the oracle owes the frame: those that differ from the last written, all of them after an Input edit
+        var rows = inputRows(), want = rows.filter(function (r, i) { return !lastRows || lastRows[i] !== r; });
+        if (want.length) lastRows = rows;
+        notches = 0; lastKey = null;
+        if (edits.some(function (r) { return /^\((?:cell|formula) "input" /i.test(r); })) lastRows = null;
+        log.length = 0;
+        var c0 = host.counters();
+        t += 1000 / 30; host.tick(t);
+        var c1 = host.counters();
+        if (c1.frame !== f) { P.push(at + ': after tick ' + f + ' the host is at frame ' + c1.frame); break; }
+        k.frames = f;
+        // ---- the Screen: the oracle's own choice from its own changes ----
+        cam = camera();
+        // the changes are asked whenever the viewport holds a values record of the Screen; the answer's header names the
+        // window asked, and another window than the held one's views whole
+        var win = lqRange(cam.row, cam.col, ld.h, ld.w), V = values('Screen', win), asked = oHeld.values, choice = 'view', byChanges = false;
+        if (asked && oHeld.window === win) {
+          var ch = answer('Screen', win);
+          if (ch && !ch.whole && ch.since === oHeld.frame) { choice = ch.n === 0 ? 'still' : 'patch'; byChanges = true; }
+        }
+        if (choice === 'view') choice = V === oLast ? 'still' : 'drawn';
+        var dd = c1.draws - c0.draws, dp = c1.patches - c0.patches, ds = c1.stills - c0.stills, owed = choice === 'drawn' ? [1, 0, 0] : (choice === 'patch' ? [1, 1, 0] : [0, 0, 1]);
+        if (dd !== owed[0] || dp !== owed[1] || ds !== owed[2]) P.push(at + ': the host counted ' + dd + ' draw(s), ' + dp + ' patch(es) and ' + ds + ' still frame(s), where the window\'s changes make the frame ' + (choice === 'drawn' ? 'a whole view' : (choice === 'patch' ? 'a patch' : 'still')));
+        else { k.decided++; if (choice === 'patch') k.patched++; else if (choice === 'still') k.still++; else k.drawn++; }
+        if (choice === 'drawn') oHeld = { frame: f, window: win, values: true }; else oHeld.frame = f;
+        oLast = V;
+        if (host.record !== V) P.push(at + ': host.record is not the values view of ' + win + ' byte for byte: ' + lineDiff(host.record || '', V));
+        else k.equal++;
+        var md = modelDiff(vp.model(), VP.readRecord(V));
+        if (md) P.push(at + ': the viewport\'s model is not the one a load of the record makes: ' + md);
+        else k.models++;
+        // the window drawn held to the record cell for cell while the panes are thawed, the oracle's own layout having none
+        var gm = gqRead(V), fz = vp.frozen();
+        if (!fz.rows && !fz.cols && gqCompare(gqExpect(gm, gqLayout(gm, vp.geometry()), measure), vp.draws(), at, P, gk)) k.drawnHeld++;
+        // ---- ENGINE.20: the canvas a full paint's, pixel for pixel and op for op; a patched frame repainted by its cells ----
+        var drp = vp.repaints() - rp0;
+        if (drp !== (choice === 'patch' ? 1 : 0)) P.push(at + ': the viewport repainted ' + drp + ' patch(es) by their cells, where the frame is ' + (choice === 'patch' ? 'a patch' : (choice === 'drawn' ? 'a whole view' : 'still')));
+        else if (choice === 'patch') k.repainted++;
+        twinPaint(twin, vp, V);
+        var px = pixelsOf(vp), pd = pixelsDiff(px, pixelsOf(twin), twin), od = drawsDiff(vp.draws(), twin.draws());
+        if (pd) P.push(at + ': the canvas is not a full paint\'s of the record in the view\'s state: ' + pd);
+        else k.pixels++;
+        if (od) P.push(at + ': the draw list is not a full paint\'s: ' + od);
+        else k.ops++;
+        if ((fz.rows || fz.cols) && !pd && !od) k.frozen++;
+        if (unseen) {
+          // every cell of the window out of view: the patch repaints nothing, the canvas as the frame before left it
+          var sv = vp.scrolled(), ud = pixelsDiff(px, shot, vp);
+          if (sv.top <= ld.h || sv.left <= ld.w + 1) P.push(at + ': the view shows ' + sv.window + ', where every cell of the window lies out of it');
+          else if (choice !== 'patch' || ud) P.push(at + ': a patch of cells out of view ' + (choice !== 'patch' ? 'was not one, the frame being ' + choice : 'changed the canvas: ' + ud));
+          else k.unseen++;
+        }
+        if (f === 30 && choice !== 'patch') P.push(at + ': the value\'s edit of K4 made the frame ' + choice + ', where it is patched');
+        if (f === 40 && choice !== 'drawn') P.push(at + ': the Camera\'s move to ' + win + ' made the frame ' + choice + ', where the window is new and viewed whole');
+        if (f === 41 && choice !== 'patch') P.push(at + ': the frame after the Camera\'s move is ' + choice + ', where the patches start again');
+        if (f === 50 && choice !== 'drawn') P.push(at + ': the formula written into L4 made the frame ' + choice + ', where its changes are whole');
+        // ---- the module's calls in the frame ----
+        var bad = '', views = function (s) { return log.filter(function (x) { return x.call === 'view' && x.sheet === s; }).map(function (x) { return x.projection; }).join(' '); };
+        var screenWant = (asked ? 'changes' : '') + (byChanges ? '' : (asked ? ' values' : 'values'));
+        if (views('Screen') !== screenWant) bad = 'the Screen was viewed "' + views('Screen') + '", where the frame is "' + screenWant + '"';
+        for (var di = 0; !bad && di < CHANGES_DEVICES.length; di++) {
+          var s = CHANGES_DEVICES[di], heldIt = !!deviceHeld[s], whole = !heldIt || answer(s).whole, dw = (heldIt ? 'changes' : '') + (whole ? (heldIt ? ' grid' : 'grid') : '');
+          if (views(s) !== dw) bad = s + ' was viewed "' + views(s) + '", where its changes ask "' + dw + '"';
+          deviceHeld[s] = true;
+        }
+        if (!bad && log.some(function (x) { return x.call === 'view' && x.sheet !== 'Screen' && CHANGES_DEVICES.indexOf(x.sheet) < 0; })) bad = 'a sheet no device reads was viewed';
+        if (bad) P.push(at + ': ' + bad); else k.calls++;
+        // ---- the Input rows written ----
+        var inputWrites = log.filter(function (x) { return x.call === 'write' && edits.indexOf(x.rows) < 0 && x.rows.split('\n').every(function (l) { return l.indexOf('(cell "Input" ') === 0; }); });
+        var gotRows = inputWrites.length ? inputWrites[0].rows.split('\n') : [];
+        if (inputWrites.length > 1 || gotRows.join('\n') !== want.join('\n')) P.push(at + ': the host wrote ' + gotRows.length + ' Input row(s), ' + JSON.stringify(gotRows.slice(0, 3)) + ', where the rows that differ from the last written are ' + want.length + ', ' + JSON.stringify(want.slice(0, 3)));
+        else if ((c1.inputsKept - c0.inputsKept) !== (want.length ? 0 : 1)) P.push(at + ': the host counted ' + (c1.inputsKept - c0.inputsKept) + ' frame(s) of Input rows kept, where it wrote ' + want.length + ' row(s)');
+        else { k.inputs++; if (!want.length) k.kept++; if (want.length === 2) k.two++; if (want.length === rows.length) k.whole++; }
+        // ---- the host's device state, a whole read's ----
+        km = keymap();
+        var fileB3 = num(recordValues(grid('File')).B3) === 1 ? 1 : 0;
+        if (fileB3 === 1 && saveWas !== 1) saves++;
+        saveWas = fileB3;
+        var derived = recordValues(grid('Write')), owedRows = [], dbad = '';
+        for (var wr = 2; wr <= 9; wr++) { var ws = derived['A' + wr], wa = derived['B' + wr], wv = derived['C' + wr]; if (typeof ws === 'string' && typeof wa === 'string' && wv !== undefined) owedRows.push('(derived ' + lqQuote(ws) + ' ' + lqQuote(wa) + ' ' + (typeof wv === 'string' ? lqQuote(wv) : wv.text) + ')'); }
+        CHANGES_DEVICES.forEach(function (s) { if (!dbad && (!host.kept[s] || canonCells(host.kept[s].cells) !== canonCells(deviceCells(grid(s))))) dbad = 'the host keeps ' + s + '\'s cells as ' + (host.kept[s] ? canonCells(host.kept[s].cells) : 'nothing') + ', where a whole read gives ' + canonCells(deviceCells(grid(s))); });
+        if (!dbad && c1.window !== win) dbad = 'the host\'s window is ' + c1.window + ', where the Camera places ' + win;
+        if (!dbad && JSON.stringify(host.keymap) !== JSON.stringify(km)) dbad = 'the host\'s key map is ' + JSON.stringify(host.keymap[4]) + ' for the button a, where the Keys sheet binds ' + JSON.stringify(km[4]);
+        if (!dbad && host.pending.map(function (x) { return x.text; }).join(' ') !== owedRows.join(' ')) dbad = 'the host\'s derived writes are ' + host.pending.map(function (x) { return x.text; }).join(' ') + ', where the Write sheet makes ' + owedRows.join(' ');
+        if (!dbad && host.cart.rate !== num(recordValues(grid('Clock')).B2)) dbad = 'the host steps at ' + host.cart.rate + ', where the Clock says ' + num(recordValues(grid('Clock')).B2);
+        if (!dbad && c1.saves !== saves) dbad = 'the host counted ' + c1.saves + ' save edge(s), where the File rose ' + saves + ' time(s)';
+        if (dbad) P.push(at + ': ' + dbad); else k.devices++;
+        // ---- a page's viewers: the Day at every frame, the Screen at every third ----
+        // each viewer views the region it shows, which its first draws may move; a patch is owed on the window held
+        log.length = 0;
+        var d0 = dayView.patches(), dm0 = dayView.model(), dWas = dm0 ? dm0.windowText : '';
+        host.refreshSheet(dayView, false, true);
+        var dWin = dayView.model() ? dayView.model().windowText : '', dch = answer('Day', dWin), dowed = dWin === dWas && !!dch && !dch.whole && dch.since === dayHeld && dch.n > 0;
+        var dText = values('Day', dWin), dl = host._lastLoad(dayView);
+        if (dl.text !== dText) P.push(at + ': the viewer of the Day holds a record that is not the values view of ' + dWin + ': ' + lineDiff(dl.text || '', dText));
+        else if (modelDiff(dayView.model(), VP.readRecord(dText))) P.push(at + ': the viewer of the Day holds a model that is not the record\'s: ' + modelDiff(dayView.model(), VP.readRecord(dText)));
+        else if ((dayView.patches() !== d0) !== dowed || (!dowed && dayView.model() === dm0 && dText !== dl.text)) P.push(at + ': the viewer of the Day was ' + (dayView.patches() !== d0 ? 'patched' : (dayView.model() !== dm0 ? 'loaded' : 'kept')) + ', where its changes ' + (dowed ? 'name cells since its frame' : 'are ' + (dch && dch.whole ? 'whole' : 'not since its frame')));
+        else { k.dayViewer++; if (dowed) k.dayPatched++; }
+        dayHeld = f;
+        if (f % 3 === 0) {
+          log.length = 0;
+          var s0 = screenView.patches(), sm0 = screenView.model();
+          host.refreshSheet(screenView, false, true);
+          var sWin = screenView.model() ? screenView.model().windowText : '';
+          // views whole: the changes asked against a values record are another frame's; a grid record, frame 0's, asks none
+          var sText = values('Screen', sWin), sl = host._lastLoad(screenView), sviews = log.filter(function (x) { return x.call === 'view'; }).map(function (x) { return x.projection; }).join(' '), sowed = screenHeld > 0 ? 'changes values' : 'values';
+          if (sl.text !== sText) P.push(at + ': the viewer of the Screen, refreshed every third frame, holds a record that is not the values view of ' + sWin + ': ' + lineDiff(sl.text || '', sText));
+          else if (screenView.patches() !== s0 || screenView.model() === sm0 || sviews !== sowed) P.push(at + ': the viewer of the Screen, refreshed every third frame, was ' + (screenView.patches() !== s0 ? 'patched' : (screenView.model() === sm0 ? 'kept' : 'loaded')) + ' (' + sviews + '), where its changes since frame ' + screenHeld + ' are another frame\'s and it views whole (' + sowed + ')');
+          else k.screenViewer++;
+          screenHeld = f;
+        }
+        live[f] = { screen: V, input: canonCells(deviceCells(grid('Input'))) };
+      }
+      k.patches = host.counters().patches; k.inputsKept = host.counters().inputsKept; k.saves = saves;
+      // ---- the run's replay, played on a fresh host without a viewport ----
+      var text = host.replayText() || '', M = new HOST({ drive: 'manual', budget: 0, now: frozen }), ex2 = HOST.instantiateSync(bytes), MD = new Driver({ exports: ex2 }), off = '';
+      try {
+        if (!M.attach(ex2).ok || !M.load(CHANGES.text, CHANGES.file).ok) P.push('changes: a fresh host did not load the changes card');
+        else {
+          M.on('frame', function (ev) {
+            var L = live[ev.frame], inp = canonCells(deviceCells(MD.call('alonzo_view', [M.counters().handle], ['grid', 'Input', '']).text));
+            if (L && M.record === L.screen && inp === L.input) k.replayFrames++;
+            else if (!off) off = 'frame ' + ev.frame + (L && M.record !== L.screen ? ': its Screen record' : ': its Input sheet');
+          });
+          var pm = M.play(text, true);
+          if (!pm.ok || pm.frames !== CHANGES_FRAMES) P.push('changes: the replay played on a fresh host stopped at frame ' + pm.frames);
+          else if (off) P.push('changes: the replay played on a fresh host is not the live run at ' + off);
+          else k.replayed = 1;
+        }
+      } finally { M.destroy(); }
+      var refusals = host.sentences().filter(function (sn) { return sn.refusal; });
+      if (refusals.length) P.push('changes: the host was refused: ' + refusals[0].text);
+    } finally { host.destroy(); dayView.destroy(); screenView.destroy(); twin.destroy(); stage.removeChild(box); stage.removeChild(dayBox); stage.removeChild(screenBox); stage.removeChild(twinBox); }
+  }
+  function caseChanges() {
+    var P = [], k = { crafted: 0, double: 0, module: 0, frames: 0, decided: 0, drawn: 0, patched: 0, still: 0, equal: 0, models: 0, drawnHeld: 0, calls: 0, devices: 0, inputs: 0, kept: 0, two: 0, whole: 0,
+                      dayViewer: 0, dayPatched: 0, screenViewer: 0, patches: 0, inputsKept: 0, saves: 0, replayed: 0, replayFrames: 0,
+                      repainted: 0, pixels: 0, ops: 0, frozen: 0, unseen: 0 };
+    k.crafted = changesCrafted(P);
+    k.double = changesDouble(P);
+    var wasm = builtModule();
+    if (!wasm) return { counters: k, problems: P };
+    var bytes = bytesOfBase64(wasm);
+    k.module = bytes.length;
+    changesRun(bytes, k, P);
+    return { counters: k, problems: P };
+  }
   // ---- SPEC.3's second slice: the pass in the page is the command line's ----
   // The first line two texts differ at, both shown without their line ends, for a failure's words;
   // a line that differs in its end alone is named so.
@@ -2354,18 +3161,21 @@
   // doors run one pass; a source whose include is not handed in is refused at the include's own
   // line, read off the record's fields; the pass takes no handle, so the first load after it, the
   // test card the page's pass built, is handle 1; and a build between two frames leaves the loop
-  // running, the next frame stepped, nothing refused.
+  // running, the next frame stepped, nothing refused. On a game's page (ENGINE.16) every source the page
+  // holds is expanded so, and the rest, over Life's source, the test card and the gun's, is Alonzo's own.
   function casePass() {
-    var P = [], k = { declined: 0, module: 0, sources: 0, same: 0, rows: 0, refused: 0, handle: 0, ranOn: 0 };
-    var fh = new HOST({ drive: 'manual' });
-    try {
-      fh.attach(FAKE.create({}).exports);
-      var d = fh.expand(CARTRIDGES.life.source, CARTRIDGES.life.sourcePath, libraryPairs());
-      var said = fh.sentences().filter(function (s) { return s.refusal && s.text.indexOf('exports no alonzo_expand') >= 0; }).length;
-      if (d.ok) P.push('the double built a cartridge, holding no pass');
-      else if (!said) P.push('the double\'s build was not declined in its words, marked as a refusal: ' + d.sentence);
-      else k.declined = 1;
-    } finally { fh.destroy(); }
+    var P = [], k = OWN ? { declined: 0, module: 0, sources: 0, same: 0, rows: 0, refused: 0, handle: 0, ranOn: 0 } : { module: 0, sources: 0, same: 0, rows: 0 };
+    if (OWN) {
+      var fh = new HOST({ drive: 'manual' });
+      try {
+        fh.attach(FAKE.create({}).exports);
+        var d = fh.expand(CARTRIDGES.life.source, CARTRIDGES.life.sourcePath, libraryPairs());
+        var said = fh.sentences().filter(function (s) { return s.refusal && s.text.indexOf('exports no alonzo_expand') >= 0; }).length;
+        if (d.ok) P.push('the double built a cartridge, holding no pass');
+        else if (!said) P.push('the double\'s build was not declined in its words, marked as a refusal: ' + d.sentence);
+        else k.declined = 1;
+      } finally { fh.destroy(); }
+    }
     var wasm = builtModule();
     if (!wasm) return { counters: k, problems: P };
     var bytes = bytesOfBase64(wasm), exports = HOST.instantiateSync(bytes), built = {};
@@ -2382,6 +3192,11 @@
         var want = c.text.replace(/\n/g, '\r\n');
         if (r.text !== want) { P.push(name + ': the page\'s pass differs from ' + c.path + ', the command line\'s, ' + lineDiff(r.text, want)); continue; }
         k.same++; k.rows += r.rows; built[name] = r.text;
+      }
+      if (!OWN) {
+        var gameRefusals = host.sentences().filter(function (s) { return s.refusal; });
+        if (gameRefusals.length) P.push('the host was refused: ' + gameRefusals[0].text);
+        return { counters: k, problems: P };
       }
       // An include the page does not hand in: refused at the include's own line, by the record.
       var src = CARTRIDGES.life.source, lines = src.split('\n'), incLine = 0;
@@ -2653,265 +3468,203 @@
     }
     return out;
   }
-  // A replay of Sand on the page's sand (CART.2's second slice), the brush as the cartridge reads it: the
-  // Input sheet's cells as the replay's rows leave them, since a replay logs a cell only in the frame it
-  // changes; the material and the radius as the State and the Brush keep them, sand and 3 at the first
-  // frame, then a key's pick and the wheel's notches; the disc the left or the right button paints while
-  // the pointer is over the Screen, empty under the right; and the board, the opening from the seed at
-  // the first frame. engine/src/cartridge.rs holds the same replay natively to engine/src/sand.rs.
-  var SAND_PICKS = { '1': 2, '2': 1, '3': 3, '0': 0 };
-  function SandHand(seed) { this.seed = seed; this.input = {}; this.material = 2; this.radius = 3; this.board = null; this.painted = 0; }
-  SandHand.prototype.frame = function (n, rows) {
-    for (var i = 0; i < rows.length; i++) {
-      var row = rows[i];
-      if (Array.isArray(row) && row[0] && row[0].sym === 'cell' && row[1] === 'Input' && typeof row[2] === 'string') this.input[row[2]] = row[3];
+  // ---- ENGINE.16: a replay held to its hand, a block of the page's own ----
+  // The hands of Sand and Kairos (CART.2's and CART.4's second slices) are blocks since ENGINE.16, each its
+  // cartridge's own file, cartridges/sand/sand.hand.js and cartridges/kairos/kairos.hand.js, and a game's
+  // hand is the same: a constructor given the replay's seed, answered each frame's number and rows (the
+  // page's reader's forms) with what the frame must hold, { plane } and or { cells }, and asked its own counts.
+  // The blocks against the registry: each block registered a hand under its own name, each hand registered
+  // stands in a block, and each holds a cartridge of the page's with a replay to hold. The count that did.
+  function handsHeld(P) {
+    var n = 0, blocks = {};
+    for (var i = 0; i < HAND_BLOCKS.length; i++) {
+      var b = HAND_BLOCKS[i];
+      blocks[b.name] = true;
+      if (typeof HANDS[b.name] !== 'function') { P.push('the block hand-' + b.name + ' registered no hand under ' + b.name + ': its script did not run to its end, or it registered another name'); continue; }
+      if (!CARTRIDGES[b.name]) { P.push('the block hand-' + b.name + ' holds a hand for ' + b.name + ', and this page holds no cartridge of that name'); continue; }
+      if (!CARTRIDGES[b.name].replayPath) { P.push('the hand of ' + b.name + ' holds nothing: this page holds no replay of ' + b.name + ' with its golden'); continue; }
+      n++;
     }
-    var input = this.input, num = function (a) { var v = input[a]; return v && v.num !== undefined ? +v.num : 0; };
-    if (n === 1) { this.material = 2; this.radius = 3; this.board = sandOpening(this.seed); return this.board; }
-    var key = typeof input.B17 === 'string' ? input.B17 : '';
-    if (Object.prototype.hasOwnProperty.call(SAND_PICKS, key)) this.material = SAND_PICKS[key];
-    this.radius = Math.max(1, Math.min(8, this.radius - num('B16')));
-    var col = num('B11'), row1 = num('B12'), left = num('B13'), right = num('B14');
-    var brush = left + right > 0 && col > 0 && row1 > 0 ? { row: row1, col: col, radius: this.radius, material: right === 1 ? 0 : this.material } : null;
-    if (brush) this.painted++;
-    this.board = sandStep(this.board, this.material, brush);
-    return this.board;
-  };
-  // Kairos by hand (CART.4's second slice), the page's own, a third beside the engine's and the Rust one,
-  // engine/src/kairos.rs: the stacking game as a person writes it, a row a bitmask of its seven columns, a
-  // stop a bitwise AND with the row beneath, and the game a switch on its phase, the cartridge's codes: 1
-  // sliding, 2 stopped, 3 the minor prize offered, 4 over; a game's end 1 fell, 2 the minor prize taken, 3
-  // the major. The Levels sheet's own values, each window its period. The board lies on its side as the
-  // plane reads the Screen's A1:O7, the cabinet's column a row and its level a column, with the checker.
-  var KAIROS = {
-    levels: 15, columns: 7, minor: 11, major: 15, beat: 20, hold: 90,
-    period: [10, 10, 9, 9, 8, 8, 7, 7, 6, 6, 5, 5, 4, 4, 3],
-    width: [3, 3, 3, 2, 2, 2, 2, 2, 2, 1, 1, 1, 1, 1, 1],
-    window: [10, 10, 9, 9, 8, 8, 7, 7, 6, 6, 5, 5, 4, 4, 3],
-    win: ['#...#.###.#...#', '#...#..#..##..#', '#...#..#..##..#', '#.#.#..#..#.#.#', '#.#.#..#..#..##', '##.##..#..#..##', '#...#.###.#...#']
-  };
-  // The run of columns from to to, both from 1, as a mask; a mask's lights.
-  function kairosRun(from, to) { var m = 0; for (var c = Math.max(1, from); c <= Math.min(KAIROS.columns, to); c++) m |= 1 << (c - 1); return m; }
-  function kairosLights(m) { var n = 0; for (; m; m &= m - 1) n++; return n; }
-  // A replay of Kairos on the page's Kairos: the Input sheet's cells as the replay's rows leave them, the
-  // stop's button held while a, select or the left button is down (the State's B8, their MAX) and the
-  // minor prize's while b is, each a press on its rising edge; the Tower the Write sheet's, a stop's lights
-  // landing before the next frame and the clear once a result has been held. Each frame's board is held.
-  function KairosHand() {
-    this.input = {}; this.frame = 0; this.phase = 4; this.since = 0; this.level = 1; this.width = 3; this.left = 1; this.direction = 1;
-    this.stopped = 0; this.beneath = kairosRun(1, KAIROS.columns); this.end = 0; this.tower = []; this.pending = [];
-    this.heldLast = false; this.takeLast = false; this.stops = 0;
-    for (var c = 0; c < KAIROS.levels; c++) this.tower.push(0);
+    for (var h in HANDS) if (Object.prototype.hasOwnProperty.call(HANDS, h) && !blocks[h]) P.push('a hand was registered under ' + h + ' by no block hand-' + h);
+    return n;
   }
-  // The row's next place and direction: a column on, turning at an end.
-  KairosHand.prototype.onward = function () {
-    var right = this.left + this.width - 1;
-    var turn = (this.direction === 1 && right >= KAIROS.columns) || (this.direction === -1 && this.left <= 1);
-    var d = turn ? -this.direction : this.direction;
-    return [this.left + d, d];
-  };
-  KairosHand.prototype.begin = function () { this.left = 1; this.direction = 1; this.phase = 1; };
-  KairosHand.prototype.start = function () {
-    this.level = 1; this.beneath = kairosRun(1, KAIROS.columns);
-    this.width = Math.min(KAIROS.width[0], kairosLights(this.beneath)); this.end = 0; this.begin();
-  };
-  KairosHand.prototype.over = function (end) { this.end = end; this.phase = 4; };
-  KairosHand.prototype.advance = function () {
-    this.level++; this.width = Math.min(KAIROS.width[this.level - 1], kairosLights(this.beneath)); this.begin();
-  };
-  KairosHand.prototype.step = function (held, takeHeld) {
-    for (var i = 0; i < this.pending.length; i++) {
-      var w = this.pending[i];
-      if (w === 'clear') for (var c = 0; c < KAIROS.levels; c++) this.tower[c] = 0;
-      else this.tower[w[0] - 1] |= w[1];
+  // A hand's value against a record's datum as sndPlain reads it: null for an empty cell, an error by its name,
+  // and a number, a text or a truth value by itself; each spelled for a failure's words.
+  function handSame(got, want) {
+    if (want === null || want === undefined) return got === undefined;
+    if (typeof want === 'object' && typeof want.error === 'string') return !!got && typeof got === 'object' && got.error === want.error;
+    return got === want;
+  }
+  function handSpell(x) { return x === undefined || x === null ? 'nothing' : (typeof x === 'object' ? 'the error ' + x.error : JSON.stringify(x)); }
+  // What a hand answers for a frame, held to the frame: its plane, byte for byte, the host's plane of the window;
+  // its cells, each Sheet!A1 to that sheet's record at the frame, one view a sheet over the range its cells span.
+  // { diff } at the first that differs, else { cells }, the count of cells held.
+  function handHeld(want, M, D) {
+    if (!want || typeof want !== 'object' || (!want.plane && !want.cells)) return { diff: 'the hand answered neither a plane nor cells' };
+    if (want.plane) { var pd = firstDiff(M.plane, want.plane, M.cart ? M.cart.w : 0); if (pd) return { diff: pd }; }
+    var held = 0, sheets = {}, order = [];
+    for (var at in want.cells || {}) {
+      if (!Object.prototype.hasOwnProperty.call(want.cells, at)) continue;
+      var bang = at.lastIndexOf('!'), a = bang > 0 ? VP.parseRange(at.slice(bang + 1)) : null;
+      if (!a || a.top !== a.bottom || a.left !== a.right) return { diff: 'the hand names ' + JSON.stringify(at) + ', which is no Sheet!A1' };
+      var sh = at.slice(0, bang), s = sheets[sh];
+      if (!s) { s = sheets[sh] = { cells: [], top: a.top, left: a.left, bottom: a.top, right: a.left }; order.push(sh); }
+      s.cells.push({ name: at, addr: VP.colName(a.left) + a.top, want: want.cells[at] });
+      s.top = Math.min(s.top, a.top); s.left = Math.min(s.left, a.left); s.bottom = Math.max(s.bottom, a.top); s.right = Math.max(s.right, a.left);
     }
-    this.pending = [];
-    this.frame++;
-    var press = held && !this.heldLast, take = takeHeld && !this.takeLast, was = this.phase, period = KAIROS.period[this.level - 1];
-    this.heldLast = held; this.takeLast = takeHeld;
-    if (this.frame === 1) this.start();
-    else if (was === 1 && press) {
-      // stopped where the person saw it, or a column on after the window
-      this.stopped = this.since % period < KAIROS.window[this.level - 1] ? this.left : this.onward()[0];
-      var stayed = kairosRun(this.stopped, this.stopped + this.width - 1) & this.beneath;
-      this.beneath = stayed;
-      if (stayed) this.pending.push([this.level, stayed]);
-      this.phase = 2; this.stops++;
-    } else if (was === 1) {
-      if ((this.since + 1) % period === 0) { var o = this.onward(); this.left = o[0]; this.direction = o[1]; }
-    } else if (was === 2) {
-      if (this.since + 1 >= KAIROS.beat) {
-        if (!this.beneath) this.over(1);
-        else if (this.level === KAIROS.major) this.over(3);
-        else if (this.level === KAIROS.minor) this.phase = 3;
-        else this.advance();
+    for (var i = 0; i < order.length; i++) {
+      var S = sheets[order[i]], v = D.call('alonzo_view', [M.counters().handle], ['grid', order[i], VP.rangeText(S)]);
+      if (v.status !== 0) return { diff: 'the view of ' + order[i] + ' was refused: ' + (v.id || 'status ' + v.status) };
+      var rec = recordValues(v.text);
+      for (var j = 0; j < S.cells.length; j++) {
+        var c = S.cells[j], got = sndPlain(rec[c.addr]);
+        if (!handSame(got, c.want)) return { diff: c.name + ' holds ' + handSpell(got) + ', and the hand ' + handSpell(c.want) };
+        held++;
       }
-    } else if (was === 3) {
-      if (take) this.over(2); else if (press) this.advance();
-    } else if (press && this.since >= KAIROS.hold) this.start();
-    this.since = this.phase !== was ? 0 : this.since + 1;
-    if (this.phase === 4 && this.since === KAIROS.hold) this.pending.push('clear');
-  };
-  // The light at the cabinet's column r and level c, both from 1, before the checker: 0 none, 1 a light
-  // that stayed, 2 the row sliding, 3 a light falling (blinking), 6 and 7 the minor and the major prize's
-  // level unlit, 5 the minor's while it is offered (blinking).
-  KairosHand.prototype.light = function (r, c) {
-    var blink = this.since % 8 < 4, bit = 1 << (r - 1), span = 0, look = 0;
-    var falling = this.phase === 2 || (this.phase === 4 && this.end === 1 && this.since < KAIROS.hold);
-    if (this.phase === 1) { span = kairosRun(this.left, this.left + this.width - 1); look = 2; }
-    else if (falling) { span = kairosRun(this.stopped, this.stopped + this.width - 1); look = blink ? 3 : 0; }
-    var stayed = this.phase === 2 ? this.beneath : 0;
-    if (c === this.level && (stayed & bit)) return 1;
-    if (c === this.level && (span & bit)) return look;
-    if (this.tower[c - 1] & bit) return 1;
-    if (c === KAIROS.minor) return this.phase === 3 && blink ? 5 : 6;
-    if (c === KAIROS.major) return 7;
-    return 0;
-  };
-  // The board row by row, WIN by half seconds while the major prize is won, the checker's twin, 8 more, on
-  // a light whose row and column sum odd.
-  KairosHand.prototype.board = function () {
-    var out = new Uint8Array(KAIROS.columns * KAIROS.levels), win = this.phase === 4 && this.end === 3 ? this.since % 30 < 15 : null;
-    for (var r = 1; r <= KAIROS.columns; r++) for (var c = 1; c <= KAIROS.levels; c++) {
-      var v = win === null ? this.light(r, c) : win && KAIROS.win[r - 1].charAt(c - 1) === '#' ? 4 : 0;
-      out[(r - 1) * KAIROS.levels + (c - 1)] = v + ((r + c) % 2 === 1 ? 8 : 0);
     }
-    return out;
-  };
-  KairosHand.prototype.frameOf = function (n, rows) {
-    for (var i = 0; i < rows.length; i++) {
-      var row = rows[i];
-      if (Array.isArray(row) && row[0] && row[0].sym === 'cell' && row[1] === 'Input' && typeof row[2] === 'string') this.input[row[2]] = row[3];
-    }
-    var input = this.input, down = function (a) { var v = input[a]; return !!v && v.num !== undefined && +v.num === 1; };
-    this.step(down('B5') || down('B10') || down('B13'), down('B6'));
-    return this.board();
-  };
+    return { diff: '', cells: held };
+  }
   function firstDiffLine(a, b) {
     var x = String(a).split('\n'), y = String(b).split('\n');
     for (var i = 0; i < Math.max(x.length, y.length); i++) if (x[i] !== y[i]) return 'at line ' + (i + 1) + ', ' + JSON.stringify((x[i] === undefined ? 'no line' : x[i]).slice(0, 80)) + ' against ' + JSON.stringify((y[i] === undefined ? 'no line' : y[i]).slice(0, 80));
     return 'nowhere by line';
   }
   function caseReplay() {
-    var P = [], k = { vectors: 0, liveFrames: 0, doubleSame: 0, doubleRound: 0, paced: 0, stopped: 0, waited: 0, refused: 0 };
+    var P = [], notes = [], k = OWN ? { vectors: 0, liveFrames: 0, doubleSame: 0, doubleRound: 0, paced: 0, stopped: 0, waited: 0, refused: 0 } : { vectors: 0 };
     // ---- the digest ----
     for (var v = 0; v < SHA_VECTORS.length; v++) {
       var msg = SHA_VECTORS[v][0] === null ? new Array(1000001).join('a') : SHA_VECTORS[v][0], sha = HOST.sha256(msg);
       if (sha === SHA_VECTORS[v][1]) k.vectors++;
       else P.push('the host\'s SHA-256 of ' + (SHA_VECTORS[v][0] === null ? 'a million a\'s' : JSON.stringify(msg.slice(0, 20))) + ' is ' + sha + ', and FIPS 180-2 gives ' + SHA_VECTORS[v][1]);
     }
-    // ---- over the double: a live run, copied and played ----
-    var r = loopRun({ text: lifeText, budget: 0, ticks: loopTicks(50, -1), events: {
-      3: [['down', 'ArrowRight', 'ArrowRight']], 7: [['edit', '(cell "State" "B1" 555)']], 9: [['up', 'ArrowRight']],
-      12: [['pointer', 6, 5], ['buttons', 1, 0, 0]], 15: [['edit', '(cell "Input" "B5" 1)']], 17: [['buttons', 0, 0, 0]],
-      20: [['wheel', 2]], 24: [['down', 'KeyZ', 'z']], 26: [['up', 'KeyZ']], 30: [['edit', '(cell "Camera" "B1" 3)']]
-    } });
-    var text = r.host.replayText(), liveFrame = r.host.counters().frame, liveDigest = r.fake.digest(r.host.counters().handle);
-    loopEnd(r, ['the edit (cell "State" "B1" 555) was written', 'the edit (cell "Input" "B5" 1) was written', 'the Camera placed the window at A3:LH202']);
-    P = P.concat(r.P);
-    k.liveFrames = liveFrame;
-    if (text === null) { P.push('the live run over the double has no replay'); return { counters: k, problems: P }; }
-    function doubleHost() {
-      var fk = FAKE.create({}), h = new HOST({ drive: 'manual', now: frozen, budget: 0 });
-      if (!h.attach(fk.exports).ok || !h.load(lifeText, 'life.vla').ok) throw new Error('a fresh host did not load Life over the double');
-      return { fake: fk, host: h };
+    // ---- the hands the page's blocks registered (ENGINE.16) ----
+    k.hands = handsHeld(P);
+    if (OWN) {
+      // ---- over the double: a live run, copied and played ----
+      var r = loopRun({ text: lifeText, budget: 0, ticks: loopTicks(50, -1), events: {
+        3: [['down', 'ArrowRight', 'ArrowRight']], 7: [['edit', '(cell "State" "B1" 555)']], 9: [['up', 'ArrowRight']],
+        12: [['pointer', 6, 5], ['buttons', 1, 0, 0]], 15: [['edit', '(cell "Input" "B5" 1)']], 17: [['buttons', 0, 0, 0]],
+        20: [['wheel', 2]], 24: [['down', 'KeyZ', 'z']], 26: [['up', 'KeyZ']], 30: [['edit', '(cell "Camera" "B1" 3)']]
+      } });
+      var text = r.host.replayText(), liveFrame = r.host.counters().frame, liveDigest = r.fake.digest(r.host.counters().handle);
+      loopEnd(r, ['the edit (cell "State" "B1" 555) was written', 'the edit (cell "Input" "B5" 1) was written', 'the Camera placed the window at A3:LH202']);
+      P = P.concat(r.P);
+      k.liveFrames = liveFrame;
+      if (text === null) { P.push('the live run over the double has no replay'); return { counters: k, problems: P }; }
+      function doubleHost() {
+        var fk = FAKE.create({}), h = new HOST({ drive: 'manual', now: frozen, budget: 0 });
+        if (!h.attach(fk.exports).ok || !h.load(lifeText, 'life.vla').ok) throw new Error('a fresh host did not load Life over the double');
+        return { fake: fk, host: h };
+      }
+      // all at once
+      var A = doubleHost(), pa = A.host.play(text, true), da = A.fake.digest(A.host.counters().handle);
+      if (!pa.ok || A.host.counters().frame !== liveFrame) P.push('over the double, the live run\'s replay played all at once ends at frame ' + A.host.counters().frame + ', the live run at ' + liveFrame);
+      if (da === liveDigest) k.doubleSame++;
+      else P.push('over the double, the live run\'s replay played on a fresh host ends in the digest ' + da + ', where the live run ended in ' + liveDigest);
+      var againA = A.host.replayText();
+      if (againA === text) k.doubleRound = 1;
+      else P.push('over the double, the player\'s own recording is not the replay it played, ' + firstDiffLine(againA || '', text));
+      A.host.destroy();
+      // through the loop, at the rate, a person's edit refused while it plays
+      var B = doubleHost(), told = [], stops = [], t = 1000;
+      B.host.on('frame', function (e) { told.push(e.replay); });
+      B.host.on('stop', function (e) { stops.push(e.frame); });
+      var pb = B.host.play(text);
+      if (!pb.ok || !B.host.running) P.push('the replay played through the loop did not start: ' + (pb.sentence || 'the loop is not running'));
+      B.host.tick(t);
+      for (var i = 0; i < 400 && B.host.running; i++) {
+        t += 17; B.host.tick(t);
+        if (i === 5) { if (B.host.edit('(cell "State" "B1" 1)')) P.push('a person\'s edit was taken while a replay played'); else k.waited = 1; }
+      }
+      var db = B.fake.digest(B.host.counters().handle);
+      if (B.host.running) P.push('the replay played through the loop had not ended after 400 ticks, at frame ' + B.host.counters().frame);
+      else if (B.host.counters().frame !== liveFrame || db !== liveDigest) P.push('over the double, the replay played through the loop ends at frame ' + B.host.counters().frame + ' in the digest ' + db + ', the live run at frame ' + liveFrame + ' in ' + liveDigest);
+      else if (told.length !== liveFrame || told.some(function (x) { return x !== liveFrame; })) P.push('the frames played through the loop said they replayed ' + told.length + ' frame(s), not ' + liveFrame + ' each of ' + liveFrame);
+      else k.paced = 1;
+      var saidB = B.host.sentences().map(function (s) { return s.text; });
+      if (!saidB.some(function (s) { return s.indexOf('frame ' + liveFrame + ': the replay ended at its last frame; the loop is paused') === 0; })) P.push('no sentence says the replay ended at its last frame, ' + liveFrame + ', and the loop paused');
+      if (!B.host.sentences().some(function (s) { return s.refusal && s.text.indexOf('The edit (cell "State" "B1" 1) was not written: a replay is playing') === 0; })) P.push('the edit made while the replay played was not refused in words');
+      // the loop's stop at the replay's end said once, at its last frame, so that a page draws what it
+      // shows of the grid at the frame the frame line says (the panel's live sheet, 2026-10-10)
+      if (stops.length === 1 && stops[0] === liveFrame) k.stopped = 1;
+      else P.push('the replay played through the loop said the loop stopped ' + stops.length + ' time(s)' + (stops.length ? ', at frame(s) ' + stops.join(', ') : '') + ', where it says so once, at its last frame, ' + liveFrame);
+      B.host.destroy();
+      // the replays a player refuses, each in words, the cartridge loaded untouched
+      var C = doubleHost();
+      var wrong = [
+        ['another cartridge\'s replay', CARTRIDGES.inputcard.replay, 'a replay plays only on the file it was recorded from'],
+        ['a later version\'s replay', text.replace('(spec 3)', '(spec 5)'), 'this host implements versions 1 to 4'],
+        ['a derived row', text.replace('(frame 1\n', '(frame 1\n  (derived "State" "B1" 1)\n'), 'holds a derived row'],
+        ['frames out of order', text + '(frame 1)\n', 'frames are out of order'],
+        ['a row outside a frame', text.replace('(frame 1\n', '(cell "State" "B1" 1)\n(frame 1\n'), 'outside a frame'],
+        ['a seed not the manifest\'s', text.replace(/\(seed \d+\)\)\n/, '(seed 7))\n'), 'holds its manifest\'s seed']
+      ];
+      for (var w = 0; w < wrong.length; w++) {
+        if (wrong[w][1] === text) { P.push(wrong[w][0] + ': the mutation did not apply'); continue; }
+        var before = C.host.counters(), pr = C.host.play(wrong[w][1], true), after = C.host.counters();
+        var last = C.host.sentences().slice(-1)[0];
+        if (pr.ok) P.push('a player took ' + wrong[w][0]);
+        else if (!last || !last.refusal || last.text.indexOf(wrong[w][2]) < 0) P.push('a player refused ' + wrong[w][0] + ' without saying ' + JSON.stringify(wrong[w][2]) + ': ' + (last ? last.text : 'nothing said'));
+        else if (after.handle !== before.handle || after.frame !== before.frame) P.push('a player refused ' + wrong[w][0] + ' and still loaded the cartridge again');
+        else k.refused++;
+      }
+      C.host.destroy();
     }
-    // all at once
-    var A = doubleHost(), pa = A.host.play(text, true), da = A.fake.digest(A.host.counters().handle);
-    if (!pa.ok || A.host.counters().frame !== liveFrame) P.push('over the double, the live run\'s replay played all at once ends at frame ' + A.host.counters().frame + ', the live run at ' + liveFrame);
-    if (da === liveDigest) k.doubleSame++;
-    else P.push('over the double, the live run\'s replay played on a fresh host ends in the digest ' + da + ', where the live run ended in ' + liveDigest);
-    var againA = A.host.replayText();
-    if (againA === text) k.doubleRound = 1;
-    else P.push('over the double, the player\'s own recording is not the replay it played, ' + firstDiffLine(againA || '', text));
-    A.host.destroy();
-    // through the loop, at the rate, a person's edit refused while it plays
-    var B = doubleHost(), told = [], stops = [], t = 1000;
-    B.host.on('frame', function (e) { told.push(e.replay); });
-    B.host.on('stop', function (e) { stops.push(e.frame); });
-    var pb = B.host.play(text);
-    if (!pb.ok || !B.host.running) P.push('the replay played through the loop did not start: ' + (pb.sentence || 'the loop is not running'));
-    B.host.tick(t);
-    for (var i = 0; i < 400 && B.host.running; i++) {
-      t += 17; B.host.tick(t);
-      if (i === 5) { if (B.host.edit('(cell "State" "B1" 1)')) P.push('a person\'s edit was taken while a replay played'); else k.waited = 1; }
-    }
-    var db = B.fake.digest(B.host.counters().handle);
-    if (B.host.running) P.push('the replay played through the loop had not ended after 400 ticks, at frame ' + B.host.counters().frame);
-    else if (B.host.counters().frame !== liveFrame || db !== liveDigest) P.push('over the double, the replay played through the loop ends at frame ' + B.host.counters().frame + ' in the digest ' + db + ', the live run at frame ' + liveFrame + ' in ' + liveDigest);
-    else if (told.length !== liveFrame || told.some(function (x) { return x !== liveFrame; })) P.push('the frames played through the loop said they replayed ' + told.length + ' frame(s), not ' + liveFrame + ' each of ' + liveFrame);
-    else k.paced = 1;
-    var saidB = B.host.sentences().map(function (s) { return s.text; });
-    if (!saidB.some(function (s) { return s.indexOf('frame ' + liveFrame + ': the replay ended at its last frame; the loop is paused') === 0; })) P.push('no sentence says the replay ended at its last frame, ' + liveFrame + ', and the loop paused');
-    if (!B.host.sentences().some(function (s) { return s.refusal && s.text.indexOf('The edit (cell "State" "B1" 1) was not written: a replay is playing') === 0; })) P.push('the edit made while the replay played was not refused in words');
-    // the loop's stop at the replay's end said once, at its last frame, so that a page draws what it
-    // shows of the grid at the frame the frame line says (the panel's live sheet, 2026-10-10)
-    if (stops.length === 1 && stops[0] === liveFrame) k.stopped = 1;
-    else P.push('the replay played through the loop said the loop stopped ' + stops.length + ' time(s)' + (stops.length ? ', at frame(s) ' + stops.join(', ') : '') + ', where it says so once, at its last frame, ' + liveFrame);
-    B.host.destroy();
-    // the replays a player refuses, each in words, the cartridge loaded untouched
-    var C = doubleHost();
-    var wrong = [
-      ['another cartridge\'s replay', CARTRIDGES.inputcard.replay, 'a replay plays only on the file it was recorded from'],
-      ['a later version\'s replay', text.replace('(spec 3)', '(spec 4)'), 'this host implements versions 1 to 3'],
-      ['a derived row', text.replace('(frame 1\n', '(frame 1\n  (derived "State" "B1" 1)\n'), 'holds a derived row'],
-      ['frames out of order', text + '(frame 1)\n', 'frames are out of order'],
-      ['a row outside a frame', text.replace('(frame 1\n', '(cell "State" "B1" 1)\n(frame 1\n'), 'outside a frame'],
-      ['a seed not the manifest\'s', text.replace(/\(seed \d+\)\)\n/, '(seed 7))\n'), 'holds its manifest\'s seed']
-    ];
-    for (var w = 0; w < wrong.length; w++) {
-      if (wrong[w][1] === text) { P.push(wrong[w][0] + ': the mutation did not apply'); continue; }
-      var before = C.host.counters(), pr = C.host.play(wrong[w][1], true), after = C.host.counters();
-      var last = C.host.sentences().slice(-1)[0];
-      if (pr.ok) P.push('a player took ' + wrong[w][0]);
-      else if (!last || !last.refusal || last.text.indexOf(wrong[w][2]) < 0) P.push('a player refused ' + wrong[w][0] + ' without saying ' + JSON.stringify(wrong[w][2]) + ': ' + (last ? last.text : 'nothing said'));
-      else if (after.handle !== before.handle || after.frame !== before.frame) P.push('a player refused ' + wrong[w][0] + ' and still loaded the cartridge again');
-      else k.refused++;
-    }
-    C.host.destroy();
     // ---- over the engine's module: the card's replay and its golden ----
     var wasm = builtModule();
-    if (!wasm) return { counters: k, problems: P };
-    var bytes = bytesOfBase64(wasm), body = afterComments(CARTRIDGES.inputcard.replay);
-    k.module = bytes.length; k.digest = 0; k.seed = 0; k.recorded = 0; k.edits = 0; k.whole = 0; k.frames = 0; k.same = 0; k.golden = 0; k.round = 0;
-    var hm = /^\(replay "inputcard" \(spec 3\) \(cartridge "([0-9A-F]{64})"\) \(seed (\d+)\)\)\n/.exec(body), cardDigest = HOST.sha256(inputcardText.replace(/\r\n/g, '\n'));
-    if (!hm) P.push('the committed replay\'s header is not (replay "inputcard" (spec 3) (cartridge "<SHA-256>") (seed <n>)): ' + body.split('\n')[0].slice(0, 120));
-    else {
-      if (hm[1] === cardDigest) k.digest = 1; else P.push('the committed replay names the cartridge ' + hm[1] + ', and the input card\'s text, its line ends LF, is ' + cardDigest);
-      if (+hm[2] === CARD_SEED) k.seed = 1; else P.push('the committed replay\'s seed is ' + hm[2] + ', not the input case\'s ' + CARD_SEED);
+    if (!wasm) return { counters: k, problems: P, notes: notes };
+    var bytes = bytesOfBase64(wasm);
+    k.module = bytes.length; k.golden = 0; k.round = 0;
+    if (OWN) {
+      var body = afterComments(CARTRIDGES.inputcard.replay);
+      k.digest = 0; k.seed = 0; k.recorded = 0; k.edits = 0; k.whole = 0; k.frames = 0; k.same = 0;
+      var hm = /^\(replay "inputcard" \(spec 3\) \(cartridge "([0-9A-F]{64})"\) \(seed (\d+)\)\)\n/.exec(body), cardDigest = HOST.sha256(inputcardText.replace(/\r\n/g, '\n'));
+      if (!hm) P.push('the committed replay\'s header is not (replay "inputcard" (spec 3) (cartridge "<SHA-256>") (seed <n>)): ' + body.split('\n')[0].slice(0, 120));
+      else {
+        if (hm[1] === cardDigest) k.digest = 1; else P.push('the committed replay names the cartridge ' + hm[1] + ', and the input card\'s text, its line ends LF, is ' + cardDigest);
+        if (+hm[2] === CARD_SEED) k.seed = 1; else P.push('the committed replay\'s seed is ' + hm[2] + ', not the input case\'s ' + CARD_SEED);
+      }
+      if (!INPUT_RUN || !INPUT_RUN.text) P.push('the input case left no live run to copy');
+      else {
+        // what the recorder logged of the live run: each edit that landed in its frame, the refused one nowhere,
+        // and the Input sheet whole at the first frame and after a person's edit of it
+        var blocks = replayFrames(INPUT_RUN.text);
+        [[9, '(cell "Input" "C5" 1)'], [18, '(cell "Clock" "B2" 1)'], [21, '(cell "Clock" "B2" 30)']].forEach(function (e) {
+          if ((blocks[e[0]] || []).indexOf(e[1]) >= 0) k.edits++;
+          else P.push('the replay of the input case\'s live run does not log the edit ' + e[1] + ' in frame ' + e[0] + ', where it landed');
+        });
+        if (INPUT_RUN.text.indexOf('(cell "Clock" "B1" 99)') >= 0) P.push('the replay of the input case\'s live run logs the refused edit (cell "Clock" "B1" 99)');
+        [1, 10].forEach(function (n) {
+          var inputs = (blocks[n] || []).filter(function (x) { return x.indexOf('(cell "Input" ') === 0; }).length;
+          if (inputs === 48) k.whole++;
+          else P.push('frame ' + n + ' of the live run\'s replay logs ' + inputs + ' Input row(s), not the sheet\'s 48 ' + (n === 1 ? 'at the first frame' : 'after a person\'s edit of the Input sheet in frame 9'));
+        });
+        if (INPUT_RUN.text === body) k.recorded = 1;
+        else P.push('the input case\'s live run recorded a replay that is not the committed one, cartridges/inputcard/inputcard.replay.vla, ' + firstDiffLine(INPUT_RUN.text, body));
+      }
     }
-    if (!INPUT_RUN || !INPUT_RUN.text) P.push('the input case left no live run to copy');
-    else {
-      // what the recorder logged of the live run: each edit that landed in its frame, the refused one nowhere,
-      // and the Input sheet whole at the first frame and after a person's edit of it
-      var blocks = replayFrames(INPUT_RUN.text);
-      [[9, '(cell "Input" "C5" 1)'], [18, '(cell "Clock" "B2" 1)'], [21, '(cell "Clock" "B2" 30)']].forEach(function (e) {
-        if ((blocks[e[0]] || []).indexOf(e[1]) >= 0) k.edits++;
-        else P.push('the replay of the input case\'s live run does not log the edit ' + e[1] + ' in frame ' + e[0] + ', where it landed');
-      });
-      if (INPUT_RUN.text.indexOf('(cell "Clock" "B1" 99)') >= 0) P.push('the replay of the input case\'s live run logs the refused edit (cell "Clock" "B1" 99)');
-      [1, 10].forEach(function (n) {
-        var inputs = (blocks[n] || []).filter(function (x) { return x.indexOf('(cell "Input" ') === 0; }).length;
-        if (inputs === 48) k.whole++;
-        else P.push('frame ' + n + ' of the live run\'s replay logs ' + inputs + ' Input row(s), not the sheet\'s 48 ' + (n === 1 ? 'at the first frame' : 'after a person\'s edit of the Input sheet in frame 9'));
-      });
-      if (INPUT_RUN.text === body) k.recorded = 1;
-      else P.push('the input case\'s live run recorded a replay that is not the committed one, cartridges/inputcard/inputcard.replay.vla, ' + firstDiffLine(INPUT_RUN.text, body));
-    }
-    // every cartridge's committed replay, played on a fresh host over a fresh instance: its end its golden
-    // and its recording itself; the input card's, every frame the live run's window as well; the sound
-    // card's, every frame's Audio sheet the card by hand (ENGINE.4's second slice); Sand's, every frame's
-    // Screen the page's sand under the replay's brush (CART.2's second slice); Kairos's, every frame's
-    // board the page's Kairos under the replay's buttons (CART.4's second slice)
-    k.replays = 0; k.cardSame = 0; k.sandFrames = 0; k.sandPainted = 0; k.kairosFrames = 0; k.kairosStops = 0;
+    // every cartridge's committed replay, played on a fresh host over a fresh instance: its end its golden and
+    // its recording itself; every frame held to its hand where the page holds one (ENGINE.16), the plane or the
+    // cells the hand answers; on Alonzo's own page the input card's, every frame the live run's window, and the
+    // sound card's, every frame's Audio sheet the card by hand (ENGINE.4's second slice); any other replay without
+    // a hand held to its golden and its recording alone, and the case says so
+    k.replays = 0; k.alone = 0;
+    if (OWN) k.cardSame = 0;
     for (var cn in CARTRIDGES) {
       if (!Object.prototype.hasOwnProperty.call(CARTRIDGES, cn) || !CARTRIDGES[cn].replayPath) continue;
-      var cart = CARTRIDGES[cn], card = cn === 'inputcard', sound = cn === 'soundcard', rBody = afterComments(cart.replay), gBody = afterComments(cart.golden);
+      var cart = CARTRIDGES[cn], card = OWN && cn === 'inputcard', sound = OWN && cn === 'soundcard', rBody = afterComments(cart.replay), gBody = afterComments(cart.golden);
       var ex = HOST.instantiateSync(bytes), DS = new Driver({ exports: ex });
-      var M = new HOST({ drive: 'manual', budget: 0, now: frozen }), firstOff = 0, soundOff = '', sandOff = '', kairosOff = '';
+      var M = new HOST({ drive: 'manual', budget: 0, now: frozen }), firstOff = 0, soundOff = '', handOff = '';
       var seedM = /^\(replay "[^"]*" \(spec \d+\) \(cartridge "[0-9A-F]{64}"\) \(seed (\d+)\)\)\n/.exec(rBody);
-      var hand = cn === 'sand' ? new SandHand(seedM ? +seedM[1] : 0) : null, handRows = hand ? replayForms(rBody) : null;
-      var kh = cn === 'kairos' ? new KairosHand() : null, khRows = kh ? replayForms(rBody) : null;
+      // a count's name is the cartridge's, its word characters alone: sandFrames, kairosCells, kairosStops
+      var tag = cn.replace(/\W/g, '_'), Hand = Object.prototype.hasOwnProperty.call(HANDS, cn) && typeof HANDS[cn] === 'function' ? HANDS[cn] : null, hand = null, handRows = null;
+      if (Hand) {
+        try { hand = new Hand(seedM ? +seedM[1] : 0); handRows = replayForms(rBody); k[tag + 'Frames'] = 0; }
+        catch (he) { P.push('the hand of ' + cn + ' could not be made: ' + (he && he.message ? he.message : he)); }
+      } else if (!card && !sound) {
+        k.alone++;
+        notes.push(cn + '\'s committed replay is held to its golden and its recording alone: this page holds no hand-' + cn + ' block');
+      }
       k.replays++;
       try {
         if (!M.attach(ex).ok || !M.load(cart.text, cart.file).ok) { P.push('a fresh host did not load ' + cart.file + ' over the module'); continue; }
@@ -2925,22 +3678,24 @@
           var diff = cardDiff(e.frame, recordValues(DS.call('alonzo_view', [M.counters().handle], ['grid', 'Audio', 'A1:D5']).text));
           if (!diff) k.cardSame++; else if (!soundOff) soundOff = 'frame ' + e.frame + ': ' + diff;
         });
+        // the hand answered every frame, whatever an earlier one held, and the first frame it differs at named
         if (hand) M.on('frame', function (e) {
-          var diff = firstDiff(M.plane, hand.frame(e.frame, handRows[e.frame] || []));
-          if (!diff) k.sandFrames++; else if (!sandOff) sandOff = 'frame ' + e.frame + ': ' + diff;
-        });
-        if (kh) M.on('frame', function (e) {
-          var diff = firstDiff(M.plane, kh.frameOf(e.frame, khRows[e.frame] || []), KAIROS.levels);
-          if (!diff) k.kairosFrames++; else if (!kairosOff) kairosOff = 'frame ' + e.frame + ': ' + diff;
+          var held;
+          try { held = handHeld(hand.frame(e.frame, handRows[e.frame] || []), M, DS); } catch (fe) { held = { diff: 'the hand threw: ' + (fe && fe.message ? fe.message : fe) }; }
+          if (held.diff) { if (!handOff) handOff = 'frame ' + e.frame + ': ' + held.diff; return; }
+          k[tag + 'Frames']++;
+          if (held.cells) k[tag + 'Cells'] = (k[tag + 'Cells'] || 0) + held.cells;
         });
         var pm = M.play(cart.replay, true);
         if (!pm.ok) P.push('the committed replay of ' + cart.file + ' played on a fresh host stopped at frame ' + pm.frames + ': ' + (pm.sentence || M.sentences().slice(-1)[0].text));
         if (firstOff) P.push('frame ' + firstOff + ' of the committed replay, played on a fresh host, draws a window that is not the live run\'s');
         if (soundOff) P.push('the sound card\'s committed replay, played on a fresh host, is not the card by hand at ' + soundOff);
-        if (sandOff) P.push('Sand\'s committed replay, played on a fresh host, is not the page\'s sand at ' + sandOff);
-        if (kairosOff) P.push('Kairos\'s committed replay, played on a fresh host, is not the page\'s Kairos at ' + kairosOff);
-        if (hand) k.sandPainted = hand.painted;
-        if (kh) k.kairosStops = kh.stops;
+        if (handOff) P.push(cn + '\'s committed replay, played on a fresh host, is not its hand\'s at ' + handOff);
+        // the hand's own counts, each its cartridge's name and its own: sandPainted, kairosStops
+        if (hand && typeof hand.counts === 'function') {
+          var own = hand.counts() || {};
+          for (var ck in own) if (Object.prototype.hasOwnProperty.call(own, ck)) k[tag + ck.charAt(0).toUpperCase() + ck.slice(1)] = own[ck];
+        }
         var wm = /^\(window "([^"]+)" "([^"]+)"\)$/m.exec(gBody);
         if (!wm) P.push('the golden of ' + cart.file + ' has no (window ...) row naming its sheet');
         else {
@@ -2953,7 +3708,7 @@
         else P.push('the player\'s own recording of ' + cart.file + '\'s committed replay is not the replay it played, ' + firstDiffLine(again || '', rBody));
       } finally { M.destroy(); }
     }
-    return { counters: k, problems: P };
+    return { counters: k, problems: P, notes: notes };
   }
   // ---- ENGINE.4: the Audio device (docs/SPEC.md section 3.6) ----
   // A double of the Web Audio graph: every node made and every call on it recorded in order, each value and
@@ -3445,15 +4200,21 @@
     out.push('loop: host ' + HOST.version + ', rules cap=' + R.capMs + ' first=' + R.firstBudget + ' min=' + R.minBudget + ' snap=' + R.snapMs + ' slice=' + R.sliceFraction + '; fake ' + FAKE.version + ' grow=' + FAKE.RULES.growEvery + '; dpr=' + dpr + '; ' + navigator.userAgent);
     var cases = [['rate30', caseRate30], ['rate0', caseRate0], ['yield', caseYield], ['slice', caseSlice], ['pace', casePace], ['memory', caseMemory], ['abi', caseAbi], ['refusals', caseRefusals],
                  ['scale', caseScale], ['engine', caseEngine], ['parity', caseParity], ['plane', casePlane], ['pass', casePass], ['input', caseInput], ['replay', caseReplay],
-                 ['audio', caseAudio], ['sound', caseSound], ['grid', caseGrid], ['tabs', caseTabs], ['empty', caseEmpty]];
+                 ['audio', caseAudio], ['sound', caseSound], ['grid', caseGrid], ['tabs', caseTabs], ['empty', caseEmpty], ['still', caseStill], ['views', caseViews], ['changes', caseChanges]];
+    // On a game's page (ENGINE.16) a case runs when it needs nothing of Alonzo's own files, over the page's own
+    // blocks; every other case is Alonzo's own, proven in Alonzo's CI for the release the page was built from,
+    // and says so in one line.
+    var GAME_CASES = { abi: 1, pass: 1, replay: 1, grid: 1, empty: 1, still: 1, views: 1, changes: 1 }, absent = 0;
     function failed(e) { return { counters: { error: 1 }, problems: ['error: ' + (e && e.message ? e.message : e)] }; }
-    function record(name, res) { out.push(loopLine(name, res.counters, res.problems)); if (!res.problems.length) ok++; }
+    // a case's notes, each a line of its own under it, say what it ran without (a replay held without a hand)
+    function record(name, res) { out.push(loopLine(name, res.counters, res.problems)); (res.notes || []).forEach(function (n) { out.push('  note: ' + n); }); if (!res.problems.length) ok++; }
     // A case answers its result, or a promise of it (sound, which waits on its render): the cases run in
     // order, and the loop element is printed once the last has answered.
     var i = 0;
     function next() {
       while (i < cases.length) {
         var c = cases[i++], res;
+        if (!OWN && !GAME_CASES[c[0]]) { out.push('case ' + c[0] + ': not on this page: Alonzo\'s own, over its own cartridges and records, proven in Alonzo\'s CI'); absent++; continue; }
         try { res = c[1](); } catch (e) { res = failed(e); }
         if (res && typeof res.then === 'function') {
           res.then(function (r) { record(c[0], r); next(); }, function (e) { record(c[0], failed(e)); next(); });
@@ -3461,7 +4222,8 @@
         }
         record(c[0], res);
       }
-      out.push(ok === cases.length ? 'loop ok cases=' + cases.length + ' dpr=' + dpr : 'loop failed: ' + (cases.length - ok) + ' of ' + cases.length + ' cases dpr=' + dpr);
+      var ran = cases.length - absent, tail = absent ? '; ' + absent + ' of Alonzo\'s own not on this page' : '';
+      out.push(ok === ran ? 'loop ok cases=' + ran + ' dpr=' + dpr + tail : 'loop failed: ' + (ran - ok) + ' of ' + ran + ' cases dpr=' + dpr + tail);
       document.getElementById('loop').textContent = out.join('\n');
     }
     next();
@@ -3485,12 +4247,15 @@
   // ENGINE.8's second slice a fourth, grid: the grid card stepped once, then its frame drawn again
   // through the viewport, the values view of its 80 by 50 window read and drawn, in a box of the
   // screen's size; its view column is the module's, its blit column the viewport's load and draw.
+  // Since ENGINE.17 a fifth, still: the still card's frame path, runFrameSync, each frame stepped and
+  // drawn as the loop draws it, in a box of the screen's size, a day's boundary every 30 frames drawn
+  // and the frames between found still, which it counts; its blit column the draw, 0 on a still frame.
   function blitInstrument() {
     var SMOKE_B = /[?&]smoke=1(&|$)/.test(QS);
     var FRAMES = SMOKE_B ? 8 : 120, WARM = SMOKE_B ? 2 : 20;
     var statusEl = document.getElementById('bench-status'), outEl = document.getElementById('out'), pre = document.getElementById('blit');
     var runBtn = document.getElementById('run'), fsBtn = document.getElementById('fullscreen'), copyBtn = document.getElementById('copy');
-    document.getElementById('instrument-title').textContent = 'The blit\'s instrument \u00b7 a 320 by 200 plane at the scale that fits the screen, at a scale of 1, and over the engine\'s module, and the grid card drawn by the viewport';
+    document.getElementById('instrument-title').textContent = 'The blit\'s instrument \u00b7 a 320 by 200 plane at the scale that fits the screen, at a scale of 1, and over the engine\'s module, the grid card drawn by the viewport, and the still card\'s frame path';
     document.getElementById('instrument-note').textContent = 'The page runs once on opening, not in fullscreen; press Fullscreen to enter it and run again. The fit case is honest only in fullscreen, where the plane fills the screen. Copy takes the table and the baseline lines for tools/check_blit_floors.ps1.';
     var running = false;
     function say(t) { statusEl.textContent = t; }
@@ -3522,15 +4287,16 @@
         // window and blitted, since a step there is the evaluator's, Life's some 270 ms, and not the
         // frame path. The language keeps the Screen's plane from the end of that first frame. The
         // grid case the same over the grid card, its Screen drawn by the viewport from the values view.
+        // The still case is the frame path itself over the still card, stepped as the loop steps it.
         var a = host.attach(spec.engine ? HOST.instantiateSync(bytesOfBase64(builtModule())) : FAKE.create({}).exports);
         if (!a.ok) throw new Error(a.sentence);
-        var ld = spec.grid ? host.load(CARTRIDGES.gridcard.text, 'gridcard.vla') : host.load(lifeText, 'life.vla');
+        var ld = spec.still ? host.load(STILL.text, STILL.file) : (spec.grid ? host.load(CARTRIDGES.gridcard.text, 'gridcard.vla') : host.load(lifeText, 'life.vla'));
         if (!ld.ok) throw new Error(ld.sentence);
-        var once = spec.engine ? function () { host.redraw(); } : function () { host.runFrameSync(); };
-        if (spec.engine && !host.runFrameSync()) throw new Error((spec.grid ? 'The grid card\'s' : 'Life\'s') + ' first frame did not complete on the engine\'s module');
+        var once = spec.engine && !spec.still ? function () { host.redraw(); } : function () { host.runFrameSync(); };
+        if (spec.engine && !spec.still && !host.runFrameSync()) throw new Error((spec.grid ? 'The grid card\'s' : 'Life\'s') + ' first frame did not complete on the engine\'s module');
         for (var w = 0; w < WARM; w++) once();
         await frame();
-        var mains = [], syncs = [], views = [], blits = [], dropped = 0, first = 0;
+        var mains = [], syncs = [], views = [], blits = [], dropped = 0, first = 0, stills0 = host.counters().stills;
         for (var i = 0; i < FRAMES; i++) {
           if (i % 20 === 0) say('Running: ' + spec.name + ', frame ' + (i + 1) + ' of ' + FRAMES + '...');
           var t0 = performance.now();
@@ -3543,17 +4309,17 @@
         }
         var sm = ordered(mains), p95 = pct(sm, 0.95), drawn = spec.grid ? host.vp.canvas : cv;
         return { name: spec.name, scale: host.counters().scale, width: drawn.width, height: drawn.height, first: first, view: pct(ordered(views), 0.5), blit: pct(ordered(blits), 0.5), sync: pct(ordered(syncs), 0.5),
-                 p50: pct(sm, 0.5), p95: p95, max: sm[sm.length - 1], dropped: dropped, n: FRAMES, holds: dropped === 0 && p95 < iv };
+                 p50: pct(sm, 0.5), p95: p95, max: sm[sm.length - 1], dropped: dropped, n: FRAMES, holds: dropped === 0 && p95 < iv, stills: spec.still ? host.counters().stills - stills0 : null };
       } finally {
         host.destroy();
         if (box.parentNode) box.parentNode.removeChild(box);
       }
     }
     function table(rs) {
-      var lines = ['| case | scale | plane in device px | first ms | view p50 ms | blit p50 ms | sync p50 ms | frame p50 ms | frame p95 ms | max ms | dropped of N | holds the frame |', '|---|---|---|---|---|---|---|---|---|---|---|---|'];
+      var lines = ['| case | scale | plane in device px | first ms | view p50 ms | blit p50 ms | sync p50 ms | frame p50 ms | frame p95 ms | max ms | dropped of N | still of N | holds the frame |', '|---|---|---|---|---|---|---|---|---|---|---|---|---|'];
       for (var i = 0; i < rs.length; i++) {
         var x = rs[i];
-        lines.push('| ' + x.name + ' | ' + x.scale + ' | ' + x.width + ' x ' + x.height + ' | ' + fmt1(x.first) + ' | ' + fmt1(x.view) + ' | ' + fmt1(x.blit) + ' | ' + fmt1(x.sync) + ' | ' + fmt1(x.p50) + ' | ' + fmt1(x.p95) + ' | ' + fmt1(x.max) + ' | ' + x.dropped + ' of ' + x.n + ' | ' + (x.holds ? 'yes' : 'no') + ' |');
+        lines.push('| ' + x.name + ' | ' + x.scale + ' | ' + x.width + ' x ' + x.height + ' | ' + fmt1(x.first) + ' | ' + fmt1(x.view) + ' | ' + fmt1(x.blit) + ' | ' + fmt1(x.sync) + ' | ' + fmt1(x.p50) + ' | ' + fmt1(x.p95) + ' | ' + fmt1(x.max) + ' | ' + x.dropped + ' of ' + x.n + ' | ' + (x.stills === null ? '-' : x.stills + ' of ' + x.n) + ' | ' + (x.holds ? 'yes' : 'no') + ' |');
       }
       return lines.join('\n');
     }
@@ -3562,7 +4328,7 @@
       for (var i = 0; i < rs.length; i++) {
         var x = rs[i];
         lines.push("    @{ Case = '" + x.name + "'; Scale = " + x.scale + '; Width = ' + x.width + '; Height = ' + x.height + '; FirstFrame = ' + fmt1(x.first) + '; ViewP50 = ' + fmt1(x.view) + '; BlitP50 = ' + fmt1(x.blit) + '; SyncP50 = ' + fmt1(x.sync) +
-                   '; FrameP50 = ' + fmt1(x.p50) + '; FrameP95 = ' + fmt1(x.p95) + '; Max = ' + fmt1(x.max) + '; Dropped = ' + x.dropped + '; N = ' + x.n + "; Holds = '" + (x.holds ? 'yes' : 'no') + "' }" + (i < rs.length - 1 ? ',' : ''));
+                   '; FrameP50 = ' + fmt1(x.p50) + '; FrameP95 = ' + fmt1(x.p95) + '; Max = ' + fmt1(x.max) + '; Dropped = ' + x.dropped + '; N = ' + x.n + "; Holds = '" + (x.holds ? 'yes' : 'no') + "'" + (x.stills === null ? '' : '; Stills = ' + x.stills) + ' }' + (i < rs.length - 1 ? ',' : ''));
       }
       lines.push(')');
       return lines.join('\n');
@@ -3581,8 +4347,9 @@
         var withEngine = !!builtModule();
         if (withEngine) rs.push(await runCase({ name: 'engine', W: screen.width, H: screen.height, scale: 0, engine: true }, iv));
         if (withEngine) rs.push(await runCase({ name: 'grid', W: screen.width, H: screen.height, engine: true, grid: true }, iv));
+        if (withEngine) rs.push(await runCase({ name: 'still', W: screen.width, H: screen.height, engine: true, grid: true, still: true }, iv));
         var env = 'Environment: ' + browser + ' | DPR ' + (window.devicePixelRatio || 1) + ' | screen ' + screen.width + 'x' + screen.height + ' | fullscreen ' + (fullscreen ? 'yes' : 'no') + ' | frame interval ' + fmt1(iv) + ' ms (about ' + (iv > 0 ? Math.round(1000 / iv) : 0) + ' Hz) | the fake module, the Life cartridge, ' + FRAMES + ' frames a case' +
-                  (withEngine ? '; the engine case over the module built into this page, ' + thousands(bytesOfBase64(builtModule()).length) + ' bytes, Life at its first frame redrawn; the grid case, the grid card at its first frame drawn again from the values view' : '; no engine module built into this page, so no engine or grid case');
+                  (withEngine ? '; the engine case over the module built into this page, ' + thousands(bytesOfBase64(builtModule()).length) + ' bytes, Life at its first frame redrawn; the grid case, the grid card at its first frame drawn again from the values view; the still case, the still card\'s frame path, a day\'s boundary drawn every 30 frames and the frames between still' : '; no engine module built into this page, so no engine, grid or still case');
         var md = env + '\n\n' + table(rs) + '\n\n' + baseline(rs, iv, env);
         outEl.value = md;
         pre.textContent = (SMOKE_B ? 'smoke ok (a virtual clock: numbers, not a measurement)\n' : 'blit ok\n') + md;
@@ -3650,6 +4417,9 @@
     var PROBE_GENERATIONS = 20, PROBE_BATCHES = 3, START_READINGS = 5, SIDE_READINGS = 3, CLOCK_MOVED_MAX = 10, RUN_GRAINS = 20;
     var RUNS = 5, RUN_FRAMES = 128, GUN_THROUGH = 720, MEMORY_FRAME = Math.min(4, N), RUNGS = [[4, 640, 400], [16, 1280, 800]];
     if (!builtModule()) { pre.textContent = 'frames failed: the page holds no engine module'; return; }
+    // Sand's rule is its hand's since ENGINE.16, the block hand-sand, one Sand by hand on the page
+    var SAND = typeof HANDS.sand === 'function' && typeof HANDS.sand.step === 'function' && typeof HANDS.sand.opening === 'function' ? HANDS.sand : null;
+    if (!SAND) { pre.textContent = 'frames failed: the page holds no hand-sand block, whose rule the Sand fixture is held to'; return; }
     if (N + RUNS * RUN_FRAMES > GUN_THROUGH) {
       pre.textContent = 'frames failed: &n=' + N + ' would carry the gun\'s runs to frame ' + (N + RUNS * RUN_FRAMES) + ', past generation ' + GUN_THROUGH + ', where the ladder\'s boards stop holding the same cells: at most ' + (GUN_THROUGH - RUNS * RUN_FRAMES);
       return;
@@ -3721,7 +4491,7 @@
         fixtures.push({ name: base.name + '-x' + mult, text: expanded.text, by: 'Life', w: rw, h: rh, next: lifeOn(rw, rh), digest: HOST.sha256(expanded.text.replace(/\r\n/g, '\n')) });
       }
     }
-    fixtures.push({ name: 'sand', text: sandText, by: 'Sand', w: LIFE_W, h: LIFE_H, next: function (g) { return sandStep(g, 2); } });
+    fixtures.push({ name: 'sand', text: sandText, by: 'Sand', w: LIFE_W, h: LIFE_H, next: function (g) { return SAND.step(g, 2); } });
     passer = null;
     var starts = [];
     for (var s0 = 0; s0 < START_READINGS; s0++) starts.push(probe());
@@ -3737,7 +4507,7 @@
       if (!bm) throw new Error(fx.name + ': the describe holds no budget row');
       var cells = +bm[1];
       var sm = /\(seed (\d+)\)/.exec(fx.text);
-      var start = fx.by === 'Sand' ? sandOpening(sm ? +sm[1] : 1) : /^\(cell "Seed" /m.test(fx.text) ? seedPlane(fx.text, fx.w, fx.h) : lifeReference(sm ? +sm[1] : 1, 0, fx.w, fx.h), want = start, gen = 0;
+      var start = fx.by === 'Sand' ? SAND.opening(sm ? +sm[1] : 1) : /^\(cell "Seed" /m.test(fx.text) ? seedPlane(fx.text, fx.w, fx.h) : lifeReference(sm ? +sm[1] : 1, 0, fx.w, fx.h), want = start, gen = 0;
       // n frames from frame f0 as one span, nothing viewed or read inside it; then each step's answer
       // read, said to be its frame and done, and freed
       var span = function (f0, n) {
