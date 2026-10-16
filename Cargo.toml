@@ -6,9 +6,9 @@
 # never copied here, as a stranger consumes them.
 #
 # The pins are exact and never a range, and a registry version and never a
-# git rev (the owner's route, 2026-10-14): alonzo 0.1.4, the release whose
-# page shows a game's views on its own sheets (ENGINE.18) and draws a frame
-# from its changes (ENGINE.19, ENGINE.20), and vla-lang 0.9.4, the version
+# git rev (the owner's route, 2026-10-14): alonzo 0.1.5, the release whose
+# page applies a rebuilt source to the running game (ENGINE.7) beside 0.1.4's
+# views on a game's own sheets (ENGINE.18), and vla-lang 0.9.4, the version
 # that release pins, so that the lock holds one copy of the language. Both
 # resolve from crates.io since alonzo 0.1.0, the engine's first release, was
 # published (2026-10-14): the local patch that stood in for it is deleted,
@@ -29,7 +29,7 @@ license = "AGPL-3.0-or-later"
 repository = "https://github.com/Spreadsheet-Company/Buffet"
 
 [workspace.dependencies]
-alonzo = "=0.1.4"
+alonzo = "=0.1.5"
 vla-lang = "=0.9.4"
 
 [profile.dev.package."*"]

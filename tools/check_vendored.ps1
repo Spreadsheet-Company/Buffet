@@ -32,7 +32,7 @@ WHAT IT HOLDS, four things, none needing a host or the network:
      digest is of the LF text, as a replay's digest of its cartridge is; the
      length says how far a copy that fails is from the file.
   3. The tag the baseline names is Cargo.toml's pin of alonzo: alonzo =
-     "=0.1.4" is the tag v0.1.4. A pin moved without the copies fails here,
+     "=0.1.5" is the tag v0.1.5. A pin moved without the copies fails here,
      and so do copies moved without the pin.
   4. web/ holds the page's four files and nothing else but the page the
      builder writes there, web/index.html (.gitignore). REUSE.toml gives
@@ -67,14 +67,17 @@ $repoRoot = Split-Path -Parent $PSScriptRoot
 # (78aa82e). 2026-10-15, the pin moved to alonzo 0.1.4, whose page carries
 # ENGINE.16 to ENGINE.20 (the views on a game's sheets among them, FRONT.1's
 # gate): the page's four files copied again at v0.1.4 (1ba83c9); the kit is
-# unchanged since v0.1.3, its digest the same. Each digest and length is
-# `git show v0.1.4:<path> | sha256sum` and `| wc -c` in Alonzo's tree, the
+# unchanged since v0.1.3, its digest the same. 2026-10-16, the pin moved to
+# alonzo 0.1.5, whose page carries ENGINE.7's edit and continue: the template
+# and host.js copied again at v0.1.5 (fb3b2a4); fake.js, viewport.js and the
+# kit unchanged since v0.1.4, their digests the same. Each digest and length
+# is `git show <tag>:<path> | sha256sum` and `| wc -c` in Alonzo's tree, the
 # blobs being stored LF.
-$tag = 'v0.1.4'
+$tag = 'v0.1.5'
 $baseline = @(
     @{ File = 'src/common.vla'; From = 'cartridges/common.vla'; Sha256 = '323AAB6168A7AF93EA66BE3C99EA15FE972D6DD2787F203198FEF6C44D8B30A2'; Bytes = 23897 },
-    @{ File = 'web/index.template.html'; From = 'web/index.template.html'; Sha256 = '140F8A6912F0DCCC578D7E8C4F578A108E3836CA662D6BCA188DCE08F6718E56'; Bytes = 406860 },
-    @{ File = 'web/host.js'; From = 'web/host.js'; Sha256 = 'AC9D10406B738CBD31FED60746949FA338340AE455346752C68BC077750DACF9'; Bytes = 124958 },
+    @{ File = 'web/index.template.html'; From = 'web/index.template.html'; Sha256 = '2816A69A1B257AEA75FD4990E249D0BF9FBB62DDB5965EF22C0B9DDFBB7206D8'; Bytes = 426308 },
+    @{ File = 'web/host.js'; From = 'web/host.js'; Sha256 = '09045E95CF56E2DB02ABF7DB998AE9D63B17EFCC055796364E4F826A9B4DA172'; Bytes = 139489 },
     @{ File = 'web/fake.js'; From = 'web/fake.js'; Sha256 = '8ECCDBBA04FAFAD3DD3AF0A87DC397B8CC58C43EBBC9445FB5DA9D4BF88F047F'; Bytes = 42955 },
     @{ File = 'web/viewport.js'; From = 'web/viewport.js'; Sha256 = '6F08E6968D3272C2F1695D5DA84269414E3254A333346200B619AE26EE8448FE'; Bytes = 90694 }
 )
