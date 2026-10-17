@@ -22,10 +22,10 @@
      "Advice starts from those three, from someone licensed to give it. This game is not financial advice."
      "Any resemblance to financial advice, living or dead, is purely coincidental."
      "")
-    ("Every day is a market day: 365 a year, weekends and holidays included."
-     "US exchanges close on weekends and about ten holidays a year, leaving about 252 trading days."
-     "Weekends are available from the rank of Partner."
-     "Day!B2")
+    ("The market keeps no holidays: every weekday trades, 261 sessions in the first year."
+     "US exchanges also close for about ten holidays a year, leaving about 252 trading days."
+     "Holidays are available from the rank of Partner."
+     "Day!B12")
     ("Tomorrow's price is a formula of the seed and the day, and anyone can read it."
      "No one knows tomorrow's price, and anyone who says otherwise is selling something."
      "Reading ahead is not insider trading, since everyone can. Compliance finds this unsettling."
@@ -58,12 +58,20 @@
      "Ledgers keep fractions of a cent: interest accrues in them daily, and the rounding comes last."
      "Fractions of a cent are swept into an account named 'Rounding (do not open)'."
      "Stocks!E5:F8")
-    ("A $1 share moves a penny at a time, and on most days not at all."
+    ("A $1 share moves a penny at a time, and most days closes where it opened."
      "A real stock near $1 can swing several percent a day, and under $1 it may be quoted to a hundredth of a cent."
      "Analysts rate it a Hold, which it does."
      "Stocks!E5")
-    ("Numbers have no formats: $12.30 reads 1230 in the model's cents, 12.3 on the Portfolio; 2% reads 0.02."
+    ("Numbers have no formats: $12.30 is 1230 in the model's cents and text on the Portfolio; 2% reads 0.02."
      "A workbook formats its numbers for people: $12.30, 2.00%, 1,000,000."
-     "The decimal point has been furloughed pending a review of number formats."
+     "The decimal point has returned from furlough, on a text-only contract."
      "Portfolio!B5:C8")
+    ("Prices move on the half hour and stand still between."
+     "A share's price moves with every trade, many times a second, from the opening bell to the closing one."
+     "Management prefers prices that keep to a timetable."
+     "Day!B22")
+    ("Each day's close is decided before the bell: the half hours wander off it and always come back."
+     "Nobody knows a day's close before the closing bell, which is the point of having one."
+     "Management confirms the close was agreed in advance, as a courtesy to the auditors."
+     "Market!B45")
     ))                              ; the sheet's end: a caveat added goes above this line

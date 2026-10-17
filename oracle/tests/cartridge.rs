@@ -44,14 +44,23 @@
 //! keys, written as the host writes them, held to the hand, the cap, the day a
 //! press counts against and the day's reset among them; the hustle's settings,
 //! its button at the place they name, and the one key the Keys sheet binds,
-//! on its view alone.
+//! on its view alone. Since `POT.10`: the calendar counted in minutes, two a
+//! frame, and the market's hours, held at the pace each run needs: every
+//! frame of ten days at the manifest's pace, the calendar, the dice, the
+//! market and its session's path, the stocks, the fine print and both views;
+//! every hour of a year and two days at a frame an hour; and eight hundred
+//! days, and a hundred years, at a frame a day, the minutes a frame written
+//! as a person's edit. Every close is its day's index to the bit, every hour
+//! of a session the hand's path, the views' date with its weekday and its
+//! time and the bell's line beneath it.
 
 use std::collections::{BTreeMap, BTreeSet};
 
 use alonzo::cartridge::{Cartridge, Seed};
 use buffet_oracle::buffet::{
-    self, disclosure, least_index, Calendar, Hustle, Inputs, Market, DAYS_A_DISCLOSURE, DIFFICULTY,
-    DIVIDEND_DAYS, LOOK_BACK, RUNGS, WAVES, YEAR,
+    self, disclosure, least_index, Calendar, Hustle, Inputs, Market, AN_HOUR, A_DAY, CLOSING_MARK,
+    DAYS_A_DISCLOSURE, DAYS_A_YEAR, DIFFICULTY, DIVIDEND_DAYS, FIRST_MINUTE, LOOK_BACK,
+    MINUTES_A_FRAME, RUNGS, SESSION_DRAW, WAVES, YEAR,
 };
 use buffet_oracle::{expand_source, gather, lf, load, read, root, values};
 use vla_lang::form::Form;
@@ -245,34 +254,70 @@ fn disclosures_held(cart: &Cartridge, cal: &Calendar, texts: &[String], days: u6
     );
 }
 
+/// The market's draws a day (`POT.1`, `POT.10`): `POT.2`'s four phases, then
+/// the session's thirteen steps.
+const MARKET_DRAWS: u64 = SESSION_DRAW + CLOSING_MARK - 1;
+
+/// The Day sheet at this frame (`POT.1`, `POT.10`), every cell its value as
+/// the record prints it, held to the hand's calendar: the minutes a frame and
+/// the days a year; the day, the time in minutes, the boundary, the year and
+/// the day of the year; the first frame's time, the bells and the trading
+/// days; the time to the half hour and of the day, the time shown, the
+/// weekday and its name; whether the market is open; the session's day, the
+/// one before it, the mark and the closing mark.
+fn day_held(cart: &Cartridge, cal: &Calendar) {
+    let f = cal.frame;
+    let got = values(cart, "Day", "B1:B23");
+    let want = [
+        ("B1", cal.minutes_a_frame.to_string()),
+        ("B2", cal.days_a_year.to_string()),
+        ("B3", cal.day.to_string()),
+        ("B4", cal.minutes().to_string()),
+        ("B5", u8::from(cal.turned).to_string()),
+        ("B6", cal.year.to_string()),
+        ("B7", cal.day_of_year.to_string()),
+        ("B9", FIRST_MINUTE.to_string()),
+        ("B10", buffet::OPENING_BELL.to_string()),
+        ("B11", buffet::CLOSING_BELL.to_string()),
+        ("B12", buffet::TRADING_DAYS.to_string()),
+        ("B14", cal.half_hours().to_string()),
+        ("B15", cal.half_hour().to_string()),
+        ("B16", buffet::time_shown(cal.half_hour())),
+        ("B17", cal.weekday.to_string()),
+        ("B18", buffet::DAY_NAMES[cal.weekday as usize].to_string()),
+        ("B19", u8::from(cal.open()).to_string()),
+        ("B20", cal.session.to_string()),
+        ("B21", cal.before.to_string()),
+        ("B22", cal.mark.to_string()),
+        ("B23", CLOSING_MARK.to_string()),
+    ];
+    for (addr, text) in want {
+        assert_eq!(
+            got.get(addr),
+            Some(&text),
+            "frame {f}, day {}, {}: Day!{addr}",
+            cal.day,
+            buffet::time_shown(cal.hour * 60 + cal.minute)
+        );
+    }
+}
+
 /// The Day, Dice and Market sheets at this frame, each cell its value as the
 /// record prints it, held to the hand's calendar, dice and market for the
 /// same frame; and the Stocks and the Disclosures sheets with them, and the
-/// Portfolio, the view of them all, its record held at the day's first frame
-/// kept in `view` for the frames after it.
+/// views of them all: the Portfolio, its record held whole at each half hour
+/// and kept in `view` for the frames after it, and Gigs at rest.
 fn held(
     cart: &Cartridge,
     cal: &Calendar,
     seed: u64,
     market: &Market,
     texts: &[String],
-    view: &mut Option<String>,
+    view: &mut Option<(u64, String)>,
 ) {
     let f = cal.frame;
-    let day = values(cart, "Day", "B1:B7");
-    let want = [
-        ("B1", cal.frames_a_day),
-        ("B3", cal.day),
-        ("B4", cal.phase),
-        ("B5", u64::from(cal.boundary())),
-        ("B6", cal.year),
-        ("B7", cal.day_of_year),
-    ];
-    for (addr, n) in want {
-        assert_eq!(day.get(addr), Some(&n.to_string()), "frame {f}: Day!{addr}");
-    }
-
-    let dice = values(cart, "Dice", "B1:C9");
+    day_held(cart, cal);
+    let dice = values(cart, "Dice", "B1:J18");
     let die = |addr: &str, z: u64| {
         assert_eq!(
             dice.get(addr),
@@ -292,46 +337,45 @@ fn held(
         );
     };
     die("B1", buffet::market_die(seed, cal.day));
-    for draw in 1..=4u64 {
+    for draw in 1..=MARKET_DRAWS {
         let z = buffet::market_draw(seed, cal.day, draw);
         die(&format!("B{}", draw + 1), z);
         uniform(&format!("C{}", draw + 1), z);
     }
-    die("B7", buffet::exam_die(seed));
+    die("I1", buffet::exam_die(seed));
     for draw in 1..=2u64 {
         let z = buffet::exam_draw(seed, draw);
-        die(&format!("B{}", draw + 7), z);
-        uniform(&format!("C{}", draw + 7), z);
+        die(&format!("I{}", draw + 1), z);
+        uniform(&format!("J{}", draw + 1), z);
     }
-    market_held(cart, cal, market, DIFFICULTY);
-    let stocks = stocks_held(cart, cal, market, DIFFICULTY);
+    market_held(cart, cal, seed, market, DIFFICULTY);
+    let stocks = stocks_held(cart, cal, seed, market, DIFFICULTY);
     disclosures_held(cart, cal, texts, DAYS_A_DISCLOSURE);
+    let turned = view.as_ref().map(|(half, _)| *half) != Some(cal.half_hours());
     portfolio_held(cart, cal, &stocks, texts, view);
-    gigs_held(cart, cal, texts);
+    if turned {
+        gigs_held(cart, cal, texts);
+    }
 }
 
-/// Gigs at rest (`BACK.1`), held on each day's first frame: its date and its
-/// fine print the Portfolio's, the hand's; no prospectus proofread, the run's
-/// claims all left, nothing earned, and a prospectus waiting. Between two days
-/// nothing moves it but an input, and these runs write none: `BD-7`'s scan
-/// and the census keep the frame out of every view, and the scripted session
-/// holds every frame of the hustle at work
-/// (`a_scripted_session_holds_the_hustle_at_every_frame`), where holding the
-/// view at every frame of two years here would cost the longest test about
-/// half a second (`FRONT.1`'s P5).
+/// Gigs at rest (`BACK.1`), held whenever the half hour turns (`POT.10`): its
+/// date and the bell's line and its fine print the Portfolio's, the hand's; no
+/// prospectus proofread, the run's claims all left, nothing earned, and a
+/// prospectus waiting. Between two half hours nothing moves it but an input,
+/// and these runs write none: `BD-7`'s scan and the census keep the frame out
+/// of every view, and the scripted session holds every frame of the hustle at
+/// work (`a_scripted_session_holds_the_hustle_at_every_frame`).
 fn gigs_held(cart: &Cartridge, cal: &Calendar, texts: &[String]) {
-    if !cal.boundary() {
-        return;
-    }
     let got = values(cart, "Gigs", "A1:B13");
     let rest = Hustle::default();
     let shown = disclosure(cal.day, texts.len() as u64, DAYS_A_DISCLOSURE);
     let want = [
         ("A1", buffet::as_of(cal)),
+        ("A2", buffet::bell(cal).to_string()),
         ("B7", "0".to_string()),
         ("B8", rest.cap.to_string()),
-        ("B9", buffet::dollars(0)),
-        ("A11", rest.status(cal.day)),
+        ("B9", buffet::two_decimals(0)),
+        ("A11", rest.status(cal)),
         ("A13", texts[shown as usize - 1].clone()),
     ];
     for (addr, text) in want {
@@ -345,33 +389,35 @@ fn gigs_held(cart: &Cartridge, cal: &Calendar, texts: &[String]) {
     }
 }
 
-/// The Portfolio at this frame (`FRONT.1`), held whole on a day's first
-/// frame: its date, the hand's; each stock's price today and its change since
-/// yesterday, the whole cents of the Stocks sheet's same frame, which
-/// `stocks_held` has just held to the hand, spelled as dollars by text, so
-/// that a cell spelled any other way than its whole cents over 100 fails
-/// here; beside the change, which way it went (`FRONT.2`), the hand's glyph
-/// of the same two prices; and the fine print at its foot, the row the hand
-/// picks for the day.
-/// On every other frame of the day its record is the one held at the day's
-/// first frame, byte for byte, as `BD-7` keeps a view still between days:
-/// the same cells held at a view's cost, where parsing and spelling them
-/// again at every frame took the suite's longest test 0.85 s more.
+/// The Portfolio at this frame (`FRONT.1`), held whole whenever the half
+/// hour turns (`POT.10`): its date and the bell's line, the hand's; each
+/// stock's price now and its change since the last close, the whole cents of
+/// the Stocks sheet's same frame, which `stocks_held` has just held to the
+/// hand, spelled as dollars by text, so that a cell spelled any other way
+/// than its whole cents over 100 fails here; beside the change, which way it
+/// went (`FRONT.2`), the hand's glyph of the same two prices; and the fine
+/// print at its foot, the row the hand picks for the day.
+/// On every other frame of the half hour its record is the one held at the
+/// half hour's first frame, byte for byte, as `BD-7` keeps a view still
+/// between two of the calendar's half hours, every price moving at a mark or
+/// a bell and each of those on a half hour: the same cells held at a view's
+/// cost, where parsing and spelling them again at every frame took the
+/// suite's longest test 0.85 s more (`FRONT.1`).
 fn portfolio_held(
     cart: &Cartridge,
     cal: &Calendar,
     stocks: &BTreeMap<String, String>,
     texts: &[String],
-    view: &mut Option<String>,
+    view: &mut Option<(u64, String)>,
 ) {
     let Ok(Viewed::Text(record)) = cart.view("values", "Portfolio", Some("A1:D10")) else {
         panic!("the Portfolio's record");
     };
-    if !cal.boundary() {
-        if let Some(day) = view.as_deref() {
+    if let Some((half, held)) = view.as_ref() {
+        if *half == cal.half_hours() {
             assert!(
-                record == day,
-                "frame {}, day {}: the Portfolio moved within the day",
+                record == *held,
+                "frame {}, day {}: the Portfolio moved within the half hour",
                 cal.frame,
                 cal.day
             );
@@ -383,12 +429,14 @@ fn portfolio_held(
         assert_eq!(
             got.get(addr).map(String::as_str),
             Some(want),
-            "frame {}, day {}: Portfolio!{addr}",
+            "frame {}, day {}, {}: Portfolio!{addr}",
             cal.frame,
-            cal.day
+            cal.day,
+            buffet::time_shown(cal.hour * 60 + cal.minute)
         );
     };
     text("A1", &buffet::as_of(cal));
+    text("A2", buffet::bell(cal));
     for row in 5..5 + RUNGS.len() {
         let cents = |column: &str| -> i64 {
             stocks[&format!("{column}{row}")]
@@ -396,24 +444,25 @@ fn portfolio_held(
                 .expect("whole cents")
         };
         let (now, was) = (cents("E"), cents("F"));
-        text(&format!("B{row}"), &buffet::dollars(now));
-        text(&format!("C{row}"), &buffet::dollars(now - was));
+        text(&format!("B{row}"), &buffet::two_decimals(now as u64));
+        text(&format!("C{row}"), &buffet::signed_two_decimals(now - was));
         text(&format!("D{row}"), buffet::glyph(now, was));
     }
     let shown = disclosure(cal.day, texts.len() as u64, DAYS_A_DISCLOSURE);
     text("A10", &texts[shown as usize - 1]);
-    *view = Some(record);
+    *view = Some((cal.half_hours(), record));
 }
 
-/// The Market sheet at this frame (`POT.2`): each wave's speed and tier 1's
-/// phases, the cycle on the first day, and every formula of the three
-/// columns, today, the look back and yesterday (`STATION.1`'s), held bit for
-/// bit to the hand's market on the calendar's day at a difficulty. The
-/// hand's value has 0.0 added, which turns its rare -0 into the 0 a cell
-/// holds instead and moves nothing else.
-fn market_held(cart: &Cartridge, cal: &Calendar, market: &Market, difficulty: u64) {
+/// The Market sheet at this frame (`POT.2`, `POT.10`): each wave's speed and
+/// tier 1's phases, the cycle on the first day, and every formula of the
+/// three columns, the session's day, the look back and the session before,
+/// and of the session's hours, its steps and their sums, the mark, its share,
+/// the swing and the index now, held bit for bit to the hand's market at the
+/// calendar's frame and a difficulty. The hand's value has 0.0 added, which
+/// turns its rare -0 into the 0 a cell holds instead and moves nothing else.
+fn market_held(cart: &Cartridge, cal: &Calendar, seed: u64, market: &Market, difficulty: u64) {
     let f = cal.frame;
-    let got = values(cart, "Market", "B7:E25");
+    let got = values(cart, "Market", "B7:E45");
     let cell = |addr: &str, want: f64| {
         let text = got
             .get(addr)
@@ -437,11 +486,11 @@ fn market_held(cart: &Cartridge, cal: &Calendar, market: &Market, difficulty: u6
         }
     }
     cell("B22", market.first_cycle);
-    let today = cal.day as f64;
+    let session = cal.session as f64;
     let days = [
-        ("B", today),
-        ("C", today - LOOK_BACK as f64),
-        ("D", today - 1.0),
+        ("B", session),
+        ("C", session - LOOK_BACK as f64),
+        ("D", cal.before as f64),
     ];
     for (column, day) in days {
         cell(&format!("{column}14"), day);
@@ -454,24 +503,35 @@ fn market_held(cart: &Cartridge, cal: &Calendar, market: &Market, difficulty: u6
         cell(&format!("{column}24"), market.tier1(day));
         cell(&format!("{column}25"), market.index(difficulty, day));
     }
+    let path = market.path(seed, difficulty, cal);
+    for (row, (step, sum)) in (28..).zip(path.steps.iter().zip(&path.sums)) {
+        cell(&format!("B{row}"), *step);
+        cell(&format!("C{row}"), *sum);
+    }
+    cell("B42", cal.mark as f64);
+    cell("B43", path.share);
+    cell("B44", path.swing);
+    cell("B45", path.now);
 }
 
-/// The Stocks sheet's workings at this frame (`STATION.1`): each rung's price
-/// today and yesterday, its dividend and the dividend today, held to the
-/// hand's rungs on the calendar's day at a difficulty, whole cents compared
-/// as the record prints them. The window is the four columns that compute:
-/// a view costs a debug build a tenth of a millisecond or more, the more the
-/// more cells it holds, at every one of the frames the tests walk, and the
-/// settings never move (`the_stocks_sheet_states_its_rungs` reads them).
-/// The values read, for a caller that counts them.
+/// The Stocks sheet's workings at this frame (`STATION.1`, `POT.10`): each
+/// rung's price now, over the hand's index now, and at the last close, over
+/// the session before's index, its dividend and the dividend today, held to
+/// the hand's rungs at the calendar's frame and a difficulty, whole cents
+/// compared as the record prints them. The window is the four columns that
+/// compute: a view costs a debug build a tenth of a millisecond or more, the
+/// more the more cells it holds, at every one of the frames the tests walk,
+/// and the settings never move (`the_stocks_sheet_states_its_rungs` reads
+/// them). The values read, for a caller that counts them.
 fn stocks_held(
     cart: &Cartridge,
     cal: &Calendar,
+    seed: u64,
     market: &Market,
     difficulty: u64,
 ) -> BTreeMap<String, String> {
     let f = cal.frame;
-    let got = values(cart, "Stocks", "E5:H8");
+    let got = values(cart, "Stocks", "E5:I8");
     let cents = |addr: &str, want: u64| {
         assert_eq!(
             got.get(addr),
@@ -480,15 +540,23 @@ fn stocks_held(
             cal.day
         );
     };
-    let today = cal.day as f64;
+    let now = market.path(seed, difficulty, cal).now;
     for (row, rung) in (5..).zip(&RUNGS) {
-        cents(&format!("E{row}"), rung.price(market, difficulty, today));
+        cents(&format!("E{row}"), rung.price_at(now));
         cents(
             &format!("F{row}"),
-            rung.price(market, difficulty, today - 1.0),
+            rung.price(market, difficulty, cal.before as f64),
         );
         cents(&format!("G{row}"), rung.dividend);
         cents(&format!("H{row}"), rung.dividend_on(cal.day_of_year));
+        let change =
+            rung.price_at(now) as i64 - rung.price(market, difficulty, cal.before as f64) as i64;
+        assert_eq!(
+            got.get(&format!("I{row}")),
+            Some(&change.to_string()),
+            "frame {f}, day {}: Stocks!I{row}",
+            cal.day
+        );
     }
     got
 }
@@ -509,23 +577,24 @@ fn the_cartridge_is_its_source_expanded() {
     );
 }
 
-/// A day is the manifest's rate in frames, a second, and a year 365 days:
-/// the Day sheet's two settings, the hand's two constants and the manifest
-/// agree, so that the teacher's dial, the Clock's rate, scales the game.
+/// An hour is a second at the manifest's rate (`POT.10`): sixty over the
+/// minutes a frame is the rate, and a year 365 days; the Day sheet's two
+/// settings, the hand's constants and the manifest agree, so that the
+/// teacher's dial, the Clock's rate, scales the game and moves no formula.
 #[test]
-fn a_day_is_a_second_at_the_manifests_rate() {
+fn an_hour_is_a_second_at_the_manifests_rate() {
     let cart = cartridge();
     let rate = u64::from(cart.manifest().rate);
-    assert_eq!(rate, buffet::FRAMES_A_DAY);
+    assert_eq!(rate * MINUTES_A_FRAME, AN_HOUR);
     let day = values(&cart, "Day", "B1:B2");
     assert_eq!(
         day.get("B1"),
-        Some(&rate.to_string()),
-        "Day!B1, the frames a day"
+        Some(&MINUTES_A_FRAME.to_string()),
+        "Day!B1, the minutes a frame"
     );
     assert_eq!(
         day.get("B2"),
-        Some(&buffet::DAYS_A_YEAR.to_string()),
+        Some(&DAYS_A_YEAR.to_string()),
         "Day!B2, the days a year"
     );
 }
@@ -555,18 +624,33 @@ fn the_dice_sheet_states_its_jumps() {
     }
 }
 
-/// Every frame of two years and two days, 21,960 frames, held to the hand:
-/// the calendar at every frame, the market's dice changing on a day's first
-/// frame and on no other, the exam's never, and the market a function of the
-/// day, the same at every frame of a day.
+/// The cartridge, its minutes a frame written as a person's edit before the
+/// first frame, and the hand's calendar at the same pace (`POT.10`).
+fn at_pace(minutes_a_frame: u64) -> (Cartridge, Calendar) {
+    let mut cart = cartridge();
+    let edit = format!("(cell \"Day\" \"B1\" {minutes_a_frame})");
+    cart.write(&edit)
+        .unwrap_or_else(|r| panic!("{edit}: {} {}", r.refusal.id, r.refusal.text));
+    (cart, Calendar::new(minutes_a_frame, DAYS_A_YEAR))
+}
+
+/// Every frame of ten days at the manifest's pace (`POT.10`), from Monday's
+/// opening bell on day 0 to the second Wednesday's last frame, 6,915 frames,
+/// held to the hand: the calendar at every frame; the market's dice changing
+/// on a day's first frame and on no other, the exam's never; the market's
+/// three columns and its session's path, the stocks and the fine print at
+/// every frame; and the views, the Portfolio still between two half hours.
+/// Its days are every kind of day: the first, its bell at the first frame;
+/// four more sessions, each its bell, its hours and its close; the first
+/// weekend; Monday's bell after it, the session before it Friday's.
 #[test]
-fn every_frame_of_two_years_is_the_calendar_the_dice_and_the_market_by_hand() {
+fn every_frame_of_ten_days_is_the_calendar_the_dice_and_the_market_by_hand() {
     let mut cart = cartridge();
     let seed = seed(&cart);
     let market = Market::new(seed);
     let texts = disclosure_texts(&cart);
-    let mut cal = Calendar::new(buffet::FRAMES_A_DAY, buffet::DAYS_A_YEAR);
-    let frames = (2 * buffet::DAYS_A_YEAR + 2) * buffet::FRAMES_A_DAY;
+    let mut cal = Calendar::new(MINUTES_A_FRAME, DAYS_A_YEAR);
+    let frames = (10 * A_DAY - FIRST_MINUTE) / MINUTES_A_FRAME;
     let mut view = None;
     for _ in 0..frames {
         let step = cart.step(0);
@@ -575,43 +659,65 @@ fn every_frame_of_two_years_is_the_calendar_the_dice_and_the_market_by_hand() {
         held(&cart, &cal, seed, &market, &texts, &mut view);
     }
     assert_eq!(
-        (cal.year, cal.day_of_year),
-        (3, 2),
-        "the run ends on the third year's second day"
+        (frames, cal.day, cal.weekday, cal.hour, cal.minute),
+        (6_915, 9, 2, 23, 58),
+        "the run ends at the second Wednesday's last frame"
     );
 }
 
-/// At one frame a day, the Day sheet's setting written as a person's edit
-/// before the first frame, every frame is a day's first, and each day rolls
-/// the dice the same day rolls at thirty frames and prices the same market:
-/// the market is a function of the day and the seed, never of the frame
-/// (`BD-3`), so a floors fixture at one frame a day plays the game's own
-/// market (`MISE.4`).
+/// Every hour of a year and two days at a frame an hour (`POT.10`), the
+/// minutes a frame written 60 as a person's edit before the first frame,
+/// 8,808 frames, each held to the hand as every frame is above: every mark of
+/// 263 sessions, each frame half an hour after its hour, the bell's at 9:30
+/// and the close's at 16:30; the dice at each day's first frame; the year's
+/// turn, and the dividend's four days.
 #[test]
-fn at_one_frame_a_day_the_same_days_roll_the_same_dice() {
-    let mut cart = cartridge();
+fn every_hour_of_a_year_and_two_days_is_the_market_by_hand_at_a_frame_an_hour() {
+    let (mut cart, mut cal) = at_pace(AN_HOUR);
     let seed = seed(&cart);
     let market = Market::new(seed);
-    cart.write("(cell \"Day\" \"B1\" 1)").unwrap_or_else(|r| {
-        panic!(
-            "the frames a day, written: {} {}",
-            r.refusal.id, r.refusal.text
-        )
-    });
     let texts = disclosure_texts(&cart);
-    let mut cal = Calendar::new(1, buffet::DAYS_A_YEAR);
+    let mut view = None;
+    let mut sessions = BTreeSet::new();
+    for _ in 0..(DAYS_A_YEAR + 2) * 24 {
+        cart.step(0);
+        cal.tick();
+        held(&cart, &cal, seed, &market, &texts, &mut view);
+        sessions.insert(cal.session);
+    }
+    assert_eq!(sessions.len(), 263, "the sessions held");
+    assert_eq!(
+        (cal.year, cal.day_of_year, cal.hour, cal.minute),
+        (2, 3, 8, 30),
+        "the run ends before the second year's third bell"
+    );
+}
+
+/// At a frame a day, the minutes a frame written 1,440 as a person's edit
+/// before the first frame, every frame turns the day at the opening bell's
+/// minute, and each day rolls the dice the same day rolls at two minutes a
+/// frame and closes the same market: the market is a function of the seed
+/// and the calendar, never of the frame (`BD-3`), so a floors fixture at a
+/// frame a day plays the game's own market (`MISE.4`).
+#[test]
+fn at_a_frame_a_day_the_same_days_roll_the_same_dice() {
+    let (mut cart, mut cal) = at_pace(A_DAY);
+    let seed = seed(&cart);
+    let market = Market::new(seed);
+    let texts = disclosure_texts(&cart);
     let mut view = None;
     for _ in 0..800 {
         cart.step(0);
         cal.tick();
-        assert!(cal.boundary());
+        assert!(cal.turned);
         held(&cart, &cal, seed, &market, &texts, &mut view);
     }
 }
 
 /// The Market sheet states its settings and its waves, and they are the
-/// hand's constants: pi, the drift, the difficulty and the look back, each
-/// wave's period and amplitude, and the Kiddie Pool's fixed phase, 0.
+/// hand's constants: pi, the drift, the difficulty, the look back and the
+/// hour's swing (`POT.10`), each wave's period and amplitude, and the Kiddie
+/// Pool's fixed phase, 0.
 #[test]
 fn the_market_sheet_states_its_settings() {
     let cart = cartridge();
@@ -627,6 +733,7 @@ fn the_market_sheet_states_its_settings() {
         ("B2", buffet::DRIFT),
         ("B3", DIFFICULTY as f64),
         ("B4", LOOK_BACK as f64),
+        ("B5", buffet::SWING),
         ("E7", 0.0),
     ];
     for (addr, n) in want {
@@ -689,30 +796,50 @@ fn the_stocks_sheet_states_its_rungs() {
     }
 }
 
-/// On day 0 every rung is at its start, at every frame of the first day: the
-/// index is exactly 1, and 1 to any beta is 1, here and on Linux.
+/// On day 0 every rung opens and closes at its start (`STATION.1`, `POT.10`):
+/// the first session opens from its own close, the index on day 0 exactly 1,
+/// and 1 to any beta is 1, here and on Linux; so at the opening bell, the
+/// first frame, and at every frame from the closing bell to midnight, each
+/// price now is its start, and at every frame of the day the last close is,
+/// the hours between wandering by the session's path.
 #[test]
-fn on_day_0_every_rung_is_at_its_start() {
+fn on_day_0_every_rung_opens_and_closes_at_its_start() {
     let mut cart = cartridge();
-    for frame in 1..=buffet::FRAMES_A_DAY {
+    let mut cal = Calendar::new(MINUTES_A_FRAME, DAYS_A_YEAR);
+    let starts = ["100", "500", "2500", "10000"];
+    let mut wandered = false;
+    while cal.day == 0 {
         cart.step(0);
-        let got = values(&cart, "Stocks", "E5:E8");
-        let prices: Vec<&str> = (5..=8)
-            .map(|row| got[&format!("E{row}")].as_str())
-            .collect();
-        assert_eq!(prices, ["100", "500", "2500", "10000"], "frame {frame}");
+        cal.tick();
+        if cal.day > 0 {
+            break;
+        }
+        let got = values(&cart, "Stocks", "E5:F8");
+        let column = |c: &str| -> Vec<&str> {
+            (5..=8)
+                .map(|row| got[&format!("{c}{row}")].as_str())
+                .collect()
+        };
+        assert_eq!(column("F"), starts, "frame {}: the last close", cal.frame);
+        if cal.mark == 0 || cal.mark == CLOSING_MARK {
+            assert_eq!(column("E"), starts, "frame {}: the price now", cal.frame);
+        } else {
+            wandered |= column("E") != starts;
+        }
     }
+    assert!(wandered, "the first session's hours moved no price");
 }
 
 /// A person who writes 0 into the difficulty before the first frame plays
-/// tier 0, the Kiddie Pool, and every frame of a year is its market by hand,
-/// the index tier 0's and tier 1 computed beside it, and every rung priced
-/// off it (`AD-6`: any cell is a person's to edit; `POT.6` makes this one a
-/// picker).
+/// tier 0, the Kiddie Pool, and every hour of a year at a frame an hour is
+/// its market by hand, the index tier 0's and tier 1 computed beside it, the
+/// session's path over tier 0's closes, and every rung priced off it (`AD-6`:
+/// any cell is a person's to edit; `POT.6` makes this one a picker).
 #[test]
 fn at_difficulty_0_the_index_is_the_kiddie_pools() {
-    let mut cart = cartridge();
-    let market = Market::new(seed(&cart));
+    let (mut cart, mut cal) = at_pace(AN_HOUR);
+    let seed = seed(&cart);
+    let market = Market::new(seed);
     cart.write("(cell \"Market\" \"B3\" 0)")
         .unwrap_or_else(|r| {
             panic!(
@@ -720,57 +847,52 @@ fn at_difficulty_0_the_index_is_the_kiddie_pools() {
                 r.refusal.id, r.refusal.text
             )
         });
-    let mut cal = Calendar::new(buffet::FRAMES_A_DAY, buffet::DAYS_A_YEAR);
-    for _ in 0..buffet::DAYS_A_YEAR * buffet::FRAMES_A_DAY {
+    for _ in 0..DAYS_A_YEAR * 24 {
         cart.step(0);
         cal.tick();
-        market_held(&cart, &cal, &market, 0);
-        stocks_held(&cart, &cal, &market, 0);
+        market_held(&cart, &cal, seed, &market, 0);
+        stocks_held(&cart, &cal, seed, &market, 0);
     }
 }
 
-/// A hundred years at one frame a day, every frame a day's first: the index
-/// today, twenty days back and yesterday, and every rung's price today and
-/// yesterday and its dividend, held to the hand on every one of the 36,500
-/// days, across the whole range a long game reaches, the drift raised past
-/// the 36,000th power and the Kondratiev two turns on. No rung's price falls
-/// below the bound no seed passes, and the dearest rung pays its dividend on
-/// exactly four days a year.
+/// A hundred years at a frame a day, the minutes a frame written 1,440, every
+/// frame the opening bell's minute of the next day: the session's close, the
+/// close twenty days before it and the session before's, and every rung's
+/// price now, over the index now, and at the last close and its dividend, held to the
+/// hand on every one of the 36,500 days, a weekend's showing Friday's
+/// session, across the whole range a long game reaches, the drift raised
+/// past the 36,000th power and the Kondratiev two turns on. No rung's price
+/// falls below the bound no seed passes, and the dearest rung pays its
+/// dividend on exactly four days a year.
 #[test]
-fn a_hundred_years_at_one_frame_a_day_are_the_market_by_hand() {
-    let mut cart = cartridge();
-    let market = Market::new(seed(&cart));
-    cart.write("(cell \"Day\" \"B1\" 1)").unwrap_or_else(|r| {
-        panic!(
-            "the frames a day, written: {} {}",
-            r.refusal.id, r.refusal.text
-        )
-    });
-    let mut cal = Calendar::new(1, buffet::DAYS_A_YEAR);
+fn a_hundred_years_at_a_frame_a_day_are_the_market_by_hand() {
+    let (mut cart, mut cal) = at_pace(A_DAY);
+    let seed = seed(&cart);
+    let market = Market::new(seed);
     let mut least = [u64::MAX; RUNGS.len()];
     let mut paid = 0;
-    for day in 0..100 * buffet::DAYS_A_YEAR {
+    for day in 0..100 * DAYS_A_YEAR {
         cart.step(0);
         cal.tick();
         assert_eq!(cal.day, day);
         let got = values(&cart, "Market", "B25:D25");
-        let today = day as f64;
+        let session = cal.session as f64;
         let days = [
-            ("B25", today),
-            ("C25", today - LOOK_BACK as f64),
-            ("D25", today - 1.0),
+            ("B25", market.index(DIFFICULTY, session)),
+            ("C25", market.index(DIFFICULTY, session - LOOK_BACK as f64)),
+            ("D25", market.index(DIFFICULTY, cal.before as f64)),
         ];
-        for (addr, at) in days {
+        for (addr, want) in days {
             let v: f64 = got[addr]
                 .parse()
                 .unwrap_or_else(|e| panic!("day {day}: Market!{addr}: {e}"));
             assert_eq!(
                 v.to_bits(),
-                (market.index(DIFFICULTY, at) + 0.0).to_bits(),
+                (want + 0.0).to_bits(),
                 "day {day}: Market!{addr} is {v}"
             );
         }
-        let stocks = stocks_held(&cart, &cal, &market, DIFFICULTY);
+        let stocks = stocks_held(&cart, &cal, seed, &market, DIFFICULTY);
         for (k, row) in (5..).take(RUNGS.len()).enumerate() {
             for column in ["E", "F"] {
                 let cents: u64 = stocks[&format!("{column}{row}")].parse().unwrap();
@@ -792,12 +914,13 @@ fn a_hundred_years_at_one_frame_a_day_are_the_market_by_hand() {
     assert_eq!(paid, 100 * DIVIDEND_DAYS.len(), "the dividend's days");
 }
 
-/// `BD-7`: the Day sheet alone reads the frame, `Clock!B1`, and its phase,
-/// `Day!B4`, the one cell of it that changes every frame; and `describe`'s
-/// census computes no shape every frame. So an ordinary frame computes the
-/// calendar's cells and what they reach, and the rest wait for a day's first
-/// frame. The step row cannot say so, since it counts the plan's cells
-/// passed, computed or not (`vla-lang` 0.9.3's `Machine::step`).
+/// `BD-7`: the Day sheet alone reads the frame, `Clock!B1`, and its time in
+/// minutes, `Day!B4`, the one cell of it that changes every frame, or that
+/// cell's twin (`POT.10`); and `describe`'s census computes no shape every
+/// frame. So an ordinary frame computes the calendar's three cells, the time,
+/// the boundary and the time to the half hour, and the rest wait for a half
+/// hour, a mark or a day. The step row cannot say so, since it counts the
+/// plan's cells passed, computed or not (`vla-lang` 0.9.3's `Machine::step`).
 #[test]
 fn the_day_sheet_alone_reads_the_frame() {
     let text = lf(&read(CARTRIDGE));
@@ -815,7 +938,8 @@ fn the_day_sheet_alone_reads_the_frame() {
         }
         for (what, target) in [
             ("the frame", ("Clock", "B", "1")),
-            ("the phase", ("Day", "B", "4")),
+            ("the time to the minute", ("Day", "B", "4")),
+            ("the time to the minute's twin", ("Day.last", "B", "4")),
         ] {
             assert!(
                 !reads(rest, target),
@@ -917,17 +1041,15 @@ fn the_disclosures_sheet_counts_its_rows() {
 }
 
 /// The picker picks every row in its turn (`MENU.1`): a disclosure a day at
-/// one frame a day, each written as a person's edit before the first frame,
-/// so that the days walk the rows from the first, twice round.
+/// a frame a day, each written as a person's edit before the first frame, so
+/// that the days walk the rows from the first, twice round.
 #[test]
 fn the_picker_picks_every_row_in_turn() {
-    let mut cart = cartridge();
+    let (mut cart, mut cal) = at_pace(A_DAY);
     let texts = disclosure_texts(&cart);
-    for edit in ["(cell \"Day\" \"B1\" 1)", "(cell \"Disclosures\" \"D5\" 1)"] {
-        cart.write(edit)
-            .unwrap_or_else(|r| panic!("{edit}: {} {}", r.refusal.id, r.refusal.text));
-    }
-    let mut cal = Calendar::new(1, buffet::DAYS_A_YEAR);
+    let edit = "(cell \"Disclosures\" \"D5\" 1)";
+    cart.write(edit)
+        .unwrap_or_else(|r| panic!("{edit}: {} {}", r.refusal.id, r.refusal.text));
     for _ in 0..2 * texts.len() {
         cart.step(0);
         cal.tick();
@@ -993,12 +1115,13 @@ fn a_row_added_expands_with_no_other_edit() {
     let texts = disclosure_texts(&grown);
     assert_eq!(texts.len(), n + 1);
     assert_eq!(texts[n], added_text);
-    for edit in ["(cell \"Day\" \"B1\" 1)", "(cell \"Disclosures\" \"D5\" 1)"] {
+    let pace = format!("(cell \"Day\" \"B1\" {A_DAY})");
+    for edit in [pace.as_str(), "(cell \"Disclosures\" \"D5\" 1)"] {
         grown
             .write(edit)
             .unwrap_or_else(|r| panic!("{edit}: {} {}", r.refusal.id, r.refusal.text));
     }
-    let mut cal = Calendar::new(1, buffet::DAYS_A_YEAR);
+    let mut cal = Calendar::new(A_DAY, DAYS_A_YEAR);
     for _ in 0..=n {
         grown.step(0);
         cal.tick();
@@ -1292,6 +1415,23 @@ fn the_portfolio_heads_its_columns_and_names_its_stocks_from_the_model() {
     }
 }
 
+/// The columns a view's dollars stand in (`POT.10`'s second hand test): each
+/// [`buffet::DOLLARS_COLUMN`] characters wide, the width the library's
+/// `dollars` and the Portfolio's change are padded for, so that each text
+/// ends where a number ends: the Portfolio's prices and changes, and Gigs'
+/// fees, which the views' frames hold to the hand's spelling.
+#[test]
+fn every_column_of_dollars_is_the_width_its_padding_is_measured_for() {
+    let text = lf(&read(CARTRIDGE));
+    for (sheet, column) in [("Portfolio", "B"), ("Portfolio", "C"), ("Gigs", "B")] {
+        let row = format!(
+            "(column \"{sheet}\" \"{column}\" {} shown none)",
+            buffet::DOLLARS_COLUMN
+        );
+        assert!(text.lines().any(|l| l == row), "{sheet}!{column}: {row}");
+    }
+}
+
 /// What a scripted session sets at a frame (`BACK.1`'s decision 12), each
 /// held until another act sets it again: the sheet shown, the pointer's cell
 /// on it, the left button, and the key the Keys sheet binds.
@@ -1337,11 +1477,13 @@ fn input_rows(keys: &BTreeMap<String, String>, now: &Inputs, went_down: bool) ->
     rows
 }
 
-/// The hustle at this frame (`BACK.1`): the Hustle sheet's workings, each a
-/// cell the hand states, the press's two cells from the frame's inputs and the
-/// last frame's, the claim, the claims, the day after the last claim's day,
-/// whether the hustle is shut today, and the fees; and Gigs' counts, its fees
-/// in dollars and its sentence.
+/// The hustle at this frame (`BACK.1`; a week and a day's work since
+/// `POT.10`): the Hustle sheet's workings, each a cell the hand states, the
+/// press's two cells from the frame's inputs and the last frame's, the claim,
+/// the claims, the day the next prospectus arrives, whether the hustle is shut
+/// today, the time the last claim's work is done, whether a prospectus is
+/// being proofread, those done, their fees and when the fee is paid; and Gigs'
+/// counts, its fees in dollars and its sentence.
 fn hustle_held(
     cart: &Cartridge,
     cal: &Calendar,
@@ -1351,15 +1493,35 @@ fn hustle_held(
     claim: bool,
 ) {
     let flag = |b: bool| u8::from(b).to_string();
-    let got = values(cart, "Hustle", "B7:B13");
+    let at = cal.half_hours();
+    let due = h.claims.last().map_or(0, |&(_, t)| t + buffet::WORK);
+    let when = if due / A_DAY > cal.day {
+        "tomorrow"
+    } else {
+        "today"
+    };
+    let got = values(cart, "Hustle", "B9:B19");
     let want = [
-        ("B7", flag(Hustle::clicked(now, last))),
-        ("B8", flag(Hustle::keyed(now, last))),
-        ("B9", flag(claim)),
-        ("B10", h.claims.len().to_string()),
-        ("B11", h.claims.last().map_or(0, |d| d + 1).to_string()),
-        ("B12", flag(!h.open(cal.day))),
-        ("B13", h.earned().to_string()),
+        ("B9", flag(Hustle::clicked(now, last))),
+        ("B10", flag(Hustle::keyed(now, last))),
+        ("B11", flag(claim)),
+        ("B12", h.claims.len().to_string()),
+        (
+            "B13",
+            h.claims
+                .last()
+                .map_or(0, |&(d, _)| d + buffet::DAYS_BETWEEN)
+                .to_string(),
+        ),
+        ("B14", flag(!h.open(cal.day))),
+        ("B15", due.to_string()),
+        ("B16", flag(h.proofreading(at))),
+        ("B17", h.done(at).to_string()),
+        ("B18", h.earned(at).to_string()),
+        (
+            "B19",
+            format!("{when} at {}", buffet::time_shown(due % A_DAY)),
+        ),
     ];
     for (addr, text) in want {
         assert_eq!(
@@ -1372,10 +1534,10 @@ fn hustle_held(
     }
     let view = values(cart, "Gigs", "A7:B11");
     let want = [
-        ("B7", h.claims.len().to_string()),
+        ("B7", h.done(at).to_string()),
         ("B8", (h.cap - h.claims.len()).to_string()),
-        ("B9", buffet::dollars(h.earned() as i64)),
-        ("A11", h.status(cal.day)),
+        ("B9", buffet::two_decimals(h.earned(at))),
+        ("A11", h.status(cal)),
     ];
     for (addr, text) in want {
         assert_eq!(
@@ -1390,80 +1552,96 @@ fn hustle_held(
 
 /// The side hustle at work, every frame of a scripted session held to the
 /// hand (`BACK.1`'s decisions 5 to 9 and 12, the key bound on its view alone
-/// since the owner's hand test): six days at thirty frames a day, the Input
-/// rows written before each step as the host writes them, the rows that
-/// changed alone (`ENGINE.19`), the key through the Keys sheet as the host
-/// reads it after every step, which at every frame binds P as the hand says,
-/// while Gigs showed and on no other sheet; and at every frame the Hustle
-/// sheet's workings and Gigs' counts and sentence the hand's. Its presses: a
-/// click claiming; a second click and P the same day refused; a click in the
-/// frame the next day turns, the claimed day shown, refused; a click beside the
-/// button, one at the button's address while the Portfolio shows, and P there,
-/// unbound, no press; P on Gigs claiming; P held on the Portfolio as Gigs is
-/// shown under it, a press the frame the key is bound, refused; the button and
-/// the key held on a claimed day across the turn into an open day, claiming
-/// nothing; a click in the frame a day turns, the open day before shown,
-/// claiming that day, and the new day open after it; a click and P in one frame
-/// claiming once; then the run's four spent, a click, P and a drag onto the
-/// button each a press refused, on that day and the next.
+/// since the owner's hand test; a prospectus a week and a day's work since
+/// `POT.10`'s): four weeks and a day at a frame each half hour, the minutes a
+/// frame written 30 as a person's edit before the first frame, each act at its
+/// day and its frame within it, a day turning at midnight; the Input rows
+/// written before each step as the host writes them, the rows that changed
+/// alone (`ENGINE.19`), the key through the Keys sheet as the host reads it
+/// after every step, which at every frame binds P as the hand says, while
+/// Gigs showed and on no other sheet; and at every frame the Hustle sheet's
+/// workings and Gigs' counts, fees and sentence the hand's. Its presses: a
+/// click claiming, its fee paid a day later; a second click and P the same
+/// day refused; a click in the frame the next day turns, the claimed day
+/// shown, refused; a click beside the button, one at the button's address
+/// while the Portfolio shows, and P there, unbound, no press; a click in the
+/// frame the week turns, the last day of the week before shown, refused, and
+/// the next frame's claiming; P held on the Portfolio as Gigs is shown under
+/// it, a press the frame the key is bound, refused; the button and the key
+/// held across the turn into an open day, claiming nothing; P in the frame a
+/// day turns, the open day before shown, claiming that day, and the week
+/// counted from it; a click and P in one frame claiming once; then the run's
+/// four spent, a click, P and a drag onto the button each a press refused.
 #[test]
 fn a_scripted_session_holds_the_hustle_at_every_frame() {
     use Act::{Key, Left, Point, Show};
-    let script: &[(u64, &[Act])] = &[
-        (1, &[Show("Portfolio")]),
-        (3, &[Show("Gigs")]),
-        (4, &[Point(1, 5)]),
-        (5, &[Left(true)]), // a click: the first claim, day 0's
-        (6, &[Left(false)]),
-        (8, &[Left(true)]), // a second click on day 0: refused
-        (9, &[Left(false)]),
-        (10, &[Key(true)]), // P on Gigs, day 0: refused
-        (11, &[Key(false)]),
-        (31, &[Left(true)]), // day 1's first frame, day 0 shown, claimed: refused
-        (32, &[Left(false)]),
-        (33, &[Point(2, 5)]), // the pointer on B5, beside the button
-        (34, &[Left(true)]),  // no press
-        (35, &[Left(false)]),
-        (36, &[Show("Portfolio"), Point(1, 5)]), // the button's address, on another sheet
-        (37, &[Left(true)]),                     // no press
-        (38, &[Left(false)]),
-        (40, &[Key(true)]), // P on the Portfolio, unbound there: no press
-        (41, &[Key(false)]),
-        (43, &[Show("Gigs")]),
-        (45, &[Key(true)]), // P on Gigs: the second claim, day 1's
-        (46, &[Key(false)]),
-        (47, &[Show("Portfolio")]),
-        (48, &[Key(true)]),    // P held on the Portfolio, unbound,
-        (49, &[Show("Gigs")]), // and Gigs shown under it: bound the frame after, a press, refused
-        (51, &[Key(false)]),
-        (53, &[Left(true)]), // day 1 claimed: refused, and held across day 2's turn
-        (55, &[Key(true)]),  // the same, by the key
-        (65, &[Left(false)]),
-        (66, &[Key(false)]),
-        (91, &[Left(true)]), // day 3's first frame, day 2 shown, open: the third claim, day 2's
-        (92, &[Left(false)]),
-        (95, &[Left(true), Key(true)]), // a click and P in one frame: the fourth claim, once
-        (96, &[Left(false), Key(false)]),
-        (125, &[Left(true)]), // day 4, the run's four spent: refused
-        (126, &[Left(false)]),
-        (130, &[Key(true)]), // refused
-        (131, &[Key(false)]),
-        (135, &[Point(0, 0)]),             // the pointer over a header
-        (136, &[Point(1, 5), Left(true)]), // dragged onto the button, held: a press, refused
-        (138, &[Left(false)]),
-        (151, &[Left(true)]), // day 5's first frame: refused
-        (152, &[Left(false)]),
+    // Each act at its day and its frame within the day: day 0 from its first
+    // frame, the opening bell, and every later day from its midnight, a frame
+    // each half hour.
+    let script: &[(u64, u64, &[Act])] = &[
+        (0, 0, &[Show("Portfolio")]),
+        (0, 2, &[Show("Gigs")]),
+        (0, 3, &[Point(1, 5)]),
+        (0, 4, &[Left(true)]), // a click: the first claim, day 0's, its fee paid at day 1's 11:00
+        (0, 5, &[Left(false)]),
+        (0, 7, &[Left(true)]), // a second click on day 0: refused
+        (0, 8, &[Left(false)]),
+        (0, 9, &[Key(true)]), // P on Gigs, day 0: refused
+        (0, 10, &[Key(false)]),
+        (1, 0, &[Left(true)]), // day 1's first frame, day 0 shown, claimed: refused
+        (1, 1, &[Left(false)]),
+        (1, 2, &[Point(2, 5)]), // the pointer on B5, beside the button
+        (1, 3, &[Left(true)]),  // no press
+        (1, 4, &[Left(false)]),
+        (1, 5, &[Show("Portfolio"), Point(1, 5)]), // the button's address, on another sheet
+        (1, 6, &[Left(true)]),                     // no press
+        (1, 7, &[Left(false)]),
+        (1, 9, &[Key(true)]), // P on the Portfolio, unbound there: no press
+        (1, 10, &[Key(false)]),
+        (1, 12, &[Show("Gigs")]),
+        (7, 0, &[Left(true)]), // day 7's first frame, day 6 shown, the week not out: refused
+        (7, 1, &[Left(false)]),
+        (7, 2, &[Left(true)]), // the second claim, day 7's
+        (7, 3, &[Left(false)]),
+        (7, 4, &[Show("Portfolio")]),
+        (7, 5, &[Key(true)]),    // P held on the Portfolio, unbound,
+        (7, 6, &[Show("Gigs")]), // and Gigs shown under it: bound the frame after, a press, refused
+        (7, 8, &[Key(false)]),
+        (13, 40, &[Left(true)]), // day 13, the week not out: refused, and held across day 14's turn
+        (13, 42, &[Key(true)]),  // the same, by the key
+        (14, 3, &[Left(false)]),
+        (14, 4, &[Key(false)]),
+        (15, 0, &[Key(true)]), // day 15's first frame, day 14 shown, open: the third claim, day 14's
+        (15, 1, &[Key(false)]),
+        (21, 4, &[Left(true), Key(true)]), // a click and P in one frame: the fourth claim, once
+        (21, 5, &[Left(false), Key(false)]),
+        (28, 4, &[Left(true)]), // day 28, the run's four spent: refused
+        (28, 5, &[Left(false)]),
+        (28, 9, &[Key(true)]), // refused
+        (28, 10, &[Key(false)]),
+        (28, 14, &[Point(0, 0)]),             // the pointer over a header
+        (28, 15, &[Point(1, 5), Left(true)]), // dragged onto the button, held: a press, refused
+        (28, 17, &[Left(false)]),
     ];
-    let mut cart = cartridge();
+    const PACE: u64 = 30;
+    // A day's first frame: the first frame for day 0, its midnight after it.
+    let start = |day: u64| match day {
+        0 => 1,
+        d => (d * A_DAY - FIRST_MINUTE) / PACE + 1,
+    };
+    let script: Vec<(u64, &[Act])> = script
+        .iter()
+        .map(|(day, at, set)| (start(*day) + at, *set))
+        .collect();
+    let (mut cart, mut cal) = at_pace(PACE);
     // The keymap the host holds: the Keys sheet as it read it after the last
     // step, and none at the load, before any formula of it holds a value.
     let mut keys: BTreeMap<String, String> = BTreeMap::new();
-    let mut cal = Calendar::new(buffet::FRAMES_A_DAY, buffet::DAYS_A_YEAR);
     let mut hustle = Hustle::default();
     let mut now = Inputs::default();
     let mut written: Option<Vec<String>> = None;
     let mut acts = script.iter().peekable();
-    for frame in 1..=6 * buffet::FRAMES_A_DAY {
+    for frame in 1..start(29) {
         let last = now.clone();
         while let Some((_, set)) = acts.next_if(|(at, _)| *at == frame) {
             for act in set.iter() {
@@ -1512,24 +1690,32 @@ fn a_scripted_session_holds_the_hustle_at_every_frame() {
             });
         }
         written = Some(rows);
-        let shown = cal.day; // the day the person saw, the last frame's
+        // The day and the half hour the person saw, the last frame's.
+        let (shown, half) = (cal.day, cal.half_hours());
         let step = cart.step(0);
         cal.tick();
         assert!(step.done && step.frame == cal.frame, "{}", step.row());
         keys = values(&cart, "Keys", "B1:E10");
-        let claim = hustle.frame(&now, &last, shown);
+        let claim = hustle.frame(&now, &last, shown, half);
         hustle_held(&cart, &cal, &hustle, &now, &last, claim);
     }
     assert!(acts.next().is_none(), "every act of the script played");
+    let days: Vec<u64> = hustle.claims.iter().map(|&(d, _)| d).collect();
     assert_eq!(
-        hustle.claims,
-        [0, 1, 2, 3],
+        days,
+        [0, 7, 14, 21],
         "the claims, by the days they counted against"
+    );
+    assert_eq!(
+        hustle.earned(cal.half_hours()),
+        4 * buffet::FEE,
+        "every fee paid by the run's end"
     );
 }
 
 /// The hustle's settings and its button (`BACK.1`'s decisions 3, 4, 5 and
-/// 9): the Hustle sheet's fee, claims a run and the button's place, the
+/// 9): the Hustle sheet's fee, claims a run, the button's place, and since
+/// `POT.10` the days between two prospectuses and a prospectus's work, the
 /// hand's; Gigs' cell at that place the button's text, no longer than its
 /// column is wide, so that every character of it is the button, the key's
 /// name beside it, and the labels below; and the Keys sheet binding one code,
@@ -1542,13 +1728,15 @@ fn the_hustle_states_its_settings_and_binds_one_key() {
     let mut cart = cartridge();
     cart.step(0);
     let (sheet, column, row) = buffet::BUTTON;
-    let settings = values(&cart, "Hustle", "B1:B5");
+    let settings = values(&cart, "Hustle", "B1:B7");
     let want = [
         ("B1", buffet::FEE.to_string()),
         ("B2", buffet::CLAIMS_A_RUN.to_string()),
         ("B3", sheet.to_string()),
         ("B4", column.to_string()),
         ("B5", row.to_string()),
+        ("B6", buffet::DAYS_BETWEEN.to_string()),
+        ("B7", buffet::WORK.to_string()),
     ];
     for (addr, text) in want {
         assert_eq!(settings.get(addr), Some(&text), "Hustle!{addr}");
@@ -1639,7 +1827,7 @@ fn the_hustle_states_its_settings_and_binds_one_key() {
     );
     let press = text
         .lines()
-        .find(|l| l.starts_with("(formula \"Hustle\" \"B8\" "))
+        .find(|l| l.starts_with("(formula \"Hustle\" \"B10\" "))
         .expect("the key's press");
     assert!(
         press.contains("Input!B5=1") && press.contains("Input.last!B5=0"),

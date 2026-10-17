@@ -297,7 +297,7 @@ A classes-by-factors block (12 by 6 is 72 cells) is the whole model, and it is *
 
 ### Time (open decision)
 
-One tick is one day (rec). With the teacher's rate (the Clock's `rate`) at 1 frame a second, one game year is about six minutes (365 ticks, *derived*), so a Kitchin wave is about 24 minutes, a Juglar about an hour, a Kuznets nearly two hours and a Kondratiev about five (*derived*): the player lives through the short waves in a session, the medium ones in a day, and the long one is the generation. The owner's question 5 in section 16 fixes it.
+One tick is one day (rec). With the teacher's rate (the Clock's `rate`) at 1 frame a second, one game year is about six minutes (365 ticks, *derived*), so a Kitchin wave is about 24 minutes, a Juglar about an hour, a Kuznets nearly two hours and a Kondratiev about five (*derived*): the player lives through the short waves in a session, the medium ones in a day, and the long one is the generation. The owner's question 5 in section 16 fixes it. (*Settled 2026-10-16 by `POT.10`, `OMAKASE.md` and `SPIKE.md`, after the owner had played a day a second: "one second per market day is too fast to conceptualize. The game should run at one real-world second per hour of in-game market play." So a frame is two minutes of the market's time, an hour a second, a day 24 seconds and a year about two hours and a half; the market keeps New York's hours, 9:30 to 16:00, Monday to Friday; each day's close stays the waves' value of its day, and a session's half hours walk from the last close to it, a price each half hour since the owner's word at its hand test.*)
 
 ### The open-book problem (a design fact, not a bug)
 

@@ -32,6 +32,12 @@
 ; Since BACK.1 (2026-10-16): as-of and fine-print, a view's date and its fine print, at
 ; their second writing, Gigs writing them after the Portfolio, which expands over them
 ; to its bytes unchanged.
+; Since POT.10 (2026-10-16): as-of with the day's name and the time to the half hour,
+; and bell, a view's line on the market's hours, written by both views at its first
+; dish, as draws was by its two streams; and dollars, a view's whole cents spelled with
+; two decimals as a text, written by the Portfolio's prices and Gigs' fees at the same
+; dish, the owner's word at its hand test: "All dollar cells should show two decimals",
+; and padded to end where a number ends at its second.
 
 ; ---- the dice (POT.1) ---------------------------------------------------------------
 ; A stream is a die and its draws. The die is one cell, the stream's state, which the
@@ -174,19 +180,48 @@
     (formula sheet at (&expand text ")"))
     (quasiquote (picker-from (unquote sheet) (unquote at) (unquote (&expand text "," letters row)) (unquote letters) (unquote (+expand row 1)) (unquote last)))))
 
-; ---- the views' frame (BACK.1) ------------------------------------------------------
-; Every view opens on its date and closes on the fine print (FRONT.1, MENU.1). The
-; Portfolio wrote both first and Gigs, the second view, wrote them again, so they come
-; here at their second writing, each a verb of one formula row taking the view's sheet
-; and a cell. The date is the calendar's year and day of the year, each from 1, and
-; unaudited, as every number of a view is until the examiner calls (GUARD.3); the fine
+; ---- the views' frame (BACK.1, POT.10) ----------------------------------------------
+; Every view opens on its date and the bell's line and closes on the fine print
+; (FRONT.1, MENU.1, POT.10). The Portfolio wrote the date and the fine print first and
+; Gigs, the second view, wrote them again, so they came here at their second writing;
+; the bell came here at its first dish, both views writing it; each a verb of one formula
+; row taking the view's sheet and a cell. The date is the calendar's day's name, its
+; year and day of the year, each from 1, and its time to the half hour, unaudited, as
+; every number of a view is until the examiner calls (GUARD.3). The bell's line says
+; whether the market is open and when it opens or closes: open, a trading day before
+; its bell, after the close Monday to Thursday, and from Friday's close to Monday's
+; bell; the first two with no joke, being the lines a player acts on, and the bells'
+; times written into the texts, which a test holds to the Day sheet's settings. The fine
 ; print is the Disclosures sheet's picker, a disclosure a month, read through a
 ; reference, so that no view holds its text in a formula.
 
 (defmacro (as-of sheet at)
-  "a view's date in one cell, from the Day sheet's year and day of the year: As of year 1, day 1 (unaudited)"
-  (formula sheet at "=\"As of year \"&Day!$B$6&\", day \"&Day!$B$7&\" (unaudited)\""))
+  "a view's date in one cell, from the Day sheet's day's name, year, day of the year and time to the half hour: As of Monday, year 1, day 1, 9:30 (unaudited)"
+  (formula sheet at "=\"As of \"&Day!$B$18&\", year \"&Day!$B$6&\", day \"&Day!$B$7&\", \"&Day!$B$16&\" (unaudited)\""))
+
+(defmacro (bell sheet at)
+  "a view's line on the market's hours in one cell, from the Day sheet: open until the closing bell, opening at the bell, closed for the night, or closed for the weekend"
+  (formula sheet at "=IF(Day!$B$19=1,\"The market is open until 16:00.\",IF(AND(Day!$B$17<Day!$B$12,Day!$B$20<Day!$B$3),\"The market opens at 9:30.\",IF(AND(Day!$B$17<Day!$B$12-1,Day!$B$20=Day!$B$3),\"The market has closed. Analysts are analyzing the aftermath.\",\"The market is closed until Monday at 9:30.\")))"))
 
 (defmacro (fine-print sheet at)
   "a view's fine print in one cell: the Disclosures sheet's disclosure of the month, read through a reference"
   (formula sheet at "=Disclosures!$D$3"))
+
+; ---- a view's dollars (POT.10) ------------------------------------------------------
+; The record spells a number at its shortest, $1.00 as 1 and $12.30 as 12.3, and holds
+; no number format (vla-lang 0.9.4: General and Text), so a view's dollars are a text:
+; the dollars, a point and the cents in two digits, from whole cents that are never
+; negative, a price or a fee. A text is drawn from its cell's left and a number to its
+; right, so each is padded on the left to end where a number ends, in a column 12
+; characters wide, as every column of a view's dollars is: its spaces and twice its
+; dollars' digits make 16, and none is padded from eight digits. A space is half a
+; digit's width in the grid's font to within a sixtieth (system-ui, Segoe UI here, at
+; 13 pixels: a digit 7.008, a space 3.561, the point 2.818), so a column's points line
+; up, and each text ends within two device pixels short of a number's edge at 150% and
+; never past it from 100% to 200% (the owner's word at POT.10's second hand test). A
+; sum or a comparison reads the model's cents and never this text. When the record
+; holds a number format, this verb becomes a format.
+
+(defmacro (dollars sheet at cents)
+  "a view's dollars in one cell or a fill: whole cents, never negative, spelled as a text with two decimals and padded to end where a number ends in a column 12 characters wide"
+  (formula sheet at (&expand "=IF(" cents "<1000,\"              \",IF(" cents "<10000,\"            \",IF(" cents "<100000,\"          \",IF(" cents "<1000000,\"        \",IF(" cents "<10000000,\"      \",IF(" cents "<100000000,\"    \",IF(" cents "<1000000000,\"  \",\"\")))))))&INT(" cents "/100)&\".\"&IF(MOD(" cents ",100)<10,\"0\",\"\")&MOD(" cents ",100)")))

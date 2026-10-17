@@ -9,14 +9,14 @@
 ;
 ; Course 0 is being cooked, a dish at a time (docs/OMAKASE.md, COURSE.0). Served so far:
 ;   POT.1   the calendar and the dice: the Day sheet, the one sheet that reads the frame,
-;           and the Dice sheet, the market's die, which rolls once a market day, and the
-;           exam's, which rolls once a game.
+;           and the Dice sheet, the market's die, which rolls once a day, and the exam's,
+;           which rolls once a game.
 ;   POT.2   the market: the Market sheet, tier 1's four waves and a drift and tier 0's one
-;           wave beside them, the index a function of the day alone, so that it moves at
-;           a day's first frame and at no other.
+;           wave beside them, the index a function of the day alone, so that each day
+;           closes at its own index whatever its hours do.
 ;   STATION.1 the first station: the Stocks sheet, four rungs of shares priced off the
-;             index in whole cents, today and yesterday, and the dearest rung's dividend
-;             on four fixed days of the year.
+;             index in whole cents, now and at the last close, and the dearest rung's
+;             dividend on four fixed days of the year.
 ;   MENU.1  the strings: the content sheets, each a file of src/content/ that holds the
 ;           words alone, and the first of them, the Disclosures sheet, the fine print,
 ;           a disclosure a month.
@@ -27,25 +27,34 @@
 ;           what the real world does and Management's response, the first the plain
 ;           statement that the game is not advice; the one content sheet in the strip.
 ;   FRONT.1 the views: the Portfolio, the game's first view and the sheet it opens on,
-;           the day and the four stocks, each its price and its change since yesterday
-;           in dollars, and the fine print at its foot; the views first among the tabs.
+;           the day and the four stocks, each its price and its change since the last
+;           close in dollars, and the fine print at its foot; the views first among the
+;           tabs.
 ;   FRONT.2 the glyphs: beside each change on the Portfolio, which way it went, up,
 ;           down or flat, read off the change itself.
 ;   BACK.1  the side hustle: Gigs, the game's second view, where a prospectus is
-;           proofread for $25 by a click on its button or by P, once a market day and
-;           four times a run, and the Hustle sheet, its books; the first button.
+;           proofread for $25 by a click on its button or by P, four times a run, and
+;           the Hustle sheet, its books; the first button. Since POT.10, a prospectus
+;           a week and a day's work each.
+;   POT.10  the market's hours: two minutes of the market's time a frame, so an hour a
+;           second; the market open from 9:30 to 16:00, Monday to Friday, each day's
+;           close the day's index and the session a path to it, a price each half
+;           hour; and the views' dollars spelled with two decimals.
 ;
-; The market's clock (BD-7). One tick is one market day, thirty frames at the manifest's
-; rate of thirty, so a day a second and a year about six minutes. The Day sheet alone
-; reads the frame, Clock!B1; every other formula reads the day, so that a frame between
-; two days computes the calendar's three cells, the day, the phase and the boundary, and
-; nothing else, and a day's first frame computes what the day moves. The Clock's rate is
-; the teacher's dial: written to 60, the game runs two days a second and no formula
-; changes, since the frames a day stay thirty.
+; The market's clock (BD-7). A frame is two minutes of the market's time, thirty frames
+; an hour at the manifest's rate of thirty, so an hour a second, a day 24 seconds and a
+; year about two hours and a half. The market trades from the opening bell, 9:30, to the
+; closing bell, 16:00, Monday to Friday, and the game opens on Monday's bell. The Day
+; sheet alone reads the frame, Clock!B1; every other formula reads the calendar, the
+; day, the time to the half hour, the session and its mark, so that a frame between two
+; half hours computes three of the calendar's cells and nothing else. Prices move at the
+; session's marks, the opening bell and each half hour to the closing bell, and the dice
+; at a day's first frame. The Clock's rate is the teacher's dial: written to 120, four hours
+; pass a second and no formula changes, since the minutes a frame stay two.
 ;
-; The dice (BD-3). The market is a pure function of the seed and the day, so its die
+; The dice (BD-3). The market is a pure function of the seed and the calendar, so its die
 ; steps on a day's first frame and on no other, from the seed on the first day, and the
-; same days give the same dice however many frames a day there are. Each day the die
+; same days give the same dice however many minutes a frame there are. Each day the die
 ; jumps 1,017 draws, and the day's draws stand beneath it, so a dish that needs a draw
 ; takes the next free one, and a later course adds draws without moving one an earlier
 ; course reads. The exam's die is the seed jumped half the generator's period away, so
@@ -61,12 +70,12 @@
   (seed 791886)                     ; every first game's market: a first year that dips early and closes 10% up
   (author "Spreadsheet Company")
   (license "AGPL-3.0-or-later AND CC-BY-SA-4.0")
-  (notes "Buffet: All You Can Sheet. The front office is open, though not yet for business: the game opens on the Portfolio, the day and four stocks on it, each its price and its change since yesterday, a market day a second, with the fine print at its foot. Beside it, Gigs, where a prospectus is proofread for $25, by a click on its button or by P, once a market day and four times a run, Compliance permitting. Behind them, the back office: the market's calendar; its dice, rolled once a day where anyone can watch them roll; the market itself, four waves and a drift; four stocks priced off it in whole cents, the dearest paying a dividend four days a year; the hustle's books, every prospectus counted; the fine print, a disclosure a month; the Series 777's question bank, twenty questions awaiting an exam the regulator has yet to schedule; and the model's caveats, the things this game gets wrong, each with Management's response. Pick the Day, the Dice, the Market, the Stocks or the Hustle sheet to watch the model work, or the Caveats sheet to read, or the Disclosures or the Questions sheet among the hidden sheets."))
+  (notes "Buffet: All You Can Sheet. The front office is open, though not yet for business: the game opens on the Portfolio at Monday's opening bell, the day, the hour and four stocks on it, each its price and its change since the last close, an hour a second, the market open from 9:30 to 16:00 on weekdays and moving each half hour, with the fine print at its foot. Beside it, Gigs, where a prospectus is proofread for $25, by a click on its button or by P, a day's work, one a week and four a run, Compliance permitting. Behind them, the back office: the market's calendar and its hours; its dice, rolled once a day where anyone can watch them roll; the market itself, four waves and a drift, and each session's hours between two closes; four stocks priced off it in whole cents, the dearest paying a dividend four days a year; the hustle's books, every prospectus counted; the fine print, a disclosure a month; the Series 777's question bank, twenty questions awaiting an exam the regulator has yet to schedule; and the model's caveats, the things this game gets wrong, each with Management's response. Pick the Day, the Dice, the Market, the Stocks or the Hustle sheet to watch the model work, or the Caveats sheet to read, or the Disclosures or the Questions sheet among the hidden sheets."))
 
 ; The libraries whose macros this source calls, both beside it: the kit, Alonzo's
 ; common.vla copied at the pin (sheets, labels, headers, on, cells, formulas, hold,
-; pressed and count), then Buffet's own, kitchen.vla (draws, strings, picker, as-of
-; and fine-print); then the content sheets, each a file of src/content/ that defines
+; pressed and count), then Buffet's own, kitchen.vla (draws, strings, picker, as-of,
+; bell, fine-print and dollars); then the content sheets, each a file of src/content/ that defines
 ; one macro of its rows, called where its sheet belongs. The manifest stands first, the
 ; cartridge's own form, then every include, then the code (the owner's word,
 ; 2026-10-15), so that a file missing is refused at the top; and each include defines
@@ -90,31 +99,63 @@
 (sheet "Screen" hidden)             ; the framebuffer, unused: each view is a sheet of its own
 (sheets "Portfolio" "Gigs" "Day" "Dice" "Market" "Stocks" "Hustle")
 
-; ---- POT.1: the calendar ------------------------------------------------------------
-; A block of settings and its workings, a label in column A beside each value in B. The
-; frame is 1 in the first step, so the day and the phase count from the frame less one:
-; the first frame is the first day's first, and every day, the first too, opens on a
-; boundary frame and holds thirty frames.
+; ---- POT.1, POT.10: the calendar and the market's hours ------------------------------
+; A block of settings and its workings, a label in column A beside each value in B, the
+; column as wide as its longest label. The frame is 1 in the first step, so the time
+; counts from the frame less one, in minutes from day 0's midnight, the minutes a frame
+; apart: two, so thirty frames an hour and an hour a second at the manifest's rate; a
+; person who writes 60 plays a frame an hour, and 1,440 a frame a day, each in whole
+; minutes and exact. The first frame stands at the opening bell, 9:30 on day 0, a Monday.
+; The day, the year and the day of the year follow from the time to the half hour, which
+; changes once every fifteen frames, and so do the market's hours: whether it is open;
+; the session's day, the last trading day whose bell has rung; the session before it, the
+; first session its own, so that the game opens at the stocks' starts; and the mark, 0 at
+; the opening bell and one more each half hour, the closing mark, 13, from the close until
+; the next bell. Three cells compute at every frame, the time, the boundary and the time to
+; the half hour, and no other cell of the game does. In the formulas, 1440 is the minutes
+; a day and 7 the days a week, arithmetic and no settings.
 
 (on "Day"
-  (labels "A1" "frames a day" "days a year" "day" "phase" "boundary" "year" "day of the year")
+  (column "A" 36 shown none)        ; the labels: as wide as the longest, the bells'
+  (labels "A1" "minutes a frame" "days a year" "day" "time, in minutes" "boundary" "year" "day of the year")
   (cells
-    ("B1" 30)                       ; frames a day: the manifest's rate, a day a second; a test holds the two equal
-    ("B2" 365))                     ; days a year: every day a market day, weekends and holidays too
+    ("B1" 2)                        ; minutes a frame: thirty frames an hour, an hour a second at the manifest's rate; a test holds the two
+    ("B2" 365))                     ; days a year
   (formulas
-    ("B3" "=INT((Clock!B1-1)/B1)")  ; the day, from 0: the market's clock, which every other formula reads
-    ("B4" "=MOD(Clock!B1-1,B1)")    ; the phase: the frame within the day, from 0
-    ("B5" "=IF(B4=0,1,0)")          ; the boundary: 1 in a day's first frame, the one frame the market moves in
+    ("B3" "=INT(B14/1440)")         ; the day, from 0, turning at midnight
+    ("B4" "=(Clock!B1-1)*B1+B9")    ; the time, in minutes from day 0's midnight: the one cell that changes every frame
+    ("B5" "=IF(OR(Clock!B1=1,B3<>Day.last!B3),1,0)")   ; the boundary: 1 in a day's first frame, and in the game's first
     ("B6" "=INT(B3/B2)+1")          ; the year, from 1
-    ("B7" "=MOD(B3,B2)+1")))        ; the day of the year, from 1 to 365
+    ("B7" "=MOD(B3,B2)+1"))         ; the day of the year, from 1 to 365
+  (labels "A9" "first frame, minutes after midnight" "opening bell, minutes after midnight" "closing bell, minutes after midnight" "trading days a week, from Monday")
+  (cells
+    ("B9" 570)                      ; the first frame: 9:30 on day 0, a Monday, the opening bell
+    ("B10" 570)                     ; the opening bell: 9:30
+    ("B11" 960)                     ; the closing bell: 16:00
+    ("B12" 5))                      ; Monday to Friday, and no holidays
+  (labels "A14" "time, to the half hour" "time of day, to the half hour" "time shown" "day of the week, from 0 a Monday" "day's name" "open" "session's day" "session before" "mark" "closing mark")
+  (formulas
+    ("B14" "=INT(B4/30)*30")        ; the time to the half hour: every cell below reads this and never B4
+    ("B15" "=MOD(B14,1440)")        ; the time of day, in minutes after midnight
+    ("B16" "=INT(B15/60)&\":\"&IF(MOD(B15,60)=0,\"00\",\"30\")")   ; the time shown: 9:30, 16:00
+    ("B17" "=MOD(B3,7)")            ; the day of the week, 0 a Monday and 6 a Sunday
+    ("B18" "=CHOOSE(B17+1,\"Monday\",\"Tuesday\",\"Wednesday\",\"Thursday\",\"Friday\",\"Saturday\",\"Sunday\")")   ; the day's name
+    ("B19" "=IF(AND(B17<B12,B15>=B10,B15<B11),1,0)")   ; open: a trading day, from the opening bell to the closing one
+    ("B20" "=IF(AND(B17<B12,B15>=B10),B3,IF(B17>=B12,B3-B17+B12-1,IF(B17=0,B3-8+B12,B3-1)))")   ; the session's day: today's from its bell, else the last trading day's
+    ("B21" "=IF(B20<=0,B20,B20-IF(MOD(B20,7)=0,8-B12,1))")   ; the session before it: the trading day before, the first session its own
+    ("B22" "=IF(AND(B20=B3,B15<B11),INT(B15/30)-INT(B10/30),B23)")   ; the mark: 0 at the bell, one more each half hour, the closing mark outside the session
+    ("B23" "=INT(B11/30)-INT(B10/30)")))   ; the closing mark: the session's half hours, 13
 
-; ---- POT.1: the dice ----------------------------------------------------------------
-; Two streams, each a die and its draws, the draws by the library's verb. Column C
-; holds each draw's uniform; columns E and F the two jumps, each in draws and as the
-; multiplier that makes it, 16807 to that power modulo 2147483647, which a test holds.
+; ---- POT.1, POT.10: the dice --------------------------------------------------------
+; Two streams, each a die and its draws, the draws by the library's verb, side by side:
+; the market's down columns A to C, columns E and F the two jumps, each in draws and as
+; the multiplier that makes it, 16807 to that power modulo 2147483647, which a test
+; holds, and the exam's down H to J, so that the market's draws grow down their column
+; with nothing beneath them, a later course's two hundred a day among them. Column C, and
+; J, hold each draw's uniform.
 
 (on "Dice"
-  (labels "A1" "the market's die" "draw 1" "draw 2" "draw 3" "draw 4")
+  (labels "A1" "the market's die" "draw 1" "draw 2" "draw 3" "draw 4" "draw 5" "draw 6" "draw 7" "draw 8" "draw 9" "draw 10" "draw 11" "draw 12" "draw 13" "draw 14" "draw 15" "draw 16" "draw 17")
   (cells ("C1" "uniform"))
   (hold                             ; the market's die, the stream's state:
     "B1"                            ;   its cell
@@ -122,41 +163,43 @@
     "MOD(IF(Day!$B$3=0,Clock!$B$3,Dice.last!B1)*$F$2,2147483647)")   ; what it rolls to: the seed on the first day, else yesterday's die, jumped a day's draws
   (draws                            ; the market's draws, read by the dish that needs one:
     "B2"                            ;   the first, beneath the die
-    4)                              ;   how many a day so far: POT.2's four phases read them first
-  (labels "A7" "the exam's die" "draw 1" "draw 2")
-  (cells ("C7" "uniform"))
-  (formulas
-    ("B7" "=MOD(Clock!$B$3*$F$4,2147483647)"))   ; the exam's die: the seed jumped half the period, once a game
-  (draws                            ; the exam's draws:
-    "B8"                            ;   the first, beneath its die
-    2)                              ;   how many: GUARD.1's start and stride through the bank
+    17)                             ;   how many a day so far: POT.2's four phases, then POT.10's thirteen half hours of a session
   (labels "E1" "a day's jump, in draws" "its multiplier" "the exam's jump, in draws" "its multiplier")
   (cells
     ("F1" 1017)                     ; a day's jump: the first past a thousand whose multiplier is below 2^22
     ("F2" 86383)                    ; 16807^1017 modulo 2147483647
     ("F3" 1073741912)               ; the exam's jump: 2^30 + 88, the first past half the period whose multiplier is below 2^22
-    ("F4" 1164196)))                ; 16807^1073741912 modulo 2147483647
+    ("F4" 1164196))                 ; 16807^1073741912 modulo 2147483647
+  (labels "H1" "the exam's die" "draw 1" "draw 2")
+  (cells ("J1" "uniform"))
+  (formulas
+    ("I1" "=MOD(Clock!$B$3*$F$4,2147483647)"))   ; the exam's die: the seed jumped half the period, once a game
+  (draws                            ; the exam's draws:
+    "I2"                            ;   the first, beneath its die
+    2))                             ;   how many: GUARD.1's start and stride through the bank
 
-; ---- POT.2: the market --------------------------------------------------------------
+; ---- POT.2, POT.10: the market ------------------------------------------------------
 ; Tier 1, four waves and a drift, and tier 0, one wave of a year, beside it, each a
-; function of the day alone, so that the market moves at a day's first frame and at no
-; other (BD-7), and the same days give the same market however many frames a day there
-; are (BD-3). The settings stand in column B beside their labels; the waves are a table,
-; a wave a row, each period a prime number of days, so that no two waves ever step
-; together and none keeps the calendar's year; then the workings, in three columns, B
-; today, C the look back and D yesterday (STATION.1's), every formula of C and D being
-; B's own fill, so that the index twenty days back and the day before are the index's
-; own formula at those days, recomputed and never remembered. Tier 1 opens at 1 on the
-; first day, so that a price opens at its rung. The index today is B25, twenty days back
-; C25 and yesterday D25, the cells every later dish reads.
+; function of the day alone, so that each day's close is the index of its day, and the
+; same days give the same market however many minutes a frame there are (BD-3). The
+; settings stand in column B beside their labels; the waves are a table, a wave a row,
+; each period a prime number of days, so that no two waves ever step together and none
+; keeps the calendar's year; then the workings, in three columns, B the session's day, C
+; the look back and D the session before it (STATION.1's yesterday until POT.10), every
+; formula of C and D being B's own fill, so that the index twenty days back and the last
+; close are the index's own formula at those days, recomputed and never remembered. Tier
+; 1 opens at 1 on the first day, so that a price opens at its rung. The session's close
+; is B25, twenty days back C25 and the session before's close D25; and between the last
+; close and the session's own, the index now, B45, the session's half hours (below).
 
 (on "Market"
-  (labels "A1" "pi" "the drift, a day" "the difficulty: 0 the Kiddie Pool, 1 the Day Trader" "the look back, in days")
+  (labels "A1" "pi" "the drift, a day" "the difficulty: 0 the Kiddie Pool, 1 the Day Trader" "the look back, in days" "the half hour's swing, of the index")
   (cells
     ("B1" 3.141592653589793)        ; pi, a number, since PI() parses and is never evaluated
     ("B2" 1.0002)                   ; the drift: the trend's growth a day, about 7.6% a year
     ("B3" 1)                        ; the difficulty: tier 1, until POT.6 makes the cell a picker
-    ("B4" 20))                      ; the look back: how many days back the weather reads the index
+    ("B4" 20)                       ; the look back: how many days back the weather reads the index
+    ("B5" 0.0028))                  ; the half hour's swing: the most one half hour of a session moves the index, 0.28% (POT.10)
   (headers "A6" "the waves" "period, in days" "amplitude" "speed, radians a day" "phase, radians")
   (labels "A7" "a year, the Kiddie Pool's one wave" "Kitchin, inventories" "Juglar, investment" "Kuznets, building" "Kondratiev, the long wave")
   (cells
@@ -177,19 +220,42 @@
     "E8:E11"                        ;   its cells
     "Day!$B$3=0"                    ;   when it is taken: the first day, day 0, and no other
     "2*$B$1*Dice!$C2")              ;   what it is: a turn times the uniform of the market's draws 1 to 4
-  (headers "B13" "today" "the look back" "yesterday")
+  (headers "B13" "the session" "the look back" "the session before")
   (labels "A14" "the day" "a year's wave" "the Kitchin" "the Juglar" "the Kuznets" "the Kondratiev" "the trend, the drift to the day" "the cycle: one and the four waves" "the cycle on the first day" "tier 0, the Kiddie Pool" "tier 1, the Day Trader" "the index")
   (formulas
-    ("B14" "=Day!$B$3")                         ; the day, today
+    ("B14" "=Day!$B$20")                        ; the session's day, today's from its opening bell
     ("C14" "=B14-$B$4")                         ; the look back's day, before day 20 a day below zero
-    ("D14" "=B14-1")                            ; yesterday, on day 0 the day below zero
+    ("D14" "=Day!$B$21")                        ; the session before it, the first session's its own
     ("B15:D19" "=$C7*SIN($D7*B$14+$E7)")        ; each wave's term on its column's day
     ("B20:D20" "=$B$2^B14")                     ; the trend: the drift raised to the day
     ("B21:D21" "=1+B16+B17+B18+B19")            ; tier 1's cycle: one and the four waves
     ("B22" "=1+C8*SIN(E8)+C9*SIN(E9)+C10*SIN(E10)+C11*SIN(E11)")   ; the cycle on day 0, by B21's operations in B21's order
     ("B23:D23" "=B20*(1+B15)")                  ; tier 0, the Kiddie Pool: the trend and the year's wave
     ("B24:D24" "=B20*B21/$B$22")                ; tier 1, the Day Trader: the trend and the cycle, exactly 1 on day 0
-    ("B25:D25" "=CHOOSE($B$3+1,B23,B24)")))     ; the index, as the difficulty picks it
+    ("B25:D25" "=CHOOSE($B$3+1,B23,B24)"))      ; the index, as the difficulty picks it
+  ; The session (POT.10). Between the last close, D25, and the session's own, B25, the
+  ; index walks a half hour at a time: a row a half hour, its step one of the day's market
+  ; draws, 5 to 17, set between -1 and 1, and the steps so far beside it. At the session's
+  ; mark, 0 at the opening bell and 13 at the closing bell, the index now is the two
+  ; closes weighed by the mark's share of the session, times one and the swing at the
+  ; mark: the half hour's swing times the steps so far, less the mark's share of all
+  ; thirteen. At the bell the share is 0 and the steps none, and at the close the share is
+  ; 1 and the swing's two terms the same, each end an operand multiplied by 0 or by 1, so
+  ; the session leaves the last close and reaches its own exactly, and every close is its
+  ; day's index to the bit (BD-3): a bridge between two closes that the half hours wander
+  ; along.
+  (headers "A27" "the session's half hours" "the half hour's step" "the steps so far")
+  (labels "A28" "9:30 to 10:00" "10:00 to 10:30" "10:30 to 11:00" "11:00 to 11:30" "11:30 to 12:00" "12:00 to 12:30" "12:30 to 13:00" "13:00 to 13:30" "13:30 to 14:00" "14:00 to 14:30" "14:30 to 15:00" "15:00 to 15:30" "15:30 to 16:00")
+  (formulas
+    ("B28:B40" "=2*Dice!$C6-1")                 ; each half hour's step: the uniform of the day's market draws 5 to 17, from -1 to 1
+    ("C28" "=B28")                              ; the steps so far: the first half hour's,
+    ("C29:C40" "=C28+B29"))                     ;   then each the one above and its own
+  (labels "A42" "the mark" "its share of the session" "the swing at the mark" "the index now")
+  (formulas
+    ("B42" "=Day!$B$22")                        ; the mark: 0 at the opening bell, 13 from the closing bell to the next
+    ("B43" "=B42/Day!$B$23")                    ; its share of the session, from 0 to 1
+    ("B44" "=$B$5*(CHOOSE(B42+1,0,C28,C29,C30,C31,C32,C33,C34,C35,C36,C37,C38,C39,C40)-B43*C40)")   ; the swing at the mark: 0 at the bell and at the close
+    ("B45" "=(D25*(1-B43)+B25*B43)*(1+B44)")))  ; the index now: from the last close to the session's, and the swing
 
 ; ---- STATION.1: the stocks ----------------------------------------------------------
 ; The first station, four rungs of shares, a rung a row, cheapest first: each its start
@@ -197,12 +263,15 @@
 ; the four rows. A rung's price is its start times the index to its beta, rounded once
 ; to whole cents, half up, so that a beta holds at every level of the index, a move of
 ; the index by 1% moving a rung by about its beta in percent, and no price reaches zero
-; at any seed: the index never falls below a third, nor the cheapest rung below 11
-; cents. Yesterday's price is the same formula over yesterday's index, recomputed and
-; never remembered; the change between them, and its glyph, are a panel's. The dearest
-; rung pays a dividend, a fixed sum in whole cents a share, on each day of the year that
-; is a multiple of the days between two, the 91st, 182nd, 273rd and 364th; the cell
-; holds it all that day, and the plate pays it at the day's first frame (PLATE.1). The
+; at any seed: no day's index falls below a third, nor a half hour's below a third less
+; the session's widest swing, nor the cheapest rung below 11 cents. The price now is
+; over the index now, the session's half hour (POT.10); the price at the last close is
+; the same formula over the session before's index, recomputed and never remembered;
+; the change between them is a column of whole cents, which the view spells and its
+; glyph reads, so the two never disagree. The dearest rung pays a dividend, a fixed sum
+; in whole cents a share, on each day of the year that is a multiple of the days
+; between two, the 91st, 182nd, 273rd and 364th; the cell holds it all that day, and
+; the plate pays it at the day's first frame (PLATE.1). The
 ; rungs' rows are written a rung at a time, each rung's values across its row and then
 ; one fill a column, the order a walk over a list of rungs writes, so that the ladder
 ; (STATION.2, course 1) rewrites them byte for byte (BD-1).
@@ -213,7 +282,7 @@
     ("B1" 4))                       ; dividends a year: one a quarter
   (formulas
     ("B2" "=INT(Day!$B$2/B1)"))     ; the days between two: 91, the year over the dividends, rounded down
-  (headers "A4" "the rungs" "start, in cents" "beta" "dividend yield, a year" "price today, in cents" "price yesterday, in cents" "a dividend, in cents a share" "the dividend today, in cents a share")
+  (headers "A4" "the rungs" "start, in cents" "beta" "dividend yield, a year" "price now, in cents" "price at the last close, in cents" "a dividend, in cents a share" "the dividend today, in cents a share" "the change since the last close, in cents")
   (cells
     ("A5" "rung 1")                 ; the cheapest share, and the wildest:
     ("B5" 100)                      ;   its start, in cents: $1
@@ -232,14 +301,15 @@
     ("C8" 0.75)                     ;   three quarters of the index's swing
     ("D8" 0.02))                    ;   2% a year, a quarter at a time: 50 cents a share
   (formulas
-    ("E5:E8" "=INT(B5*Market!$B$25^C5+0.5)")      ; the price today: the start times the index to the beta, in whole cents, half up
-    ("F5:F8" "=INT(B5*Market!$D$25^C5+0.5)")      ; the price yesterday: the same over yesterday's index
+    ("E5:E8" "=INT(B5*Market!$B$45^C5+0.5)")      ; the price now: the start times the index now to the beta, in whole cents, half up
+    ("F5:F8" "=INT(B5*Market!$D$25^C5+0.5)")      ; the price at the last close: the same over the session before's index
     ("G5:G8" "=INT(B5*D5/$B$1+0.5)")              ; a dividend: the year's yield on the start, over the dividends a year, in whole cents
-    ("H5:H8" "=IF(MOD(Day!$B$7,$B$2)=0,G5,0)")))  ; the dividend today: a dividend on its days, all day, and nothing on the others
+    ("H5:H8" "=IF(MOD(Day!$B$7,$B$2)=0,G5,0)")    ; the dividend today: a dividend on its days, all day, and nothing on the others
+    ("I5:I8" "=E5-F5")))                          ; the change since the last close, in whole cents: the view's change and its glyph both read it
 
 ; ---- BACK.1: the hustle -------------------------------------------------------------
-; The side hustle's books: prospectuses proofread at $25 apiece, a claim a market day
-; and four a run, by a click on Gigs' button or by its key. The settings first, each a
+; The side hustle's books: prospectuses proofread at $25 apiece, a claim a week at any
+; hour, and four a run, by a click on Gigs' button or by its key. The settings first, each a
 ; value beside its label: the fee in whole cents, the claims a run, and the button's
 ; place, its sheet, column and row, which a layout of the view moves as values and no
 ; formula. Then the workings. A press is two cells that hold 0 between presses, so that
@@ -249,30 +319,40 @@
 ; press while the last frame showed the hustle open, shut's twin, the state the person
 ; saw, since the claim moves this frame's; so it counts against the last frame's day,
 ; as an order fills at the price shown, and a press in the frame a day turns is the day
-; before's. Open from day holds the day after the day a claim counted against, from 0,
-; so that a game opens open, and shut compares it with today: the day moving opens the
-; hustle again, and nothing reads the boundary (BD-7). The fees are the claims times
-; the fee, which the pockets read when they come (PLATE.2).
+; before's. A prospectus a week, and a day's work each (POT.10, the owner's word at its
+; hand test): open from day holds the day a week after the day a claim counted against,
+; from 0, so that a game opens open, and shut compares it with today, the day moving
+; opens the hustle again and nothing reading the boundary (BD-7); due holds the time a
+; claim's work is done, a day after the half hour shown, and a prospectus is being
+; proofread until the half hour reaches it. The fees are the claims done times the fee,
+; which the pockets read when they come (PLATE.2).
 
 (on "Hustle"
-  (labels "A1" "a prospectus's fee, in cents" "claims a run" "the button's sheet" "its column" "its row")
+  (labels "A1" "a prospectus's fee, in cents" "claims a run" "the button's sheet" "its column" "its row" "days between two prospectuses" "a prospectus's work, in minutes")
   (cells
     ("B1" 2500)                     ; $25 a prospectus, whole cents
     ("B2" 4)                        ; claims a run: four, and then Compliance says no
     ("B3" "Gigs")                   ; the button: its view,
     ("B4" 1)                        ;   its column, A,
-    ("B5" 5))                       ;   and its row, values a layout moves, and no formula
-  (labels "A7" "clicked" "keyed" "claimed" "claims" "open from day" "shut" "earned, in cents")
+    ("B5" 5)                        ;   and its row, values a layout moves, and no formula
+    ("B6" 7)                        ; a prospectus a week: the next seven days after the last claim
+    ("B7" 1440))                    ; a day's work: the fee is paid a day after the claim
+  (labels "A9" "clicked" "keyed" "claimed" "claims" "open from day" "shut" "due, in minutes from day 0's midnight" "proofreading" "done" "earned, in cents" "due, shown")
   (formulas
-    ("B7" "=IF(AND(Input!$B$19=$B$3,Input!$B$11=$B$4,Input!$B$12=$B$5,Input!$B$13=1,Input.last!$B$13=0),1,0)"))   ; a click: the left button's rising edge on the button, its sheet shown
-  (pressed "B8" "Input!B5")         ; a key: the a button's rising edge, held by P
+    ("B9" "=IF(AND(Input!$B$19=$B$3,Input!$B$11=$B$4,Input!$B$12=$B$5,Input!$B$13=1,Input.last!$B$13=0),1,0)"))   ; a click: the left button's rising edge on the button, its sheet shown
+  (pressed "B10" "Input!B5")        ; a key: the a button's rising edge, held by P
   (formulas
-    ("B9" "=IF(AND(OR(B7=1,B8=1),Hustle.last!B12=0),1,0)"))   ; a claim: a press while the last frame showed it open
-  (count "B10" "B9")                ; the claims so far
-  (hold "B11" "B9=1" "Day.last!$B$3+1")   ; open from day: after a claim, the day after the day shown
+    ("B11" "=IF(AND(OR(B9=1,B10=1),Hustle.last!B14=0),1,0)"))   ; a claim: a press while the last frame showed it open
+  (count "B12" "B11")               ; the claims so far
+  (hold "B13" "B11=1" "Day.last!$B$3+$B$6")   ; open from day: after a claim, a week after the day shown
   (formulas
-    ("B12" "=IF(OR(B10>=$B$2,B11>Day!$B$3),1,0)")   ; shut: the run's claims spent, or today's made
-    ("B13" "=B10*$B$1")))           ; earned, in whole cents
+    ("B14" "=IF(OR(B12>=$B$2,B13>Day!$B$3),1,0)"))   ; shut: the run's claims spent, or this week's made
+  (hold "B15" "B11=1" "Day.last!$B$14+$B$7")   ; due: after a claim, a day's work after the half hour shown
+  (formulas
+    ("B16" "=IF(AND(B12>0,B15>Day!$B$14),1,0)")   ; proofreading: a claim's work not yet done
+    ("B17" "=B12-B16")              ; done: the claims whose work is done
+    ("B18" "=B17*$B$1")             ; earned, in whole cents: the fees of the prospectuses done
+    ("B19" "=IF(INT(B15/1440)>Day!$B$3,\"tomorrow\",\"today\")&\" at \"&INT(MOD(B15,1440)/60)&\":\"&IF(MOD(B15,60)=0,\"00\",\"30\")")))   ; due, shown: tomorrow at 10:00
 
 ; ---- MENU.1: the strings ------------------------------------------------------------
 ; The content sheets, each a file of src/content/ that holds the words alone, a
@@ -295,7 +375,7 @@
 (on "Disclosures"
   (labels "C5" "days a disclosure stands")
   (cells
-    ("D5" 30))                      ; a month: thirty market days, thirty seconds at the manifest's rate
+    ("D5" 30))                      ; a month: thirty days, twelve minutes at the manifest's rate
   (formulas
     ("D2" "=MOD(INT(Day!$B$3/D5),D1)+1")))   ; the row shown: the day's month round the rows, the first on the first day
 
@@ -344,32 +424,39 @@
 ; gridlines, reached by the workbook's tabs, where they stand first, the sheets row above
 ; naming them before the model (the owner's word, 2026-10-15: "the UI is a workbook").
 ; A view shows the model and holds none of it: its formulas read the model's sheets and
-; the day, never the frame (BD-7), and no formula reads a view, so a dish lays a view out
-; again without moving a formula. Money reaches a view as whole cents divided by 100
-; once, which draws its own decimals at their shortest, 12.3 for $12.30 (FRONT.2's rule,
-; MISE.3), and a change is a difference of two prices in cents, divided once.
+; the calendar, never the frame (BD-7), and no formula reads a view, so a dish lays a
+; view out again without moving a formula. Money reaches a view as whole cents spelled
+; with two decimals as a text, the library's dollars, padded so that it ends where a
+; number ends in its column of 12 characters (the owner's word at POT.10's hand test:
+; "All dollar cells should show two decimals"; and at its second, that they sat left of
+; center), since the record spells a number at its shortest, 12.3 for $12.30 (MISE.3);
+; and a change is the model's difference of two prices in cents, spelled with its sign
+; and padded alike.
 ;
 ; The Portfolio: the sheet the game opens on, the first visible among the tabs, until
-; the Exam exists (GUARD.1). Its date; then a row a stock, on the Stocks sheet's own
-; rows, each its name, the model's, its price today and its change since yesterday, in
-; dollars, and beside the change which way it went (FRONT.2), a glyph read off the
-; change itself, so the two never disagree: a whole number of cents over 100 keeps its
-; sign. The glyph has no color yet, the looks waiting for an aesthetic pass. And the
-; fine print at its foot, a disclosure a month. The date and the fine print are every
-; view's, the library's two verbs since the second view wrote them again (BACK.1).
+; the Exam exists (GUARD.1). Its date, and under it the bell's line, whether the market
+; is open and when it opens or closes (POT.10); then a row a stock, on the Stocks sheet's
+; own rows, each its name, the model's, its price now and its change since the last
+; close, in dollars, and beside the change which way it went (FRONT.2), a glyph read off
+; the cents the change is spelled from, so the two never disagree. The glyph has no
+; color yet, the looks waiting for an aesthetic pass. And the
+; fine print at its foot, a disclosure a month. The date, the bell and the fine print are
+; every view's, the library's verbs (BACK.1, POT.10).
 
 (on "Portfolio"
-  (column "A" 22 shown none)        ; the names; the date and the fine print spill past them
-  (column "B" 12 shown none)        ; the price, in dollars
-  (column "C" 12 shown none)        ; the change since yesterday, in dollars
+  (column "A" 22 shown none)        ; the names; the date, the bell and the fine print spill past them
+  (column "B" 12 shown none)        ; the price, in dollars: 12 characters, the width the dollars are padded for
+  (column "C" 12 shown none)        ; the change since the last close, in dollars, as wide
   (column "D" 3 shown none)         ; which way the change went, a glyph (FRONT.2)
-  (as-of "A1")                      ; the date, from the day: unaudited, as every number here is until the examiner calls (GUARD.3)
+  (as-of "A1")                      ; the date and the time, from the calendar: unaudited, as every number here is until the examiner calls (GUARD.3)
+  (bell "A2")                       ; the market's hours: open until the close, or when it opens
   (headers "A4" "Security" "Price ($)" "Change ($)")
   (formulas
-    ("A5:A8" "=Stocks!A5")                      ; each stock's name, the model's, until MENU.3 names them
-    ("B5:B8" "=Stocks!E5/100")                  ; its price today: whole cents over 100, once
-    ("C5:C8" "=(Stocks!E5-Stocks!F5)/100")      ; its change since yesterday: a difference of cents, over 100 once
-    ("D5:D8" "=IF(C5>0,\"▲\",IF(C5<0,\"▼\",\"=\"))"))   ; which way it went: up, down or flat, read off the change beside it
+    ("A5:A8" "=Stocks!A5"))                     ; each stock's name, the model's, until MENU.3 names them
+  (dollars "B5:B8" "Stocks!E5")                 ; its price now: whole cents spelled with two decimals
+  (formulas
+    ("C5:C8" "=IF(ABS(Stocks!I5)<1000,\"            \",IF(ABS(Stocks!I5)<10000,\"          \",IF(ABS(Stocks!I5)<100000,\"        \",IF(ABS(Stocks!I5)<1000000,\"      \",IF(ABS(Stocks!I5)<10000000,\"    \",IF(ABS(Stocks!I5)<100000000,\"  \",\"\"))))))&IF(Stocks!I5<0,\" -\",\"+\")&INT(ABS(Stocks!I5)/100)&\".\"&IF(MOD(ABS(Stocks!I5),100)<10,\"0\",\"\")&MOD(ABS(Stocks!I5),100)")   ; its change since the last close, two decimals and its sign: a gain's +, a loss's space and -, each as wide as the other; its spaces and twice its dollars' digits make 14, so that it ends where a number ends
+    ("D5:D8" "=IF(Stocks!I5>0,\"▲\",IF(Stocks!I5<0,\"▼\",\"=\"))"))   ; which way it went: up, down or flat, read off the cents the change is spelled from
   (fine-print "A10"))                           ; the fine print, a disclosure a month (MENU.1)
 
 ; ---- BACK.1: the gigs ---------------------------------------------------------------
@@ -392,18 +479,20 @@
 
 (on "Gigs"
   (column "A" 26 shown none)        ; the button and the labels: as wide as the button's text
-  (column "B" 12 shown none)        ; the counts, and the button's key
+  (column "B" 12 shown none)        ; the counts, the fees and the button's key: 12 characters, the width the dollars are padded for
   (as-of "A1")                      ; the date, every view's
+  (bell "A2")                       ; the market's hours, every view's
   (cells
-    ("A3" "Proofreading prospectuses at $25 apiece, paid by the prospectus and not by the page.")
+    ("A3" "Proofreading prospectuses at $25 apiece, a day's work and one a week, paid by the prospectus and not by the page.")
     ("A5" "[ Proofread a prospectus ]")   ; the button: Hustle!B3:B5 name this cell
     ("B5" "or press P"))            ; its key, the Keys sheet's B5
   (labels "A7" "Proofread" "Left this run" "Fees earned ($)")
   (formulas
-    ("B7" "=Hustle!B10")            ; the prospectuses proofread
-    ("B8" "=Hustle!B2-Hustle!B10")  ; what remains of the run's claims
-    ("B9" "=Hustle!B13/100")        ; the fees: whole cents over 100, once
-    ("A11" "=IF(Hustle!B10>=Hustle!B2,\"Compliance has approved \"&Hustle!B2&\" a run, and you have proofread \"&Hustle!B10&\".\",IF(Hustle!B12=1,\"Done for today: the next prospectus arrives tomorrow.\",\"A prospectus awaits. Nobody else has read one either.\"))"))   ; where the hustle stands: the run spent, today's made, or open
+    ("B7" "=Hustle!B17")            ; the prospectuses proofread, their work done
+    ("B8" "=Hustle!B2-Hustle!B12")) ; what remains of the run's claims
+  (dollars "B9" "Hustle!B18")       ; the fees: whole cents spelled with two decimals
+  (formulas
+    ("A11" "=IF(Hustle!B16=1,\"Proofreading: the fee is paid \"&Hustle!B19&\".\",IF(Hustle!B12>=Hustle!B2,\"Compliance has approved \"&Hustle!B2&\" a run, and you have proofread \"&Hustle!B12&\".\",IF(Hustle!B14=1,\"Done for the week: the next prospectus arrives \"&IF(Hustle!B13-Day!$B$3=1,\"tomorrow\",\"in \"&(Hustle!B13-Day!$B$3)&\" days\")&\".\",\"A prospectus awaits. Nobody else has read one either.\")))"))   ; where the hustle stands: one being proofread, the run spent, this week's made, or open
   (fine-print "A13"))               ; the fine print, every view's
 
 (sheet "Keys" visible)              ; the keys: the one device the game writes, among the engine's

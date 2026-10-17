@@ -37,14 +37,27 @@
 //! quotient as its shortest round trip; the hand spells the same cents by
 //! text, the dollars, a point and the cents less their trailing zeros, so
 //! that the tests hold what `MISE.3` derived, that whole cents over 100 draw
-//! their own two decimals at their shortest. The glyph beside each change
-//! (`FRONT.2`) shares no comparison with its cell: the cell reads the sign of
-//! the change the view shows, the hand compares the two prices in cents.
+//! their own two decimals at their shortest. Since `POT.10`'s hand test a
+//! view's dollars are a text of two decimals instead, which the cell pads by
+//! comparing its cents with powers of ten and the hand by counting its
+//! dollars' digits. The glyph beside each change (`FRONT.2`) shares no
+//! comparison with its cell: the cell reads the sign of the change in cents,
+//! the hand compares the two prices.
 //!
 //! The side hustle (`BACK.1`) shares none with its cells either. The cells
 //! judge a press by the twin of the cell that says the hustle is shut, and
 //! keep the day after the last claim; the hand keeps the days its claims
 //! counted against, in order, and reads the list's length and its last day.
+//!
+//! The market's hours (`POT.10`): the cartridge's calendar divides the time,
+//! in minutes from day 0's midnight, and chooses the session's day by the
+//! weekday; the hand counts minutes into hours and hours into days, keeps
+//! the session whose bell it last heard and the one before, and counts the
+//! session's marks as its hours turn. The session's path cannot share
+//! nothing, any more than the waves can: the hand computes the bridge
+//! between two closes with the cells' operations in their order, so that it
+//! holds every hour of it exactly, and its independence is the calendar
+//! beneath it, counted, and the draws, found by their place.
 
 /// Park and Miller's minimal standard (1988): a stream of whole numbers,
 /// each the last times the multiplier, modulo the modulus, a prime.
@@ -82,10 +95,46 @@ const _: () = assert!(EXAM_OFFSET / DAY_STRIDE > 1_000_000);
 const _: () = assert!(EXAM_OFFSET / DAY_STRIDE / DAYS_A_YEAR > 2_800);
 const _: () = assert!(MODULUS - 1 - EXAM_OFFSET > 1_000_000_000);
 
-/// The frames a market day, the manifest's rate: a day a second.
-pub const FRAMES_A_DAY: u64 = 30;
-/// The days a year, every day a market day.
+/// The minutes of the market's time a frame (`POT.10`), the Day sheet's `B1`:
+/// two, so thirty frames an hour and an hour a second at the manifest's rate,
+/// which a test holds; a person who writes 60 plays a frame an hour, and
+/// 1,440 a frame a day.
+pub const MINUTES_A_FRAME: u64 = 2;
+/// The minutes a frame for a frame an hour and for a frame a day, the
+/// oracle's longer runs.
+pub const AN_HOUR: u64 = 60;
+pub const A_DAY: u64 = 1_440;
+/// The days a year, every one a day of the calendar, five in seven a session.
 pub const DAYS_A_YEAR: u64 = 365;
+/// The days a week, and the days of it the market trades from Monday, the
+/// Day sheet's `B12`: Monday to Friday, and no holidays.
+pub const DAYS_A_WEEK: u64 = 7;
+pub const TRADING_DAYS: u64 = 5;
+/// The opening bell and the closing bell, `B10` and `B11`, in minutes after
+/// midnight: 9:30 and 16:00, New York's core session.
+pub const OPENING_BELL: u64 = 570;
+pub const CLOSING_BELL: u64 = 960;
+/// The first frame's time, `B9`: the opening bell on day 0, a Monday, so that
+/// the game opens on a market that moves.
+pub const FIRST_MINUTE: u64 = 570;
+/// The closing mark, `B23`: the session's mark at the closing bell, and from
+/// it to the next bell, the marks being 0 at the opening bell and one more at
+/// each half hour of the session, 10:00 to 16:00 (the owner's word at the
+/// hand test: "Why don't prices move on the half hour, too?").
+pub const CLOSING_MARK: u64 = 13;
+/// The days' names, Monday's first, as the views show them.
+pub const DAY_NAMES: [&str; DAYS_A_WEEK as usize] = [
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+    "Sunday",
+];
+
+// The game opens on the opening bell, and the hand's calendar counts from it.
+const _: () = assert!(FIRST_MINUTE == OPENING_BELL);
 /// The seed of every first game, the manifest's `(seed 791886)`: one market
 /// and one exam for every first player, chosen by the owner on 2026-10-14
 /// for a kind first year, the index dipping 1.1% to day 91 and closing the
@@ -150,61 +199,141 @@ pub fn uniform(draw: u64) -> f64 {
     draw as f64 / MODULUS as f64
 }
 
-/// The calendar, counted a frame at a time.
+/// The calendar (`POT.1`, counted in minutes since `POT.10`): a frame at a
+/// time, its minutes rolling into the hour, the hour into the day, the day
+/// into the week and the year; the session the hand last heard the bell for,
+/// and the one before it; and the session's mark, counted as its hours turn.
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 pub struct Calendar {
-    pub frames_a_day: u64,
+    pub minutes_a_frame: u64,
     pub days_a_year: u64,
     /// The frame last counted: 0 before the first.
     pub frame: u64,
-    /// The market's day, from 0.
+    /// The day, from 0.
     pub day: u64,
-    /// The frame within the day, from 0.
-    pub phase: u64,
-    /// The year, from 1.
+    /// The hour of the day, from 0, and the minute of the hour.
+    pub hour: u64,
+    pub minute: u64,
+    /// The day of the week, 0 a Monday.
+    pub weekday: u64,
+    /// The year, from 1, and the day of the year, from 1.
     pub year: u64,
-    /// The day of the year, from 1.
     pub day_of_year: u64,
+    /// Whether this frame turned the day or began the game: the frame the
+    /// dice roll in.
+    pub turned: bool,
+    /// The session's day: the last day whose opening bell the hand heard.
+    pub session: u64,
+    /// The session before it; the first session's is its own, so that the
+    /// game opens at the starts.
+    pub before: u64,
+    /// The session's mark: 0 at the opening bell, one more as each half hour
+    /// of the session turns, [`CLOSING_MARK`] from the closing bell to the
+    /// next.
+    pub mark: u64,
 }
 
 impl Calendar {
-    /// The calendar before its first frame.
-    pub fn new(frames_a_day: u64, days_a_year: u64) -> Calendar {
+    /// The calendar before its first frame, the minutes a frame apart.
+    pub fn new(minutes_a_frame: u64, days_a_year: u64) -> Calendar {
         Calendar {
-            frames_a_day,
+            minutes_a_frame,
             days_a_year,
             frame: 0,
             day: 0,
-            phase: 0,
+            hour: 0,
+            minute: 0,
+            weekday: 0,
             year: 1,
             day_of_year: 1,
+            turned: false,
+            session: 0,
+            before: 0,
+            mark: CLOSING_MARK,
         }
     }
 
-    /// One frame on. The first frame opens the first day; each later frame
-    /// is a phase on, a day's last phase rolling into the next day's first,
-    /// and the year's last day into the next year's first.
+    /// One frame on. The first frame stands at the first frame's time on day
+    /// 0; each later frame is its minutes on, a half hour at a time: each
+    /// half hour reached turns the session's mark while the session is
+    /// today's, the hour's second rolling into the next hour and the day's
+    /// last hour into the next day. Then, if the market is open and the
+    /// session is not today's, the bell has rung: the session is today's, the
+    /// one before it the last, and the mark 0.
     pub fn tick(&mut self) {
         self.frame += 1;
+        self.turned = self.frame == 1;
         if self.frame == 1 {
-            return;
+            (self.hour, self.minute) = (FIRST_MINUTE / 60, FIRST_MINUTE % 60);
+        } else {
+            let mut left = self.minutes_a_frame;
+            while left > 0 {
+                let to_half = 30 - self.minute % 30;
+                if left < to_half {
+                    self.minute += left;
+                    break;
+                }
+                left -= to_half;
+                self.minute += to_half;
+                if self.minute == 60 {
+                    self.minute = 0;
+                    self.hour += 1;
+                    if self.hour == 24 {
+                        self.hour = 0;
+                        self.next_day();
+                    }
+                }
+                if self.session == self.day && self.mark < CLOSING_MARK {
+                    self.mark += 1;
+                }
+            }
         }
-        self.phase += 1;
-        if self.phase < self.frames_a_day {
-            return;
+        if self.open() && (self.frame == 1 || self.session != self.day) {
+            self.before = if self.frame == 1 {
+                self.day
+            } else {
+                self.session
+            };
+            self.session = self.day;
+            self.mark = 0;
         }
-        self.phase = 0;
+    }
+
+    /// The day turned: the next weekday, the next day of the year, and the
+    /// next year after its last day.
+    fn next_day(&mut self) {
         self.day += 1;
+        self.weekday += 1;
+        if self.weekday == DAYS_A_WEEK {
+            self.weekday = 0;
+        }
         self.day_of_year += 1;
         if self.day_of_year > self.days_a_year {
             self.day_of_year = 1;
             self.year += 1;
         }
+        self.turned = true;
     }
 
-    /// Whether this frame opens a day, the one frame a day the market moves.
-    pub fn boundary(&self) -> bool {
-        self.phase == 0
+    /// The time of day to the half hour, in minutes after midnight, the Day
+    /// sheet's `B15`.
+    pub fn half_hour(&self) -> u64 {
+        self.hour * 60 + if self.minute >= 30 { 30 } else { 0 }
+    }
+
+    /// The time in minutes from day 0's midnight, `B4`, and to the half hour,
+    /// `B14`.
+    pub fn minutes(&self) -> u64 {
+        self.day * A_DAY + self.hour * 60 + self.minute
+    }
+    pub fn half_hours(&self) -> u64 {
+        self.day * A_DAY + self.half_hour()
+    }
+
+    /// Whether the market is open, `B19`: a trading day, from its opening
+    /// bell's half hour to its closing bell's.
+    pub fn open(&self) -> bool {
+        self.weekday < TRADING_DAYS && (OPENING_BELL..CLOSING_BELL).contains(&self.half_hour())
     }
 }
 
@@ -364,15 +493,83 @@ impl Market {
     }
 }
 
-/// The least the index can be on any day a price reads, at any seed and at
-/// either tier built (`STATION.1`'s decision 8): tier 1's cycle and its
-/// cycle on the first day are each between one less and one more than the
-/// amplitudes' sum, a half, so their quotient is at least a third; the trend
-/// is at least the drift to the day -1, yesterday's on day 0, the earliest
-/// day a price reads; and tier 0 is never below nine tenths of its trend.
+/// The half hour's swing (`POT.10`), the Market sheet's `B5`: the most one
+/// half hour of a session moves the index, 0.28% of it, which wanders a
+/// session as far as 0.4% an hour did and keeps the first year above 0.98 at
+/// every half hour.
+pub const SWING: f64 = 0.0028;
+/// The first of the market's draws a session's steps take each day, the
+/// fifth: `POT.2`'s four phases take the four before it.
+pub const SESSION_DRAW: u64 = 5;
+/// The widest a bridge of thirteen steps strays from its line, in steps: at
+/// the sixth or the seventh mark, `2m(13-m)/13`, every step against the rest.
+pub const WIDEST: f64 = 84.0 / 13.0;
+
+/// A session's path at a frame (`POT.10`), the Market sheet's rows 28 to 45.
+#[derive(Clone, Copy, Debug, PartialEq)]
+pub struct Path {
+    /// Each half hour's step, `B28:B40`: the uniform of the day's market draw
+    /// 5 to 17 set between -1 and 1, `2u-1`.
+    pub steps: [f64; CLOSING_MARK as usize],
+    /// The steps so far, `C28:C40`: the first step, then each the one before
+    /// and its own.
+    pub sums: [f64; CLOSING_MARK as usize],
+    /// The mark's share of the session, `B43`, from 0 at the bell to 1.
+    pub share: f64,
+    /// The swing at the mark, `B44`.
+    pub swing: f64,
+    /// The index now, `B45`.
+    pub now: f64,
+}
+
+impl Market {
+    /// The session's path at a calendar's frame (`POT.10`), each value in its
+    /// cell's operations and order: from the session before's close to the
+    /// session's own, weighed by the mark's share, times one and the swing,
+    /// `=(D25*(1-B43)+B25*B43)*(1+B44)`; the swing the half hour's swing times
+    /// the steps so far less the share of all thirteen,
+    /// `=$B$5*(CHOOSE(B42+1,0,C28,...,C40)-B43*C40)`. The steps are the
+    /// calendar day's draws, which a session reads in its own hours and which
+    /// the swing multiplies away outside them.
+    pub fn path(&self, seed: u64, difficulty: u64, cal: &Calendar) -> Path {
+        let steps: [f64; CLOSING_MARK as usize] = std::array::from_fn(|k| {
+            2.0 * uniform(market_draw(seed, cal.day, SESSION_DRAW + k as u64)) - 1.0
+        });
+        let mut sums = steps;
+        for k in 1..sums.len() {
+            sums[k] = sums[k - 1] + steps[k];
+        }
+        let share = cal.mark as f64 / CLOSING_MARK as f64;
+        let so_far = match cal.mark {
+            0 => 0.0,
+            m => sums[m as usize - 1],
+        };
+        let swing = SWING * (so_far - share * sums[sums.len() - 1]);
+        let last = self.index(difficulty, cal.before as f64);
+        let close = self.index(difficulty, cal.session as f64);
+        let now = (last * (1.0 - share) + close * share) * (1.0 + swing);
+        Path {
+            steps,
+            sums,
+            share,
+            swing,
+            now,
+        }
+    }
+}
+
+/// The least the index can be at any half hour a price reads, at any seed and
+/// at either tier built (`STATION.1`'s decision 8, `POT.10`): tier 1's cycle
+/// and its cycle on the first day are each between one less and one more than
+/// the amplitudes' sum, a half, so their quotient is at least a third; the
+/// trend is at least the drift to day 0, the earliest day a price reads, since
+/// the first session opens from its own close; tier 0 is never below nine
+/// tenths of its trend; and a half hour's index strays below the line between
+/// two closes by at most the half hour's swing times the widest a bridge of
+/// thirteen steps goes.
 pub fn least_index() -> f64 {
     let swing: f64 = WAVES.iter().map(|w| w.amplitude).sum();
-    Market::trend(-1.0) * (1.0 - swing) / (1.0 + swing)
+    Market::trend(0.0) * (1.0 - swing) / (1.0 + swing) * (1.0 - SWING * WIDEST)
 }
 
 /// A rung of a station's ladder (`STATION.1`): its start, a share's price on
@@ -457,7 +654,7 @@ impl Rung {
 }
 
 /// The days a disclosure stands, the Disclosures sheet's `D5` (`MENU.1`): a
-/// month of market days, thirty seconds at the manifest's rate.
+/// month of days, twelve minutes at the manifest's rate since `POT.10`.
 pub const DAYS_A_DISCLOSURE: u64 = 30;
 
 /// The row of the Disclosures sheet the fine print shows on a day, from 1
@@ -490,13 +687,84 @@ pub fn dollars(cents: i64) -> String {
     }
 }
 
-/// The Portfolio's date at a frame (`FRONT.1`): the year and the day of the
-/// year, each from 1, as of which its numbers stand, none of them audited.
+/// The width in characters of every column a view's dollars stand in
+/// (`POT.10`), which their padding is measured for.
+pub const DOLLARS_COLUMN: u64 = 12;
+
+/// A price's spaces and twice its dollars' digits (`POT.10`'s second hand
+/// test): in a column of [`DOLLARS_COLUMN`] characters, the text then ends
+/// where a number ends, the viewport drawing a text from its cell's left and a
+/// number to its right, a space being half a digit to within a sixtieth.
+pub const PRICE_UNITS: usize = 16;
+
+/// A change's spaces before its sign and twice its dollars' digits, the sign
+/// being about a space and a digit wide.
+pub const CHANGE_UNITS: usize = 14;
+
+/// Whole cents, never negative, as a view spells them since `POT.10`'s hand
+/// test, the library's `dollars`: the dollars, a point and the cents in two
+/// digits, after the spaces that make [`PRICE_UNITS`] with twice the dollars'
+/// digits, and none from eight digits. The cell chooses its padding by
+/// comparing the cents with powers of ten; the hand counts the dollars' digits.
+pub fn two_decimals(cents: u64) -> String {
+    let dollars = (cents / 100).to_string();
+    let pad = " ".repeat(PRICE_UNITS.saturating_sub(2 * dollars.len()));
+    format!("{pad}{dollars}.{:02}", cents % 100)
+}
+
+/// A change in whole cents as the Portfolio spells it (`POT.10`): two decimals
+/// and its sign, a gain's or nothing's `+` and a loss's space and `-`, each as
+/// wide as the other in the grid's font, after the spaces that make
+/// [`CHANGE_UNITS`] with twice its dollars' digits, and none from seven.
+pub fn signed_two_decimals(cents: i64) -> String {
+    let sign = if cents < 0 { " -" } else { "+" };
+    let c = cents.unsigned_abs();
+    let dollars = (c / 100).to_string();
+    let pad = " ".repeat(CHANGE_UNITS.saturating_sub(2 * dollars.len()));
+    format!("{pad}{sign}{dollars}.{:02}", c % 100)
+}
+
+/// A time of day in minutes after midnight as the views show it (`POT.10`):
+/// the hour, a colon and the minutes in two digits, 9:30 and 16:00.
+pub fn time_shown(minutes: u64) -> String {
+    format!("{}:{:02}", minutes / 60, minutes % 60)
+}
+
+/// A view's date at a frame (`FRONT.1`, `POT.10`): the day's name, the year
+/// and the day of the year, each from 1, and the time to the half hour, as of
+/// which its numbers stand, none of them audited.
 pub fn as_of(cal: &Calendar) -> String {
     format!(
-        "As of year {}, day {} (unaudited)",
-        cal.year, cal.day_of_year
+        "As of {}, year {}, day {}, {} (unaudited)",
+        DAY_NAMES[cal.weekday as usize],
+        cal.year,
+        cal.day_of_year,
+        time_shown(cal.half_hour())
     )
+}
+
+/// The bell's four lines (`POT.10`), a view's row 2: while the market is
+/// open; on a trading day before its bell; after the close, Monday to
+/// Thursday; and from Friday's close to Monday's bell, the last two the
+/// owner's words at the hand test.
+pub const BELL_OPEN: &str = "The market is open until 16:00.";
+pub const BELL_BEFORE: &str = "The market opens at 9:30.";
+pub const BELL_CLOSED: &str = "The market has closed. Analysts are analyzing the aftermath.";
+pub const BELL_WEEKEND: &str = "The market is closed until Monday at 9:30.";
+
+/// The bell's line at a frame. The cell compares the session's day with the
+/// day; the hand asks whether the market is open, then the time and the
+/// weekday.
+pub fn bell(cal: &Calendar) -> &'static str {
+    if cal.open() {
+        BELL_OPEN
+    } else if cal.weekday < TRADING_DAYS && cal.half_hour() < OPENING_BELL {
+        BELL_BEFORE
+    } else if cal.weekday + 1 < TRADING_DAYS {
+        BELL_CLOSED
+    } else {
+        BELL_WEEKEND
+    }
 }
 
 /// Which way a stock went since yesterday, as the Portfolio shows it beside
@@ -514,6 +782,11 @@ pub fn glyph(now: i64, was: i64) -> &'static str {
 /// The fee a prospectus proofread pays (`BACK.1`), in whole cents, the
 /// Hustle sheet's `B1`: $25, the contract's.
 pub const FEE: u64 = 2_500;
+/// The days between two prospectuses, `B6`, and a prospectus's work in
+/// minutes, `B7` (`POT.10`, the owner's word at its hand test): a prospectus a
+/// week, its fee paid a day after the claim.
+pub const DAYS_BETWEEN: u64 = 7;
+pub const WORK: u64 = A_DAY;
 /// The claims a run, the Hustle sheet's `B2`: four, the contract's cap, the
 /// owner's choice of 2026-10-16 over a claim a day for good.
 pub const CLAIMS_A_RUN: usize = 4;
@@ -543,15 +816,17 @@ pub struct Inputs {
     pub bound: bool,
 }
 
-/// The side hustle by hand (`BACK.1`): the days its claims counted against,
-/// in the order they were made. The cells judge a press by `shut`'s twin and
-/// keep the day after the last claim; the hand keeps the list and reads its
-/// length and its last day.
+/// The side hustle by hand (`BACK.1`, a week and a day's work since
+/// `POT.10`): its claims in the order they were made, each the day it counted
+/// against and the half hour, in minutes from day 0's midnight, the person
+/// saw when making it. The cells judge a press by `shut`'s twin and keep the
+/// day the next prospectus arrives and the time the last one is done; the
+/// hand keeps the list and reads its length and its last claim.
 #[derive(Clone, Debug, PartialEq, Eq)]
 pub struct Hustle {
     /// The claims a run, [`CLAIMS_A_RUN`] unless a person's edit raised it.
     pub cap: usize,
-    pub claims: Vec<u64>,
+    pub claims: Vec<(u64, u64)>,
 }
 
 impl Default for Hustle {
@@ -588,42 +863,72 @@ impl Hustle {
         now.key && now.bound && !(last.key && last.bound)
     }
 
-    /// Whether a press would claim on `day`: the run has a claim left, and
-    /// no claim counted against `day` yet.
+    /// Whether a press would claim on `day`: the run has a claim left, and no
+    /// claim counted against a day of the week before it.
     pub fn open(&self, day: u64) -> bool {
-        self.claims.len() < self.cap && self.claims.last() != Some(&day)
+        self.claims.len() < self.cap
+            && match self.claims.last() {
+                Some(&(d, _)) => day >= d + DAYS_BETWEEN,
+                None => true,
+            }
     }
 
     /// A frame of the hustle, its inputs beside the last frame's: a press
     /// claims when the hustle was open on the day the person saw, the last
-    /// frame's, and counts against that day. Whether a claim was made.
-    pub fn frame(&mut self, now: &Inputs, last: &Inputs, day_shown: u64) -> bool {
+    /// frame's, and counts against that day, its work running from the half
+    /// hour the person saw. Whether a claim was made.
+    pub fn frame(&mut self, now: &Inputs, last: &Inputs, day_shown: u64, half_shown: u64) -> bool {
         let pressed = Hustle::clicked(now, last) || Hustle::keyed(now, last);
         let claim = pressed && self.open(day_shown);
         if claim {
-            self.claims.push(day_shown);
+            self.claims.push((day_shown, half_shown));
         }
         claim
     }
 
-    /// The fees earned, in whole cents.
-    pub fn earned(&self) -> u64 {
-        self.claims.len() as u64 * FEE
+    /// Whether the last claim's work is under way at the half hour `at`, in
+    /// minutes from day 0's midnight: a day's work not yet done.
+    pub fn proofreading(&self, at: u64) -> bool {
+        self.claims.last().is_some_and(|&(_, t)| t + WORK > at)
     }
 
-    /// What Gigs says of the hustle on `day`: the run's claims spent, today's
-    /// made, or a prospectus waiting.
-    pub fn status(&self, day: u64) -> String {
-        if self.claims.len() >= self.cap {
-            format!(
+    /// The prospectuses done at `at`, their work finished, and their fees in
+    /// whole cents.
+    pub fn done(&self, at: u64) -> usize {
+        self.claims.len() - usize::from(self.proofreading(at))
+    }
+    pub fn earned(&self, at: u64) -> u64 {
+        self.done(at) as u64 * FEE
+    }
+
+    /// What Gigs says of the hustle at a frame: one being proofread and when
+    /// its fee is paid, the run's claims spent, this week's made and when the
+    /// next arrives, or a prospectus waiting.
+    pub fn status(&self, cal: &Calendar) -> String {
+        let at = cal.half_hours();
+        match self.claims.last() {
+            Some(&(_, t)) if self.proofreading(at) => {
+                let due = t + WORK;
+                let when = if due / A_DAY > cal.day {
+                    "tomorrow"
+                } else {
+                    "today"
+                };
+                format!(
+                    "Proofreading: the fee is paid {when} at {}.",
+                    time_shown(due % A_DAY)
+                )
+            }
+            _ if self.claims.len() >= self.cap => format!(
                 "Compliance has approved {} a run, and you have proofread {}.",
                 self.cap,
                 self.claims.len()
-            )
-        } else if !self.open(day) {
-            "Done for today: the next prospectus arrives tomorrow.".to_string()
-        } else {
-            "A prospectus awaits. Nobody else has read one either.".to_string()
+            ),
+            Some(&(d, _)) if !self.open(cal.day) => match d + DAYS_BETWEEN - cal.day {
+                1 => "Done for the week: the next prospectus arrives tomorrow.".to_string(),
+                n => format!("Done for the week: the next prospectus arrives in {n} days."),
+            },
+            _ => "A prospectus awaits. Nobody else has read one either.".to_string(),
         }
     }
 }
@@ -659,6 +964,90 @@ mod tests {
         );
     }
 
+    /// The views' dollars since `POT.10`'s hand test, two decimals as a text,
+    /// each ending where a number ends in its column of 12 characters (the
+    /// owner's second hand test): a price or a fee after the spaces that make
+    /// 16 with twice its dollars' digits, a space being half a digit in the
+    /// grid's font (7.008 and 3.561 px at 13 px, measured); and a change after
+    /// the spaces that make 14 with twice its dollars' digits, then its sign,
+    /// a gain's `+` or a loss's space and `-` (8.893 and 8.760 px), about a
+    /// space and a digit. Each spells its cents back, for every count of
+    /// cents to $10,000 and every change to $1,000 either way; no price is
+    /// padded from eight digits of dollars, and no change from seven.
+    #[test]
+    fn whole_cents_spell_two_decimals_padded() {
+        let padded = |spaces: usize, text: &str| format!("{}{text}", " ".repeat(spaces));
+        assert_eq!(
+            [100, 499, 2_498, 9_993, 10_000, 0, 2_500].map(two_decimals),
+            [
+                padded(14, "1.00"),
+                padded(14, "4.99"),
+                padded(12, "24.98"),
+                padded(12, "99.93"),
+                padded(10, "100.00"),
+                padded(14, "0.00"),
+                padded(12, "25.00")
+            ]
+        );
+        assert_eq!(
+            [99_999_999, 100_000_000, 9_999_999_999].map(two_decimals),
+            [
+                padded(4, "999999.99"),
+                padded(2, "1000000.00"),
+                padded(0, "99999999.99")
+            ]
+        );
+        assert_eq!(
+            [17, -2, 0, -1_234, 1_234].map(signed_two_decimals),
+            [
+                padded(12, "+0.17"),
+                padded(12, " -0.02"),
+                padded(12, "+0.00"),
+                padded(10, " -12.34"),
+                padded(10, "+12.34")
+            ]
+        );
+        assert_eq!(
+            [-99_999_999, 100_000_000].map(signed_two_decimals),
+            [padded(2, " -999999.99"), padded(0, "+1000000.00")]
+        );
+        let digits = |dollars: u64| dollars.checked_ilog10().map_or(1, |d| d as usize + 1);
+        // The cents a spelling reads back, from its dollars and its two
+        // digits of cents, read as whole numbers.
+        let cents = |text: &str| -> u64 {
+            let (whole, part) = text.split_once('.').expect("a point");
+            assert_eq!(part.len(), 2, "{text:?}: two digits of cents");
+            whole.parse::<u64>().expect("dollars") * 100 + part.parse::<u64>().expect("cents")
+        };
+        for c in 0..1_000_000u64 {
+            let s = two_decimals(c);
+            let text = s.trim_start_matches(' ');
+            let spaces = s.len() - text.len();
+            assert_eq!(
+                spaces + 2 * digits(c / 100),
+                PRICE_UNITS,
+                "{c} cents: {s:?}"
+            );
+            assert_eq!(cents(text), c, "{s:?}");
+        }
+        for c in -100_000..=100_000i64 {
+            let s = signed_two_decimals(c);
+            let text = s.trim_start_matches(' ');
+            let (minus, rest) = match text.strip_prefix('-') {
+                Some(rest) => (true, rest),
+                None => (false, text.strip_prefix('+').expect("a sign")),
+            };
+            assert_eq!(minus, c < 0, "{s:?}");
+            assert_eq!(cents(rest), c.unsigned_abs(), "{s:?}");
+            let before = s.len() - text.len() - usize::from(minus);
+            assert_eq!(
+                before + 2 * digits(c.unsigned_abs() / 100),
+                CHANGE_UNITS,
+                "{c} cents: {s:?}"
+            );
+        }
+    }
+
     /// Which way a stock went (`FRONT.2`): up, down and flat each; and over
     /// the first game's two years and two days, each of the three shown on
     /// some day by some stock, so that the Portfolio held to the hand at
@@ -682,16 +1071,30 @@ mod tests {
         assert_eq!(shown.len(), 3, "the glyphs shown: {shown:?}");
     }
 
-    /// The hustle by hand (`BACK.1`): a press claims once a day, against the
-    /// day the person saw, and four times a run. A key's press on day 0
-    /// claims and a second is refused; a key held is no press; days 1 to 3
-    /// claim, and the fifth press is refused; a claim counted against the
-    /// day before, as in the frame a day turns, leaves today open; the fees
-    /// are $25 a claim; the key is bound on the button's view alone, and a key
-    /// held while unbound is no press; and the button's click is a press only
-    /// on its own cell of its own view, the button going down.
+    /// A calendar standing at a day and a time of day in minutes, for the
+    /// hustle's sentences.
+    fn when(day: u64, minutes: u64) -> Calendar {
+        let mut c = Calendar::new(MINUTES_A_FRAME, DAYS_A_YEAR);
+        (c.day, c.weekday) = (day, day % DAYS_A_WEEK);
+        (c.hour, c.minute) = (minutes / 60, minutes % 60);
+        c
+    }
+
+    /// The hustle by hand (`BACK.1`; a week and a day's work since `POT.10`):
+    /// a press claims once a week, against the day the person saw, and four
+    /// times a run, its fee paid a day after the half hour the person saw. A
+    /// key's press on day 0 at 10:00 claims, and the prospectus is being
+    /// proofread, its fee due tomorrow and then today at 10:00, and paid at
+    /// day 1's 10:00; the week counts down to the next; a press within it is
+    /// refused; a key held is no press; days 7, 14 and 21 claim, the fifth
+    /// press is refused, and the run's sentence waits for the last fee; a
+    /// claim counted against the day before, as in the frame a day turns,
+    /// opens the next week from that day; the key is bound on the button's
+    /// view alone, and a key held while unbound is no press; and the button's
+    /// click is a press only on its own cell of its own view, the button going
+    /// down.
     #[test]
-    fn the_hustle_claims_once_a_day_and_four_a_run() {
+    fn the_hustle_claims_once_a_week_and_four_a_run() {
         let up = Inputs::default();
         let key = Inputs {
             key: true,
@@ -710,30 +1113,70 @@ mod tests {
         );
         let mut h = Hustle::default();
         assert_eq!(
-            h.status(0),
+            h.status(&when(0, 600)),
             "A prospectus awaits. Nobody else has read one either."
         );
-        assert!(h.frame(&key, &up, 0), "day 0's first press claims");
+        assert!(h.frame(&key, &up, 0, 600), "day 0's first press claims");
+        assert!(h.proofreading(600) && h.earned(600) == 0, "the day's work");
         assert_eq!(
-            h.status(0),
-            "Done for today: the next prospectus arrives tomorrow."
+            h.status(&when(0, 600)),
+            "Proofreading: the fee is paid tomorrow at 10:00."
         );
-        assert!(!h.frame(&key, &up, 0), "a second press on day 0 is refused");
-        assert!(!h.frame(&key, &key, 1), "a key held is no press");
-        for day in 1..=3 {
-            assert!(h.frame(&key, &up, day), "day {day} claims");
-        }
-        assert_eq!(h.claims, [0, 1, 2, 3]);
-        assert!(!h.frame(&key, &up, 4), "the fifth press is refused");
-        assert_eq!(h.earned(), 4 * FEE);
         assert_eq!(
-            h.status(9),
+            h.status(&when(1, 570)),
+            "Proofreading: the fee is paid today at 10:00."
+        );
+        assert!(
+            !h.proofreading(A_DAY + 600) && h.earned(A_DAY + 600) == FEE,
+            "the fee paid a day later"
+        );
+        assert_eq!(
+            h.status(&when(1, 600)),
+            "Done for the week: the next prospectus arrives in 6 days."
+        );
+        assert_eq!(
+            h.status(&when(6, 600)),
+            "Done for the week: the next prospectus arrives tomorrow."
+        );
+        assert!(
+            !h.frame(&key, &up, 6, 6 * A_DAY + 600),
+            "a press on day 6 is refused, the week not out"
+        );
+        assert!(
+            !h.frame(&key, &key, 7, 7 * A_DAY + 600),
+            "a key held is no press"
+        );
+        for day in [7, 14, 21] {
+            assert!(
+                h.frame(&key, &up, day, day * A_DAY + 600),
+                "day {day} claims"
+            );
+        }
+        let days: Vec<u64> = h.claims.iter().map(|&(d, _)| d).collect();
+        assert_eq!(days, [0, 7, 14, 21]);
+        assert!(
+            !h.frame(&key, &up, 28, 28 * A_DAY + 600),
+            "the fifth press is refused"
+        );
+        assert_eq!(
+            h.status(&when(21, 900)),
+            "Proofreading: the fee is paid tomorrow at 10:00."
+        );
+        assert_eq!(h.earned(22 * A_DAY + 600), 4 * FEE);
+        assert_eq!(
+            h.status(&when(28, 600)),
             "Compliance has approved 4 a run, and you have proofread 4."
         );
 
         let mut turning = Hustle::default();
-        assert!(turning.frame(&key, &up, 6), "a press shown day 6");
-        assert!(turning.open(7), "day 7 open after day 6's claim");
+        assert!(
+            turning.frame(&key, &up, 6, 6 * A_DAY + 1410),
+            "a press shown day 6, at 23:30"
+        );
+        assert!(
+            !turning.open(12) && turning.open(13),
+            "day 13 open after day 6's claim"
+        );
 
         let (sheet, column, row) = BUTTON;
         let at = |sheet: &str, column: u64, row: u64, left: bool| Inputs {
@@ -808,29 +1251,167 @@ mod tests {
         assert_eq!(z, DAY_JUMP);
     }
 
-    /// The calendar's turns: the first frame opens day 0, the thirty-first
-    /// opens day 1, and the 10,951st opens the second year.
+    /// The calendar's turns at two minutes a frame (`POT.10`): the first frame
+    /// is Monday's opening bell on day 0, the session its own and its mark 0;
+    /// the sixteenth 10:00, the first half hour's mark; the 196th the closing
+    /// bell, the thirteenth;
+    /// the 436th midnight, Tuesday, the dice's frame, the session still
+    /// Monday's; the 721st Tuesday's bell, its session Tuesday's and the one
+    /// before Monday's; Saturday's midnight, Friday's session standing through
+    /// the weekend; Monday's bell after it, the session before it Friday's;
+    /// and the year's turn, day 365 a Tuesday.
     #[test]
-    fn the_calendar_turns_at_a_days_first_frame() {
-        let mut c = Calendar::new(FRAMES_A_DAY, DAYS_A_YEAR);
+    fn the_calendar_turns_at_its_bells_and_its_midnights() {
+        let mut c = Calendar::new(MINUTES_A_FRAME, DAYS_A_YEAR);
+        let wanted = [1, 2, 16, 195, 196, 435, 436, 721, 3_316, 5_041, 262_516];
         let mut at = Vec::new();
-        for _ in 0..10_951 {
+        while c.frame < 262_516 {
             c.tick();
-            if [1, 2, 30, 31, 10_950, 10_951].contains(&c.frame) {
-                at.push((c.frame, c.day, c.phase, c.boundary(), c.year, c.day_of_year));
+            if wanted.contains(&c.frame) {
+                at.push((
+                    c.frame,
+                    c.day,
+                    c.weekday,
+                    time_shown(c.hour * 60 + c.minute),
+                    c.turned,
+                    c.open(),
+                    (c.session, c.before, c.mark),
+                    (c.year, c.day_of_year),
+                ));
             }
         }
+        let row = |frame, day, weekday, time: &str, turned, open, s, y| {
+            (frame, day, weekday, time.to_string(), turned, open, s, y)
+        };
         assert_eq!(
             at,
             vec![
-                (1, 0, 0, true, 1, 1),
-                (2, 0, 1, false, 1, 1),
-                (30, 0, 29, false, 1, 1),
-                (31, 1, 0, true, 1, 2),
-                (10_950, 364, 29, false, 1, 365),
-                (10_951, 365, 0, true, 2, 1),
+                row(1, 0, 0, "9:30", true, true, (0, 0, 0), (1, 1)),
+                row(2, 0, 0, "9:32", false, true, (0, 0, 0), (1, 1)),
+                row(16, 0, 0, "10:00", false, true, (0, 0, 1), (1, 1)),
+                row(195, 0, 0, "15:58", false, true, (0, 0, 12), (1, 1)),
+                row(196, 0, 0, "16:00", false, false, (0, 0, 13), (1, 1)),
+                row(435, 0, 0, "23:58", false, false, (0, 0, 13), (1, 1)),
+                row(436, 1, 1, "0:00", true, false, (0, 0, 13), (1, 2)),
+                row(721, 1, 1, "9:30", false, true, (1, 0, 0), (1, 2)),
+                row(3_316, 5, 5, "0:00", true, false, (4, 3, 13), (1, 6)),
+                row(5_041, 7, 0, "9:30", false, true, (7, 4, 0), (1, 8)),
+                row(262_516, 365, 1, "0:00", true, false, (364, 361, 13), (2, 1)),
             ]
         );
+    }
+
+    /// The same days at a frame an hour and at a frame a day: the hour's
+    /// frames see a session's even marks, from 9:30 to 16:30, two half hours
+    /// turning in each, and the closing mark, and the day's frames every bell,
+    /// a Saturday's showing Friday's session.
+    #[test]
+    fn an_hour_or_a_day_a_frame_counts_the_same_sessions() {
+        let mut h = Calendar::new(AN_HOUR, DAYS_A_YEAR);
+        let mut marks = Vec::new();
+        for _ in 0..8 {
+            h.tick();
+            marks.push((time_shown(h.hour * 60 + h.minute), h.mark, h.open()));
+        }
+        assert_eq!(marks.first(), Some(&("9:30".to_string(), 0, true)));
+        assert_eq!(marks.last(), Some(&("16:30".to_string(), 13, false)));
+        assert_eq!(
+            marks.iter().map(|m| m.1).collect::<Vec<_>>(),
+            [0, 2, 4, 6, 8, 10, 12, 13]
+        );
+        let mut d = Calendar::new(A_DAY, DAYS_A_YEAR);
+        let mut sessions = Vec::new();
+        for _ in 0..9 {
+            d.tick();
+            assert!(d.turned && (d.hour, d.minute) == (9, 30));
+            sessions.push((d.day, d.session, d.before, d.mark));
+        }
+        assert_eq!(
+            sessions,
+            [
+                (0, 0, 0, 0),
+                (1, 1, 0, 0),
+                (2, 2, 1, 0),
+                (3, 3, 2, 0),
+                (4, 4, 3, 0),
+                (5, 4, 3, 13),
+                (6, 4, 3, 13),
+                (7, 7, 4, 0),
+                (8, 8, 7, 0),
+            ]
+        );
+    }
+
+    /// A session leaves the last close and reaches its own exactly (`POT.10`):
+    /// over every session of the first game's first year, at a frame each half
+    /// hour, the index at the opening bell is the session before's close to
+    /// the bit, at the closing bell the session's own, and at every mark
+    /// between no further off the line between them than the half hour's
+    /// swing times the widest a bridge of thirteen steps strays.
+    #[test]
+    fn a_session_leaves_the_last_close_and_reaches_its_own() {
+        let market = Market::new(SEED);
+        let mut c = Calendar::new(30, DAYS_A_YEAR);
+        let (mut opens, mut closes, mut closed) = (0, 0, None);
+        while c.day < DAYS_A_YEAR {
+            c.tick();
+            if c.session != c.day {
+                continue;
+            }
+            let p = market.path(SEED, DIFFICULTY, &c);
+            let last = market.index(DIFFICULTY, c.before as f64);
+            let close = market.index(DIFFICULTY, c.session as f64);
+            if c.mark == 0 {
+                assert_eq!(p.now.to_bits(), last.to_bits(), "day {}'s bell", c.day);
+                opens += 1;
+            }
+            if c.mark == CLOSING_MARK && closed != Some(c.day) {
+                assert_eq!(p.now.to_bits(), close.to_bits(), "day {}'s close", c.day);
+                (closes, closed) = (closes + 1, Some(c.day));
+            }
+            let line = last * (1.0 - p.share) + close * p.share;
+            assert!(
+                (p.now / line - 1.0).abs() <= SWING * WIDEST,
+                "day {}, mark {}: {} off its line {line}",
+                c.day,
+                c.mark,
+                p.now
+            );
+        }
+        assert_eq!((opens, closes), (261, 261), "the first year's sessions");
+    }
+
+    /// The widest a bridge of thirteen steps strays, `84/13` of a step: over
+    /// every pattern of steps at -1 and 1, the extremes of a sum linear in
+    /// each step, the most `W(m) - (m/13)W(13)` reaches at any mark.
+    #[test]
+    fn a_bridge_of_thirteen_steps_strays_at_most_84_13_of_a_step() {
+        let k = CLOSING_MARK as usize;
+        let mut most = 0.0f64;
+        for pattern in 0..1u32 << k {
+            let steps: Vec<f64> = (0..k)
+                .map(|j| if pattern >> j & 1 == 1 { 1.0 } else { -1.0 })
+                .collect();
+            let all: f64 = steps.iter().sum();
+            for m in 0..=k {
+                let so_far: f64 = steps[..m].iter().sum();
+                most = most.max((so_far - m as f64 / k as f64 * all).abs());
+            }
+        }
+        assert!((most - WIDEST).abs() < 1e-12, "{most}");
+    }
+
+    /// The bell's lines name the bells (`POT.10`): the open line the closing
+    /// bell's time, the lines before the bell and over the weekend the opening
+    /// bell's, the weekend's Monday, the first trading day.
+    #[test]
+    fn the_bells_lines_name_the_bells() {
+        let (open, close) = (time_shown(OPENING_BELL), time_shown(CLOSING_BELL));
+        assert_eq!((open.as_str(), close.as_str()), ("9:30", "16:00"));
+        assert!(BELL_OPEN.contains(&format!("until {close}.")));
+        assert!(BELL_BEFORE.contains(&format!("at {open}.")));
+        assert!(BELL_WEEKEND.contains(&format!("until {} at {open}.", DAY_NAMES[0])));
+        assert!(!BELL_CLOSED.contains(':'), "the night's line names no time");
     }
 
     /// Seed 777's first die and draw, the numbers `POT.1`'s hand test read on
@@ -896,10 +1477,11 @@ mod tests {
     }
 
     /// The first game's year is kind, as the owner chose its seed to be: the
-    /// index dips no more than 2% and only in the first four months, the
-    /// weather turns within them, and the report card at day 365 reads at
-    /// least 5% up. A change to the waves that spoils the first year fails
-    /// here, and the seed is chosen again with it.
+    /// index dips no more than 2% and only in the first four months, at the
+    /// close of any day and at any half hour of any session (`POT.10`), the weather
+    /// turns within them, and the report card at day 365 reads at least 5% up.
+    /// A change to the waves or the session's swing that spoils the first year
+    /// fails here, and the seed is chosen again with it.
     #[test]
     fn the_first_game_opens_on_a_kind_year() {
         let market = Market::new(SEED);
@@ -913,6 +1495,19 @@ mod tests {
         assert!(
             low > 0.98 && low_day <= 120,
             "the year's low, {low}, on day {low_day}"
+        );
+        let mut c = Calendar::new(30, DAYS_A_YEAR);
+        let (mut hour_low, mut hour_day) = (f64::INFINITY, 0);
+        while c.day < DAYS_A_YEAR {
+            c.tick();
+            let now = market.path(SEED, DIFFICULTY, &c).now;
+            if now < hour_low {
+                (hour_low, hour_day) = (now, c.day);
+            }
+        }
+        assert!(
+            hour_low > 0.98 && hour_day <= 120,
+            "the year's lowest half hour, {hour_low}, on day {hour_day}"
         );
         let turns = |day: i64| index(day) >= index(day - 20);
         let turn = (1..=365).find(|&day| turns(day) != turns(day - 1));
@@ -938,14 +1533,19 @@ mod tests {
     }
 
     /// No seed prices a rung at or below zero (`STATION.1`'s decision 8):
-    /// at the least the index can be, a third of the drift to -1, the four
-    /// rungs are 11, 96, 833 and 4,386 cents.
+    /// at the least the index can be at any half hour (`POT.10`), a third of
+    /// the trend at day 0 less the widest a half hour strays from its line, the four
+    /// rungs are 11, 94, 818 and 4,327 cents, where a day's least made them 11,
+    /// 96, 833 and 4,386.
     #[test]
     fn no_seed_prices_a_rung_at_or_below_zero() {
         let least = least_index();
-        assert!((least - 1.0 / 3.0 / DRIFT).abs() < 1e-15, "{least}");
+        assert!(
+            (least - (1.0 - SWING * WIDEST) / 3.0).abs() < 1e-15,
+            "{least}"
+        );
         let floor: Vec<u64> = RUNGS.iter().map(|r| r.price_at(least)).collect();
-        assert_eq!(floor, [11, 96, 833, 4_386]);
+        assert_eq!(floor, [11, 94, 818, 4_327]);
     }
 
     /// The dividend falls four times a year, 91 days apart, its last inside

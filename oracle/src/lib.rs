@@ -10,8 +10,10 @@
 //! What it holds since `POT.1` (2026-10-14): the hand, [`buffet`], its
 //! calendar and its dice, since `POT.2` its market, since `STATION.1` the
 //! stocks' four rungs and their dividend, since `FRONT.1` the Portfolio's
-//! date and its dollars spelled by text, and since `BACK.1` the side hustle,
-//! its presses, its claims and its cap; the door the runners and the tests
+//! date and its dollars spelled by text, since `BACK.1` the side hustle, its
+//! presses, its claims and its cap, and since `POT.10` the market's hours,
+//! the calendar counted in minutes, the session's bells and marks, and its
+//! path between two closes; the door the runners and the tests
 //! share, which reads a source of the repository and the texts it includes
 //! and hands them to the engine's pass, `alonzo::pass::expand`, as the
 //! engine's own runner does; and the smoke test of the pin, a two-row
