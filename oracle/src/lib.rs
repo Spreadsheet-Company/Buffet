@@ -11,9 +11,12 @@
 //! calendar and its dice, since `POT.2` its market, since `STATION.1` the
 //! stocks' four rungs and their dividend, since `FRONT.1` the Portfolio's
 //! date and its dollars spelled by text, since `BACK.1` the side hustle, its
-//! presses, its claims and its cap, and since `POT.10` the market's hours,
+//! presses, its claims and its cap, since `POT.10` the market's hours,
 //! the calendar counted in minutes, the session's bells and marks, and its
-//! path between two closes; the door the runners and the tests
+//! path between two closes, and since `GUARD.1` the Series 777, its draw
+//! walked a row at a time, its answers, its score, the firm's capital and
+//! style, its keys by view and state, and the bell waiting for it; the door
+//! the runners and the tests
 //! share, which reads a source of the repository and the texts it includes
 //! and hands them to the engine's pass, `alonzo::pass::expand`, as the
 //! engine's own runner does; and the smoke test of the pin, a two-row

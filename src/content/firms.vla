@@ -1,0 +1,20 @@
+; SPDX-License-Identifier: CC-BY-SA-4.0
+; firms.vla - the firms' styles: the Firms sheet, the four answers to the Series 777's
+; last question, ungraded, "Which best describes you?", each the style of the firm it
+; founds (docs/OMAKASE.md, GUARD.1 and BACK.2). Words alone: one macro named after this
+; file, whose body is one call of the library's strings. The source includes this file
+; after its manifest, with every other include, and calls (firms) where the sheet's
+; rows belong. The exam shows the first four rows as the question's options, a row's
+; place its letter, and the certificate the one chosen; the firms' own names come with
+; BACK.2, a field beside the style. To add a row, read README.md beside this file.
+
+(defmacro (firms)
+  "the firms' styles: the Firms sheet, a style a row, the exam's last question's options"
+  (strings "Firms"                  ; the sheet, hidden among the tabs
+    ("Style" 40)                    ; its field, its header and its width in characters: the style, as a candidate describes it
+    ; each row: its one field, the style in the candidate's own words
+    ("I read the prospectus")
+    ("I read the headlines")
+    ("I read the room")
+    ("I feel the market")
+    ))                              ; the sheet's end: a style added goes above this line

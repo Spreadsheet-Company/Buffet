@@ -1,6 +1,6 @@
 ; SPDX-License-Identifier: CC-BY-SA-4.0
 ; questions.vla - the exam's bank: the Questions sheet, a question a row, from which the
-; Series 777 draws its nine scored questions (docs/OMAKASE.md, MENU.2 and GUARD.1). Words
+; Series 777 draws its ten scored questions (docs/OMAKASE.md, MENU.2 and GUARD.1). Words
 ; alone: one macro named after this file, whose body is one call of the library's
 ; strings. The source includes this file after its manifest, with every other include,
 ; and calls (questions) where the sheet's rows belong. To add a question, read README.md
@@ -84,7 +84,7 @@
      "A"
      "When new bonds pay more, an old bond's fixed interest is worth less, so its price falls until it yields what the new ones do.")
     ("Liquidity"
-     "Which is the most liquid?"
+     "Which asset is the most liquid?"
      "a private island"
      "a 1952 baseball card"
      "your cousin's startup"

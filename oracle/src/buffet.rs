@@ -58,6 +58,24 @@
 //! between two closes with the cells' operations in their order, so that it
 //! holds every hour of it exactly, and its independence is the calendar
 //! beneath it, counted, and the draws, found by their place.
+//!
+//! The Series 777 (`GUARD.1`) shares none with its cells. The cells pick the
+//! stride by a `CHOOSE` over ten primes written out, and compute each
+//! question's row from the start, a product taken round the bank; the hand
+//! finds the primes above 1,547 by trial division, and walks the draw a row
+//! at a time, each the last plus the stride's remainder, wrapping. The cells
+//! count the answers and the right ones over their twins, judging a press
+//! by the right option the last frame showed as a number; the hand keeps
+//! the options given in a list and compares each one's letter with the
+//! bank's letter, as text. And the calendar's wait: the cells take the frames
+//! the bell waited out of the time; the hand's calendar stands still while
+//! the bell waits, and moves on from the frame after it rings. The views'
+//! dollars since `GUARD.1`'s hand test share none either: the cells join the
+//! leading group of the dollars and each later digit by its place, choosing
+//! the padding by powers of ten; the hand counts the digits back from the
+//! last, a comma before every third, and the padding from the count.
+
+use std::collections::BTreeSet;
 
 /// Park and Miller's minimal standard (1988): a stream of whole numbers,
 /// each the last times the multiplier, modulo the modulus, a prime.
@@ -231,6 +249,11 @@ pub struct Calendar {
     /// of the session turns, [`CLOSING_MARK`] from the closing bell to the
     /// next.
     pub mark: u64,
+    /// Whether the exam holds the bell at this frame (`GUARD.1`), the Day
+    /// sheet's `B25`: the game not yet begun, the market closed and its time
+    /// standing; and the frames before this one it held it, `B26`.
+    pub waits: bool,
+    pub waited: u64,
 }
 
 impl Calendar {
@@ -250,22 +273,38 @@ impl Calendar {
             session: 0,
             before: 0,
             mark: CLOSING_MARK,
+            waits: false,
+            waited: 0,
         }
     }
 
-    /// One frame on. The first frame stands at the first frame's time on day
-    /// 0; each later frame is its minutes on, a half hour at a time: each
-    /// half hour reached turns the session's mark while the session is
-    /// today's, the hour's second rolling into the next hour and the day's
-    /// last hour into the next day. Then, if the market is open and the
-    /// session is not today's, the bell has rung: the session is today's, the
-    /// one before it the last, and the mark 0.
+    /// One frame on, the bell never waiting: the game begun before the first
+    /// frame, as a waiver written then begins it, and as every run that
+    /// holds the market from its first frame plays.
     pub fn tick(&mut self) {
+        self.tick_waiting(false);
+    }
+
+    /// One frame on, `waits` whether the exam holds the bell at the new
+    /// frame. The first frame stands at the first frame's time on day 0; a
+    /// frame after one the bell waited stands where that one stood, the
+    /// frames waited counted; each other frame is its minutes on, a half hour
+    /// at a time: each half hour reached turns the session's mark while the
+    /// session is today's, the hour's second rolling into the next hour and
+    /// the day's last hour into the next day. Then, if it is a trading day's
+    /// hours and the session is not today's, the bell has rung: the session is
+    /// today's, the one before it the last, and the mark 0.
+    pub fn tick_waiting(&mut self, waits: bool) {
+        let stands = self.frame >= 1 && self.waits;
+        if stands {
+            self.waited += 1;
+        }
         self.frame += 1;
+        self.waits = waits;
         self.turned = self.frame == 1;
         if self.frame == 1 {
             (self.hour, self.minute) = (FIRST_MINUTE / 60, FIRST_MINUTE % 60);
-        } else {
+        } else if !stands {
             let mut left = self.minutes_a_frame;
             while left > 0 {
                 let to_half = 30 - self.minute % 30;
@@ -288,7 +327,7 @@ impl Calendar {
                 }
             }
         }
-        if self.open() && (self.frame == 1 || self.session != self.day) {
+        if self.trading() && (self.frame == 1 || self.session != self.day) {
             self.before = if self.frame == 1 {
                 self.day
             } else {
@@ -330,10 +369,17 @@ impl Calendar {
         self.day * A_DAY + self.half_hour()
     }
 
-    /// Whether the market is open, `B19`: a trading day, from its opening
-    /// bell's half hour to its closing bell's.
-    pub fn open(&self) -> bool {
+    /// Whether it is a trading day's hours: a trading day, from its opening
+    /// bell's half hour to its closing bell's, the session's own whether or
+    /// not the bell waits.
+    pub fn trading(&self) -> bool {
         self.weekday < TRADING_DAYS && (OPENING_BELL..CLOSING_BELL).contains(&self.half_hour())
+    }
+
+    /// Whether the market is open, `B19`: a trading day's hours, and the bell
+    /// not waiting for the exam (`GUARD.1`).
+    pub fn open(&self) -> bool {
+        !self.waits && self.trading()
     }
 }
 
@@ -691,37 +737,67 @@ pub fn dollars(cents: i64) -> String {
 /// (`POT.10`), which their padding is measured for.
 pub const DOLLARS_COLUMN: u64 = 12;
 
-/// A price's spaces and twice its dollars' digits (`POT.10`'s second hand
-/// test): in a column of [`DOLLARS_COLUMN`] characters, the text then ends
-/// where a number ends, the viewport drawing a text from its cell's left and a
-/// number to its right, a space being half a digit to within a sixtieth.
+/// A price's spaces, twice its dollars' digits and its commas (`POT.10`'s
+/// second hand test, the commas since `GUARD.1`'s): in a column of
+/// [`DOLLARS_COLUMN`] characters, the text then ends where a number ends, the
+/// viewport drawing a text from its cell's left and a number to its right, a
+/// space being half a digit to within a sixtieth and a comma four fifths of a
+/// space, so that each comma takes a space off and leaves its text a fifth of
+/// a space short of the others, never past a number's edge.
 pub const PRICE_UNITS: usize = 16;
 
-/// A change's spaces before its sign and twice its dollars' digits, the sign
-/// being about a space and a digit wide.
+/// A change's spaces before its sign, twice its dollars' digits and its
+/// commas, the sign being about a space and a digit wide.
 pub const CHANGE_UNITS: usize = 14;
 
-/// Whole cents, never negative, as a view spells them since `POT.10`'s hand
-/// test, the library's `dollars`: the dollars, a point and the cents in two
-/// digits, after the spaces that make [`PRICE_UNITS`] with twice the dollars'
-/// digits, and none from eight digits. The cell chooses its padding by
-/// comparing the cents with powers of ten; the hand counts the dollars' digits.
-pub fn two_decimals(cents: u64) -> String {
-    let dollars = (cents / 100).to_string();
-    let pad = " ".repeat(PRICE_UNITS.saturating_sub(2 * dollars.len()));
-    format!("{pad}{dollars}.{:02}", cents % 100)
+/// Whole dollars with their thousands grouped by commas (`GUARD.1`'s hand
+/// test, the owner's word: "Thousands separators need to be implemented"):
+/// 1,234,567. The cell joins the leading group and each later group's three
+/// digits by their places; the hand counts the digits back from the last.
+pub fn grouped(dollars: u64) -> String {
+    let digits = dollars.to_string();
+    let mut out = String::with_capacity(digits.len() + digits.len() / 3);
+    for (k, ch) in digits.chars().enumerate() {
+        if k > 0 && (digits.len() - k) % 3 == 0 {
+            out.push(',');
+        }
+        out.push(ch);
+    }
+    out
 }
 
-/// A change in whole cents as the Portfolio spells it (`POT.10`): two decimals
-/// and its sign, a gain's or nothing's `+` and a loss's space and `-`, each as
-/// wide as the other in the grid's font, after the spaces that make
-/// [`CHANGE_UNITS`] with twice its dollars' digits, and none from seven.
+/// The width a spelling of whole dollars takes in units of a space: twice its
+/// digits and one a comma.
+fn units(dollars: u64) -> usize {
+    let digits = dollars.checked_ilog10().map_or(1, |d| d as usize + 1);
+    2 * digits + (digits - 1) / 3
+}
+
+/// Whole cents, never negative, as a view spells them since `POT.10`'s hand
+/// test, the library's `dollars`: the dollars, their thousands grouped by
+/// commas since `GUARD.1`'s, a point and the cents in two digits, after the
+/// spaces that make [`PRICE_UNITS`] with twice the dollars' digits and their
+/// commas, and none from seven digits. The cell chooses its padding by
+/// comparing the cents with powers of ten; the hand counts the dollars'
+/// digits.
+pub fn two_decimals(cents: u64) -> String {
+    let dollars = cents / 100;
+    let pad = " ".repeat(PRICE_UNITS.saturating_sub(units(dollars)));
+    format!("{pad}{}.{:02}", grouped(dollars), cents % 100)
+}
+
+/// A change in whole cents as the Portfolio spells it (`POT.10`, the
+/// library's `signed-dollars` since `GUARD.1`'s hand test): two decimals, the
+/// thousands grouped, and its sign, a gain's or nothing's `+` and a loss's
+/// space and `-`, each as wide as the other in the grid's font, after the
+/// spaces that make [`CHANGE_UNITS`] with twice its dollars' digits and their
+/// commas, and none from seven digits.
 pub fn signed_two_decimals(cents: i64) -> String {
     let sign = if cents < 0 { " -" } else { "+" };
     let c = cents.unsigned_abs();
-    let dollars = (c / 100).to_string();
-    let pad = " ".repeat(CHANGE_UNITS.saturating_sub(2 * dollars.len()));
-    format!("{pad}{sign}{dollars}.{:02}", c % 100)
+    let dollars = c / 100;
+    let pad = " ".repeat(CHANGE_UNITS.saturating_sub(units(dollars)));
+    format!("{pad}{sign}{}.{:02}", grouped(dollars), c % 100)
 }
 
 /// A time of day in minutes after midnight as the views show it (`POT.10`):
@@ -743,21 +819,24 @@ pub fn as_of(cal: &Calendar) -> String {
     )
 }
 
-/// The bell's four lines (`POT.10`), a view's row 2: while the market is
-/// open; on a trading day before its bell; after the close, Monday to
-/// Thursday; and from Friday's close to Monday's bell, the last two the
-/// owner's words at the hand test.
+/// The bell's five lines (`POT.10`, `GUARD.1`), a view's row 2: while the
+/// market is open; while the first bell waits for the exam; on a trading day
+/// before its bell; after the close, Monday to Thursday; and from Friday's
+/// close to Monday's bell, the last two the owner's words at the hand test.
 pub const BELL_OPEN: &str = "The market is open until 16:00.";
+pub const BELL_WAIT: &str = "The market opens when you leave the exam room.";
 pub const BELL_BEFORE: &str = "The market opens at 9:30.";
 pub const BELL_CLOSED: &str = "The market has closed. Analysts are analyzing the aftermath.";
 pub const BELL_WEEKEND: &str = "The market is closed until Monday at 9:30.";
 
 /// The bell's line at a frame. The cell compares the session's day with the
-/// day; the hand asks whether the market is open, then the time and the
-/// weekday.
+/// day; the hand asks whether the market is open, then whether the bell
+/// waits, then the time and the weekday.
 pub fn bell(cal: &Calendar) -> &'static str {
     if cal.open() {
         BELL_OPEN
+    } else if cal.waits {
+        BELL_WAIT
     } else if cal.weekday < TRADING_DAYS && cal.half_hour() < OPENING_BELL {
         BELL_BEFORE
     } else if cal.weekday + 1 < TRADING_DAYS {
@@ -780,8 +859,9 @@ pub fn glyph(now: i64, was: i64) -> &'static str {
 }
 
 /// The fee a prospectus proofread pays (`BACK.1`), in whole cents, the
-/// Hustle sheet's `B1`: $25, the contract's.
-pub const FEE: u64 = 2_500;
+/// Hustle sheet's `B1`: $250, the owner's word at `GUARD.1`'s hand test,
+/// where the contract had $25.
+pub const FEE: u64 = 25_000;
 /// The days between two prospectuses, `B6`, and a prospectus's work in
 /// minutes, `B7` (`POT.10`, the owner's word at its hand test): a prospectus a
 /// week, its fee paid a day after the claim.
@@ -801,19 +881,46 @@ pub const BUTTON_TEXT: &str = "[ Proofread a prospectus ]";
 pub const KEY_CODE: &str = "KeyP";
 pub const KEY_TEXT: &str = "or press P";
 
-/// What the host writes into the Input sheet in a frame, as far as the
-/// hustle reads it (Alonzo's `SPEC.md` section 3.3, version 4): the sheet
-/// shown; the pointer's column and row on it, 0 off its cells; the left
-/// button held; whether the key is held; and whether it was bound when the
-/// row was written, by the Keys sheet the host read after the last step.
+/// What the host writes into the Input sheet in a frame, as far as the game
+/// reads it (Alonzo's `SPEC.md` section 3.3, version 4): the sheet shown; the
+/// pointer's column and row on it, 0 off its cells; the left button held; the
+/// keys held, each its `KeyboardEvent.code`; and the keys bound when the rows
+/// were written, by the Keys sheet the host read after the last step, so that
+/// a key's button is down while the key is both. The hustle's one key at
+/// `BACK.1`, the exam's five more since `GUARD.1`.
 #[derive(Clone, Debug, Default, PartialEq, Eq)]
 pub struct Inputs {
     pub sheet: String,
     pub column: u64,
     pub row: u64,
     pub left: bool,
-    pub key: bool,
-    pub bound: bool,
+    pub held: BTreeSet<String>,
+    pub bound: BTreeSet<String>,
+}
+
+impl Inputs {
+    /// Whether a key's button is down this frame: the key held, and bound.
+    pub fn down(&self, code: &str) -> bool {
+        self.held.contains(code) && self.bound.contains(code)
+    }
+
+    /// A key's button going down this frame: down, where the last frame's
+    /// was not.
+    pub fn pressed(now: &Inputs, last: &Inputs, code: &str) -> bool {
+        now.down(code) && !last.down(code)
+    }
+}
+
+/// A view's button clicked this frame (`BACK.1`, the library's `clicked`
+/// since `GUARD.1`): the left button going down over the button's cell, its
+/// view's name, its column and its row, while that view shows, as the host
+/// writes the pointer.
+pub fn clicked(now: &Inputs, last: &Inputs, (view, column, row): (&str, u64, u64)) -> bool {
+    now.left
+        && !last.left
+        && now.sheet.eq_ignore_ascii_case(view)
+        && now.column == column
+        && now.row == row
 }
 
 /// The side hustle by hand (`BACK.1`, a week and a day's work since
@@ -842,12 +949,7 @@ impl Hustle {
     /// A click this frame: the left button going down over the button's cell
     /// while its view shows, as the host writes the pointer.
     pub fn clicked(now: &Inputs, last: &Inputs) -> bool {
-        let (sheet, column, row) = BUTTON;
-        now.left
-            && !last.left
-            && now.sheet.eq_ignore_ascii_case(sheet)
-            && now.column == column
-            && now.row == row
+        clicked(now, last, BUTTON)
     }
 
     /// Whether the Keys sheet binds the key while `sheet` shows: on the
@@ -860,7 +962,7 @@ impl Hustle {
     /// The key's button going down this frame: the key held and bound, where
     /// the last frame's was not both.
     pub fn keyed(now: &Inputs, last: &Inputs) -> bool {
-        now.key && now.bound && !(last.key && last.bound)
+        Inputs::pressed(now, last, KEY_CODE)
     }
 
     /// Whether a press would claim on `day`: the run has a claim left, and no
@@ -933,6 +1035,310 @@ impl Hustle {
     }
 }
 
+/// The firm's capital before the exam, in whole cents, and what a correct
+/// answer adds, the Proctor sheet's `B1` and `B2` (`GUARD.1`): $5,000 and $500,
+/// the contract's.
+pub const CAPITAL_BEFORE: u64 = 500_000;
+pub const CAPITAL_A_RIGHT: u64 = 50_000;
+/// The questions the Series 777 asks, eleven, and those it scores, the first
+/// ten, drawn from the bank; the eleventh, ungraded, sets the firm's style
+/// (the owner's word at the hand test: "The exam should have 11 question (10
+/// of substance, the eleventh question being firm style)").
+pub const ASKED: usize = 11;
+pub const SCORED: usize = 10;
+/// A waiver's correct answers and its style, `B4` and `B5`: five, the middle
+/// of 0 to 10, and the first style.
+pub const WAIVED_SCORE: u64 = 5;
+pub const WAIVED_STYLE: u64 = 1;
+/// The personal cash at the start, the Cash sheet's `B1` (`GUARD.1`'s hand
+/// test): $100, the contract's, in whole cents. The Cash sheet keeps the
+/// firm's cash, the exam's capital, and the personal, this and the hustle's
+/// fees once paid, which the Portfolio shows as its cash on hand.
+pub const PERSONAL_CASH: u64 = 10_000;
+/// The waiver's cell, which a person's edit of 1 waives the exam by, `B3`.
+pub const WAIVER: (&str, &str) = ("Proctor", "B3");
+/// Where the certificate leads, `B6`, and the exam's two views.
+pub const LEAD: &str = "Portfolio";
+pub const EXAM: &str = "Exam";
+pub const CERTIFICATE: &str = "Certificate";
+/// The most rows one picker holds (`MISE.3`'s probe 3), so the most a bank
+/// may hold: every prime above it is coprime to every bank's size.
+pub const PICKER_ROWS: u64 = 1_547;
+/// The strides the exam's second draw picks among: the first ten primes
+/// above [`PICKER_ROWS`], found by trial division.
+pub const STRIDES: [u64; 10] = primes_above(PICKER_ROWS);
+/// The exam's four options, each its letter, its row on the Exam and the key
+/// that presses it there, all in [`OPTION_COLUMN`]; and the certificate's
+/// button, its place and its key, the Proctor sheet's `A24:E28`.
+pub const OPTIONS: [(&str, u64, &str); 4] = [
+    ("A", 7, "KeyA"),
+    ("B", 8, "KeyB"),
+    ("C", 9, "KeyC"),
+    ("D", 10, "KeyD"),
+];
+pub const OPTION_COLUMN: u64 = 1;
+pub const OPEN_BUTTON: (&str, u64, u64) = (CERTIFICATE, 1, 11);
+pub const OPEN_KEY: &str = "KeyO";
+/// The texts the two views write beside their buttons, naming their keys.
+pub const OPEN_TEXT: &str = "[ Open for business ]";
+pub const OPEN_KEY_TEXT: &str = "or press O";
+pub const ANSWER_KEYS_TEXT: &str = "Click an answer, or press its letter: A, B, C or D.";
+/// The eleventh question, ungraded, the Exam view's own (`MENU.2`'s decision
+/// 4).
+pub const STYLE_PROMPT: &str = "Which best describes you?";
+/// The Exam's width in characters, its column A, inside which every option
+/// stands whole with its letter, so that every character of it is its
+/// button.
+pub const EXAM_COLUMN: u64 = 100;
+/// The certificate's style before the eleventh answer gives one.
+pub const STYLE_UNASKED: &str = "asked last";
+/// The heading over the certificate's plain statement, the owner's word at
+/// the hand test, so that its "You." does not stand alone.
+pub const CAVEAT_HEADING: &str = "Caveat:";
+/// The buttons' look (`GUARD.1`'s hand test): format 1, a fill of Lovelace
+/// Lavender, the house's primary, the text the grid's own until the record
+/// holds a text's color.
+pub const BUTTON_FORMAT: &str = "(format 1 \"A080E0\" general nowrap)";
+
+/// The first ten primes above `floor`, by trial division.
+pub const fn primes_above(floor: u64) -> [u64; 10] {
+    let mut out = [0; 10];
+    let (mut k, mut n) = (0, floor + 1);
+    while k < out.len() {
+        if is_prime(n) {
+            out[k] = n;
+            k += 1;
+        }
+        n += 1;
+    }
+    out
+}
+
+/// The exam's start, from 0, a row of a bank of `bank` questions: its first
+/// draw round the bank, the Proctor sheet's `B9`.
+pub fn start(seed: u64, bank: u64) -> u64 {
+    exam_draw(seed, 1) % bank
+}
+
+/// The exam's stride, `B10`: one of [`STRIDES`] by its second draw.
+pub fn stride(seed: u64) -> u64 {
+    STRIDES[(exam_draw(seed, 2) % STRIDES.len() as u64) as usize]
+}
+
+/// The ten questions drawn, each a row of the bank from 1, `B12:B21`: from
+/// the start, the stride's remainder added a question at a time and the
+/// bank's size taken off once it is passed. The cells compute each row from
+/// the start as a product round the bank; the hand walks.
+pub fn draw(seed: u64, bank: u64) -> [u64; SCORED] {
+    let step = stride(seed) % bank;
+    let mut at = start(seed, bank);
+    let mut rows = [0; SCORED];
+    for row in rows.iter_mut() {
+        *row = at + 1;
+        at += step;
+        if at >= bank {
+            at -= bank;
+        }
+    }
+    rows
+}
+
+/// The Series 777 by hand (`GUARD.1`): the ten rows drawn, the bank's right
+/// letters, row 1 first, the options given in order, each 1 to 4, whether
+/// the exam was waived and the game has begun, and the frames played. The
+/// cells count the answers and the right ones over their twins and judge a
+/// press by the right option the last frame showed, as a number; the hand
+/// keeps the list and compares each option's letter with the bank's, as
+/// text.
+#[derive(Clone, Debug, PartialEq, Eq)]
+pub struct Exam {
+    pub rows: [u64; SCORED],
+    pub letters: Vec<String>,
+    pub answers: Vec<u64>,
+    pub waived: bool,
+    pub begun: bool,
+    pub frames: u64,
+}
+
+impl Exam {
+    /// The exam of a seed over a bank whose right letters are `letters`.
+    pub fn new(seed: u64, letters: Vec<String>) -> Exam {
+        Exam {
+            rows: draw(seed, letters.len() as u64),
+            letters,
+            answers: Vec::new(),
+            waived: false,
+            begun: false,
+            frames: 0,
+        }
+    }
+
+    /// Whether a question is open, `B33`: fewer than eleven answered, and no
+    /// waiver.
+    pub fn open(&self) -> bool {
+        self.answers.len() < ASKED && !self.waived
+    }
+
+    /// Whether the certificate waits for its button: all eleven answered, and
+    /// the game not begun.
+    pub fn pending(&self) -> bool {
+        self.answers.len() == ASKED && !self.begun
+    }
+
+    /// The bank's row shown, `B34`: the next scored question's, the tenth's
+    /// from the tenth answer on.
+    pub fn row_shown(&self) -> u64 {
+        self.rows[self.answers.len().min(SCORED - 1)]
+    }
+
+    /// The right option of the question shown, `B35`, 1 to 4: its letter's
+    /// place among the options.
+    pub fn right(&self) -> u64 {
+        let letter = &self.letters[self.row_shown() as usize - 1];
+        OPTIONS
+            .iter()
+            .position(|(l, _, _)| *l == letter.as_str())
+            .map_or(0, |k| k as u64 + 1)
+    }
+
+    /// The right answers of the ten, `B37`: each option's letter the bank's
+    /// letter of the row asked.
+    pub fn correct(&self) -> u64 {
+        self.answers
+            .iter()
+            .zip(&self.rows)
+            .filter(|(&option, &row)| {
+                OPTIONS[option as usize - 1].0 == self.letters[row as usize - 1]
+            })
+            .count() as u64
+    }
+
+    /// The score, `B38`: a waiver's, or the right answers.
+    pub fn score(&self) -> u64 {
+        if self.waived {
+            WAIVED_SCORE
+        } else {
+            self.correct()
+        }
+    }
+
+    /// The firm's capital in whole cents, `B39`.
+    pub fn capital(&self) -> u64 {
+        CAPITAL_BEFORE + CAPITAL_A_RIGHT * self.score()
+    }
+
+    /// The firm's style, `B40`: a waiver's, else the eleventh answer, 0 until
+    /// it is given.
+    pub fn style(&self) -> u64 {
+        if self.waived {
+            WAIVED_STYLE
+        } else {
+            self.answers.get(SCORED).copied().unwrap_or(0)
+        }
+    }
+
+    /// The sheet the game shows, the Camera's `B3`: the exam's while a
+    /// question is open, its certificate's after the eleventh, and where the
+    /// certificate leads once the game has begun.
+    pub fn shows(&self) -> &'static str {
+        if self.begun {
+            LEAD
+        } else if self.open() {
+            EXAM
+        } else {
+            CERTIFICATE
+        }
+    }
+
+    /// The keys the Keys sheet binds while `sheet` shows, by the exam's state:
+    /// A to D on the Exam while a question is open, and O on the Certificate
+    /// while it waits for its button.
+    pub fn binds(&self, sheet: &str) -> Vec<&'static str> {
+        if sheet.eq_ignore_ascii_case(EXAM) && self.open() {
+            OPTIONS.iter().map(|(_, _, key)| *key).collect()
+        } else if sheet.eq_ignore_ascii_case(OPEN_BUTTON.0) && self.pending() {
+            vec![OPEN_KEY]
+        } else {
+            Vec::new()
+        }
+    }
+
+    /// The option pressed this frame, 1 to 4: of the four, the first by
+    /// letter whose cell was clicked or whose key went down.
+    pub fn option_pressed(now: &Inputs, last: &Inputs) -> Option<u64> {
+        OPTIONS
+            .iter()
+            .position(|&(_, row, key)| {
+                clicked(now, last, (EXAM, OPTION_COLUMN, row)) || Inputs::pressed(now, last, key)
+            })
+            .map(|k| k as u64 + 1)
+    }
+
+    /// Whether the certificate's button was pressed this frame, by its click
+    /// or its key.
+    pub fn opened(now: &Inputs, last: &Inputs) -> bool {
+        clicked(now, last, OPEN_BUTTON) || Inputs::pressed(now, last, OPEN_KEY)
+    }
+
+    /// A frame of the exam, judged by the state the last frame showed, which
+    /// is this exam's before the frame: an option pressed is an answer while a
+    /// question was open, and the first frame's last showed none; the
+    /// certificate's button begins the game once all eleven were answered.
+    /// Whether an answer was taken.
+    pub fn frame(&mut self, option: Option<u64>, opened: bool) -> bool {
+        let shown = self.frames > 0;
+        let begins = opened && shown && self.answers.len() == ASKED;
+        let answered = option.is_some() && shown && self.open();
+        if let (true, Some(o)) = (answered, option) {
+            self.answers.push(o);
+        }
+        if begins {
+            self.begun = true;
+        }
+        self.frames += 1;
+        answered
+    }
+
+    /// A waiver, a person's edit of the Proctor's `B3`: the exam closed and
+    /// the game begun, at the waiver's score and style.
+    pub fn waive(&mut self) {
+        self.waived = true;
+        self.begun = true;
+    }
+
+    /// Where the exam stands, the Exam's `A3`, its second sentence the
+    /// owner's words at the hand test.
+    pub fn status(&self) -> String {
+        if self.open() {
+            if self.answers.len() < SCORED {
+                format!(
+                    "The Series 777, question {} of {ASKED}. Correct answers earn starting capital.",
+                    self.answers.len() + 1
+                )
+            } else {
+                format!(
+                    "The Series 777, question {ASKED} of {ASKED}, ungraded: it sets your firm's style."
+                )
+            }
+        } else if self.waived {
+            "The Series 777: waived.".to_string()
+        } else {
+            "Pencils down. Your certificate is on its sheet.".to_string()
+        }
+    }
+
+    /// What the certificate says of the exam, its `A5`.
+    pub fn headline(&self) -> &'static str {
+        if self.open() {
+            "Pending: the proctor certifies after the eleventh question."
+        } else if self.waived {
+            "Waived: the regulator assumes you would have passed."
+        } else {
+            "The bearer has sat the Series 777 and passed, as every candidate does."
+        }
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -966,16 +1372,23 @@ mod tests {
 
     /// The views' dollars since `POT.10`'s hand test, two decimals as a text,
     /// each ending where a number ends in its column of 12 characters (the
-    /// owner's second hand test): a price or a fee after the spaces that make
-    /// 16 with twice its dollars' digits, a space being half a digit in the
-    /// grid's font (7.008 and 3.561 px at 13 px, measured); and a change after
-    /// the spaces that make 14 with twice its dollars' digits, then its sign,
-    /// a gain's `+` or a loss's space and `-` (8.893 and 8.760 px), about a
-    /// space and a digit. Each spells its cents back, for every count of
-    /// cents to $10,000 and every change to $1,000 either way; no price is
-    /// padded from eight digits of dollars, and no change from seven.
+    /// owner's second hand test), the thousands grouped by commas since
+    /// `GUARD.1`'s: a price or a fee after the spaces that make 16 with twice
+    /// its dollars' digits and its commas, a space being half a digit in the
+    /// grid's font and a comma four fifths of a space (7.008, 3.561 and 2.818
+    /// px at 13 px, measured); and a change after the spaces that make 14 with
+    /// the same, then its sign, a gain's `+` or a loss's space and `-` (8.893
+    /// and 8.760 px), about a space and a digit. Each spells its cents back,
+    /// its groups three digits after the first's one to three, for every
+    /// count of cents to $10,000, every change to $1,000 either way, and
+    /// beside every power of ten to 10^15 cents; no price is padded from
+    /// seven digits of dollars, and no change from seven.
     #[test]
     fn whole_cents_spell_two_decimals_padded() {
+        assert_eq!(
+            [0, 7, 999, 1_000, 65_536, 1_234_567].map(grouped),
+            ["0", "7", "999", "1,000", "65,536", "1,234,567"]
+        );
         let padded = |spaces: usize, text: &str| format!("{}{text}", " ".repeat(spaces));
         assert_eq!(
             [100, 499, 2_498, 9_993, 10_000, 0, 2_500].map(two_decimals),
@@ -990,12 +1403,19 @@ mod tests {
             ]
         );
         assert_eq!(
-            [99_999_999, 100_000_000, 9_999_999_999].map(two_decimals),
+            [100_000, 550_000, 99_999_999, 100_000_000, 9_999_999_999].map(two_decimals),
             [
-                padded(4, "999999.99"),
-                padded(2, "1000000.00"),
-                padded(0, "99999999.99")
+                padded(7, "1,000.00"),
+                padded(7, "5,500.00"),
+                padded(3, "999,999.99"),
+                padded(0, "1,000,000.00"),
+                padded(0, "99,999,999.99")
             ]
+        );
+        assert_eq!(
+            two_decimals((1 << 53) - 1),
+            "90,071,992,547,409.91",
+            "2^53 cents less one, the most a double holds exactly"
         );
         assert_eq!(
             [17, -2, 0, -1_234, 1_234].map(signed_two_decimals),
@@ -1008,27 +1428,52 @@ mod tests {
             ]
         );
         assert_eq!(
-            [-99_999_999, 100_000_000].map(signed_two_decimals),
-            [padded(2, " -999999.99"), padded(0, "+1000000.00")]
+            [-123_456, -99_999_999, 100_000_000].map(signed_two_decimals),
+            [
+                padded(5, " -1,234.56"),
+                padded(1, " -999,999.99"),
+                padded(0, "+1,000,000.00")
+            ]
         );
         let digits = |dollars: u64| dollars.checked_ilog10().map_or(1, |d| d as usize + 1);
-        // The cents a spelling reads back, from its dollars and its two
-        // digits of cents, read as whole numbers.
+        let commas = |dollars: u64| (digits(dollars) - 1) / 3;
+        // The cents a spelling reads back, from its dollars, each comma three
+        // digits before the point or the next comma and the first group one
+        // to three, and its two digits of cents, read as whole numbers.
         let cents = |text: &str| -> u64 {
             let (whole, part) = text.split_once('.').expect("a point");
             assert_eq!(part.len(), 2, "{text:?}: two digits of cents");
-            whole.parse::<u64>().expect("dollars") * 100 + part.parse::<u64>().expect("cents")
+            let groups: Vec<&str> = whole.split(',').collect();
+            assert!(
+                (1..=3).contains(&groups[0].len()) && groups[1..].iter().all(|g| g.len() == 3),
+                "{text:?}: the thousands grouped"
+            );
+            groups.concat().parse::<u64>().expect("dollars") * 100
+                + part.parse::<u64>().expect("cents")
         };
         for c in 0..1_000_000u64 {
             let s = two_decimals(c);
             let text = s.trim_start_matches(' ');
             let spaces = s.len() - text.len();
             assert_eq!(
-                spaces + 2 * digits(c / 100),
+                spaces + 2 * digits(c / 100) + commas(c / 100),
                 PRICE_UNITS,
                 "{c} cents: {s:?}"
             );
             assert_eq!(cents(text), c, "{s:?}");
+        }
+        for p in 0..=15 {
+            let ten = 10u64.pow(p);
+            for c in [ten - 1, ten, ten + 1] {
+                let s = two_decimals(c);
+                let text = s.trim_start_matches(' ');
+                assert_eq!(cents(text), c, "{s:?}");
+                assert_eq!(
+                    s.len() - text.len(),
+                    PRICE_UNITS.saturating_sub(2 * digits(c / 100) + commas(c / 100)),
+                    "{c} cents: {s:?}"
+                );
+            }
         }
         for c in -100_000..=100_000i64 {
             let s = signed_two_decimals(c);
@@ -1040,8 +1485,9 @@ mod tests {
             assert_eq!(minus, c < 0, "{s:?}");
             assert_eq!(cents(rest), c.unsigned_abs(), "{s:?}");
             let before = s.len() - text.len() - usize::from(minus);
+            let dollars = c.unsigned_abs() / 100;
             assert_eq!(
-                before + 2 * digits(c.unsigned_abs() / 100),
+                before + 2 * digits(dollars) + commas(dollars),
                 CHANGE_UNITS,
                 "{c} cents: {s:?}"
             );
@@ -1080,6 +1526,15 @@ mod tests {
         c
     }
 
+    /// A frame's inputs with these keys held and these bound, nothing else.
+    fn keys(held: &[&str], bound: &[&str]) -> Inputs {
+        Inputs {
+            held: held.iter().map(|k| k.to_string()).collect(),
+            bound: bound.iter().map(|k| k.to_string()).collect(),
+            ..Inputs::default()
+        }
+    }
+
     /// The hustle by hand (`BACK.1`; a week and a day's work since `POT.10`):
     /// a press claims once a week, against the day the person saw, and four
     /// times a run, its fee paid a day after the half hour the person saw. A
@@ -1096,15 +1551,8 @@ mod tests {
     #[test]
     fn the_hustle_claims_once_a_week_and_four_a_run() {
         let up = Inputs::default();
-        let key = Inputs {
-            key: true,
-            bound: true,
-            ..Inputs::default()
-        };
-        let unbound = Inputs {
-            key: true,
-            ..Inputs::default()
-        };
+        let key = keys(&[KEY_CODE], &[KEY_CODE]);
+        let unbound = keys(&[KEY_CODE], &[]);
         assert!(Hustle::binds(BUTTON.0) && Hustle::binds("gigs") && !Hustle::binds("Portfolio"));
         assert!(!Hustle::keyed(&unbound, &up), "a key held while unbound");
         assert!(
@@ -1561,5 +2009,253 @@ mod tests {
             .map(|r| (1..=DAYS_A_YEAR).map(|day| r.dividend_on(day)).sum())
             .collect();
         assert_eq!(paid, [0, 0, 0, 200], "cents a share a year");
+    }
+
+    fn gcd(a: u64, b: u64) -> u64 {
+        if b == 0 {
+            a
+        } else {
+            gcd(b, a % b)
+        }
+    }
+
+    /// The exam's strides (`GUARD.1`): the first ten primes above the most
+    /// rows a picker holds, each prime, in order, none skipped between them,
+    /// and so coprime to every bank's size from 1 to 1,547; and among them
+    /// every stride coprime to the first bank's twenty, so that its twenty
+    /// starts make 160 exams.
+    #[test]
+    fn the_strides_are_the_first_ten_primes_above_the_most_a_picker_holds() {
+        let between: Vec<u64> = (PICKER_ROWS + 1..=STRIDES[9])
+            .filter(|&n| is_prime(n))
+            .collect();
+        assert_eq!(
+            between, STRIDES,
+            "the primes from 1,548 to the tenth, every one"
+        );
+        assert_eq!(STRIDES[0], 1_549);
+        for bank in 1..=PICKER_ROWS {
+            for s in STRIDES {
+                assert_eq!(gcd(s, bank), 1, "{s} and a bank of {bank}");
+            }
+        }
+        let classes: BTreeSet<u64> = STRIDES.iter().map(|s| s % 20).collect();
+        let coprime: BTreeSet<u64> = (1..20).filter(|&r| gcd(r, 20) == 1).collect();
+        assert_eq!(classes, coprime, "every stride a bank of twenty can take");
+    }
+
+    /// Every bank a picker holds, ten to 1,547 rows, with every stride and
+    /// from its first row and its last: ten rows, each a row of the bank, and
+    /// no row twice; a bank of ten meets all of its rows. And the first game's
+    /// exam, at the contract's seed over the bank's twenty, the rows the
+    /// scoping derived and the tenth since the owner's eleven questions: 9,
+    /// 18, 7, 16, 5, 14, 3, 12, 1 and 10.
+    #[test]
+    fn every_bank_a_picker_holds_draws_ten_rows_and_no_repeat() {
+        for bank in SCORED as u64..=PICKER_ROWS {
+            for s in STRIDES {
+                for first in [0, bank - 1] {
+                    let mut rows = BTreeSet::new();
+                    let mut at = first;
+                    for _ in 0..SCORED {
+                        assert!(at < bank);
+                        rows.insert(at);
+                        at = (at + s % bank) % bank;
+                    }
+                    assert_eq!(rows.len(), SCORED, "a bank of {bank}, the stride {s}");
+                }
+            }
+        }
+        assert_eq!(draw(SEED, 20), [9, 18, 7, 16, 5, 14, 3, 12, 1, 10]);
+        assert_eq!((start(SEED, 20), stride(SEED)), (8, 1_549));
+        for seed in 1..=1_000 {
+            let rows = draw(seed, 20);
+            let distinct: BTreeSet<u64> = rows.iter().copied().collect();
+            assert!(
+                distinct.len() == SCORED && rows.iter().all(|r| (1..=20).contains(r)),
+                "seed {seed}"
+            );
+        }
+    }
+
+    /// A bank of twenty whose right letters run A, B, C, D and round again.
+    fn letters() -> Vec<String> {
+        (0..20).map(|k| OPTIONS[k % 4].0.to_string()).collect()
+    }
+
+    /// The exam by hand (`GUARD.1`): a question open until eleven are
+    /// answered, each press judged by the state before it; the right answers
+    /// of the ten counted by letter and the eleventh the style; the
+    /// certificate waiting for its button once all eleven are in, and the game
+    /// begun by it and by nothing before; the sheet shown and the keys bound
+    /// by the state; the option pressed the first by letter, by its cell's
+    /// click on the Exam or its key.
+    #[test]
+    fn the_exam_takes_eleven_answers_and_begins_at_its_certificate() {
+        let mut e = Exam::new(SEED, letters());
+        assert!(e.open() && !e.pending() && !e.begun);
+        assert_eq!(
+            (e.shows(), e.status().as_str()),
+            (
+                EXAM,
+                "The Series 777, question 1 of 11. Correct answers earn starting capital."
+            )
+        );
+        assert_eq!(e.binds("Exam"), ["KeyA", "KeyB", "KeyC", "KeyD"]);
+        assert!(e.binds("Portfolio").is_empty() && e.binds("Certificate").is_empty());
+        assert_eq!(e.row_shown(), 9, "the draw's first row");
+        assert!(
+            !e.frame(None, true),
+            "the certificate's button, with a question open, begins nothing"
+        );
+        assert!(!e.begun);
+        for k in 0..SCORED {
+            let right = e.right();
+            let option = if k % 2 == 0 { right } else { right % 4 + 1 };
+            assert!(e.frame(Some(option), false), "answer {}", k + 1);
+        }
+        assert_eq!(
+            e.correct(),
+            5,
+            "the first, the third, the fifth, the seventh and the ninth"
+        );
+        assert_eq!(
+            e.status(),
+            "The Series 777, question 11 of 11, ungraded: it sets your firm's style."
+        );
+        assert_eq!(e.style(), 0, "no style before the eleventh");
+        assert!(e.frame(Some(3), false), "the eleventh");
+        assert!(!e.open() && e.pending());
+        assert_eq!((e.style(), e.score(), e.capital()), (3, 5, 750_000));
+        assert_eq!(e.shows(), CERTIFICATE);
+        assert_eq!(
+            e.status(),
+            "Pencils down. Your certificate is on its sheet."
+        );
+        assert!(!e.frame(Some(1), false), "a twelfth is no answer");
+        assert_eq!(e.answers.len(), ASKED);
+        assert!(e.binds("Exam").is_empty());
+        assert_eq!(e.binds("Certificate"), [OPEN_KEY]);
+        assert!(
+            !e.frame(None, true) && e.begun,
+            "the certificate's button begins the game"
+        );
+        assert_eq!(e.shows(), LEAD);
+        assert!(e.binds("Certificate").is_empty() && e.binds("Exam").is_empty());
+
+        // The option pressed: a click on its cell of the Exam, or its key.
+        let at = |sheet: &str, row: u64, left: bool| Inputs {
+            sheet: sheet.to_string(),
+            column: OPTION_COLUMN,
+            row,
+            left,
+            ..Inputs::default()
+        };
+        assert_eq!(
+            Exam::option_pressed(&at(EXAM, 9, true), &at(EXAM, 9, false)),
+            Some(3)
+        );
+        assert_eq!(
+            Exam::option_pressed(&at(EXAM, 9, true), &at(EXAM, 9, true)),
+            None,
+            "held"
+        );
+        assert_eq!(
+            Exam::option_pressed(&at(EXAM, 5, true), &at(EXAM, 5, false)),
+            None,
+            "the question"
+        );
+        assert_eq!(
+            Exam::option_pressed(&at("Portfolio", 9, true), &at("Portfolio", 9, false)),
+            None
+        );
+        let mut both = at(EXAM, 10, true);
+        both.held.insert("KeyB".to_string());
+        both.bound.insert("KeyB".to_string());
+        assert_eq!(
+            Exam::option_pressed(&both, &at(EXAM, 10, false)),
+            Some(2),
+            "the first by letter of two"
+        );
+        assert_eq!(
+            Exam::option_pressed(&keys(&["KeyC"], &[]), &Inputs::default()),
+            None,
+            "unbound"
+        );
+        let (sheet, column, row) = OPEN_BUTTON;
+        let open = Inputs {
+            sheet: sheet.to_string(),
+            column,
+            row,
+            left: true,
+            ..Inputs::default()
+        };
+        assert!(Exam::opened(&open, &Inputs::default()));
+        assert!(Exam::opened(
+            &keys(&[OPEN_KEY], &[OPEN_KEY]),
+            &Inputs::default()
+        ));
+    }
+
+    /// The score funds the firm as the contract says (`GUARD.1`): $5,000 and
+    /// $500 a right answer, from $5,000 to $10,000 as the right answers of
+    /// the ten run from none to all, the eleventh counting nothing; and a
+    /// waiver's five, $7,500, its style the first, at any answer.
+    #[test]
+    fn every_score_funds_the_contracts_capital() {
+        let mut first = Exam::new(SEED, letters());
+        assert!(
+            !first.frame(Some(first.right()), false),
+            "a press in the first frame, whose last showed no question"
+        );
+        for k in 0..=SCORED {
+            let mut e = Exam::new(SEED, letters());
+            e.frame(None, false);
+            for q in 0..SCORED {
+                let right = e.right();
+                e.frame(Some(if q < k { right } else { right % 4 + 1 }), false);
+            }
+            e.frame(Some(4), false);
+            assert_eq!(e.score(), k as u64);
+            assert_eq!(e.capital(), 500_000 + 50_000 * k as u64, "{k} right");
+        }
+        let mut w = Exam::new(SEED, letters());
+        w.frame(None, false);
+        assert!(w.frame(Some(w.right()), false));
+        w.waive();
+        assert!(!w.open() && w.begun && w.shows() == LEAD);
+        assert_eq!(
+            (w.score(), w.style(), w.capital()),
+            (WAIVED_SCORE, WAIVED_STYLE, 750_000)
+        );
+        assert_eq!(w.status(), "The Series 777: waived.");
+    }
+
+    /// The calendar waits at the first bell (`GUARD.1`): while the exam holds
+    /// it, every frame stands at the first frame's time, day 0's session at
+    /// its mark 0, the market closed and the bell's line the wait's, the
+    /// frames counted; the game's first frame stands there too, the market
+    /// open; and the frame after it is two minutes on.
+    #[test]
+    fn the_calendar_waits_at_the_first_bell_until_the_game_begins() {
+        let mut c = Calendar::new(MINUTES_A_FRAME, DAYS_A_YEAR);
+        for f in 1..=5 {
+            c.tick_waiting(true);
+            assert_eq!(
+                (c.minutes(), c.session, c.mark, c.waited),
+                (FIRST_MINUTE, 0, 0, f - 1)
+            );
+            assert!(c.waits && c.trading() && !c.open() && c.turned == (f == 1));
+            assert_eq!(bell(&c), BELL_WAIT);
+        }
+        c.tick_waiting(false);
+        assert_eq!(
+            (c.minutes(), c.waited),
+            (FIRST_MINUTE, 5),
+            "the game's first frame stands at the bell"
+        );
+        assert!(c.open() && bell(&c) == BELL_OPEN);
+        c.tick_waiting(false);
+        assert_eq!((c.minutes(), c.waited), (FIRST_MINUTE + MINUTES_A_FRAME, 5));
     }
 }

@@ -52,15 +52,31 @@
 //! days, and a hundred years, at a frame a day, the minutes a frame written
 //! as a person's edit. Every close is its day's index to the bit, every hour
 //! of a session the hand's path, the views' date with its weekday and its
-//! time and the bell's line beneath it.
+//! time and the bell's line beneath it. Since `GUARD.1`: the Series 777, the
+//! game's opening; its draw at every seed of a thousand, the hand's and never
+//! a question twice; every frame of a scripted exam answered by clicks and by
+//! keys, its proctor's books, its two views, the keys each view binds, the
+//! Camera's hand-over and the bell's wait held to the hand, then the market's
+//! first frames after the bell; the score funding the firm as the contract
+//! says; a waiver at the first frame and in the middle; the proctor's
+//! settings and buttons, every option whole inside its view's column, and the
+//! game opening on the Exam. Every run that holds the market from its first
+//! frame writes the waiver before it, so that its calendar stands as before.
+//! Since `GUARD.1`'s hand test: ten questions scored and an eleventh, the
+//! views' dollars grouped by thousands, every spelling held to the hand's
+//! beside every power of ten to 2^53 cents; the Cash sheet and the
+//! Portfolio's cash on hand, the firm's and the personal pocket's, held at
+//! every frame those runs hold the Portfolio, the exam and the hustle; the
+//! buttons' lavender look; the Certificate's caveat under its heading; and
+//! the hustle's fee at $250.
 
 use std::collections::{BTreeMap, BTreeSet};
 
 use alonzo::cartridge::{Cartridge, Seed};
 use buffet_oracle::buffet::{
-    self, disclosure, least_index, Calendar, Hustle, Inputs, Market, AN_HOUR, A_DAY, CLOSING_MARK,
-    DAYS_A_DISCLOSURE, DAYS_A_YEAR, DIFFICULTY, DIVIDEND_DAYS, FIRST_MINUTE, LOOK_BACK,
-    MINUTES_A_FRAME, RUNGS, SESSION_DRAW, WAVES, YEAR,
+    self, disclosure, least_index, Calendar, Exam, Hustle, Inputs, Market, AN_HOUR, A_DAY,
+    CLOSING_MARK, DAYS_A_DISCLOSURE, DAYS_A_YEAR, DIFFICULTY, DIVIDEND_DAYS, FIRST_MINUTE,
+    LOOK_BACK, MINUTES_A_FRAME, RUNGS, SESSION_DRAW, WAVES, YEAR,
 };
 use buffet_oracle::{expand_source, gather, lf, load, read, root, values};
 use vla_lang::form::Form;
@@ -76,13 +92,16 @@ const DISCLOSURES: &str = "src/content/disclosures.vla";
 const QUESTIONS: &str = "src/content/questions.vla";
 /// The caveats' content file, and the sheet its call writes (`MENU.5`).
 const CAVEATS: &str = "src/content/caveats.vla";
+/// The firms' styles, the exam's eleventh question's options (`GUARD.1`).
+const FIRMS: &str = "src/content/firms.vla";
 /// The content sheets, each written by a file of `src/content/`: the sheet,
 /// its file, and the state the source writes before its call, hidden as a
 /// workbook keeps its reference data at the back, or visible for the one a
 /// player reads whole (`MENU.5`'s decision 2).
-const CONTENT: [(&str, &str, &str); 3] = [
+const CONTENT: [(&str, &str, &str); 4] = [
     ("Disclosures", DISCLOSURES, "hidden"),
     ("Questions", QUESTIONS, "hidden"),
+    ("Firms", FIRMS, "hidden"),
     ("Caveats", CAVEATS, "visible"),
 ];
 /// The exam's bank's fields, in their columns from A (`MENU.2`'s decision 1,
@@ -102,17 +121,40 @@ const CAVEAT_FIELDS: [&str; 4] = [
 /// The game's views, each a sheet of its own (`FRONT.1`), standing first
 /// among the tabs: the workbook's outputs, which read the model and which no
 /// formula reads. A view enters this list with the dish that fills it: Gigs
-/// with `BACK.1`, the side hustle's.
-const VIEWS: [&str; 2] = ["Portfolio", "Gigs"];
+/// with `BACK.1`, the side hustle's; the Exam and the Certificate with
+/// `GUARD.1`, standing before the Portfolio, the game opening on the Exam.
+const VIEWS: [&str; 4] = ["Exam", "Certificate", "Portfolio", "Gigs"];
 /// Gigs' labels down its column A from row 7 (`BACK.1`'s decision 3), beside
 /// the prospectuses proofread, what remains of the run's claims and the fees.
 const GIGS_LABELS: [&str; 3] = ["Proofread", "Left this run", "Fees earned ($)"];
 /// The Portfolio's headers over its columns from A, in row 4 (`FRONT.1`'s
 /// decision 6).
 const PORTFOLIO_HEADERS: [&str; 3] = ["Security", "Price ($)", "Change ($)"];
+/// The Portfolio's cash on hand under its stocks (`GUARD.1`'s hand test, the
+/// owner's word, both pockets the owner's choice): its heading and the two
+/// pockets' labels, their dollars beside them in column B.
+const CASH_LABELS: [(&str, &str); 3] = [
+    ("A10", "Cash on hand ($)"),
+    ("A11", "  Firm"),
+    ("A12", "  Personal"),
+];
 
-fn cartridge() -> Cartridge {
+/// The cartridge as a stranger loads it, the exam to be sat (`GUARD.1`).
+fn loaded() -> Cartridge {
     load(CARTRIDGE).unwrap_or_else(|e| panic!("{CARTRIDGE} loads: {e}"))
+}
+
+/// The cartridge with the exam waived before its first frame, a person's
+/// edit of the Proctor's `B3` (`GUARD.1`'s decision 12): the game begun at the
+/// first frame and the market from it, as every run that holds the market
+/// plays, its calendar standing as it did before the exam came.
+fn cartridge() -> Cartridge {
+    let mut cart = loaded();
+    let (sheet, at) = buffet::WAIVER;
+    let edit = format!("(cell \"{sheet}\" \"{at}\" 1)");
+    cart.write(&edit)
+        .unwrap_or_else(|r| panic!("{edit}: {} {}", r.refusal.id, r.refusal.text));
+    cart
 }
 
 fn seed(cart: &Cartridge) -> u64 {
@@ -264,10 +306,11 @@ const MARKET_DRAWS: u64 = SESSION_DRAW + CLOSING_MARK - 1;
 /// the day of the year; the first frame's time, the bells and the trading
 /// days; the time to the half hour and of the day, the time shown, the
 /// weekday and its name; whether the market is open; the session's day, the
-/// one before it, the mark and the closing mark.
+/// one before it, the mark and the closing mark; and whether the exam holds
+/// the bell and the frames it held it (`GUARD.1`).
 fn day_held(cart: &Cartridge, cal: &Calendar) {
     let f = cal.frame;
-    let got = values(cart, "Day", "B1:B23");
+    let got = values(cart, "Day", "B1:B26");
     let want = [
         ("B1", cal.minutes_a_frame.to_string()),
         ("B2", cal.days_a_year.to_string()),
@@ -290,6 +333,8 @@ fn day_held(cart: &Cartridge, cal: &Calendar) {
         ("B21", cal.before.to_string()),
         ("B22", cal.mark.to_string()),
         ("B23", CLOSING_MARK.to_string()),
+        ("B25", u8::from(cal.waits).to_string()),
+        ("B26", cal.waited.to_string()),
     ];
     for (addr, text) in want {
         assert_eq!(
@@ -395,8 +440,11 @@ fn gigs_held(cart: &Cartridge, cal: &Calendar, texts: &[String]) {
 /// the Stocks sheet's same frame, which `stocks_held` has just held to the
 /// hand, spelled as dollars by text, so that a cell spelled any other way
 /// than its whole cents over 100 fails here; beside the change, which way it
-/// went (`FRONT.2`), the hand's glyph of the same two prices; and the fine
-/// print at its foot, the row the hand picks for the day.
+/// went (`FRONT.2`), the hand's glyph of the same two prices; under them the
+/// cash on hand (`GUARD.1`'s hand test), the firm's and the personal pocket's
+/// in dollars, `cash`, which these runs, the exam waived and no prospectus
+/// claimed, hold at $7,500 and $100; and the fine print at its foot, the row
+/// the hand picks for the day.
 /// On every other frame of the half hour its record is the one held at the
 /// half hour's first frame, byte for byte, as `BD-7` keeps a view still
 /// between two of the calendar's half hours, every price moving at a mark or
@@ -410,7 +458,11 @@ fn portfolio_held(
     texts: &[String],
     view: &mut Option<(u64, String)>,
 ) {
-    let Ok(Viewed::Text(record)) = cart.view("values", "Portfolio", Some("A1:D10")) else {
+    let cash = (
+        buffet::CAPITAL_BEFORE + buffet::CAPITAL_A_RIGHT * buffet::WAIVED_SCORE,
+        buffet::PERSONAL_CASH,
+    );
+    let Ok(Viewed::Text(record)) = cart.view("values", "Portfolio", Some("A1:D14")) else {
         panic!("the Portfolio's record");
     };
     if let Some((half, held)) = view.as_ref() {
@@ -424,7 +476,7 @@ fn portfolio_held(
             return;
         }
     }
-    let got = values(cart, "Portfolio", "A1:D10");
+    let got = values(cart, "Portfolio", "A1:D14");
     let text = |addr: &str, want: &str| {
         assert_eq!(
             got.get(addr).map(String::as_str),
@@ -448,8 +500,13 @@ fn portfolio_held(
         text(&format!("C{row}"), &buffet::signed_two_decimals(now - was));
         text(&format!("D{row}"), buffet::glyph(now, was));
     }
+    for (addr, want) in CASH_LABELS {
+        text(addr, want);
+    }
+    text("B11", &buffet::two_decimals(cash.0));
+    text("B12", &buffet::two_decimals(cash.1));
     let shown = disclosure(cal.day, texts.len() as u64, DAYS_A_DISCLOSURE);
-    text("A10", &texts[shown as usize - 1]);
+    text("A14", &texts[shown as usize - 1]);
     *view = Some((cal.half_hours(), record));
 }
 
@@ -649,6 +706,9 @@ fn every_frame_of_ten_days_is_the_calendar_the_dice_and_the_market_by_hand() {
     let seed = seed(&cart);
     let market = Market::new(seed);
     let texts = disclosure_texts(&cart);
+    let w = words(&cart);
+    let mut waived = exam_of(&cart, &w);
+    waived.waive();
     let mut cal = Calendar::new(MINUTES_A_FRAME, DAYS_A_YEAR);
     let frames = (10 * A_DAY - FIRST_MINUTE) / MINUTES_A_FRAME;
     let mut view = None;
@@ -657,6 +717,12 @@ fn every_frame_of_ten_days_is_the_calendar_the_dice_and_the_market_by_hand() {
         cal.tick();
         assert!(step.done && step.frame == cal.frame, "{}", step.row());
         held(&cart, &cal, seed, &market, &texts, &mut view);
+        // The exam's views at rest, waived, at the run's first frame and its
+        // last: their date, bell and fine print are the Portfolio's own shapes,
+        // held here at every half hour (GUARD.1).
+        if cal.frame == 1 || cal.frame == frames {
+            exam_views_held(&cart, &cal, &waived, &w);
+        }
     }
     assert_eq!(
         (frames, cal.day, cal.weekday, cal.hour, cal.minute),
@@ -915,12 +981,14 @@ fn a_hundred_years_at_a_frame_a_day_are_the_market_by_hand() {
 }
 
 /// `BD-7`: the Day sheet alone reads the frame, `Clock!B1`, and its time in
-/// minutes, `Day!B4`, the one cell of it that changes every frame, or that
-/// cell's twin (`POT.10`); and `describe`'s census computes no shape every
-/// frame. So an ordinary frame computes the calendar's three cells, the time,
-/// the boundary and the time to the half hour, and the rest wait for a half
-/// hour, a mark or a day. The step row cannot say so, since it counts the
-/// plan's cells passed, computed or not (`vla-lang` 0.9.3's `Machine::step`).
+/// minutes, `Day!B4`, the one cell of it that changes every frame once the
+/// bell has rung, or that cell's twin (`POT.10`), and the frames the bell
+/// waited for the exam, `Day!B26`, which change every frame of it, or their
+/// twin (`GUARD.1`); and `describe`'s census computes no shape every frame. So
+/// an ordinary frame computes the calendar's three cells, the time, the
+/// boundary and the time to the half hour, and the rest wait for a half hour,
+/// a mark or a day. The step row cannot say so, since it counts the plan's
+/// cells passed, computed or not (`vla-lang` 0.9.3's `Machine::step`).
 #[test]
 fn the_day_sheet_alone_reads_the_frame() {
     let text = lf(&read(CARTRIDGE));
@@ -940,6 +1008,8 @@ fn the_day_sheet_alone_reads_the_frame() {
             ("the frame", ("Clock", "B", "1")),
             ("the time to the minute", ("Day", "B", "4")),
             ("the time to the minute's twin", ("Day.last", "B", "4")),
+            ("the frames the bell waited", ("Day", "B", "26")),
+            ("the frames the bell waited's twin", ("Day.last", "B", "26")),
         ] {
             assert!(
                 !reads(rest, target),
@@ -960,7 +1030,7 @@ fn the_day_sheet_alone_reads_the_frame() {
     for no in ["=Clock!B3", "=Clock!B10", "=Clock!$B$3*2", "=Day!B1"] {
         assert!(!reads(no, ("Clock", "B", "1")), "{no}");
     }
-    let census = cartridge().describe();
+    let census = loaded().describe();
     assert!(census.contains("(every-frame 0)"), "{census}");
 }
 
@@ -985,7 +1055,7 @@ fn reads(text: &str, (sheet, column, row): (&str, &str, &str)) -> bool {
 /// writes the golden again, to be read in its diff before it is committed.
 #[test]
 fn describe_holds_its_golden() {
-    let got = cartridge().describe();
+    let got = loaded().describe();
     let path = root().join(DESCRIBE);
     if std::env::var_os("BUFFET_BLESS").is_some() {
         std::fs::write(&path, &got).unwrap_or_else(|e| panic!("{}: {e}", path.display()));
@@ -1116,7 +1186,13 @@ fn a_row_added_expands_with_no_other_edit() {
     assert_eq!(texts.len(), n + 1);
     assert_eq!(texts[n], added_text);
     let pace = format!("(cell \"Day\" \"B1\" {A_DAY})");
-    for edit in [pace.as_str(), "(cell \"Disclosures\" \"D5\" 1)"] {
+    let (sheet, at) = buffet::WAIVER;
+    let waiver = format!("(cell \"{sheet}\" \"{at}\" 1)");
+    for edit in [
+        pace.as_str(),
+        "(cell \"Disclosures\" \"D5\" 1)",
+        waiver.as_str(),
+    ] {
         grown
             .write(edit)
             .unwrap_or_else(|r| panic!("{edit}: {} {}", r.refusal.id, r.refusal.text));
@@ -1228,14 +1304,16 @@ fn tabs(cart: &Cartridge) -> Vec<(String, String)> {
 /// the kit's verbs need, and no two are the same without case; the Screen
 /// hidden, then the views and the model's sheets, visible, then the content
 /// sheets, each in the state its source writes, the reference data hidden and
-/// the caveats shown, then the devices, the Keys the game writes before the
-/// engine's own; and the twins after every sheet (`MENU.1`'s decisions 2 and
-/// 3, `MENU.5`'s decision 2, `FRONT.1`'s 4 and 5, `BACK.1`'s 2, 4 and 9). A
-/// state the source forgot would leave its sheet visible, which the engine
-/// makes a sheet first named by a cell.
+/// the caveats shown, then the devices, the Keys and the Camera the game
+/// writes before the engine's own; and the twins after every sheet
+/// (`MENU.1`'s decisions 2 and 3, `MENU.5`'s decision 2, `FRONT.1`'s 4 and 5,
+/// `BACK.1`'s 2, 4 and 9, `GUARD.1`'s 9 and 10, and its hand test's Cash
+/// sheet after the books it reads). A state the source forgot
+/// would leave its sheet visible, which the engine makes a sheet first named
+/// by a cell.
 #[test]
 fn every_sheet_is_written_bare_and_each_content_sheet_in_its_state() {
-    let cart = cartridge();
+    let cart = loaded();
     let all = tabs(&cart);
     let sheets: Vec<(&str, &str)> = all
         .iter()
@@ -1260,6 +1338,8 @@ fn every_sheet_is_written_bare_and_each_content_sheet_in_its_state() {
         .collect();
     let want = [
         ("Screen", "hidden"),
+        ("Exam", "visible"),
+        ("Certificate", "visible"),
         ("Portfolio", "visible"),
         ("Gigs", "visible"),
         ("Day", "visible"),
@@ -1267,10 +1347,14 @@ fn every_sheet_is_written_bare_and_each_content_sheet_in_its_state() {
         ("Market", "visible"),
         ("Stocks", "visible"),
         ("Hustle", "visible"),
+        ("Proctor", "visible"),
+        ("Cash", "visible"),
         ("Disclosures", "hidden"),
         ("Questions", "hidden"),
+        ("Firms", "hidden"),
         ("Caveats", "visible"),
         ("Keys", "visible"),
+        ("Camera", "visible"),
         ("Clock", "visible"),
         ("File", "visible"),
         ("Input", "visible"),
@@ -1287,23 +1371,44 @@ fn every_sheet_is_written_bare_and_each_content_sheet_in_its_state() {
     }
 }
 
-/// The game opens on the Portfolio (`FRONT.1`'s decisions 2 to 5). The
-/// cartridge is written to the page's version 4, whose host opens a grid
-/// cartridge on the sheet its Camera's third row names, else on the first
-/// visible sheet of its own order (Alonzo's `SPEC.md` section 3.1): it has no
-/// Camera, so that rule names the Portfolio, the first visible sheet, and the
-/// hidden Screen before it is never opened on.
+/// The game opens on the Exam (`GUARD.1`'s decisions 9 and 10, after
+/// `FRONT.1`'s 2 to 5). The cartridge is written to the page's version 4,
+/// whose host opens a grid cartridge on the sheet its Camera's third row names
+/// at the load, a value or a formula's `value` row, else on the first visible
+/// sheet of its own order (Alonzo's `SPEC.md` sections 3.1 and 3.8): the
+/// Camera's `B3` is a formula with no value at the load, so that rule names
+/// the Exam, the first visible sheet, and the hidden Screen before it is never
+/// opened on. The Camera's first two rows are whole numbers, the window's
+/// place, so that its host says nothing of them.
 #[test]
-fn the_game_opens_on_the_portfolio() {
-    let cart = cartridge();
+fn the_game_opens_on_the_exam() {
+    let cart = loaded();
     assert_eq!(
         cart.manifest().spec,
         4,
         "the page's version 4: a game's views on sheets of their own"
     );
+    let Ok(Viewed::Text(camera)) = cart.view("grid", "Camera", Some("A1:B3")) else {
+        panic!("the Camera's record");
+    };
+    let rows: Vec<&str> = camera
+        .lines()
+        .filter(|l| l.contains("\"Camera\" \""))
+        .collect();
+    for want in [
+        "(cell \"Camera\" \"B1\" 1)",
+        "(cell \"Camera\" \"B2\" 1)",
+        "(cell \"Camera\" \"A3\" \"sheet\")",
+    ] {
+        assert!(rows.contains(&want), "{want} in {rows:?}");
+    }
     assert!(
-        cart.machine().find_sheet("Camera").is_none(),
-        "a Camera's third row would name the sheet the game opens on (GUARD.1 brings one)"
+        rows.iter()
+            .any(|l| l.starts_with("(formula \"Camera\" \"B3\" "))
+            && !rows
+                .iter()
+                .any(|l| l.starts_with("(value \"Camera\" \"B3\" ")),
+        "the Camera's B3 a formula with no value at the load, naming no sheet to open on: {rows:?}"
     );
     let all = tabs(&cart);
     let first = all.iter().find(|(_, state)| state == "visible");
@@ -1423,7 +1528,12 @@ fn the_portfolio_heads_its_columns_and_names_its_stocks_from_the_model() {
 #[test]
 fn every_column_of_dollars_is_the_width_its_padding_is_measured_for() {
     let text = lf(&read(CARTRIDGE));
-    for (sheet, column) in [("Portfolio", "B"), ("Portfolio", "C"), ("Gigs", "B")] {
+    for (sheet, column) in [
+        ("Portfolio", "B"),
+        ("Portfolio", "C"),
+        ("Gigs", "B"),
+        ("Certificate", "B"),
+    ] {
         let row = format!(
             "(column \"{sheet}\" \"{column}\" {} shown none)",
             buffet::DOLLARS_COLUMN
@@ -1432,36 +1542,117 @@ fn every_column_of_dollars_is_the_width_its_padding_is_measured_for() {
     }
 }
 
+/// The views' dollars with their thousands grouped (`GUARD.1`'s hand test,
+/// the owner's word: "Thousands separators need to be implemented"): the
+/// cells that spell whole cents, the library's `dollars` and
+/// `signed-dollars`, held to the hand's spelling beside every power of ten to
+/// 10^15 cents and at 2^53 cents less one, the most a double holds exactly:
+/// the firm's capital, written as a person's edit of the capital before the
+/// exam with no answer given, on the Certificate and the Portfolio's cash on
+/// hand; and a change either way, written over the Stocks sheet's own, on the
+/// Portfolio.
+#[test]
+fn every_amount_is_spelled_with_its_thousands_grouped() {
+    let mut cart = loaded();
+    let mut amounts: Vec<u64> = vec![(1 << 53) - 1, 123_456_789_012_345, 550_000];
+    for p in 0..=15 {
+        let ten = 10u64.pow(p);
+        amounts.extend([ten - 1, ten, ten + 1]);
+    }
+    for c in amounts {
+        let loss = -(c as i64);
+        let edits = format!(
+            "(cell \"Proctor\" \"B1\" {c})\n(cell \"Stocks\" \"I5\" {c})\n(cell \"Stocks\" \"I6\" {loss})"
+        );
+        cart.write(&edits)
+            .unwrap_or_else(|r| panic!("{edits}: {} {}", r.refusal.id, r.refusal.text));
+        assert!(cart.step(0).done);
+        let cert = values(&cart, "Certificate", "B8");
+        let view = values(&cart, "Portfolio", "B5:C12");
+        for (got, want, at) in [
+            (cert.get("B8"), buffet::two_decimals(c), "Certificate!B8"),
+            (view.get("B11"), buffet::two_decimals(c), "Portfolio!B11"),
+            (
+                view.get("C5"),
+                buffet::signed_two_decimals(c as i64),
+                "Portfolio!C5",
+            ),
+            (
+                view.get("C6"),
+                buffet::signed_two_decimals(loss),
+                "Portfolio!C6",
+            ),
+        ] {
+            assert_eq!(got, Some(&want), "{c} cents: {at}");
+        }
+    }
+}
+
 /// What a scripted session sets at a frame (`BACK.1`'s decision 12), each
 /// held until another act sets it again: the sheet shown, the pointer's cell
-/// on it, the left button, and the key the Keys sheet binds.
+/// on it, the left button, and a key held or let go, by its code (the
+/// hustle's P, and since `GUARD.1` the exam's A to D and O).
 #[derive(Clone, Copy)]
 enum Act {
     Show(&'static str),
     Point(u64, u64),
     Left(bool),
-    Key(bool),
+    Key(&'static str, bool),
+}
+
+/// The hustle's key, P.
+const P: &str = buffet::KEY_CODE;
+
+/// An act of a script on what the host holds: the sheet shown, the pointer's
+/// cell, the left button, or a key held or let go.
+fn act_on(now: &mut Inputs, act: Act) {
+    match act {
+        Act::Show(sheet) => now.sheet = sheet.to_string(),
+        Act::Point(column, row) => (now.column, now.row) = (column, row),
+        Act::Left(down) => now.left = down,
+        Act::Key(code, true) => {
+            now.held.insert(code.to_string());
+        }
+        Act::Key(code, false) => {
+            now.held.remove(code);
+        }
+    }
+}
+
+/// The key that went down this frame, as the host's last key names it: one
+/// held now that was not at the last frame, the last of them by its code.
+fn went_down<'a>(now: &'a Inputs, last: &Inputs) -> Option<&'a str> {
+    now.held
+        .iter()
+        .rfind(|code| !last.held.contains(*code))
+        .map(String::as_str)
 }
 
 /// The Input sheet's rows as the host writes them at version 4 (Alonzo's
-/// `host.js`, `_inputRows`): ten buttons for four players, each 1 while the
-/// key its cell of the Keys sheet names is held; the pointer's column and row
-/// on the sheet shown, that sheet's own cell, 0 off its cells; its three
-/// buttons; the wheel; the key that went down this frame and its code; and the
-/// sheet shown. The one key a session holds is the hustle's.
-fn input_rows(keys: &BTreeMap<String, String>, now: &Inputs, went_down: bool) -> Vec<String> {
+/// `host.js`, `_inputRows`): ten buttons for four players, each 1 while a key
+/// held is the one its cell of the Keys sheet names; the pointer's column and
+/// row on the sheet shown, that sheet's own cell, 0 off its cells; its three
+/// buttons; the wheel; the key that went down this frame and its code, a
+/// letter's key its lower case; and the sheet shown.
+fn input_rows(
+    keys: &BTreeMap<String, String>,
+    now: &Inputs,
+    went_down: Option<&str>,
+) -> Vec<String> {
     let mut rows = Vec::new();
     for button in 1..=10 {
         for player in ["B", "C", "D", "E"] {
             let at = format!("{player}{button}");
-            let held = now.key && keys.get(&at).map(String::as_str) == Some(buffet::KEY_CODE);
+            let held = keys.get(&at).is_some_and(|code| now.held.contains(code));
             rows.push(format!("(cell \"Input\" \"{at}\" {})", u8::from(held)));
         }
     }
-    let (key, code) = if went_down {
-        ("p", buffet::KEY_CODE)
-    } else {
-        ("", "")
+    let (key, code) = match went_down {
+        Some(code) => (
+            code.strip_prefix("Key").unwrap_or(code).to_lowercase(),
+            code,
+        ),
+        None => (String::new(), ""),
     };
     rows.extend([
         format!("(cell \"Input\" \"B11\" {})", now.column),
@@ -1477,13 +1668,36 @@ fn input_rows(keys: &BTreeMap<String, String>, now: &Inputs, went_down: bool) ->
     rows
 }
 
+/// The cash on hand at this frame (`GUARD.1`'s hand test): the Cash sheet's
+/// personal cash at the start, the firm's cash and the personal, in cents,
+/// the hand's; and the Portfolio's two pockets in dollars, the same cents.
+fn cash_held(cart: &Cartridge, frame: u64, firm: u64, personal: u64) {
+    let cash = values(cart, "Cash", "B1:B4");
+    let view = values(cart, "Portfolio", "B11:B12");
+    for (addr, want) in [
+        ("B1", buffet::PERSONAL_CASH.to_string()),
+        ("B3", firm.to_string()),
+        ("B4", personal.to_string()),
+    ] {
+        assert_eq!(cash.get(addr), Some(&want), "frame {frame}: Cash!{addr}");
+    }
+    for (addr, cents) in [("B11", firm), ("B12", personal)] {
+        assert_eq!(
+            view.get(addr),
+            Some(&buffet::two_decimals(cents)),
+            "frame {frame}: Portfolio!{addr}"
+        );
+    }
+}
+
 /// The hustle at this frame (`BACK.1`; a week and a day's work since
 /// `POT.10`): the Hustle sheet's workings, each a cell the hand states, the
 /// press's two cells from the frame's inputs and the last frame's, the claim,
 /// the claims, the day the next prospectus arrives, whether the hustle is shut
 /// today, the time the last claim's work is done, whether a prospectus is
-/// being proofread, those done, their fees and when the fee is paid; and Gigs'
-/// counts, its fees in dollars and its sentence.
+/// being proofread, those done, their fees and when the fee is paid; Gigs'
+/// counts, its fees in dollars and its sentence; and since `GUARD.1`'s hand
+/// test the cash on hand, the personal cash $100 and the fees once paid.
 fn hustle_held(
     cart: &Cartridge,
     cal: &Calendar,
@@ -1548,6 +1762,12 @@ fn hustle_held(
             cal.day
         );
     }
+    cash_held(
+        cart,
+        cal.frame,
+        buffet::CAPITAL_BEFORE + buffet::CAPITAL_A_RIGHT * buffet::WAIVED_SCORE,
+        buffet::PERSONAL_CASH + h.earned(at),
+    );
 }
 
 /// The side hustle at work, every frame of a scripted session held to the
@@ -1586,8 +1806,8 @@ fn a_scripted_session_holds_the_hustle_at_every_frame() {
         (0, 5, &[Left(false)]),
         (0, 7, &[Left(true)]), // a second click on day 0: refused
         (0, 8, &[Left(false)]),
-        (0, 9, &[Key(true)]), // P on Gigs, day 0: refused
-        (0, 10, &[Key(false)]),
+        (0, 9, &[Key(P, true)]), // P on Gigs, day 0: refused
+        (0, 10, &[Key(P, false)]),
         (1, 0, &[Left(true)]), // day 1's first frame, day 0 shown, claimed: refused
         (1, 1, &[Left(false)]),
         (1, 2, &[Point(2, 5)]), // the pointer on B5, beside the button
@@ -1596,29 +1816,29 @@ fn a_scripted_session_holds_the_hustle_at_every_frame() {
         (1, 5, &[Show("Portfolio"), Point(1, 5)]), // the button's address, on another sheet
         (1, 6, &[Left(true)]),                     // no press
         (1, 7, &[Left(false)]),
-        (1, 9, &[Key(true)]), // P on the Portfolio, unbound there: no press
-        (1, 10, &[Key(false)]),
+        (1, 9, &[Key(P, true)]), // P on the Portfolio, unbound there: no press
+        (1, 10, &[Key(P, false)]),
         (1, 12, &[Show("Gigs")]),
         (7, 0, &[Left(true)]), // day 7's first frame, day 6 shown, the week not out: refused
         (7, 1, &[Left(false)]),
         (7, 2, &[Left(true)]), // the second claim, day 7's
         (7, 3, &[Left(false)]),
         (7, 4, &[Show("Portfolio")]),
-        (7, 5, &[Key(true)]),    // P held on the Portfolio, unbound,
+        (7, 5, &[Key(P, true)]), // P held on the Portfolio, unbound,
         (7, 6, &[Show("Gigs")]), // and Gigs shown under it: bound the frame after, a press, refused
-        (7, 8, &[Key(false)]),
+        (7, 8, &[Key(P, false)]),
         (13, 40, &[Left(true)]), // day 13, the week not out: refused, and held across day 14's turn
-        (13, 42, &[Key(true)]),  // the same, by the key
+        (13, 42, &[Key(P, true)]), // the same, by the key
         (14, 3, &[Left(false)]),
-        (14, 4, &[Key(false)]),
-        (15, 0, &[Key(true)]), // day 15's first frame, day 14 shown, open: the third claim, day 14's
-        (15, 1, &[Key(false)]),
-        (21, 4, &[Left(true), Key(true)]), // a click and P in one frame: the fourth claim, once
-        (21, 5, &[Left(false), Key(false)]),
+        (14, 4, &[Key(P, false)]),
+        (15, 0, &[Key(P, true)]), // day 15's first frame, day 14 shown, open: the third claim, day 14's
+        (15, 1, &[Key(P, false)]),
+        (21, 4, &[Left(true), Key(P, true)]), // a click and P in one frame: the fourth claim, once
+        (21, 5, &[Left(false), Key(P, false)]),
         (28, 4, &[Left(true)]), // day 28, the run's four spent: refused
         (28, 5, &[Left(false)]),
-        (28, 9, &[Key(true)]), // refused
-        (28, 10, &[Key(false)]),
+        (28, 9, &[Key(P, true)]), // refused
+        (28, 10, &[Key(P, false)]),
         (28, 14, &[Point(0, 0)]),             // the pointer over a header
         (28, 15, &[Point(1, 5), Left(true)]), // dragged onto the button, held: a press, refused
         (28, 17, &[Left(false)]),
@@ -1645,23 +1865,22 @@ fn a_scripted_session_holds_the_hustle_at_every_frame() {
         let last = now.clone();
         while let Some((_, set)) = acts.next_if(|(at, _)| *at == frame) {
             for act in set.iter() {
-                match *act {
-                    Show(sheet) => now.sheet = sheet.to_string(),
-                    Point(column, row) => (now.column, now.row) = (column, row),
-                    Left(down) => now.left = down,
-                    Key(down) => now.key = down,
-                }
+                act_on(&mut now, *act);
             }
         }
         // P bound as the hand says, by the sheet the last frame showed, which
         // the last step's Keys sheet read; and the cartridge's keymap the same.
-        now.bound = Hustle::binds(&last.sheet);
+        now.bound = if Hustle::binds(&last.sheet) {
+            BTreeSet::from([P.to_string()])
+        } else {
+            BTreeSet::new()
+        };
         let bound: Vec<(&str, &str)> = keys
             .iter()
             .filter(|(_, code)| !code.is_empty())
             .map(|(addr, code)| (addr.as_str(), code.as_str()))
             .collect();
-        let want: &[(&str, &str)] = if now.bound {
+        let want: &[(&str, &str)] = if now.bound.contains(P) {
             &[("B5", buffet::KEY_CODE)]
         } else {
             &[]
@@ -1671,7 +1890,7 @@ fn a_scripted_session_holds_the_hustle_at_every_frame() {
             "frame {frame}: the keys bound after {:?} showed",
             last.sheet
         );
-        let rows = input_rows(&keys, &now, now.key && !last.key);
+        let rows = input_rows(&keys, &now, went_down(&now, &last));
         let changed: Vec<&str> = match &written {
             None => rows.iter().map(String::as_str).collect(),
             Some(before) => rows
@@ -1773,6 +1992,11 @@ fn the_hustle_states_its_settings_and_binds_one_key() {
     assert!(
         buffet::BUTTON_TEXT.chars().count() <= width,
         "the button's text runs past its column of {width} characters, and a click on the spill is the next cell's"
+    );
+    let style = format!("(style \"{sheet}\" \"{}\" 1)", address(row, column));
+    assert!(
+        text.lines().any(|l| l == style) && text.lines().any(|l| l == buffet::BUTTON_FORMAT),
+        "the button drawn as the buttons are, in lavender (GUARD.1's hand test): {style}"
     );
 
     let mut codes: Vec<(String, String)> = Vec::new();
@@ -1915,23 +2139,27 @@ fn each_content_sheet_is_its_file() {
     }
 }
 
-/// The exam's bank shows its first question (`MENU.2`): the row shown, `K2`,
-/// a value the source writes, 1, until `GUARD.1`'s draw drives it; and from
-/// the first frame its eight pickers, `K3` to `K10`, the first row's fields,
-/// each beside its label.
+/// The exam's bank shows its first question (`MENU.2`, driven by `GUARD.1`'s
+/// draw): the row shown, `K2`, the Proctor's, the draw's first row at the
+/// contract's seed, the hand's; and from the first frame its eight pickers,
+/// `K3` to `K10`, that row's fields, each beside its label.
 #[test]
 fn the_questions_sheet_shows_its_first_question() {
-    let mut cart = cartridge();
+    let mut cart = loaded();
     cart.step(0);
-    let got = values(&cart, "Questions", "A1:K10");
+    let n = content(QUESTIONS).rows.len() as u64;
+    let row = buffet::draw(seed(&cart), n)[0] as usize;
+    let got = values(&cart, "Questions", &format!("A1:K{}", n + 1));
     assert_eq!(
-        got.get("K2").map(String::as_str),
-        Some("1"),
+        got.get("K2"),
+        Some(&row.to_string()),
         "Questions!K2, the row shown"
     );
-    let first: Vec<&str> = (1..=8).map(|k| got[&address(2, k)].as_str()).collect();
+    let first: Vec<&str> = (1..=8)
+        .map(|k| got[&address(row + 1, k)].as_str())
+        .collect();
     let shown: Vec<&str> = (3..=10).map(|r| got[&format!("K{r}")].as_str()).collect();
-    assert_eq!(shown, first, "Questions!K3:K10, the first question");
+    assert_eq!(shown, first, "Questions!K3:K10, the draw's first question");
 }
 
 /// Every question is whole (`MENU.2`): the bank's eight fields in their
@@ -1981,15 +2209,19 @@ fn every_question_is_whole() {
     }
 }
 
-/// A picker a field picks every row in its turn (`MENU.2`, `MENU.5`): on each
-/// sheet whose row shown is a value the source writes, the exam's bank and the
-/// caveats, the row shown written from 1 to the sheet's last row as a person's
-/// edit, and at each step every picker that row's field, read off the sheet's
-/// own columns. An empty text, as the first caveat's `Where` is, reads empty on
-/// both sides.
+/// A picker a field picks every row in its turn (`MENU.2`, `MENU.5`,
+/// `GUARD.1`): on the exam's bank, the firms' styles and the caveats, the row
+/// shown written from 1 to the sheet's last row as a person's edit, over the
+/// formula the bank's and the styles' row shown hold, and at each step every
+/// picker that row's field, read off the sheet's own columns. An empty text,
+/// as the first caveat's `Where` is, reads empty on both sides.
 #[test]
 fn every_field_is_picked_at_every_row() {
-    for (sheet, path) in [("Questions", QUESTIONS), ("Caveats", CAVEATS)] {
+    for (sheet, path) in [
+        ("Questions", QUESTIONS),
+        ("Firms", FIRMS),
+        ("Caveats", CAVEATS),
+    ] {
         let mut cart = cartridge();
         let file = content(path);
         let (n, rows) = (file.fields.len(), file.rows.len());
@@ -2239,4 +2471,777 @@ fn the_draws_verb_meets_park_and_millers_ten_thousandth() {
     assert_eq!(last.get("B10001").map(String::as_str), Some("1043618065"));
     let u: f64 = last["C10001"].parse().expect("a uniform");
     assert_eq!(u.to_bits(), buffet::uniform(1_043_618_065).to_bits());
+}
+
+/// The words the exam shows (`GUARD.1`), read from the content files by the
+/// language's own reader: the bank's rows, each its eight fields; the firms'
+/// four styles; the plain statement, the first caveat's first three fields;
+/// and the fine print's rows.
+struct Words {
+    bank: Vec<Vec<String>>,
+    styles: Vec<String>,
+    plain: Vec<String>,
+    texts: Vec<String>,
+}
+
+fn words(cart: &Cartridge) -> Words {
+    let mut caveats = content(CAVEATS).rows;
+    Words {
+        bank: content(QUESTIONS)
+            .rows
+            .into_iter()
+            .map(|r| r.words)
+            .collect(),
+        styles: content(FIRMS)
+            .rows
+            .into_iter()
+            .map(|mut r| r.words.remove(0))
+            .collect(),
+        plain: caveats.swap_remove(0).words[..3].to_vec(),
+        texts: disclosure_texts(cart),
+    }
+}
+
+/// The Certificate's title and signature, the scoping's drafts.
+const CERTIFICATE_TITLE: &str = "The Series 777: a certificate of completion";
+const SIGNATURE: &str =
+    "Signed for the regulator by the proctor, whose signature is, on inspection, a doodle of a bull.";
+
+/// The hand's exam over the cartridge's bank, at its seed.
+fn exam_of(cart: &Cartridge, w: &Words) -> Exam {
+    Exam::new(seed(cart), w.bank.iter().map(|r| r[6].clone()).collect())
+}
+
+/// The host of a session (`BACK.1`'s and `GUARD.1`'s scripts), as Alonzo's
+/// `host.js` holds it: the inputs it holds, the keymap it read after the last
+/// step, the Input rows it last wrote, and the Camera's sheet as it last read
+/// it, a change of which it shows at the frame's end, so that the next frame's
+/// rows name it.
+struct Host {
+    now: Inputs,
+    keys: BTreeMap<String, String>,
+    written: Option<Vec<String>>,
+    camera: String,
+}
+
+impl Host {
+    /// A host that opened the game on `sheet`, with no keymap read, the
+    /// Keys sheet's formulas holding no value at the load.
+    fn new(sheet: &str) -> Host {
+        Host {
+            now: Inputs {
+                sheet: sheet.to_string(),
+                ..Inputs::default()
+            },
+            keys: BTreeMap::new(),
+            written: None,
+            camera: String::new(),
+        }
+    }
+
+    /// One frame: the acts applied to what the host holds, the keys bound as
+    /// its keymap binds them, the Input rows that changed written, and the
+    /// step; then the keymap and the Camera read. The last frame's inputs and
+    /// this frame's.
+    fn step(&mut self, cart: &mut Cartridge, acts: &[Act]) -> (Inputs, Inputs) {
+        let last = self.now.clone();
+        for act in acts {
+            act_on(&mut self.now, *act);
+        }
+        self.now.bound = self
+            .keys
+            .values()
+            .filter(|code| !code.is_empty())
+            .cloned()
+            .collect();
+        let rows = input_rows(&self.keys, &self.now, went_down(&self.now, &last));
+        let changed: Vec<&str> = match &self.written {
+            None => rows.iter().map(String::as_str).collect(),
+            Some(before) => rows
+                .iter()
+                .zip(before)
+                .filter(|(row, was)| row != was)
+                .map(|(row, _)| row.as_str())
+                .collect(),
+        };
+        if !changed.is_empty() {
+            cart.write(&changed.join("\n"))
+                .unwrap_or_else(|r| panic!("the Input rows: {} {}", r.refusal.id, r.refusal.text));
+        }
+        self.written = Some(rows);
+        let step = cart.step(0);
+        assert!(step.done, "{}", step.row());
+        self.keys = values(cart, "Keys", "B1:E10");
+        let now = self.now.clone();
+        let shows = values(cart, "Camera", "B3")
+            .remove("B3")
+            .unwrap_or_default();
+        if shows != self.camera && !shows.is_empty() {
+            self.now.sheet = shows.clone();
+        }
+        self.camera = shows;
+        (last, now)
+    }
+}
+
+/// The exam's two views at this frame (`GUARD.1`), every cell the hand's: the
+/// Exam's date and bell, where the exam stands, the question shown, its four
+/// options each a button with its letter, the line of keys and the fine print,
+/// a closed exam's question, options and keys empty; and the Certificate's
+/// date and bell, its title, its headline, the correct answers, the capital in
+/// dollars, the style, its button and its key, the plain statement whole under
+/// its heading, the signature and the fine print.
+fn exam_views_held(cart: &Cartridge, cal: &Calendar, exam: &Exam, w: &Words) {
+    let f = cal.frame;
+    let open = exam.open();
+    let scored = exam.answers.len() < buffet::SCORED;
+    let row = exam.row_shown() as usize - 1;
+    let shown = disclosure(cal.day, w.texts.len() as u64, DAYS_A_DISCLOSURE);
+    let fine = w.texts[shown as usize - 1].clone();
+    let blank_or = |text: String| if open { text } else { String::new() };
+    let mut want: Vec<(String, String)> = vec![
+        ("A1".into(), buffet::as_of(cal)),
+        ("A2".into(), buffet::bell(cal).to_string()),
+        ("A3".into(), exam.status()),
+        (
+            "A5".into(),
+            blank_or(if scored {
+                w.bank[row][1].clone()
+            } else {
+                buffet::STYLE_PROMPT.to_string()
+            }),
+        ),
+        ("A12".into(), blank_or(buffet::ANSWER_KEYS_TEXT.to_string())),
+        ("A14".into(), fine.clone()),
+    ];
+    for (k, (letter, r, _)) in buffet::OPTIONS.iter().enumerate() {
+        let text = if scored {
+            &w.bank[row][2 + k]
+        } else {
+            &w.styles[k]
+        };
+        want.push((format!("A{r}"), blank_or(format!("[ {letter} ]  {text}"))));
+    }
+    let got = values(cart, "Exam", "A1:A14");
+    for (addr, text) in &want {
+        assert_eq!(got.get(addr), Some(text), "frame {f}: Exam!{addr}");
+    }
+    let style = exam.style() as usize;
+    let want = [
+        ("A1", buffet::as_of(cal)),
+        ("A2", buffet::bell(cal).to_string()),
+        ("A3", CERTIFICATE_TITLE.to_string()),
+        ("A5", exam.headline().to_string()),
+        ("A7", "Correct answers".to_string()),
+        ("B7", format!("{} of {}", exam.score(), buffet::SCORED)),
+        ("A8", "Firm capital ($)".to_string()),
+        ("B8", buffet::two_decimals(exam.capital())),
+        ("A9", "Style".to_string()),
+        (
+            "B9",
+            if style == 0 {
+                buffet::STYLE_UNASKED.to_string()
+            } else {
+                w.styles[style - 1].clone()
+            },
+        ),
+        ("A11", buffet::OPEN_TEXT.to_string()),
+        ("B11", buffet::OPEN_KEY_TEXT.to_string()),
+        ("A13", buffet::CAVEAT_HEADING.to_string()),
+        ("A14", w.plain[0].clone()),
+        ("A15", w.plain[1].clone()),
+        ("A16", w.plain[2].clone()),
+        ("A18", SIGNATURE.to_string()),
+        ("A20", fine),
+    ];
+    let got = values(cart, "Certificate", "A1:B20");
+    for (addr, text) in want {
+        assert_eq!(got.get(addr), Some(&text), "frame {f}: Certificate!{addr}");
+    }
+}
+
+/// The proctor's books at this frame (`GUARD.1`), every working the hand's:
+/// the draw, the bank's size, the start, the stride and the ten rows; each
+/// button's click and key, read off this frame's inputs and the last's; the
+/// option pressed, whether it was taken, the answers, whether a question is
+/// open, the row shown, the right option, whether this frame's answer was
+/// right, the right answers so far, the score, the capital, the style and
+/// begun; and the bank's row shown and the Camera's sheet beside them.
+fn proctor_held(
+    cart: &Cartridge,
+    frame: u64,
+    exam: &Exam,
+    io: (&Inputs, &Inputs),
+    answer: (bool, bool),
+) {
+    let (now, last) = io;
+    let (answered, right) = answer;
+    let flag = |b: bool| u8::from(b).to_string();
+    let bank = exam.letters.len() as u64;
+    let seed = seed(cart);
+    let mut want: Vec<(String, String)> = vec![
+        ("B8".into(), bank.to_string()),
+        ("B9".into(), buffet::start(seed, bank).to_string()),
+        ("B10".into(), buffet::stride(seed).to_string()),
+    ];
+    for (k, row) in exam.rows.iter().enumerate() {
+        want.push((format!("B{}", 12 + k), row.to_string()));
+    }
+    for (k, (_, row, key)) in buffet::OPTIONS.iter().enumerate() {
+        let r = 24 + k;
+        let place = (buffet::EXAM, buffet::OPTION_COLUMN, *row);
+        want.push((format!("F{r}"), flag(buffet::clicked(now, last, place))));
+        want.push((format!("G{r}"), flag(Inputs::pressed(now, last, key))));
+    }
+    want.push((
+        "F28".into(),
+        flag(buffet::clicked(now, last, buffet::OPEN_BUTTON)),
+    ));
+    want.push((
+        "G28".into(),
+        flag(Inputs::pressed(now, last, buffet::OPEN_KEY)),
+    ));
+    let option = Exam::option_pressed(now, last).unwrap_or(0);
+    for (addr, text) in [
+        ("B30", option.to_string()),
+        ("B31", flag(answered)),
+        ("B32", exam.answers.len().to_string()),
+        ("B33", flag(exam.open())),
+        ("B34", exam.row_shown().to_string()),
+        ("B35", exam.right().to_string()),
+        ("B36", flag(right)),
+        ("B37", exam.correct().to_string()),
+        ("B38", exam.score().to_string()),
+        ("B39", exam.capital().to_string()),
+        ("B40", exam.style().to_string()),
+        ("B41", flag(exam.begun)),
+    ] {
+        want.push((addr.into(), text));
+    }
+    let got = values(cart, "Proctor", "B8:G41");
+    for (addr, text) in &want {
+        assert_eq!(got.get(addr), Some(text), "frame {frame}: Proctor!{addr}");
+    }
+    assert_eq!(
+        values(cart, "Questions", "K2").get("K2"),
+        Some(&exam.row_shown().to_string()),
+        "frame {frame}: Questions!K2, the row shown"
+    );
+    assert_eq!(
+        values(cart, "Camera", "B3").get("B3").map(String::as_str),
+        Some(exam.shows()),
+        "frame {frame}: Camera!B3, the sheet the game shows"
+    );
+}
+
+/// The keys the Keys sheet binds after a step, against the hand's for the
+/// sheet that frame showed and the exam's state: A to D on the Exam while a
+/// question is open, O on the Certificate while it waits for its button, P on
+/// Gigs, and nothing else.
+fn keys_held(frame: u64, keys: &BTreeMap<String, String>, sheet: &str, exam: &Exam) {
+    let bound: Vec<(&str, &str)> = keys
+        .iter()
+        .filter(|(_, code)| !code.is_empty())
+        .map(|(addr, code)| (addr.as_str(), code.as_str()))
+        .collect();
+    let mut want: Vec<(String, &str)> = Vec::new();
+    if Hustle::binds(sheet) {
+        want.push(("B5".into(), P));
+    }
+    for code in exam.binds(sheet) {
+        let addr = if code == buffet::OPEN_KEY {
+            "B10".to_string()
+        } else {
+            let k = buffet::OPTIONS
+                .iter()
+                .position(|(_, _, c)| *c == code)
+                .expect("an option's key");
+            format!("B{}", 6 + k)
+        };
+        want.push((addr, code));
+    }
+    want.sort();
+    let want: Vec<(&str, &str)> = want.iter().map(|(a, c)| (a.as_str(), *c)).collect();
+    assert_eq!(
+        bound, want,
+        "frame {frame}: the keys bound while {sheet} shows"
+    );
+}
+
+/// A frame of the exam by hand beside the cartridge's: the hand's exam judged
+/// by this frame's inputs and the last's, the hand's calendar on a frame, the
+/// bell waiting while the game has not begun; then every cell held, the cash
+/// on hand among them, the firm's the exam's capital as the answers come.
+fn exam_frame_held(
+    cart: &Cartridge,
+    host: &Host,
+    io: (&Inputs, &Inputs),
+    exam: &mut Exam,
+    cal: &mut Calendar,
+    w: &Words,
+) {
+    let (now, last) = io;
+    let before = exam.correct();
+    let answered = exam.frame(Exam::option_pressed(now, last), Exam::opened(now, last));
+    let right = exam.correct() > before;
+    cal.tick_waiting(!exam.begun);
+    day_held(cart, cal);
+    proctor_held(cart, cal.frame, exam, (now, last), (answered, right));
+    exam_views_held(cart, cal, exam, w);
+    keys_held(cal.frame, &host.keys, &now.sheet, exam);
+    cash_held(cart, cal.frame, exam.capital(), buffet::PERSONAL_CASH);
+}
+
+/// The draw at every seed of a thousand (`GUARD.1`'s decision 4): the seed
+/// written into the Clock as a person's edit, from 1 to 1,000 and the
+/// contract's, and a step each; the bank's size, the start and the stride the
+/// hand's, and the ten rows the hand's walk, each a row of the bank and none
+/// twice.
+#[test]
+fn the_draw_never_repeats_a_question_at_any_seed_of_a_thousand() {
+    let mut cart = loaded();
+    let n = content(QUESTIONS).rows.len() as u64;
+    let contract = seed(&cart);
+    for s in (1..=1_000).chain([contract]) {
+        let edit = format!("(cell \"Clock\" \"B3\" {s})");
+        cart.write(&edit)
+            .unwrap_or_else(|r| panic!("{edit}: {} {}", r.refusal.id, r.refusal.text));
+        cart.step(0);
+        let got = values(&cart, "Proctor", "B8:B21");
+        let cell = |addr: &str| -> u64 {
+            got.get(addr)
+                .unwrap_or_else(|| panic!("seed {s}: Proctor!{addr} holds no value"))
+                .parse()
+                .unwrap_or_else(|e| panic!("seed {s}: Proctor!{addr}: {e}"))
+        };
+        assert_eq!(
+            (cell("B8"), cell("B9"), cell("B10")),
+            (n, buffet::start(s, n), buffet::stride(s)),
+            "seed {s}: the bank, the start and the stride"
+        );
+        let rows: Vec<u64> = (12..=21).map(|r| cell(&format!("B{r}"))).collect();
+        assert_eq!(rows, buffet::draw(s, n), "seed {s}: the ten rows");
+        let distinct: BTreeSet<u64> = rows.iter().copied().collect();
+        assert!(
+            distinct.len() == buffet::SCORED && rows.iter().all(|r| (1..=n).contains(r)),
+            "seed {s}: {rows:?}"
+        );
+    }
+}
+
+/// The Series 777 played (`GUARD.1`'s decisions 1 to 10), every frame of a
+/// scripted session held to the hand: the Input rows written as the host
+/// writes them, its keymap read after every step and its Camera followed; at
+/// every frame the proctor's books, both views, the keys each view binds, the
+/// Day sheet's wait and the market at its bell the hand's. Its presses: a
+/// click on an option in the first frame, whose last showed no question,
+/// refused; a click answering, and a key; a click on the question, beside
+/// the options; a click at an option's address and a key while the Portfolio
+/// shows, nothing, the key unbound there; a key held on the Portfolio as the
+/// Exam is shown under it, a press the frame it is bound; a click and a key
+/// on two options in one frame, the first by letter answering once; a click
+/// held across two frames, answering once; the tenth by a click; the
+/// certificate's button by a click and its key before the eleventh, refused,
+/// the key unbound; the eleventh by its key, the style; the Camera showing the
+/// Certificate, an option's key unbound there; the certificate's key, the
+/// game begun and the Portfolio shown; then the market's first hour, the bell
+/// at the game's first frame and two minutes a frame after it, its first move
+/// at 10:00.
+#[test]
+fn a_scripted_exam_holds_every_frame_to_the_hand() {
+    use Act::{Key, Left, Point, Show};
+    let mut cart = loaded();
+    let w = words(&cart);
+    let mut exam = exam_of(&cart, &w);
+    let seed = seed(&cart);
+    let market = Market::new(seed);
+    let mut cal = Calendar::new(MINUTES_A_FRAME, DAYS_A_YEAR);
+    let mut host = Host::new(buffet::EXAM);
+    // A key or a click on the right option of the question shown, or a wrong
+    // one, chosen at its frame by the hand; a line of the script is its frame,
+    // its acts, and a tap if any, by its key or by a click.
+    #[derive(Clone, Copy)]
+    enum Tap {
+        Right,
+        Wrong,
+        Option(u64),
+    }
+    type Line = (u64, &'static [Act], Option<(Tap, bool)>);
+    let script: &[Line] = &[
+        (1, &[], Some((Tap::Right, false))), // a click in the first frame: refused
+        (3, &[], Some((Tap::Right, false))), // question 1, right, by a click
+        (5, &[], Some((Tap::Wrong, true))),  // question 2, wrong, by a key
+        (7, &[Point(1, 5), Left(true)], None), // a click on the question: nothing
+        (8, &[Left(false)], None),
+        (9, &[Show("Portfolio")], None),
+        (10, &[Point(1, 7), Left(true)], None), // an option's address on the Portfolio: nothing
+        (11, &[Left(false)], None),
+        (12, &[Key("KeyC", true)], None), // a key on the Portfolio, unbound: nothing
+        (13, &[Key("KeyC", false)], None),
+        (14, &[Key("KeyB", true)], None), // held on the Portfolio,
+        (15, &[Show("Exam")], None), // the Exam shown under it: question 3, B, the frame it is bound
+        (17, &[Key("KeyB", false)], None),
+        (19, &[Point(1, 10), Left(true), Key("KeyB", true)], None), // D clicked and B keyed: question 4, B
+        (20, &[Left(false), Key("KeyB", false)], None),
+        (21, &[], Some((Tap::Right, true))),    // question 5
+        (23, &[Point(1, 7), Left(true)], None), // question 6, A, by a click held across two frames: one answer
+        (25, &[Left(false)], None),
+        (26, &[], Some((Tap::Wrong, false))), // question 7
+        (28, &[], Some((Tap::Right, true))),  // question 8
+        (30, &[], Some((Tap::Wrong, true))),  // question 9
+        (32, &[], Some((Tap::Right, false))), // question 10, the last scored, by a click
+        (34, &[Show("Certificate")], None),
+        (35, &[Point(1, 11), Left(true)], None), // the certificate's button before the eleventh: refused
+        (36, &[Left(false)], None),
+        (37, &[Key("KeyO", true)], None), // its key, unbound before the eleventh: nothing
+        (38, &[Key("KeyO", false)], None),
+        (39, &[Show("Exam")], None),
+        (41, &[], Some((Tap::Option(3), true))), // the eleventh, the style, by its key; the Camera shows the Certificate
+        (43, &[Key("KeyA", true)], None), // an option's key on the Certificate, unbound: nothing
+        (44, &[Key("KeyA", false)], None),
+        (46, &[Key("KeyO", true)], None), // the certificate's key: the game begins, the Portfolio shown
+        (47, &[Key("KeyO", false)], None),
+    ];
+    let last_frame = 46 + 30;
+    let mut acts = script.iter().peekable();
+    let mut release: Vec<Act> = Vec::new();
+    let mut begun_at = None;
+    for frame in 1..=last_frame {
+        let mut set: Vec<Act> = std::mem::take(&mut release);
+        while let Some((_, more, tap)) = acts.next_if(|(at, _, _)| *at == frame) {
+            set.extend_from_slice(more);
+            if let Some((tap, by_key)) = *tap {
+                let right = exam.right();
+                let option = match tap {
+                    Tap::Right => right,
+                    Tap::Wrong => right % 4 + 1,
+                    Tap::Option(o) => o,
+                } as usize;
+                let (_, row, code) = buffet::OPTIONS[option - 1];
+                if by_key {
+                    set.push(Key(code, true));
+                    release.push(Key(code, false));
+                } else {
+                    set.extend([Point(buffet::OPTION_COLUMN, row), Left(true)]);
+                    release.push(Left(false));
+                }
+            }
+        }
+        let (last, now) = host.step(&mut cart, &set);
+        exam_frame_held(&cart, &host, (&now, &last), &mut exam, &mut cal, &w);
+        market_held(&cart, &cal, seed, &market, DIFFICULTY);
+        stocks_held(&cart, &cal, seed, &market, DIFFICULTY);
+        if exam.begun && begun_at.is_none() {
+            begun_at = Some(frame);
+        }
+        let portfolio = values(&cart, "Portfolio", "A1:A2");
+        assert_eq!(
+            portfolio.get("A2").map(String::as_str),
+            Some(buffet::bell(&cal)),
+            "frame {frame}: Portfolio!A2"
+        );
+    }
+    assert!(acts.next().is_none(), "every act of the script played");
+    assert_eq!(exam.answers.len(), buffet::ASKED, "eleven answered");
+    assert_eq!(
+        exam.answers[2..4],
+        [2, 2],
+        "the held key's B, and the first by letter of two"
+    );
+    assert_eq!(
+        exam.answers[5], 1,
+        "the click held across two frames, A once"
+    );
+    assert_eq!(exam.style(), 3, "the eleventh, the third style");
+    assert_eq!(
+        begun_at,
+        Some(46),
+        "the game begun at the certificate's key"
+    );
+    assert_eq!(
+        host.now.sheet,
+        buffet::LEAD,
+        "the Camera showed where the certificate leads"
+    );
+    assert_eq!(
+        (cal.waited, cal.hour, cal.minute),
+        (45, 10, 30),
+        "the bell waited 45 frames, the game's first stood at 9:30, and 30 frames on it is 10:30"
+    );
+}
+
+/// The score funds the firm as the contract says (`GUARD.1`'s decision 6):
+/// eleven exams sat by keys, the right answers of the ten from none to all,
+/// the eleventh by the option that was right for the tenth, which scores
+/// nothing, each frame's books the hand's; at its certificate the capital
+/// $5,000 and $500 a right answer, in the Proctor's cents and the
+/// Certificate's dollars; and a waiver's score written each of 0 to 10, the
+/// same.
+#[test]
+fn the_score_funds_the_firm_as_the_contract_says() {
+    use Act::Key;
+    let w = words(&loaded());
+    for k in 0..=buffet::SCORED {
+        let mut cart = loaded();
+        let mut exam = exam_of(&cart, &w);
+        let mut cal = Calendar::new(MINUTES_A_FRAME, DAYS_A_YEAR);
+        let mut host = Host::new(buffet::EXAM);
+        let (last, now) = host.step(&mut cart, &[]);
+        exam_frame_held(&cart, &host, (&now, &last), &mut exam, &mut cal, &w);
+        for q in 0..buffet::ASKED {
+            // The eleventh by the option that was right for the tenth, the
+            // row still shown, which scores nothing.
+            let right = exam.right();
+            let option = if q < k || q >= buffet::SCORED {
+                right
+            } else {
+                right % 4 + 1
+            };
+            let code = buffet::OPTIONS[option as usize - 1].2;
+            for act in [Key(code, true), Key(code, false)] {
+                let (last, now) = host.step(&mut cart, &[act]);
+                exam_frame_held(&cart, &host, (&now, &last), &mut exam, &mut cal, &w);
+            }
+        }
+        assert_eq!(exam.score(), k as u64);
+        let got = values(&cart, "Proctor", "B38:B39");
+        assert_eq!(
+            (got["B38"].as_str(), got["B39"].as_str()),
+            (
+                k.to_string().as_str(),
+                (500_000 + 50_000 * k).to_string().as_str()
+            ),
+            "{k} right: the score and the capital in cents"
+        );
+    }
+    let mut cart = cartridge();
+    for k in 0..=buffet::SCORED {
+        let edit = format!("(cell \"Proctor\" \"B4\" {k})");
+        cart.write(&edit)
+            .unwrap_or_else(|r| panic!("{edit}: {} {}", r.refusal.id, r.refusal.text));
+        cart.step(0);
+        let got = values(&cart, "Proctor", "B38:B39");
+        assert_eq!(
+            got["B39"],
+            (500_000 + 50_000 * k).to_string(),
+            "a waiver at {k}"
+        );
+        let dollars = values(&cart, "Certificate", "B8");
+        assert_eq!(
+            dollars["B8"],
+            buffet::two_decimals(500_000 + 50_000 * k as u64)
+        );
+    }
+}
+
+/// A waiver (`GUARD.1`'s decision 12), a person's edit of the Proctor's `B3`:
+/// written before the first frame, the game begun at it, the exam closed, the
+/// market open at its bell and moving two minutes a frame as with no exam,
+/// the Camera at where the certificate leads, and the certificate saying the
+/// exam was waived at five correct answers and the first style; written in
+/// the middle of an exam, every frame of it held, the exam closed at the next
+/// step, the bell rung at that frame and the market two minutes on at the
+/// next.
+#[test]
+fn a_waiver_skips_the_exam_at_any_frame() {
+    use Act::Key;
+    let w = words(&loaded());
+    // Before the first frame.
+    let mut cart = cartridge();
+    let mut exam = exam_of(&cart, &w);
+    exam.waive();
+    let mut cal = Calendar::new(MINUTES_A_FRAME, DAYS_A_YEAR);
+    let mut host = Host::new(buffet::EXAM);
+    for _ in 0..3 {
+        let (last, now) = host.step(&mut cart, &[]);
+        exam_frame_held(&cart, &host, (&now, &last), &mut exam, &mut cal, &w);
+    }
+    assert_eq!(
+        (cal.waited, cal.minutes()),
+        (0, FIRST_MINUTE + 2 * MINUTES_A_FRAME)
+    );
+    assert_eq!(host.now.sheet, buffet::LEAD);
+    // In the middle of an exam: three answered by keys, then the waiver.
+    let mut cart = loaded();
+    let mut exam = exam_of(&cart, &w);
+    let mut cal = Calendar::new(MINUTES_A_FRAME, DAYS_A_YEAR);
+    let mut host = Host::new(buffet::EXAM);
+    let (last, now) = host.step(&mut cart, &[]);
+    exam_frame_held(&cart, &host, (&now, &last), &mut exam, &mut cal, &w);
+    for _ in 0..3 {
+        let code = buffet::OPTIONS[exam.right() as usize - 1].2;
+        for act in [Key(code, true), Key(code, false)] {
+            let (last, now) = host.step(&mut cart, &[act]);
+            exam_frame_held(&cart, &host, (&now, &last), &mut exam, &mut cal, &w);
+        }
+    }
+    let (sheet, at) = buffet::WAIVER;
+    let edit = format!("(cell \"{sheet}\" \"{at}\" 1)");
+    cart.write(&edit)
+        .unwrap_or_else(|r| panic!("{edit}: {} {}", r.refusal.id, r.refusal.text));
+    let waited = cal.frame;
+    for k in 0..3 {
+        let (last, now) = host.step(&mut cart, &[]);
+        if k == 0 {
+            exam.waive();
+        }
+        exam_frame_held(&cart, &host, (&now, &last), &mut exam, &mut cal, &w);
+    }
+    assert_eq!(exam.answers.len(), 3);
+    assert_eq!(
+        (exam.score(), exam.style(), exam.capital()),
+        (5, 1, 750_000)
+    );
+    assert_eq!(cal.waited, waited, "the bell rang at the waiver's frame");
+    assert_eq!(cal.minutes(), FIRST_MINUTE + 2 * MINUTES_A_FRAME);
+    assert_eq!(host.now.sheet, buffet::LEAD);
+}
+
+/// The proctor's settings and buttons, and the views' buttons at their places
+/// (`GUARD.1`'s decisions 3, 7 and 9): the capital, the waiver, a waiver's
+/// score and style, and the lead, the hand's; the buttons' table, each
+/// option's letter, view, column, row and key and the certificate's, the
+/// hand's; each button's text at the place the table names, the Exam's options
+/// beginning with their letters and the certificate's button no wider than
+/// its column; every option of the bank and every style, with its letter,
+/// inside the Exam's column, so that a click on any character of it is the
+/// option's; the texts beside the buttons naming the keys bound; and no key
+/// bound the viewport's, and no Alt.
+#[test]
+fn the_proctor_states_its_settings_and_its_buttons() {
+    let mut cart = loaded();
+    cart.step(0);
+    let settings = values(&cart, "Proctor", "B1:B6");
+    for (addr, text) in [
+        ("B1", buffet::CAPITAL_BEFORE.to_string()),
+        ("B2", buffet::CAPITAL_A_RIGHT.to_string()),
+        ("B3", "0".to_string()),
+        ("B4", buffet::WAIVED_SCORE.to_string()),
+        ("B5", buffet::WAIVED_STYLE.to_string()),
+        ("B6", buffet::LEAD.to_string()),
+    ] {
+        assert_eq!(settings.get(addr), Some(&text), "Proctor!{addr}");
+    }
+    assert_eq!(buffet::WAIVER, ("Proctor", "B3"));
+    let table = values(&cart, "Proctor", "A24:E28");
+    let mut buttons: Vec<(&str, &str, u64, u64, &str)> = buffet::OPTIONS
+        .iter()
+        .map(|&(letter, row, key)| (letter, buffet::EXAM, buffet::OPTION_COLUMN, row, key))
+        .collect();
+    let (view, column, row) = buffet::OPEN_BUTTON;
+    buttons.push(("open for business", view, column, row, buffet::OPEN_KEY));
+    for (k, (label, view, column, row, key)) in buttons.iter().enumerate() {
+        let r = 24 + k;
+        let want = [
+            label.to_string(),
+            view.to_string(),
+            column.to_string(),
+            row.to_string(),
+            key.to_string(),
+        ];
+        for (c, text) in ["A", "B", "C", "D", "E"].iter().zip(want) {
+            assert_eq!(table.get(&format!("{c}{r}")), Some(&text), "Proctor!{c}{r}");
+        }
+    }
+    let exam = values(&cart, "Exam", "A1:A14");
+    for (letter, row, _) in buffet::OPTIONS {
+        let text = &exam[&format!("A{row}")];
+        assert!(
+            text.starts_with(&format!("[ {letter} ]  ")),
+            "Exam!A{row}: {text}"
+        );
+    }
+    let cert = values(&cart, "Certificate", "A11:B11");
+    assert_eq!(cert.get("A11").map(String::as_str), Some(buffet::OPEN_TEXT));
+    assert_eq!(
+        cert.get("B11").map(String::as_str),
+        Some(buffet::OPEN_KEY_TEXT)
+    );
+    let text = lf(&read(CARTRIDGE));
+    for (sheet, width) in [
+        ("Exam", buffet::EXAM_COLUMN),
+        ("Certificate", buffet::OPEN_TEXT.chars().count() as u64),
+    ] {
+        let row = format!("(column \"{sheet}\" \"A\" {width} shown none)");
+        assert!(text.lines().any(|l| l == row), "{sheet}!A: {row}");
+    }
+    // The buttons' look (the owner's word at the hand test): format 1, a fill
+    // of Lovelace Lavender, on every option's cell and the certificate's
+    // button; and an option emptied after the exam drawn in the default look.
+    assert!(
+        text.lines().any(|l| l == buffet::BUTTON_FORMAT),
+        "the buttons' format: {}",
+        buffet::BUTTON_FORMAT
+    );
+    let (view, column, row) = buffet::OPEN_BUTTON;
+    let looks = buffet::OPTIONS
+        .iter()
+        .map(|&(_, row, _)| (buffet::EXAM, buffet::OPTION_COLUMN, row))
+        .chain([(view, column, row)]);
+    for (sheet, column, row) in looks {
+        let style = format!(
+            "(style \"{sheet}\" \"{}\" 1)",
+            address(row as usize, column as usize)
+        );
+        assert!(text.lines().any(|l| l == style), "a button's look: {style}");
+    }
+    assert!(
+        text.lines().any(|l| l == "(look \"Exam\" \"\" 0)"),
+        "an option emptied after the exam, in the default look"
+    );
+    let w = words(&cart);
+    for (q, row) in (1..).zip(&w.bank) {
+        for (k, option) in row[2..6].iter().enumerate() {
+            let shown = format!("[ {} ]  {option}", buffet::OPTIONS[k].0)
+                .chars()
+                .count() as u64;
+            assert!(
+                shown <= buffet::EXAM_COLUMN,
+                "question {q}'s option {}: {shown} characters with its letter, past the Exam's {}: a click on its spill would miss",
+                buffet::OPTIONS[k].0,
+                buffet::EXAM_COLUMN
+            );
+        }
+    }
+    assert!(
+        w.styles.len() >= buffet::OPTIONS.len(),
+        "four styles at least"
+    );
+    for (k, style) in w.styles.iter().take(4).enumerate() {
+        let shown = format!("[ {} ]  {style}", buffet::OPTIONS[k].0)
+            .chars()
+            .count() as u64;
+        assert!(
+            shown <= buffet::EXAM_COLUMN,
+            "style {}: {shown} characters",
+            k + 1
+        );
+    }
+    for (letter, _, key) in buffet::OPTIONS {
+        assert!(key.ends_with(letter) && buffet::ANSWER_KEYS_TEXT.contains(letter));
+    }
+    assert!(buffet::OPEN_KEY_TEXT.ends_with(&buffet::OPEN_KEY["Key".len()..]));
+    let moves = [
+        "ArrowUp",
+        "ArrowDown",
+        "ArrowLeft",
+        "ArrowRight",
+        "PageUp",
+        "PageDown",
+        "Home",
+        "End",
+        "Enter",
+        "Space",
+    ];
+    let codes: Vec<&str> = buffet::OPTIONS
+        .iter()
+        .map(|(_, _, key)| *key)
+        .chain([buffet::OPEN_KEY, P])
+        .collect();
+    for code in codes {
+        assert!(
+            !moves.contains(&code) && !code.starts_with("Alt"),
+            "{code} is the viewport's or the chords'"
+        );
+    }
 }

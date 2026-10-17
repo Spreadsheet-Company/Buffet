@@ -61,6 +61,12 @@ empty.*
 
   *Closed 2026-10-16.* Predicted `~days`; cost one session, the scoping, its approval, the build, its measurements, the owner's hand test and its amendment. What landed: Gigs, the Hustle sheet and the Keys sheet's one key in the source and its cartridge, 474 rows and 125 formula cells; `as-of` and `fine-print` in `src/kitchen.vla`; the hand's hustle and its test; the scripted session and the binding's test, 49 tests in all; the describe golden blessed again; and, in the same commit, the five Linux cells run 38939138517 answered, `MENU.1`'s, `MENU.2`'s, `MENU.5`'s, `FRONT.1`'s and `FRONT.2`'s. Five of the nine predictions missed in part, each named beside its number: the describe golden's shapes, the views' date and fine print being one shape over two sheets; the step after a write of the Input rows; the cartridge's block in the page; P beside a click in Chrome; and the key, bound on every sheet as decision 9 had it until the owner's word at the hand test. The build found that every record lists every sheet, so that each sheet a dish adds makes the oracle's long tests dearer; and the owner, playing the game, asked before any other dish for an hour a second and the market's trading hours, recorded with the hand test for the item that takes it.
 
+## 🛡 THE SNEEZE GUARD
+
+- ✅ **`GUARD.1` — the Series 777: the opening screen and its controls tutorial.** *Scoped 2026-10-17, its twenty decisions approved whole by the owner the same day, built that day, and amended at the owner's hand test, eleven questions, the dollars grouped by thousands, the buttons in lavender, the caveat's heading, the cash on hand and $250 a prospectus; passed at the second the same day: the scoping, the approval, every prediction beside its number, what the build found and the owner's two hand tests are under THE ITEMS, SCOPED.* The game opens on the Exam, a view of its own first among the tabs: ten questions drawn from the bank by the exam's own die (`POT.1`), a seeded start and a stride among the first ten primes above 1,547, coprime to every bank a picker holds, so that none repeats; then an eleventh, ungraded, "Which best describes you?", its options the four styles of the Firms sheet, `src/content/firms.vla`, the answer the firm's style (eleven at the owner's word at the hand test, where the scoping had nine and a tenth). Each question shows with its four options, each a button in Lovelace Lavender, answered by a click, the press the library's `clicked` at its second writing, or by its key, A to D, bound on the Exam alone while a question is open (the Keys sheet's free buttons, until `ENGINE.25`'s commands are released and pinned). An answer is judged by the question the last frame showed, as an order fills at the price shown; the score is a count, the firm's capital $5,000 and $500 a right answer; the exam cannot be failed. The Proctor sheet keeps its books: the settings, the draw, the buttons' table and the workings. The Camera hands the game over: the Exam, the Certificate at the eleventh answer, then where the certificate leads, a value, the Portfolio until the Overview (`FRONT.3`), by the certificate's button or O. The Certificate: the score of ten, the capital in dollars, the style, its button, and the plain statement that the game is not advice under its heading, "Caveat:", the proctor's signature beneath. The market's first bell waits for the certificate's button, the Day sheet counting the frames it waited and taking them out of the time (`BD-7`'s clause), so that no market day passes under an exam. A second run may skip the exam by a waiver, a person's edit of `Proctor!B3`, at five correct answers, $7,500, and the first style. And at the hand test, at the owner's words: every view's dollars grouped by thousands, `dollars` and the new `signed-dollars`; the Cash sheet, the personal cash at the start, $100, the firm's cash and the personal, shown on the Portfolio as its cash on hand; and the prospectus's fee $250 where $25 (`BACK.1`). *Oracle, met:* the draw at every seed of a thousand and the contract's, the hand's and never a question twice; every frame of a scripted exam answered by clicks and by keys, the proctor's books, both views, the keys each view binds, the Camera's hand-over, the bell's wait and the cash held to the hand, then the market's first hour after the bell; the score funding the firm as the contract says at every score of the ten and at a waiver's; a waiver at the first frame and in the middle; the settings, the buttons at their places, every option whole inside its column and the buttons' looks; every amount spelled with its thousands grouped, beside every power of ten to 2^53 cents; `BD-7`'s scan and the census's `(every-frame 0)`; the describe golden blessed again; 28 mutants, each caught by the test written for it; the cost natively and in Chrome at full screen, an answer shown 49 ms after its click at p95, the contract's 100 ms met by half; and the owner's two hand tests. *Pays into:* the firm's capital and name (`BACK.2`), the pockets (`PLATE.2`), and the license ladder (`GUARD.2`), whose every exam is this one over another bank. `~days`
+
+  *Closed 2026-10-17.* Predicted `~days`; cost one session, the scoping, its approval, the build, its measurements, the owner's hand test and its seven changes, and the second hand test. What landed: the Exam, the Certificate, the Proctor, the Cash and the Firms sheets and the Camera in the source and its cartridge, 748 rows and 271 formula cells; `clicked`, `signed-dollars`, the grouped `dollars` and the bell's fifth line in `src/kitchen.vla`; `src/content/firms.vla`, the fourth content sheet; the caveats' rows 15 and 16; the hand's exam, its draw, its keys, the calendar's wait, its grouped dollars and the cash; 67 tests, the crate's 27 and the cartridge's 40; the describe golden blessed again; the layout check's pin at four content sheets; and, in `OMAKASE.md`, the contract, `BD-5`, `BD-7`'s clause and the notes on `PLATE.1`, `PLATE.2`, `FRONT.2`, `FRONT.3`, `BACK.2` and `MISE.6`, whose asks gained the white text and the pointer over a button. Every prediction measured missed in part, each named beside its number. The build found the first frame's press refused, which the hand had taken; the long runs' waiver; a held click that a mutant first passed; and each view's date about 2 µs at every half hour. The hand test asked seven changes, made the same day, the grouping written three ways to cost the load 1.3 ms and nothing at a mark; found and unminted: the white text's deep shade, a dollar's text costing its load until the record holds a number format, and the pointer over a button, Alonzo's.
+
 ## 🛎 THE FRONT OF HOUSE
 
 - ✅ **`FRONT.1`, first slice — the workbook: the game's views, each a sheet of its own.** *Scoped 2026-10-15, first as panels on the Screen and then, at the owner's word, as the game's views on sheets of their own, gated on Alonzo; rescoped at the page's version 4 the same day, once `ENGINE.18` was released, its seventeen decisions approved whole by the owner on 2026-10-16, and built and hand-tested that day: both scopings, every prediction beside its number, what the build found and the owner's hand test are under THE ITEMS, SCOPED.* Buffet is played full-screen as a workbook: each of the game's views a sheet of its own, with its own widths, heights, looks and gridlines, reached by the workbook's own tabs and standing first among them, the model's sheets after them, visible (`AD-6`), every name a fund manager's and no tab numbered (`BD-2`'s amendment). The cartridge is written to the page's version 4, `(spec 4)`: the game opens on its first visible sheet with no Camera, which enters with `GUARD.1`; a click on any cell of the sheet shown is the game's, `Input!B19`, `B11` and `B12`, which the first button reads (`BACK.1`); and its Screen, holding nothing, is hidden, the manifest's screen line kept for a Screen a game may show (`FRONT.7`). The first view, the Portfolio: its date, "As of year 1, day 1 (unaudited)"; a row a stock on the Stocks sheet's own rows, each its name read from that sheet, its price today and its change since yesterday in dollars, whole cents over 100 once and the change a difference of cents; and the fine print at its foot, `Disclosures!D3`. Fourteen formula cells, reading the model and the day and never the frame (`BD-7`), and read by nothing, a view being the workbook's output; widths 22, 12 and 12 characters, the default row height, 15 points, kept by the owner's eye, gridlines on, and no background until `FRONT.2`. The caveat on number formats rewritten in the same commit, the first view to show dollars taking it (`BD-5`). Each later view enters with its dish: the Exam with `GUARD.1`, the Overview with `FRONT.3`, Work with `BACK.1`, the market's view with `PLATE.1`, the curve's at course 1. *Oracle, met:* the Portfolio held to the hand at every frame of two years and two days, whole on a day's first frame and byte for byte still through the day, and on every one of eight hundred days at one frame a day, its dollars the Stocks sheet's cents spelled by text, which a test of the hand holds to the record's own spelling from −200,000 cents to 2^52; its headers, and its names the model's; the game opening on it, written to version 4 with no Camera and the Screen hidden; no formula reading a view, each at most 1,000 formula cells; `BD-7`'s scan and the census's `(every-frame 0)`; the describe golden blessed again; eight mutants, each caught by the test written for it; `MISE.3`'s first number re-measured on the real view, in headless Chrome and in the owner's; and the owner's hand test in the page. *Pays into:* every view after it, each a sheet; every button (`BACK.1`, `PLATE.1`, `GUARD.1`), each a click on the sheet shown; the looks (`FRONT.2`), whose glyph column stands beside the change. `~days`
@@ -3867,7 +3873,11 @@ as the registry holds them; `web/` as vendored at `v0.1.5`; Buffet at
    ledger's rows being `PLATE.1`'s, and nothing here is taken over. *The
    alternative:* the personal cash cell now, `=10000+Hustle!B13`, the
    contract's $100 shown from today, the pocket's place and spelling settled
-   a dish before `PLATE.2`.
+   a dish before `PLATE.2`. *(Taken at `GUARD.1`'s hand test, 2026-10-17, at
+   the owner's word and choice: the Cash sheet's personal cash, `Cash!B4`,
+   the start and the fees once paid, beside the firm's, on the Portfolio as
+   its cash on hand; and the fee $250 where $25, the owner's word the same
+   day.)*
 
 9. **The key: P, on the `a` button, the one row this dish needs (rec).**
    `(sheet "Keys" visible)`, then `Keys!A5` `a` and `Keys!B5` `KeyP`,
@@ -4506,6 +4516,11 @@ ahead of its remote, its tree clean).
     spaces before its sign 14, from the font measured in the page, the
     numbers under the owner's second hand test below; and every column of a
     view's dollars is 12 characters, which a test holds.)*
+    *(Amended at `GUARD.1`'s hand test, 2026-10-17, the owner's words:
+    "Thousands separators need to be implemented": the thousands grouped by
+    commas, a comma four fifths of a space and taking one off the padding,
+    and the change the library's `signed-dollars` since (`GUARD.1`'s decision
+    9, amended).)*
 
 12. **The day's other readers (rec).** The hustle stays once a day, a
     calendar day, at any hour, the market open or closed: its formulas read
@@ -4934,3 +4949,884 @@ patch 0.4 and 0.6; a mark's 0.6 and 1.0; the bell's 0.6 and 1.0 over 21; the
 close's 0.7 and 1.1 over 22; midnight's 0.5 and 0.7 over 30; 1,439 of 21,598
 frames patched, one in fifteen; each within a tenth of the headless runs at
 p50.
+
+## `GUARD.1` — the Series 777: the opening screen and its controls tutorial, nine questions drawn without a repeat, a certificate, then the game
+
+*Scoped 2026-10-17 at the owner's word, "Scope and implement GUARD.1 in Buffet
+(Delta/Buffet): the Series 777, the game's opening screen and its controls
+tutorial", to stop for the owner's approval before building. Minted already,
+`COURSE.0`'s item 14 in `OMAKASE.md`, and taken now, before `PLATE.1`, so that
+the first button's second writing is the exam's. The owner's brief with it:
+nine scored questions drawn from the bank by the exam's own die, a seeded
+start and a stride among the primes above 1,547, so that none repeats, shown
+one at a time on an Exam view with four option cells; an answer a press, as
+`BACK.1`'s button is, and every answer a key too, "keyboard-first, keys
+scoped to each tab"; the score a count, and the exam impossible to fail; a
+tenth question, ungraded, that sets the archetype; then a certificate, then
+the game; and the contract's numbers standing, the firm's capital $5,000 and
+$500 a correct answer, the personal cash $100. Read for it: the item's line
+and its four Found notes; `COURSE.0`'s opening contract; `BD-2`, `BD-4`,
+`BD-5` and `BD-7`; `BACK.2`'s line, which names the firm from the archetype
+later, and `PLATE.1`'s and `MISE.6`'s notes on buttons and keys; in this file
+`MENU.2`'s record (the bank, its row shown, the stride's finding and its
+decision 4), `MENU.5`'s (the plain statement the certificate shows),
+`BACK.1`'s (the button, the keys a view binds, the scripted session) and
+`POT.10`'s (the calendar, the exam's stream at `Dice!H1:J3`, the dollars'
+padding, its measurements and its traps); `BUFFET.md` §3, the draft texts;
+and Alonzo's `SPEC.md` at `v0.1.5`, the tag the pin names, §3.3, §3.4, §3.8
+and §5, with the host and the engine at that tag where the page is silent.
+Each decision carries its recommendation, for the owner to approve, amend or
+strike; the texts a player reads are drafts, for the owner to approve or
+rewrite. The predictions were written before any number was taken; the
+figures marked *derived* were computed in a scratch script over the
+cartridge's own rows by the rule the hand will follow, at seed 791886 and at
+every seed from 1 to 1,000, and none of them is a measurement of the
+cartridge. Alonzo's and Frazaro's trees were read and never touched: Alonzo's
+holds a peer's `ENGINE.25` uncommitted, and was read at its tag and its
+`HEAD` alone.*
+
+**What it stands on, read on the day** (`alonzo` 0.1.5 and `vla-lang` 0.9.4
+as the registry holds them; `SPEC.md` and the page at `v0.1.5`; Buffet at
+`b82793c`, two ahead of its remote with `BACK.1`'s `518d414`, its tree clean).
+- *The cartridge.* `(spec 4)`, `(rate 30)`, 569 rows, 201 formula cells in 86
+  formula rows; the cartridge its source expanded; 56 tests green, the
+  crate's 22 and the cartridge's 34, and the four checks with their controls;
+  CI's last run 38939138517 at `ec069e8`, `BACK.1`'s and `POT.10`'s P5 Linux
+  cells waiting for the push. The game opens on the Portfolio, the first
+  visible sheet, with no Camera and the Screen hidden (`FRONT.1`), and the
+  test of it says the Camera is this dish's to bring.
+- *The exam's stream* (`POT.1`'s decision 8, moved by `POT.10`'s decision 8).
+  `Dice!I1`, `=MOD(Clock!$B$3*$F$4,2147483647)`, the seed jumped half the
+  generator's period, a function of the seed alone; its two draws, `I2` and
+  `I3`, and their uniforms, `J2` and `J3`; read by nothing.
+- *The bank* (`MENU.2`, as amended at its close). The Questions sheet, hidden,
+  twenty rows of eight fields in `A2:H21`, the concept, the question, the
+  four options, the right one's letter and the why, the right letters five to
+  each; beside the table `K1` the count, 20; `K2` the row shown, a value, 1,
+  the source's (where the brief says `M2`: the approver's strike moved it to
+  `L2` and the vintage's to `K2`, both on 2026-10-15); and `K3` to `K10` a
+  picker a field. Its longest question 130 characters and its longest option
+  92 (*derived*). The ungraded question is no row of it: its options belong
+  on the Firms sheet, each beside the firm it picks, and its prompt on the
+  Exam view (its decision 4).
+- *The plain statement* (`MENU.5`). The Caveats sheet's row shown, `G2`, a
+  value, 1, so that `G3` to `G5` hold its first row's first three fields:
+  "You. It knows nothing of your goals, your means or your timeline.";
+  "Advice starts from those three, from someone licensed to give it. This
+  game is not financial advice."; and the joke, "Any resemblance to financial
+  advice, living or dead, is purely coincidental." The record has the
+  certificate read `G4:G5`.
+- *The button and the key* (`BACK.1`). `Hustle!B9`,
+  `=IF(AND(Input!$B$19=$B$3,Input!$B$11=$B$4,Input!$B$12=$B$5,Input!$B$13=1,Input.last!$B$13=0),1,0)`,
+  the button's place three values a layout moves; P on the `a` button, the
+  Keys sheet's `B5` a formula of the sheet shown,
+  `=IF(Input!$B$19=Hustle!$B$3,"KeyP","")`, the other nine buttons free; and
+  the scripted session writing the Input rows as the host does, the rows that
+  changed alone, reading the Keys sheet after every step, a key's binding
+  lagging the tab by a frame.
+- *The calendar* (`POT.10`). `Day!B4`, `=(Clock!B1-1)*B1+B9`, the time in
+  minutes, `B9` the first frame's, 570, Monday's opening bell; `B19` open; the
+  views' bell, four lines over the Day sheet; `BD-7` held by a scan of the
+  formula rows, that no sheet but the Day reads `Clock!B1`, `Day!B4` or its
+  twin, and by the census's `(every-frame 0)`. Every long run starts the
+  market at the first frame; each test alone, at its last timing: the hour's
+  year 4.17 s, the hundred years at a frame a day 3.90, the ten days at every
+  frame 2.57, the year at difficulty 0 1.74, the eight hundred days 0.40, the
+  hustle's scripted session 0.14; the cartridge's suite 4.0 to 4.6 s on eight
+  threads, 6.2 s today, unpinned.
+- *The page's version 4* (`SPEC.md` at `v0.1.5`). §3.8: the Camera's third
+  row is the sheet the game shows; at the load it names the sheet the
+  cartridge opens on, "a value or a formula's `value` row", else the first
+  visible sheet; after a step, a change of its value that names a sheet is
+  shown once at the frame's end, as a tab clicked is; between its changes the
+  person's tabs win; and its own example is this dish's: "A game's exam that
+  ends on its Portfolio is `=IF(Exam!B1=1,"Portfolio","Exam")`, its one change
+  shown once." The engine takes a Camera of three rows at version 4, `A1:B3`
+  (`alonzo` 0.1.5's `cartridge.rs`); the host reads its `B1` and `B2` as the
+  Screen's window and says once in its line when either is not a whole
+  number from 1 (`host.js`, `_cameraCell`); the load takes a formula's `value`
+  row, and the host reads it as the cell's value at the load (`sheetCells`).
+  §3.4: the host reads the Keys sheet after each step, so a cartridge "may
+  even rebind keys by formula, by phase of play". §3.3: `B19` the sheet
+  shown, `B11` and `B12` the pointer's cell on it.
+- *The keys at the pin* (`host.js`, `viewport.js` and the template at
+  `v0.1.5`). A key the Keys sheet binds is the game's while the focus is in
+  the grid, taken before the viewport sees it; the viewport moves by the
+  arrows, Page Up and Down, Home and End, opens a cell by Enter, and takes no
+  letter; the page binds no letter of its own. A pick leaves the focus on the
+  picker (`BACK.1`'s finding), where a typed "a" picks "An empty sheet" and
+  loads it; mended in Alonzo's `ENGINE.23` (`dc32bbc`), unreleased since
+  `v0.1.5`.
+- *Alonzo's `ENGINE.25`*, a cartridge's own commands: approved by the owner
+  2026-10-17, all nine decisions, and under construction there, its Commands
+  sheet and the Input sheet's twentieth row a `(spec 5)` cartridge's alone;
+  "Buffet takes it after a release, its pin the owner's to move" (its
+  roadmap line).
+- *The dialect* (`vla-lang` 0.9.4's `calc/library.rs`). `IF` computes the
+  branch taken and `CHOOSE` the value chosen, and nothing else, so a guard
+  shields a `CHOOSE` of 0; `AND` and `OR` compute every argument. `MOD` of a
+  draw, below 2^31, is exact.
+- *The first game's exam* (*derived*, seed 791886, the rule of decision 4).
+  The start 8 and the stride 1,549, which is 9 modulo 20, so the nine rows
+  are 9, 18, 7, 16, 5, 14, 3, 12 and 1: Liquidity, Time Value of Money,
+  Bonds, Central Banks, Risk and Return, Sunk Costs, Inflation, Moral Hazard
+  and Opportunity Cost, their right letters D, C, D, D, A, A, C, B and C. The
+  first question is "Which is the most liquid?", its right option D, "cash".
+- *A thousand seeds* (*derived*, seeds 1 to 1,000). No exam repeats a
+  question. 160 exams are distinct, the bank's twenty starts by the eight
+  strides coprime to 20, all eight reached by the first ten primes above
+  1,547, 1,549, 1,553, 1,559, 1,567, 1,571, 1,579, 1,583, 1,597, 1,601 and
+  1,607, which are 9, 13, 19, 7, 11, 19, 3, 17, 1 and 7 modulo 20 (the first
+  eight miss 1, and meet 140). Each question is drawn 442 to 458 times of the
+  9,000 and stands first 47 to 53 times of the thousand; the right letters
+  are met 2,254, 2,250, 2,245 and 2,251 times, A to D; and no exam's nine hold
+  more than five of one letter. Every bank a picker holds, 9 to 1,547 rows,
+  with each of the ten strides: nine rows and no repeat.
+
+**The decisions.**
+
+1. **The market's clock during the exam: the bell waits for the certificate's
+   button (rec).** `POT.10`'s finding stands: the market runs from the first
+   frame, an hour a second, so an exam of two minutes passes five days, the
+   first week's bells and the hustle's first prospectus with them. So the
+   calendar stands at its first frame's time, Monday's opening bell, from the
+   first frame until the game begins, and the bell rings then: not at the
+   tenth answer, which would pass the certificate's reading in market hours,
+   twenty seconds being twenty hours, but at the certificate's own button, the
+   exam's end as the player meets it. While it waits the market is closed and
+   still: the time 9:30 on day 0, the session day 0's at its mark 0, every
+   price its start (`STATION.1`'s opening), and `Day!B19` 0, so that
+   `PLATE.1`'s orders, filled only while the last frame showed open
+   (`POT.10`'s decision 13), are refused through the exam with no rule of
+   their own; the dice roll at the first frame as now; and the views' bell
+   says so in a fifth line, "The market opens when you leave the exam room."
+   The brief's question, the calendar starting at the exam's end, answered
+   yes, by the Day sheet itself, as decision 2 draws it. *The alternatives:*
+   the bell at the tenth answer; the market from the first frame, as `POT.10`
+   left it; the market open and still through the exam, `Day!B19` and the
+   bell's four lines untouched, an order then filling at the starts while the
+   exam is up.
+
+2. **The Day sheet counts the frames the bell waited; `BD-7` holds, a clause
+   added (rec).** Two cells after the closing mark, a block of their own, and
+   two formulas rewritten:
+
+   | | A | B |
+   |---|---|---|
+   | 4 | time, in minutes | `=(Clock!B1-1-B26)*B1+B9`, where `=(Clock!B1-1)*B1+B9` stood |
+   | 19 | open | `=IF(AND(B25=0,B17<B12,B15>=B10,B15<B11),1,0)`, the wait's test first |
+   | 25 | the exam holds the bell | `=IF(Proctor!$B$41=1,0,1)` |
+   | 26 | frames the bell waited | `=Day.last!B26+Day.last!B25`, the kit's `count` |
+
+   `B25` is 1 until the Proctor's begun (decision 6) and 0 from it for good;
+   `B26` counts the frames before this one that it held, its twin reading 0
+   at the first frame. So a frame of the exam stands at 570 minutes, the
+   game's first frame after it at 570 too, and every frame after that two
+   minutes on; and a waiver before the first frame (decision 12) leaves `B26`
+   at 0 and the calendar exactly as it is today. `B9` keeps its value and its
+   meaning, the market's first frame's time. The brief's `Day!B9` as a formula
+   of the Exam sheet would have the frames counted somewhere other than the
+   calendar, an exam sheet reading its own twin at every frame being the
+   frame by another name, and the first frame's time a negative number of
+   minutes. `BD-7` holds as written: the Day sheet alone reads the frame and
+   counts frames; the scan's list gains `Day!B26` and its twin, which change
+   at every frame of the exam; and the census keeps `(every-frame 0)`, `B26`
+   reading twins alone. A frame of the exam computes three of the calendar's
+   cells, `B4`, `B5` and `B26`, `B4`'s value standing so that `B14` and
+   everything under it wait; from the frame after the bell `B26` is still,
+   and an ordinary frame computes the three it does today. The rule gains a
+   dated clause saying so (decision 20). *The alternative:* `B9` the formula,
+   as the brief frames it.
+
+3. **The exam's state: a model sheet of its own, Proctor, after the Hustle
+   (rec).** A view is read by nothing (`FRONT.1`'s decision 10), and the Day
+   sheet, the Camera, the Keys and later `PLATE.2` and `BACK.2` read what the
+   exam decides, so its books stand on a model sheet, visible (`AD-6`), a
+   label in A beside each value as the model's sheets hold them: the
+   proctor's, who administers every exam and is never promoted (`BUFFET.md`
+   §2), so that `GUARD.2`'s exams take the same sheet over other banks. Its
+   rows:
+
+   | | A | B | C | D | E | F | G |
+   |---|---|---|---|---|---|---|---|
+   | 1 | the firm's capital before the exam, in cents | `500000` | | | | | |
+   | 2 | the capital a correct answer adds, in cents | `50000` | | | | | |
+   | 3 | waived: 1 skips the exam | `0` | | | | | |
+   | 4 | a waiver's correct answers | `5` | | | | | |
+   | 5 | a waiver's style | `1` | | | | | |
+   | 6 | where the certificate leads | `Portfolio` | | | | | |
+   | 8 | the bank's questions | `=Questions!$K$1` | | | | | |
+   | 9 | the start, from 0 | `=MOD(Dice!$I$2,B8)` | | | | | |
+   | 10 | the stride, a prime above 1,547 | `=CHOOSE(MOD(Dice!$I$3,10)+1,1549,1553,1559,1567,1571,1579,1583,1597,1601,1607)` | | | | | |
+   | 12 | the draw: question | its row in the bank | | | | | |
+   | 13 to 21 | `1` to `9` | `=MOD($B$9+(A13-1)*$B$10,$B$8)+1`, a fill | | | | | |
+   | 23 | the buttons | view | column | row | key | clicked | keyed |
+   | 24 to 27 | `A` to `D` | `Exam` | `1` | `7` to `10` | `KeyA` to `KeyD` | `clicked`, a fill (decision 8) | the kit's `pressed` over `Input!B6` to `B9`, a fill |
+   | 28 | open for business | `Certificate` | `1` | `11` | `KeyO` | the same fill | the same fill, `Input!B10` |
+   | 30 | the option pressed | `=IF(OR(F24=1,G24=1),1,IF(OR(F25=1,G25=1),2,IF(OR(F26=1,G26=1),3,IF(OR(F27=1,G27=1),4,0))))` | | | | | |
+   | 31 | answered | `=IF(AND(B30>0,Proctor.last!B33=1),1,0)` | | | | | |
+   | 32 | answers | `=Proctor.last!B32+B31`, the kit's `count` | | | | | |
+   | 33 | a question open | `=IF(AND(B32<10,$B$3=0),1,0)` | | | | | |
+   | 34 | the row shown | `=CHOOSE(MIN(B32+1,9),B13,B14,B15,B16,B17,B18,B19,B20,B21)` | | | | | |
+   | 35 | the right option | `=IF(Questions!$K$9="A",1,IF(Questions!$K$9="B",2,IF(Questions!$K$9="C",3,IF(Questions!$K$9="D",4,0))))` | | | | | |
+   | 36 | correct | `=IF(AND(B31=1,Proctor.last!B32<9,B30=Proctor.last!B35),1,0)` | | | | | |
+   | 37 | correct so far | `=Proctor.last!B37+B36`, the kit's `count` | | | | | |
+   | 38 | the score | `=IF($B$3=1,$B$4,B37)` | | | | | |
+   | 39 | the firm's capital, in cents | `=$B$1+$B$2*B38` | | | | | |
+   | 40 | the style | `=IF($B$3=1,$B$5,IF(AND(B31=1,Proctor.last!B32=9),B30,Proctor.last!B40))` | | | | | |
+   | 41 | begun | `=IF(OR($B$3=1,AND(OR(F28=1,G28=1),Proctor.last!B32=10)),1,Proctor.last!B41)`, the kit's `hold` | | | | | |
+
+   Thirty-four formula cells in eighteen formula rows. The draw's three cells
+   and its nine compute at the first frame and never again; the buttons' ten
+   follow the pointer and the keys, each 0 between presses (`SPEC.md` §2's
+   rule 3); and the twelve workings move at a press alone. The bank is told
+   the question to show through its own row shown, `Questions!K2`
+   `=Proctor!$B$34`, where the source wrote 1 (`MENU.2`'s decision 5), so the
+   pickers stay its own and the views read them. The capital is whole cents,
+   the contract's two numbers values beside it. *The alternatives:* the state
+   on the Questions sheet, which holds words alone; the name `Licensing` or
+   `Registration`, a firm's records of its licenses, which `GUARD.2`'s
+   `Licenses` sheet would stand beside confusingly.
+
+4. **The draw: a start and a stride among ten primes, nine rows a table
+   (rec).** The start is the exam's first draw modulo the bank's size, from 0,
+   and the stride one of the first ten primes above 1,547 by its second draw,
+   so that it is coprime to every bank a picker holds (`MENU.2`'s finding);
+   the question `k`'s row is `MOD(start+(k-1)*stride,n)+1`, the nine rows a
+   fill, which repeat no row while `n` is nine or more, since it shares no
+   factor with the stride. Ten primes reach the eight strides coprime to 20,
+   so the first thousand seeds meet 160 exams, each question first in about
+   one of twenty and somewhere in nine of twenty (*derived*, above). The
+   primes stand in the formula, where a reader of its bar sees them and the
+   hand's test proves them prime; the bank's size is its own count, so a row
+   added joins the draw with no formula edited (`MENU.2`'s decision 4) and
+   moves every seed's exam (Found). The table is the draw whole from the
+   first frame, which a player may open (`AD-6`; `BD-3`, the exam an open
+   book as the market is, and one that cannot be failed), and which the
+   oracle reads at every seed of a thousand after one step each. *The
+   alternatives:* one prime, twenty exams in all; the primes as ten value
+   cells; the draw computed for the question shown alone, one cell where
+   nine, the oracle then walking ten answers at every seed.
+   *(Amended at the owner's hand test, 2026-10-17, the owner's words: "The
+   exam should have 11 question (10 of substance, the eleventh question being
+   firm style)". Ten rows, `B12:B21`, the table's header a row higher, at
+   `A11`, so that the buttons and the workings keep their addresses; ten rows
+   repeat none while the bank holds ten or more, and the first game's tenth
+   is the bank's row 10.)*
+
+5. **An answer: a press on an option or its key, judged by the question the
+   last frame showed (rec).** An answer is a click on one of the Exam view's
+   four option cells, `BACK.1`'s button four times, or one of four keys
+   (decision 7), each a cell that holds 0 between presses; the option pressed
+   is the first by letter when two are pressed in one frame, so that a frame
+   answers once. It is taken only while the last frame showed a question
+   open, `Proctor.last!B33`, which also refuses a press in the first frame,
+   whose last showed formulas' texts; and it is judged by the question the
+   person saw, the last frame's right option, since the answer moves this
+   frame's question, as a claim is judged by the hustle the person saw and an
+   order fills at the price shown. A right answer counts while the question
+   shown was one of the nine; the tenth's sets the style. Nothing is said of
+   right or wrong on screen at this dish: the next question is the answer's
+   echo, the proctor's remarks wait for an exam that answers on screen
+   (`MENU.2`'s decision 9), and the whys for the concept cards (`FRONT.5`).
+   *The alternatives:* this frame's question, which reads the answer's own
+   effect and so the question after it; the last option pressed of two.
+   *(Ten and the eleventh since the owner's word at the hand test, decision
+   4's amendment.)*
+
+6. **The score, the capital and the style (rec).** The score is the right
+   answers of the nine, a count; the firm's capital `500000+50000*score`
+   cents, $5,000 to $9,500, the contract's; the style the tenth answer, 1 to
+   4, 0 until it is given, which `BACK.2` turns into the firm's name; begun
+   once the certificate's button is pressed while the last frame showed all
+   ten answered, or at a waiver. The personal cash, $100, stays `PLATE.2`'s,
+   as `BACK.1`'s decision 8 left it, no pocket entering before its dish.
+   "Style", a fund's investment style, is the game's word for the docs'
+   archetype. *(Amended at the owner's hand test, 2026-10-17: the right
+   answers of the ten, $5,000 to $10,000, the eleventh the style, begun after
+   all eleven, decision 4's amendment. And the personal cash entered after
+   all, at the owner's word the same day, "Portfolio should list "Cash on
+   hand:" so the player can see their available cash inside their
+   portfolio", both pockets at the owner's choice: the Cash sheet, after the
+   Proctor, its personal cash at the start `B1`, $100, a value, the firm's
+   cash `B3`, the exam's capital, and the personal `B4`, the start and the
+   hustle's fees once paid; the Portfolio shows the two under its stocks,
+   "Cash on hand ($)", a line a pocket. The pockets' own books, a switch and
+   the orders stay `PLATE.1`'s and `PLATE.2`'s.)*
+
+7. **The keys: the Keys sheet's free buttons, each bound on its view while
+   its act can happen (rec).** A, B, C and D on the `b`, `x`, `y` and `start`
+   buttons while the Exam shows and a question is open; O on `select` while
+   the Certificate shows and waits for its button; Gigs' P on `a` as it
+   stands. Each code a formula of the sheet shown, the owner's word of
+   2026-10-16, as P's is:
+
+   | | A | B |
+   |---|---|---|
+   | 6 to 9 | `b`, `x`, `y`, `start` | `=IF(AND(Input!$B$19=Proctor!B24,Proctor!$B$33=1),Proctor!E24,"")`, a fill |
+   | 10 | `select` | `=IF(AND(Input!$B$19=Proctor!B28,Proctor!$B$32=10,Proctor!$B$41=0),Proctor!E28,"")` |
+
+   Each button stands for one act on one view, so no reader of a press asks
+   which view bound it, and Gigs' press is untouched; six of the ten are then
+   the game's, the arrows' four left for acts that move. A key bound only
+   while its act can happen leaves a later page's note of the game's keys
+   (`ENGINE.24`) naming only keys that act. The texts beside the buttons
+   name the keys, as "or press P" does, and a test holds each to its code.
+   Not `ENGINE.25`'s commands: approved and under construction in Alonzo, a
+   `(spec 5)` cartridge's, and unreleased; when a release carries them and
+   the pin moves, the exam's five keys may become the cartridge's own
+   commands, an item's of that move (Found). *The alternatives:* `ENGINE.25`
+   first, the exam waiting for a release and the cartridge for version 5; the
+   digits 1 to 4, one key on every layout and no picker to meet (Found), where
+   the options are lettered; the key rows `B17` and `B18`, which the viewport
+   also sees and the browser repeats (`BACK.1`'s decision 9).
+
+8. **The button's second writing: `clicked` enters `kitchen.vla` (rec).**
+   `BACK.1`'s click is written a second time, five times over, by the exam's
+   options and the certificate's button, so by the ratchet it enters the
+   library: a verb of one formula row over a cell or a fill, taking the
+   sheet, the range and three pieces, the references to the button's view,
+   column and row as the range's first cell reads them, and writing
+   `=IF(AND(Input!$B$19=<view>,Input!$B$11=<column>,Input!$B$12=<row>,Input!$B$13=1,Input.last!$B$13=0),1,0)`.
+   The Hustle's `B9` is rewritten over it, `(clicked "B9" "$B$3" "$B$4"
+   "$B$5")`, expanding to its bytes unchanged, the hoist's proof; the
+   Proctor's five are one fill over the buttons' table, `(clicked "F24:F28"
+   "B24" "C24" "D24")`, a row a button. Its name is the Hustle's own label for
+   the cell. `MISE.6`'s hoist ledger gains its row: *`clicked`, a left button
+   pressed on a cell of a view; from `BACK.1`'s Gigs and `GUARD.1`'s exam and
+   certificate; into `src/kitchen.vla`; course 0; the Hustle's row byte for
+   byte.* A button's click and key together, `PLATE.1`'s pair, waits for its
+   own second writing there. *The alternative:* the click written by hand
+   again and hoisted with `PLATE.1`'s twenty-four.
+
+9. **The views: the Exam and the Certificate, each a sheet of its own, first
+   among the tabs, the game opening on the Exam (rec).** Each opens on its
+   date and the bell's line and closes on the fine print, as every view does,
+   those three one shape each over four sheets.
+
+   The Exam, its column A 100 characters wide:
+
+   | | A |
+   |---|---|
+   | 1 | the date (`as-of`) |
+   | 2 | the bell's line (`bell`) |
+   | 3 | `=IF(Proctor!$B$33=1,IF(Proctor!$B$32<9,"The Series 777, question "&(Proctor!$B$32+1)&" of 10. It cannot be failed.","The Series 777, question 10 of 10, ungraded: it sets your firm's style."),IF(Proctor!$B$3=1,"The Series 777: waived.","Pencils down. Your certificate is on its sheet."))` |
+   | 5 | the question: `=IF(Proctor!$B$33=0,"",IF(Proctor!$B$32<9,Questions!$K$4,"Which best describes you?"))` |
+   | 7 to 10 | an option each: `=IF(Proctor!$B$33=0,"",IF(Proctor!$B$32<9,"[ "&Proctor!A24&" ]  "&Questions!K5,"[ "&Proctor!A24&" ]  "&Firms!A2))`, a fill |
+   | 12 | `=IF(Proctor!$B$33=1,"Click an answer, or press its letter: A, B, C or D.","")` |
+   | 14 | the fine print (`fine-print`) |
+
+   An option cell is its button whole: every option with its letter, 99
+   characters at the longest (*derived*), stands inside the column, which a
+   test holds over every question of the bank and the four styles, so that a
+   click on any character of it answers (`BACK.1`'s decision 3: a click on a
+   text's spill is the next cell's); the question, 130 characters at the
+   longest, spills past it into empty cells and is no button. The tenth's
+   prompt is the view's (`MENU.2`'s decision 4), its options the Firms
+   sheet's rows. Ten formula cells.
+
+   The Certificate, its column A 21 characters wide, as wide as its button's
+   text, and B 12, the width the dollars are padded for:
+
+   | | A | B |
+   |---|---|---|
+   | 1 | the date | |
+   | 2 | the bell's line | |
+   | 3 | `The Series 777: a certificate of completion` | |
+   | 5 | `=IF(Proctor!$B$33=1,"Pending: the proctor certifies after the tenth question.",IF(Proctor!$B$3=1,"Waived: the regulator assumes you would have passed.","The bearer has sat the Series 777 and passed, as every candidate does."))` | |
+   | 7 | `Correct answers` | `=Proctor!$B$38&" of 9"` |
+   | 8 | `Firm capital ($)` | the capital's dollars, `dollars` over `Proctor!B39` |
+   | 9 | `Style` | `=IF(Proctor!$B$40=0,"asked last",Firms!$D$3)` |
+   | 11 | `[ Open for business ]` | `or press O` |
+   | 13 to 15 | the plain statement whole: `=Caveats!G3`, a fill over `G3:G5` | |
+   | 17 | `Signed for the regulator by the proctor, whose signature is, on inspection, a doodle of a bull.` | |
+   | 19 | the fine print | |
+
+   The plain statement's three fields, where the record had two, since the
+   second, "Advice starts from those three", reads the first's three (Found).
+   Ten formula cells. The tab order, each sheet's state and the box: the
+   Exam, the Certificate, the Portfolio and Gigs, the views; the Day, Dice,
+   Market, Stocks, Hustle and Proctor, the model; the Disclosures, Questions
+   and Firms hidden, and the Caveats; then the Keys, Camera, Clock, File and
+   Input: sixteen tabs in the strip where twelve, "hidden sheets (24)" where
+   18, none numbered (`BD-2`). The game opens on the Exam, the first visible
+   sheet, the Camera's third row a formula with no value at the load (§3.1).
+   The cost of the five sheets, read before it is paid: every shape is
+   renumbered, two views standing before the Portfolio; and every record the
+   oracle reads lists forty sheet rows where thirty, the long tests' price
+   (P5), the Certificate's own share of it about a hundredth of each. *The
+   alternatives:* the certificate the Exam's lower half, a sheet and its twin
+   fewer and every cell of the view two-faced; the two views after Gigs, the
+   opening stated by a `(value "Camera" "B3" "Exam")` row after the Camera's
+   formula, which the load and the host both take, so that a later Overview
+   (`FRONT.3`) stands first with no reordering; the Certificate named
+   License, beside `GUARD.2`'s Licenses.
+   *(Amended at the owner's hand test, 2026-10-17. The Exam's `A3` in the
+   owner's words, edited into the source: "The Series 777, question N of 11.
+   Correct answers earn starting capital.", where it had read "It cannot be
+   failed.", eleven questions since decision 4's amendment. The
+   Certificate's plain statement under a heading, the owner's words: "The
+   caveat should have a "Caveat:" cell above it so the caveat doesn't read
+   like a random "You. ... statement" hanging on the certificate without
+   context": `A13` `Caveat:`, the statement `A14:A16`, the signature `A18`
+   and the fine print `A20`; its `B7` of ten. The buttons in Lovelace
+   Lavender, the owner's words: "Buttons like [ Open for business ] should be
+   highlighted with lavender background and white text": format 1, a fill of
+   `#A080E0`, on the Exam's four options, the Certificate's button and Gigs',
+   and a look of the empty text on the Exam drawing an option emptied after
+   the exam in the default look; the record holds no color for a text
+   (`vla-lang` 0.9.4), so the text stays the grid's dark, 5.3 to 1 against
+   the lavender, its white asked of Frazaro and Alonzo (`MISE.6`; Found
+   below). The views' dollars with their thousands grouped by commas, the
+   owner's word: "Thousands separators need to be implemented": the
+   library's `dollars`, and the Portfolio's change its signed twin, now the
+   library's `signed-dollars`, both over one walk, a comma four fifths of a
+   space and taking one off the padding. And the Portfolio's cash on hand
+   under its stocks, decision 6's amendment, the fine print moved to `A14`.
+   The Cash sheet stands after the Proctor: seventeen tabs in the strip,
+   "hidden sheets (25)".)*
+
+10. **The Camera: the hand-over, Exam to Certificate to the game (rec).** A
+    device sheet the game writes, visible after the Keys: the kit's `camera`
+    for its first two rows, the Screen's window at `A1`, unused and hidden but
+    two whole numbers for the host to read without a word; and its third row,
+    `A3` `sheet` beside `B3`
+    `=IF(Proctor!$B$41=1,Proctor!$B$6,IF(Proctor!$B$33=1,Proctor!$B$24,Proctor!$B$28))`.
+    At the load it has no value, so the game opens on the first visible sheet,
+    the Exam; at the first frame it names the Exam, a change the host shows on
+    the sheet already shown; at the tenth answer the Certificate; at the
+    certificate's button or a waiver, where the certificate leads. Three
+    changes in a game, each shown once, and between them the person's tabs
+    win, so a player who opens the Portfolio mid-exam sees the market at its
+    bell, and is shown the Certificate when the tenth is answered. The views'
+    names stay values of the model, `Proctor!B24`, `B28` and `B6`, so that a
+    layout moves no formula. *The alternative:* `B3` naming its sheets as
+    texts in the formula.
+
+11. **Where the certificate leads: the Portfolio, a value (rec).** The game's
+    opening before this dish and the view of the market the player has, until
+    the Overview (`FRONT.3`), which writes `Overview` into `Proctor!B6` and
+    moves no formula. *The alternatives:* Gigs, the first thing a player can do
+    for money; nowhere, the bell rung and the player's tab their own.
+
+12. **A second run's skip: a waiver, the Proctor's value, written by a
+    person's edit, at the owner's word (rec).** `Proctor!B3` written 1, by the
+    drawer's edit row, `(cell "Proctor" "B3" 1)`, at any frame: the game begins
+    at the next step, the exam closed, the score the waiver's, 5 of 9 and
+    $7,500, the middle of 0 to 9 rounded up (the open decisions' "the score
+    then the median"), and the style the waiver's, the first, both values a
+    person may edit; the certificate says the exam was waived, and the Camera
+    goes where it leads. Written before the first frame, it opens the market
+    at the first frame as today, which is how the oracle's long runs and a
+    hand test of the market play. No key or button on the Exam at this dish:
+    no run can tell it is a second, the engine keeping nothing between loads
+    until a save (`ENGINE.5`), so a key on the opening screen would offer
+    every first player a way past the controls tutorial (`BD-4`); the
+    manifest's notes say how, which a returning player reads in the drawer
+    before playing, and the act is a typed row, a keyboard's. *The
+    alternatives:* a key and its button on the Exam, W for waive, on every
+    run, a row of the Keys sheet and a click cell more; no waiver, every long
+    run answering the exam first, some twenty frames each, and every hand
+    test of the market starting with the exam. *(Amended at the hand test,
+    2026-10-17: five is the middle of 0 to 10, $7,500 as before, the
+    certificate saying 5 of 10.)*
+
+13. **The Firms sheet: the four styles alone (rec).** `src/content/firms.vla`,
+    the fourth content sheet, hidden after the Questions: one field, `Style`,
+    40 characters wide, its four rows the draft's answers, "I read the
+    prospectus", "I read the headlines", "I read the room" and "I feel"; its
+    row shown the source's `D2`, `=MAX(Proctor!$B$40,1)`, the style chosen and
+    the first before one is, so that its picker, `D3`, is the certificate's
+    style. The Exam's tenth reads its rows, `A2:A5`, by reference. `BACK.2`
+    adds the firm beside each, a field added to four rows, with its names and
+    its flavor. The layout check's content pin rises from 3 to 4. *The
+    alternative:* the firms' draft names now beside the styles, Prudent &
+    Sons, Headline Capital, Read-the-Room Partners and Vibes LLC (`BUFFET.md`
+    §3), a field read by nothing until `BACK.2`, which `MENU.2`'s decision 9
+    would leave for its dish. *(The fourth style in the owner's words at the
+    hand test, 2026-10-17, edited into `firms.vla`: "I feel the market", where
+    the draft had "I feel". The Exam's eleventh reads the rows since decision
+    4's amendment.)*
+
+14. **The texts, drafts (rec).** The bell's fifth line, "The market opens when
+    you leave the exam room.", with no joke but the room, being a line a
+    player acts on; the Exam's status lines, its line of keys and the tenth's
+    prompt; the Certificate's title, its three headlines, its labels, its
+    button and the signature, `BUFFET.md` §3's "a doodle of a bull" kept. Every
+    one is a fund manager's word or an examiner's (`BD-2`), the jokes the
+    regulator's and the proctor's. `BUFFET.md` §3's "you have failed in a way
+    the regulator has decided to call passing" is offered for the owner's
+    taste as the passed headline's joke, where the draft says "as every
+    candidate does". *(The owner's words at the hand test, 2026-10-17, edited
+    into the files: the Exam's status line, "Correct answers earn starting
+    capital.", where the draft had "It cannot be failed."; and the bank's
+    first question, "Which asset is the most liquid?", where `MENU.2` had
+    "Which is the most liquid?". The passed headline's draft stands.)*
+
+15. **The caveats, drafts (rec).** A dish that brings a simplification brings
+    its row (`BD-5`), and this one brings two, the first owed since `MENU.5`:
+
+    | | Things this game gets wrong | In the real world | Management's response | Where |
+    |---|---|---|---|---|
+    | 15, new | The Series 777 cannot be failed, and nine questions license you to manage other people's money. | FINRA's qualification exams can be failed: the Series 7 asks 125 scored questions and passes at 72% (check). | Management passed the Series 777 on its first attempt, as everyone does. | `Proctor!B38` |
+    | 16, new | The market waits at its opening bell until you leave the exam room. | The opening bell rings at 9:30 whether or not anyone has finished an exam. | Management asked the exchange to hold the bell. The exchange agreed, this once. | `Day!B26` |
+
+    Row 15's claim is marked for `MENU.8`'s read. *(Row 15 reads "ten
+    questions" since the owner's eleven at the hand test, 2026-10-17.)*
+
+16. **The notes and the comments (rec).** The manifest's notes open on the
+    exam: "... the game opens on the Series 777, the regulator's exam for a
+    fund manager, ten questions answered by a click or a key, nine of them
+    scored, each right answer $500 more of the firm's $5,000, and the last its
+    style; then its certificate, and the Portfolio at Monday's opening bell
+    ... A returning candidate may waive the exam, a 1 in Proctor!B3, at five
+    correct answers." The back office's list gains the proctor's books. The
+    source's opening comment lists `GUARD.1`, and its comment on the market's
+    clock says the bell waits; `kitchen.vla`'s header gains `clicked`, and
+    `bell`'s comment its fifth line.
+
+17. **The oracle (rec).** In `oracle/src/buffet.rs` and
+    `oracle/tests/cartridge.rs`:
+    - *The hand's exam*, sharing no predicate with the cells: the primes above
+      1,547 found by the hand's own `is_prime`; the draw walked a row at a
+      time, each the last plus the stride's remainder, wrapping, where a cell
+      computes its row from the start; the answers kept as a list of the
+      options given beside the rows shown, the score counted by comparing an
+      option's letter with the bank's letter, as text; the capital, the style
+      and the begin as the contract states them. Its own test: every bank from
+      9 to 1,547 rows with every stride, nine rows and no repeat; the ten
+      strides prime and above 1,547; every score's capital.
+    - *The hand's calendar waits*: a frame before the bell stands at the first
+      frame's time, the session day 0's at its mark 0 and the market closed;
+      the game's first frame stands there too, and every frame after it is
+      two minutes on.
+    - *The draw at every seed of a thousand*: the seed written into the Clock
+      as a person's edit, 1 to 1,000 and the contract's, a step each; the
+      start, the stride and the nine rows the hand's, none repeated, each a
+      row of the bank.
+    - *A scripted session*, every frame held: the Input rows written as the
+      host writes them, the keys through the Keys sheet as the host reads it
+      after every step; at every frame the Proctor's workings, the Exam, the
+      Certificate, the Camera's sheet, the keys each view binds, and the Day's
+      wait, the hand's. Its presses: one in the first frame, refused; a click
+      answering right, and a key answering wrong; a click on the question,
+      beside the options; a click at an option's address while the Portfolio
+      shows, and a key there, unbound; a key held on the Portfolio as the Exam
+      is shown under it, a press the frame it is bound; a click and a key on
+      two options in one frame, the first answering once; the Portfolio
+      mid-exam, every price its start and the time 9:30; the tenth by its key,
+      the style; the Camera showing the Certificate, A to D unbound and O
+      bound there; the certificate's button pressed before the tenth, refused,
+      and after it, the game begun; then the market's first frames, the bell
+      at the game's first frame and 9:32 at the next, held to the hand's
+      calendar with its wait.
+    - *The score to capital*: ten sessions, right answers 0 to 9 by key, the
+      capital and the certificate's dollars the contract's; and a waiver
+      written at each score, the same.
+    - *A waiver*: before the first frame, the market from the first frame and
+      the Camera at the Portfolio; mid-exam, the exam closed at the next step.
+    - *The settings, the views and the keys*: the Proctor's settings and
+      buttons the hand's; every option of the bank and every style inside the
+      Exam's column; each button's text at its place; the keys named beside
+      them, each bound; no code the viewport's, and no Alt; every column of
+      dollars 12 characters, the Certificate's among them.
+    - *The long runs*, each with a waiver before its first frame, so that its
+      market and its hand stand as today; the exam's views held at the run's
+      first frame and its last, their date, bell and fine print being the
+      Portfolio's own shapes over four sheets, which the census shows.
+    - *Kept*: the cartridge its source expanded, the Hustle's row byte for
+      byte under the verb; `BD-7`'s scan, its list grown by `Day!B26` and its
+      twin; the census's `(every-frame 0)`; nothing reads a view, `VIEWS`
+      naming the Exam and the Certificate; the tab order; each content sheet
+      its file, `CONTENT` naming the Firms; the Questions' first question,
+      now the draw's first row; the describe golden blessed again and read in
+      its diff with the shapes' numbers stripped.
+    - *Mutants*, each written into the source or the library by one anchor and
+      expanded before the suite runs, each failing the test written for it:
+      the stride 1,560, a multiple of 20; the start 0; an answer judged by this
+      frame's question; the tenth counted in the score; the bell not waiting,
+      `B4`'s `-B26` lost; the bell rung at the tenth answer, `B25` reading the
+      question open; an answer's key bound on every sheet; the option keys
+      bound after the exam; the certificate's button beginning the game
+      before the tenth; the capital a correct answer adds lost; the waiver's
+      score ignored; the Camera never showing the Certificate; the click's
+      edge lost in the verb, which fails the hustle and the exam alike; and
+      the Exam's column 60 characters, an option past its edge.
+
+18. **What it costs, measured (rec).** As `POT.10` took it. Natively: this
+    tree's runner timing both cartridges, `b82793c`'s texts copied into its
+    tree for the runs marked before, pinned to the performance cores and
+    opted out of Windows' throttling, a fixed computation before and after:
+    the pass, the load and the first frame in both; an ordinary frame, a half
+    hour's turn, a mark, the bell, the close and midnight in both, this tree's
+    waived; and in this tree an exam's still frame, a pointer's move over the
+    options, an answer by click and by key, the tenth and the begin, each its
+    write and its step apart. Each test timed alone, in this tree and in a
+    `git archive` of `b82793c` built in a target of its own, before the
+    suite's whole is read. In the browser, `POT.10`'s instruments copied into
+    this session's scratchpad: the page built here, three runs in headless
+    Chrome at the owner's full screen, every process opted out and pinned; an
+    exam played by real clicks and keys through the DevTools protocol, each
+    answer timed by `BACK.1`'s latency instrument from the event's own
+    timestamp to the end of the tick that painted the next question, and to
+    the next animation frame, at p50, p95 and the longest, against the
+    contract's 100 ms at p95; the Camera's two hand-overs; the still ticks of
+    an exam left alone; then a week of the market as `POT.10`'s P8. And the
+    owner's own Chrome, the probe copy printing the same in a corner.
+
+19. **The hand test, the owner's, on the page built here:** the strip and its
+    box; the Exam at the first frame, its date, the bell's waiting line, the
+    first question and its four options; a click in the sheet first (Found);
+    answers by clicks and by keys, the question's number climbing; the
+    Portfolio mid-exam, the market at its bell, every price its start; the
+    tenth and its styles; the Certificate shown by itself, its score, its
+    capital in dollars, its style, the plain statement and the signature; O
+    or its button, the Portfolio at 9:30 and the market open, its first move
+    at 10:00; the Proctor's books; a second load waived by the drawer's edit
+    row, the Portfolio at once and the certificate saying so; Build's text
+    compared with `src/buffet.vla` by a command given at the handover, since
+    the page prints no "same bytes"; and the probe copy's corner after a few
+    minutes.
+
+20. **The stale places, rewritten at the build.** In `OMAKASE.md`:
+    `GUARD.1`'s line, 🟡 from the approval, its text as the decisions leave it
+    (it still says "a draw of nine scored and one ungraded"); the contract's
+    exam, its waiver and the bell's wait, dated; `BD-7`'s dated clause, the
+    frames the bell waited counted by the Day sheet alone; `BD-5`'s list, the
+    exam's caveat taken; `BACK.2`'s line, the Firms sheet arrived with its
+    styles and the certificate's style where its name will go; `PLATE.1`'s,
+    the click hoisted at `GUARD.1` and its orders refused while the bell
+    waits; `PLATE.2`'s, the firm's capital at `Proctor!B39`; `FRONT.3`'s, the
+    certificate's lead at `Proctor!B6`; `MISE.6`'s hoist ledger, `clicked`,
+    and its key chords' row, `ENGINE.25` approved and under construction; and
+    the open decisions' row on the exam's skip, answered, dated. The source's
+    opening comment, notes, sheets row and the Day's section, the Hustle's
+    click, the Proctor's section, the Questions' row shown, the views'
+    sections, the Keys' and the Camera's; `kitchen.vla`'s header, `clicked`
+    and `bell`; `src/content/firms.vla`, and `src/content/README.md`'s fourth
+    sheet; the caveats' file; `check_layout.ps1`'s pin, header and control;
+    `oracle/src/buffet.rs`'s module comment, the exam and the calendar's wait;
+    the module comments of `oracle/src/lib.rs` and `oracle/tests/cartridge.rs`;
+    the describe golden; `BACK.1`'s and `POT.10`'s P5 cells, CI's Linux at the
+    push; `Delta/CLAUDE.md`'s map, the exam's sheets, the waiver and the
+    Camera among the edits that trip a test; the memory. Not this item: the
+    firm's name (`BACK.2`), the pockets (`PLATE.2`), the plate and its orders
+    (`PLATE.1`), the overview (`FRONT.3`), the proctor's remarks (`MENU.4`),
+    the license ladder (`GUARD.2`), the looks (`FRONT.2`'s second slice), and
+    the replay golden (the tasting).
+
+**Found at the scoping**, measured or read, none minted:
+- *The opening's first key.* At the pin a pick leaves the focus on the
+  picker, where a typed "a" picks "An empty sheet" and loads it, the game
+  gone (`BACK.1`'s finding, mended in Alonzo's `ENGINE.23`, `dc32bbc`,
+  unreleased); a "b" names the game already picked, and "c", "d" and "o" name
+  nothing. The exam's first answer by key, A, meets it until the pin moves
+  past that release, so the hand test clicks the sheet first.
+- *A key by its place* (`SPEC.md` §3.3). `KeyA` is the key where QWERTY's A
+  stands: A on QWERTY, QWERTZ and Dvorak, Q on AZERTY, where the view says A.
+- *The plain statement's second field reads its first.* "Advice starts from
+  those three" names the goals, the means and the timeline of `G3`, and the
+  record's `G4:G5` (`MENU.5`'s decision 4) shows it without them; so the
+  certificate shows `G3:G5`.
+- *A question added moves every exam.* The draw reads the bank's count, so a
+  row added changes the start and the stride's remainder at every seed, the
+  first game's exam among them: a replay's answers then meet other questions,
+  and its golden moves with them, the tasting's to know.
+- *The hustle through the exam.* Gigs never asks whether the market is open,
+  so a claim made during the exam counts against day 0 at 9:30, its fee due
+  at day 1's 9:30; harmless while the bell waits, where `PLATE.1`'s orders are
+  refused by the market's own `B19`.
+- *The Questions' row shown a formula.* A person's edit of `Questions!K2`
+  replaces the formula for the run, as `MENU.2`'s tests write it to walk every
+  row; the exam then shows the row written, and its judging follows it.
+- *`ENGINE.25` at version 5.* When it is released and pinned, the exam's five
+  keys may become `buffet.<command>` lines of the palette, the cartridge then
+  `(spec 5)`; a move of the pin's own item.
+
+**The predictions, before any number.** The numbers column is filled at the
+build, P9 at the owner's hand test; P3 to P5 and P8 as decision 18 says.
+
+| | What | Predicted | The number |
+|---|---|---|---|
+| P1 | the cartridge | 715 to 740 rows where 569 stand, about 725: the sheets row's three names more; the Day's four; the Proctor's 89, its labels, its values and its 34 formula cells; the Firms' 13; the Exam's 8 and the Certificate's 17; the Keys' seven more and the Camera's seven; the caveats' two rows of four fields; 255 to 275 formula cells where 201, about 266, in about 127 formula rows where 86; the diff the notes, the sheets row, the Day's `B4`, `B19` and its new block, the Hustle's `B9` unmoved, the Proctor after the Hustle, the Questions' `K2` a formula, the Firms after the Questions, the caveats' rows, the two views before the Portfolio, and the Keys' and the Camera's rows at the end | *Measurement*: the runner printed `(rows 725) (loads yes)`, as about 725 predicted, each sheet's rows as priced: the sheets row's three names, the Day's four, the Proctor's 89, the Firms' 13, the Exam's 8 and the Certificate's 17, the Keys' seven more, the Camera's seven and the caveats' eight; 266 formula cells in 127 formula rows where 201 and 86, as predicted; the diff 11 lines out and 167 in, the Hustle's `B9` unmoved. **Missed** in one: the diff's list left out the Portfolio's and Gigs' `A2`, the bell's formula, which its new line, the market waiting for the exam, moves on both views that stood; the caveats' count `G1` and its four pickers moved with the caveats' rows, as the list's "the caveats' rows" meant |
+| P2 | the describe golden | the notes; `(device "Camera" "A1:B3" effect)` after the File's; `(budget 30 266 7980 2000000)`, give or take ten cells; the plan's shapes 112 to 125 where 83, every-frame and cycles 0; readers rows new for the Proctor, its twin and the Firms; the Questions' grown by the Exam's and the Proctor's reads, the Caveats' by the certificate's, the Day's by the wait's, the Dice's by the start and the stride, the Input's and its twin's by the clicks and the keys, and the Day's twin's by the count; the views' date, bell and fine print each one shape over four sheets, `(sheets 4)`; every other shape's row its own but for its number | *Measurement*: the notes; `(device "Camera" "A1:B3" effect)` after the File's; `(budget 30 266 7980 2000000)`, the cells exactly; `(plan (shapes 117) (texts 115) (formulas 266) (levels 31) (runs 15) (lanes 68) (alone 198) (every-frame 0) (cycles 0))`; readers rows new, `(readers "Proctor" 67 (most 8))`, `(readers "Proctor.last" 8)` and `(readers "Firms" 7)`; the Questions' 172 where 168, the Caveats' 69 where 60, the Day's 59 where 56, the Dice's 10 where 8, the Input's 13 where 6 and its twin's 4 where 2, the Day's twin's 5 where 3; the views' date, bell and fine print each one shape over four sheets, `(sheets 4)`; every shape renumbered, the two views standing before the model. **Missed** in one: the plan's levels 31 where 30, and every shape below the calendar a level deeper, so that its row moved by more than its number: the time to the minute, `Day!B4`, now reads the frames the bell waited, `B26`, a count over twins at level 0, which sets the time at level 1 where 0 and makes the calendar's chain, the longest, one longer, `Day!B14` at 2 where 1 and the Stocks' prices at 28 where 27 |
+| P3 | the pass and the load | the pass 0.6 to 1.4 ms longer than `b82793c`'s 5.4 to 5.5; the load 0.4 to 0.9 ms longer than its 2.7 | *Measurement*, this tree's runner over both cartridges, `b82793c`'s four texts (the source, the library, the caveats, the cartridge) copied into its tree for the runs marked before, six runs alternated, 200 passes and 200 loads a run, every run pinned to the performance cores and opted out of Windows' throttling, a fixed computation before and after within 3.2%: the pass 6.51 to 6.61 ms at p50 where it took 5.53 to 5.59, about 1.0 longer, inside. **Missed** in one: the load 3.66 to 3.72 ms where 2.62 to 2.77, about 1.0 longer, over its 0.4 to 0.9, priced short of its rows: `POT.10`'s 69 rows more had cost 0.5 ms, and these are 156 |
+| P4 | the step | waived, an ordinary frame within 0.3 µs of `b82793c`'s 2.5, three cells as now; a half hour's turn and a mark each 1 to 3 µs dearer, the date on four views where two; the bell, the close and midnight each 1 to 4 µs dearer, the bell's line on four; the first frame 160 to 195 µs where 140 to 153. In this tree: an exam's still frame 2.4 to 3.2 µs; a pointer's move over the options, its write 3.5 to 4.5 µs and its step 3.5 to 6; an answer, its write 2 to 3 µs and its step 15 to 40; the tenth 15 to 45; the begin 10 to 35 | *Measurement*, the same runs, ten days at two minutes a frame, the exam waived before the first frame, each frame filed by what the hand's calendar ticked beside it turned: an ordinary frame 2.8 to 2.9 µs where 2.5 to 2.6, inside at its edge; the first frame 184 to 189 µs where 140 to 151, inside. In this tree, over 200 exams each a fresh load, the Input rows written as the host writes them: a pointer's move, its write 3.8 to 3.9 µs and its step 3.6 to 3.7, inside; an answer's write 2.3 to 2.4, inside, and its step 15.5 to 15.7 by a click and 17.5 to 17.8 by a key, inside; the frame after an answer 8.3, and after the begin 4.7. An exam's still frame, timed first on frames 2 to 4, 5.0 to 5.1 µs, those frames still carrying the first frame's state through the twins; timed again from the fifth frame, twenty an exam, in three runs of this tree alone, 2.9 µs, inside. **Missed** in two: every turn of the calendar dearer than priced, a half hour 13.9 to 14.4 µs where 9.5 to 9.7, a mark 28.9 to 29.5 where 24.0 to 24.3, the bell 30.2 to 36.2 where 24.8 to 30.1, the close 31.6 to 32.6 where 25.0 to 25.8, and midnight 32.2 to 38.7 where 26.6 to 34.0, each 4.4 to 6.8 µs more where 1 to 4 were priced: a run with the Exam's and the Certificate's dates taken out read a half hour at 9.9 µs and a mark at 24.6, so each view's date, its text joined anew at every half hour, costs about 2 µs, where a quarter to three quarters of that was priced; and the tenth's step 13.8 µs and the begin's 7.1, under their 15 to 45 and 10 to 35 |
+| P5 | the suite | 62 to 66 tests green where 56, and in CI on Linux; each long test 3 to 12% dearer alone, its records listing forty sheet rows where thirty and a waiver written before it; the draw at a thousand seeds 0.2 to 0.6 s, the scripted exam 0.05 to 0.25, the ten score sessions 0.05 to 0.3; the suite's whole 4.2 to 5.2 s on eight threads where 4.0 to 4.6 | *Measurement*, here: 66 green, the crate's 27 and the cartridge's 39, inside at its edge; the suite's whole on eight threads 4.45 to 4.73 s, the median 4.55, where `b82793c`'s took 4.12 to 4.67, the median 4.19, four rounds alternated, pinned and opted out, inside. Each test timed alone, two rounds alternated, one thread, the least of each: the ten days at every frame 2.81 s where 2.53, 11% dearer; the hour's year 4.38 where 4.07, 7%; the year at difficulty 0 1.83 where 1.74, 5%; the eight hundred days 0.44 where 0.40, 9%; the hustle's session 0.17 where 0.14, its script rewritten over the new verb and its keys read as a set; the scripted exam 0.053, inside at its edge, and the ten score sessions 0.146, inside; the waiver's two sessions 0.029, the settings 0.012 and the opening 0.012; the whole 14.77 s where 13.11. A record of one cell, counted in each tree, lists 40 sheet rows where 30, 1,196 characters where 921. **Missed** in two: the hundred years at a frame a day 4.38 s where 3.84, 14% dearer, over its 3 to 12%; and the draw at a thousand seeds 0.065 s, under its 0.2 to 0.6, one load and the seed written into the Clock a step. Linux at the push |
+| P6 | the page | the cartridge's block 8,500 to 13,000 characters longer, the source's 10,000 to 18,000, the library's 1,000 to 2,000, the caveats' 600 to 1,100, and a block new, `library-content-firms`, 900 to 1,600: the page between 1,872,000 and 1,890,000 characters where 1,852,402 stands; Build writing the cartridge byte for byte | *Measurement*: 1,881,861 characters, 29,459 more than `b82793c`'s 1,852,402, inside: the cartridge's block 9,599 longer, the source's 15,936 and the library's 1,963, each inside, the last at its edge, and the new block, `library-content-firms`, 1,293 characters of text, inside, the five and the new block's tags adding to the page's growth exactly; Build writing the cartridge byte for byte, 44,322 characters, checked headlessly (P9). **Missed** in one: the caveats' block 571 longer, under its 600 to 1,100, its two rows shorter than priced |
+| P7 | the checks | 4 checks and 4 controls green; one file added under `src/`, `src/content/firms.vla`; `check_layout.ps1`'s pin raised from 3 to 4, its header and its control's mutant past the pin moved to a fifth; no other check edited | *Measurement*: ALL GREEN, 4 checks and 4 controls; one file added under `src/`, `src/content/firms.vla`; `check_layout.ps1`'s pin raised from 3 to 4, its header with it, and its control's mutant past the pin a fifth sheet; no other check edited. **Missed** in one: the control wanted three edits more, which its first run failed for: its scratch copy the nine files where eight, the Firms file among them, its clean copy held to nine, and the Firms file put back after each mutant with the others, the mutant past the pin having failed for the file's absence where it should have failed for its count |
+| P8 | an answer's cost in Chrome at full screen | a click to painted 13 to 20 ms at p50 and 30 to 34 at p95, and to the next frame 46 to 51 at p95, the contract's 100 ms met by half, as `BACK.1`'s claim is; a key within a frame of a click at p95; an answer's patch 0.5 to 0.9 ms, the question, its options and the status; each hand-over 1 to 3 ms, a sheet shown whole; an exam's still tick 0.2 ms at p50 and 0.3 at p95; then the market's week as `POT.10`'s, the main thread 0.76 to 0.86 ms a frame; the owner's Chrome within a tenth | *Measurement*, three runs in headless Chrome at 2,560 by 1,440 CSS pixels at 1.5, its eleven processes opted out and pinned, the clock within 1.8%; in each, four exams, the game picked again for each, a click on the question first, which answers nothing and gives the game its keys, then ten answers, a real click on an option and a key by turns at a random wait, then O: a click to painted 16.3 to 16.5 ms at p50 and 32.8 to 33.2 at p95, at its longest 33.1 to 33.4, inside; to the next frame, the answer shown, 32.4 to 32.7 at p50 and 49.0 to 49.1 at p95, at its longest 49.1 to 49.4, inside: the contract's 100 ms at p95 met by half. A key to painted 17.2 to 21.7 at p50 and 31.8 to 34.0 at p95, shown 47.7 to 49.5 at p95, within a frame of a click, inside; O, four a run, shown 32.2 to 47.8 at p95. An answer's patch 0.6 ms at p50, inside; a hand-over, the Certificate or the Portfolio shown whole, 2.4 to 2.6 at p50, inside; an exam's still tick 0.2 at p50, over 1,737 to 1,903 a run. Then the market's week, three runs, the exam waived by a person's edit once the host ran and each frame filed by the market's own time, the frames the bell waited read once: a still tick 0.2 ms at p50 and 0.3 at p95, as `POT.10`'s; a half hour's patch 0.4 and 0.5 to 0.7; a mark's 0.5 to 0.6 and 0.6 to 1.0; the bell's 0.5 to 0.6 and 0.5 to 0.7; midnight's 0.4 to 0.5 and 0.5 to 0.6; 96 or 97 of 1,440 frames patched; the main thread 0.79 to 0.80 ms a frame, inside; at the dial's 120, a week of about 5,045 frames, a two-frame tick 0.4 at p50 and 0.7 at p95, at its longest 1.3 to 1.9. **Missed** in five: an answer's patch 0.9 to 1.5 ms at p95, over its 0.9 in two runs of three; a hand-over 3.3 to 3.5 at p95, over its 3; an exam's still tick 0.4 at p95 where 0.3; the close's patch 0.6 to 0.7 at p50 and 0.7 to 1.3 at p95, two ticks a run, where `POT.10`'s read 0.5 and 0.5 to 0.7; and at the dial's 120 the main thread 0.37 to 0.38 ms a frame where `POT.10`'s 0.34 to 0.36. The owner's own Chrome, the probe copy's corner at the hand test over 6,233 frames, the exam answered by keys: ten keys painted 13.1 ms at p50 and 31.5 at p95, shown 29.2 and 45.8, at their longest 45.8; O shown at 27.7; a still tick 0.2 ms at p50 and 0.3 at p95, at its longest 0.6; a patch 0.4 and 0.6, at its longest 1.2, over 388 frames patched, the market's most of them; 5,833 frames still: headless's p95s within 2.5 ms and the owner's lower, the still tick's within a tenth. **Missed** in one more: a sheet shown, two ticks, 3.0 ms where headless read 2.4 to 2.6 at p50 |
+| P9 | the hand test | the strip of sixteen and "hidden sheets (24)"; the Exam at Monday's 9:30, the bell's waiting line and "Which is the most liquid?"; the answers by click and by key, the Portfolio still at its starts mid-exam; the tenth, and the Certificate shown by itself, the capital the contract's; O to the Portfolio, the market open and moving at 10:00; a waiver's second load opening on the Portfolio; Build's bytes the file's, checked headlessly | *Headlessly*, over the page built here, before the owner's test, its steps driven through the DevTools protocol: the first frame on the Exam, "As of Monday, year 1, day 1, 9:30 (unaudited)" over "The market opens when you leave the exam room.", "The Series 777, question 1 of 10. It cannot be failed." and "Which is the most liquid?", its four options and A to D bound; Build's bytes the file's, 44,322 characters; the strip of sixteen, from the Exam to the Input sheet, and "hidden sheets (24)"; a click on the question answering nothing; nine answers by a click and a key in turns, each judged as the hand judges it, six right, the capital rising $500 at each right one; the Portfolio mid-exam at 9:30 on the starts, `====`, under the bell's waiting line; the tenth, "Which best describes you?" over the four styles; its answer by C showing the Certificate by itself, A to D unbound there and O bound: "The bearer has sat the Series 777 and passed, as every candidate does.", 6 of 9, 8000.00, "I read the room", the plain statement in its three fields and the proctor's signature; A there doing nothing; O beginning the game, the Portfolio shown under "The market is open until 16:00.", the first prices moving at 10:00, fifteen frames on, `==▲▲`; the Exam then "Pencils down. Your certificate is on its sheet."; and a second load waived after its first frame by an edit through the host, as the drawer's edit row writes one, opening on the Portfolio at 9:30, the bell having waited that one frame, its certificate "Waived: the regulator assumes you would have passed.", 5 of 9, 7500.00, "I read the prospectus". The owner's, on the page built here and the probe copy, 2026-10-17: passed, "Tests pass.", the exam sat, the certificate at 1 of 9 and 5500.00, the Proctor's books and the market's second week seen; with three texts reworded in the tree and seven changes asked, each in the owner's words, in the paragraph below; and the second the same day, over the changes: passed, "Tests pass; commit." |
+
+*Scoped 2026-10-17. Approved by the owner the same day, whole:
+"Recommendations approved; proceed with implementing GUARD.1 as scoped." So
+every decision stands as recommended, the drafts among them until the owner
+rewrites them, and the waiver is a person's edit of `Proctor!B3` with no key on
+the opening screen (decision 12); the roadmap's line went to 🟡 the same
+hour.*
+
+**What the build found.** The exam held as the decisions drew it, and the
+hand learned one rule from the cartridge: an answer is judged by what the
+last frame showed, so a press in the first frame, whose last frame showed no
+question, is refused, `Proctor.last!B33` reading 0 there, where the hand had
+taken it; the hand now counts its frames and takes no answer in its first,
+its own tests hold that refusal, and the scripted exam opens with such a
+press. One test of the market from the first frame failed on its own load:
+the disclosures' row added, its fine print turning with the day, never saw
+its day come, the bell waiting for an exam no one sat; it now writes the
+waiver with its other edits, as the long runs do through `cartridge()`. The
+hand then met the cells at every frame of every run from the first: the
+scripted exam's proctor's books, both views, the keys each view binds, the
+Day sheet's wait and the market at its bell, through every press the script
+draws, the tenth and the begin among them; the draw at every seed of a
+thousand and the contract's, no row repeated; the score at each of its ten
+values, $5,000 to $9,500; and a waiver before the first frame and in the
+middle of an exam. The census found the calendar's chain a level longer, the
+time to the minute reading the frames the bell waited (P2), and the timings
+found each view's date about 2 µs at every half hour, four views joining it
+where two did (P4); a frame timed after a load carries the first frame's
+state through the twins to its fourth, so an exam's still frame was timed
+again from its fifth, 2.9 µs. Fifteen mutants, each written into the source
+or the library by one anchor and expanded before the suite ran, each failed
+the test written for it: the stride a multiple of twenty and the start 0,
+each caught by the draw; an answer judged by this frame's question; the
+tenth counted in the score; the bell not waiting, and rung at the tenth
+answer; an option's key bound on every sheet, and after the exam; the
+certificate's button beginning the game before the tenth; the capital's $500
+lost; the waiver's score ignored; the Camera never showing the Certificate;
+the click's edge lost in `clicked`; the Exam's column 60 characters, an
+option past its edge; and the bell's waiting line never shown. The click's
+edge survived the exam's session at its first run, the script holding no
+click across two frames, so a click held across three was added, and the
+mutant failed it then, with the hustle's session. The layout check's control
+failed its first run on the new file it did not yet copy and put back (P7),
+and the offline check on a page built before the sources moved, until the
+page was built again. Every prediction measured missed in part, each named
+beside its number. In the page, driven headlessly (P9), every line the
+scoping drew appeared where it was drawn, and in Chrome at the owner's full
+screen an answer is painted 16.3 to 16.5 ms after its click at p50 and shown
+49.0 to 49.1 ms after it at p95, the contract's 100 ms met by half (P8).
+Found with it: a waiver written after the first frame lands at the next
+step, the bell waiting the frames before it, one in the headless run, as
+decision 12 has it; and each view joins its own date, so a fifth view
+(`FRONT.3`'s Overview) adds about 2 µs to every half hour unless the date is
+joined once on the model and each view reads it, a choice left to that dish.
+
+**The owner's hand test, and what it changed.** On the page built here and
+the probe copy, 2026-10-17: passed, "Tests pass.", the exam sat to 1 of 9 and
+5500.00, the Proctor's books and the market's second week seen, and the probe
+copy's corner sent (P8, P9). The owner reworded three texts in the tree, each
+kept: the Exam's line, "Correct answers earn starting capital.", where it read
+"It cannot be failed."; the fourth style, "I feel the market", where "I feel";
+and the bank's first question, "Which asset is the most liquid?", where "Which
+is the most liquid?". And asked seven things, each in the owner's words and
+each settled the same day, one by the owner's answer to one question, "Both
+pockets":
+
+- "The exam should have 11 question (10 of substance, the eleventh question
+  being firm style)": ten questions scored and an eleventh, the style
+  (decisions 4, 5, 6, 9, 12 and 15, amended): the draw's ten rows, the score
+  of ten and the capital $5,000 to $10,000, the Certificate's "of 10", a
+  waiver's five the middle of 0 to 10, and the caveat's row 15, "ten
+  questions".
+- "Thousands separators need to be implemented": the views' dollars grouped
+  by commas (decision 9 and `POT.10`'s decision 11, amended), a comma taking
+  a space off the padding; the Portfolio's change the library's
+  `signed-dollars`, the price's signed twin. The model's numbers, cents in
+  number cells, wait for the record's number format (`MISE.6`).
+- "Buttons like [ Open for business ] should be highlighted with lavender
+  background and white text": the fill on every button, the Exam's options
+  undrawn once emptied; the white waits for a text's color in the record
+  (`MISE.6`), and takes the deep shade with it (Found).
+- "Is it possible to change the cursor to a pointer when hovering over
+  specific cells? That would help indicate that it's a button.": not from a
+  cartridge at the pin, the viewport giving every cell one cursor and no row
+  of the record saying a cell is a button; a candidate for Alonzo (`MISE.6`),
+  its item the owner's to mint.
+- "The caveat should have a "Caveat:" cell above it so the caveat doesn't read
+  like a random "You. ... statement" hanging on the certificate without
+  context": the heading, `Certificate!A13` (decision 9, amended).
+- "Portfolio should list "Cash on hand:" so the player can see their available
+  cash inside their portfolio": both pockets, the owner's choice when asked
+  which: the Cash sheet after the Proctor, its personal cash at the start,
+  $100, the firm's cash, the exam's capital, and the personal, the start and
+  the hustle's fees once paid, shown under the stocks a line a pocket
+  (decision 6 amended, `BACK.1`'s decision 8's alternative taken).
+- "Proofreading a prospectus should earn $250, not $20, unless you think the
+  math works out better at $25 per prospectus?": $250, my answer being that
+  the math works better there. A day's proofreading at $250 is a plausible
+  fee where $25 was a joke at the player's expense; four claims bring the
+  personal cash to $1,100, enough for whole shares of every rung and a
+  session's moves in dollars rather than cents, and still a fifth of the
+  least firm's $5,000, so that the firm stays the game; the cap of four keeps
+  the hustle the pocket's start and not its loop.
+
+**What the changes cost.** The cartridge 748 rows where 725 and 271 formula
+cells where 266: the Cash sheet's 8 rows, the Portfolio's 5, the draw's
+tenth, the format, six styles and a look, and the Certificate's heading. The
+describe golden blessed again, `(budget 30 271 8130 2000000)`, `(plan (shapes
+120) ...)` and `(readers "Cash" 2)`, the Portfolio's two cash cells one shape.
+67 tests green, the crate's 27 and the cartridge's 40, one new: every amount
+spelled with its thousands grouped, each cell of `dollars` and
+`signed-dollars` held to the hand's spelling beside every power of ten to
+10^15 cents and at 2^53 cents less one, either way. 28 mutants, the fifteen
+moved to their new anchors and thirteen new, each caught by the test written
+for it; the eleventh counted in the score was caught only once the score test
+answered the eleventh with the option that was right for the tenth, where it
+had answered A, which no tenth's right option at the contract's seed was. The
+page 1,895,219 characters; Build the file's bytes, 50,547 characters, checked
+headlessly; `run_checks.ps1` ALL GREEN with its controls. Natively, one runner
+over GUARD.1 as built and as amended, six runs alternated, pinned and opted
+out, the clock within 3%: the pass 6.63 to 6.74 ms where 7.01 to 7.20; the load
+3.65 to 3.78 ms where 4.90 to 5.05, 1.3 ms more; the first frame 185 to 190 µs
+where 211 to 216; a half hour, a mark, the bell and the close as they stood,
+a price under $1,000 spelled at its first comparison. The grouping was written
+three ways to get there, each timed: nested, each group written in every
+branch, its formulas 1,708 to 1,960 characters where 363, cost the load 2.2 ms;
+flat, each group once behind its own test, 1.4 ms, but 3.5 µs at every mark,
+every price testing four groups; and kept, the hybrid, a price under $1,000
+at its first comparison and the groups flat above it, 1,126 to 1,303
+characters. In Chrome at the owner's full screen, the probe copies rebuilt:
+two runs of four exams of eleven answers, a click painted 16.2 to 16.6 ms at
+p50 and 33.1 to 34.7 at p95, shown 48.9 to 49.1 at p95, a key shown 48.1 to
+48.2 at p95; a still tick 0.2 and 0.4, an answer's patch 0.6 and 0.8 to 0.9, a
+sheet shown 2.5 to 2.8 and 3.5 to 3.8; and two runs of the market's week, a
+still tick 0.2 and 0.3, a mark's patch 0.6 and 0.8, the main thread 0.75 to
+0.77 ms a frame and 0.35 at the dial's 120: as the build stood, the lavender
+costing nothing measured. Headlessly, the hand test's steps over the page
+built here: the Exam's "question 1 of 11. Correct answers earn starting
+capital." over "Which asset is the most liquid?", its four options lavender;
+the strip of seventeen, the Cash sheet among them, and "hidden sheets (25)";
+ten answers and the eleventh, "I feel the market" among the styles; the
+Certificate, 7 of 10, 8,500.00, "Caveat:" over the plain statement, its
+button lavender; the Exam after the exam, its options undrawn; the
+Portfolio's cash on hand, Firm 8,500.00 and Personal 100.00; Gigs' "$250
+apiece" and a prospectus claimed, its fee paid a day later, 250.00, and the
+personal cash 350.00; and a waiver, 5 of 10 and 7,500.00.
+
+Found with them, none minted:
+- *The white on the lavender.* White reads at 3.2 to 1 on Lovelace Lavender
+  itself, under the 4.5 a text of normal size wants, and at 5.9 to 1 on the
+  family's deep `#6B4FC8`; the grid's dark reads at 5.3 to 1 on the lavender.
+  So when the record holds a text's color, the buttons take the deep shade
+  with the white.
+- *A dollar's text costs the load.* About a tenth of a millisecond a cell, by
+  its formula's length, while the record holds no number format: a ledger of
+  a hundred rows of two dollars each would cost a load about 20 ms
+  (*derived*), so `PLATE.1`'s rows want the format, or their dollars as
+  numbers until it comes.
+- *The pointer over a button* waits on Alonzo: the viewport's cursor is the
+  hit's kind, never the cell's (`MISE.6`).
+
+**The owner's second hand test.** On the page built here and the probe copy,
+the same day, over the changes: passed, "Tests pass; commit." The Certificate
+at 2 of 10 and 6,000.00, "I feel the market" its style and the plain statement
+under "Caveat:", its button lavender; the Portfolio mid-exam, its cash on hand
+Firm 6,000.00 and Personal 100.00 under the starts, the bell waiting; and Gigs
+on the second Saturday, "$250 apiece", its button lavender, one prospectus
+proofread and its fee paid, 250.00, the next arriving in four days. The
+owner's own Chrome, the probe copy's corner over 8,999 frames: eleven answers
+by key, painted 12.1 ms at p50 and 31.9 at p95, shown 28.0 and 45.2; O shown
+at 21.0; a still tick 0.2 ms at p50 and 0.3 at p95, at its longest 1.3; a
+patch 0.4 and 0.6, at its longest 1.4, over 574 frames patched; and two sheets
+shown, 3.4 ms: the headless runs' p95s or under them, as at the first.

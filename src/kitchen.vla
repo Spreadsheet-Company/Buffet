@@ -38,6 +38,13 @@
 ; two decimals as a text, written by the Portfolio's prices and Gigs' fees at the same
 ; dish, the owner's word at its hand test: "All dollar cells should show two decimals",
 ; and padded to end where a number ends at its second.
+; Since GUARD.1 (2026-10-17): clicked, a press of a view's button, at its second writing,
+; the exam's four options and its certificate's button writing it after Gigs' button,
+; which expands over it to its bytes unchanged; and the bell's fifth line, the market
+; waiting at its first bell until the candidate leaves the exam room. At its hand test
+; the same day, the owner's word, "Thousands separators need to be implemented": dollars
+; groups the thousands by commas, and the Portfolio's change, its signed twin, came here
+; as signed-dollars, so that the grouping is one text written once for both.
 
 ; ---- the dice (POT.1) ---------------------------------------------------------------
 ; A stream is a die and its draws. The die is one cell, the stream's state, which the
@@ -188,10 +195,11 @@
 ; row taking the view's sheet and a cell. The date is the calendar's day's name, its
 ; year and day of the year, each from 1, and its time to the half hour, unaudited, as
 ; every number of a view is until the examiner calls (GUARD.3). The bell's line says
-; whether the market is open and when it opens or closes: open, a trading day before
-; its bell, after the close Monday to Thursday, and from Friday's close to Monday's
-; bell; the first two with no joke, being the lines a player acts on, and the bells'
-; times written into the texts, which a test holds to the Day sheet's settings. The fine
+; whether the market is open and when it opens or closes: open; before the game's
+; first bell, which waits for the exam (GUARD.1); a trading day before its bell; after
+; the close Monday to Thursday; and from Friday's close to Monday's bell; the first
+; three with no joke, being the lines a player acts on, and the bells' times written
+; into the texts, which a test holds to the Day sheet's settings. The fine
 ; print is the Disclosures sheet's picker, a disclosure a month, read through a
 ; reference, so that no view holds its text in a formula.
 
@@ -200,28 +208,69 @@
   (formula sheet at "=\"As of \"&Day!$B$18&\", year \"&Day!$B$6&\", day \"&Day!$B$7&\", \"&Day!$B$16&\" (unaudited)\""))
 
 (defmacro (bell sheet at)
-  "a view's line on the market's hours in one cell, from the Day sheet: open until the closing bell, opening at the bell, closed for the night, or closed for the weekend"
-  (formula sheet at "=IF(Day!$B$19=1,\"The market is open until 16:00.\",IF(AND(Day!$B$17<Day!$B$12,Day!$B$20<Day!$B$3),\"The market opens at 9:30.\",IF(AND(Day!$B$17<Day!$B$12-1,Day!$B$20=Day!$B$3),\"The market has closed. Analysts are analyzing the aftermath.\",\"The market is closed until Monday at 9:30.\")))"))
+  "a view's line on the market's hours in one cell, from the Day sheet: open until the closing bell, waiting for the exam, opening at the bell, closed for the night, or closed for the weekend"
+  (formula sheet at "=IF(Day!$B$19=1,\"The market is open until 16:00.\",IF(Day!$B$25=1,\"The market opens when you leave the exam room.\",IF(AND(Day!$B$17<Day!$B$12,Day!$B$20<Day!$B$3),\"The market opens at 9:30.\",IF(AND(Day!$B$17<Day!$B$12-1,Day!$B$20=Day!$B$3),\"The market has closed. Analysts are analyzing the aftermath.\",\"The market is closed until Monday at 9:30.\"))))"))
 
 (defmacro (fine-print sheet at)
   "a view's fine print in one cell: the Disclosures sheet's disclosure of the month, read through a reference"
   (formula sheet at "=Disclosures!$D$3"))
 
-; ---- a view's dollars (POT.10) ------------------------------------------------------
+; ---- a view's dollars (POT.10, GUARD.1) ---------------------------------------------
 ; The record spells a number at its shortest, $1.00 as 1 and $12.30 as 12.3, and holds
 ; no number format (vla-lang 0.9.4: General and Text), so a view's dollars are a text:
-; the dollars, a point and the cents in two digits, from whole cents that are never
-; negative, a price or a fee. A text is drawn from its cell's left and a number to its
-; right, so each is padded on the left to end where a number ends, in a column 12
-; characters wide, as every column of a view's dollars is: its spaces and twice its
-; dollars' digits make 16, and none is padded from eight digits. A space is half a
-; digit's width in the grid's font to within a sixtieth (system-ui, Segoe UI here, at
-; 13 pixels: a digit 7.008, a space 3.561, the point 2.818), so a column's points line
-; up, and each text ends within two device pixels short of a number's edge at 150% and
-; never past it from 100% to 200% (the owner's word at POT.10's second hand test). A
-; sum or a comparison reads the model's cents and never this text. When the record
-; holds a number format, this verb becomes a format.
+; the dollars, their thousands grouped by commas, a point and the cents in two digits,
+; from whole cents that are never negative, a price, a fee or the cash on hand; and a
+; change, a difference that may be either, is its signed twin, a gain's or nothing's +
+; and a loss's space and -, each as wide as the other. A text is drawn from its cell's
+; left and a number to its right, so each is padded on the left to end where a number
+; ends, in a column 12 characters wide, as every column of a view's dollars is: a
+; price's spaces, twice its dollars' digits and its commas make 16, and a change's
+; spaces before its sign 14. A space is half a digit's width in the grid's font to
+; within a sixtieth, and a comma is the point's width, four fifths of a space (system-ui,
+; Segoe UI here, at 13 pixels: a digit 7.008, a space 3.561, the point and the comma
+; 2.818), so a comma takes a space off and its text ends a fifth of a space short of the
+; others, never past a number's edge (the owner's words at POT.10's second hand test,
+; and at GUARD.1's, "Thousands separators need to be implemented"). The dialect has no
+; TEXT and no LEN, so the groups are whole numbers joined: the leading group, then each
+; of the next three digits by its place, the dollars taken whole first, which a double
+; holds exactly to 2^53 cents, past $90 trillion. A sum or a comparison reads the
+; model's cents and never this text. When the record holds a number format, these
+; verbs become formats.
 
 (defmacro (dollars sheet at cents)
-  "a view's dollars in one cell or a fill: whole cents, never negative, spelled as a text with two decimals and padded to end where a number ends in a column 12 characters wide"
-  (formula sheet at (&expand "=IF(" cents "<1000,\"              \",IF(" cents "<10000,\"            \",IF(" cents "<100000,\"          \",IF(" cents "<1000000,\"        \",IF(" cents "<10000000,\"      \",IF(" cents "<100000000,\"    \",IF(" cents "<1000000000,\"  \",\"\")))))))&INT(" cents "/100)&\".\"&IF(MOD(" cents ",100)<10,\"0\",\"\")&MOD(" cents ",100)")))
+  "a view's dollars in one cell or a fill: whole cents, never negative, spelled as a text with two decimals, their thousands grouped by commas, and padded to end where a number ends in a column 12 characters wide"
+  (dollars-spelled sheet at cents "" "              " "            " "          " "       " "     " "   "))
+
+(defmacro (signed-dollars sheet at cents)
+  "a view's change in one cell or a fill: whole cents either way, spelled as dollars with two decimals, their thousands grouped by commas, after a gain's or nothing's + or a loss's space and -, and padded to end where a number ends in a column 12 characters wide"
+  (quasiquote (dollars-spelled (unquote sheet) (unquote at) (unquote (&expand "ABS(" cents ")")) (unquote (&expand "&IF(" cents "<0,\" -\",\"+\")")) "            " "          " "        " "     " "   " " ")))
+
+(defmacro (dollars-spelled sheet at whole sign p1 p2 p3 p4 p5 p6)
+  "the dollars' walk: the padding by the dollars' count of digits and commas, from one digit to six, none from seven; and each group of three digits after the leading one, from the lowest, each digit by its place in the dollars taken whole, handed on as texts"
+  (quasiquote (dollars-grouped (unquote sheet) (unquote at) (unquote whole) (unquote sign)
+    (unquote (&expand "IF(" whole "<1000,\"" p1 "\",IF(" whole "<10000,\"" p2 "\",IF(" whole "<100000,\"" p3 "\",IF(" whole "<1000000,\"" p4 "\",IF(" whole "<10000000,\"" p5 "\",IF(" whole "<100000000,\"" p6 "\",\"\"))))))"))
+    (unquote (&expand "MOD(INT(INT(" whole "/100)/100),10)&MOD(INT(INT(" whole "/100)/10),10)&MOD(INT(" whole "/100),10)"))
+    (unquote (&expand "MOD(INT(INT(" whole "/100)/100000),10)&MOD(INT(INT(" whole "/100)/10000),10)&MOD(INT(INT(" whole "/100)/1000),10)"))
+    (unquote (&expand "MOD(INT(INT(" whole "/100)/100000000),10)&MOD(INT(INT(" whole "/100)/10000000),10)&MOD(INT(INT(" whole "/100)/1000000),10)"))
+    (unquote (&expand "MOD(INT(INT(" whole "/100)/100000000000),10)&MOD(INT(INT(" whole "/100)/10000000000),10)&MOD(INT(INT(" whole "/100)/1000000000),10)")))))
+
+(defmacro (dollars-grouped sheet at whole sign pad g1 g2 g3 g4)
+  "the dollars' formula: the padding, the sign if any, and the dollars, under a thousand at the first comparison; else their leading group by their size, each later group of three after its comma where the dollars reach it, each written once, the last always; then a point and two digits of cents"
+  (formula sheet at (&expand "=" pad sign "&IF(" whole "<100000,INT(" whole "/100),IF(" whole "<100000000,INT(" whole "/100000),IF(" whole "<100000000000,INT(" whole "/100000000),IF(" whole "<100000000000000,INT(" whole "/100000000000),INT(" whole "/100000000000000))))&IF(" whole ">=100000000000000,\",\"&" g4 ",\"\")&IF(" whole ">=100000000000,\",\"&" g3 ",\"\")&IF(" whole ">=100000000,\",\"&" g2 ",\"\")&\",\"&" g1 ")&\".\"&IF(MOD(" whole ",100)<10,\"0\",\"\")&MOD(" whole ",100)")))
+
+; ---- a view's buttons (BACK.1, GUARD.1) ---------------------------------------------
+; A button is a cell of a view, and its press a cell of the model that holds 0 between
+; presses: 1 in the frame the left button goes down on the button's cell while its view
+; shows, the pointer on the sheet shown (SPEC.md section 3.3, version 4), and 0 at every
+; other frame, so that nothing else reads the pointer (section 2's rule 3). Gigs wrote it
+; first and the exam a second time, its four options and its certificate's button, so
+; it came here at that second writing, the Hustle's press expanding over it to its bytes
+; unchanged. The button's place is three pieces, each a reference to a value of the
+; model, its view's name, its column and its row, written as the range's first cell
+; reads them, so that a fill over a table of buttons is one shape, a row a button, and
+; a layout of the view moves values and no formula. A button's key is the kit's pressed
+; beside it, and the cell that judges the press reads the two.
+
+(defmacro (clicked sheet at view across down)
+  "a press of a view's button in one cell or a fill: 1 in the frame the left button goes down on the button's cell while its view shows, and 0 otherwise: =IF(AND(Input!$B$19=view,Input!$B$11=across,Input!$B$12=down,Input!$B$13=1,Input.last!$B$13=0),1,0)"
+  (formula sheet at (&expand "=IF(AND(Input!$B$19=" view ",Input!$B$11=" across ",Input!$B$12=" down ",Input!$B$13=1,Input.last!$B$13=0),1,0)")))

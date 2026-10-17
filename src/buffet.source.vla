@@ -22,7 +22,7 @@
 ;           a disclosure a month.
 ;   MENU.2  the exam's bank: the Questions sheet, twenty questions, each its concept, four
 ;           options, the right one's letter and the one line that says why, from which
-;           the Series 777 will draw its nine scored questions (GUARD.1).
+;           the Series 777 draws its ten scored questions (GUARD.1).
 ;   MENU.5  the caveats: the Caveats sheet, the things this game gets wrong, each beside
 ;           what the real world does and Management's response, the first the plain
 ;           statement that the game is not advice; the one content sheet in the strip.
@@ -33,18 +33,28 @@
 ;   FRONT.2 the glyphs: beside each change on the Portfolio, which way it went, up,
 ;           down or flat, read off the change itself.
 ;   BACK.1  the side hustle: Gigs, the game's second view, where a prospectus is
-;           proofread for $25 by a click on its button or by P, four times a run, and
-;           the Hustle sheet, its books; the first button. Since POT.10, a prospectus
-;           a week and a day's work each.
+;           proofread by a click on its button or by P, four times a run, and the
+;           Hustle sheet, its books; the first button. Since POT.10, a prospectus a
+;           week and a day's work each; since GUARD.1's hand test, $250 each.
 ;   POT.10  the market's hours: two minutes of the market's time a frame, so an hour a
 ;           second; the market open from 9:30 to 16:00, Monday to Friday, each day's
 ;           close the day's index and the session a path to it, a price each half
 ;           hour; and the views' dollars spelled with two decimals.
+;   GUARD.1 the Series 777: the Exam, the game's opening view, ten questions drawn from
+;           the bank without a repeat and an eleventh, ungraded, that sets the firm's
+;           style, each answered by a click or a key; the Proctor sheet, the exam's
+;           books, its score funding the firm's capital; the Certificate, then the
+;           game, the Camera handing each over; and the market's first bell waiting
+;           for the candidate to leave the exam room. At its hand test: the buttons in
+;           Lovelace Lavender, the views' dollars grouped by thousands, and the Cash
+;           sheet, the two pockets' cash on hand, which the Portfolio shows.
 ;
 ; The market's clock (BD-7). A frame is two minutes of the market's time, thirty frames
 ; an hour at the manifest's rate of thirty, so an hour a second, a day 24 seconds and a
 ; year about two hours and a half. The market trades from the opening bell, 9:30, to the
-; closing bell, 16:00, Monday to Friday, and the game opens on Monday's bell. The Day
+; closing bell, 16:00, Monday to Friday, and the game opens on Monday's bell, which waits
+; for the exam: the calendar stands at its first frame's time until the certificate is
+; left for the game, the Day sheet counting the frames it waited. The Day
 ; sheet alone reads the frame, Clock!B1; every other formula reads the calendar, the
 ; day, the time to the half hour, the session and its mark, so that a frame between two
 ; half hours computes three of the calendar's cells and nothing else. Prices move at the
@@ -70,12 +80,12 @@
   (seed 791886)                     ; every first game's market: a first year that dips early and closes 10% up
   (author "Spreadsheet Company")
   (license "AGPL-3.0-or-later AND CC-BY-SA-4.0")
-  (notes "Buffet: All You Can Sheet. The front office is open, though not yet for business: the game opens on the Portfolio at Monday's opening bell, the day, the hour and four stocks on it, each its price and its change since the last close, an hour a second, the market open from 9:30 to 16:00 on weekdays and moving each half hour, with the fine print at its foot. Beside it, Gigs, where a prospectus is proofread for $25, by a click on its button or by P, a day's work, one a week and four a run, Compliance permitting. Behind them, the back office: the market's calendar and its hours; its dice, rolled once a day where anyone can watch them roll; the market itself, four waves and a drift, and each session's hours between two closes; four stocks priced off it in whole cents, the dearest paying a dividend four days a year; the hustle's books, every prospectus counted; the fine print, a disclosure a month; the Series 777's question bank, twenty questions awaiting an exam the regulator has yet to schedule; and the model's caveats, the things this game gets wrong, each with Management's response. Pick the Day, the Dice, the Market, the Stocks or the Hustle sheet to watch the model work, or the Caveats sheet to read, or the Disclosures or the Questions sheet among the hidden sheets."))
+  (notes "Buffet: All You Can Sheet. The front office is open, though not yet for business: the game opens on the Series 777, the regulator's exam for a fund manager, eleven questions answered by a click or a key, ten of them scored, each right answer $500 more of the firm's $5,000, and the last the firm's style; then its certificate; then the Portfolio at Monday's opening bell, which waits for you to leave the exam room, the day, the hour and four stocks on it, each its price and its change since the last close, an hour a second, the market open from 9:30 to 16:00 on weekdays and moving each half hour, and under them the cash on hand, the firm's and yours, with the fine print at its foot. Beside it, Gigs, where a prospectus is proofread for $250, by a click on its button or by P, a day's work, one a week and four a run, Compliance permitting. Behind them, the back office: the market's calendar and its hours; its dice, rolled once a day where anyone can watch them roll; the market itself, four waves and a drift, and each session's hours between two closes; four stocks priced off it in whole cents, the dearest paying a dividend four days a year; the hustle's books, every prospectus counted; the proctor's books, the exam's draw and every answer; the cash, the firm's and yours; the fine print, a disclosure a month; the Series 777's question bank, twenty questions; the firms' four styles; and the model's caveats, the things this game gets wrong, each with Management's response. A returning candidate may waive the exam by writing 1 into Proctor!B3, at five correct answers. Pick the Day, the Dice, the Market, the Stocks, the Hustle, the Proctor or the Cash sheet to watch the model work, or the Caveats sheet to read, or the Disclosures, the Questions or the Firms sheet among the hidden sheets."))
 
 ; The libraries whose macros this source calls, both beside it: the kit, Alonzo's
 ; common.vla copied at the pin (sheets, labels, headers, on, cells, formulas, hold,
-; pressed and count), then Buffet's own, kitchen.vla (draws, strings, picker, as-of,
-; bell, fine-print and dollars); then the content sheets, each a file of src/content/ that defines
+; pressed, count and camera), then Buffet's own, kitchen.vla (draws, strings, picker,
+; as-of, bell, fine-print, dollars, signed-dollars and clicked); then the content sheets, each a file of src/content/ that defines
 ; one macro of its rows, called where its sheet belongs. The manifest stands first, the
 ; cartridge's own form, then every include, then the code (the owner's word,
 ; 2026-10-15), so that a file missing is refused at the top; and each include defines
@@ -85,19 +95,21 @@
 (include "kitchen.vla")
 (include "content/disclosures.vla")
 (include "content/questions.vla")
+(include "content/firms.vla")
 (include "content/caveats.vla")
 
 ; The tabs. The Screen, the device a game draws its frame on, holds nothing here, the
 ; game's views being sheets of their own (FRONT.1), so it is hidden, and nothing views it
 ; until a game shows it, an ending (FRONT.7); the manifest's screen line is the window it
 ; would be drawn through. Then the views, first, the game opening on the first visible
-; sheet (Alonzo's SPEC.md section 3.1, version 4); then the model's sheets, visible, a
-; spreadsheet a player may open (AD-6); the content sheets stand after them, where each
-; is called below, then the Keys, the one device the game writes, and the engine's own
-; devices last.
+; sheet (Alonzo's SPEC.md section 3.1, version 4), the Exam, whose Camera hands the game
+; to the Certificate and then to the Portfolio (GUARD.1); then the model's sheets,
+; visible, a spreadsheet a player may open (AD-6); the content sheets stand after them,
+; where each is called below, then the Keys and the Camera, the devices the game writes,
+; and the engine's own devices last.
 
 (sheet "Screen" hidden)             ; the framebuffer, unused: each view is a sheet of its own
-(sheets "Portfolio" "Gigs" "Day" "Dice" "Market" "Stocks" "Hustle")
+(sheets "Exam" "Certificate" "Portfolio" "Gigs" "Day" "Dice" "Market" "Stocks" "Hustle" "Proctor" "Cash")
 
 ; ---- POT.1, POT.10: the calendar and the market's hours ------------------------------
 ; A block of settings and its workings, a label in column A beside each value in B, the
@@ -114,6 +126,16 @@
 ; the next bell. Three cells compute at every frame, the time, the boundary and the time to
 ; the half hour, and no other cell of the game does. In the formulas, 1440 is the minutes
 ; a day and 7 the days a week, arithmetic and no settings.
+;
+; The first bell waits for the exam (GUARD.1). While the Proctor's books say the game has
+; not begun, the exam holds the bell: the market is closed, and the frames it waits are
+; counted beneath, each frame counting the one before through the twins, so that the
+; time stands at the first frame's until the frame the game begins, which stands there
+; too, and runs two minutes a frame from the frame after it. A frame of the exam computes
+; the time, the boundary and the count, the time's value standing; once the bell has
+; rung the count stands still, and the three cells above are the frame's again. A waiver
+; written before the first frame begins the game there, the count 0 and the calendar
+; the same as with no exam at all.
 
 (on "Day"
   (column "A" 36 shown none)        ; the labels: as wide as the longest, the bells'
@@ -123,7 +145,7 @@
     ("B2" 365))                     ; days a year
   (formulas
     ("B3" "=INT(B14/1440)")         ; the day, from 0, turning at midnight
-    ("B4" "=(Clock!B1-1)*B1+B9")    ; the time, in minutes from day 0's midnight: the one cell that changes every frame
+    ("B4" "=(Clock!B1-1-B26)*B1+B9")   ; the time, in minutes from day 0's midnight, the frames the bell waited taken out: the one cell that changes every frame once the bell has rung
     ("B5" "=IF(OR(Clock!B1=1,B3<>Day.last!B3),1,0)")   ; the boundary: 1 in a day's first frame, and in the game's first
     ("B6" "=INT(B3/B2)+1")          ; the year, from 1
     ("B7" "=MOD(B3,B2)+1"))         ; the day of the year, from 1 to 365
@@ -140,11 +162,15 @@
     ("B16" "=INT(B15/60)&\":\"&IF(MOD(B15,60)=0,\"00\",\"30\")")   ; the time shown: 9:30, 16:00
     ("B17" "=MOD(B3,7)")            ; the day of the week, 0 a Monday and 6 a Sunday
     ("B18" "=CHOOSE(B17+1,\"Monday\",\"Tuesday\",\"Wednesday\",\"Thursday\",\"Friday\",\"Saturday\",\"Sunday\")")   ; the day's name
-    ("B19" "=IF(AND(B17<B12,B15>=B10,B15<B11),1,0)")   ; open: a trading day, from the opening bell to the closing one
+    ("B19" "=IF(AND(B25=0,B17<B12,B15>=B10,B15<B11),1,0)")   ; open: the bell rung, and a trading day, from the opening bell to the closing one
     ("B20" "=IF(AND(B17<B12,B15>=B10),B3,IF(B17>=B12,B3-B17+B12-1,IF(B17=0,B3-8+B12,B3-1)))")   ; the session's day: today's from its bell, else the last trading day's
     ("B21" "=IF(B20<=0,B20,B20-IF(MOD(B20,7)=0,8-B12,1))")   ; the session before it: the trading day before, the first session its own
     ("B22" "=IF(AND(B20=B3,B15<B11),INT(B15/30)-INT(B10/30),B23)")   ; the mark: 0 at the bell, one more each half hour, the closing mark outside the session
-    ("B23" "=INT(B11/30)-INT(B10/30)")))   ; the closing mark: the session's half hours, 13
+    ("B23" "=INT(B11/30)-INT(B10/30)"))   ; the closing mark: the session's half hours, 13
+  (labels "A25" "the exam holds the bell" "frames the bell waited")
+  (formulas
+    ("B25" "=IF(Proctor!$B$41=1,0,1)"))   ; the exam holds the bell: 1 until the game begins, at the certificate's button or a waiver
+  (count "B26" "Day.last!B25"))     ; frames the bell waited: the frames before this one that the exam held it
 
 ; ---- POT.1, POT.10: the dice --------------------------------------------------------
 ; Two streams, each a die and its draws, the draws by the library's verb, side by side:
@@ -308,7 +334,8 @@
     ("I5:I8" "=E5-F5")))                          ; the change since the last close, in whole cents: the view's change and its glyph both read it
 
 ; ---- BACK.1: the hustle -------------------------------------------------------------
-; The side hustle's books: prospectuses proofread at $25 apiece, a claim a week at any
+; The side hustle's books: prospectuses proofread at $250 apiece (the owner's word at
+; GUARD.1's hand test, where BACK.1 had paid $25), a claim a week at any
 ; hour, and four a run, by a click on Gigs' button or by its key. The settings first, each a
 ; value beside its label: the fee in whole cents, the claims a run, and the button's
 ; place, its sheet, column and row, which a layout of the view moves as values and no
@@ -325,12 +352,13 @@
 ; opens the hustle again and nothing reading the boundary (BD-7); due holds the time a
 ; claim's work is done, a day after the half hour shown, and a prospectus is being
 ; proofread until the half hour reaches it. The fees are the claims done times the fee,
-; which the pockets read when they come (PLATE.2).
+; which the Cash sheet adds to your cash (GUARD.1's hand test) until the pockets come
+; (PLATE.2).
 
 (on "Hustle"
   (labels "A1" "a prospectus's fee, in cents" "claims a run" "the button's sheet" "its column" "its row" "days between two prospectuses" "a prospectus's work, in minutes")
   (cells
-    ("B1" 2500)                     ; $25 a prospectus, whole cents
+    ("B1" 25000)                    ; $250 a prospectus, whole cents
     ("B2" 4)                        ; claims a run: four, and then Compliance says no
     ("B3" "Gigs")                   ; the button: its view,
     ("B4" 1)                        ;   its column, A,
@@ -338,8 +366,11 @@
     ("B6" 7)                        ; a prospectus a week: the next seven days after the last claim
     ("B7" 1440))                    ; a day's work: the fee is paid a day after the claim
   (labels "A9" "clicked" "keyed" "claimed" "claims" "open from day" "shut" "due, in minutes from day 0's midnight" "proofreading" "done" "earned, in cents" "due, shown")
-  (formulas
-    ("B9" "=IF(AND(Input!$B$19=$B$3,Input!$B$11=$B$4,Input!$B$12=$B$5,Input!$B$13=1,Input.last!$B$13=0),1,0)"))   ; a click: the left button's rising edge on the button, its sheet shown
+  (clicked                          ; a click: the left button's rising edge on the button, its sheet shown (the library's verb since GUARD.1):
+    "B9"                            ;   its cell
+    "$B$3"                          ;   the button's view,
+    "$B$4"                          ;   its column
+    "$B$5")                         ;   and its row, values of this sheet
   (pressed "B10" "Input!B5")        ; a key: the a button's rising edge, held by P
   (formulas
     ("B11" "=IF(AND(OR(B9=1,B10=1),Hustle.last!B14=0),1,0)"))   ; a claim: a press while the last frame showed it open
@@ -353,6 +384,124 @@
     ("B17" "=B12-B16")              ; done: the claims whose work is done
     ("B18" "=B17*$B$1")             ; earned, in whole cents: the fees of the prospectuses done
     ("B19" "=IF(INT(B15/1440)>Day!$B$3,\"tomorrow\",\"today\")&\" at \"&INT(MOD(B15,1440)/60)&\":\"&IF(MOD(B15,60)=0,\"00\",\"30\")")))   ; due, shown: tomorrow at 10:00
+
+; ---- GUARD.1: the proctor's books ---------------------------------------------------
+; The Series 777's books, kept by its proctor, who administers every exam and is never
+; promoted, so that every license's exam after it keeps the same books over another
+; bank (GUARD.2). A label in column A beside each value, as the model's sheets hold
+; them. The settings first: the contract's capital, $5,000 and $500 a correct answer, in
+; whole cents; the waiver, a person's edit of B3 that skips the exam, a returning
+; candidate's, with the score and the style a waiver takes; and where the certificate
+; leads, a view's name, so that the Overview takes it with no formula moved (FRONT.3).
+; Then the draw: ten questions from the bank, from a start the exam's first draw picks
+; and a stride its second picks among the first ten primes above 1,547, each coprime to
+; every bank a picker holds (MENU.2), so that no question repeats; the bank's size its
+; own count, so that a question added joins the draw. Then the buttons, a row a button,
+; its view, column and row, its key, and its two presses, the click and the key, each 0
+; between presses (SPEC.md section 2's rule 3): the exam's four options and the
+; certificate's. Then the workings. An answer is a press while the last frame showed a
+; question open, the first option by letter when two are pressed together, judged by
+; the right option that frame showed, since the answer moves this frame's question, as
+; a claim is judged by the hustle the person saw; the score counts the right answers of
+; the ten, the capital follows it, the eleventh sets the firm's style, and the game
+; begins when the certificate's button is pressed after the eleventh answer, or at a
+; waiver (ten and an eleventh since the owner's word at the hand test: "The exam should
+; have 11 question (10 of substance, the eleventh question being firm style)"). The
+; bank shows the question through its own row shown, which reads the row shown here;
+; and the Day sheet's bell waits for begun (BD-7).
+
+(on "Proctor"
+  (column "A" 44 shown none)        ; the labels: as wide as the longest, the capital's
+  (labels "A1" "the firm's capital before the exam, in cents" "the capital a correct answer adds, in cents" "waived: 1 skips the exam" "a waiver's correct answers" "a waiver's style" "where the certificate leads")
+  (cells
+    ("B1" 500000)                   ; $5,000 before the exam, the contract's
+    ("B2" 50000)                    ; $500 a correct answer, the contract's
+    ("B3" 0)                        ; the waiver: a person's edit of 1 skips the exam, the game beginning at the next step
+    ("B4" 5)                        ; a waiver's correct answers: the middle of 0 to 10
+    ("B5" 1)                        ; a waiver's style: the first
+    ("B6" "Portfolio"))             ; where the certificate leads: the Portfolio, until the Overview (FRONT.3)
+  (labels "A8" "the bank's questions" "the start, from 0" "the stride, a prime above 1,547")
+  (formulas
+    ("B8" "=Questions!$K$1")        ; the bank's size, its own count: a question added joins the draw
+    ("B9" "=MOD(Dice!$I$2,B8)")     ; the start: the exam's first draw, round the bank
+    ("B10" "=CHOOSE(MOD(Dice!$I$3,10)+1,1549,1553,1559,1567,1571,1579,1583,1597,1601,1607)"))   ; the stride: one of the first ten primes above 1,547, by the exam's second draw
+  (headers "A11" "the draw: question" "its row in the bank")
+  (labels "A12" 1 2 3 4 5 6 7 8 9 10)
+  (formulas
+    ("B12:B21" "=MOD($B$9+(A12-1)*$B$10,$B$8)+1"))   ; each question's row: from the start, a stride a question, round the bank
+  (headers "A23" "the buttons" "view" "column" "row" "key" "clicked" "keyed")
+  (cells
+    ("A24" "A")                     ; the first option: its letter,
+    ("B24" "Exam")                  ;   its view,
+    ("C24" 1)                       ;   its column, A,
+    ("D24" 7)                       ;   its row
+    ("E24" "KeyA")                  ;   and the key that presses it while its view shows
+    ("A25" "B")                     ; the second
+    ("B25" "Exam")
+    ("C25" 1)
+    ("D25" 8)
+    ("E25" "KeyB")
+    ("A26" "C")                     ; the third
+    ("B26" "Exam")
+    ("C26" 1)
+    ("D26" 9)
+    ("E26" "KeyC")
+    ("A27" "D")                     ; the fourth
+    ("B27" "Exam")
+    ("C27" 1)
+    ("D27" 10)
+    ("E27" "KeyD")
+    ("A28" "open for business")     ; the certificate's button: the game begins
+    ("B28" "Certificate")
+    ("C28" 1)
+    ("D28" 11)
+    ("E28" "KeyO"))
+  (clicked                          ; each button's click: the left button's rising edge on it, its view shown
+    "F24:F28"                       ;   the presses, a button a row
+    "B24"                           ;   its view,
+    "C24"                           ;   its column
+    "D24")                          ;   and its row, values a layout moves
+  (pressed "G24:G28" "Input!B6")    ; each button's key: the rising edge of b, x, y, start and select, each held by its key while its view shows
+  (labels "A30" "the option pressed" "answered" "answers" "a question open" "the row shown" "the right option" "correct" "correct so far" "the score" "the firm's capital, in cents" "the style" "begun")
+  (formulas
+    ("B30" "=IF(OR(F24=1,G24=1),1,IF(OR(F25=1,G25=1),2,IF(OR(F26=1,G26=1),3,IF(OR(F27=1,G27=1),4,0))))")   ; the option pressed: the first by letter, by a click or a key, 0 for none
+    ("B31" "=IF(AND(B30>0,Proctor.last!B33=1),1,0)"))   ; answered: a press while the last frame showed a question open
+  (count "B32" "B31")               ; the answers given
+  (formulas
+    ("B33" "=IF(AND(B32<11,$B$3=0),1,0)")   ; a question open: fewer than eleven answered, and no waiver
+    ("B34" "=CHOOSE(MIN(B32+1,10),B12,B13,B14,B15,B16,B17,B18,B19,B20,B21)")   ; the row shown: the next question's, the tenth's from the eleventh on, which the bank's row shown reads
+    ("B35" "=IF(Questions!$K$9=\"A\",1,IF(Questions!$K$9=\"B\",2,IF(Questions!$K$9=\"C\",3,IF(Questions!$K$9=\"D\",4,0))))")   ; the right option of the question shown, its letter as a number
+    ("B36" "=IF(AND(B31=1,Proctor.last!B32<10,B30=Proctor.last!B35),1,0)"))   ; correct: an answer to one of the ten, the right option of the question the person saw
+  (count "B37" "B36")               ; correct so far
+  (formulas
+    ("B38" "=IF($B$3=1,$B$4,B37)")  ; the score: a waiver's, or the right answers
+    ("B39" "=$B$1+$B$2*B38")        ; the firm's capital, in whole cents
+    ("B40" "=IF($B$3=1,$B$5,IF(AND(B31=1,Proctor.last!B32=10),B30,Proctor.last!B40))"))   ; the style: the eleventh answer, 1 to 4, 0 until it is given
+  (hold                             ; begun, the game's: once 1, for good:
+    "B41"                           ;   its cell
+    "OR($B$3=1,AND(OR(F28=1,G28=1),Proctor.last!B32=11))"   ;   when: a waiver, or the certificate's button after the eleventh answer
+    "1"))                           ;   what it holds then
+
+; ---- GUARD.1: the cash --------------------------------------------------------------
+; The two pockets' cash on hand, which the Portfolio shows under its stocks (the owner's
+; word at GUARD.1's hand test, 2026-10-17: "Portfolio should list "Cash on hand:" so the
+; player can see their available cash inside their portfolio", both pockets at the
+; owner's choice the same day). A label in column A beside each value. The personal
+; cash at the start, $100, the contract's, a value; then the firm's cash, the exam's
+; capital, until the plate's orders spend it (PLATE.1); and the personal cash, the start
+; and the hustle's fees, each paid when its prospectus is done, until the pockets keep
+; their own books and a switch picks which funds an order (PLATE.2). Nothing here reads
+; the frame (BD-7), and the sheet stands after the books it reads.
+
+(on "Cash"
+  (column "A" 36 shown none)        ; the labels: as wide as the longest, the personal cash at the start
+  (labels "A1" "personal cash at the start, in cents")
+  (cells
+    ("B1" 10000))                   ; $100, the contract's personal cash
+  (labels "A3" "the firm's cash, in cents" "personal cash, in cents")
+  (formulas
+    ("B3" "=Proctor!$B$39")         ; the firm's: the exam's capital, as the answers come and final at the begin
+    ("B4" "=$B$1+Hustle!$B$18")))   ; the personal: the start and the prospectuses' fees, each paid when its work is done
 
 ; ---- MENU.1: the strings ------------------------------------------------------------
 ; The content sheets, each a file of src/content/ that holds the words alone, a
@@ -380,7 +529,7 @@
     ("D2" "=MOD(INT(Day!$B$3/D5),D1)+1")))   ; the row shown: the day's month round the rows, the first on the first day
 
 ; ---- MENU.2: the exam's bank --------------------------------------------------------
-; The Questions sheet: the bank from which the Series 777 draws its nine scored
+; The Questions sheet: the bank from which the Series 777 draws its ten scored
 ; questions, a seeded start and a stride through it by the exam's two draws on the Dice
 ; sheet (GUARD.1), a question a row, each its concept, the question, four options, the
 ; right one's letter and the one line that says why. Eight fields, so its table runs
@@ -388,15 +537,30 @@
 ; K10, beside their labels in J. Its last question, ungraded, which names the firm's
 ; archetype, is no row of the bank: it is asked last and always, and never drawn.
 ;
-; The row shown, K2, a value, is the first question until GUARD.1's draw drives it: the
-; bank is read by nothing that draws yet, and a person's edit of K2 shows any question.
+; The row shown, K2, is the Proctor's, the draw's row for the question asked (GUARD.1), a
+; value until that dish drove it; a person's edit of K2 shows any question.
 
 (sheet "Questions" hidden)          ; the exam's bank: reference data, its answers not the first thing a player finds
 (questions)                         ; the Questions sheet: its headers, its rows, their count and a picker a field
 
 (on "Questions"
-  (cells
-    ("K2" 1)))                      ; the row shown: the first question, until the exam's draw (GUARD.1)
+  (formulas
+    ("K2" "=Proctor!$B$34")))       ; the row shown: the draw's row for the question asked
+
+; ---- GUARD.1: the firms' styles -----------------------------------------------------
+; The Firms sheet: the four answers to the Series 777's last question, ungraded, "Which
+; best describes you?", each the style of the firm it founds, which BACK.2 names beside
+; it. One field, so its table is column A and its values stand in D: the count in D1 and
+; its picker in D3. The exam shows its rows as the question's four options; the row
+; shown, D2, is the style chosen, the first until the eleventh answer gives one, so that
+; the picker is the certificate's style.
+
+(sheet "Firms" hidden)              ; the firms' styles: reference data, at the back of the workbook
+(firms)                             ; the Firms sheet: its header, its rows, their count and their picker
+
+(on "Firms"
+  (formulas
+    ("D2" "=MAX(Proctor!$B$40,1)")))   ; the row shown: the style chosen, the first before one is
 
 ; ---- MENU.5: the caveats ------------------------------------------------------------
 ; The Caveats sheet: the things this game gets wrong, each beside what the real world
@@ -408,8 +572,8 @@
 ; label, so that each reads whole beside its value.
 ;
 ; The row shown, G2, a value, is the first row: the plain statement that the game is
-; not advice, with its joke beside it, which the certificate reads through a reference,
-; Caveats!G4:G5 (GUARD.1).
+; not advice, with its joke beside it, which the certificate reads through references,
+; Caveats!G3:G5, its first three fields, the second reading the first (GUARD.1).
 
 (sheet "Caveats" visible)           ; the one content sheet shown: a player reads it whole
 (caveats)                           ; the Caveats sheet: its headers, its rows, their count and a picker a field
@@ -431,15 +595,95 @@
 ; "All dollar cells should show two decimals"; and at its second, that they sat left of
 ; center), since the record spells a number at its shortest, 12.3 for $12.30 (MISE.3);
 ; and a change is the model's difference of two prices in cents, spelled with its sign
-; and padded alike.
+; and padded alike, the library's signed-dollars; and each its thousands grouped by
+; commas (the owner's word at GUARD.1's hand test: "Thousands separators need to be
+; implemented").
 ;
-; The Portfolio: the sheet the game opens on, the first visible among the tabs, until
-; the Exam exists (GUARD.1). Its date, and under it the bell's line, whether the market
+; A view's buttons are drawn in Lovelace Lavender, the house's primary, #A080E0, the
+; owner's word at GUARD.1's hand test: "Buttons like [ Open for business ] should be
+; highlighted with lavender background and white text". The fill is format 1, which each
+; button's cell takes by a style row; the record holds no color for a text (vla-lang
+; 0.9.4), so a button's text stays the grid's dark until it does, its white asked of
+; Frazaro and Alonzo (MISE.6).
+
+(format 1 "A080E0" general nowrap)  ; the buttons' look: Lovelace Lavender, the text the grid's own
+
+; The Exam (GUARD.1): the sheet the game opens on, the first visible among the tabs, the
+; Series 777 one question at a time. Its date and the bell's line, every view's; the
+; question's number, or that the exam is over; the question; its four options, each a
+; button, its letter before its text, in a column as wide as the longest of them, so that
+; every character of an option is its button, a click on a text's spill being the next
+; cell's; the keys that answer; and the fine print. The first ten questions are the
+; bank's, through its pickers; the eleventh, ungraded, is the view's own, "Which best
+; describes you?", its options the Firms sheet's styles. Nothing here says whether an
+; answer was right: the next question is the answer's echo, and the proctor's remarks
+; wait for an exam that answers on screen (MENU.2's decision 9). The options are drawn
+; as the buttons are, in lavender, and an option emptied once the exam is over draws in
+; the default look by a look of the empty text, so that no button stands where none is.
+
+(on "Exam"
+  (column "A" 100 shown none)       ; the question and its options: as wide as the longest option with its letter
+  (as-of "A1")                      ; the date, every view's
+  (bell "A2")                       ; the market's hours, every view's: the bell waits for the exam
+  (formulas
+    ("A3" "=IF(Proctor!$B$33=1,IF(Proctor!$B$32<10,\"The Series 777, question \"&(Proctor!$B$32+1)&\" of 11. Correct answers earn starting capital.\",\"The Series 777, question 11 of 11, ungraded: it sets your firm's style.\"),IF(Proctor!$B$3=1,\"The Series 777: waived.\",\"Pencils down. Your certificate is on its sheet.\"))")   ; where the exam stands, the second sentence the owner's words at the hand test
+    ("A5" "=IF(Proctor!$B$33=0,\"\",IF(Proctor!$B$32<10,Questions!$K$4,\"Which best describes you?\"))")   ; the question: the bank's, or the eleventh, the view's own
+    ("A7:A10" "=IF(Proctor!$B$33=0,\"\",IF(Proctor!$B$32<10,\"[ \"&Proctor!A24&\" ]  \"&Questions!K5,\"[ \"&Proctor!A24&\" ]  \"&Firms!A2))")   ; its options, each a button: the Proctor's buttons name these cells
+    ("A12" "=IF(Proctor!$B$33=1,\"Click an answer, or press its letter: A, B, C or D.\",\"\")"))   ; the keys, the Keys sheet's B6:B9 while a question is open
+  (style "A7" 1)                    ; each option drawn as a button, in lavender,
+  (style "A8" 1)
+  (style "A9" 1)
+  (style "A10" 1)
+  (look "" 0)                       ;   and an option emptied after the exam in the default look
+  (fine-print "A14"))               ; the fine print, every view's
+
+; The Certificate (GUARD.1): what the exam decided, shown by the Camera at the eleventh
+; answer. Its date and the bell's line; its title; whether the exam is still pending,
+; waived or passed, as every candidate passes; the correct answers, the firm's capital
+; in dollars and its style; the button that opens the firm for business, and its key;
+; the game's plain statement that it is not advice, the Caveats sheet's first row, under
+; its heading (the owner's word at the hand test: "The caveat should have a "Caveat:"
+; cell above it so the caveat doesn't read like a random "You. ... statement" hanging on
+; the certificate without context"); the
+; proctor's signature; and the fine print. The button begins the game, the bell ringing,
+; and the Camera shows where the certificate leads.
+
+(on "Certificate"
+  (column "A" 21 shown none)        ; the labels and the button: as wide as the button's text
+  (column "B" 12 shown none)        ; the values: 12 characters, the width the dollars are padded for
+  (as-of "A1")                      ; the date, every view's
+  (bell "A2")                       ; the market's hours, every view's
+  (cells
+    ("A3" "The Series 777: a certificate of completion"))
+  (formulas
+    ("A5" "=IF(Proctor!$B$33=1,\"Pending: the proctor certifies after the eleventh question.\",IF(Proctor!$B$3=1,\"Waived: the regulator assumes you would have passed.\",\"The bearer has sat the Series 777 and passed, as every candidate does.\"))"))   ; pending, waived or passed
+  (labels "A7" "Correct answers" "Firm capital ($)" "Style")
+  (formulas
+    ("B7" "=Proctor!$B$38&\" of 10\""))   ; the score, of the ten
+  (dollars "B8" "Proctor!B39")      ; the firm's capital: whole cents spelled with two decimals
+  (formulas
+    ("B9" "=IF(Proctor!$B$40=0,\"asked last\",Firms!$D$3)"))   ; the style, the Firms sheet's, once the eleventh answer gives it
+  (cells
+    ("A11" "[ Open for business ]")   ; the button: the Proctor's buttons name this cell
+    ("B11" "or press O"))           ; its key, the Keys sheet's B10
+  (style "A11" 1)                   ; the button drawn as a button, in lavender
+  (cells
+    ("A13" "Caveat:"))              ; the plain statement's heading, the owner's word
+  (formulas
+    ("A14:A16" "=Caveats!G3"))      ; the plain statement whole, its three fields: the game is not advice
+  (cells
+    ("A18" "Signed for the regulator by the proctor, whose signature is, on inspection, a doodle of a bull."))
+  (fine-print "A20"))               ; the fine print, every view's
+
+; The Portfolio: the sheet the certificate leads to, the game's opening before the Exam
+; (FRONT.1, GUARD.1). Its date, and under it the bell's line, whether the market
 ; is open and when it opens or closes (POT.10); then a row a stock, on the Stocks sheet's
 ; own rows, each its name, the model's, its price now and its change since the last
 ; close, in dollars, and beside the change which way it went (FRONT.2), a glyph read off
 ; the cents the change is spelled from, so the two never disagree. The glyph has no
-; color yet, the looks waiting for an aesthetic pass. And the
+; color yet, the looks waiting for an aesthetic pass. Under the stocks, the cash on
+; hand, the firm's and the personal pocket's, each the Cash sheet's, in dollars (the
+; owner's word at GUARD.1's hand test, both pockets the owner's choice). And the
 ; fine print at its foot, a disclosure a month. The date, the bell and the fine print are
 ; every view's, the library's verbs (BACK.1, POT.10).
 
@@ -454,16 +698,19 @@
   (formulas
     ("A5:A8" "=Stocks!A5"))                     ; each stock's name, the model's, until MENU.3 names them
   (dollars "B5:B8" "Stocks!E5")                 ; its price now: whole cents spelled with two decimals
+  (signed-dollars "C5:C8" "Stocks!I5")         ; its change since the last close: two decimals and its sign, a gain's +, a loss's space and -, each as wide as the other
   (formulas
-    ("C5:C8" "=IF(ABS(Stocks!I5)<1000,\"            \",IF(ABS(Stocks!I5)<10000,\"          \",IF(ABS(Stocks!I5)<100000,\"        \",IF(ABS(Stocks!I5)<1000000,\"      \",IF(ABS(Stocks!I5)<10000000,\"    \",IF(ABS(Stocks!I5)<100000000,\"  \",\"\"))))))&IF(Stocks!I5<0,\" -\",\"+\")&INT(ABS(Stocks!I5)/100)&\".\"&IF(MOD(ABS(Stocks!I5),100)<10,\"0\",\"\")&MOD(ABS(Stocks!I5),100)")   ; its change since the last close, two decimals and its sign: a gain's +, a loss's space and -, each as wide as the other; its spaces and twice its dollars' digits make 14, so that it ends where a number ends
     ("D5:D8" "=IF(Stocks!I5>0,\"▲\",IF(Stocks!I5<0,\"▼\",\"=\"))"))   ; which way it went: up, down or flat, read off the cents the change is spelled from
-  (fine-print "A10"))                           ; the fine print, a disclosure a month (MENU.1)
+  (labels "A10" "Cash on hand ($)" "  Firm" "  Personal")   ; the cash on hand, each pocket's (the owner's word at GUARD.1's hand test)
+  (dollars "B11" "Cash!B3")                    ; the firm's: the exam's capital, until orders spend it
+  (dollars "B12" "Cash!B4")                    ; the personal: $100 and the hustle's fees once paid
+  (fine-print "A14"))                          ; the fine print, a disclosure a month (MENU.1)
 
 ; ---- BACK.1: the gigs ---------------------------------------------------------------
 ; Gigs, the game's second view, where the side hustle is worked: its button, the key
 ; beside it, the prospectuses proofread, what remains of the run's four, the fees, and
-; where the hustle stands, in a sentence. The button is a text in brackets, no look
-; drawing one yet (FRONT.2's second slice), in a column as wide as its text, so that a
+; where the hustle stands, in a sentence. The button is a text in brackets, drawn in the
+; buttons' lavender since GUARD.1's hand test, in a column as wide as its text, so that a
 ; click on any of it is a click on the button: a text spills only into the empty cells
 ; on its right, and a click there is the next cell's. The Hustle sheet names the
 ; button's place in values, so that this sheet is laid out again with no formula moved;
@@ -483,9 +730,10 @@
   (as-of "A1")                      ; the date, every view's
   (bell "A2")                       ; the market's hours, every view's
   (cells
-    ("A3" "Proofreading prospectuses at $25 apiece, a day's work and one a week, paid by the prospectus and not by the page.")
+    ("A3" "Proofreading prospectuses at $250 apiece, a day's work and one a week, paid by the prospectus and not by the page.")
     ("A5" "[ Proofread a prospectus ]")   ; the button: Hustle!B3:B5 name this cell
     ("B5" "or press P"))            ; its key, the Keys sheet's B5
+  (style "A5" 1)                    ; the button drawn as a button, in lavender
   (labels "A7" "Proofread" "Left this run" "Fees earned ($)")
   (formulas
     ("B7" "=Hustle!B17")            ; the prospectuses proofread, their work done
@@ -495,9 +743,29 @@
     ("A11" "=IF(Hustle!B16=1,\"Proofreading: the fee is paid \"&Hustle!B19&\".\",IF(Hustle!B12>=Hustle!B2,\"Compliance has approved \"&Hustle!B2&\" a run, and you have proofread \"&Hustle!B12&\".\",IF(Hustle!B14=1,\"Done for the week: the next prospectus arrives \"&IF(Hustle!B13-Day!$B$3=1,\"tomorrow\",\"in \"&(Hustle!B13-Day!$B$3)&\" days\")&\".\",\"A prospectus awaits. Nobody else has read one either.\")))"))   ; where the hustle stands: one being proofread, the run spent, this week's made, or open
   (fine-print "A13"))               ; the fine print, every view's
 
-(sheet "Keys" visible)              ; the keys: the one device the game writes, among the engine's
+(sheet "Keys" visible)              ; the keys: a device the game writes, among the engine's
 (on "Keys"
   (cells
     ("A5" "a"))                     ; the Input sheet's fifth button,
   (formulas
-    ("B5" "=IF(Input!$B$19=Hustle!$B$3,\"KeyP\",\"\")")))   ;   held by P while the button's sheet shows, and by nothing elsewhere
+    ("B5" "=IF(Input!$B$19=Hustle!$B$3,\"KeyP\",\"\")"))   ;   held by P while the button's sheet shows, and by nothing elsewhere
+  (labels "A6" "b" "x" "y" "start" "select")   ; the sixth to the tenth, the exam's (GUARD.1), each its own act on its own view:
+  (formulas
+    ("B6:B9" "=IF(AND(Input!$B$19=Proctor!B24,Proctor!$B$33=1),Proctor!E24,\"\")")   ;   held by A, B, C and D while the Exam shows a question open,
+    ("B10" "=IF(AND(Input!$B$19=Proctor!B28,Proctor!$B$32=11,Proctor!$B$41=0),Proctor!E28,\"\")")))   ;   and by O while the Certificate waits for its button
+
+; The Camera (GUARD.1), the other device the game writes: its first two rows the Screen's
+; window, at A1, unused while the Screen is hidden but two whole numbers for the host to
+; read; and its third, the sheet the game shows (SPEC.md section 3.8, version 4). At the
+; load it holds no value, so the game opens on the first visible sheet, the Exam; then it
+; names the Exam while a question is open, the Certificate once the eleventh is answered,
+; and where the certificate leads once the game begins, each change shown once, and the
+; person's tabs their own between them. The views' names are the Proctor's values.
+
+(sheet "Camera" visible)            ; the window and the sheet shown
+(camera 1 1)                        ; the Screen's window at A1, the kit's two rows
+(on "Camera"
+  (cells
+    ("A3" "sheet"))                 ; the third row's label,
+  (formulas
+    ("B3" "=IF(Proctor!$B$41=1,Proctor!$B$6,IF(Proctor!$B$33=1,Proctor!$B$24,Proctor!$B$28))")))   ;   and the sheet the game shows: the exam's, its certificate's, then the game's
