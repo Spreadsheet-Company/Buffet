@@ -6,10 +6,15 @@
 # never copied here, as a stranger consumes them.
 #
 # The pins are exact and never a range, and a registry version and never a
-# git rev (the owner's route, 2026-10-14): alonzo 0.1.5, the release whose
-# page applies a rebuilt source to the running game (ENGINE.7) beside 0.1.4's
-# views on a game's own sheets (ENGINE.18), and vla-lang 0.9.4, the version
-# that release pins, so that the lock holds one copy of the language. Both
+# git rev (the owner's route, 2026-10-14): alonzo 0.2.0, the release whose
+# page runs every act of the player as a named command from one palette, a
+# keymap a person rebinds and a cartridge's own commands at the page's version
+# 5 (ENGINE.22 to ENGINE.25), beside 0.1.5's edit and continue (ENGINE.7) and
+# 0.1.4's views on a game's own sheets (ENGINE.18); and vla-lang 0.10.0, the
+# version that release pins, so that the lock holds one copy of the language,
+# a fill's cells read as slices, a cell computed alone run compiled once, and
+# a sheet read in the frame being computed read as an array (Frazaro's
+# KERNEL.43, KERNEL.44 and KERNEL.31), every answer the same to the bit. Both
 # resolve from crates.io since alonzo 0.1.0, the engine's first release, was
 # published (2026-10-14): the local patch that stood in for it is deleted,
 # and Cargo.lock is committed (HOUSE.2). What this repository copies from the
@@ -29,8 +34,8 @@ license = "AGPL-3.0-or-later"
 repository = "https://github.com/Spreadsheet-Company/Buffet"
 
 [workspace.dependencies]
-alonzo = "=0.1.5"
-vla-lang = "=0.9.4"
+alonzo = "=0.2.0"
+vla-lang = "=0.10.0"
 
 [profile.dev.package."*"]
 # The engine and the language, every package that is not the workspace's,
@@ -55,9 +60,14 @@ opt-level = 3
 # Alonzo's own release profile, copied so that a build of the engine's
 # module from this workspace (cargo build --release -p alonzo --target
 # wasm32-unknown-unknown, for the page, HOUSE.4) keeps its import section
-# empty: a panic aborts, so the module imports nothing to unwind with.
+# empty: a panic aborts, so the module imports nothing to unwind with. A
+# module built from the crate takes the building workspace's profile, so the
+# game's page reaps the engine's speed only at the engine's own: opt-level 3
+# since the pin to alonzo 0.2.0, as Alonzo's since its pin to vla-lang 0.10.0,
+# the browser's frames and loads about a tenth faster than at "s" for a module
+# about a fifth larger (Alonzo's RELEASES.md, 0.2.0).
 panic = "abort"
 lto = true
 codegen-units = 1
-opt-level = "s"
+opt-level = 3
 strip = true
