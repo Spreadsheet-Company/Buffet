@@ -68,17 +68,27 @@
 //! Portfolio's cash on hand, the firm's and the personal pocket's, held at
 //! every frame those runs hold the Portfolio, the exam and the hustle; the
 //! buttons' lavender look; the Certificate's caveat under its heading; and
-//! the hustle's fee at $250.
+//! the hustle's fee at $250. Since `PLATE.1`: the page's version 5; Trading,
+//! the order desk's view, its buttons at the places the Orders sheet names, its
+//! keys the cartridge's own commands; every frame of a scripted session of
+//! orders, by clicks, keys and the palette, in both pockets, through every
+//! refusal, the click beside the command and the closing bell, held to the hand:
+//! the order desk's books, the positions, the cash, the commands' words and
+//! holds, both views, and the ledger a frame late, the host's derived writes
+//! made as the host makes them; the ledger's ring past a hundred fills; the
+//! dividend paid at a day's turn to the shares each pocket held; and the desk's
+//! settings, buttons and commands. The Portfolio's holding and net worth held
+//! at rest in every long run.
 
-use std::collections::{BTreeMap, BTreeSet};
+use std::collections::{BTreeMap, BTreeSet, VecDeque};
 
 use alonzo::cartridge::{Cartridge, Seed};
 use buffet_oracle::buffet::{
-    self, disclosure, least_index, Calendar, Exam, Hustle, Inputs, Market, AN_HOUR, A_DAY,
-    CLOSING_MARK, DAYS_A_DISCLOSURE, DAYS_A_YEAR, DIFFICULTY, DIVIDEND_DAYS, FIRST_MINUTE,
-    LOOK_BACK, MINUTES_A_FRAME, RUNGS, SESSION_DRAW, WAVES, YEAR,
+    self, disclosure, least_index, Calendar, Exam, Hustle, Inputs, Market, Order, Plate, Shown,
+    AN_HOUR, A_DAY, CLOSING_MARK, DAYS_A_DISCLOSURE, DAYS_A_YEAR, DIFFICULTY, DIVIDEND_DAYS,
+    FIRST_MINUTE, LOOK_BACK, MINUTES_A_FRAME, RUNGS, SESSION_DRAW, WAVES, YEAR,
 };
-use buffet_oracle::{expand_source, gather, lf, load, read, root, values};
+use buffet_oracle::{derived, expand_source, gather, lf, load, read, root, values};
 use vla_lang::form::Form;
 use vla_lang::machine::Viewed;
 use vla_lang::reader::read_forms;
@@ -122,22 +132,32 @@ const CAVEAT_FIELDS: [&str; 4] = [
 /// among the tabs: the workbook's outputs, which read the model and which no
 /// formula reads. A view enters this list with the dish that fills it: Gigs
 /// with `BACK.1`, the side hustle's; the Exam and the Certificate with
-/// `GUARD.1`, standing before the Portfolio, the game opening on the Exam.
-const VIEWS: [&str; 4] = ["Exam", "Certificate", "Portfolio", "Gigs"];
+/// `GUARD.1`, standing before the Portfolio, the game opening on the Exam; and
+/// Trading with `PLATE.1`, beside the Portfolio.
+const VIEWS: [&str; 5] = ["Exam", "Certificate", "Portfolio", "Trading", "Gigs"];
 /// Gigs' labels down its column A from row 7 (`BACK.1`'s decision 3), beside
 /// the prospectuses proofread, what remains of the run's claims and the fees.
 const GIGS_LABELS: [&str; 3] = ["Proofread", "Left this run", "Fees earned ($)"];
 /// The Portfolio's headers over its columns from A, in row 4 (`FRONT.1`'s
-/// decision 6).
+/// decision 6); and over the holding's columns from E (`PLATE.1`).
 const PORTFOLIO_HEADERS: [&str; 3] = ["Security", "Price ($)", "Change ($)"];
+const HOLDING_HEADERS: [&str; 4] = ["Shares", "Cost ($)", "Value ($)", "Gain ($)"];
 /// The Portfolio's cash on hand under its stocks (`GUARD.1`'s hand test, the
 /// owner's word, both pockets the owner's choice): its heading and the two
-/// pockets' labels, their dollars beside them in column B.
-const CASH_LABELS: [(&str, &str); 3] = [
+/// pockets' labels, their dollars beside them in column B; and each pocket's
+/// net worth under them (`PLATE.1`).
+const CASH_LABELS: [(&str, &str); 6] = [
     ("A10", "Cash on hand ($)"),
     ("A11", "  Firm"),
     ("A12", "  Personal"),
+    ("A14", "Net worth ($)"),
+    ("A15", "  Firm"),
+    ("A16", "  Personal"),
 ];
+/// The firm's capital when the exam is waived, five right answers' (`GUARD.1`).
+const WAIVED_CAPITAL: u64 = buffet::CAPITAL_BEFORE + buffet::CAPITAL_A_RIGHT * buffet::WAIVED_SCORE;
+/// Trading's headers over its columns from B, in row 5 (`PLATE.1`).
+const TRADING_HEADERS: [&str; 3] = ["Security", "Price ($)", "Shares"];
 
 /// The cartridge as a stranger loads it, the exam to be sat (`GUARD.1`).
 fn loaded() -> Cartridge {
@@ -401,6 +421,96 @@ fn held(
     if turned {
         gigs_held(cart, cal, texts);
     }
+    // Trading at rest at each day's first frame: its prices are the Portfolio's
+    // own cents, held above at every half hour, and every frame of it at work is
+    // the order desk's sessions' (PLATE.1); at every half hour of the year at a
+    // frame an hour it made that run half again as long.
+    if cal.turned {
+        trading_cells(
+            cart,
+            cal,
+            &stocks,
+            texts,
+            &Plate::default(),
+            [WAIVED_CAPITAL, buffet::PERSONAL_CASH],
+        );
+    }
+}
+
+/// The stocks' names, the Stocks sheet's `A5:A8`, which every view and the
+/// order desk read.
+fn stock_names(cart: &Cartridge) -> [String; 4] {
+    let got = values(cart, "Stocks", "A5:A8");
+    std::array::from_fn(|k| got[&format!("A{}", 5 + k)].clone())
+}
+
+/// Every cell of Trading at this frame (`PLATE.1`), the hand's: its date, the
+/// bell's line and where an order's money comes from; its headers; each
+/// stock's mark when picked, its name, its price now, the Stocks sheet's cents
+/// (`stocks`) spelled as dollars, the pocket's shares of it and its six
+/// buttons; the pocket's cash; the last order's sentence; the keys' line; and
+/// the fine print. Between two half hours nothing moves it but an order, a
+/// pick or a pocket, so the long runs hold it at rest at each half hour.
+fn trading_cells(
+    cart: &Cartridge,
+    cal: &Calendar,
+    stocks: &BTreeMap<String, String>,
+    texts: &[String],
+    plate: &Plate,
+    starts: [u64; 2],
+) {
+    let got = values(cart, "Trading", "A1:J17");
+    let text = |addr: &str, want: &str| {
+        assert_eq!(
+            got.get(addr).map(String::as_str),
+            Some(want),
+            "frame {}, day {}, {}: Trading!{addr}",
+            cal.frame,
+            cal.day,
+            buffet::time_shown(cal.hour * 60 + cal.minute)
+        );
+    };
+    let names = stock_names(cart);
+    let pocket = plate.funding();
+    text("A1", &buffet::as_of(cal));
+    text("A2", buffet::bell(cal));
+    text("A3", buffet::trading_line(pocket));
+    for (k, header) in TRADING_HEADERS.iter().enumerate() {
+        text(&address(5, 2 + k), header);
+    }
+    for (k, name) in names.iter().enumerate() {
+        let row = buffet::STOCK_ROWS[k] as usize;
+        let mark = if plate.picked == k as u64 + 1 {
+            "▸"
+        } else {
+            ""
+        };
+        text(&format!("A{row}"), mark);
+        text(&format!("B{row}"), name);
+        let now: u64 = stocks[&format!("E{}", 5 + k)].parse().expect("whole cents");
+        text(&format!("C{row}"), &buffet::two_decimals(now));
+        text(
+            &format!("D{row}"),
+            &plate.book(pocket, k as u64 + 1).shares.to_string(),
+        );
+        for (t, label) in buffet::TRADE_TEXTS.iter().enumerate() {
+            text(&address(row, buffet::TRADE_COLUMNS[t] as usize), label);
+        }
+    }
+    text("B11", "Cash available ($)");
+    text(
+        "C11",
+        &buffet::two_decimals(plate.cash(pocket, starts[pocket as usize - 1])),
+    );
+    let said = match plate.last {
+        Some(o) if o.stock > 0 => o.sentence(&names[o.stock as usize - 1]),
+        Some(o) => o.sentence(""),
+        None => buffet::NO_ORDER.to_string(),
+    };
+    text("A13", &said);
+    text("A15", buffet::TRADING_KEYS);
+    let shown = disclosure(cal.day, texts.len() as u64, DAYS_A_DISCLOSURE);
+    text("A17", &texts[shown as usize - 1]);
 }
 
 /// Gigs at rest (`BACK.1`), held whenever the half hour turns (`POT.10`): its
@@ -458,11 +568,7 @@ fn portfolio_held(
     texts: &[String],
     view: &mut Option<(u64, String)>,
 ) {
-    let cash = (
-        buffet::CAPITAL_BEFORE + buffet::CAPITAL_A_RIGHT * buffet::WAIVED_SCORE,
-        buffet::PERSONAL_CASH,
-    );
-    let Ok(Viewed::Text(record)) = cart.view("values", "Portfolio", Some("A1:D14")) else {
+    let Ok(Viewed::Text(record)) = cart.view("values", "Portfolio", Some("A1:H18")) else {
         panic!("the Portfolio's record");
     };
     if let Some((half, held)) = view.as_ref() {
@@ -476,7 +582,34 @@ fn portfolio_held(
             return;
         }
     }
-    let got = values(cart, "Portfolio", "A1:D14");
+    portfolio_cells(
+        cart,
+        cal,
+        stocks,
+        texts,
+        &Plate::default(),
+        [WAIVED_CAPITAL, buffet::PERSONAL_CASH],
+    );
+    *view = Some((cal.half_hours(), record));
+}
+
+/// Every cell of the Portfolio at this frame (`FRONT.1`, `FRONT.2`, `GUARD.1`'s
+/// hand test, `PLATE.1`), the hand's: its date, the bell's line and whose
+/// holdings it shows; each stock's price now and its change since the last
+/// close, the Stocks sheet's own cents (`stocks`, held to the hand just before)
+/// spelled as dollars, and its glyph; the pocket's holding of it, its shares,
+/// their cost basis, their value at the price now and the gain not yet taken,
+/// from the hand's books; each pocket's cash on hand and net worth, from its
+/// start at this frame (`starts`, the firm's and your own); and the fine print.
+fn portfolio_cells(
+    cart: &Cartridge,
+    cal: &Calendar,
+    stocks: &BTreeMap<String, String>,
+    texts: &[String],
+    plate: &Plate,
+    starts: [u64; 2],
+) {
+    let got = values(cart, "Portfolio", "A1:H18");
     let text = |addr: &str, want: &str| {
         assert_eq!(
             got.get(addr).map(String::as_str),
@@ -489,25 +622,46 @@ fn portfolio_held(
     };
     text("A1", &buffet::as_of(cal));
     text("A2", buffet::bell(cal));
-    for row in 5..5 + RUNGS.len() {
+    let pocket = plate.funding();
+    text("A3", buffet::holdings_line(pocket));
+    for (k, header) in HOLDING_HEADERS.iter().enumerate() {
+        text(&address(4, 5 + k), header);
+    }
+    let mut prices = [0; 4];
+    for (k, row) in (5..5 + RUNGS.len()).enumerate() {
         let cents = |column: &str| -> i64 {
             stocks[&format!("{column}{row}")]
                 .parse()
                 .expect("whole cents")
         };
         let (now, was) = (cents("E"), cents("F"));
+        prices[k] = now as u64;
         text(&format!("B{row}"), &buffet::two_decimals(now as u64));
         text(&format!("C{row}"), &buffet::signed_two_decimals(now - was));
         text(&format!("D{row}"), buffet::glyph(now, was));
+        let book = plate.book(pocket, k as u64 + 1);
+        let value = book.shares * now as u64;
+        text(&format!("E{row}"), &book.shares.to_string());
+        text(&format!("F{row}"), &buffet::two_decimals(book.basis));
+        text(&format!("G{row}"), &buffet::two_decimals(value));
+        text(
+            &format!("H{row}"),
+            &buffet::signed_two_decimals(value as i64 - book.basis as i64),
+        );
     }
     for (addr, want) in CASH_LABELS {
         text(addr, want);
     }
-    text("B11", &buffet::two_decimals(cash.0));
-    text("B12", &buffet::two_decimals(cash.1));
+    for (k, pocket) in [buffet::FIRM, buffet::PERSONAL].into_iter().enumerate() {
+        let cash = plate.cash(pocket, starts[k]);
+        text(&format!("B{}", 11 + k), &buffet::two_decimals(cash));
+        text(
+            &format!("B{}", 15 + k),
+            &buffet::two_decimals(cash + plate.holdings(pocket, prices)),
+        );
+    }
     let shown = disclosure(cal.day, texts.len() as u64, DAYS_A_DISCLOSURE);
-    text("A14", &texts[shown as usize - 1]);
-    *view = Some((cal.half_hours(), record));
+    text("A18", &texts[shown as usize - 1]);
 }
 
 /// The Market sheet at this frame (`POT.2`, `POT.10`): each wave's speed and
@@ -1308,7 +1462,9 @@ fn tabs(cart: &Cartridge) -> Vec<(String, String)> {
 /// writes before the engine's own; and the twins after every sheet
 /// (`MENU.1`'s decisions 2 and 3, `MENU.5`'s decision 2, `FRONT.1`'s 4 and 5,
 /// `BACK.1`'s 2, 4 and 9, `GUARD.1`'s 9 and 10, and its hand test's Cash
-/// sheet after the books it reads). A state the source forgot
+/// sheet after the books it reads; `PLATE.1`'s Trading beside the Portfolio,
+/// its Orders, Positions and Ledger among the model's, and its Commands and
+/// Write sheets after the Camera). A state the source forgot
 /// would leave its sheet visible, which the engine makes a sheet first named
 /// by a cell.
 #[test]
@@ -1341,6 +1497,7 @@ fn every_sheet_is_written_bare_and_each_content_sheet_in_its_state() {
         ("Exam", "visible"),
         ("Certificate", "visible"),
         ("Portfolio", "visible"),
+        ("Trading", "visible"),
         ("Gigs", "visible"),
         ("Day", "visible"),
         ("Dice", "visible"),
@@ -1348,13 +1505,18 @@ fn every_sheet_is_written_bare_and_each_content_sheet_in_its_state() {
         ("Stocks", "visible"),
         ("Hustle", "visible"),
         ("Proctor", "visible"),
+        ("Orders", "visible"),
+        ("Positions", "visible"),
         ("Cash", "visible"),
+        ("Ledger", "visible"),
         ("Disclosures", "hidden"),
         ("Questions", "hidden"),
         ("Firms", "hidden"),
         ("Caveats", "visible"),
         ("Keys", "visible"),
         ("Camera", "visible"),
+        ("Commands", "visible"),
+        ("Write", "visible"),
         ("Clock", "visible"),
         ("File", "visible"),
         ("Input", "visible"),
@@ -1372,8 +1534,9 @@ fn every_sheet_is_written_bare_and_each_content_sheet_in_its_state() {
 }
 
 /// The game opens on the Exam (`GUARD.1`'s decisions 9 and 10, after
-/// `FRONT.1`'s 2 to 5). The cartridge is written to the page's version 4,
-/// whose host opens a grid cartridge on the sheet its Camera's third row names
+/// `FRONT.1`'s 2 to 5). The cartridge is written to the page's version 5 since
+/// `PLATE.1` (version 4 since `FRONT.1`, which version 5 keeps whole), whose
+/// host opens a grid cartridge on the sheet its Camera's third row names
 /// at the load, a value or a formula's `value` row, else on the first visible
 /// sheet of its own order (Alonzo's `SPEC.md` sections 3.1 and 3.8): the
 /// Camera's `B3` is a formula with no value at the load, so that rule names
@@ -1385,8 +1548,8 @@ fn the_game_opens_on_the_exam() {
     let cart = loaded();
     assert_eq!(
         cart.manifest().spec,
-        4,
-        "the page's version 4: a game's views on sheets of their own"
+        5,
+        "the page's version 5: a game's views on sheets of their own, and commands of its own"
     );
     let Ok(Viewed::Text(camera)) = cart.view("grid", "Camera", Some("A1:B3")) else {
         panic!("the Camera's record");
@@ -1523,14 +1686,19 @@ fn the_portfolio_heads_its_columns_and_names_its_stocks_from_the_model() {
 /// The columns a view's dollars stand in (`POT.10`'s second hand test): each
 /// [`buffet::DOLLARS_COLUMN`] characters wide, the width the library's
 /// `dollars` and the Portfolio's change are padded for, so that each text
-/// ends where a number ends: the Portfolio's prices and changes, and Gigs'
-/// fees, which the views' frames hold to the hand's spelling.
+/// ends where a number ends: the Portfolio's prices and changes, Gigs' fees,
+/// and since `PLATE.1` the Portfolio's cost, value and gain and Trading's
+/// prices and cash, which the views' frames hold to the hand's spelling.
 #[test]
 fn every_column_of_dollars_is_the_width_its_padding_is_measured_for() {
     let text = lf(&read(CARTRIDGE));
     for (sheet, column) in [
         ("Portfolio", "B"),
         ("Portfolio", "C"),
+        ("Portfolio", "F"),
+        ("Portfolio", "G"),
+        ("Portfolio", "H"),
+        ("Trading", "C"),
         ("Gigs", "B"),
         ("Certificate", "B"),
     ] {
@@ -1591,13 +1759,16 @@ fn every_amount_is_spelled_with_its_thousands_grouped() {
 /// What a scripted session sets at a frame (`BACK.1`'s decision 12), each
 /// held until another act sets it again: the sheet shown, the pointer's cell
 /// on it, the left button, and a key held or let go, by its code (the
-/// hustle's P, and since `GUARD.1` the exam's A to D and O).
+/// hustle's P, and since `GUARD.1` the exam's A to D and O); and since
+/// `PLATE.1` a command of the cartridge's own run by its name, as the page's
+/// palette runs one, which a key of a command that holds runs too.
 #[derive(Clone, Copy)]
 enum Act {
     Show(&'static str),
     Point(u64, u64),
     Left(bool),
     Key(&'static str, bool),
+    Run(&'static str),
 }
 
 /// The hustle's key, P.
@@ -1616,6 +1787,7 @@ fn act_on(now: &mut Inputs, act: Act) {
         Act::Key(code, false) => {
             now.held.remove(code);
         }
+        Act::Run(_) => {}
     }
 }
 
@@ -1628,16 +1800,18 @@ fn went_down<'a>(now: &'a Inputs, last: &Inputs) -> Option<&'a str> {
         .map(String::as_str)
 }
 
-/// The Input sheet's rows as the host writes them at version 4 (Alonzo's
+/// The Input sheet's rows as the host writes them at version 5 (Alonzo's
 /// `host.js`, `_inputRows`): ten buttons for four players, each 1 while a key
 /// held is the one its cell of the Keys sheet names; the pointer's column and
 /// row on the sheet shown, that sheet's own cell, 0 off its cells; its three
 /// buttons; the wheel; the key that went down this frame and its code, a
-/// letter's key its lower case; and the sheet shown.
+/// letter's key its lower case; the sheet shown; and the command that runs at
+/// this frame, or empty (`PLATE.1`).
 fn input_rows(
     keys: &BTreeMap<String, String>,
     now: &Inputs,
     went_down: Option<&str>,
+    command: &str,
 ) -> Vec<String> {
     let mut rows = Vec::new();
     for button in 1..=10 {
@@ -1664,24 +1838,52 @@ fn input_rows(
         format!("(cell \"Input\" \"B17\" \"{key}\")"),
         format!("(cell \"Input\" \"B18\" \"{code}\")"),
         format!("(cell \"Input\" \"B19\" \"{}\")", now.sheet),
+        format!("(cell \"Input\" \"B20\" \"{command}\")"),
     ]);
     rows
 }
 
 /// The cash on hand at this frame (`GUARD.1`'s hand test): the Cash sheet's
 /// personal cash at the start, the firm's cash and the personal, in cents,
-/// the hand's; and the Portfolio's two pockets in dollars, the same cents.
+/// the hand's; each pocket's holdings and net worth (`PLATE.1`), which a
+/// session that buys nothing holds at none and at its cash; and the
+/// Portfolio's two pockets' cash and net worth in dollars, the same cents.
 fn cash_held(cart: &Cartridge, frame: u64, firm: u64, personal: u64) {
-    let cash = values(cart, "Cash", "B1:B4");
-    let view = values(cart, "Portfolio", "B11:B12");
+    assert_eq!(
+        values(cart, "Cash", "B1").get("B1"),
+        Some(&buffet::PERSONAL_CASH.to_string()),
+        "frame {frame}: Cash!B1"
+    );
+    books_cash_held(cart, frame, [firm, personal], [0, 0]);
+}
+
+/// Each pocket's cash, holdings and net worth at this frame, in cents on the
+/// Cash sheet and in dollars on the Portfolio, from the hand's `cash` and
+/// `holdings`, the firm's first; the personal start, `B1`, a setting a test
+/// may write, is `cash_held`'s.
+fn books_cash_held(cart: &Cartridge, frame: u64, cash: [u64; 2], holdings: [u64; 2]) {
+    let got = values(cart, "Cash", "B3:B10");
+    let view = values(cart, "Portfolio", "B11:B16");
     for (addr, want) in [
-        ("B1", buffet::PERSONAL_CASH.to_string()),
-        ("B3", firm.to_string()),
-        ("B4", personal.to_string()),
+        ("B3", cash[0]),
+        ("B4", cash[1]),
+        ("B6", holdings[0]),
+        ("B7", holdings[1]),
+        ("B9", cash[0] + holdings[0]),
+        ("B10", cash[1] + holdings[1]),
     ] {
-        assert_eq!(cash.get(addr), Some(&want), "frame {frame}: Cash!{addr}");
+        assert_eq!(
+            got.get(addr),
+            Some(&want.to_string()),
+            "frame {frame}: Cash!{addr}"
+        );
     }
-    for (addr, cents) in [("B11", firm), ("B12", personal)] {
+    for (addr, cents) in [
+        ("B11", cash[0]),
+        ("B12", cash[1]),
+        ("B15", cash[0] + holdings[0]),
+        ("B16", cash[1] + holdings[1]),
+    ] {
         assert_eq!(
             view.get(addr),
             Some(&buffet::two_decimals(cents)),
@@ -1890,7 +2092,7 @@ fn a_scripted_session_holds_the_hustle_at_every_frame() {
             "frame {frame}: the keys bound after {:?} showed",
             last.sheet
         );
-        let rows = input_rows(&keys, &now, went_down(&now, &last));
+        let rows = input_rows(&keys, &now, went_down(&now, &last), "");
         let changed: Vec<&str> = match &written {
             None => rows.iter().map(String::as_str).collect(),
             Some(before) => rows
@@ -2516,17 +2718,26 @@ fn exam_of(cart: &Cartridge, w: &Words) -> Exam {
 /// `host.js` holds it: the inputs it holds, the keymap it read after the last
 /// step, the Input rows it last wrote, and the Camera's sheet as it last read
 /// it, a change of which it shows at the frame's end, so that the next frame's
-/// rows name it.
+/// rows name it. Since `PLATE.1`, at the page's version 5: the Commands sheet as
+/// it last read it, each command's name, whether it holds and its key; the
+/// commands waiting for their frames, one a frame, and the one that runs at
+/// this frame; and the Write sheet's rows it read after the last step, made
+/// before the next frame's inputs, each its own write (`SPEC.md` section 5).
 struct Host {
     now: Inputs,
     keys: BTreeMap<String, String>,
     written: Option<Vec<String>>,
     camera: String,
+    commands: Vec<(String, bool, String)>,
+    waiting: VecDeque<String>,
+    command: String,
+    pending: Vec<String>,
 }
 
 impl Host {
     /// A host that opened the game on `sheet`, with no keymap read, the
-    /// Keys sheet's formulas holding no value at the load.
+    /// Keys sheet's formulas holding no value at the load, and the Commands
+    /// sheet not yet read.
     fn new(sheet: &str) -> Host {
         Host {
             now: Inputs {
@@ -2536,25 +2747,67 @@ impl Host {
             keys: BTreeMap::new(),
             written: None,
             camera: String::new(),
+            commands: Vec::new(),
+            waiting: VecDeque::new(),
+            command: String::new(),
+            pending: Vec::new(),
         }
     }
 
-    /// One frame: the acts applied to what the host holds, the keys bound as
-    /// its keymap binds them, the Input rows that changed written, and the
-    /// step; then the keymap and the Camera read. The last frame's inputs and
-    /// this frame's.
+    /// The command a key runs (`host.js`, `_commandKey`): the first that holds
+    /// with that key, as the Commands sheet last said.
+    fn command_key(&self, code: &str) -> Option<String> {
+        self.commands
+            .iter()
+            .find(|(_, holds, key)| *holds && key == code)
+            .map(|(name, _, _)| name.clone())
+    }
+
+    /// One frame: the acts applied to what the host holds, a key of a command
+    /// that holds running the command and holding no button, and a command run
+    /// by its name waiting for its frame while it holds and refused while it
+    /// does not; the keys bound as its keymap binds them; the derived writes
+    /// read after the last step made, each its own write; the Input rows that
+    /// changed written, the command that runs at this frame the twentieth; and
+    /// the step; then the keymap, the commands, the Write sheet and the Camera
+    /// read. The last frame's inputs and this frame's.
     fn step(&mut self, cart: &mut Cartridge, acts: &[Act]) -> (Inputs, Inputs) {
         let last = self.now.clone();
         for act in acts {
-            act_on(&mut self.now, *act);
+            match *act {
+                Act::Key(code, true) => match self.command_key(code) {
+                    Some(name) => self.waiting.push_back(name),
+                    None => act_on(&mut self.now, *act),
+                },
+                Act::Run(name) => {
+                    if self
+                        .commands
+                        .iter()
+                        .any(|(n, holds, _)| n == name && *holds)
+                    {
+                        self.waiting.push_back(name.to_string());
+                    }
+                }
+                _ => act_on(&mut self.now, *act),
+            }
         }
+        self.command = self.waiting.pop_front().unwrap_or_default();
         self.now.bound = self
             .keys
             .values()
             .filter(|code| !code.is_empty())
             .cloned()
             .collect();
-        let rows = input_rows(&self.keys, &self.now, went_down(&self.now, &last));
+        for row in std::mem::take(&mut self.pending) {
+            cart.write(&row)
+                .unwrap_or_else(|r| panic!("{row}: {} {}", r.refusal.id, r.refusal.text));
+        }
+        let rows = input_rows(
+            &self.keys,
+            &self.now,
+            went_down(&self.now, &last),
+            &self.command,
+        );
         let changed: Vec<&str> = match &self.written {
             None => rows.iter().map(String::as_str).collect(),
             Some(before) => rows
@@ -2572,6 +2825,16 @@ impl Host {
         let step = cart.step(0);
         assert!(step.done, "{}", step.row());
         self.keys = values(cart, "Keys", "B1:E10");
+        let sheet = values(cart, "Commands", "A2:D101");
+        self.commands = (2..=101)
+            .filter_map(|row| {
+                let name = sheet.get(&format!("A{row}"))?;
+                let holds = sheet.get(&format!("C{row}")).is_some_and(|h| h == "true");
+                let key = sheet.get(&format!("D{row}")).cloned().unwrap_or_default();
+                Some((name.clone(), holds, key))
+            })
+            .collect();
+        self.pending = derived(cart);
         let now = self.now.clone();
         let shows = values(cart, "Camera", "B3")
             .remove("B3")
@@ -3242,6 +3505,775 @@ fn the_proctor_states_its_settings_and_its_buttons() {
         assert!(
             !moves.contains(&code) && !code.starts_with("Alt"),
             "{code} is the viewport's or the chords'"
+        );
+    }
+}
+
+/// What the last frame showed the order desk (`PLATE.1`), from the hand's
+/// calendar, market and books before this frame: whether the market was open,
+/// each stock's price now, each pocket's cash from its start at that frame, and
+/// its half hour as the ledger writes it; and nothing at the first frame,
+/// whose last is the load's, every twin empty.
+fn shown(cal: &Calendar, seed: u64, market: &Market, plate: &Plate, starts: [u64; 2]) -> Shown {
+    if cal.frame == 0 {
+        return Shown::default();
+    }
+    let now = market.path(seed, DIFFICULTY, cal).now;
+    Shown {
+        open: cal.open(),
+        prices: std::array::from_fn(|k| RUNGS[k].price_at(now)),
+        cash: [
+            plate.cash(buffet::FIRM, starts[0]),
+            plate.cash(buffet::PERSONAL, starts[1]),
+        ],
+        when: format!(
+            "{}, year {}, day {}, {}",
+            buffet::DAY_NAMES[cal.weekday as usize],
+            cal.year,
+            cal.day_of_year,
+            buffet::time_shown(cal.half_hour())
+        ),
+    }
+}
+
+/// Each stock's price now in whole cents at this frame, from the Stocks
+/// sheet's own cells as `stocks_held` has just held them to the hand.
+fn prices_of(stocks: &BTreeMap<String, String>) -> [u64; 4] {
+    std::array::from_fn(|k| stocks[&format!("E{}", 5 + k)].parse().expect("whole cents"))
+}
+
+/// The order desk's books at this frame (`PLATE.1`), every working the hand's:
+/// the grid's presses; the stock and the trade clicked; the command run, the
+/// stock it picks and the trade it orders; the stock picked and its name; the
+/// order's stock by name, its pocket, its stock and its trade; what the last
+/// frame showed, the market, the price, the pocket's cash and its shares; the
+/// shares filled and the outcome; the fills counted, the ledger's row and the
+/// pocket's cash now; and the last order as it was taken, every cell 0 before
+/// the first.
+#[allow(clippy::too_many_arguments)]
+fn orders_held(
+    cart: &Cartridge,
+    frame: u64,
+    plate: &Plate,
+    io: (&Inputs, &Inputs),
+    command: &str,
+    order: Option<Order>,
+    shown: &Shown,
+    starts: [u64; 2],
+    names: &[String; 4],
+) {
+    let (now, last) = io;
+    let flag = |b: bool| u8::from(b).to_string();
+    let name = |s: u64| {
+        if s == 0 {
+            String::new()
+        } else {
+            names[s as usize - 1].clone()
+        }
+    };
+    let press = Plate::clicked(now, last);
+    let grid = values(cart, "Orders", "D6:I9");
+    for (s, &row) in buffet::STOCK_ROWS.iter().enumerate() {
+        for t in 0..buffet::TRADES.len() {
+            let at = address(6 + s, 4 + t);
+            let want = flag(press == Some((s as u64 + 1, t + 1)));
+            assert_eq!(
+                grid.get(&at),
+                Some(&want),
+                "frame {frame}: Orders!{at}, the button on Trading's row {row}"
+            );
+        }
+    }
+    let (stock_clicked, trade_clicked) = press.unwrap_or((0, 0));
+    let pocket = plate.funding();
+    let n = plate.fills.len() as u64;
+    let o = order;
+    let mut want: Vec<(&str, String)> = vec![
+        ("B11", stock_clicked.to_string()),
+        ("B12", trade_clicked.to_string()),
+        ("B13", command.to_string()),
+        ("B14", Plate::pick_of(command).to_string()),
+        ("B15", Plate::trade_of(command).to_string()),
+        ("B16", plate.picked.to_string()),
+        (
+            "B17",
+            if plate.picked == 0 {
+                "the stock picked, none yet".to_string()
+            } else {
+                name(plate.picked)
+            },
+        ),
+        ("B18", name(o.map_or(0, |o| o.stock))),
+        ("B19", pocket.to_string()),
+        ("B20", o.map_or(0, |o| o.stock).to_string()),
+        ("B21", o.map_or(0, |o| o.trade).to_string()),
+        ("B22", flag(shown.open)),
+        ("B23", o.map_or(0, |o| o.price).to_string()),
+        ("B24", shown.cash[pocket as usize - 1].to_string()),
+        ("B25", o.map_or(0, |o| o.held).to_string()),
+        ("B26", o.map_or(0, |o| o.filled).to_string()),
+        ("B27", o.map_or(0, |o| o.outcome as u8).to_string()),
+        ("B29", n.to_string()),
+        ("B30", ((n as i64 - 1).rem_euclid(100) + 2).to_string()),
+        (
+            "B31",
+            plate.cash(pocket, starts[pocket as usize - 1]).to_string(),
+        ),
+    ];
+    let held: [String; 10] = match plate.last {
+        Some(l) => [
+            name(l.stock),
+            l.pocket.to_string(),
+            l.stock.to_string(),
+            l.trade.to_string(),
+            flag(l.open),
+            l.price.to_string(),
+            l.cash.to_string(),
+            l.held.to_string(),
+            l.filled.to_string(),
+            (l.outcome as u8).to_string(),
+        ],
+        None => std::array::from_fn(|_| "0".to_string()),
+    };
+    let addrs = [
+        "B32", "B33", "B34", "B35", "B36", "B37", "B38", "B39", "B40", "B41",
+    ];
+    want.extend(addrs.into_iter().zip(held));
+    let got = values(cart, "Orders", "B11:B41");
+    for (addr, text) in want {
+        assert_eq!(got.get(addr), Some(&text), "frame {frame}: Orders!{addr}");
+    }
+}
+
+/// The books at this frame (`PLATE.1`), every cell the hand's: a row a pocket
+/// and a stock, its pocket, rung and name, this frame's fill on its row, the
+/// shares, the cost basis, the cents spent and received, the dividends, the
+/// price now, the value, the gain not yet taken and the gain taken; and the
+/// rows shown, the pocket an order funds.
+fn positions_held(
+    cart: &Cartridge,
+    frame: u64,
+    plate: &Plate,
+    order: Option<Order>,
+    prices: [u64; 4],
+    names: &[String; 4],
+) {
+    let got = values(cart, "Positions", "A2:M15");
+    let mut want: Vec<(String, String)> = Vec::new();
+    for pocket in [buffet::FIRM, buffet::PERSONAL] {
+        for stock in 1..=4u64 {
+            let row = 1 + (pocket - 1) * 4 + stock;
+            let b = plate.book(pocket, stock);
+            let filled = match order {
+                Some(o) if o.pocket == pocket && o.stock == stock => o.filled,
+                _ => 0,
+            };
+            let price = prices[stock as usize - 1];
+            let value = b.shares * price;
+            let cells = [
+                ("A", pocket.to_string()),
+                ("B", stock.to_string()),
+                ("C", names[stock as usize - 1].clone()),
+                ("D", filled.to_string()),
+                ("E", b.shares.to_string()),
+                ("F", b.basis.to_string()),
+                ("G", b.bought.to_string()),
+                ("H", b.sold.to_string()),
+                (
+                    "I",
+                    plate.dividends[pocket as usize - 1][stock as usize - 1].to_string(),
+                ),
+                ("J", price.to_string()),
+                ("K", value.to_string()),
+                ("L", (value as i64 - b.basis as i64).to_string()),
+                (
+                    "M",
+                    (b.sold as i64 - b.bought as i64 + b.basis as i64).to_string(),
+                ),
+            ];
+            want.extend(cells.map(|(c, v)| (format!("{c}{row}"), v)));
+        }
+    }
+    let pocket = plate.funding();
+    for stock in 1..=4u64 {
+        let row = 11 + stock;
+        let b = plate.book(pocket, stock);
+        let value = b.shares * prices[stock as usize - 1];
+        let cells = [
+            ("A", pocket.to_string()),
+            ("B", stock.to_string()),
+            ("C", names[stock as usize - 1].clone()),
+            ("D", b.shares.to_string()),
+            ("E", b.basis.to_string()),
+            ("F", value.to_string()),
+            ("G", (value as i64 - b.basis as i64).to_string()),
+        ];
+        want.extend(cells.map(|(c, v)| (format!("{c}{row}"), v)));
+    }
+    for (addr, text) in want {
+        assert_eq!(
+            got.get(&addr),
+            Some(&text),
+            "frame {frame}: Positions!{addr}"
+        );
+    }
+}
+
+/// The ledger at this frame (`PLATE.1`): exactly the hand's ring of the fills
+/// landed, those of the frames before this one, the Write sheet's rows being
+/// made a frame late; each row its fill's number, when, pocket, stock, shares,
+/// price and cash after, and no other cell.
+fn ledger_held(cart: &Cartridge, frame: u64, plate: &Plate, landed: usize, names: &[String; 4]) {
+    let got = values(cart, "Ledger", "A2:G101");
+    let mut want = BTreeMap::new();
+    for row in 2..2 + buffet::LEDGER_ROWS {
+        if let Some(f) = plate.ledger(row, landed) {
+            let cells = [
+                ("A", f.number.to_string()),
+                ("B", f.when.clone()),
+                ("C", buffet::POCKET_NAMES[f.pocket as usize - 1].to_string()),
+                ("D", names[f.stock as usize - 1].clone()),
+                ("E", f.shares.to_string()),
+                ("F", f.price.to_string()),
+                ("G", f.cash_after.to_string()),
+            ];
+            for (c, v) in cells {
+                want.insert(format!("{c}{row}"), v);
+            }
+        }
+    }
+    assert!(
+        got == want,
+        "frame {frame}: the Ledger\n{got:?}\nwhere the hand's is\n{want:?}"
+    );
+}
+
+/// The commands at this frame (`PLATE.1`, the page's version 5): each the
+/// hand's name and key, its words by the stock picked, and whether it holds,
+/// while Trading shows, the sheet this frame's inputs named.
+fn commands_held(cart: &Cartridge, frame: u64, names: &[String; 4], picked: u64, sheet: &str) {
+    let got = values(cart, "Commands", "A2:D11");
+    let words = buffet::command_words(names, picked);
+    let holds = if sheet.eq_ignore_ascii_case(buffet::TRADING) {
+        "true"
+    } else {
+        "false"
+    };
+    for (k, (name, key)) in buffet::PICKS
+        .iter()
+        .chain(buffet::TRADE_COMMANDS.iter())
+        .enumerate()
+    {
+        let row = k + 2;
+        for (c, want) in [
+            ("A", *name),
+            ("B", words[k].as_str()),
+            ("C", holds),
+            ("D", *key),
+        ] {
+            assert_eq!(
+                got.get(&format!("{c}{row}")).map(String::as_str),
+                Some(want),
+                "frame {frame}: Commands!{c}{row}"
+            );
+        }
+    }
+}
+
+/// A frame of the order desk by hand beside the cartridge's, after the host's
+/// step (`PLATE.1`): the hand's calendar on a frame, the dividends of a day's
+/// first frame paid to the shares the last frame held, the order judged by what
+/// the last frame showed; then every cell of the desk, the books, the cash, the
+/// ledger, the commands and both views held, and the Write sheet's rows the
+/// host read, seven while an order fills and none else. The order taken.
+#[allow(clippy::too_many_arguments)]
+fn plate_frame_held(
+    cart: &Cartridge,
+    host: &Host,
+    io: (&Inputs, &Inputs),
+    plate: &mut Plate,
+    cal: &mut Calendar,
+    (seed, market): (u64, &Market),
+    shown: &Shown,
+    starts: [u64; 2],
+    texts: &[String],
+) -> Option<Order> {
+    let (now, last) = io;
+    let landed = plate.fills.len();
+    cal.tick();
+    if cal.turned {
+        plate.pay(std::array::from_fn(|k| {
+            RUNGS[k].dividend_on(cal.day_of_year)
+        }));
+    }
+    let order = plate.frame(Plate::clicked(now, last), &host.command, shown, starts);
+    let names = stock_names(cart);
+    let f = cal.frame;
+    let stocks = stocks_held(cart, cal, seed, market, DIFFICULTY);
+    let prices = prices_of(&stocks);
+    orders_held(
+        cart,
+        f,
+        plate,
+        (now, last),
+        &host.command,
+        order,
+        shown,
+        starts,
+        &names,
+    );
+    positions_held(cart, f, plate, order, prices, &names);
+    books_cash_held(
+        cart,
+        f,
+        [
+            plate.cash(buffet::FIRM, starts[0]),
+            plate.cash(buffet::PERSONAL, starts[1]),
+        ],
+        [
+            plate.holdings(buffet::FIRM, prices),
+            plate.holdings(buffet::PERSONAL, prices),
+        ],
+    );
+    ledger_held(cart, f, plate, landed, &names);
+    commands_held(cart, f, &names, plate.picked, &now.sheet);
+    trading_cells(cart, cal, &stocks, texts, plate, starts);
+    portfolio_cells(cart, cal, &stocks, texts, plate, starts);
+    let wrote = plate.fills.len() > landed;
+    assert_eq!(
+        host.pending.len(),
+        if wrote { 7 } else { 0 },
+        "frame {f}: the Write sheet's rows, seven while an order fills and none else: {:?}",
+        host.pending
+    );
+    order
+}
+
+/// The order desk at work (`PLATE.1`'s decisions 3 to 11), every frame of a
+/// scripted session held to the hand at the manifest's pace, the exam waived:
+/// the Input rows written as the host writes them, its keymap, its commands and
+/// its Camera read after every step, the derived writes it read made before
+/// the next frame. Its orders: a trade's key with no stock picked, refused; a
+/// click on Buy 10, filling at the price shown and picking its stock; B, a
+/// share of it; 1, a pick; M, as many as the cash covers; N, ten the cash no
+/// longer covers, refused; a click on Sell all at 10:00, a mark; S with none
+/// held, refused; 3 and D, ten
+/// sold of eleven, then ten of one, refused; a click and a trade's key in one
+/// frame, the click's order alone; B on the Portfolio, where no command holds,
+/// a key of no button, and a palette's run there, refused by the host; a
+/// palette's Sell all on Trading; your own pocket by a person's edit, Buy 10 of
+/// a stock its $100 covers three of, refused whole, then a click, M and a
+/// palette's Sell 1 from it; the firm's again, and a click on Sell 1 in the
+/// frame the 11:00 mark moves the price, filling at the last frame's; then at
+/// the closing bell's frame a share filling at the last open frame's price, and
+/// at the next frame a share refused, the market closed.
+#[test]
+fn a_scripted_session_holds_every_order_to_the_hand() {
+    use Act::{Key, Left, Point, Run, Show};
+    let script: &[(u64, &[Act])] = &[
+        (1, &[Show("Trading")]),
+        (3, &[Show("Trading")]), // the Camera showed the Portfolio at the begin
+        (4, &[Key("KeyB", true)]), // buy-1 with no stock picked: refused
+        (5, &[Key("KeyB", false)]),
+        (6, &[Point(6, 8), Left(true)]), // Buy 10 of the third: filled, and picked
+        (7, &[Left(false)]),
+        (8, &[Key("KeyB", true)]), // buy-1 of the third
+        (9, &[Key("KeyB", false)]),
+        (10, &[Key("Digit1", true)]), // the first picked
+        (11, &[Key("Digit1", false)]),
+        (12, &[Key("KeyM", true)]), // buy-max of the first: every cent
+        (13, &[Key("KeyM", false)]),
+        (14, &[Key("KeyN", true)]), // buy-10: the cash spent, refused
+        (15, &[Key("KeyN", false)]),
+        (16, &[Point(10, 6), Left(true)]), // Sell all of the first at 10:00, a mark: the last frame's price
+        (17, &[Left(false)]),
+        (18, &[Key("KeyS", true)]), // sell-1 of the first, none held: refused
+        (19, &[Key("KeyS", false)]),
+        (20, &[Key("Digit3", true)]), // the third picked
+        (21, &[Key("Digit3", false)]),
+        (22, &[Key("KeyD", true)]), // sell-10 of eleven
+        (23, &[Key("KeyD", false)]),
+        (24, &[Key("KeyD", true)]), // sell-10 of one: refused
+        (25, &[Key("KeyD", false)]),
+        (26, &[Point(5, 7), Left(true), Key("KeyF", true)]), // Buy 1 of the second clicked, and sell-all keyed: the click's
+        (27, &[Left(false), Key("KeyF", false)]),
+        (28, &[Show("Portfolio")]),
+        (29, &[Key("KeyB", true)]), // B on the Portfolio: no command holds there
+        (30, &[Key("KeyB", false)]),
+        (31, &[Run("buy-1")]), // the palette there: refused by the host
+        (32, &[Show("Trading")]),
+        (33, &[Run("sell-all")]), // the palette's: every share of the second
+        (36, &[Point(6, 8), Left(true)]), // your own pocket since frame 35: Buy 10 of the third, $100 covering three: refused
+        (37, &[Left(false)]),
+        (38, &[Point(5, 6), Left(true)]), // Buy 1 of the first
+        (39, &[Left(false)]),
+        (40, &[Key("KeyM", true)]), // buy-max from your own cash
+        (41, &[Key("KeyM", false)]),
+        (42, &[Run("sell-1")]),
+        (46, &[Point(8, 8), Left(true)]), // the firm's again: Sell 1 of the third at 11:00, a mark moving its price
+        (47, &[Left(false)]),
+        (196, &[Run("buy-1")]), // 16:00, the closing bell's frame: the last frame showed the market open
+        (197, &[Run("buy-1")]), // 16:02: the market shown closed, refused
+    ];
+    // A person's edits of the pocket an order funds, before the frame's step.
+    let pockets = [(35, buffet::PERSONAL), (44, buffet::FIRM)];
+    let last_frame = 199;
+    let mut cart = cartridge();
+    let seed = seed(&cart);
+    let market = Market::new(seed);
+    let texts = disclosure_texts(&cart);
+    let mut cal = Calendar::new(MINUTES_A_FRAME, DAYS_A_YEAR);
+    let mut host = Host::new(buffet::EXAM);
+    let mut plate = Plate::default();
+    let starts = [WAIVED_CAPITAL, buffet::PERSONAL_CASH];
+    let mut acts = script.iter().peekable();
+    let mut outcomes: Vec<(u64, buffet::Outcome)> = Vec::new();
+    for frame in 1..=last_frame {
+        if let Some(&(_, pocket)) = pockets.iter().find(|(at, _)| *at == frame) {
+            let edit = format!("(cell \"Orders\" \"B1\" {pocket})");
+            cart.write(&edit)
+                .unwrap_or_else(|r| panic!("{edit}: {} {}", r.refusal.id, r.refusal.text));
+            plate.pocket = pocket;
+        }
+        let mut set: Vec<Act> = Vec::new();
+        while let Some((_, more)) = acts.next_if(|(at, _)| *at == frame) {
+            set.extend_from_slice(more);
+        }
+        let shown = shown(&cal, seed, &market, &plate, starts);
+        let (last, now) = host.step(&mut cart, &set);
+        let order = plate_frame_held(
+            &cart,
+            &host,
+            (&now, &last),
+            &mut plate,
+            &mut cal,
+            (seed, &market),
+            &shown,
+            starts,
+            &texts,
+        );
+        if let Some(o) = order {
+            outcomes.push((frame, o.outcome));
+        }
+        if frame == 46 {
+            let now = RUNGS[2].price_at(market.path(seed, DIFFICULTY, &cal).now);
+            assert_ne!(
+                now, shown.prices[2],
+                "the mark at 11:00 moves the third's price, so its sale fills at the last frame's"
+            );
+        }
+    }
+    assert!(acts.next().is_none(), "every act of the script played");
+    use buffet::Outcome::{Closed, Filled, NoCash, NoShares, NoStock};
+    assert_eq!(
+        outcomes,
+        [
+            (4, NoStock),
+            (6, Filled),
+            (8, Filled),
+            (12, Filled),
+            (14, NoCash),
+            (16, Filled),
+            (18, NoShares),
+            (22, Filled),
+            (24, NoShares),
+            (26, Filled),
+            (33, Filled),
+            (36, NoCash),
+            (38, Filled),
+            (40, Filled),
+            (42, Filled),
+            (46, Filled),
+            (196, Filled),
+            (197, Closed),
+        ],
+        "the orders taken, by frame"
+    );
+    let fills: Vec<(u64, u64, i64)> = plate
+        .fills
+        .iter()
+        .map(|f| (f.pocket, f.stock, f.shares))
+        .collect();
+    assert_eq!(fills[0], (buffet::FIRM, 3, 10));
+    assert_eq!(fills[1], (buffet::FIRM, 3, 1));
+    assert_eq!(
+        fills[3],
+        (buffet::FIRM, 1, -fills[2].2),
+        "every share of the first sold"
+    );
+    assert_eq!(fills[4], (buffet::FIRM, 3, -10));
+    assert_eq!(fills[5..7], [(buffet::FIRM, 2, 1), (buffet::FIRM, 2, -1)]);
+    assert_eq!(fills[7], (buffet::PERSONAL, 1, 1));
+    assert_eq!(fills[9], (buffet::PERSONAL, 1, -1));
+    assert_eq!(
+        fills[10],
+        (buffet::FIRM, 3, -1),
+        "the third's last share at 11:00"
+    );
+    assert_eq!(
+        fills[11],
+        (buffet::FIRM, 3, 1),
+        "a share of the stock picked at the closing bell's frame"
+    );
+    assert_eq!(host.now.sheet, buffet::TRADING);
+}
+
+/// The ledger's ring past a hundred fills (`PLATE.1`'s decision 10, `MISE.3`'s
+/// decision 5): a click at the first frame, whose last is the load's, refused
+/// as the market closed and picking the first stock; then a share of it bought
+/// and sold by the palette's commands at every frame, 106 fills, the ledger
+/// held at every frame a frame late; at the end its first row holds the 101st,
+/// its next five the 102nd to the 106th, and the rest the 7th to the 100th.
+#[test]
+fn the_ledger_rings_past_a_hundred_fills() {
+    use Act::{Left, Point, Run, Show};
+    let mut cart = cartridge();
+    let seed = seed(&cart);
+    let market = Market::new(seed);
+    let texts = disclosure_texts(&cart);
+    let mut cal = Calendar::new(MINUTES_A_FRAME, DAYS_A_YEAR);
+    let mut host = Host::new(buffet::EXAM);
+    let mut plate = Plate::default();
+    let starts = [WAIVED_CAPITAL, buffet::PERSONAL_CASH];
+    let fills = 106;
+    for frame in 1..=fills + 4 {
+        let set: Vec<Act> = match frame {
+            1 => vec![Show("Trading"), Point(5, 6), Left(true)],
+            2 => vec![Left(false)],
+            3 => vec![Show("Trading")],
+            f if f < fills + 4 => vec![Run(if f % 2 == 0 { "buy-1" } else { "sell-1" })],
+            _ => vec![],
+        };
+        let shown = shown(&cal, seed, &market, &plate, starts);
+        let (last, now) = host.step(&mut cart, &set);
+        let order = plate_frame_held(
+            &cart,
+            &host,
+            (&now, &last),
+            &mut plate,
+            &mut cal,
+            (seed, &market),
+            &shown,
+            starts,
+            &texts,
+        );
+        if frame == 1 {
+            assert_eq!(order.map(|o| o.outcome), Some(buffet::Outcome::Closed));
+        }
+    }
+    assert_eq!(plate.fills.len() as u64, fills);
+    let rows = values(&cart, "Ledger", "A2:A101");
+    let number = |row: u64| rows[&format!("A{row}")].parse::<u64>().expect("a number");
+    assert_eq!(number(2), 101, "the 101st on the first row");
+    for (row, n) in (3..=7).zip(102..) {
+        assert_eq!(number(row), n);
+    }
+    for row in 8..=101 {
+        assert_eq!(number(row), row - 1);
+    }
+}
+
+/// The dividend (`PLATE.1`'s decision 9, `STATION.1`'s decision 11): at a frame
+/// a day, every frame the opening bell's minute of the next day, ten shares of
+/// the fourth stock bought for the firm and ten for your own, your own start
+/// raised to $10,000 by a person's edit so that it can; then every frame held to
+/// the third year's first dividend day: at each of the nine dividend days'
+/// first frames, each pocket paid 50 cents a share of the shares the last frame
+/// held, into its dividends and its cash, and nothing at any other frame. The
+/// ninth day, the 821st, is a Tuesday, the frame before it Monday's opening
+/// bell, so an order fills there: the firm's every share sold that frame, the
+/// dividend still paid to the ten shares held as the day before closed, the
+/// record date. At the manifest's pace a day's first frame is midnight, when no
+/// order fills, so only a pace of a day a frame or more meets the two.
+#[test]
+fn a_dividend_is_paid_to_the_shares_held_at_the_days_turn() {
+    use Act::{Left, Point, Show};
+    let (mut cart, mut cal) = at_pace(A_DAY);
+    let edit = "(cell \"Cash\" \"B1\" 1000000)";
+    cart.write(edit)
+        .unwrap_or_else(|r| panic!("{edit}: {} {}", r.refusal.id, r.refusal.text));
+    let seed = seed(&cart);
+    let market = Market::new(seed);
+    let texts = disclosure_texts(&cart);
+    let mut host = Host::new(buffet::EXAM);
+    let mut plate = Plate::default();
+    let starts = [WAIVED_CAPITAL, 1_000_000];
+    let mut paid = Vec::new();
+    for frame in 1..=822 {
+        let set: Vec<Act> = match frame {
+            2 => vec![Show("Trading"), Point(6, 9), Left(true)], // Buy 10 of the fourth, the firm's
+            3 => vec![Left(false)],
+            4 => vec![Left(true)], // your own, since this frame's edit
+            5 => vec![Left(false)],
+            821 => vec![Point(10, 9), Left(true)], // the firm's again: Sell all of the fourth, on a dividend's frame
+            822 => vec![Left(false)],
+            _ => vec![],
+        };
+        for (at, pocket) in [(4, buffet::PERSONAL), (820, buffet::FIRM)] {
+            if frame == at {
+                let edit = format!("(cell \"Orders\" \"B1\" {pocket})");
+                cart.write(&edit)
+                    .unwrap_or_else(|r| panic!("{edit}: {} {}", r.refusal.id, r.refusal.text));
+                plate.pocket = pocket;
+            }
+        }
+        let before = plate.dividends;
+        let shown = shown(&cal, seed, &market, &plate, starts);
+        let (last, now) = host.step(&mut cart, &set);
+        let order = plate_frame_held(
+            &cart,
+            &host,
+            (&now, &last),
+            &mut plate,
+            &mut cal,
+            (seed, &market),
+            &shown,
+            starts,
+            &texts,
+        );
+        if frame == 821 {
+            assert_eq!(
+                order.map(|o| (o.outcome, o.filled)),
+                Some((buffet::Outcome::Filled, -10)),
+                "the firm's ten sold on the dividend's frame"
+            );
+        }
+        if plate.dividends != before {
+            let d: Vec<u64> = plate.dividends.iter().map(|p| p[3]).collect();
+            paid.push((cal.day, d));
+        }
+    }
+    let days = [90, 181, 272, 363, 455, 546, 637, 728, 820];
+    let want: Vec<(u64, Vec<u64>)> = days
+        .iter()
+        .enumerate()
+        .map(|(k, &day)| (day, vec![500 * (k as u64 + 1); 2]))
+        .collect();
+    assert_eq!(paid, want, "the nine dividends, each pocket's ten shares");
+    assert_eq!(plate.book(buffet::FIRM, 4).shares, 0);
+}
+
+/// The order desk's settings, its buttons and its commands (`PLATE.1`'s
+/// decisions 1 to 4): the pocket an order funds, the firm's; the buttons' view
+/// and their places, an act a column and a stock a row, the hand's; each
+/// button's text at its place on Trading, inside a column of 12 characters,
+/// and drawn in lavender by a look of its text; the Commands sheet's headers,
+/// names and keys, the hand's, the order desk reading each name from it; no
+/// key the viewport moves by, none with Alt, and the keys' line naming them;
+/// and every command holding while Trading shows and on no other sheet.
+#[test]
+fn the_order_desk_states_its_settings_its_buttons_and_its_commands() {
+    let mut cart = cartridge();
+    cart.step(0);
+    let orders = values(&cart, "Orders", "A1:I9");
+    assert_eq!(orders.get("B1").map(String::as_str), Some("1"));
+    assert_eq!(orders.get("B2").map(String::as_str), Some(buffet::TRADING));
+    for (t, column) in buffet::TRADE_COLUMNS.iter().enumerate() {
+        let at = address(5, 4 + t);
+        assert_eq!(orders.get(&at), Some(&column.to_string()), "Orders!{at}");
+    }
+    let names = stock_names(&cart);
+    for (s, row) in buffet::STOCK_ROWS.iter().enumerate() {
+        let r = 6 + s;
+        assert_eq!(orders.get(&format!("A{r}")), Some(&names[s]));
+        assert_eq!(orders.get(&format!("B{r}")), Some(&(s + 1).to_string()));
+        assert_eq!(orders.get(&format!("C{r}")), Some(&row.to_string()));
+    }
+    let view = values(&cart, buffet::TRADING, "A1:J17");
+    let text = lf(&read(CARTRIDGE));
+    for (t, label) in buffet::TRADE_TEXTS.iter().enumerate() {
+        let column = buffet::TRADE_COLUMNS[t] as usize;
+        for &row in &buffet::STOCK_ROWS {
+            let at = address(row as usize, column);
+            assert_eq!(
+                view.get(&at).map(String::as_str),
+                Some(*label),
+                "Trading!{at}"
+            );
+        }
+        let width = format!(
+            "(column \"Trading\" \"{}\" {} shown none)",
+            letters(column),
+            buffet::BUTTON_COLUMN
+        );
+        assert!(text.lines().any(|l| l == width), "{width}");
+        assert!(
+            label.chars().count() as u64 <= buffet::BUTTON_COLUMN,
+            "{label}"
+        );
+        let look = format!("(look \"Trading\" \"{label}\" 1)");
+        assert!(text.lines().any(|l| l == look), "a button's look: {look}");
+    }
+    assert!(text.lines().any(|l| l == buffet::BUTTON_FORMAT));
+    let commands = values(&cart, "Commands", "A1:D11");
+    for (c, header) in ["A", "B", "C", "D"]
+        .iter()
+        .zip(["name", "words", "holds", "key"])
+    {
+        assert_eq!(
+            commands.get(&format!("{c}1")).map(String::as_str),
+            Some(header)
+        );
+    }
+    let all: Vec<(&str, &str)> = buffet::PICKS
+        .iter()
+        .chain(buffet::TRADE_COMMANDS.iter())
+        .copied()
+        .collect();
+    for (k, (name, key)) in all.iter().enumerate() {
+        let row = k + 2;
+        assert_eq!(
+            commands.get(&format!("A{row}")).map(String::as_str),
+            Some(*name)
+        );
+        assert_eq!(
+            commands.get(&format!("D{row}")).map(String::as_str),
+            Some(*key)
+        );
+        let read = format!("Commands!$A${row}");
+        let reader = if k < 4 { "B14" } else { "B15" };
+        let head = format!("(formula \"Orders\" \"{reader}\" ");
+        assert!(
+            text.lines()
+                .any(|l| l.starts_with(&head) && l.contains(&read)),
+            "Orders!{reader} reads {name}'s name from {read}"
+        );
+    }
+    let moves = [
+        "ArrowUp",
+        "ArrowDown",
+        "ArrowLeft",
+        "ArrowRight",
+        "PageUp",
+        "PageDown",
+        "Home",
+        "End",
+        "Enter",
+        "Space",
+    ];
+    for (_, key) in &all {
+        assert!(!moves.contains(key) && !key.starts_with("Alt"), "{key}");
+    }
+    for words in ["1 to 4", "B, N or M", "S, D or F"] {
+        assert!(
+            buffet::TRADING_KEYS.contains(words),
+            "the keys' line: {words}"
+        );
+    }
+    assert_eq!(
+        all.iter().map(|(_, key)| *key).collect::<Vec<_>>(),
+        ["Digit1", "Digit2", "Digit3", "Digit4", "KeyB", "KeyN", "KeyM", "KeyS", "KeyD", "KeyF"],
+        "the keys the line names, in its order"
+    );
+    for (shown, holds) in [(buffet::TRADING, "true"), ("Portfolio", "false")] {
+        let edit = format!("(cell \"Input\" \"B19\" \"{shown}\")");
+        cart.write(&edit)
+            .unwrap_or_else(|r| panic!("{edit}: {} {}", r.refusal.id, r.refusal.text));
+        cart.step(0);
+        let got = values(&cart, "Commands", "C2:C11");
+        assert!(
+            got.len() == all.len() && got.values().all(|h| h == holds),
+            "the commands while {shown} shows: {got:?}"
         );
     }
 }

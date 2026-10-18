@@ -74,6 +74,18 @@
 //! leading group of the dollars and each later digit by its place, choosing
 //! the padding by powers of ten; the hand counts the digits back from the
 //! last, a comma before every third, and the padding from the count.
+//!
+//! The order desk (`PLATE.1`) shares none with its cells. The cells find a
+//! click by a grid of presses summed by row and by column, and a command by
+//! comparing the command run with the Commands sheet's names; the hand matches
+//! the pointer to each button's place and the name to its own list. The cells
+//! keep each pocket's book of each stock as state over its twin, the cost basis
+//! taken down sale by sale in doubles, and derive the gain taken from three
+//! sums, and the cash from the books' flows; the hand keeps every fill in a
+//! list and folds it, the cost of the shares sold found in whole integers
+//! rounded half up, and the cash from its start and the fills. The ledger's
+//! ring is the cells' count taken round a hundred; the hand finds a row's fill
+//! as the last whose number falls there.
 
 use std::collections::BTreeSet;
 
@@ -1337,6 +1349,445 @@ impl Exam {
             "The bearer has sat the Series 777 and passed, as every candidate does."
         }
     }
+}
+
+/// The view the order desk's buttons stand on (`PLATE.1`), the Orders sheet's
+/// `B2`.
+pub const TRADING: &str = "Trading";
+
+/// A trade the order desk makes of a stock: a share or ten bought, as many as
+/// the cash covers, a share or ten sold, or every share held.
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+pub enum Trade {
+    Buy(u64),
+    BuyMax,
+    Sell(u64),
+    SellAll,
+}
+
+/// The six trades, in the order of each stock's buttons on Trading and of the
+/// commands that make them.
+pub const TRADES: [Trade; 6] = [
+    Trade::Buy(1),
+    Trade::Buy(10),
+    Trade::BuyMax,
+    Trade::Sell(1),
+    Trade::Sell(10),
+    Trade::SellAll,
+];
+/// Each trade's button, its text, and its column on Trading, E to J; and each
+/// stock's row there, 6 to 9: the Orders sheet's `D5:I5` and `C6:C9`.
+pub const TRADE_TEXTS: [&str; 6] = [
+    "[ Buy 1 ]",
+    "[ Buy 10 ]",
+    "[ Buy max ]",
+    "[ Sell 1 ]",
+    "[ Sell 10 ]",
+    "[ Sell all ]",
+];
+pub const TRADE_COLUMNS: [u64; 6] = [5, 6, 7, 8, 9, 10];
+pub const STOCK_ROWS: [u64; 4] = [6, 7, 8, 9];
+/// The width of each button's column on Trading, in characters.
+pub const BUTTON_COLUMN: u64 = 12;
+/// The commands that pick a stock, each its name and its key, the Commands
+/// sheet's rows 2 to 5; and those that trade the stock picked, rows 6 to 11,
+/// in the order of the trades (the page's version 5, `SPEC.md` section 3.10).
+pub const PICKS: [(&str, &str); 4] = [
+    ("rung-1", "Digit1"),
+    ("rung-2", "Digit2"),
+    ("rung-3", "Digit3"),
+    ("rung-4", "Digit4"),
+];
+pub const TRADE_COMMANDS: [(&str, &str); 6] = [
+    ("buy-1", "KeyB"),
+    ("buy-10", "KeyN"),
+    ("buy-max", "KeyM"),
+    ("sell-1", "KeyS"),
+    ("sell-10", "KeyD"),
+    ("sell-all", "KeyF"),
+];
+/// The pockets by their number, the Orders sheet's `B1`: the firm's, and
+/// your own; and their names as the ledger writes them.
+pub const FIRM: u64 = 1;
+pub const PERSONAL: u64 = 2;
+pub const POCKET_NAMES: [&str; 2] = ["Firm", "Personal"];
+/// The ledger's rows, a ring, from row 2 (`MISE.3`'s probe 3).
+pub const LEDGER_ROWS: u64 = 100;
+/// Trading's lines: the keys, and the last order before there is one.
+pub const TRADING_KEYS: &str = "Press 1 to 4 to pick a stock, marked ▸; then B, N or M buys 1, 10 or the most, and S, D or F sells 1, 10 or all.";
+pub const NO_ORDER: &str = "No order yet.";
+
+/// Why an order filled or did not, the Orders sheet's `B27`.
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+pub enum Outcome {
+    Filled = 1,
+    Closed = 2,
+    NoStock = 3,
+    NoCash = 4,
+    NoShares = 5,
+}
+
+/// What the last frame showed, by which an order is judged: whether the market
+/// was open, each stock's price now in whole cents, each pocket's cash, and
+/// the half hour the person saw, as the ledger writes it.
+#[derive(Clone, Debug, Default, PartialEq, Eq)]
+pub struct Shown {
+    pub open: bool,
+    pub prices: [u64; 4],
+    pub cash: [u64; 2],
+    pub when: String,
+}
+
+/// An order as it was taken, filled or refused: its pocket, its stock from 1,
+/// 0 for none picked, and its trade from 1; what the last frame showed of the
+/// market, the price, the pocket's cash and its shares of the stock; the
+/// shares filled, a sale negative; and why.
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+pub struct Order {
+    pub pocket: u64,
+    pub stock: u64,
+    pub trade: usize,
+    pub open: bool,
+    pub price: u64,
+    pub cash: u64,
+    pub held: u64,
+    pub filled: i64,
+    pub outcome: Outcome,
+}
+
+impl Order {
+    /// What Trading says of the order, `A13`, by the stock's name: what was
+    /// bought or sold, or why nothing was.
+    pub fn sentence(&self, name: &str) -> String {
+        match self.outcome {
+            Outcome::Filled => {
+                let n = self.filled.unsigned_abs();
+                format!(
+                    "{} {n} share{} of {name} at the price shown.",
+                    if self.filled > 0 { "Bought" } else { "Sold" },
+                    if n == 1 { "" } else { "s" }
+                )
+            }
+            Outcome::Closed => "Refused: the market was closed. Orders fill from the opening bell to the closing bell.".to_string(),
+            Outcome::NoStock => "Refused: no stock is picked. Press 1 to 4 to pick one, or click a button on its row.".to_string(),
+            Outcome::NoCash => format!(
+                "Refused: the cash does not cover {} of {name}.",
+                if TRADES[self.trade - 1] == Trade::Buy(10) {
+                    "10 shares"
+                } else {
+                    "a share"
+                }
+            ),
+            Outcome::NoShares if self.held == 0 => format!("Refused: no shares of {name} to sell."),
+            Outcome::NoShares => format!("Refused: fewer than 10 shares of {name} to sell."),
+        }
+    }
+}
+
+/// A fill, as the ledger keeps it: its number from 1, when, the pocket, the
+/// stock from 1, the shares, a sale negative, the price and the pocket's cash
+/// after it, in whole cents.
+#[derive(Clone, Debug, PartialEq, Eq)]
+pub struct Fill {
+    pub number: u64,
+    pub when: String,
+    pub pocket: u64,
+    pub stock: u64,
+    pub shares: i64,
+    pub price: u64,
+    pub cash_after: u64,
+}
+
+/// A pocket's book of one stock, folded from its fills: the shares, the cost
+/// basis at the average cost, and the cents spent buying and received
+/// selling.
+#[derive(Clone, Copy, Debug, Default, PartialEq, Eq)]
+pub struct Book {
+    pub shares: u64,
+    pub basis: u64,
+    pub bought: u64,
+    pub sold: u64,
+}
+
+/// The order desk and the books by hand (`PLATE.1`): the pocket an order
+/// funds as written, the stock picked, every fill in order and the dividends
+/// paid to each pocket's each stock, and the last order taken. The cells keep
+/// each book as state over its twin and derive the gain taken from three
+/// sums; the hand keeps the fills and folds them, a share's cost averaged
+/// sale by sale, and finds a click by matching the pointer to a button's place
+/// and a command by its name.
+#[derive(Clone, Debug, PartialEq, Eq)]
+pub struct Plate {
+    pub pocket: u64,
+    pub picked: u64,
+    pub fills: Vec<Fill>,
+    pub dividends: [[u64; 4]; 2],
+    pub last: Option<Order>,
+}
+
+impl Default for Plate {
+    fn default() -> Plate {
+        Plate {
+            pocket: FIRM,
+            picked: 0,
+            fills: Vec::new(),
+            dividends: [[0; 4]; 2],
+            last: None,
+        }
+    }
+}
+
+impl Plate {
+    /// The pocket an order funds, as the Orders sheet's `B19` reads `B1`: your
+    /// own at 2, and the firm's at any other value.
+    pub fn funding(&self) -> u64 {
+        if self.pocket == PERSONAL {
+            PERSONAL
+        } else {
+            FIRM
+        }
+    }
+
+    /// The button clicked this frame, its stock and its trade, each from 1:
+    /// the left button going down on a button's cell while Trading shows.
+    pub fn clicked(now: &Inputs, last: &Inputs) -> Option<(u64, usize)> {
+        for (s, &row) in STOCK_ROWS.iter().enumerate() {
+            for (t, &column) in TRADE_COLUMNS.iter().enumerate() {
+                if clicked(now, last, (TRADING, column, row)) {
+                    return Some((s as u64 + 1, t + 1));
+                }
+            }
+        }
+        None
+    }
+
+    /// The stock a command picks, from 1, and the trade a command orders,
+    /// from 1, by its name; 0 for a name that does neither.
+    pub fn pick_of(command: &str) -> u64 {
+        PICKS
+            .iter()
+            .position(|(name, _)| *name == command)
+            .map_or(0, |k| k as u64 + 1)
+    }
+    pub fn trade_of(command: &str) -> usize {
+        TRADE_COMMANDS
+            .iter()
+            .position(|(name, _)| *name == command)
+            .map_or(0, |k| k + 1)
+    }
+
+    /// A pocket's book of a stock, each from 1, folded from the fills in their
+    /// order: a purchase adds its shares and its cost; a sale takes off its
+    /// shares and their share of the cost, rounded half up to whole cents, or
+    /// all of it with the last share.
+    pub fn book(&self, pocket: u64, stock: u64) -> Book {
+        let mut b = Book::default();
+        for f in self
+            .fills
+            .iter()
+            .filter(|f| f.pocket == pocket && f.stock == stock)
+        {
+            let n = f.shares.unsigned_abs();
+            if f.shares > 0 {
+                b.shares += n;
+                b.basis += n * f.price;
+                b.bought += n * f.price;
+            } else {
+                let cost = if n == b.shares {
+                    b.basis
+                } else {
+                    let (whole, held) = (u128::from(b.basis) * u128::from(n), u128::from(b.shares));
+                    ((2 * whole + held) / (2 * held)) as u64
+                };
+                b.shares -= n;
+                b.basis -= cost;
+                b.sold += n * f.price;
+            }
+        }
+        b
+    }
+
+    /// A pocket's cash from its start, the exam's capital for the firm's or
+    /// $100 and the hustle's fees for your own: less what its books spent,
+    /// with what they received and its dividends.
+    pub fn cash(&self, pocket: u64, start: u64) -> u64 {
+        let p = (pocket - 1) as usize;
+        let (mut spent, mut received) = (0, 0);
+        for stock in 1..=4 {
+            let b = self.book(pocket, stock);
+            spent += b.bought;
+            received += b.sold;
+        }
+        start + received + self.dividends[p].iter().sum::<u64>() - spent
+    }
+
+    /// A pocket's holdings, its shares of each stock at its price now.
+    pub fn holdings(&self, pocket: u64, prices: [u64; 4]) -> u64 {
+        (1..=4)
+            .map(|s| self.book(pocket, s).shares * prices[s as usize - 1])
+            .sum()
+    }
+
+    /// The dividends of a day's first frame, each stock's today a share, paid
+    /// to the shares each pocket held at the frame before, before this
+    /// frame's order.
+    pub fn pay(&mut self, today: [u64; 4]) {
+        for pocket in [FIRM, PERSONAL] {
+            for stock in 1..=4u64 {
+                let held = self.book(pocket, stock).shares;
+                self.dividends[pocket as usize - 1][stock as usize - 1] +=
+                    held * today[stock as usize - 1];
+            }
+        }
+    }
+
+    /// A frame of the order desk: a click on a button, its stock and its
+    /// trade, and the command run, judged by what the last frame showed. A
+    /// click picks its stock, as a pick command does, a click first; the order
+    /// is a click's, else a trade command's on the stock picked before this
+    /// frame, the one the person saw marked, and none for a frame with
+    /// neither. A filled order is a fill, the pocket's cash after it found
+    /// from `starts`, each pocket's start at this frame (and this frame's
+    /// dividends, paid first). The order taken, filled or refused.
+    pub fn frame(
+        &mut self,
+        press: Option<(u64, usize)>,
+        command: &str,
+        shown: &Shown,
+        starts: [u64; 2],
+    ) -> Option<Order> {
+        let before = self.picked;
+        match press {
+            Some((stock, _)) => self.picked = stock,
+            None => {
+                let pick = Plate::pick_of(command);
+                if pick > 0 {
+                    self.picked = pick;
+                }
+            }
+        }
+        let (stock, trade) = match press {
+            Some(order) => order,
+            None => match Plate::trade_of(command) {
+                0 => return None,
+                trade => (before, trade),
+            },
+        };
+        let pocket = self.funding();
+        let p = (pocket - 1) as usize;
+        let price = if stock == 0 {
+            0
+        } else {
+            shown.prices[stock as usize - 1]
+        };
+        let cash = shown.cash[p];
+        let held = if stock == 0 {
+            0
+        } else {
+            self.book(pocket, stock).shares
+        };
+        let filled: i64 = if !shown.open || stock == 0 {
+            0
+        } else {
+            match TRADES[trade - 1] {
+                Trade::Buy(n) if n * price <= cash => n as i64,
+                Trade::Buy(_) => 0,
+                Trade::BuyMax => (cash / price) as i64,
+                Trade::Sell(n) if held >= n => -(n as i64),
+                Trade::Sell(_) => 0,
+                Trade::SellAll => -(held as i64),
+            }
+        };
+        let outcome = if !shown.open {
+            Outcome::Closed
+        } else if stock == 0 {
+            Outcome::NoStock
+        } else if filled != 0 {
+            Outcome::Filled
+        } else if trade <= 3 {
+            Outcome::NoCash
+        } else {
+            Outcome::NoShares
+        };
+        if filled != 0 {
+            self.fills.push(Fill {
+                number: self.fills.len() as u64 + 1,
+                when: shown.when.clone(),
+                pocket,
+                stock,
+                shares: filled,
+                price,
+                cash_after: 0,
+            });
+            let after = self.cash(pocket, starts[p]);
+            if let Some(fill) = self.fills.last_mut() {
+                fill.cash_after = after;
+            }
+        }
+        let order = Order {
+            pocket,
+            stock,
+            trade,
+            open: shown.open,
+            price,
+            cash,
+            held,
+            filled,
+            outcome,
+        };
+        self.last = Some(order);
+        Some(order)
+    }
+
+    /// The fill a ledger's row holds, of the first `fills` fills: the last
+    /// whose number falls on that row of the ring, `MOD(n-1,100)+2`.
+    pub fn ledger(&self, row: u64, fills: usize) -> Option<&Fill> {
+        self.fills[..fills]
+            .iter()
+            .rev()
+            .find(|f| (f.number - 1) % LEDGER_ROWS + 2 == row)
+    }
+}
+
+/// Trading's line on where an order's money comes from, `A3`; and the
+/// Portfolio's on whose holdings it shows, its `A3`: the pocket an order funds.
+pub fn trading_line(pocket: u64) -> &'static str {
+    if pocket == PERSONAL {
+        "Orders fill at the price shown, while the market is open, from your own cash."
+    } else {
+        "Orders fill at the price shown, while the market is open, from the firm's cash, which is to say other people's money."
+    }
+}
+pub fn holdings_line(pocket: u64) -> &'static str {
+    if pocket == PERSONAL {
+        "Your own holdings, at the price now."
+    } else {
+        "The firm's holdings, at the price now."
+    }
+}
+
+/// The words of the Commands sheet's rows from 2, a command's sentence the
+/// palette shows: each pick's by its stock's name, and each trade's by the
+/// stock picked's, or none yet.
+pub fn command_words(names: &[String; 4], picked: u64) -> Vec<String> {
+    let stock = if picked == 0 {
+        "the stock picked, none yet".to_string()
+    } else {
+        names[picked as usize - 1].clone()
+    };
+    let mut out: Vec<String> = names
+        .iter()
+        .map(|name| format!("Pick {name}: the buy and sell commands trade it"))
+        .collect();
+    out.extend([
+        format!("Buy 1 share of {stock}"),
+        format!("Buy 10 shares of {stock}"),
+        format!("Buy as many shares of {stock} as the cash covers"),
+        format!("Sell 1 share of {stock}"),
+        format!("Sell 10 shares of {stock}"),
+        format!("Sell every share of {stock}"),
+    ]);
+    out
 }
 
 #[cfg(test)]

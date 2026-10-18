@@ -82,4 +82,8 @@
      "The opening bell rings at 9:30 whether or not anyone has finished an exam."
      "Management asked the exchange to hold the bell. The exchange agreed, this once."
      "Day!B26")
+    ("An order fills whole at the price shown, at once, with no spread, no commission and no day to settle."
+     "A buyer pays the ask and a seller gets the bid, a broker may charge, and a trade settles a business day later."
+     "Our broker works for exposure."
+     "Orders!B23")
     ))                              ; the sheet's end: a caveat added goes above this line

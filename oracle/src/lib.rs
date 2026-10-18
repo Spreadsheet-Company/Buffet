@@ -15,7 +15,10 @@
 //! the calendar counted in minutes, the session's bells and marks, and its
 //! path between two closes, and since `GUARD.1` the Series 777, its draw
 //! walked a row at a time, its answers, its score, the firm's capital and
-//! style, its keys by view and state, and the bell waiting for it; the door
+//! style, its keys by view and state, and the bell waiting for it, and since
+//! `PLATE.1` the order desk, its buttons and commands, its fills and books,
+//! each pocket's cash and the ledger's ring; the host's derived writes, the
+//! Write sheet's rows as the host reads them; the door
 //! the runners and the tests
 //! share, which reads a source of the repository and the texts it includes
 //! and hands them to the engine's pass, `alonzo::pass::expand`, as the
@@ -114,6 +117,45 @@ pub fn values(cart: &Cartridge, sheet: &str, window: &str) -> BTreeMap<String, S
         }
     }
     out
+}
+
+/// The Write sheet's rows as the host reads them after a step (Alonzo's
+/// `SPEC.md` section 3.9, `web/host.js`'s `_readWrite`, `PLATE.1`): from row 2,
+/// each row whose address is a text not empty, its sheet a text not empty and
+/// its value no error, a `derived` row for the next frame, its value spelled as
+/// the record spells it; each the host's own write before the next frame's
+/// inputs.
+pub fn derived(cart: &Cartridge) -> Vec<String> {
+    let Ok(Viewed::Text(record)) = cart.view("values", "Write", Some("A2:C101")) else {
+        return Vec::new();
+    };
+    let mut cells: BTreeMap<(u32, char), String> = BTreeMap::new();
+    for line in record.lines() {
+        let Some(rest) = line
+            .strip_prefix("(value \"Write\" \"")
+            .or_else(|| line.strip_prefix("(cell \"Write\" \""))
+        else {
+            continue;
+        };
+        let Some((addr, spelled)) = rest.split_once("\" ") else {
+            continue;
+        };
+        let column = addr.chars().next().unwrap_or(' ');
+        if let Ok(row) = addr[1..].parse::<u32>() {
+            let spelled = spelled.strip_suffix(')').unwrap_or(spelled);
+            cells.insert((row, column), spelled.to_string());
+        }
+    }
+    let rows: BTreeSet<u32> = cells.keys().map(|(row, _)| *row).collect();
+    let text = |s: &String| s.len() > 2 && s.starts_with('"');
+    rows.into_iter()
+        .filter_map(|row| {
+            let at = |c: char| cells.get(&(row, c));
+            let (sheet, addr, value) = (at('A')?, at('B')?, at('C')?);
+            (text(sheet) && text(addr) && !value.starts_with('('))
+                .then(|| format!("(derived {sheet} {addr} {value})"))
+        })
+        .collect()
 }
 
 /// A cartridge's text loaded through the engine and stepped `frames` times

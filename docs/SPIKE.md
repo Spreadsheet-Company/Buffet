@@ -55,6 +55,12 @@ empty.*
 
   *Closed 2026-10-15.* Predicted `~days`; cost one session, the scoping, the build and the owner's hand test. What landed: the Stocks sheet and the Market's column D in the source and its cartridge, now 131 rows and 79 formula cells; the hand's rungs, their prices, the dividend's days and the bound in `oracle/src/buffet.rs`; the Stocks sheet held inside the tests of two years, a year at difficulty 0, eight hundred days and a hundred years at one frame a day, two tests of the cartridge more (the rungs' settings, the opening) and three of the hand (the opening at both tiers, the bound, the dividend's days), 27 in all; the describe golden blessed again, moved as predicted; and, in the same commit at the owner's word, `POT.2`'s P2 cell, CI's Linux holding the market bit for bit at the first push. One of the eight predictions missed, and only at first: the suite took 11.6 s while the Stocks sheet's 56 cells were viewed at every frame and every day, and 7.4 s once the window held the four columns that compute, half again the old suite's time on the same machine under the same load. The build found that a cent is a wide step for a $1 share: the first rung's price moves on 25 of the first year's 365 days.
 
+## 🍴 THE PLATE
+
+- ✅ **`PLATE.1` — the plate and the ledger: orders by click and by key, fills at the price shown.** *Scoped and built 2026-10-18 in one sitting at the owner's word, "Scope and implement PLATE.1", its fifteen decisions built as recommended, and passed at the owner's hand test the same day with no change asked: the scoping, every prediction beside its number, what the build found and the owner's hand test are under THE ITEMS, SCOPED.* Trading, a view of its own beside the Portfolio, a stock a row with its price now and the pocket's shares of it, and six buttons a stock, Buy 1, Buy 10, Buy max, Sell 1, Sell 10 and Sell all, each drawn in Lovelace Lavender by a look keyed on its text; the presses the library's `clicked` at its third writing, one fill over the Orders sheet's grid, an act a column and a stock a row, its places values. The cartridge at the page's version 5 (`ENGINE.25`): ten commands of its own, held while Trading shows and listed in the palette as `buffet.rung-1` to `buffet.sell-all`, the digits 1 to 4 picking a stock, marked ▸, and B, N and M buying a share, ten and the most of it, S, D and F selling a share, ten and every one; a click picks its stock too. An order is one a frame, a click's before a command's, judged by what the last frame showed: filled at the price shown, `Stocks.last!E5:E8`, only while the market showed open (`POT.10`'s decision 13), a share or ten whole, as many as the cash covers, or every share held, and each refusal said by its reason. The Orders sheet keeps the desk's books and holds the last order for the view to say; the Positions sheet both pockets' books, a row a pocket and a stock, the shares, the cost basis at the average cost, the cents spent and received and the dividends as state over their twins, the value and the gains taken and not taken as functions of them; the Cash sheet each pocket's cash as the sum of its flows, its holdings and its net worth; and the Ledger the last hundred fills, a ring written by the Write sheet's seven rows a frame late (`MISE.3`'s decision 5). Orders fund the firm, `Orders!B1`, until `PLATE.2`'s switch; a person's edit of 2 funds your own. The dividend is paid at a day's first frame to the shares the last frame held (`STATION.1`'s decision 11), into the pocket's dividends and cash, with no ledger row. The Portfolio gains the holding's columns, Shares, Cost ($), Value ($) and Gain ($), and each pocket's net worth; the caveats their row 17, the order filled whole at the price shown with no spread, no commission and no day to settle (`BD-5`). *Oracle, met:* every frame of a scripted session of orders by clicks, keys and the palette, in both pockets, through every refusal, the click beside a command, a mark's frame and the closing bell's, held to the hand, the desk's books, the positions, the cash, the commands, both views and the ledger a frame late, the host's derived writes made as the host makes them; the ledger's ring past a hundred fills; nine dividends at a frame a day, the ninth on a frame an order fills; the desk's settings, buttons and commands; the views' new cells at rest in every long run; `BD-7`'s scan and the census's `(every-frame 0)`; the describe golden blessed again; 20 mutants, each caught by the test written for it; the cost natively; and the owner's hand test. *Pays into:* the pockets' switch (`PLATE.2`), every order a later course places, the timers (`PLATE.3`), the cost model (`PLATE.5`), the report card (`CRITIC.1`) and the rules' orders (`RECIPE.1`). `~days`
+
+  *Closed 2026-10-18.* Predicted `~days`; cost one sitting, the scoping, the build, its measurements and mutants, and the owner's hand test. What landed: Trading, the Orders, the Positions and the Ledger sheets, the Commands and the Write sheets, and the Cash sheet's and the Portfolio's new rows in the source and its cartridge, 1,028 rows and 520 formula cells; the caveats' row 17; the hand's order desk, its books, its cash, its ledger and its views' texts, and the oracle's `derived`, the host's Write sheet read; 71 tests, the crate's 27 and the cartridge's 44; the describe golden blessed again; and, in `OMAKASE.md`, the contract's version, `BD-5`'s caveat taken, `PLATE.2`'s line and `MISE.6`'s rows and hoist; and in the same commit the three Linux cells run 39088078269 answered, `BACK.1`'s, `POT.10`'s and `GUARD.1`'s. The predictions missed in part, each named beside its number. The build found a write into a cell that held nothing dear for the next two steps, while the ledger fills its hundred rows; a mutant of the price now living through the $1 stock's mark, until a sale at a dearer stock's mark was added; and Trading held at every half hour making the hour's year half again as long. The hand test found a column's width a person drags kept by its letters on every sheet, Alonzo's.
+
 ## 🧽 THE BACK OF HOUSE
 
 - ✅ **`BACK.1` — the dish pit: the side hustle, the first button.** *Scoped 2026-10-16, approved the same day with the view named by the owner, built and hand-tested that day, and amended at the hand test, the key bound on its view alone: the scoping, the approval, every prediction beside its number, what the build found and the owner's hand test are under THE ITEMS, SCOPED.* Gigs, the game's second view, the owner's name for "the sheet where various clicker jobs can produce cash at varying speeds, cooldowns, and pay rates", and its one job at course 0, proofreading a prospectus: a button cell, `[ Proofread a prospectus ]` in a column as wide as its text, pressed by a click on it while Gigs shows, the pointer on the cell and the left button's rising edge, or by P while Gigs shows, the Keys sheet binding P on that view alone by a formula of the sheet shown, so that every view binds keys of its own (the owner's word at the hand test: "keybindings should be scoped to each tab to avoid limiting the entire application to 26 key commands"); each press a cell that holds 0 between presses; $25 a claim, once a market day, at most four claims a run, the owner's cap over a claim a day for good, four claims being $100, about twice a perfect trader's first year on the personal pocket's $100. A claim is judged by what the last frame showed and counts against the day shown, as an order fills at the price shown; its books stand on the Hustle sheet, the fee, the cap and the button's place as values, so that a layout of the view moves no formula; the fees are the claims times the fee, which `PLATE.2`'s personal pocket reads when it comes; the day moving reopens the hustle, and nothing reads the boundary. The views' date and fine print entered `kitchen.vla` at their second writing, `as-of` and `fine-print`, the Portfolio expanding over them to its bytes unchanged. *Oracle, met:* every frame of a scripted session of clicks and keys, written as the host writes them and the Keys sheet read after every step as the host reads it, held to the hand, the cap, the day a press counts against, the reset and the key's binding among them; Gigs at rest on every day of two years and two days and of eight hundred at one frame a day; the settings, the button at their place and the one key bound on its view; nothing reads a view, `BD-7`'s scan and the census's `(every-frame 0)` kept; the describe golden blessed again; nine mutants, each caught by the test written for it; a click's cost natively and in Chrome at full screen, a claim shown 48 to 50 ms after the click at p95, the contract's 100 ms met by half; and the owner's hand test in the page, twice. *Pays into:* `PLATE.1`'s six buttons a rung and `GUARD.1`'s four options a question, each a press's cell, its place values of the model and its keys its view's; the gigs to come, each its own speed, cooldown and pay. `~days`
@@ -4063,7 +4069,7 @@ build, P9 at the owner's hand test; P3 to P5 and P8 as decision 13 says.
 | P2 | the describe golden | the notes; `(device "Keys" "A1:E10" effect)` after the Input's; `(budget 30 124 3720 2000000)`; the plan's shapes 61, texts 57, formulas 124, alone 81, levels 16, runs 10, lanes 43, every-frame and cycles 0; readers rows new for the Hustle, 19 to 21 with its own reads, past sixteen and so indexed, `(most 5)` or `(most 6)` its row 10, the claims; its twin's 3, the Input's 5, the Input's twin's 2 and the Day's twin's 1; the Day's `(readers "Day" 19 (most 7))`, its row 3 read by `shut` too, and the Disclosures' 13; no row for Gigs; its six shapes after the Portfolio's, its date `(same 0)` and its fine print `(same 5)`; the Hustle's seven after the Stocks', single cells; every other shape's row unmoved but for its number and its `same` | *Measurement*: the notes; `(device "Keys" "A1:E10" effect)` after the Input's; `(budget 30 124 3720 2000000)`; `(plan (shapes 59) (texts 57) (formulas 124) (levels 16) (runs 10) (lanes 43) (alone 81) (every-frame 0) (cycles 0))`; `(readers "Hustle" 19 (most 5))`, `(readers "Input" 5)`, `(readers "Day.last" 1)`, `(readers "Hustle.last" 3)` and `(readers "Input.last" 2)`; `(readers "Day" 17 (most 7))`; no row for Gigs; Gigs' four other shapes after the Portfolio's and the Hustle's seven after the Stocks', single cells; every other shape's row its own but for its number. **Missed** in three, of one cause: Gigs' date and fine print are no shapes of their own but the Portfolio's two, each now a shape of two cells over two sheets, `(cells 2) ... (sheets 2)`, where `(same 0)` and `(same 5)` were predicted; so 59 shapes where 61, the Day's readers 17 where 19, and the Disclosures' 12, unmoved, where 13 |
 | P3 | the pass and the load | the pass 0.2 to 0.5 ms longer, forty-three rows and two verbs; the load 0.1 to 0.25 ms longer | *Measurement*, this tree's runner over both cartridges, the commit before's texts copied into its tree for the runs marked before, three runs each alternated, 200 passes and 200 loads a run, every run pinning itself to the performance cores and opting itself out of Windows' throttling, a fixed computation before and after within 3.7%: the pass 4.94 to 4.96 ms at p50 where it took 4.53 to 4.60, 0.34 to 0.43 more, inside; the load 1.81 to 1.85 where 1.55 to 1.60, the medians 0.25 apart, inside at its edge. Each tree's own runner, alternated first, agreed within 0.06 ms; its fixed computation read 120 ms in the commit before's binary and 140 in this one's at every run, two layouts of one loop and not the machine, which is why one runner timed both |
 | P4 | the step | an ordinary frame 0.1 to 0.3 µs dearer, thirteen shapes' flags; a day's first frame 0.5 to 2 µs more, Gigs' date and `shut`; the first frame 5 to 15 µs more. In this tree: a pointer's move, its two rows' write 2 to 6 µs and its step 2.1 to 2.8; a claim's write 1 to 3 µs and its step 3.5 to 7, about ten cells; a refused press's step 2.3 to 3.5; the frame after a claim 2.5 to 4.5 | *Measurement*, the same runs, two years and two days at thirty frames a day: an ordinary frame 2.1 µs at every run where it took 2.0, 0.1 more, inside at its edge; a day's first frame on which the fine print stays 17.2 to 17.7 µs where 15.3 to 15.9, the medians 1.7 apart, inside; one on which it turns 18.2 to 19.6 where 16.3 to 17.4, the medians 2.0 apart, inside at its edge; the first frame 97.7 to 99.7 µs where 83.4 to 89.0, the medians 12.1 apart, inside. In this tree, the run's claims raised by a write and 360 days played, each day a move onto the button, a claim, the frame after it, a release, a refused press, a release and a move away: a move's two rows' write 3.6 to 3.7 µs, inside; a claim's write 2.1 µs and its step 5.2 to 5.3, inside; the frame after a claim 4.1 to 4.2, inside. **Missed** in two: a move's step 3.5 µs where 2.1 to 2.8, and a refused press's step 3.6 to 3.7 where 2.3 to 3.5, a frame after a write of the Input rows costing about 1.4 µs over an ordinary one where the cells it computes were priced alone; not looked into |
-| P5 | the suite | 49 tests green, the crate's 17 and the cartridge's 32, and in CI on Linux; within 0.4 s of `ec069e8`'s at the median | *Measurement*, here: 49 green, the crate's 17 and the cartridge's 32. Each tree's suite run alternately, five rounds, the order turned each round, each run pinned and opted out, on eight threads: 5.07 to 5.46 s where it took 4.82 to 5.11, the medians 5.13 and 4.87, 0.26 apart: inside. Each test timed alone first, two rounds alternated, one thread: the two years' test 5.03 s where 4.78, 0.25 dearer, the hundred years' 2.68 where 2.48, the eight hundred days' 0.27 where 0.23, the year at difficulty 0 1.37 where 1.34; the session 0.02 s and the binding's test 0.01, new; every other within a hundredth. The long tests' cost is the oracle's own: every record lists every sheet, 30 sheet rows where 24 stood, Gigs, Hustle, the Keys and their twins, and the oracle's `values` reads each record whole, so every held frame pays for each sheet a dish adds. Linux at the push |
+| P5 | the suite | 49 tests green, the crate's 17 and the cartridge's 32, and in CI on Linux; within 0.4 s of `ec069e8`'s at the median | *Measurement*, here: 49 green, the crate's 17 and the cartridge's 32. Each tree's suite run alternately, five rounds, the order turned each round, each run pinned and opted out, on eight threads: 5.07 to 5.46 s where it took 4.82 to 5.11, the medians 5.13 and 4.87, 0.26 apart: inside. Each test timed alone first, two rounds alternated, one thread: the two years' test 5.03 s where 4.78, 0.25 dearer, the hundred years' 2.68 where 2.48, the eight hundred days' 0.27 where 0.23, the year at difficulty 0 1.37 where 1.34; the session 0.02 s and the binding's test 0.01, new; every other within a hundredth. The long tests' cost is the oracle's own: every record lists every sheet, 30 sheet rows where 24 stood, Gigs, Hustle, the Keys and their twins, and the oracle's `values` reads each record whole, so every held frame pays for each sheet a dish adds. Linux at the push, run 39088078269 at `7bbeb59`, three commits on, `POT.10`, `GUARD.1` and the pin to `alonzo` 0.2.0, CI running the pushed head alone: the 67 green there, the crate's 27 and the cartridge's 40, the cartridge's in 6.07 s |
 | P6 | the page | the cartridge's block 2,800 to 3,800 characters longer, the source's 5,000 to 8,000 and the library's 800 to 1,500: the page between 1,831,000 and 1,836,000 where 1,822,477 stands; Build writing the cartridge byte for byte | *Measurement*: 1,831,874 characters, 9,397 more than `ec069e8`'s 1,822,477: the cartridge's block 2,248 longer, the source's 5,882 and the library's 1,267, the three adding to the page's growth exactly; the page, the source's block and the library's inside their ranges; Build writing the cartridge byte for byte, 28,056 characters, checked headlessly (P9). **Missed** in the cartridge's block, under its range: its rows shorter than priced |
 | P7 | the checks | 4 checks and 4 controls green, no check edited, no file added under `src/` | *Measurement*, as predicted: ALL GREEN, 4 checks and 4 controls, the layout control's fourteen mutants and the offline control's fifteen as they stood; no check edited; no file added under `src/` |
 | P8 | a click's cost in Chrome at full screen | click to painted 13 to 20 ms at p50 and 30 to 34 at p95, at its longest under 38; to the next frame about 16.7 more, 46 to 51 at p95: the contract's 100 ms met by half; P within a millisecond of a click; a still tick with Gigs shown 0.2 ms at p50 and 0.3 at p95, a claim's patch 0.4 to 0.7; the main thread 0.70 to 0.80 ms a frame; the owner's Chrome within a tenth | *Measurement*, three runs in headless Chrome at 2,560 by 1,440 CSS pixels at 1.5, its eleven processes opted out and pinned, the clock within 0.3%; in each, 40 real clicks on Gigs' button and then 40 presses of P through the DevTools protocol, one a market day at a random point of the day, the run's claims raised by a person's edit and every press claiming: a click to painted 16.0 to 18.1 ms at p50 and 32.0 to 33.2 at p95, at its longest 33.1 to 33.9; to the next frame, the claim shown, 32.0 to 34.4 at p50 and 48.2 to 49.3 at p95, at its longest 49.3 to 50.2: the contract's 100 ms at p95 met by half. P to painted 17.7 to 19.8 at p50 and 32.0 to 33.8 at p95; shown 48.2 to 49.9 at p95. A claim's patch 0.4 to 0.5 ms at p50 and 0.6 to 0.7 at p95. With Gigs shown and nothing pressed, three runs of 600 frames: a still tick 0.2 ms at p50 and 0.3 at p95, at its longest 0.4 to 0.5; a patch 0.4 to 0.5, at its longest 0.5 to 0.6; 580 or 581 still and 20 patched; the main thread 0.77 to 0.80 ms a frame, inside (0.96 to 0.98 while the instrument polled the day every 5 ms). **Missed** in one: P within a millisecond of a click, where its p50s stood 0.3 to 3.8 ms apart, forty presses a run, each waiting up to a frame's 33 ms, telling no finer difference; and one P of 120 at 45.0 ms. The owner's own Chrome, the probe copy at full screen for 2,297 frames, 31 clicks: painted 11.4 ms at p50 and 30.3 at p95, at its longest 33.0; shown 27.7 and 46.8, at its longest 49.2; one press claiming nothing; no P pressed; a still tick 0.2 ms at p50 and 0.3 at p95, at its longest 0.6; a patch 0.5 and 0.6, at its longest 1.3; 2,188 frames still and 106 patched: headless's p95s within 2 ms, the p50 lower over its 31 |
@@ -4749,7 +4755,7 @@ build, P9 at the owner's hand test; P3 to P5 and P8 as decision 15 says.
 | P2 | the describe golden | the notes; `(budget 30 169 5070 2000000)`, give or take three cells; the plan's shapes 75 to 82 where 60, every-frame and cycles 0; the Day's readers rows grown, its own cells and the Market's, the views' and the bell's reads; `(readers "Day.last" 2)`, the boundary's read with the hustle's; the Dice's readers grown by the session's steps; the Market's grown by the Stocks' `E`; the views' date one shape over two sheets as now, and `bell` one more of the same kind; every other shape's row its own but for its number | *Measurement*: the notes; `(budget 30 169 5070 2000000)`; `(plan (shapes 78) (texts 76) (formulas 169) (levels 24) (runs 9) (lanes 37) (alone 132) (every-frame 0) (cycles 0))`; `(readers "Day" 53 (most 11))` where 17, `(readers "Day.last" 2)`, `(readers "Dice" 8)` where 7, `(readers "Market" 51 (most 6))` where 34, `(readers "Caveats" 60 (most 8))` where 52; the views' date one shape over two sheets and the bell one more of the kind, `(cells 2) ... (sheets 2)`. **Missed** in two: every shape below the calendar stands deeper in the order, the Portfolio's prices at level 22 where 14, so its row moved by more than its number; and the waves' fifteen terms, `Market!B15:D19`, one run of six lanes before, are now evaluated alone, `(runs 9) (lanes 37)` where 10 and 43, `alone` 132 being 82 and the calendar's 10, the dice's 14, the session's 18, the bells' 2 and those 6. A run is four cells or more of one shape together in the plan's order (`vla-lang` 0.9.4's `RUN`); not looked into further, the terms computing once a day, at the bell |
 | P3 | the pass and the load | the pass 0.4 to 0.9 ms longer than `518d414`'s; the load 0.25 to 0.5 ms longer | *Measurement*, this tree's runner over both cartridges, `518d414`'s four texts (the source, the library, the caveats, the cartridge) copied into its tree for the runs marked before, three runs each alternated, 200 passes and 200 loads a run, every run pinned to the performance cores and opted out of Windows' throttling, a fixed computation before and after within 3.9%: the pass 5.50 to 5.51 ms at p50 where it took 4.86 to 5.02, the medians 0.53 apart, inside; the load 2.33 to 2.40 where 1.83 to 1.85, the medians 0.49 apart, inside at its edge |
 | P4 | the step | an ordinary frame within 0.4 µs of `518d414`'s, three cells as now; a half hour's turn 4 to 9 µs; an hour's mark in the session 8 to 16 µs; the bell, the whole Market's three columns, 18 to 28 µs; the close 8 to 16 µs; midnight, the dice and the session's steps, 15 to 28 µs; the first frame 110 to 140 µs where about 99 | *Measurement*, the same runs, ten days at two minutes a frame, each frame filed by what the hand's calendar ticked beside it turned, against two years and two days at thirty frames a day: an ordinary frame 2.4 to 2.5 µs where 2.1, inside at its edge; an hour's mark 12.8 to 13.5 µs, inside; the bell 21.0 to 25.3, inside; the close 14.2 to 15.6, inside; midnight 22.9 to 26.5, inside; the first frame 118 to 126 µs where 99 to 100, inside; `518d414`'s day's first frame 17.5 to 17.8 µs, 18.8 to 19.9 where the fine print turns. **Missed** in one: a half hour's turn 9.2 to 9.5 µs, over its 4 to 9, the date joined as text on two views and the calendar's cells below the half hour priced short |
-| P5 | the suite | 52 to 56 tests green, and in CI on Linux; the suite 3.0 to 4.5 s where 5.0, its longest test the hour's year at about 3 s; every test timed alone in both trees | *Measurement*, here: 54 green, the crate's 21 and the cartridge's 33; the suite's whole 4.0 to 4.2 s on eight threads in two runs, where 5.0, inside. Each test timed alone first, two rounds alternated, one thread: the hundred years at a frame a day 4.12 s, the hour's year 3.60, the ten days at every frame 2.23, the year at difficulty 0 at a frame an hour 1.48 where a year at thirty frames a day took 1.40, the eight hundred days 0.35, the scripted session 0.30 where 0.02, its six days 4,035 frames where 180; `518d414`'s two years took 5.03 s and its hundred years 2.68 (`BACK.1`'s P5). **Missed** in one: the longest test is the hundred years', its window grown to the index now and the hand's path computed at each of its 36,500 frames, not looked into, and not the hour's year at about 3 s. Linux at the push |
+| P5 | the suite | 52 to 56 tests green, and in CI on Linux; the suite 3.0 to 4.5 s where 5.0, its longest test the hour's year at about 3 s; every test timed alone in both trees | *Measurement*, here: 54 green, the crate's 21 and the cartridge's 33; the suite's whole 4.0 to 4.2 s on eight threads in two runs, where 5.0, inside. Each test timed alone first, two rounds alternated, one thread: the hundred years at a frame a day 4.12 s, the hour's year 3.60, the ten days at every frame 2.23, the year at difficulty 0 at a frame an hour 1.48 where a year at thirty frames a day took 1.40, the eight hundred days 0.35, the scripted session 0.30 where 0.02, its six days 4,035 frames where 180; `518d414`'s two years took 5.03 s and its hundred years 2.68 (`BACK.1`'s P5). **Missed** in one: the longest test is the hundred years', its window grown to the index now and the hand's path computed at each of its 36,500 frames, not looked into, and not the hour's year at about 3 s. Linux at the push, run 39088078269 at `7bbeb59`, two commits on, `GUARD.1` and the pin to `alonzo` 0.2.0: the 67 green there, the crate's 27 and the cartridge's 40, the cartridge's in 6.07 s |
 | P6 | the page | the cartridge's block 5,500 to 8,000 characters longer, the source's 9,000 to 14,000 and the library's 600 to 1,200: the page between 1,847,000 and 1,856,000 where 1,832,337 stands; Build writing the cartridge byte for byte | *Measurement*: 1,845,186 characters, 12,849 more than `BACK.1`'s 1,832,337: the cartridge's block 4,302 longer, the source's 6,612, the library's 1,337 and the caveats' 598, the four adding to the page's growth exactly; Build writing the cartridge byte for byte, 32,399 characters, checked headlessly (P9). **Missed** in all three blocks and the page: the cartridge's and the source's under their ranges, their rows and comments shorter than priced, the library's over it, its comment longer, and the caveats' block not priced at all, as `MENU.1` once forgot the library's |
 | P7 | the checks | 4 checks and 4 controls green, no check edited, no file added under `src/` | *Measurement*, as predicted: ALL GREEN, 4 checks and 4 controls, the layout control's fourteen mutants and the offline control's fifteen as they stood; no check edited; no file added under `src/` |
 | P8 | a frame's cost in Chrome at full screen | a still tick 0.2 ms at p50 and 0.3 at p95, as now; a half hour's patch 0.4 to 0.5; a mark's and the bell's 0.5 to 0.8; the main thread 0.78 to 0.90 ms a frame through a week, a view's date patched every fifteenth frame; at the dial's 120 the same per frame; the owner's Chrome within a tenth | *Measurement*, three runs in headless Chrome at 2,560 by 1,440 CSS pixels at 1.5, its eleven processes opted out and pinned, the clock within 4%, the Portfolio shown; in each, two days at the manifest's rate, 1,440 frames from about the 800th, each tick filed by what its frame turned, found from the frame number so that the probe reads no record: a still tick 0.2 ms at p50 and 0.3 at p95, as now, at its longest 0.6 to 1.7; a half hour's patch 0.4 at p50 and 0.5 at p95, inside; a mark's 0.5 at p50 and 0.7 to 1.0 at p95; the bell's and the close's 0.5 at p50, 0.5 to 0.7 at p95; midnight's 0.4 to 0.5; 96 of 1,441 frames patched, one in fifteen, the date's; the main thread 0.75 to 0.80 ms a frame, inside in two runs and the third 0.03 under. Then the dial at 120 by a person's edit, a week of 5,040 frames: the host stepping two frames a tick on the display's 60, a tick 0.4 ms at p50 and 0.6 at p95, at its longest 1.1 to 2.0, and the main thread 0.34 to 0.36 ms a frame. **Missed** in one: at the dial's 120 a frame costs the main thread half what it does at 30, two frames sharing each tick's draw, where the same was predicted. The owner's Chrome, the probe copy's corner at the hand test, 3,270 ticks of one frame each from Monday's 10:30 to Friday's night at the manifest's rate: a still tick 0.2 ms at p50 and 0.4 at p95, at its longest 1.0; a half hour's patch 0.4 and 0.6; a mark's 0.6 and 0.9; the close's and midnight's 0.6 and 0.8; 219 of 3,300 frames patched; within a tenth of the headless runs at p50 but for one, **missed**: the bell's 0.9 ms at p50 over its four ticks, where the headless runs read 0.5 |
@@ -5652,7 +5658,7 @@ build, P9 at the owner's hand test; P3 to P5 and P8 as decision 18 says.
 | P2 | the describe golden | the notes; `(device "Camera" "A1:B3" effect)` after the File's; `(budget 30 266 7980 2000000)`, give or take ten cells; the plan's shapes 112 to 125 where 83, every-frame and cycles 0; readers rows new for the Proctor, its twin and the Firms; the Questions' grown by the Exam's and the Proctor's reads, the Caveats' by the certificate's, the Day's by the wait's, the Dice's by the start and the stride, the Input's and its twin's by the clicks and the keys, and the Day's twin's by the count; the views' date, bell and fine print each one shape over four sheets, `(sheets 4)`; every other shape's row its own but for its number | *Measurement*: the notes; `(device "Camera" "A1:B3" effect)` after the File's; `(budget 30 266 7980 2000000)`, the cells exactly; `(plan (shapes 117) (texts 115) (formulas 266) (levels 31) (runs 15) (lanes 68) (alone 198) (every-frame 0) (cycles 0))`; readers rows new, `(readers "Proctor" 67 (most 8))`, `(readers "Proctor.last" 8)` and `(readers "Firms" 7)`; the Questions' 172 where 168, the Caveats' 69 where 60, the Day's 59 where 56, the Dice's 10 where 8, the Input's 13 where 6 and its twin's 4 where 2, the Day's twin's 5 where 3; the views' date, bell and fine print each one shape over four sheets, `(sheets 4)`; every shape renumbered, the two views standing before the model. **Missed** in one: the plan's levels 31 where 30, and every shape below the calendar a level deeper, so that its row moved by more than its number: the time to the minute, `Day!B4`, now reads the frames the bell waited, `B26`, a count over twins at level 0, which sets the time at level 1 where 0 and makes the calendar's chain, the longest, one longer, `Day!B14` at 2 where 1 and the Stocks' prices at 28 where 27 |
 | P3 | the pass and the load | the pass 0.6 to 1.4 ms longer than `b82793c`'s 5.4 to 5.5; the load 0.4 to 0.9 ms longer than its 2.7 | *Measurement*, this tree's runner over both cartridges, `b82793c`'s four texts (the source, the library, the caveats, the cartridge) copied into its tree for the runs marked before, six runs alternated, 200 passes and 200 loads a run, every run pinned to the performance cores and opted out of Windows' throttling, a fixed computation before and after within 3.2%: the pass 6.51 to 6.61 ms at p50 where it took 5.53 to 5.59, about 1.0 longer, inside. **Missed** in one: the load 3.66 to 3.72 ms where 2.62 to 2.77, about 1.0 longer, over its 0.4 to 0.9, priced short of its rows: `POT.10`'s 69 rows more had cost 0.5 ms, and these are 156 |
 | P4 | the step | waived, an ordinary frame within 0.3 µs of `b82793c`'s 2.5, three cells as now; a half hour's turn and a mark each 1 to 3 µs dearer, the date on four views where two; the bell, the close and midnight each 1 to 4 µs dearer, the bell's line on four; the first frame 160 to 195 µs where 140 to 153. In this tree: an exam's still frame 2.4 to 3.2 µs; a pointer's move over the options, its write 3.5 to 4.5 µs and its step 3.5 to 6; an answer, its write 2 to 3 µs and its step 15 to 40; the tenth 15 to 45; the begin 10 to 35 | *Measurement*, the same runs, ten days at two minutes a frame, the exam waived before the first frame, each frame filed by what the hand's calendar ticked beside it turned: an ordinary frame 2.8 to 2.9 µs where 2.5 to 2.6, inside at its edge; the first frame 184 to 189 µs where 140 to 151, inside. In this tree, over 200 exams each a fresh load, the Input rows written as the host writes them: a pointer's move, its write 3.8 to 3.9 µs and its step 3.6 to 3.7, inside; an answer's write 2.3 to 2.4, inside, and its step 15.5 to 15.7 by a click and 17.5 to 17.8 by a key, inside; the frame after an answer 8.3, and after the begin 4.7. An exam's still frame, timed first on frames 2 to 4, 5.0 to 5.1 µs, those frames still carrying the first frame's state through the twins; timed again from the fifth frame, twenty an exam, in three runs of this tree alone, 2.9 µs, inside. **Missed** in two: every turn of the calendar dearer than priced, a half hour 13.9 to 14.4 µs where 9.5 to 9.7, a mark 28.9 to 29.5 where 24.0 to 24.3, the bell 30.2 to 36.2 where 24.8 to 30.1, the close 31.6 to 32.6 where 25.0 to 25.8, and midnight 32.2 to 38.7 where 26.6 to 34.0, each 4.4 to 6.8 µs more where 1 to 4 were priced: a run with the Exam's and the Certificate's dates taken out read a half hour at 9.9 µs and a mark at 24.6, so each view's date, its text joined anew at every half hour, costs about 2 µs, where a quarter to three quarters of that was priced; and the tenth's step 13.8 µs and the begin's 7.1, under their 15 to 45 and 10 to 35 |
-| P5 | the suite | 62 to 66 tests green where 56, and in CI on Linux; each long test 3 to 12% dearer alone, its records listing forty sheet rows where thirty and a waiver written before it; the draw at a thousand seeds 0.2 to 0.6 s, the scripted exam 0.05 to 0.25, the ten score sessions 0.05 to 0.3; the suite's whole 4.2 to 5.2 s on eight threads where 4.0 to 4.6 | *Measurement*, here: 66 green, the crate's 27 and the cartridge's 39, inside at its edge; the suite's whole on eight threads 4.45 to 4.73 s, the median 4.55, where `b82793c`'s took 4.12 to 4.67, the median 4.19, four rounds alternated, pinned and opted out, inside. Each test timed alone, two rounds alternated, one thread, the least of each: the ten days at every frame 2.81 s where 2.53, 11% dearer; the hour's year 4.38 where 4.07, 7%; the year at difficulty 0 1.83 where 1.74, 5%; the eight hundred days 0.44 where 0.40, 9%; the hustle's session 0.17 where 0.14, its script rewritten over the new verb and its keys read as a set; the scripted exam 0.053, inside at its edge, and the ten score sessions 0.146, inside; the waiver's two sessions 0.029, the settings 0.012 and the opening 0.012; the whole 14.77 s where 13.11. A record of one cell, counted in each tree, lists 40 sheet rows where 30, 1,196 characters where 921. **Missed** in two: the hundred years at a frame a day 4.38 s where 3.84, 14% dearer, over its 3 to 12%; and the draw at a thousand seeds 0.065 s, under its 0.2 to 0.6, one load and the seed written into the Clock a step. Linux at the push |
+| P5 | the suite | 62 to 66 tests green where 56, and in CI on Linux; each long test 3 to 12% dearer alone, its records listing forty sheet rows where thirty and a waiver written before it; the draw at a thousand seeds 0.2 to 0.6 s, the scripted exam 0.05 to 0.25, the ten score sessions 0.05 to 0.3; the suite's whole 4.2 to 5.2 s on eight threads where 4.0 to 4.6 | *Measurement*, here: 66 green, the crate's 27 and the cartridge's 39, inside at its edge; the suite's whole on eight threads 4.45 to 4.73 s, the median 4.55, where `b82793c`'s took 4.12 to 4.67, the median 4.19, four rounds alternated, pinned and opted out, inside. Each test timed alone, two rounds alternated, one thread, the least of each: the ten days at every frame 2.81 s where 2.53, 11% dearer; the hour's year 4.38 where 4.07, 7%; the year at difficulty 0 1.83 where 1.74, 5%; the eight hundred days 0.44 where 0.40, 9%; the hustle's session 0.17 where 0.14, its script rewritten over the new verb and its keys read as a set; the scripted exam 0.053, inside at its edge, and the ten score sessions 0.146, inside; the waiver's two sessions 0.029, the settings 0.012 and the opening 0.012; the whole 14.77 s where 13.11. A record of one cell, counted in each tree, lists 40 sheet rows where 30, 1,196 characters where 921. **Missed** in two: the hundred years at a frame a day 4.38 s where 3.84, 14% dearer, over its 3 to 12%; and the draw at a thousand seeds 0.065 s, under its 0.2 to 0.6, one load and the seed written into the Clock a step. Linux at the push, run 39088078269 at `7bbeb59`, a commit on, the pin to `alonzo` 0.2.0 and `vla-lang` 0.10.0: the 67 green there, the crate's 27 and the cartridge's 40, the cartridge's in 6.07 s |
 | P6 | the page | the cartridge's block 8,500 to 13,000 characters longer, the source's 10,000 to 18,000, the library's 1,000 to 2,000, the caveats' 600 to 1,100, and a block new, `library-content-firms`, 900 to 1,600: the page between 1,872,000 and 1,890,000 characters where 1,852,402 stands; Build writing the cartridge byte for byte | *Measurement*: 1,881,861 characters, 29,459 more than `b82793c`'s 1,852,402, inside: the cartridge's block 9,599 longer, the source's 15,936 and the library's 1,963, each inside, the last at its edge, and the new block, `library-content-firms`, 1,293 characters of text, inside, the five and the new block's tags adding to the page's growth exactly; Build writing the cartridge byte for byte, 44,322 characters, checked headlessly (P9). **Missed** in one: the caveats' block 571 longer, under its 600 to 1,100, its two rows shorter than priced |
 | P7 | the checks | 4 checks and 4 controls green; one file added under `src/`, `src/content/firms.vla`; `check_layout.ps1`'s pin raised from 3 to 4, its header and its control's mutant past the pin moved to a fifth; no other check edited | *Measurement*: ALL GREEN, 4 checks and 4 controls; one file added under `src/`, `src/content/firms.vla`; `check_layout.ps1`'s pin raised from 3 to 4, its header with it, and its control's mutant past the pin a fifth sheet; no other check edited. **Missed** in one: the control wanted three edits more, which its first run failed for: its scratch copy the nine files where eight, the Firms file among them, its clean copy held to nine, and the Firms file put back after each mutant with the others, the mutant past the pin having failed for the file's absence where it should have failed for its count |
 | P8 | an answer's cost in Chrome at full screen | a click to painted 13 to 20 ms at p50 and 30 to 34 at p95, and to the next frame 46 to 51 at p95, the contract's 100 ms met by half, as `BACK.1`'s claim is; a key within a frame of a click at p95; an answer's patch 0.5 to 0.9 ms, the question, its options and the status; each hand-over 1 to 3 ms, a sheet shown whole; an exam's still tick 0.2 ms at p50 and 0.3 at p95; then the market's week as `POT.10`'s, the main thread 0.76 to 0.86 ms a frame; the owner's Chrome within a tenth | *Measurement*, three runs in headless Chrome at 2,560 by 1,440 CSS pixels at 1.5, its eleven processes opted out and pinned, the clock within 1.8%; in each, four exams, the game picked again for each, a click on the question first, which answers nothing and gives the game its keys, then ten answers, a real click on an option and a key by turns at a random wait, then O: a click to painted 16.3 to 16.5 ms at p50 and 32.8 to 33.2 at p95, at its longest 33.1 to 33.4, inside; to the next frame, the answer shown, 32.4 to 32.7 at p50 and 49.0 to 49.1 at p95, at its longest 49.1 to 49.4, inside: the contract's 100 ms at p95 met by half. A key to painted 17.2 to 21.7 at p50 and 31.8 to 34.0 at p95, shown 47.7 to 49.5 at p95, within a frame of a click, inside; O, four a run, shown 32.2 to 47.8 at p95. An answer's patch 0.6 ms at p50, inside; a hand-over, the Certificate or the Portfolio shown whole, 2.4 to 2.6 at p50, inside; an exam's still tick 0.2 at p50, over 1,737 to 1,903 a run. Then the market's week, three runs, the exam waived by a person's edit once the host ran and each frame filed by the market's own time, the frames the bell waited read once: a still tick 0.2 ms at p50 and 0.3 at p95, as `POT.10`'s; a half hour's patch 0.4 and 0.5 to 0.7; a mark's 0.5 to 0.6 and 0.6 to 1.0; the bell's 0.5 to 0.6 and 0.5 to 0.7; midnight's 0.4 to 0.5 and 0.5 to 0.6; 96 or 97 of 1,440 frames patched; the main thread 0.79 to 0.80 ms a frame, inside; at the dial's 120, a week of about 5,045 frames, a two-frame tick 0.4 at p50 and 0.7 at p95, at its longest 1.3 to 1.9. **Missed** in five: an answer's patch 0.9 to 1.5 ms at p95, over its 0.9 in two runs of three; a hand-over 3.3 to 3.5 at p95, over its 3; an exam's still tick 0.4 at p95 where 0.3; the close's patch 0.6 to 0.7 at p50 and 0.7 to 1.3 at p95, two ticks a run, where `POT.10`'s read 0.5 and 0.5 to 0.7; and at the dial's 120 the main thread 0.37 to 0.38 ms a frame where `POT.10`'s 0.34 to 0.36. The owner's own Chrome, the probe copy's corner at the hand test over 6,233 frames, the exam answered by keys: ten keys painted 13.1 ms at p50 and 31.5 at p95, shown 29.2 and 45.8, at their longest 45.8; O shown at 27.7; a still tick 0.2 ms at p50 and 0.3 at p95, at its longest 0.6; a patch 0.4 and 0.6, at its longest 1.2, over 388 frames patched, the market's most of them; 5,833 frames still: headless's p95s within 2.5 ms and the owner's lower, the still tick's within a tenth. **Missed** in one more: a sheet shown, two ticks, 3.0 ms where headless read 2.4 to 2.6 at p50 |
@@ -5830,3 +5836,297 @@ by key, painted 12.1 ms at p50 and 31.9 at p95, shown 28.0 and 45.2; O shown
 at 21.0; a still tick 0.2 ms at p50 and 0.3 at p95, at its longest 1.3; a
 patch 0.4 and 0.6, at its longest 1.4, over 574 frames patched; and two sheets
 shown, 3.4 ms: the headless runs' p95s or under them, as at the first.
+
+## `PLATE.1` — the plate and the ledger: orders by click and by key, fills at the price shown
+
+*Scoped and built 2026-10-18 at the owner's word, "Scope and implement PLATE.1
+from Buffet's OMAKASE.md", in one sitting: each decision below stands as
+recommended and was built, the owner's to approve, amend or strike at the
+hand test, and the texts a player reads are drafts. Read for it: the item's
+line in `OMAKASE.md` and its five notes; `COURSE.0`'s opening contract;
+`BD-2`, `BD-5`, `BD-7`, `BD-8` and `BD-9`; `PLATE.2`'s line, whose switch this
+dish leaves to it; in this file `MISE.3`'s probe 3 and its decision 5, the
+ledger's spelling, `STATION.1`'s decision 11, the dividend, `FRONT.1`'s
+rescoping, the market's view and the Portfolio's columns, `BACK.1`'s and
+`GUARD.1`'s records, the button, `clicked`, the keys a view binds and the
+scripted sessions, and `POT.10`'s decision 13, an order while the market is
+closed; Alonzo's `SPEC.md` at `v0.2.0`, the tag the pin names, §3.3, §3.9,
+§3.10 and §5, and `ENGINE.25`'s scoping in its `REARVIEW.md`, which names this
+dish its client and leaves Buffet's move to version 5 to it; and the page at
+that tag where the specification is silent. Alonzo's and Frazaro's trees were
+read and never touched.*
+
+**What it stands on, read on the day** (`alonzo` 0.2.0 and `vla-lang` 0.10.0;
+Buffet at `7bbeb59`, even with its remote, this file carrying the P5 Linux
+cells of `BACK.1`, `POT.10` and `GUARD.1` uncommitted).
+- *The cartridge.* `(spec 4)`, 748 rows and 271 formula cells; 67 tests
+  green, the crate's 27 and the cartridge's 40 in 5.0 s; the four checks
+  green.
+- *The price shown.* `Stocks!E5:E8`, the price now over the index now, which
+  moves at the session's marks; its twin, `Stocks.last!E5:E8`, the price the
+  last frame showed; `Day!B19`, the market open, and its twin, what the
+  person saw.
+- *The pockets.* `Cash!B3`, the firm's cash, the exam's capital,
+  `Proctor!B39`; `Cash!B4`, your own, $100 and the hustle's fees once paid,
+  `Hustle!B18`.
+- *The dividend.* `Stocks!H5:H8`, 50 cents a share of the fourth rung all day
+  on the year's 91st, 182nd, 273rd and 364th days, paid by nothing until this
+  dish: "`PLATE.1` pays it once, at that day's first frame, to the shares a
+  pocket held as the day before closed" (`STATION.1`'s decision 11).
+- *The click and the keys.* `kitchen.vla`'s `clicked`, written twice, Gigs'
+  button and the exam's five; the Keys sheet's ten buttons, five of them
+  bound by formula on their own views, P on Gigs, A to D on the Exam and O on
+  the Certificate.
+- *Version 5* (`SPEC.md` §3.10 at `v0.2.0`). A Commands sheet, `A1:D101`, a
+  row a command: its name, lowercase letters, digits and hyphens, checked at
+  the load; its words; whether it holds; and its key, a `KeyboardEvent.code`.
+  The palette lists the commands that hold as `buffet.<name>`; a command run
+  reaches the game as its name in `Input!B20` for one frame, one a frame;
+  its key is the command's on the viewport while it holds and no Ctrl, Cmd
+  or Alt is held, before a Keys button of the same code, a repeat running
+  nothing; and `holds` is read after each step, so a formula of the sheet
+  shown reaches a tab a frame late. The specification's own example is this
+  dish's: `=IF(Input!$B$20="buy-1",...)`.
+- *The Write sheet* (§3.9). A row a write, made by the host after the step
+  as a value a frame late; the kit's `put`; `MISE.3`'s probe 3, through the
+  real host, each order's six fields landing a frame late and its replay
+  deriving them again.
+- *The keys free.* The viewport takes the arrows, Page Up and Down, Home,
+  End and Enter, and no letter or digit; the page's own keymap binds no key
+  without Ctrl, Cmd or Alt (`web/viewport.js` and the template at `v0.2.0`).
+- *The dialect* (`vla-lang` 0.10.0). Fourteen functions, `IF`, `AND`, `OR`,
+  `NOT`, `SUM`, `MIN`, `MAX`, `ABS`, `INT`, `MOD`, `ROW`, `COLUMN`, `CHOOSE`
+  and `SIN`, and no `SUMIF` or text function; `IF` and `CHOOSE` compute the
+  branch taken; a `style` row takes one written cell, a `cell` row a range,
+  and a `look` draws every cell of its sheet whose value is its own, before
+  the cell's own style.
+
+**The decisions.**
+
+1. **The version: `(spec 5)`, and the order desk's acts the cartridge's own
+   commands (rec).** The move `ENGINE.25` left to this dish, "Buffet's pin,
+   its `(spec 5)` and its Commands sheet are Buffet's dishes'": the Input
+   sheet's twentieth row, and the Commands sheet a device. The Keys sheet
+   keeps the exam's and the hustle's keys, each bound on its own view, so no
+   act already built moves (Found). *The alternatives:* the Keys sheet's ten
+   buttons for twenty-four acts, which they cannot hold; version 4 and no
+   key, the owner's keyboard-first rule broken.
+2. **The views: Trading, a view of its own beside the Portfolio, where the
+   buttons stand; and the Portfolio's columns of the holding (rec).**
+   `FRONT.1`'s rescoping: "the market's view and its buttons with
+   `PLATE.1`", and beside the Portfolio's prices "the shares, the cost, the
+   value and the gain are `PLATE.1`'s columns". Its name settles `FRONT.1`'s
+   "one is renamed at `PLATE.1`" with no rename: the model's Market sheet,
+   which the Stocks sheet, the hand, the tests and every record read, keeps
+   its name, and the view is Trading, the desk's own word. *The
+   alternatives:* the buttons on the Portfolio's rows, a view 160 characters
+   wide; the view named Market and the model's sheet renamed Index.
+3. **The buttons: six a stock, Buy 1, Buy 10, Buy max, Sell 1, Sell 10 and
+   Sell all (the line's), a grid of four rows and six columns; each a text in
+   brackets in a column of 12 characters, drawn in the buttons' lavender by a
+   look keyed on its text (rec).** Six looks for twenty-four cells, where a
+   style row would stand at each: a look draws before a cell's own style
+   (`SPEC.md` decision 19). The presses are `clicked`'s third writing, one
+   fill over the Orders sheet's grid, `(clicked "D6:I9" "$B$2" "D$5"
+   "$C6")`, its places values: the view, a column an act and a row a stock.
+   *The alternatives:* a style row a button; a table a button a row, as the
+   Proctor's, twenty-four rows of five values.
+4. **The keys: a stock picked, then an act (rec).** Ten commands:
+   `rung-1` to `rung-4`, on the digits 1 to 4, pick a stock; `buy-1`,
+   `buy-10`, `buy-max`, `sell-1`, `sell-10` and `sell-all`, on B, N, M, S, D
+   and F, order an act of the stock picked, the keyboard's lowest row buying
+   and its home row selling, a share, ten and the most in the order of the
+   buttons' columns. The stock picked is the last a click or a pick named,
+   marked ▸ on the view, none at the start, and an act with none picked is
+   refused by a sentence that says how to pick. Every command holds while
+   Trading shows and on no other view (the owner's word at `BACK.1`'s hand
+   test, "keybindings should be scoped to each tab"), so the exam's B and D
+   stay the Exam's; each is a line of the palette and a person's to rebind.
+   *The alternatives:* twenty-four commands, a button each, and no key but
+   the palette's and a person's keymap; twenty-four default keys, which no
+   layout spells memorably.
+5. **An order: one a frame, judged by what the last frame showed (rec).** A
+   click's before a command's: its pocket, its stock and its act, filled at
+   the price shown, `Stocks.last!E5:E8`, only while the last frame showed the
+   market open, `Day.last!$B$19` (`POT.10`'s decision 13), and against the
+   pocket's cash and its shares as the last frame showed them, so that the
+   state the person saw decides, as a claim's and an answer's do. Buy 1 and
+   Buy 10 fill whole or not at all; Buy max fills as many as the cash
+   covers; Sell 1 and Sell 10 whole or not at all; Sell all every share held.
+   A refusal says its reason: the market closed, no stock picked, the cash
+   short or the shares short. *The alternative:* Buy 10 and Sell 10 filled in
+   part, up to what the cash or the shares cover, which Buy max and Sell all
+   already offer.
+6. **The books: a row a pocket and a stock, both pockets', on a sheet of
+   their own, Positions (rec).** The line's "shares held in each pocket":
+   eight rows, the firm's four, then your own. Formula state over their twins
+   (`BD-8`): the shares; the cost basis at the average cost, a purchase adding
+   its cost and a sale taking off the shares' share of it, rounded once to
+   whole cents, all of it with the last share; the cents spent buying and
+   received selling; and the dividends. Functions of them: the price now, the
+   value, the gain not yet taken, the value less the basis, and the gain
+   taken, the cents received less those spent, and back with the basis still
+   held. Positions never pass through the Write sheet, as the line has it. The
+   line's *weight* is left to the dish that shows one, the overview or the
+   report card, since a percent wants the number format no view draws yet
+   (Found). *The alternatives:* each pocket's columns side by side, every
+   shape twice; lots kept first in, first out, `PLATE.7`'s.
+7. **The pocket an order funds: the firm's, a value, `Orders!B1`, 1 the firm
+   and 2 your own (rec).** `PLATE.2` makes it the switch, a click and a key,
+   and holds that a switch moves no balance (`BD-9`); until then a person's
+   edit of 2 is the switch. The views show that pocket's holdings, and both
+   pockets' cash and net worth. *The alternative:* the firm's book alone,
+   your own cash idle until `PLATE.2`.
+8. **The cash: each pocket's a sum of its flows (rec).** The firm's, the
+   exam's capital, less the cents spent, with those received and the
+   dividends; your own, $100 and the hustle's fees, the same way; then each
+   pocket's holdings at the price now and its net worth, on the Cash sheet.
+   *The alternative:* cash as state over its twin, its history in no cell.
+9. **The dividend: paid at a day's first frame to the shares the last frame
+   held, into the pocket's dividends, with no ledger row (rec).** `STATION.1`'s
+   decision 11 had it "into that pocket's cash with a ledger row". The ledger
+   is of orders, and a day's first frame may pay both pockets and fill an
+   order besides at a frame a day, three rows of seven writes; the dividends
+   are a column of the books and a flow of the cash instead.
+10. **The ledger: a sheet of its own, Ledger, a ring of the last hundred
+    fills, seven fields, written by seven Write rows (`MISE.3`'s decision 5,
+    rec).** The order's number; when, the half hour the person saw; the
+    pocket; the stock; the shares, a sale negative; the price in cents; and
+    the pocket's cash after it, in cents. A refusal is no row. The row is
+    computed once, `=MOD(n-1,100)+2`, on the Orders sheet.
+11. **The texts, drafts (rec).** Trading's line, "Orders fill at the price
+    shown, while the market is open, from the firm's cash, which is to say
+    other people's money.", or "from your own cash."; its headers Security,
+    Price ($) and Shares; the last order, "No order yet.", "Bought 10 shares
+    of rung 3 at the price shown.", and four refusals with no joke, each a
+    line a player acts on: "Refused: the market was closed. Orders fill from
+    the opening bell to the closing bell.", "Refused: no stock is picked.
+    Press 1 to 4 to pick one, or click a button on its row.", "Refused: the
+    cash does not cover 10 shares of rung 3." and "Refused: no shares of rung
+    3 to sell." or "fewer than 10 shares"; the keys' line; the Portfolio's
+    "The firm's holdings, at the price now.", its headers Shares, Cost ($),
+    Value ($) and Gain ($), and "Net worth ($)"; and the commands' words,
+    live, "Buy 10 shares of rung 3".
+12. **The caveat (`BD-5`, owed by this dish).** "An order fills whole at the
+    price shown, at once, with no spread, no commission and no day to
+    settle." beside "A buyer pays the ask and a seller gets the bid, a broker
+    may charge, and a trade settles a business day later.", and Management's
+    response, "Our broker works for exposure.", its place `Orders!B23`, the
+    price shown.
+13. **The oracle (rec).** The hand gains the order desk: the buttons by their
+    places, the commands by their names, an order judged by what the last
+    frame showed, the books folded from a list of fills, the cash, the
+    dividends, the ledger's ring and both views' texts. The tests: a scripted
+    session of every press and refusal, the host's derived writes made as
+    `host.js` makes them; the ledger past a hundred fills; the dividend paid
+    at a day's turn to both pockets; the desk's settings, its buttons and the
+    commands' names and keys; and every test standing moved to version 5 and
+    the views' new rows.
+14. **What it costs, measured** natively, as `GUARD.1` measured it, the
+    browser's latency left to the hand test and the playtest pass (`MISE.5`).
+15. **The stale places, rewritten at the build:** the item's line (🟡),
+    `BD-5`'s owed list, the contract's `(spec 4)`, `MISE.6`'s row of chords and
+    its hoist row of `clicked`; and `Delta/CLAUDE.md`'s map.
+
+**Found at the scoping**, none minted:
+- *The exam's and the hustle's keys as commands.* A to D, O and P could be
+  commands of their views at version 5, lines of the palette; they stand on
+  the Keys sheet as `GUARD.1` and `BACK.1` built them.
+- *A weight as a percent* wants the number format (`MISE.6`'s row): a text
+  percent would be padded as the dollars are.
+- *A click and a command in one frame*: the click's order is taken and the
+  command's dropped, one order a frame, as the exam takes the first of two
+  options pressed together.
+- *The ledger in cents*: a hundred rows of dollars as texts would cost a load
+  about 20 ms (`GUARD.1`'s finding); the ledger is the model's, and no view
+  reads it.
+
+**The predictions.** The cartridge's size was read from the build's first
+expansion, 1,028 rows and 520 formula cells, before these were written, so
+it is no prediction; the rest were written before any of their numbers was
+taken.
+
+| | What | Predicted | The number |
+|---|---|---|---|
+| P1 | the cartridge | read, not predicted: 1,028 rows where 748 stood, 520 formula cells where 271 | *Measurement*: 1,028 rows and 520 formula cells in 214 formula rows, where 131 stood |
+| P2 | the describe golden | `(spec 5)`; `(device "Input" "A1:E20" input)`; the Write and Commands devices; `(budget 30 520 15600 2000000)`; every shape renumbered from the Portfolio's columns on, the views' date, bell and fine print each a shape over five sheets; readers rows new for the Orders, the Positions, the Commands and their twins; `(every-frame 0)` | *Measurement*: `(spec 5)`; `(device "Input" "A1:E20" input)`; `(device "Write" "A1:C1048576" effect)` and `(device "Commands" "A1:D101" effect)`; `(budget 30 520 15600 2000000)`; `(plan (shapes 198) (texts 195) (formulas 520) (levels 34) (runs 45) (lanes 260) (alone 260) (every-frame 0) (cycles 0))`; readers rows new, `(readers "Orders" 102 (most 14))`, `(readers "Positions" 39 (most 6))`, `(readers "Commands" 10)`, `(readers "Orders.last" 4)` and `(readers "Positions.last" 14)`; the views' date, bell and fine print `(sheets 5)`. **Missed** in one: no row for the Commands' twin, which nothing reads, and two twins' rows new that I did not name, the Stocks' 4, the price shown, and the Cash's 2, the cash shown; and the Stocks' readers 27 where 13, the Input's 19 where 13 and the Day's twin's 10 where 5 |
+| P3 | the pass and the load | the pass 1.0 to 2.5 ms longer than `GUARD.1`'s 6.5; the load 2 to 4 ms longer than its 3.7, nineteen dollars' texts and 250 formula cells more | *Measurement*, one runner over `HEAD`'s texts and this tree's, four rounds alternated, 200 passes and 200 loads a round, pinned to the performance cores and opted out of Windows' throttling, a fixed computation 1.9 ms before and after: the pass 7.10 to 7.27 ms where `HEAD`'s took 5.44 to 5.85, 1.6 to 1.8 longer, inside; the load 7.10 to 7.23 ms where 4.18 to 4.38, 2.8 to 3.0 longer, inside. `HEAD`'s own pass read 5.4 to 5.8 where `GUARD.1` read 6.5, the pin to 0.2.0 at opt-level 3 between them |
+| P4 | the step | an ordinary frame within 0.4 µs of 1.9; a mark 20 to 45 µs dearer than its 26, fourteen dollars' texts more moving with the prices; an order's frame 20 to 60 µs; the day's first frame within 10 µs of its own | *Measurement*, the same runs, ten days at two minutes a frame, the exam waived, each frame filed by what the hand's calendar turned, `HEAD`'s beside: an ordinary frame 2.0 to 2.1 µs where 1.6 to 1.7, inside; midnight 26.2 to 27.3 where 21.2 to 24.1, inside; a half hour 12.9 to 13.2 where 10.6 to 10.8; the bell 22.8 to 26.3 where 19.6 to 23.5; the close 34.5 to 36.1 where 25.9 to 27.5; the first frame 252 to 307 where 179 to 254. **Missed** in two: a mark 30.9 to 31.7 where 22.9 to 23.7, 8 µs dearer where 20 to 45 were priced, the holdings' dollars standing still while their shares are none; and an order's frame 118 to 122 µs, and the frame after it 180 to 188, where 20 to 60 were priced: the order's own cells 33 to 45 µs and the frame after 14 to 19 when its seven derived writes land on cells already written, and the rest the writes into the ledger's empty rows (What the build found). The derived writes themselves 14.6 to 15.2 µs, the Input rows 4.0 to 4.4 |
+| P5 | the suite | 72 to 80 tests where 67; each long test 10 to 30% dearer, every record listing twelve sheet rows more; the scripted session of orders 0.05 to 0.3 s | *Measurement*, the two test binaries alternated, each pinned and opted out, two rounds: 71 green, the crate's 27 and the cartridge's 44; the session of orders 0.27 s, inside; the ring 0.25 s and the dividend at a frame a day 1.0 s; the hour's year 5.49 to 5.53 s where 4.56 to 4.60, 20% dearer, and the hundred years 5.04 to 5.11 where 4.09 to 4.12, 24%, inside; the whole on eight threads 5.8 to 6.0 s where 4.7 to 5.1. **Missed** in four: 71 tests, under 72, four new where five were priced; the ten days 3.03 to 3.04 s where 2.74 to 3.17, no dearer to the noise; the year at difficulty 0 1.97 to 1.99 where 1.81 to 1.84, 7 to 10%; and the eight hundred days 0.65 to 0.66 where 0.44 to 0.45, 47%, Trading held at each of its frames, every one a day's turn. Trading held at every half hour made the hour's year 46% dearer at the first build, so the long runs hold it at each day's turn |
+| P6 | the page | the cartridge's block 25,000 to 35,000 characters longer, the source's 20,000 to 30,000, the caveats' 300 to 500; Build writing the cartridge byte for byte | *Measurement*: 2,457,379 characters where `HEAD`'s texts make 2,410,194; the source's block 23,757 longer, inside. **Missed** in two: the cartridge's 23,144, under its 25,000, and the caveats' 284, under its 300. Build's bytes not checked here, no headless harness this sitting: the hand test's |
+| P7 | the checks | four checks and four controls green, none edited | *Measurement*: ALL GREEN, the four checks and their four controls, none edited, as predicted |
+| P8 | the hand test | Trading by its tab; a click on Buy 10 filling at the price shown and the ledger's row landing; 3 then B buying a share; an order at a closed hour refused; the Portfolio's columns and net worth; the palette's `buffet.` lines on Trading alone | The owner's, 2026-10-18, on the page built here: passed, "Tests pass; commit", every line as predicted (the paragraph below) |
+
+**What the build found.** The order desk held as the decisions drew it: the
+scripted session of orders and the ledger's ring passed at their first run,
+every cell of the Orders, the Positions, the Cash, the Ledger and the Commands
+sheets and of both views the hand's at every frame, and the Write sheet's rows
+seven at a fill and none else. The hand kept its fills in a list and folded
+them, the cost of the shares sold found in integers rounded half up, and met
+the cells' doubles at every sale. One test's own edit, your own start raised
+to $10,000 so that it could buy ten shares of the fourth stock, met the cash
+holder's check of the contract's $100, and the check moved to the holder of
+the sessions that write none. Twenty mutants, each written into the source by
+its anchor, applied the counted number of times and expanded before its test
+ran, each failed the test named for it: the price now in place of the price
+shown; the market open now; a command before a click; Buy 10 and Sell 10 filled
+in part; the basis taken off at the sale's price; the dividend paid to this
+frame's shares; the ring a row late; the commands holding on every sheet; a
+click picking nothing; the gain taken, its sign turned; the ledger written on
+a refusal; the pocket ignored; a button's look gone; Sell all leaving one share;
+Buy max one share more; the firm's cash without its dividends; a refusal
+counted a fill; Trading showing the firm's shares; and the ledger's cash before
+the order. At the first run the price now lived: the session's order at the
+10:00 mark sold the first stock, a $1 share the half hour's swing seldom moves
+a cent, so its frame showed no new price. A sale of the third at the 11:00 mark
+was added, its price's move asserted, and the mutant failed it. Two of the
+mutants wanted tests of their own: Buy 10 in part, a pocket that covers some of
+ten, your own $100 against the third stock; and the dividend paid to this
+frame's shares, an order on a dividend's own frame, which only a pace of a day a
+frame or more meets, a day's first frame being midnight at the manifest's, so
+the dividend's test plays three years at a frame a day and sells the firm's
+shares on the ninth dividend's frame, a Tuesday.
+
+Found at the build, none minted:
+- *A derived write into a cell that held nothing costs the next two steps.*
+  Natively, the ledger's seven writes into a row not yet written cost the step
+  after them about 150 µs more and the step after that about 90; the same
+  writes into a row already written, nothing measurable. So while the ledger
+  fills its hundred rows each fill costs about a quarter of a millisecond, and
+  after the hundredth none. The cartridge could fill its rows with empty texts
+  at the load, a row of the source, to avoid it; it does not, the cost being a
+  hundred fills' and the language's to price (`vla-lang` 0.10.0's machine): a
+  candidate ask, with these numbers, if a later ledger is dearer.
+- *The plan's levels 34 where 31*: the order desk's chain, the click's grid, the
+  order, the fill, the books, the cash and the views' dollars, the longest.
+- *The dollars a view shows of a holding* stand still while no share is held,
+  so a mark costs a fifth of what fourteen moving texts would.
+
+**The owner's hand test.** On the page built here, 2026-10-18: passed, "Tests
+pass; commit", over eight screenshots and no change asked. The exam sat to two
+of ten, the firm's $6,000.00; the Portfolio at Monday's 22:30, "The firm's
+holdings, at the price now.", Shares, Cost ($), Value ($) and Gain ($) at 0
+and 0.00, and the net worth beneath the cash on hand. On Trading, ten shares
+each of the first three stocks bought on Tuesday, the fourth picked, and a
+click at Wednesday's 1:00 refused, "Refused: the market was closed. Orders fill
+from the opening bell to the closing bell."; then "Bought 5690 shares of rung
+1 at the price shown.", the cash available $0.70. The Portfolio on Friday at
+13:00: 5,700 shares of the first at their cost, the second's ten at $50.00
+worth $49.90, a loss of 0.10, the third's at $249.30 worth $249.70, a gain of
+0.40, the firm's net worth $6,000.30. The Ledger's four rows, each the half
+hour the person saw, the firm, the stock, the shares, the price and the cash
+after in cents, the fourth "Wednesday, year 1, day 3, 14:30", 5,690 at 100,
+70 left. Ctrl+K on Trading listing `buffet.rung-1` to `buffet.sell-all`, each
+with its live words, "Buy 1 share of rung 1", and its key "on the Screen", and
+on the Portfolio none of them. Your own pocket by the drawer's edit,
+`(cell "Orders" "B1" 2)`: Trading's line "from your own cash.", ten shares of
+the second bought from it, $50.10 left, and the drawer's count, 35 derived
+writes landed and none refused, its note naming the keys 1 to 4, B, N, M, S, D
+and F. Found in the screenshots, not asked: column D drawn about 24
+characters wide on every sheet shown, the Portfolio's, Trading's and the
+Ledger's alike, where the record gives it 3, 12 and 10. The viewport keeps a
+width a person drags by the column's letters alone (`state.widths`,
+`web/viewport.js` at `v0.2.0`), so one drag of D's divider on any sheet widens
+D on all of them, where a spreadsheet keeps a column's width a sheet: a
+finding for Alonzo, the owner's to pass on.
+
