@@ -55,6 +55,9 @@
 ;           the Ledger, a ring of the last hundred fills, written through the Write
 ;           sheet; and the Portfolio's holdings, each pocket's net worth and the
 ;           dividend paid to the shares held.
+;   PLATE.2 the two pockets' switch: a button beside Trading's cash and a command of the
+;           cartridge's own on C, each turning which pocket an order funds and the
+;           views show, the firm's or your own, and moving no money.
 ;
 ; The market's clock (BD-7). A frame is two minutes of the market's time, thirty frames
 ; an hour at the manifest's rate of thirty, so an hour a second, a day 24 seconds and a
@@ -87,7 +90,7 @@
   (seed 791886)                     ; every first game's market: a first year that dips early and closes 10% up
   (author "Spreadsheet Company")
   (license "AGPL-3.0-or-later AND CC-BY-SA-4.0")
-  (notes "Buffet: All You Can Sheet. The front office is open for business: the game opens on the Series 777, the regulator's exam for a fund manager, eleven questions answered by a click or a key, ten of them scored, each right answer $500 more of the firm's $5,000, and the last the firm's style; then its certificate; then the Portfolio at Monday's opening bell, which waits for you to leave the exam room, the day, the hour and four stocks on it, each its price, its change since the last close and the firm's holding of it, its shares, their cost, their value and the gain, an hour a second, the market open from 9:30 to 16:00 on weekdays and moving each half hour, and under them the cash on hand and the net worth, the firm's and yours, with the fine print at its foot. Beside it, Trading, where each stock's six buttons buy one share, ten or as many as the cash covers, and sell one, ten or all, at the price shown while the market is open, by a click or by a key: 1 to 4 pick a stock, then B, N and M buy and S, D and F sell, each also a command of the page's palette. And Gigs, where a prospectus is proofread for $250, by a click on its button or by P, a day's work, one a week and four a run, Compliance permitting. Behind them, the back office: the market's calendar and its hours; its dice, rolled once a day where anyone can watch them roll; the market itself, four waves and a drift, and each session's hours between two closes; four stocks priced off it in whole cents, the dearest paying a dividend four days a year, paid to the shares held; the hustle's books, every prospectus counted; the proctor's books, the exam's draw and every answer; the order desk's books, every button and command and the order they make; the positions, each pocket's shares, cost and gains; the cash, the holdings and the net worth, the firm's and yours; the ledger, the last hundred orders filled; the fine print, a disclosure a month; the Series 777's question bank, twenty questions; the firms' four styles; and the model's caveats, the things this game gets wrong, each with Management's response. A returning candidate may waive the exam by writing 1 into Proctor!B3, at five correct answers, and orders fund the firm unless 2 is written into Orders!B1, your own pocket. Pick the Day, the Dice, the Market, the Stocks, the Hustle, the Proctor, the Orders, the Positions, the Cash or the Ledger sheet to watch the model work, or the Caveats sheet to read, or the Disclosures, the Questions or the Firms sheet among the hidden sheets."))
+  (notes "Buffet: All You Can Sheet. The front office is open for business: the game opens on the Series 777, the regulator's exam for a fund manager, eleven questions answered by a click or a key, ten of them scored, each right answer $500 more of the firm's $5,000, and the last the firm's style; then its certificate; then the Portfolio at Monday's opening bell, which waits for you to leave the exam room, the day, the hour and four stocks on it, each its price, its change since the last close and the holding of it, the firm's or your own, its shares, their cost, their value and the gain, an hour a second, the market open from 9:30 to 16:00 on weekdays and moving each half hour, and under them the cash on hand and the net worth, the firm's and yours, with the fine print at its foot. Beside it, Trading, where each stock's six buttons buy one share, ten or as many as the cash covers, and sell one, ten or all, at the price shown while the market is open, by a click or by a key: 1 to 4 pick a stock, then B, N and M buy and S, D and F sell, each also a command of the page's palette; and beside the cash, a switch, or C, turns whose cash an order spends, the firm's or your own, moving none of it. And Gigs, where a prospectus is proofread for $250, by a click on its button or by P, a day's work, one a week and four a run, Compliance permitting. Behind them, the back office: the market's calendar and its hours; its dice, rolled once a day where anyone can watch them roll; the market itself, four waves and a drift, and each session's hours between two closes; four stocks priced off it in whole cents, the dearest paying a dividend four days a year, paid to the shares held; the hustle's books, every prospectus counted; the proctor's books, the exam's draw and every answer; the order desk's books, every button and command and the order they make; the positions, each pocket's shares, cost and gains; the cash, the holdings and the net worth, the firm's and yours; the ledger, the last hundred orders filled; the fine print, a disclosure a month; the Series 777's question bank, twenty questions; the firms' four styles; and the model's caveats, the things this game gets wrong, each with Management's response. A returning candidate may waive the exam by writing 1 into Proctor!B3, at five correct answers. Pick the Day, the Dice, the Market, the Stocks, the Hustle, the Proctor, the Orders, the Positions, the Cash or the Ledger sheet to watch the model work, or the Caveats sheet to read, or the Disclosures, the Questions or the Firms sheet among the hidden sheets."))
 
 ; The libraries whose macros this source calls, both beside it: the kit, Alonzo's
 ; common.vla copied at the pin (sheets, labels, headers, on, cells, formulas, hold,
@@ -360,8 +363,7 @@
 ; opens the hustle again and nothing reading the boundary (BD-7); due holds the time a
 ; claim's work is done, a day after the half hour shown, and a prospectus is being
 ; proofread until the half hour reaches it. The fees are the claims done times the fee,
-; which the Cash sheet adds to your cash (GUARD.1's hand test) until the pockets come
-; (PLATE.2).
+; which the Cash sheet adds to your own cash (GUARD.1's hand test).
 
 (on "Hustle"
   (labels "A1" "a prospectus's fee, in cents" "claims a run" "the button's sheet" "its column" "its row" "days between two prospectuses" "a prospectus's work, in minutes")
@@ -494,9 +496,11 @@
 ; The order desk's books: every order a person places on Trading, by a click on one of
 ; its buttons or by a command of the cartridge's own (the page's version 5, SPEC.md
 ; section 3.10), each judged by what the last frame showed, as a claim is (BACK.1) and
-; an answer (GUARD.1). The settings first, a label in column A beside each value in B:
-; the pocket an order funds, the firm's until PLATE.2's switch, a person's edit of 2
-; funding it from your own; and the buttons' view. Then the buttons as the view lays
+; an answer (GUARD.1). First, a label in column A beside each cell in B, the pocket an
+; order funds, 1 the firm's and 2 your own: formula state over its twin since PLATE.2,
+; the firm's at the first frame and the other pocket at each switch, so that every
+; formula reading it, the views and the ledger among them, follows the switch with no
+; formula moved; and the buttons' view, a value. Then the buttons as the view lays
 ; them out, a stock a row and an act a column: each act's column on the view above it,
 ; each stock's name, rung and row on the view beside it, values a layout moves and no
 ; formula, and a press each, the library's clicked, one fill over the grid (its third
@@ -514,12 +518,21 @@
 ; taken, for the view to say. Positions never pass through the Write sheet: each
 ; pocket's shares are formula state on the Positions sheet, so that an order the next
 ; frame reads a current balance.
+;
+; Last, the switch (PLATE.2): its place on the view, values; its press, clicked's fourth
+; writing; its command, read by the Commands sheet's own name; and switched, a click on
+; it, or its command while no order's button is clicked. The desk takes one act a frame,
+; a click's before a command's, an order, a pick or a switch, so that no order fills on
+; a switch's frame and an order funds the pocket the person saw. A switch moves no money
+; (BD-9): it turns which pocket the next order funds and the views show, and never a
+; balance, a transfer being a row of the ledger (BACK.6).
 
 (on "Orders"
   (column "A" 46 shown none)        ; the labels: as wide as the longest, the pocket's
   (labels "A1" "the pocket an order funds: 1 the firm, 2 yours" "the buttons' view")
+  (formulas
+    ("B1" "=IF($B$47=1,IF(Orders.last!$B$1=2,1,2),IF(Orders.last!$B$1=2,2,1))"))   ; the pocket: the last frame's, the firm's at the first, and the other at a switch
   (cells
-    ("B1" 1)                        ; the firm's, until PLATE.2's switch; a person's edit of 2 funds your own
     ("B2" "Trading"))               ; the view the buttons stand on
   (headers "A4" "the buttons" "rung" "row" "Buy 1" "Buy 10" "Buy max" "Sell 1" "Sell 10" "Sell all")
   (labels "A5" "the act's column on the view")
@@ -553,13 +566,13 @@
     ("B13" "=Input!$B$20")          ; the command run at this frame, its name, or empty
     ("B14" "=IF(B13=Commands!$A$2,1,IF(B13=Commands!$A$3,2,IF(B13=Commands!$A$4,3,IF(B13=Commands!$A$5,4,0))))")   ; the stock a command picks: the Commands sheet's rows 2 to 5
     ("B15" "=IF(B13=Commands!$A$6,1,IF(B13=Commands!$A$7,2,IF(B13=Commands!$A$8,3,IF(B13=Commands!$A$9,4,IF(B13=Commands!$A$10,5,IF(B13=Commands!$A$11,6,0))))))"))   ; the act a command orders: its rows 6 to 11
-  (hold "B16" "B11+B14>0" "IF(B11>0,B11,B14)")   ; the stock picked: the last a click or a command named, a click's first, none at the start
+  (hold "B16" "OR(B11>0,AND(B14>0,B45=0))" "IF(B11>0,B11,B14)")   ; the stock picked: the last a click or a command named, a click's first, the switch's too, none at the start
   (formulas
     ("B17" "=IF(B16=0,\"the stock picked, none yet\",CHOOSE(B16,A6,A7,A8,A9))")   ; the stock picked, by name, which the commands' words say
     ("B18" "=IF(B20=0,\"\",CHOOSE(B20,A6,A7,A8,A9))")   ; the order's stock, by name
     ("B19" "=IF($B$1=2,2,1)")      ; the order's pocket: your own at 2, else the firm's
-    ("B20" "=IF(B12>0,B11,IF(B15>0,Orders.last!B16,0))")   ; the order's stock: a click's, else the stock the person saw picked
-    ("B21" "=IF(B12>0,B12,B15)")    ; the order's act: a click's, else a command's, one order a frame
+    ("B20" "=IF(B12>0,B11,IF(B21>0,Orders.last!B16,0))")   ; the order's stock: a click's, else the stock the person saw picked
+    ("B21" "=IF(B12>0,B12,IF(B45=1,0,B15))")   ; the order's act: a click's, else a command's, none beside the switch's click, one act a frame
     ("B22" "=Day.last!$B$19")       ; the market shown open: the last frame's, the state the person saw
     ("B23" "=IF(B20=0,0,CHOOSE(B20,Stocks.last!$E$5,Stocks.last!$E$6,Stocks.last!$E$7,Stocks.last!$E$8))")   ; the price shown: the last frame's price now
     ("B24" "=IF(B19=2,Cash.last!$B$4,Cash.last!$B$3)")   ; the pocket's cash as the last frame showed it
@@ -575,7 +588,19 @@
   (hold                             ; the last order, as it was taken, which the view says:
     "B32:B41"                       ;   its cells, B18 to B27's
     "$B$21>0"                       ;   when: an order, filled or refused
-    "B18"))                         ;   what each holds then
+    "B18")                          ;   what each holds then
+  (labels "A43" "the switch's column on the view" "its row" "the switch clicked" "the switch run" "switched")
+  (cells
+    ("B43" 4)                       ; the switch: column D on the view,
+    ("B44" 11))                     ;   row 11, beside the cash it turns, values a layout moves
+  (clicked                          ; the switch's click: the left button's rising edge on it, its view shown
+    "B45"                           ;   its cell
+    "$B$2"                          ;   the view,
+    "$B$43"                         ;   its column
+    "$B$44")                        ;   and its row
+  (formulas
+    ("B46" "=IF(B13=Commands!$A$12,1,0)")   ; the switch run: the command of the Commands sheet's row 12
+    ("B47" "=IF(OR(B45=1,AND(B46=1,B12=0)),1,0)")))   ; switched: a click on it, or its command while no order's button is clicked
 
 ; ---- PLATE.1: the positions ---------------------------------------------------------
 ; The books of both pockets, a row a pocket and a stock, the firm's four, then your
@@ -590,7 +615,7 @@
 ; functions of them, the price now, the value, the gain not yet taken, and the gain
 ; taken, the cents received less those spent and back with the cost still held. The
 ; pockets' cash is the Cash sheet's, a sum of these flows; and beneath, the rows the
-; views show, the pocket an order funds, until PLATE.2's switch picks the pocket shown.
+; views show, the pocket an order funds, which the switch on Trading turns (PLATE.2).
 
 (on "Positions"
   (column "A" 8 shown none)         ; the pocket, 1 or 2
@@ -868,7 +893,8 @@
 ; went (FRONT.2), a glyph read off the cents the change is spelled from, so the two never
 ; disagree; then the holding of it (PLATE.1), the pocket's shares, their cost basis,
 ; their value at the price now and the gain not yet taken, each the Positions sheet's
-; rows shown, the pocket an order funds until PLATE.2's switch picks it. The glyph has
+; rows shown, the pocket an order funds, the firm's or your own as the switch on Trading
+; turns it (PLATE.2). The glyph has
 ; no color yet, the looks waiting for an aesthetic pass. Under the stocks, the cash on
 ; hand, the firm's and the personal pocket's, each the Cash sheet's, in dollars (the
 ; owner's word at GUARD.1's hand test, both pockets the owner's choice), and each
@@ -917,8 +943,12 @@
 ; button, drawn in the buttons' lavender by a look keyed on its text, one look an act
 ; for its four buttons, where a style row would stand at each; the Orders sheet names
 ; their places in values, so that this sheet is laid out again with no formula moved.
-; Under them the pocket's cash; the last order, filled or refused and why; the keys,
-; the Commands sheet's, each a command of the page's palette too; and the fine print.
+; Under them the pocket's cash, and beside it the switch (PLATE.2), a text in brackets
+; in a column of 12 characters drawn in lavender by a style row, as Gigs' one button is,
+; and its key: a click or C turns which pocket an order funds, the firm's or your own,
+; and the line on whose cash, the shares and the cash available follow it, moving no
+; money; the last order, filled or refused and why; the keys, the Commands sheet's,
+; each a command of the page's palette too; and the fine print.
 
 (on "Trading"
   (column "A" 3 shown none)         ; the mark of the stock picked; the date, the bell and the lines spill past it
@@ -957,6 +987,10 @@
   (look "[ Sell all ]" 1)
   (labels "B11" "Cash available ($)")
   (dollars "C11" "Orders!B31")      ; the pocket's cash now
+  (cells
+    ("D11" "[ Switch ]")            ; the switch, beside the cash it turns: Orders!B43:B44 name this cell
+    ("E11" "or press C"))           ; its key, the Commands sheet's D12
+  (style "D11" 1)                   ; the switch drawn as a button, in lavender
   (formulas
     ("A13" "=CHOOSE(Orders!$B$41+1,\"No order yet.\",IF(Orders!$B$40>0,\"Bought \",\"Sold \")&ABS(Orders!$B$40)&IF(ABS(Orders!$B$40)=1,\" share of \",\" shares of \")&Orders!$B$32&\" at the price shown.\",\"Refused: the market was closed. Orders fill from the opening bell to the closing bell.\",\"Refused: no stock is picked. Press 1 to 4 to pick one, or click a button on its row.\",\"Refused: the cash does not cover \"&IF(Orders!$B$35=2,\"10 shares\",\"a share\")&\" of \"&Orders!$B$32&\".\",\"Refused: \"&IF(Orders!$B$39=0,\"no shares of \"&Orders!$B$32&\" to sell.\",\"fewer than 10 shares of \"&Orders!$B$32&\" to sell.\"))"))   ; the last order: filled, or refused and why
   (cells
@@ -1033,7 +1067,9 @@
 ; first four pick a stock, by its number's key; the six after them order an act of the
 ; stock picked, buying by the keys of the keyboard's lowest row, B, N and M, a share,
 ; ten and the most, and selling by the home row's S, D and F, a share, ten and all, the
-; order of the buttons' columns. Each holds while Trading shows, the view whose keys they
+; order of the buttons' columns; and the eleventh turns the pocket an order funds, by C
+; for the cash beside the switch, its words naming the pocket it turns to (PLATE.2).
+; Each holds while Trading shows, the view whose keys they
 ; are (the owner's word at BACK.1's hand test: "keybindings should be scoped to each
 ; tab"), and its key is then the command's, on the view alone, so that the exam's B and
 ; D and the hustle's P stay their own views'. The order desk reads each name from here,
@@ -1042,7 +1078,7 @@
 (sheet "Commands" visible)          ; the cartridge's commands: a device the game writes
 (headers "Commands" "A1" "name" "words" "holds" "key")
 (on "Commands"
-  (column "A" 9 shown none)         ; the names: as wide as the longest, sell-all
+  (column "A" 11 shown none)        ; the names: as wide as the longest, switch-cash
   (column "B" 64 shown none)        ; the words
   (cells
     ("A2" "rung-1")                 ; the first stock picked,
@@ -1064,7 +1100,9 @@
     ("A10" "sell-10")               ; ten, by D
     ("D10" "KeyD")
     ("A11" "sell-all")              ; every share, by F
-    ("D11" "KeyF"))
+    ("D11" "KeyF")
+    ("A12" "switch-cash")           ; the pocket an order funds turned,
+    ("D12" "KeyC"))                 ;   by C
   (formulas
     ("B2:B5" "=\"Pick \"&Orders!A6&\": the buy and sell commands trade it\"")   ; each pick's words, the stock's name
     ("B6" "=\"Buy 1 share of \"&Orders!$B$17")   ; each act's words, the stock picked
@@ -1073,7 +1111,8 @@
     ("B9" "=\"Sell 1 share of \"&Orders!$B$17")
     ("B10" "=\"Sell 10 shares of \"&Orders!$B$17")
     ("B11" "=\"Sell every share of \"&Orders!$B$17")
-    ("C2:C11" "=Input!$B$19=Orders!$B$2")))   ; each holds while the buttons' view shows
+    ("B12" "=IF(Orders!$B$19=2,\"Switch to the firm's cash\",\"Switch to your own cash\")&\": the buy and sell commands spend it\"")   ; the switch's words, the pocket it turns to
+    ("C2:C12" "=Input!$B$19=Orders!$B$2")))   ; each holds while the buttons' view shows
 
 ; The Write sheet (PLATE.1, SPEC.md section 3.9), the last device the game writes: a row
 ; a write, which the host makes after each step as a value, landing before the next

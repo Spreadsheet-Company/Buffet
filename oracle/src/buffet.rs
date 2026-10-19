@@ -86,6 +86,12 @@
 //! rounded half up, and the cash from its start and the fills. The ledger's
 //! ring is the cells' count taken round a hundred; the hand finds a row's fill
 //! as the last whose number falls there.
+//!
+//! The pockets' switch (`PLATE.2`) shares none with its cells. The cells hold
+//! the pocket over its twin, 2 your own and any other value the firm's, the
+//! other at a switch, and keep one act a frame by gating each command on the
+//! clicks; the hand flips the pocket it holds, and takes a frame's acts in
+//! turn, a click's before a command's, stopping at the first it takes.
 
 use std::collections::BTreeSet;
 
@@ -1406,6 +1412,14 @@ pub const TRADE_COMMANDS: [(&str, &str); 6] = [
     ("sell-10", "KeyD"),
     ("sell-all", "KeyF"),
 ];
+/// The switch (`PLATE.2`): its place on Trading, column D and row 11 beside
+/// the cash available, the Orders sheet's `B43:B44`; its text and its key's
+/// beside it; and its command, its name and its key, the Commands sheet's
+/// row 12, C for the cash it turns.
+pub const SWITCH: (&str, u64, u64) = (TRADING, 4, 11);
+pub const SWITCH_TEXT: &str = "[ Switch ]";
+pub const SWITCH_KEY_TEXT: &str = "or press C";
+pub const SWITCH_COMMAND: (&str, &str) = ("switch-cash", "KeyC");
 /// The pockets by their number, the Orders sheet's `B1`: the firm's, and
 /// your own; and their names as the ledger writes them.
 pub const FIRM: u64 = 1;
@@ -1510,12 +1524,12 @@ pub struct Book {
 }
 
 /// The order desk and the books by hand (`PLATE.1`): the pocket an order
-/// funds as written, the stock picked, every fill in order and the dividends
-/// paid to each pocket's each stock, and the last order taken. The cells keep
-/// each book as state over its twin and derive the gain taken from three
-/// sums; the hand keeps the fills and folds them, a share's cost averaged
-/// sale by sale, and finds a click by matching the pointer to a button's place
-/// and a command by its name.
+/// funds, which the switch turns (`PLATE.2`), the stock picked, every fill in
+/// order and the dividends paid to each pocket's each stock, and the last
+/// order taken. The cells keep each book as state over its twin and derive
+/// the gain taken from three sums; the hand keeps the fills and folds them, a
+/// share's cost averaged sale by sale, and finds a click by matching the
+/// pointer to a button's place and a command by its name.
 #[derive(Clone, Debug, PartialEq, Eq)]
 pub struct Plate {
     pub pocket: u64,
@@ -1546,6 +1560,19 @@ impl Plate {
         } else {
             FIRM
         }
+    }
+
+    /// The switch clicked this frame (`PLATE.2`): the left button going down
+    /// on its cell while Trading shows.
+    pub fn switch_clicked(now: &Inputs, last: &Inputs) -> bool {
+        clicked(now, last, SWITCH)
+    }
+
+    /// Whether this frame switches the pocket: a click on the switch, or its
+    /// command while no button of an order is clicked, one act a frame and a
+    /// click's first.
+    pub fn switches(press: Option<(u64, usize)>, switch: bool, command: &str) -> bool {
+        switch || (press.is_none() && command == SWITCH_COMMAND.0)
     }
 
     /// The button clicked this frame, its stock and its trade, each from 1:
@@ -1642,7 +1669,9 @@ impl Plate {
     }
 
     /// A frame of the order desk: a click on a button, its stock and its
-    /// trade, and the command run, judged by what the last frame showed. A
+    /// trade, a click on the switch, and the command run, judged by what the
+    /// last frame showed. One act a frame, a click's first (`PLATE.2`): a
+    /// switch turns the pocket and takes nothing else, no pick and no order. A
     /// click picks its stock, as a pick command does, a click first; the order
     /// is a click's, else a trade command's on the stock picked before this
     /// frame, the one the person saw marked, and none for a frame with
@@ -1652,10 +1681,19 @@ impl Plate {
     pub fn frame(
         &mut self,
         press: Option<(u64, usize)>,
+        switch: bool,
         command: &str,
         shown: &Shown,
         starts: [u64; 2],
     ) -> Option<Order> {
+        if Plate::switches(press, switch, command) {
+            self.pocket = if self.funding() == PERSONAL {
+                FIRM
+            } else {
+                PERSONAL
+            };
+            return None;
+        }
         let before = self.picked;
         match press {
             Some((stock, _)) => self.picked = stock,
@@ -1767,9 +1805,10 @@ pub fn holdings_line(pocket: u64) -> &'static str {
 }
 
 /// The words of the Commands sheet's rows from 2, a command's sentence the
-/// palette shows: each pick's by its stock's name, and each trade's by the
-/// stock picked's, or none yet.
-pub fn command_words(names: &[String; 4], picked: u64) -> Vec<String> {
+/// palette shows: each pick's by its stock's name, each trade's by the stock
+/// picked's, or none yet, and the switch's by the pocket it turns to, the
+/// other than `pocket`'s (`PLATE.2`).
+pub fn command_words(names: &[String; 4], picked: u64, pocket: u64) -> Vec<String> {
     let stock = if picked == 0 {
         "the stock picked, none yet".to_string()
     } else {
@@ -1786,6 +1825,14 @@ pub fn command_words(names: &[String; 4], picked: u64) -> Vec<String> {
         format!("Sell 1 share of {stock}"),
         format!("Sell 10 shares of {stock}"),
         format!("Sell every share of {stock}"),
+        format!(
+            "Switch to {} cash: the buy and sell commands spend it",
+            if pocket == PERSONAL {
+                "the firm's"
+            } else {
+                "your own"
+            }
+        ),
     ]);
     out
 }
@@ -2708,5 +2755,57 @@ mod tests {
         assert!(c.open() && bell(&c) == BELL_OPEN);
         c.tick_waiting(false);
         assert_eq!((c.minutes(), c.waited), (FIRST_MINUTE + MINUTES_A_FRAME, 5));
+    }
+
+    /// Every book of both pockets, each pocket's cash and the fills: what a
+    /// switch must leave as it found it (`BD-9`).
+    fn balances(p: &Plate, starts: [u64; 2]) -> (Vec<Book>, [u64; 2], usize) {
+        let books = [FIRM, PERSONAL]
+            .iter()
+            .flat_map(|&pocket| (1..=4).map(move |stock| (pocket, stock)))
+            .map(|(pocket, stock)| p.book(pocket, stock))
+            .collect();
+        let cash = [p.cash(FIRM, starts[0]), p.cash(PERSONAL, starts[1])];
+        (books, cash, p.fills.len())
+    }
+
+    /// The switch by hand (`PLATE.2`): a click on it, or its command, turns the
+    /// pocket and moves no balance, takes no order and picks no stock; and one
+    /// act a frame, a click's first: a trade clicked beside the switch's
+    /// command fills from the pocket shown and switches nothing, and the switch
+    /// clicked beside a trade's command or a pick's takes neither.
+    #[test]
+    fn the_switch_turns_the_pocket_and_moves_no_balance() {
+        let shown = Shown {
+            open: true,
+            prices: [100, 500, 2_500, 10_000],
+            cash: [750_000, 10_000],
+            when: "Monday, year 1, day 1, 9:30".to_string(),
+        };
+        let starts = [750_000, 10_000];
+        let (switch, _) = SWITCH_COMMAND;
+        let mut p = Plate::default();
+        let bought = p.frame(Some((2, 2)), false, "", &shown, starts);
+        assert_eq!(bought.map(|o| (o.pocket, o.filled)), Some((FIRM, 10)));
+        for (press, clicked, command, pocket) in [
+            (None, true, "", PERSONAL),
+            (None, false, switch, FIRM),
+            (None, true, "buy-1", PERSONAL),
+            (None, true, "rung-3", FIRM),
+            (None, true, switch, PERSONAL),
+        ] {
+            let before = balances(&p, starts);
+            assert_eq!(p.frame(press, clicked, command, &shown, starts), None);
+            assert_eq!(p.pocket, pocket, "the switch beside {command:?}");
+            assert_eq!(balances(&p, starts), before, "no balance moved");
+            assert_eq!(p.picked, 2, "no stock picked beside the switch");
+        }
+        let order = p.frame(Some((1, 1)), false, switch, &shown, starts);
+        assert_eq!(
+            order.map(|o| (o.pocket, o.stock, o.filled)),
+            Some((PERSONAL, 1, 1)),
+            "a trade clicked beside the switch's command fills from the pocket shown"
+        );
+        assert_eq!(p.pocket, PERSONAL, "and switches nothing");
     }
 }

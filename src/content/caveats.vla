@@ -86,4 +86,8 @@
      "A buyer pays the ask and a seller gets the bid, a broker may charge, and a trade settles a business day later."
      "Our broker works for exposure."
      "Orders!B23")
+    ("Cash earns no interest and loses nothing to inflation: a dollar today is worth a dollar in any year."
+     "Savings earn interest, and prices rise: US consumer prices rose about 3% a year on average over the last century."
+     "Inflation has been classified as transitory, permanently."
+     "Cash!B3:B4")
     ))                              ; the sheet's end: a caveat added goes above this line

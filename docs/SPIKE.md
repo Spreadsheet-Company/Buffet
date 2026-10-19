@@ -61,6 +61,10 @@ empty.*
 
   *Closed 2026-10-18.* Predicted `~days`; cost one sitting, the scoping, the build, its measurements and mutants, and the owner's hand test. What landed: Trading, the Orders, the Positions and the Ledger sheets, the Commands and the Write sheets, and the Cash sheet's and the Portfolio's new rows in the source and its cartridge, 1,028 rows and 520 formula cells; the caveats' row 17; the hand's order desk, its books, its cash, its ledger and its views' texts, and the oracle's `derived`, the host's Write sheet read; 71 tests, the crate's 27 and the cartridge's 44; the describe golden blessed again; and, in `OMAKASE.md`, the contract's version, `BD-5`'s caveat taken, `PLATE.2`'s line and `MISE.6`'s rows and hoist; and in the same commit the three Linux cells run 39088078269 answered, `BACK.1`'s, `POT.10`'s and `GUARD.1`'s. The predictions missed in part, each named beside its number. The build found a write into a cell that held nothing dear for the next two steps, while the ledger fills its hundred rows; a mutant of the price now living through the $1 stock's mark, until a sale at a dearer stock's mark was added; and Trading held at every half hour making the hour's year half again as long. The hand test found a column's width a person drags kept by its letters on every sheet, Alonzo's.
 
+- ✅ **`PLATE.2`, first slice — the two pockets' switch: a button and a key, and no money moved.** *Scoped and built 2026-10-18 in one sitting at the owner's word, "Scope and implement PLATE.2", its eleven decisions built as recommended, and passed at the owner's hand test on 2026-10-19 with no change asked of it: the scoping, every prediction beside its number, what the build found and the owner's hand test are under THE ITEMS, SCOPED.* The pocket an order funds, `Orders!B1`, formula state over its twin: the firm's at the first frame and the other pocket at each switch, read by every formula that follows it through `B19` as before, so that Trading's line, its shares and its cash available, the Portfolio's line and holding, and the ledger's pocket and cash after follow the switch at its own frame with no formula of theirs moved. The switch: `[ Switch ]` beside Trading's cash available, `D11`, "or press C" beside it, drawn in Lovelace Lavender by a style row, its place values of the Orders sheet, `B43:B44`, its press the library's `clicked` at its fourth writing; and the cartridge's eleventh command, `switch-cash`, on C, held while Trading shows, its words naming the pocket it turns to. One act a frame, a click's before a command's, an order, a pick or a switch, so that no order fills on a switch's frame and an order funds the pocket its person saw. The caveat `BD-5` owed this dish, its row 18: cash that earns no interest and loses nothing to inflation, the 3% of its real world marked for the educator's read. *Oracle, met:* every frame of a scripted session of switches, by the click, by C and by the palette, beside an order both ways and beside a pick, at a mark and with the market closed, and C and a click at the switch's place while the Portfolio shows, held to the hand; at every switch's frame and the frame after it, every balance the last frame's (`BD-9`), compared from the cells before the hand holds the frame; `PLATE.1`'s two sessions switching by the switch where a person's edit had stood; the desk's settings grown by the switch; a hand test of the rule; `BD-7`'s scan and the census's `(every-frame 0)`; the describe golden blessed again; 16 mutants, each caught by the test written for it; the cost natively; and the owner's hand test. *Pays into:* each pocket as the report card's (`CRITIC.1`), the draw and every transfer (`BACK.6`, this dish's second slice), and every order after it. `~days`
+
+  *Closed 2026-10-19.* Predicted `~days` for the dish; the first slice cost one sitting, the scoping, the build, its measurements and mutants, and the owner's hand test the next day. What landed: `Orders!B1` a switch's state, the switch's block `B43:B47`, the gates of `B16`, `B20` and `B21`, Trading's switch and its key, the eleventh command and the notes in the source and its cartridge, 1,048 rows and 526 formula cells; caveat 18; the hand's switch and its rule; 73 tests, the crate's 28 and the cartridge's 45; the describe golden blessed again; in `OMAKASE.md`, `BD-5`'s caveat taken; and `Delta/CLAUDE.md`'s map. The predictions missed in part, each named beside its number: the describe golden's readers, a switch's step under its range, and the cartridge's block in the page. The build found `BD-9`'s comparison first placed after the hand's, which caught the money-moving mutants first, and a harness trap. The hand test asked two things of the game the same day, a minute a second where an hour a second stood and a volatility factor, taken up as `POT.11`.
+
 ## 🧽 THE BACK OF HOUSE
 
 - ✅ **`BACK.1` — the dish pit: the side hustle, the first button.** *Scoped 2026-10-16, approved the same day with the view named by the owner, built and hand-tested that day, and amended at the hand test, the key bound on its view alone: the scoping, the approval, every prediction beside its number, what the build found and the owner's hand test are under THE ITEMS, SCOPED.* Gigs, the game's second view, the owner's name for "the sheet where various clicker jobs can produce cash at varying speeds, cooldowns, and pay rates", and its one job at course 0, proofreading a prospectus: a button cell, `[ Proofread a prospectus ]` in a column as wide as its text, pressed by a click on it while Gigs shows, the pointer on the cell and the left button's rising edge, or by P while Gigs shows, the Keys sheet binding P on that view alone by a formula of the sheet shown, so that every view binds keys of its own (the owner's word at the hand test: "keybindings should be scoped to each tab to avoid limiting the entire application to 26 key commands"); each press a cell that holds 0 between presses; $25 a claim, once a market day, at most four claims a run, the owner's cap over a claim a day for good, four claims being $100, about twice a perfect trader's first year on the personal pocket's $100. A claim is judged by what the last frame showed and counts against the day shown, as an order fills at the price shown; its books stand on the Hustle sheet, the fee, the cap and the button's place as values, so that a layout of the view moves no formula; the fees are the claims times the fee, which `PLATE.2`'s personal pocket reads when it comes; the day moving reopens the hustle, and nothing reads the boundary. The views' date and fine print entered `kitchen.vla` at their second writing, `as-of` and `fine-print`, the Portfolio expanding over them to its bytes unchanged. *Oracle, met:* every frame of a scripted session of clicks and keys, written as the host writes them and the Keys sheet read after every step as the host reads it, held to the hand, the cap, the day a press counts against, the reset and the key's binding among them; Gigs at rest on every day of two years and two days and of eight hundred at one frame a day; the settings, the button at their place and the one key bound on its view; nothing reads a view, `BD-7`'s scan and the census's `(every-frame 0)` kept; the describe golden blessed again; nine mutants, each caught by the test written for it; a click's cost natively and in Chrome at full screen, a claim shown 48 to 50 ms after the click at p95, the contract's 100 ms met by half; and the owner's hand test in the page, twice. *Pays into:* `PLATE.1`'s six buttons a rung and `GUARD.1`'s four options a question, each a press's cell, its place values of the model and its keys its view's; the gigs to come, each its own speed, cooldown and pay. `~days`
@@ -6129,4 +6133,219 @@ width a person drags by the column's letters alone (`state.widths`,
 `web/viewport.js` at `v0.2.0`), so one drag of D's divider on any sheet widens
 D on all of them, where a spreadsheet keeps a column's width a sheet: a
 finding for Alonzo, the owner's to pass on.
+
+## `PLATE.2`, first slice — the two pockets' switch: a button and a key, and no money moved
+
+*Scoped and built 2026-10-18 at the owner's word, "Scope and implement PLATE.2
+in Buffet (Delta/Buffet): the two pockets' switch", in one sitting after
+`PLATE.1`'s close: each decision below stands as recommended and was built,
+the owner's to approve, amend or strike at the hand test, and the texts a
+player reads are drafts. Read for it: the item's line in `OMAKASE.md` and its
+three notes; `BD-5`, `BD-7`, `BD-8` and `BD-9`; `PLATE.1`'s record above, its
+decisions 4, 5 and 7 and what its build found; Alonzo's `SPEC.md` at `v0.2.0`,
+the tag the pin names, §3.3, §3.4 and §3.10; and the page at that tag for the
+keys it keeps. Alonzo's and Frazaro's trees were read and never touched.*
+
+**What it stands on, read on the day** (Buffet at `c7cd4f3`, one ahead of its
+remote, the tree clean).
+- *The pocket.* `Orders!B1`, a value, 1 the firm's and 2 your own, read by
+  one cell, `B19`, `=IF($B$1=2,2,1)`; and `B19` read by everything that
+  follows the pocket: the order's cash and shares shown, `B24` and `B25`; the
+  fill's row, `Positions!D2:D9`; the pocket's cash now, `B31`; the rows shown,
+  `Positions!A12:A15`, so the Portfolio's holding and Trading's shares;
+  Trading's line and cash available; the Portfolio's line; and the ledger's
+  pocket and cash after, the Write sheet's `C4` and `C8`. A person's edit of
+  `B1` the only switch.
+- *One order a frame, a click's before a command's* (`PLATE.1`'s decision 5):
+  a button clicked and a command run in one frame, the click's order taken.
+- *The keys.* Trading's commands hold 1 to 4, B, N, M, S, D and F; the exam's
+  A to D and O and the hustle's P bind on their own views alone; the page
+  binds no letter without Ctrl, Cmd or Alt (`KEYMAP_DEFAULTS` at `v0.2.0`).
+- *The suite.* 71 tests green, the crate's 27 and the cartridge's 44; the four
+  checks green.
+
+**The decisions.**
+
+1. **The selector: `Orders!B1`, formula state over its twin (rec).**
+   `=IF($B$47=1,IF(Orders.last!$B$1=2,1,2),IF(Orders.last!$B$1=2,2,1))`: the
+   last frame's pocket read as `B19` reads it, 2 your own and any other value
+   the firm's, so the firm's at the first frame, whose twin is empty, and the
+   other pocket at a switch; always 1 or 2. `B19` and every formula after it
+   stand byte for byte, so the views and the ledger follow the switch with no
+   formula moved, the line's words; and `B1` is the selector the line names,
+   the toggle its note asked for (`BD-8`: a state is a cell over its twin). A
+   person's edit of `B1` now replaces the switch's formula, as an edit of any
+   formula does, and the notes stop offering it. *The alternatives:* `B1` kept
+   a value, the pocket at the start, and the switches counted beside it,
+   `B19` flipping the start by their parity, which moves `B19` and keeps a
+   setting no player needs, a switch being one key; the kit's `hold`, whose
+   untaken branch is the bare twin, 0 until the first switch, a pocket the
+   label does not name.
+2. **The switch: a button beside the cash it turns, `[ Switch ]` at
+   Trading's `D11`, "or press C" beside it at `E11`, drawn in lavender by a
+   style row (rec).** Row 11 reads "Cash available ($) 7,500.00 [ Switch ] or
+   press C", the line above saying whose cash, as Gigs' and the Certificate's
+   buttons carry their keys beside them; a style row, as their one button
+   each has, where Trading's twenty-four take looks. Its place is values on
+   the Orders sheet, `B43`, column 4, and `B44`, row 11, the view `B2`'s, so a
+   layout moves no formula, and its press is the library's `clicked` at its
+   fourth writing, `B45`, the verb unchanged. *The alternatives:* two buttons,
+   `[ Firm ]` and `[ Personal ]`, the chosen marked, two places for one
+   toggle; a button naming the pocket it turns to, which 12 characters hold
+   only ambiguously, "[ Your own ]" reading as the pocket shown as well as
+   the pocket to come; the switch at row 4, under the line.
+3. **The command: `switch-cash`, on C, its words live, holding while Trading
+   shows (rec).** The Commands sheet's row 12, listed in the palette as
+   `buffet.switch-cash`: "Switch to your own cash: the buy and sell commands
+   spend it", or "Switch to the firm's cash: ..." while your own is the
+   pocket, as each pick's words say what the commands then trade. C for the
+   game's own word on the row beside the switch, free on Trading. Its hold is
+   the commands' fill, `C2:C11` grown to `C2:C12`, and the order desk reads its
+   name from `Commands!$A$12`, `B46`, as it reads the others. *The
+   alternatives:* P, for a pocket, which the game never names, P being Gigs'
+   on its own view; Tab, the page's for its focus; two commands, a pocket
+   each, two keys for one toggle.
+4. **One act a frame, a click's before a command's: an order, a pick or a
+   switch (rec).** `PLATE.1`'s rule widened to the switch, so that no order
+   lands on a switch's frame and the pocket an order funds is always the
+   pocket its person saw, the house's rule (an act judged by what the last
+   frame showed) kept with no view's formula moved, the views reading this
+   frame's pocket. Switched, `B47`, is a click on the switch, or its command
+   while no button of an order is clicked; an order's act, `B21`, drops a
+   command's beside the switch's click; the stock picked, `B16`, drops a
+   command's pick beside it; and the order's stock, `B20`, follows the act.
+   *The alternatives:* both acts taken, the order funding the pocket switched
+   to in the same frame, which its person never saw; the order's pocket read
+   from the twin, which moves the formulas the line keeps and shows every
+   switch a frame late (`BD-7`: a person's act is answered at the next
+   frame).
+5. **No balance moves (`BD-9`), held by a test of its own (rec).** At a
+   switch's frame and at the frame after it, each pocket's cash, each book's
+   shares, cost basis, cents bought and sold and dividends, the fills counted
+   and the ledger's rows are as the last frame left them; a value and a net
+   worth move with the price at a mark, being valuations and no balance. A
+   switch is allowed at every hour, the market open or closed, since it moves
+   nothing. The line's "mutant page" is read as mutants of the cartridge, the
+   page's own loop oracle being `HOUSE.4`'s second slice.
+6. **The views follow, at the switch's own frame (rec).** Trading's line on
+   whose cash, its shares column and its cash available; the Portfolio's line
+   and its holding's four columns; the command's words. The last order's
+   sentence stays the last order's (Found). Both pockets' cash and net worth
+   on the Portfolio stand as they did.
+7. **The caveat owed (`BD-5`): row 18, cash that earns nothing and loses
+   nothing to inflation, its place `Cash!B3:B4` (rec).** "Cash earns no
+   interest and loses nothing to inflation: a dollar today is worth a dollar
+   in any year." beside "Savings earn interest, and prices rise: US consumer
+   prices rose about 3% a year on average over the last century.", and
+   Management's response, "Inflation has been classified as transitory,
+   permanently." The 3% is marked for the finance educator's read (`MENU.8`):
+   the consumer price index's annual average from 17.5 in 1925 to 313.7 in
+   2024 (*check*, the Bureau of Labor Statistics' CPI-U), 2.96% a year
+   (*derived*, (313.7 ÷ 17.5)^(1/99)).
+8. **The texts (drafts):** `[ Switch ]`, "or press C", the command's words,
+   and the game's notes, the clause offering an edit of `Orders!B1` struck
+   and the switch named beside Trading's buttons.
+9. **The oracle (rec).** The hand gains the switch: its place, its command,
+   the pocket flipped, and one act a frame, the switch taken first and nothing
+   after it. The tests: a scripted session of the switch held at every frame;
+   `BD-9`'s comparison at each switch's frame and the frame after; the desk's
+   settings grown by the switch's place, text, style, command, key and hold;
+   `PLATE.1`'s two sessions switching by the switch where a person's edit
+   stood; a hand test of the rule; the describe golden.
+10. **What it costs, measured** natively, as `PLATE.1` measured it, the
+    browser's latency left to the hand test and the playtest pass (`MISE.5`).
+11. **The stale places, rewritten at the build:** the item's line (🟡),
+    `BD-5`'s owed list, the source's notes and the comments that named the
+    switch to come, and `Delta/CLAUDE.md`'s map.
+
+**Found at the scoping**, none minted:
+- *The switch on the Portfolio too.* Its holding follows the switch made on
+  Trading; a button there and the command holding there would let it turn
+  its own view. One more place and one more hold, at the owner's word.
+- *The last order's sentence names no pocket.* After a switch, Trading's
+  `A13` still reads the last order, which may be the other pocket's: "Bought
+  10 shares of rung 2 at the price shown." under your own cash. "..., for the
+  firm." would say it, a view's formula moved, so left to the owner.
+- *A caveat on a manager's own trades.* The game lets both pockets buy the
+  same stock at the same price in the same minute, approved by no one, where
+  an adviser's people report their own trades to compliance, and firms
+  commonly approve them first and forbid trading ahead of a client (Rule
+  204A-1's code of ethics, *check*); offered as a row with its joke,
+  "Compliance has approved all personal trading in advance, and in
+  arrears.", and not added.
+- *A transfer's row wants two pockets.* `BD-9`'s second half, every transfer a
+  row of the ledger with the pocket it left and the pocket it entered, is
+  `BACK.6`'s; the Ledger's pocket field holds one, so its seven fields grow by
+  one then.
+
+**The predictions.** The cartridge's size was read from the build's first
+expansion, 1,048 rows, before these were written, so it is no prediction;
+the rest were written before any of their numbers was taken.
+
+| | What | Predicted | The number |
+|---|---|---|---|
+| P1 | the cartridge | read, not predicted: 1,048 rows where 1,028; 526 formula cells where 520, predicted | *Measurement*: 1,048 rows and 526 formula cells, as predicted |
+| P2 | the describe golden | `(budget 30 526 15780 2000000)`; `(formulas 526)`, `(every-frame 0)`, `(cycles 0)`; shapes 198 to 201 to 205; levels 34 or 35; the readers of Orders 2 to 6 more, Commands 11, Input 20, `Input.last` 6, `Orders.last` 5; the devices unchanged | *Measurement*: `(budget 30 526 15780 2000000)`; `(plan (shapes 203) (texts 200) (formulas 526) (levels 34) (runs 44) (lanes 256) (alone 270) (every-frame 0) (cycles 0))`; Commands 11, `Input.last` 6 and `Orders.last` 5; the devices unchanged; every shape renumbered from the Orders sheet's on, the views' shapes reading the pocket five levels deep where one. **Missed** in three: the readers of Orders 113 where 104 to 108, the switch's six cells and the desk's reads of them each counted; Input's 23 where 20, the switch's click reading four of its cells; and the Caveats' 77, unnamed, a picker a field reading the new row |
+| P3 | the pass and the load | the pass 0.0 to 0.3 ms longer than `HEAD`'s; the load 0.0 to 0.3 ms longer | *Measurement*, one release runner over `HEAD`'s texts and this tree's, four rounds alternated, 200 passes and 200 loads a round, pinned to the performance cores and opted out of Windows' throttling, a fixed computation 91 ms before and after: the pass 7.90 to 8.23 ms where `HEAD`'s took 7.81 to 8.04, inside; the load 7.41 to 7.54 ms where 7.24 to 7.31, inside. `HEAD`'s own pass read 7.8 to 8.0 where `PLATE.1` read 7.1 to 7.3, the day's machine |
+| P4 | the step | an ordinary frame within 0.2 µs of `HEAD`'s; a switch's step 15 to 45 µs with no share held; the frame after a switch within 5 µs of an ordinary frame; an order's step within 5 µs of `HEAD`'s once the ledger's rows are written | *Measurement*, the same runs, ten days at two minutes a frame filed by the hand's calendar, then twenty loads each Trading's: an ordinary frame 2.0 to 2.2 µs where 2.0 to 2.2, inside, and the half hour, the mark, the bell, the close and midnight each `HEAD`'s to the noise; the frame after a switch 5.4 to 6.6 µs, 3.4 to 4.4 above an ordinary frame, inside; an order's step 29.8 to 29.9 where 29.4 to 29.9, inside, the frame after it 10.7 to 10.9 where 10.4 to 10.5. **Missed** in one: a switch's step 13.1 to 13.3 µs with no share held, under the 15 priced, where a command no cartridge knows costs 5.1 to 5.2; 34.0 to 34.4 with the firm holding four stocks, the Portfolio's twelve texts of the holding spelled again |
+| P5 | the suite | 73 to 75 tests where 71; the new session 0.1 to 0.4 s; each long test within 5% of `HEAD`'s; the whole on eight threads within 0.4 s | *Measurement*, the two test binaries alternated, each pinned and opted out, two rounds: 73 green, the crate's 28 and the cartridge's 45, inside; the switch's session 0.29 to 0.30 s, inside; the ten days 3.07 to 3.10 s where 3.00 to 3.06, the hour's year 5.51 to 5.55 where 5.47 to 5.49, the hundred years 5.12 to 5.14 where 5.01 to 5.05, the orders' session 0.28 to 0.29 where 0.27 to 0.28 and the dividend's 1.02 to 1.03 where 0.99, each 1 to 3%, inside; the whole on eight threads 5.96 to 6.44 s where 5.89 to 6.45, inside |
+| P6 | the page | the cartridge's block 1,500 to 2,500 characters longer, the source's 2,500 to 4,500, the caveats' 300 to 450 | *Measurement*: 2,462,137 characters where `HEAD`'s texts make 2,457,379; the source's block 3,080 longer and the caveats' 313, inside. **Missed** in one: the cartridge's 1,365, under its 1,500, the switch's rows short |
+| P7 | the checks | four checks and four controls green, none edited | *Measurement*: ALL GREEN, the four checks and their four controls, none edited, as predicted |
+| P8 | the hand test | `[ Switch ]` on Trading turning the line to your own cash, the cash available to $100.00 and the shares to yours; C turning it back; the palette's `buffet.switch-cash` on Trading alone, its words naming the pocket it turns to; each pocket's orders in the ledger by name; no cash moved by a switch; the Portfolio's line and holding following; caveat 18 on the Caveats sheet | The owner's, 2026-10-19, on the page built here: passed, "Tests pass", every line as predicted (the paragraph below) |
+
+**What the build found.** The switch held as the decisions drew it: the
+session of the switch and `PLATE.1`'s two sessions, switching by the click and
+by C where a person's edit of `B1` had stood, passed at their first run, every
+cell of the Orders, the Positions, the Cash, the Ledger and the Commands
+sheets and of both views the hand's at every frame, the views following at
+each switch's own frame. Sixteen mutants, each written into the source or the
+caveats' file by its anchor, applied the counted number of times and expanded
+before its test ran, each failed the test named for it: a switch moving a cent
+into your own cash; a switch counted as a fill; the switch one way only; the
+pocket read a frame late; an order taken beside the switch's click; the
+switch's command taken beside an order's click; a pick taken beside the
+switch's click; the order's stock beside the switch's click; the commands
+holding on every sheet; the switch a row lower; its words fixed; its key
+moved; its look gone; the pocket starting your own; the command renamed; and
+the caveat's place empty. At the first run the two that move money, the cent
+and the fill, were caught by the hand's books, `Orders!B31` and `B29`, before
+`BD-9`'s own comparison ran, so the comparison moved ahead of the hand in each
+frame, read from the cells alone at the switch frames the script names; then
+both, and the order beside the switch's click, failed it by its own words,
+"frame 6: a switch moved a balance" and "frame 14". A switch costs under half
+a mark with no share held and about a mark with four stocks held, its cost the
+views' texts of the holding, none of the books'.
+
+Found at the build, none minted:
+- *A harness trap.* The mutant script piped into `Select-Object -First 1`
+  stopped its child process in the middle of putting the texts back, and left
+  the scratch copy's source cut short and its cartridge mutated, which the
+  next control caught; the copy was restored, and the repository, which the
+  script never writes, checked by the pass's own `--check`. Its output goes
+  to a file since.
+
+**The owner's hand test.** On the page built here, 2026-10-19: passed, "Tests
+pass", over nine screenshots, every line as predicted. The exam waived at frame
+156; Trading on Monday at 21:30, the market closed, its row 11 "Cash available
+($) 7,500.00 [ Switch ] or press C", the switch in lavender; on Tuesday at
+21:30 your own pocket switched in, "from your own cash.", rung 2 marked ▸, the
+cash available $100.00 and every share 0 though the firm held ten, the last
+order still the firm's, "Bought 10 shares of rung 2 at the price shown." (the
+scoping's Found: the sentence names no pocket); the Portfolio on Wednesday at
+6:30, "Your own holdings, at the price now.", the firm's cash $7,450.10 and
+your own $100.00, their net worth $7,500.10 and $100.00; Trading on Friday at
+19:00, twenty shares of rung 2 bought from your own cash, $0.20 left; the
+palette on Trading, its eleven lines from `buffet.rung-1`, `buffet.switch-cash`
+reading "Switch to the firm's cash: the buy and sell commands spend it" with "C
+on the Screen", and on the Portfolio none of them; the Ledger's two rows, the
+firm's 10 at 499 cents on Tuesday at 10:30 with 745,010 after and your own 20
+at 499 on Friday at 13:00 with 20 after; the Cash sheet, 745,010 and 20 cents,
+holdings 4,990 and 9,980, net worth 750,000 and 10,000; and the Caveats
+sheet's eighteenth row. Asked the same day, of the game and not of this dish,
+the owner's words: "the gameplay feels too fast. The trading windows is too
+narrow, so I wonder if we should default the gamplay to 1 real-world second to
+1 in-game minute, meaning a real-world minute would be an in-game hour, and so
+on. To spice up the gameplay a little biut, we should add a volatility factor
+to the market which increases the price movement so the game doesn't feel like
+the prices are flat for the first 5-10 minutes of play." Taken up as `POT.11`.
 

@@ -78,7 +78,13 @@
 //! made as the host makes them; the ledger's ring past a hundred fills; the
 //! dividend paid at a day's turn to the shares each pocket held; and the desk's
 //! settings, buttons and commands. The Portfolio's holding and net worth held
-//! at rest in every long run.
+//! at rest in every long run. Since `PLATE.2`: the pockets' switch, a button
+//! beside Trading's cash and a command of the cartridge's own on C; every frame
+//! of a scripted session of switches, by the click, the key and the palette,
+//! beside an order both ways and beside a pick, at a mark and with the market
+//! closed, held to the hand, the views following at the switch's own frame;
+//! at every switch's frame and the frame after, every balance as the last
+//! frame left it (`BD-9`); and PLATE.1's sessions switching by the switch.
 
 use std::collections::{BTreeMap, BTreeSet, VecDeque};
 
@@ -448,9 +454,10 @@ fn stock_names(cart: &Cartridge) -> [String; 4] {
 /// bell's line and where an order's money comes from; its headers; each
 /// stock's mark when picked, its name, its price now, the Stocks sheet's cents
 /// (`stocks`) spelled as dollars, the pocket's shares of it and its six
-/// buttons; the pocket's cash; the last order's sentence; the keys' line; and
-/// the fine print. Between two half hours nothing moves it but an order, a
-/// pick or a pocket, so the long runs hold it at rest at each half hour.
+/// buttons; the pocket's cash, and beside it the switch and its key
+/// (`PLATE.2`); the last order's sentence; the keys' line; and the fine print.
+/// Between two half hours nothing moves it but an order, a pick or a switch,
+/// so the long runs hold it at rest at each day's turn.
 fn trading_cells(
     cart: &Cartridge,
     cal: &Calendar,
@@ -502,6 +509,8 @@ fn trading_cells(
         "C11",
         &buffet::two_decimals(plate.cash(pocket, starts[pocket as usize - 1])),
     );
+    text("D11", buffet::SWITCH_TEXT);
+    text("E11", buffet::SWITCH_KEY_TEXT);
     let said = match plate.last {
         Some(o) if o.stock > 0 => o.sentence(&names[o.stock as usize - 1]),
         Some(o) => o.sentence(""),
@@ -3548,8 +3557,10 @@ fn prices_of(stocks: &BTreeMap<String, String>) -> [u64; 4] {
 /// order's stock by name, its pocket, its stock and its trade; what the last
 /// frame showed, the market, the price, the pocket's cash and its shares; the
 /// shares filled and the outcome; the fills counted, the ledger's row and the
-/// pocket's cash now; and the last order as it was taken, every cell 0 before
-/// the first.
+/// pocket's cash now; the last order as it was taken, every cell 0 before
+/// the first; and since `PLATE.2` the pocket the hand holds after this frame,
+/// and the switch, its place, its click, its command run and whether it
+/// switched.
 #[allow(clippy::too_many_arguments)]
 fn orders_held(
     cart: &Cartridge,
@@ -3639,7 +3650,17 @@ fn orders_held(
         "B32", "B33", "B34", "B35", "B36", "B37", "B38", "B39", "B40", "B41",
     ];
     want.extend(addrs.into_iter().zip(held));
-    let got = values(cart, "Orders", "B11:B41");
+    let (_, column, row) = buffet::SWITCH;
+    let switch = Plate::switch_clicked(now, last);
+    want.extend([
+        ("B1", plate.pocket.to_string()),
+        ("B43", column.to_string()),
+        ("B44", row.to_string()),
+        ("B45", flag(switch)),
+        ("B46", flag(command == buffet::SWITCH_COMMAND.0)),
+        ("B47", flag(Plate::switches(press, switch, command))),
+    ]);
+    let got = values(cart, "Orders", "B1:B47");
     for (addr, text) in want {
         assert_eq!(got.get(addr), Some(&text), "frame {frame}: Orders!{addr}");
     }
@@ -3749,11 +3770,18 @@ fn ledger_held(cart: &Cartridge, frame: u64, plate: &Plate, landed: usize, names
 }
 
 /// The commands at this frame (`PLATE.1`, the page's version 5): each the
-/// hand's name and key, its words by the stock picked, and whether it holds,
-/// while Trading shows, the sheet this frame's inputs named.
-fn commands_held(cart: &Cartridge, frame: u64, names: &[String; 4], picked: u64, sheet: &str) {
-    let got = values(cart, "Commands", "A2:D11");
-    let words = buffet::command_words(names, picked);
+/// hand's name and key, its words by the stock picked, and the switch's by the
+/// pocket it turns to (`PLATE.2`), and whether it holds, while Trading shows,
+/// the sheet this frame's inputs named.
+fn commands_held(
+    cart: &Cartridge,
+    frame: u64,
+    names: &[String; 4],
+    (picked, pocket): (u64, u64),
+    sheet: &str,
+) {
+    let got = values(cart, "Commands", "A2:D12");
+    let words = buffet::command_words(names, picked, pocket);
     let holds = if sheet.eq_ignore_ascii_case(buffet::TRADING) {
         "true"
     } else {
@@ -3762,6 +3790,7 @@ fn commands_held(cart: &Cartridge, frame: u64, names: &[String; 4], picked: u64,
     for (k, (name, key)) in buffet::PICKS
         .iter()
         .chain(buffet::TRADE_COMMANDS.iter())
+        .chain([buffet::SWITCH_COMMAND].iter())
         .enumerate()
     {
         let row = k + 2;
@@ -3806,7 +3835,13 @@ fn plate_frame_held(
             RUNGS[k].dividend_on(cal.day_of_year)
         }));
     }
-    let order = plate.frame(Plate::clicked(now, last), &host.command, shown, starts);
+    let order = plate.frame(
+        Plate::clicked(now, last),
+        Plate::switch_clicked(now, last),
+        &host.command,
+        shown,
+        starts,
+    );
     let names = stock_names(cart);
     let f = cal.frame;
     let stocks = stocks_held(cart, cal, seed, market, DIFFICULTY);
@@ -3836,7 +3871,7 @@ fn plate_frame_held(
         ],
     );
     ledger_held(cart, f, plate, landed, &names);
-    commands_held(cart, f, &names, plate.picked, &now.sheet);
+    commands_held(cart, f, &names, (plate.picked, plate.funding()), &now.sheet);
     trading_cells(cart, cal, &stocks, texts, plate, starts);
     portfolio_cells(cart, cal, &stocks, texts, plate, starts);
     let wrote = plate.fills.len() > landed;
@@ -3861,9 +3896,10 @@ fn plate_frame_held(
 /// sold of eleven, then ten of one, refused; a click and a trade's key in one
 /// frame, the click's order alone; B on the Portfolio, where no command holds,
 /// a key of no button, and a palette's run there, refused by the host; a
-/// palette's Sell all on Trading; your own pocket by a person's edit, Buy 10 of
-/// a stock its $100 covers three of, refused whole, then a click, M and a
-/// palette's Sell 1 from it; the firm's again, and a click on Sell 1 in the
+/// palette's Sell all on Trading; your own pocket by a click on the switch
+/// (`PLATE.2`, where a person's edit of `Orders!B1` stood), Buy 10 of a stock
+/// its $100 covers three of, refused whole, then a click, M and a palette's
+/// Sell 1 from it; the firm's again by C, and a click on Sell 1 in the
 /// frame the 11:00 mark moves the price, filling at the last frame's; then at
 /// the closing bell's frame a share filling at the last open frame's price, and
 /// at the next frame a share refused, the market closed.
@@ -3903,20 +3939,22 @@ fn a_scripted_session_holds_every_order_to_the_hand() {
         (31, &[Run("buy-1")]), // the palette there: refused by the host
         (32, &[Show("Trading")]),
         (33, &[Run("sell-all")]), // the palette's: every share of the second
-        (36, &[Point(6, 8), Left(true)]), // your own pocket since frame 35: Buy 10 of the third, $100 covering three: refused
+        (34, &[Point(4, 11), Left(true)]), // the switch: your own pocket
+        (35, &[Left(false)]),
+        (36, &[Point(6, 8), Left(true)]), // Buy 10 of the third, $100 covering three: refused
         (37, &[Left(false)]),
         (38, &[Point(5, 6), Left(true)]), // Buy 1 of the first
         (39, &[Left(false)]),
         (40, &[Key("KeyM", true)]), // buy-max from your own cash
         (41, &[Key("KeyM", false)]),
         (42, &[Run("sell-1")]),
-        (46, &[Point(8, 8), Left(true)]), // the firm's again: Sell 1 of the third at 11:00, a mark moving its price
+        (44, &[Key("KeyC", true)]), // the switch by its key: the firm's again
+        (45, &[Key("KeyC", false)]),
+        (46, &[Point(8, 8), Left(true)]), // Sell 1 of the third at 11:00, a mark moving its price
         (47, &[Left(false)]),
         (196, &[Run("buy-1")]), // 16:00, the closing bell's frame: the last frame showed the market open
         (197, &[Run("buy-1")]), // 16:02: the market shown closed, refused
     ];
-    // A person's edits of the pocket an order funds, before the frame's step.
-    let pockets = [(35, buffet::PERSONAL), (44, buffet::FIRM)];
     let last_frame = 199;
     let mut cart = cartridge();
     let seed = seed(&cart);
@@ -3929,12 +3967,6 @@ fn a_scripted_session_holds_every_order_to_the_hand() {
     let mut acts = script.iter().peekable();
     let mut outcomes: Vec<(u64, buffet::Outcome)> = Vec::new();
     for frame in 1..=last_frame {
-        if let Some(&(_, pocket)) = pockets.iter().find(|(at, _)| *at == frame) {
-            let edit = format!("(cell \"Orders\" \"B1\" {pocket})");
-            cart.write(&edit)
-                .unwrap_or_else(|r| panic!("{edit}: {} {}", r.refusal.id, r.refusal.text));
-            plate.pocket = pocket;
-        }
         let mut set: Vec<Act> = Vec::new();
         while let Some((_, more)) = acts.next_if(|(at, _)| *at == frame) {
             set.extend_from_slice(more);
@@ -4075,19 +4107,21 @@ fn the_ledger_rings_past_a_hundred_fills() {
 
 /// The dividend (`PLATE.1`'s decision 9, `STATION.1`'s decision 11): at a frame
 /// a day, every frame the opening bell's minute of the next day, ten shares of
-/// the fourth stock bought for the firm and ten for your own, your own start
-/// raised to $10,000 by a person's edit so that it can; then every frame held to
+/// the fourth stock bought for the firm and ten for your own, the switch's key
+/// between them (`PLATE.2`), your own start raised to $10,000 by a person's
+/// edit so that it can; then every frame held to
 /// the third year's first dividend day: at each of the nine dividend days'
 /// first frames, each pocket paid 50 cents a share of the shares the last frame
 /// held, into its dividends and its cash, and nothing at any other frame. The
 /// ninth day, the 821st, is a Tuesday, the frame before it Monday's opening
 /// bell, so an order fills there: the firm's every share sold that frame, the
-/// dividend still paid to the ten shares held as the day before closed, the
-/// record date. At the manifest's pace a day's first frame is midnight, when no
-/// order fills, so only a pace of a day a frame or more meets the two.
+/// palette's switch the frame before, the dividend still paid to the ten
+/// shares held as the day before closed, the record date. At the manifest's
+/// pace a day's first frame is midnight, when no order fills, so only a pace of
+/// a day a frame or more meets the two.
 #[test]
 fn a_dividend_is_paid_to_the_shares_held_at_the_days_turn() {
-    use Act::{Left, Point, Show};
+    use Act::{Key, Left, Point, Run, Show};
     let (mut cart, mut cal) = at_pace(A_DAY);
     let edit = "(cell \"Cash\" \"B1\" 1000000)";
     cart.write(edit)
@@ -4102,21 +4136,14 @@ fn a_dividend_is_paid_to_the_shares_held_at_the_days_turn() {
     for frame in 1..=822 {
         let set: Vec<Act> = match frame {
             2 => vec![Show("Trading"), Point(6, 9), Left(true)], // Buy 10 of the fourth, the firm's
-            3 => vec![Left(false)],
-            4 => vec![Left(true)], // your own, since this frame's edit
+            3 => vec![Left(false), Key("KeyC", true)],           // the switch by its key: your own
+            4 => vec![Left(true), Key("KeyC", false)],           // Buy 10 of the fourth, your own
             5 => vec![Left(false)],
-            821 => vec![Point(10, 9), Left(true)], // the firm's again: Sell all of the fourth, on a dividend's frame
+            820 => vec![Run("switch-cash")], // the palette's switch: the firm's again
+            821 => vec![Point(10, 9), Left(true)], // Sell all of the fourth, on a dividend's frame
             822 => vec![Left(false)],
             _ => vec![],
         };
-        for (at, pocket) in [(4, buffet::PERSONAL), (820, buffet::FIRM)] {
-            if frame == at {
-                let edit = format!("(cell \"Orders\" \"B1\" {pocket})");
-                cart.write(&edit)
-                    .unwrap_or_else(|r| panic!("{edit}: {} {}", r.refusal.id, r.refusal.text));
-                plate.pocket = pocket;
-            }
-        }
         let before = plate.dividends;
         let shown = shown(&cal, seed, &market, &plate, starts);
         let (last, now) = host.step(&mut cart, &set);
@@ -4160,7 +4187,10 @@ fn a_dividend_is_paid_to_the_shares_held_at_the_days_turn() {
 /// and drawn in lavender by a look of its text; the Commands sheet's headers,
 /// names and keys, the hand's, the order desk reading each name from it; no
 /// key the viewport moves by, none with Alt, and the keys' line naming them;
-/// and every command holding while Trading shows and on no other sheet.
+/// and every command holding while Trading shows and on no other sheet. Since
+/// `PLATE.2` the switch: its place, the hand's, beside the cash available; its
+/// text there inside its column, drawn in lavender by a style row, and its key
+/// beside it; and its command, its name and its key, read by the order desk.
 #[test]
 fn the_order_desk_states_its_settings_its_buttons_and_its_commands() {
     let mut cart = cartridge();
@@ -4205,7 +4235,40 @@ fn the_order_desk_states_its_settings_its_buttons_and_its_commands() {
         assert!(text.lines().any(|l| l == look), "a button's look: {look}");
     }
     assert!(text.lines().any(|l| l == buffet::BUTTON_FORMAT));
-    let commands = values(&cart, "Commands", "A1:D11");
+    let (view_name, column, row) = buffet::SWITCH;
+    assert_eq!(view_name, buffet::TRADING);
+    let place = values(&cart, "Orders", "B43:B44");
+    assert_eq!(
+        place.get("B43"),
+        Some(&column.to_string()),
+        "the switch's column"
+    );
+    assert_eq!(place.get("B44"), Some(&row.to_string()), "the switch's row");
+    let at = address(row as usize, column as usize);
+    assert_eq!(
+        view.get(&at).map(String::as_str),
+        Some(buffet::SWITCH_TEXT),
+        "Trading!{at}, the switch"
+    );
+    assert_eq!(
+        view.get(&address(row as usize, column as usize + 1))
+            .map(String::as_str),
+        Some(buffet::SWITCH_KEY_TEXT),
+        "the switch's key beside it"
+    );
+    let width = format!(
+        "(column \"Trading\" \"{}\" {} shown none)",
+        letters(column as usize),
+        buffet::BUTTON_COLUMN
+    );
+    assert!(text.lines().any(|l| l == width), "{width}");
+    assert!(buffet::SWITCH_TEXT.chars().count() as u64 <= buffet::BUTTON_COLUMN);
+    let style = format!("(style \"Trading\" \"{at}\" 1)");
+    assert!(
+        text.lines().any(|l| l == style),
+        "the switch's look: {style}"
+    );
+    let commands = values(&cart, "Commands", "A1:D12");
     for (c, header) in ["A", "B", "C", "D"]
         .iter()
         .zip(["name", "words", "holds", "key"])
@@ -4239,6 +4302,14 @@ fn the_order_desk_states_its_settings_its_buttons_and_its_commands() {
             "Orders!{reader} reads {name}'s name from {read}"
         );
     }
+    let (switch, key) = buffet::SWITCH_COMMAND;
+    assert_eq!(commands.get("A12").map(String::as_str), Some(switch));
+    assert_eq!(commands.get("D12").map(String::as_str), Some(key));
+    assert!(
+        text.lines()
+            .any(|l| l.starts_with("(formula \"Orders\" \"B46\" ") && l.contains("Commands!$A$12")),
+        "Orders!B46 reads the switch's name from Commands!$A$12"
+    );
     let moves = [
         "ArrowUp",
         "ArrowDown",
@@ -4254,6 +4325,10 @@ fn the_order_desk_states_its_settings_its_buttons_and_its_commands() {
     for (_, key) in &all {
         assert!(!moves.contains(key) && !key.starts_with("Alt"), "{key}");
     }
+    assert!(
+        !moves.contains(&key) && !all.iter().any(|(_, k)| *k == key),
+        "the switch's key, {key}, moves nothing and is no other command's"
+    );
     for words in ["1 to 4", "B, N or M", "S, D or F"] {
         assert!(
             buffet::TRADING_KEYS.contains(words),
@@ -4270,10 +4345,164 @@ fn the_order_desk_states_its_settings_its_buttons_and_its_commands() {
         cart.write(&edit)
             .unwrap_or_else(|r| panic!("{edit}: {} {}", r.refusal.id, r.refusal.text));
         cart.step(0);
-        let got = values(&cart, "Commands", "C2:C11");
+        let got = values(&cart, "Commands", "C2:C12");
         assert!(
-            got.len() == all.len() && got.values().all(|h| h == holds),
+            got.len() == all.len() + 1 && got.values().all(|h| h == holds),
             "the commands while {shown} shows: {got:?}"
         );
     }
+}
+
+/// Every balance at this frame (`BD-9`): each pocket's cash, each book's
+/// shares, cost basis, cents bought and sold and dividends, the fills counted
+/// and the ledger's rows, by sheet and address. A valuation, the value of the
+/// shares and the net worth, moves with the price and is no balance.
+fn balances(cart: &Cartridge) -> BTreeMap<String, String> {
+    let mut out = BTreeMap::new();
+    for (sheet, range) in [
+        ("Cash", "B3:B4"),
+        ("Positions", "E2:I9"),
+        ("Orders", "B29:B29"),
+        ("Ledger", "A2:G101"),
+    ] {
+        for (addr, v) in values(cart, sheet, range) {
+            out.insert(format!("{sheet}!{addr}"), v);
+        }
+    }
+    out
+}
+
+/// The pockets' switch at work (`PLATE.2`'s decisions), every frame of a
+/// scripted session held to the hand at the manifest's pace, the exam waived,
+/// as the order desk's session is: ten shares bought for the firm; the switch
+/// clicked, your own pocket, and its cash buying as many as it covers; the
+/// switch by C and by the palette; the switch clicked beside buy-1's key, the
+/// switch alone; a Buy 1 clicked beside C, the order alone, funded by the
+/// pocket shown; the switch clicked beside a pick's key, the pick dropped; the
+/// switch clicked and C in one frame, one switch; C and a click at the
+/// switch's address while the Portfolio shows, neither a switch; C at 10:30, a
+/// mark; and the palette's switch at 16:02, the market closed. At every
+/// switch's frame and at the frame after it, every balance is the last
+/// frame's (`BD-9`): a switch turns which pocket an order funds and the views
+/// show, the views following at its own frame, and moves no money.
+#[test]
+fn a_switch_moves_no_balance_and_the_views_follow_it() {
+    use Act::{Key, Left, Point, Run, Show};
+    let script: &[(u64, &[Act])] = &[
+        (1, &[Show("Trading")]),
+        (3, &[Show("Trading")]), // the Camera showed the Portfolio at the begin
+        (4, &[Point(6, 7), Left(true)]), // Buy 10 of the second, the firm's
+        (5, &[Left(false)]),
+        (6, &[Point(4, 11), Left(true)]), // the switch clicked: your own
+        (7, &[Left(false)]),
+        (8, &[Key("KeyM", true)]), // buy-max of the second from your own cash
+        (9, &[Key("KeyM", false)]),
+        (10, &[Key("KeyC", true)]), // the switch by its key: the firm's
+        (11, &[Key("KeyC", false)]),
+        (12, &[Run("switch-cash")]), // the palette's: your own
+        (14, &[Point(4, 11), Left(true), Key("KeyB", true)]), // the switch clicked beside buy-1: the switch alone, the firm's
+        (15, &[Left(false), Key("KeyB", false)]),
+        (16, &[Point(5, 6), Left(true), Key("KeyC", true)]), // Buy 1 of the first beside C: the order alone, the firm's
+        (17, &[Left(false), Key("KeyC", false)]),
+        (18, &[Point(4, 11), Left(true), Key("Digit3", true)]), // the switch beside a pick: the switch alone, your own
+        (19, &[Left(false), Key("Digit3", false)]),
+        (20, &[Point(4, 11), Left(true), Key("KeyC", true)]), // the switch clicked and C: one switch, the firm's
+        (21, &[Left(false), Key("KeyC", false)]),
+        (22, &[Show("Portfolio")]),
+        (23, &[Key("KeyC", true)]), // C on the Portfolio: no command holds there
+        (24, &[Key("KeyC", false)]),
+        (25, &[Left(true)]), // a click at the switch's address on the Portfolio: no switch
+        (26, &[Left(false), Show("Trading")]),
+        (31, &[Key("KeyC", true)]), // 10:30, a mark: your own
+        (32, &[Key("KeyC", false)]),
+        (197, &[Run("switch-cash")]), // 16:02, the market closed: the firm's
+    ];
+    let mut cart = cartridge();
+    let seed = seed(&cart);
+    let market = Market::new(seed);
+    let texts = disclosure_texts(&cart);
+    let mut cal = Calendar::new(MINUTES_A_FRAME, DAYS_A_YEAR);
+    let mut host = Host::new(buffet::EXAM);
+    let mut plate = Plate::default();
+    let starts = [WAIVED_CAPITAL, buffet::PERSONAL_CASH];
+    use buffet::{FIRM, PERSONAL};
+    // The switches the script makes, by frame, each the pocket after it.
+    let switches = [
+        (6, PERSONAL),
+        (10, FIRM),
+        (12, PERSONAL),
+        (14, FIRM),
+        (18, PERSONAL),
+        (20, FIRM),
+        (31, PERSONAL),
+        (197, FIRM),
+    ];
+    let mut acts = script.iter().peekable();
+    let (mut switched, mut orders) = (Vec::new(), Vec::new());
+    let mut before = balances(&cart);
+    let mut worth = values(&cart, "Cash", "B6:B7");
+    for frame in 1..=199 {
+        let mut set: Vec<Act> = Vec::new();
+        while let Some((_, more)) = acts.next_if(|(at, _)| *at == frame) {
+            set.extend_from_slice(more);
+        }
+        let shown = shown(&cal, seed, &market, &plate, starts);
+        let (last, now) = host.step(&mut cart, &set);
+        // BD-9 first, from the cells alone and before the hand holds the frame:
+        // at a switch's frame and the frame after, every balance the last frame's.
+        let now_balances = balances(&cart);
+        if switches
+            .iter()
+            .any(|&(at, _)| frame == at || frame == at + 1)
+        {
+            assert!(
+                now_balances == before,
+                "frame {frame}: a switch moved a balance\n{now_balances:?}\nwhere the last frame left\n{before:?}"
+            );
+        }
+        let now_worth = values(&cart, "Cash", "B6:B7");
+        if frame == 31 {
+            assert_ne!(
+                now_worth, worth,
+                "the mark at 10:30 moves the holdings' value, a valuation, beside the switch"
+            );
+        }
+        before = now_balances;
+        worth = now_worth;
+        let was = plate.pocket;
+        let order = plate_frame_held(
+            &cart,
+            &host,
+            (&now, &last),
+            &mut plate,
+            &mut cal,
+            (seed, &market),
+            &shown,
+            starts,
+            &texts,
+        );
+        if let Some(o) = order {
+            orders.push((frame, o.pocket, o.stock, o.outcome));
+        }
+        if plate.pocket != was {
+            switched.push((frame, plate.pocket));
+        }
+    }
+    assert!(acts.next().is_none(), "every act of the script played");
+    assert_eq!(
+        switched, switches,
+        "the switches, by frame, each its pocket after"
+    );
+    use buffet::Outcome::Filled;
+    assert_eq!(
+        orders,
+        [
+            (4, FIRM, 2, Filled),
+            (8, PERSONAL, 2, Filled),
+            (16, FIRM, 1, Filled)
+        ],
+        "the orders taken, by frame, each its pocket"
+    );
+    assert_eq!(plate.picked, 1, "the pick beside the switch dropped");
+    assert_eq!(host.now.sheet, buffet::TRADING);
 }
