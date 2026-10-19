@@ -1,0 +1,26 @@
+; SPDX-License-Identifier: CC-BY-SA-4.0
+; headlines.vla - the ticker: the Headlines sheet, a headline a row, of which the game
+; shows one a day on its Overview, the row the day's market draw picks (docs/OMAKASE.md,
+; FRONT.3). Words alone: one macro named after this file, whose body is one call of the
+; library's strings. The source includes this file after its manifest, with every other
+; include, and calls (headlines) where the sheet's rows belong. A headline moves no price
+; until the events sheet gives the ticker teeth (SPECIAL.1). To add a row, read README.md
+; beside this file: one line, in the voice of a financial newswire that has seen things,
+; approved by a reviewer.
+
+(defmacro (headlines)
+  "the ticker: the Headlines sheet, a headline a row"
+  (strings "Headlines"              ; the sheet, hidden among the tabs
+    ("Headline" 100)                ; its one field: the header over its texts, and its width in characters
+    ; each row: the headline
+    ("Economists predict nine of the last three recessions.")
+    ("Fed holds rates steady; markets read it as 'a sort of hug'.")
+    ("Analyst upgrades stock to 'buy' after discovering they own it.")
+    ("Board assures investors the losses are merely unrealized, 'like everything else'.")
+    ("SEC announces new rule against funny business; definitions to follow.")
+    ("Company announces 'strategic pivot to AI'; stock up 40%; company still sells ice cream.")
+    ("Local man buys everything at the top; market tops.")
+    ("Tulip prices surge; historians sigh.")
+    ("Intern discovers rounding error worth $4 million; asks about a bonus; there isn't one.")
+    ("Gold remains calm as the world panics; the world finds this annoying.")
+    ))                              ; the sheet's end: a row added goes on a line above this one

@@ -91,6 +91,10 @@ empty.*
 
   *Closed 2026-10-16.* Predicted `~days` for the whole dish; the first slice cost one session, the scoping, its approval, the build, its measurements and the owner's hand test, beside the pin's move to `alonzo` 0.1.5, a `HOUSE.2` commit of its own. What landed: the Portfolio's column `D` and the glyph's fill in the source and its cartridge, 431 rows and 111 formula cells; the hand's `glyph` and its test; the Portfolio held over `A1:D10`; 46 tests; the describe golden blessed again. Five of the nine predictions missed in part, each named beside its number: the cartridge's characters by three, each escaped glyph counted short; the load under its range and a day's first frame where the fine print stays a tenth under it, both inside the noise; the source's block under its range, its comments shorter than priced; and the main thread's least a hundredth under. The colors stand as the second slice, an aesthetic pass, the scoping's findings with them.
 
+- ✅ **`FRONT.3` — the overview, the ticker, the weather word.** *Scoped and built 2026-10-19 in one sitting at the owner's word, its ten decisions built as recommended; passed at the owner's hand test the same day with no change asked: the scoping, every prediction beside its number, what the build found and the owner's hand test are under THE ITEMS, SCOPED.* The dashboard: both pockets' net worth, the day and the year, the firm's name, the weather word from the index's slope, the ticker's headline of the day by `CHOOSE` over the Headlines sheet, course 0's ten headlines flavor alone and moving nothing until `SPECIAL.1`; the alerts that link to their panel (a margin call, a maturity, a redemption) as later courses add them; and the live sheet's strategy guide beside it, a column of payback times anyone can read (`AD-6`). *Oracle:* `buffet.rs`; the headline of the day held to the picker. *Pays into:* every alert a later course raises. *Found at `GUARD.1`'s build, 2026-10-17 (`SPIKE.md`):* the certificate leads to the sheet named at `Proctor!B6`, a value, the Portfolio until this dish writes the Overview's name there; the Camera shows it at the certificate's button, so one value moves the game's first view after the exam. *Scoped and built 2026-10-19 in one sitting, each decision the owner's to approve, amend or strike at the hand test (`SPIKE.md`):* the Overview after the Certificate, where the certificate now leads; the firm's line a placeholder until `BACK.2`; each pocket's net worth; the weather, five words by the market's change in tenths of a percent over the twenty days to the last close made, the session before's in session and the session's own from its close, `Market!B114:B124`, the look back moved with it, so that the word changes at most once a session, at its close; the Headlines sheet, ten rows of `BUFFET.md`'s fifteen, a headline a calendar day by the day's 83rd market draw; the alerts and the guide of payback times left to the dishes that give them something to hold, the Overview binding no key; caveats 21 and 22. `~days`
+
+  *Closed 2026-10-19.* Predicted `~days`; cost one sitting, the scoping, the build, its measurements and mutants, and the owner's hand test, which passed it whole. What landed: the Overview, the sixth view, after the Certificate, `Proctor!B6` naming it; the Market's weather at its foot, `B114:B124`, and its look back moved to the last close made; the Dice's 83rd draw; the Headlines sheet, `src/content/headlines.vla`, ten rows; caveats 21 and 22; the source's notes and comments; 1,258 rows and 805 formula cells; the hand's last close made, its change, its weather and its headline; 81 tests, the Overview and the weather held at every bell and every day's turn of the long runs and at every frame of the order desk's sessions, the run that writes the open reaching Tuesday's close; eighteen mutants caught; the describe golden blessed again; `check_layout`'s content pin at 5; and, in `OMAKASE.md`, `BD-5`'s rows and the notes on `BACK.2`, `MENU.7`, `SPECIAL.1` and `POT.4`. Three of the nine predictions missed in part, each named beside its number: Cash's readers 8 where 9; the bell no dearer where 1 to 6 µs were priced, and the first frame 19.4 µs dearer, under the 20; and the suite cheaper than priced, the hour's year 3% longer, the weekday 1% and the whole 0.15 s.
+
 ## 📜 THE MENU CARD
 
 - ✅ **`MENU.1` — the strings sheets and the picker.** *Scoped, built and hand-tested 2026-10-15: the scoping, its fourteen decisions approved whole by the owner and amended at the hand test, every prediction beside its number, what the build found and the owner's hand test are under THE ITEMS, SCOPED.* The content sheets under `src/content/`, a file a sheet holding words alone, one macro named after the file whose body is one call of the library's `strings`, each sheet one kind of string, hidden after the model's sheets, its rows of text each with the course that added it, its vintage, and the reviewer who approved it (*the vintage and the reviewer struck 2026-10-15 at the owner's word, a row's review its pull request's and no course a freeze, `BD-1` amended: `MENU.2`'s amendments after its close*); the source's manifest its first form, then every include, then the code, each content sheet's macro called where the sheet belongs (the owner's words at the hand test); the library's `picker`, `CHOOSE(k, ...)` over a sheet's rows, generated from the sheet's extent so that a row added needs no formula edited, one cell to 1,547 rows below the headers, the pages of 500 written by the dish whose sheet first passes 1,000 rows; the first sheet, the fine print as a rotating footer, the Disclosures sheet, eight rows in the owner's words, a disclosure a month from the day; and the one-page *How to add a row* in the folder, for a stranger with five minutes. Every other sheet arrives with the dish that reads it, named for it: `Questions` (`MENU.2`), `Headlines` (`FRONT.3`), `Memos` (the first of `MENU.4` and `GUARD.3`), `Firms` (`BACK.2`), `Awards` (`MENU.7`), `Errors` (`PLATE.6`) and `Exits` (`FRONT.7`). *Oracle, met:* the layout check's content rule and the source's order (`tools/check_layout.ps1`, the content sheets' pin raised from 0 to 1, its control fifteen mutants), their headers held by `check_spdx.ps1`; the page's content blocks (`tools/build_web.ps1`, `tools/check_web_offline.ps1`, its control fifteen mutants); the oracle's tests, the fine print held to the hand at every frame, the rows counted by their extent, every row picked in its turn, a row added expanding with no other edit, the one picker's limit and the tripwire before it, and every sheet written bare with the content hidden; and the owner's hand test in the page. *Pays into:* every string any view shows: the ticker (`FRONT.3`), the exam (`MENU.2`), the names (`MENU.3`), the errors (`PLATE.6`), the endings (`FRONT.7`); and the cheapest pull request there is. `~days`
@@ -6803,4 +6807,321 @@ the half hour alone, so that a second between sessions steps in about 75 µs
 where 200; a tick 33.5 to 34.0 where `HEAD`'s mark took 31.1 to 31.7; midnight
 50.4 to 59.3; an ordinary frame 2.3. The page 2,475,244 characters, its blocks
 the files'. Committed at the owner's word.
+
+## `FRONT.3` — the overview, the ticker, the weather word: where the certificate leads, two net worths, a word and a headline
+
+*Scoped and built 2026-10-19 at the owner's word, "Scope and implement FRONT.3
+in Buffet (Delta/Buffet): the overview, the ticker, the weather word", in one
+sitting as `PLATE.1`, `PLATE.2` and `POT.11` were: each decision below stands
+as recommended and was built, the owner's to approve, amend or strike at the
+hand test, and every text a player reads is a draft. Minted already; nothing
+else was minted, and what else the scoping found stands under Found. Read for
+it: the item's line in `OMAKASE.md` and its Found note; `BD-2`, `BD-4`, `BD-5`,
+`BD-6` and `BD-7`; the opening contract; `BACK.2`'s and `MENU.7`'s lines;
+`FRONT.1`'s records above (no sheet stands empty waiting, a view reads the model
+and nothing reads a view, at most 1,000 formula cells a view); `MENU.1`'s (the
+content sheets by `strings` and `picker`, the fine print's row by the day, the
+names table keeping "Headlines"); `GUARD.1`'s decisions 10 and 11, the Camera's
+`B3` and the lead; `POT.2`'s finding on the weather word; `POT.11`'s record;
+`PLATE.1`'s and `PLATE.2`'s; `BUFFET.md`'s course 0 row and its Headlines
+appendix, as design reference; the source's views, the library's verbs and the
+Market's look back; the tests' views and their holding; and Alonzo's `SPEC.md`
+at `v0.2.0`, the tag the pin names, §3.8. Alonzo's and Frazaro's trees were read
+and never touched.*
+
+**What it stands on, read on the day** (Buffet at `7386c3d`, three ahead of its
+remote, the tree clean; `alonzo` 0.2.0 and `vla-lang` 0.10.0).
+- *The lead.* `Proctor!B6`, a value, "Portfolio", which the Camera's `B3` names
+  once the game begins (`GUARD.1`'s decisions 10 and 11), so one value moves the
+  game's first view after the exam. The host shows a sheet when the Camera's
+  third row changes and names a sheet the grid holds, and between its changes
+  the person's tabs win (§3.8).
+- *The look back.* `Market!B4`, twenty days; `C15` `=B15-$B$4`, twenty days
+  before the session's day, its column the index's own fill, read by nothing in
+  the cartridge (grepped). The session's close, `B26`, is the waves' index of the
+  session's day, known from its opening bell, which the price shown reaches only
+  at the closing bell (caveats 14 and 20); the last close, `D26`, the session
+  before's.
+- *The weather word's finding* (`POT.2`): read off the slope's sign alone it never
+  turned in seed 777's first year; at seed 791886 the index's twenty-day slope
+  first turns on day 102 (the hand's kind-year test) and again on days 1,105 and
+  1,681 in five years.
+- *The dice.* 82 market draws a day, `POT.2`'s four phases (read on day 0 alone)
+  and `POT.11`'s 78 steps; the next free is the 83rd (the source's rule: a dish
+  that needs a draw takes the next free one, and none an earlier dish reads
+  moves).
+- *The strings.* `MENU.1`'s `strings` and `picker`; its names table kept
+  "Headlines" for the ticker's headline of the day, read by the Overview; a
+  content file a sheet, hidden, called after the sheets row; `check_layout.ps1`
+  pins content sheets at 4.
+- *The views.* Five, the Exam, the Certificate, the Portfolio, Trading and Gigs,
+  each opening on the library's `as-of` and `bell` and closing on `fine-print`,
+  their dollars by `dollars` in 12-character columns. The Portfolio already
+  shows each pocket's cash on hand and net worth, `Cash!B3:B4` and `B9:B10`
+  (`GUARD.1`'s hand test, `PLATE.1`).
+- *The suite.* 76 tests green, the crate's 29 and the cartridge's 47.
+
+**The decisions.**
+
+1. **The view: the Overview, third among the tabs, and where the certificate
+   leads (rec).** A fund manager's word for the page that sums the book up, and
+   the records' own (`FRONT.1`'s views, `MENU.1`'s names table, `GUARD.1`'s
+   decision 11). It stands after the exam's two views, before the Portfolio,
+   `(sheets "Exam" "Certificate" "Overview" "Portfolio" ...)`: the strip reads
+   the views in the order a player meets them, and the game still opens on the
+   first visible sheet, the Exam, its opening rule unchanged. `Proctor!B6` reads
+   `Overview`, one value and no formula moved, so the certificate's button lands
+   there (`BD-4`: two numbers, a word and a headline make the first screen after
+   the exam, the Portfolio's 32 cells of stocks and holdings one tab over).
+   *The alternatives:* the Summary, Excel's word, or the Dashboard, software's,
+   or a Tear Sheet, a fund's one-pager few players know; the Overview first of
+   all, the opening stated by a `(value "Camera" "B3" "Exam")` row (`GUARD.1`'s
+   named alternative), the strip's head after the exam held by a row a later
+   edit of the Camera must keep; the lead kept on the Portfolio, the Overview a
+   tab the player finds.
+
+2. **What it shows at course 0, and what it leaves (rec).**
+
+   | | A | B |
+   |---|---|---|
+   | 1 | the date, every view's | |
+   | 2 | the bell's line, every view's | |
+   | 3 | `Your firm: name pending registration.` | |
+   | 5 | `Net worth ($)` | |
+   | 6 | `  Firm` | its net worth, `Cash!B9` |
+   | 7 | `  Personal` | its net worth, `Cash!B10` |
+   | 9 | `Market weather: Overcast, the market down 0.5% in the 20 days to the last close.` | |
+   | 11 | `Today's headline: SEC announces new rule against funny business; definitions to follow.` | |
+   | 13 | the fine print | |
+
+   Column A 22 characters and B 12, the width the dollars are padded for; seven
+   formula cells, where a view may hold 1,000. The firm's line is a value, a
+   placeholder with its own wink, regulation's pace, until `BACK.2` names the
+   firm from the Firms sheet beside the style and makes the cell a formula. Each
+   pocket's net worth is the line's own; the Portfolio keeps the stocks, the
+   holdings and the cash on hand, which the Overview does not repeat.
+   *The alternatives:* the style answered in the name's place, `Firms!D3`, "I read
+   the room", which the Certificate already prints and which reads as no name;
+   each pocket's cash and holdings beside its net worth, the Portfolio's block
+   twice; the change of each net worth since the certificate, the report card's
+   (`CRITIC.1`).
+
+3. **The weather word: by the change's size, at the last close made, five words
+   (rec).** The Market sheet's foot, rows 114 to 124: a table of words, each
+   beside the change in whole tenths of a percent it begins at, Sunny from 10,
+   Partly sunny from 1, Calm at 0, Overcast from -9 and Rain below them all,
+   settings a person may edit (`AD-6`); the last close made, `B121`
+   `=IF(Day!$B$29=1,D26,B26)`, the session before's while the session trades
+   and the session's own from its closing bell; the change over the look back,
+   `B122` `=B121/C26-1`; in tenths, `B123` `=INT(B122*1000+0.5)`, rounded half up;
+   and the word, `B124`, the first whose tenths the change reaches, from the top.
+   The look back moves with it, `C15` `=IF(Day!$B$29=1,D15,B15)-$B$4`, twenty days
+   before the last close made. So the word changes at most once a session, at its
+   close, keyed on the bells as the pace is (`BD-7`, a license's hours moving no
+   weather), and never reads a close the session has not made: the open book's
+   `B26` stays the Market's own (caveat 20), off the player's first screen. The
+   Overview spells it with the change it is read off, up, down or flat, in tenths
+   of a percent over the look back's days, `B4`, so a person who edits the look
+   back reads its days. The words are plain, a line a player reads at a glance,
+   as the bell's lines are; the jokes are the caveat's. The thresholds, chosen
+   from the hand's measurement after the predictions were written: at the seed
+   the word reads Overcast at the first bell, the market easing into the year's
+   dip, then Calm from day 93's close, Partly sunny from day 112's and Sunny from
+   day 263's; over the seed's century of trading days 4.9% Rain, 23.4% Overcast,
+   4.5% Calm, 42.1% Partly sunny and 25.0% Sunny, and over 2,000 seeds' first five
+   years alike, 1.3 changes a year. *The alternatives:* the slope's sign alone,
+   two words that turn three times in five years at the seed, once in the first
+   80 minutes of play and then not for thirteen hours; `POT.2`'s `B26` less `C26`,
+   the session's close against twenty days before it, which reads at the bell the
+   close the session has not yet made; the session before's close always, `D26`,
+   a session late from each close to the next bell and Thursday's all weekend;
+   thresholds of half a percent, 48% Sunny and 15% Rain over the century, or of a
+   percent and a half, Rain on 0.7% of days.
+
+4. **The ticker: the Headlines sheet, ten rows, a headline a calendar day by the
+   day's 83rd market draw (rec).** `src/content/headlines.vla`, `MENU.1`'s shape,
+   one field, `Headline`, 100 characters wide, hidden after the Firms sheet; its
+   row shown, `D2` `=INT(Dice!$C$84*D1)+1`, the uniform of the day's 83rd draw
+   times the rows, from the first, the Dice sheet's draws growing from 82 to 83,
+   so that a row added joins the draw with no formula edited; the Overview reads
+   its picker, `D3`. A headline a calendar day, weekends among them, changing at
+   midnight with the die, drawn where anyone can watch it roll (`BD-3`), so
+   tomorrow's is no rota a player counts off. Course 0's headlines are color
+   alone and move nothing until `SPECIAL.1` gives the ticker teeth. A draw repeats
+   yesterday's on about one day in ten (days 7 and 8 at the seed). *The
+   alternative:* a headline a day round the rows, as the fine print's month is,
+   no draw, the same ten in the same order every ten days, eight minutes of play.
+
+   The ten, of `BUFFET.md`'s fifteen, each held to `BD-2`:
+
+   | The seed (`BUFFET.md`, Appendix A) | The verdict |
+   |---|---|
+   | "Fed holds rates steady; markets read it as 'a sort of hug'." | kept: punches up at a market that needs reassurance |
+   | "Economists predict nine of the last three recessions." | kept: the oldest joke in the profession, and it teaches humility about forecasts beside a weather word |
+   | "Analyst upgrades stock to 'buy' after discovering he owns it." | rewritten: "... after discovering they own it." |
+   | "Soybean futures bean-up after surprise harvest." | struck: a forced pun, `BD-2`'s weak comedy |
+   | "Crypto exchange loses all customer funds, describes it as 'a learning process'." | struck: the target is the exchange, but its customers' losses are real ones, a line the policy keeps (never at people who lost their savings) |
+   | "Board assures investors the losses are merely unrealized, 'like everything else'." | kept: the Portfolio shows an unrealized gain beside it |
+   | "Yield curve inverts; bonds observed walking backward." | held for course 1, when the curve exists (`POT.3`) |
+   | "SEC announces new rule against funny business; definitions to follow." | kept: the first game's first headline, day 0 at the seed |
+   | "Company announces 'strategic pivot to AI'; stock up 40%; company still sells ice cream." | kept |
+   | "Local man buys everything at the top; market tops." | kept: an archetype, and ourselves |
+   | "Hurricane season: insurers 'cautiously terrified'." | held for course 6's insurance: beside a weather word, a hurricane reads as the market's forecast (clarity first) |
+   | "Tulip prices surge; historians sigh." | kept |
+   | "Intern discovers rounding error worth $4 million; asks about a bonus; there isn't one." | kept: the spreadsheet's own wink |
+   | "Private-island index hits record; sea levels also." | struck: the one seed whose punchline is not finance |
+   | "Gold remains calm as the world panics; the world finds this annoying." | kept |
+
+5. **The alerts and the strategy guide: each waits for the dish that gives it
+   something to hold (rec).** At course 0 nothing can alert as the line's three
+   do, no margin (`PLATE.4`, course 3), no maturity (`PLATE.3` and `STATION.2`,
+   course 1) and no redemption (`BACK.3`, course 2); and nothing a player buys has
+   both a cost and an income, the two numbers a payback time divides, until
+   course 2's staff (`BACK.5`) or a later gig. So the Overview keeps no row for
+   them, as no sheet stands empty waiting (`FRONT.1`), holds no button and binds
+   no key, having no act of its own: an alert that links to its panel is an act,
+   and enters with the dish that raises it, its key and its command holding on
+   the Overview beside it. *The alternative:* a column of dividend payback times
+   now, the price over a year's dividends, the $100 rung's fifty years and the
+   rest never, a price-to-dividend ratio by another name for `MENU.8` to read.
+
+6. **The caveats (`BD-5`), drafts.** Row 21, the weather's, its place `Market!B124`:
+   "The weather is one word for one number: the market's change in the twenty
+   days to the last close." beside "A trend says where prices have been, not where
+   they will go; forecasters weigh many signals and still miss turns." and
+   Management's response, "Management checks the forecast in hindsight, where it
+   has never been wrong." Row 22, the headlines', its place `Headlines!D3`: "The
+   news moves nothing: a headline here is color, and no price reads it." beside
+   "Prices react to news, often within seconds, and traders pay to read a headline
+   a moment sooner." and "Management reads only the headlines, which the Series
+   777 recognizes as a style." Both real-world lines marked for `MENU.8`'s read.
+
+7. **The oracle (rec).** The hand shares no rule with the cells: the cells choose
+   the last close made by whether the clock stands between the bells, `Day!B29`,
+   and the hand by how far its session has ticked; the cells nest comparisons from
+   the top and the hand counts the words whose tenths the change reaches; the
+   change itself is the market's, taken in the cells' order as the waves are. The
+   cells pick the headline by the draw's uniform times the rows, rounded down, and
+   the hand divides the draw times the rows by the modulus in whole numbers, the
+   two the same at every draw (*derived*: the modulus is prime, so the quotient is
+   never whole and stands at least 4.7e-10 from the next whole number, where the
+   double's two roundings move it less than 4e-13 for any sheet a picker holds),
+   held at every day of the seed's century at twenty-one counts of rows. The runs:
+   the Overview at rest and the Market's weather held to the hand at every bell and
+   every day's turn of the long runs, the weather reading the session before's
+   close at the bell and the session's own outside it; the look back's column in
+   the waves' workings, held whole at each session and each close; the Overview at
+   every frame of the order desk's sessions, its net worth the holdings at the
+   price now; the weather at every frame of the run that writes `B19` open, to
+   half past four on Tuesday, Monday's session being its own session before; the
+   headline at every day's turn; the hand's first year at a frame each five
+   minutes, the weather turning three times, each at a close; and a test of the
+   view, its table and its keys, and one of the Headlines sheet. Mutants, each
+   into the source or a content file by one anchor, each failing the test named
+   for it: the weather reading the session's close in session; the look back at
+   the session's day; the weather keyed on the open; a word begun past its tenths;
+   the tenths rounded down; the table's words out of order; the sun from half a
+   percent; the flat line spelled otherwise; the headline round the rows; the
+   headline from the session's last draw; the draws 82 a day; the certificate
+   leading to the Portfolio; each net worth its cash alone; the Overview reading a
+   view; P bound on the Overview; the Overview after the Portfolio; and each
+   caveat's place empty.
+
+8. **What it costs, measured (rec).** Natively, as `POT.11` measured it: a release
+   runner over `HEAD`'s texts and this tree's, alternated, pinned to the
+   performance cores and opted out of Windows' throttling; the pass, the load, the
+   first frame, and ten days of frames filed by what each turned, a half hour's
+   turn between sessions now filed apart from a five minutes'. The suite, the two
+   test binaries alternated. The browser at the hand test.
+
+9. **The stale places, rewritten at the build.** In `OMAKASE.md`: the line (🟡);
+   `BD-5`'s taken rows; `BACK.2`'s line, the placeholder at `Overview!A3`;
+   `MENU.7`'s, the Awards on the Overview; `SPECIAL.1`'s, the ticker's draw;
+   `POT.4`'s, the weather's table it replaces. The source's served list, its notes,
+   the tabs', the Dice's, the Market's, the Proctor's and the Portfolio's comments,
+   `Proctor!B6` and its comment; the caveats' and the headlines' files; the
+   content's `README.md`; `check_layout.ps1`'s pin and control; the hand's module
+   comment, its draw, its lead and its tests; `oracle/tests/cartridge.rs`' module
+   comment, the views, the content sheets and the holders; the describe golden;
+   `Delta/CLAUDE.md`'s views paragraph; and the memory.
+
+10. **The hand test, the owner's, on the page built here:** the strip and the lead;
+    the Overview at the bell, its date, bell, firm line, net worth, weather and
+    headline; the headline at the first midnight; the net worth after a purchase;
+    the weather turned by the paces written a day a frame; the drafts read; no
+    key on the Overview; Build's bytes the file's.
+
+**Found at the scoping**, none minted:
+- *A link's mechanism.* The host shows a sheet when the Camera's third row
+  changes (§3.8), so a link that sets `B3` to its panel shows it once: clicked
+  again after the person tabs away, `B3` still names it and nothing moves. A
+  Camera whose `B3` follows the sheet shown, `Input!B19`, between links, and
+  names the link's panel at its frame, shows it at every click. The first
+  alert's dish settles it; no ask of Alonzo is needed.
+- *The weather is slow at tier 1.* About 1.3 changes a year over 2,000 seeds, the
+  first game's first hour reading one word: the waves are smooth, and `POT.5`'s
+  walk is what gives the closes texture, its place in the order the owner's.
+- *The headline repeats.* About one day in ten shows yesterday's headline again.
+  A draw among the other nine wants yesterday's row as state over the twin;
+  `SPECIAL.1`'s schedule replaces the draw.
+- *The Market sheet's labels.* Its column A keeps the default width, 8.43
+  characters, so every label beside a value is cut where B begins, the
+  weather's "Partly sunny" among them; a column row would show them whole, the
+  looks' pass or the next Market dish. (*Seen at the hand test:* its numbers too,
+  the session's steps and sums, the five minutes' swing, the index now and the
+  weather's last close and change, each drawn `#######` in a column too narrow
+  for its digits.)
+- *The first screen's call to action.* The Overview names no act a first player
+  can take, the tabs doing it; lines such as "a prospectus awaits" or "the
+  market is open" are alerts of a kind at course 0, the owner's call.
+
+**The predictions, before any number.** Written before any number was taken;
+the numbers column was filled at the build, P9 at the owner's hand test.
+
+| | What | Predicted | The number |
+|---|---|---|---|
+| P1 | the cartridge | 1,250 to 1,270 rows where 1,198, about 1,259; 803 to 808 formula cells where 790, about 805 | *Measurement*: `(rows 1258) (loads yes)`, one under about 1,259; 805 formula cells, as about 805 predicted, the describe golden's budget |
+| P2 | the describe golden | `(budget 30 805 24150 2000000)` give or take three cells; shapes 214 to 222 where 207; `(every-frame 0)`, `(cycles 0)`; levels 98; the views' date, bell and fine print at `(sheets 6)`; a readers row for Headlines; Cash's readers 9 where 7; every shape after the Certificate's renumbered | *Measurement*: `(budget 30 805 24150 2000000)`, exactly; `(plan (shapes 216) (texts 213) (formulas 805) (levels 98) (runs 45) (lanes 260) (alone 545) (every-frame 0) (cycles 0))`; `(sheets 6)`; `(readers "Headlines" 13)`; every shape after the Certificate's renumbered. **Missed** in one: Cash's readers 8 where 9, the net worth one fill of two cells and so one reader |
+| P3 | the pass and the load | the pass 0.2 to 0.8 ms longer; the load 0.3 to 1.0 ms longer | *Measurement*, one release runner over `HEAD`'s texts and these, six runs alternated, pinned and opted out, the fixed computation within 2.1%: the pass 9.78 to 9.83 ms where 9.11 to 9.29, the medians 0.56 apart; the load 8.45 to 8.73 where 7.96 to 8.11, 0.48 apart. Inside, each |
+| P4 | the step | an ordinary frame within 0.3 µs; a tick 1 to 3 µs dearer; a half hour's turn between sessions 1 to 3 µs dearer; the bell 1 to 6 µs dearer; the close 5 to 15 µs dearer; midnight 2 to 6 µs dearer; the first frame 20 to 60 µs dearer | *Measurement*, the same runs, ten days of each text's own frames, the exam waived, three passes each, the medians: an ordinary frame 2.3 µs either way; a tick 35.7 where 34.1, 1.6 dearer; a half hour between sessions 15.5 where 13.8, 1.7 dearer; a five minutes' turn 2.6 either way; the close 49.1 where 39.9, 9.2 dearer; midnight 61.5 where 57.7, 3.8 dearer. Inside, each. **Missed** in two: the bell 29.5 µs where 30.3, no dearer, the look back's column having moved its work from the bell to the close (at the bell the last close made keeps its day, so the column's twelve cells stand); and the first frame 319.2 µs where 299.8, 19.4 dearer, under the 20 priced |
+| P5 | the suite | 79 to 82 tests where 76; the hour's year 5 to 15% longer alone; the eight hundred days 5 to 20% longer; the weekday 3 to 10% longer; the whole on eight threads 0.3 to 1.0 s longer | *Measurement*, the two test binaries alternated, each pinned and opted out, two rounds: 81 green, the crate's 32 and the cartridge's 49, inside; the eight hundred days 1.34 to 1.35 s where 1.22 to 1.24, 9% longer, inside. **Missed** in three, each cheaper than priced, the Overview and the weather held at the bells and the days' turns alone: the hour's year 6.41 to 6.43 s where 6.22 to 6.29, 3% longer; the weekday 0.90 to 0.91 s where 0.89 to 0.91, 1%; the cartridge's whole on eight threads 7.34 to 7.43 s where 7.19 to 7.25, 0.15 to 0.18 s longer. Beside them the hundred years 6.47 to 6.50 s where 6.26 to 6.29, the order desk's sessions 4 to 6% longer, the Overview held at every frame of them, and the run that writes the open 0.26 to 0.27 s where 0.11 to 0.12, its frames 2,881 where 1,711 and the weather held at every one |
+| P6 | the page | the cartridge's block 5,000 to 8,000 characters longer, the source's 4,000 to 7,000, the caveats' 500 to 800, the headlines' new block 1,800 to 2,500, the library's 0 to 300; the page 12,000 to 18,000 longer | *Measurement*: 2,489,690 characters where 2,475,244, 14,446 longer; the cartridge's block 5,423 longer, the source's 6,486, the caveats' 621, the headlines' 1,811 and the library's none, with the new block's tags. Inside, each |
+| P7 | the checks | four checks and four controls green, `check_layout`'s pin 4 to 5 and its clean copy 9 files to 10, the only check edited; one file added under `src/`; fmt and clippy clean | *Measurement*, as predicted: ALL GREEN, four checks and four controls, the layout's control a clean copy of ten files and fourteen mutants; `cargo fmt --check` and `cargo clippy -D warnings` clean once `cargo fmt` had wrapped two calls |
+| P8 | the numbers given | the weather word changes 3 to 5 times in the first year, the first before day 110, from Overcast; no word under 3% of the century's days but Rain; each headline on 24 to 50 of the first year's days; the hand's headline rule the cell's on every day of a century | *Measurement*, by the hand at the seed: Overcast at the first bell, "down 0.5%", then Calm from day 93's close, Partly sunny from day 112's and Sunny from day 263's, three changes; over the century Rain 4.9%, Overcast 23.4%, Calm 4.5%, Partly sunny 42.1%, Sunny 25.0%; the first year's headlines 27 to 46 days each; the two rules equal on all 36,500 days. Inside, each |
+| P9 | the hand test | the certificate's button lands on the Overview; its lines; the headline at the first midnight, about 47 seconds of play after the bell; the weather turned by the paces; Build's bytes the file's | The owner's, on the page built here, 2026-10-19 (the paragraph below): the Overview after the exam sat at 2 of 10, its firm $6,000.00 and you $100.00, Overcast and down 0.5%, the SEC's headline; the AI pivot's at Tuesday's 0:30; the firm's net worth moving after a purchase; the weather Sunny at 15 tenths once the paces ran a day a frame; the drafts read; passed with no change asked |
+
+**What the build found.** The Overview held as the decisions drew it, and the
+suite was green at its first run, 81 tests. The hand's weather met the cells at
+every bell and every day's turn of the long runs and at every frame of the run
+that writes the open, and its headline at every day's turn. Eighteen mutants,
+each written into the source or a content file by one anchor, applied once and
+expanded before its test ran, each failed the test named for it but one at the
+first run: the weather keyed on the open lived, since Monday's session is its own
+session before, so that the first weekday's two closes are one close and its
+night reads it either way; the test that writes the open now runs through
+Tuesday's close and half an hour past it, 2,881 frames where 1,711, and caught it
+at the close, frame 2,866. Natively the look back's column moved its work from the
+bell to the close, at the bell the last close made keeping its day: a close now
+costs 9.2 µs more and a bell nothing more, though the Overview's date and bell
+line turn there too.
+
+**The owner's hand test.** On the page built here (`web/index.html`, 2,489,690
+characters), 2026-10-19, over seven screenshots. The strip read Exam,
+Certificate, Overview, Portfolio, Trading, Gigs and the model's sheets. The exam
+sat by hand at two right answers of ten, the certificate led to the Overview:
+at frame 345, Monday at 10:05, the date, "The market is open until 16:00.", "Your
+firm: name pending registration.", the firm's net worth $6,000.00 and yours
+$100.00, "Market weather: Overcast, the market down 0.5% in the 20 days to the
+last close.", "Today's headline: SEC announces new rule against funny business;
+definitions to follow." and the fine print. At frame 1,656, Tuesday at 0:30, the
+bell's "The market opens at 9:30." and the AI pivot's headline, the day turned;
+at frame 2,887, Tuesday at 14:50, the firm's net worth $6,003.40 after a purchase
+on Trading, the weather still Monday's close's. The paces written a day a frame,
+`Day!B1` at frame 3,148 and `B28` at 3,259, the game paused at frame 3,869: the
+Market sheet's weather table, the change at 15 tenths and the word Sunny; the
+Headlines sheet's ten rows, `D1` 10, `D2` 4 and `D3` the board's; the Caveats
+sheet's rows 22 and 23; the Proctor's `B6`, Overview. The Market sheet's numbers
+at its foot drew `#######` in its default columns (Found, above). The owner's
+words: "Hand tests pass; commit before suggesting next steps." So every decision
+and every draft stands as built. Committed at the owner's word.
 

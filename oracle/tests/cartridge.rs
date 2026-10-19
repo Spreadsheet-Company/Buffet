@@ -94,9 +94,19 @@
 //! the hustle's due spelled to the minute, its session a frame each quarter
 //! hour; the pace keyed on the session's bells, held with `B19` written open
 //! at every hour as a license would widen it; and the sessions of `PLATE.1`
-//! and `PLATE.2` played at the pace to their closing bell, frame 1,171.
+//! and `PLATE.2` played at the pace to their closing bell, frame 1,171. Since
+//! `FRONT.3`: the Overview, where the certificate leads, standing after the
+//! Certificate and binding no key: its date, the bell's line, the firm's line,
+//! each pocket's net worth, the weather's line and the day's headline, held to
+//! the hand at every bell and every day's turn of the long runs, at rest, and
+//! at every frame of the order desk's sessions, the holdings among them; the
+//! Market sheet's weather, the last close made, the change over the look back,
+//! its tenths and its word, at the same frames, and with `B19` written open at
+//! every hour; the look back moved to the last close made; and the Headlines
+//! sheet, its rows whole, its row shown the hand's draw at every day's turn.
 
 use std::collections::{BTreeMap, BTreeSet, VecDeque};
+use std::sync::OnceLock;
 
 use alonzo::cartridge::{Cartridge, Seed};
 use buffet_oracle::buffet::{
@@ -120,14 +130,17 @@ const QUESTIONS: &str = "src/content/questions.vla";
 const CAVEATS: &str = "src/content/caveats.vla";
 /// The firms' styles, the exam's eleventh question's options (`GUARD.1`).
 const FIRMS: &str = "src/content/firms.vla";
+/// The ticker's headlines, the Overview's headline of the day (`FRONT.3`).
+const HEADLINES: &str = "src/content/headlines.vla";
 /// The content sheets, each written by a file of `src/content/`: the sheet,
 /// its file, and the state the source writes before its call, hidden as a
 /// workbook keeps its reference data at the back, or visible for the one a
 /// player reads whole (`MENU.5`'s decision 2).
-const CONTENT: [(&str, &str, &str); 4] = [
+const CONTENT: [(&str, &str, &str); 5] = [
     ("Disclosures", DISCLOSURES, "hidden"),
     ("Questions", QUESTIONS, "hidden"),
     ("Firms", FIRMS, "hidden"),
+    ("Headlines", HEADLINES, "hidden"),
     ("Caveats", CAVEATS, "visible"),
 ];
 /// The exam's bank's fields, in their columns from A (`MENU.2`'s decision 1,
@@ -148,9 +161,17 @@ const CAVEAT_FIELDS: [&str; 4] = [
 /// among the tabs: the workbook's outputs, which read the model and which no
 /// formula reads. A view enters this list with the dish that fills it: Gigs
 /// with `BACK.1`, the side hustle's; the Exam and the Certificate with
-/// `GUARD.1`, standing before the Portfolio, the game opening on the Exam; and
-/// Trading with `PLATE.1`, beside the Portfolio.
-const VIEWS: [&str; 5] = ["Exam", "Certificate", "Portfolio", "Trading", "Gigs"];
+/// `GUARD.1`, standing before the Portfolio, the game opening on the Exam;
+/// Trading with `PLATE.1`, beside the Portfolio; and the Overview with
+/// `FRONT.3`, after the Certificate, where the certificate leads.
+const VIEWS: [&str; 6] = [
+    "Exam",
+    "Certificate",
+    "Overview",
+    "Portfolio",
+    "Trading",
+    "Gigs",
+];
 /// Gigs' labels down its column A from row 7 (`BACK.1`'s decision 3), beside
 /// the prospectuses proofread, what remains of the run's claims and the fees.
 const GIGS_LABELS: [&str; 3] = ["Proofread", "Left this run", "Fees earned ($)"];
@@ -388,15 +409,32 @@ fn day_held(cart: &Cartridge, cal: &Calendar) {
 /// What a long run holds whole when it moves and byte for byte between: the
 /// Portfolio's record at each five minutes; the Dice sheet's and the session
 /// table's at each day's turn, the day's die and draws and the steps they make;
-/// and the waves' workings at each session (`POT.11`, its 82 draws and 78 steps
-/// a day, spelled again at every frame, having taken the hour's year from 5.8 s
-/// to 9.5).
+/// and the waves' workings at each session and each close (`POT.11`, its 82
+/// draws and 78 steps a day, spelled again at every frame, having taken the
+/// hour's year from 5.8 s to 9.5; `FRONT.3`, the look back at the last close
+/// made). And the session last held, so that the Overview and the weather are
+/// held whole at each bell as well as at each day's turn (`FRONT.3`).
 #[derive(Default)]
 struct Held {
     portfolio: Option<(u64, String)>,
     dice: Option<(u64, String)>,
     table: Option<(u64, String)>,
     workings: Option<(u64, String)>,
+    session: Option<u64>,
+}
+
+/// The ticker's headlines (`FRONT.3`), its content file's rows read once by the
+/// language's own reader, which `each_content_sheet_is_its_file` holds the
+/// Headlines sheet to.
+fn headline_texts() -> &'static [String] {
+    static TEXTS: OnceLock<Vec<String>> = OnceLock::new();
+    TEXTS.get_or_init(|| {
+        content(HEADLINES)
+            .rows
+            .into_iter()
+            .map(|mut r| r.words.remove(0))
+            .collect()
+    })
 }
 
 /// A window's record at this frame, as the `values` view prints it.
@@ -434,11 +472,12 @@ fn still_or_held(
 }
 
 /// The Dice sheet at this frame (`POT.1`, `POT.10`, `POT.11`): the market's die
-/// and the day's 82 draws, each draw and its uniform, the hand's found by place;
-/// and the exam's die and its two draws.
+/// and the day's 83 draws, the headline's among them since `FRONT.3`, each draw
+/// and its uniform, the hand's found by place; and the exam's die and its two
+/// draws.
 fn dice_held(cart: &Cartridge, cal: &Calendar, seed: u64) {
     let f = cal.frame;
-    let dice = values(cart, "Dice", "B1:J83");
+    let dice = values(cart, "Dice", DICE);
     let die = |addr: &str, z: u64| {
         assert_eq!(
             dice.get(addr),
@@ -471,13 +510,26 @@ fn dice_held(cart: &Cartridge, cal: &Calendar, seed: u64) {
     }
 }
 
+/// The Dice sheet's window: the market's die and its 83 draws down B, their
+/// uniforms down C, and the exam's die and its two draws in I and J.
+const DICE: &str = "B1:J84";
+
+/// What the waves' workings move with: the session, at its bell, and since
+/// `FRONT.3` the last close made, at the session's close, the look back's day.
+fn workings_key(cal: &Calendar) -> u64 {
+    cal.session * 2 + u64::from(cal.last_close() == cal.session)
+}
+
 /// The Day, Dice and Market sheets at this frame, each cell its value as the
 /// record prints it, held to the hand's calendar, dice and market for the
 /// same frame; and the Stocks and the Disclosures sheets with them, and the
 /// views of them all: the Portfolio, its record held whole at each five
 /// minutes and kept for the frames after it, and Gigs at rest. The dice and the
 /// session's table are held whole at each day's turn and the waves' workings
-/// at each session, byte for byte between (`Held`).
+/// at each session and each close, byte for byte between (`Held`). Since
+/// `FRONT.3`, at each bell and each day's turn, the Overview at rest and the
+/// Market sheet's weather, the one reading the last close made in session and
+/// the other outside it; and the day's headline at each day's turn.
 fn held(
     cart: &Cartridge,
     cal: &Calendar,
@@ -487,19 +539,14 @@ fn held(
     kept: &mut Held,
 ) {
     day_held(cart, cal);
-    still_or_held(
-        cart,
-        cal,
-        ("Dice", "B1:J83"),
-        cal.day,
-        &mut kept.dice,
-        || dice_held(cart, cal, seed),
-    );
+    still_or_held(cart, cal, ("Dice", DICE), cal.day, &mut kept.dice, || {
+        dice_held(cart, cal, seed)
+    });
     still_or_held(
         cart,
         cal,
         ("Market", "B8:E26"),
-        cal.session,
+        workings_key(cal),
         &mut kept.workings,
         || waves_held(cart, cal, market, DIFFICULTY),
     );
@@ -532,7 +579,131 @@ fn held(
             &Plate::default(),
             [WAIVED_CAPITAL, buffet::PERSONAL_CASH],
         );
+        headlines_held(cart, cal, seed);
     }
+    // The Overview at rest and the weather at each bell and each day's turn
+    // (FRONT.3): the weather reads the session before's close at the bell and
+    // the session's own outside it, and changes only at a close, which a day's
+    // turn follows before the next bell; the headline moves at the day's turn.
+    let rang = kept.session != Some(cal.session);
+    kept.session = Some(cal.session);
+    if rang || cal.turned {
+        weather_held(cart, cal, market, DIFFICULTY);
+        overview_cells(
+            cart,
+            cal,
+            (seed, market),
+            texts,
+            &Plate::default(),
+            ([WAIVED_CAPITAL, buffet::PERSONAL_CASH], prices_of(&stocks)),
+        );
+    }
+}
+
+/// The Market sheet's weather at this frame (`FRONT.3`), `B121:B124`: the index
+/// at the last close made, the change over the look back and the change in
+/// whole tenths of a percent, each bit for bit, and the word, the hand's.
+fn weather_held(cart: &Cartridge, cal: &Calendar, market: &Market, difficulty: u64) {
+    let got = values(cart, "Market", "B121:B124");
+    let number = |addr: &str| -> f64 {
+        got.get(addr)
+            .unwrap_or_else(|| panic!("frame {}: Market!{addr} holds no value", cal.frame))
+            .parse()
+            .unwrap_or_else(|e| panic!("frame {}: Market!{addr}: {e}", cal.frame))
+    };
+    let tenths = market.tenths(difficulty, cal);
+    for (addr, want) in [
+        ("B121", market.index(difficulty, cal.last_close() as f64)),
+        ("B122", market.change(difficulty, cal)),
+        ("B123", tenths as f64),
+    ] {
+        assert_eq!(
+            number(addr).to_bits(),
+            (want + 0.0).to_bits(),
+            "frame {}, day {}: Market!{addr} is {} and the hand's {want}",
+            cal.frame,
+            cal.day,
+            number(addr)
+        );
+    }
+    assert_eq!(
+        got.get("B124").map(String::as_str),
+        Some(buffet::weather(tenths)),
+        "frame {}, day {}: Market!B124, the weather",
+        cal.frame,
+        cal.day
+    );
+}
+
+/// The Headlines sheet's row shown and its text at this frame (`FRONT.3`): the
+/// row the hand draws for the calendar's day, and that row's headline.
+fn headlines_held(cart: &Cartridge, cal: &Calendar, seed: u64) {
+    let headlines = headline_texts();
+    let got = values(cart, "Headlines", "D2:D3");
+    let row = buffet::headline(seed, cal.day, headlines.len() as u64);
+    assert_eq!(
+        got.get("D2"),
+        Some(&row.to_string()),
+        "frame {}, day {}: Headlines!D2",
+        cal.frame,
+        cal.day
+    );
+    assert_eq!(
+        got.get("D3"),
+        Some(&headlines[row as usize - 1]),
+        "frame {}, day {}: Headlines!D3",
+        cal.frame,
+        cal.day
+    );
+}
+
+/// Every cell of the Overview at this frame (`FRONT.3`), the hand's: its date
+/// and the bell's line, every view's; the firm's line; each pocket's net worth,
+/// its cash from its start at this frame and its holdings at the price now
+/// (`starts`, `prices`), in dollars, under its label; the weather's line, the
+/// hand's word and change at the last close made; the day's headline, the row
+/// the hand draws; and the fine print.
+fn overview_cells(
+    cart: &Cartridge,
+    cal: &Calendar,
+    (seed, market): (u64, &Market),
+    texts: &[String],
+    plate: &Plate,
+    (starts, prices): ([u64; 2], [u64; 4]),
+) {
+    let got = values(cart, "Overview", "A1:B13");
+    let text = |addr: &str, want: &str| {
+        assert_eq!(
+            got.get(addr).map(String::as_str),
+            Some(want),
+            "frame {}, day {}, {}: Overview!{addr}",
+            cal.frame,
+            cal.day,
+            buffet::time_shown(cal.hour * 60 + cal.minute)
+        );
+    };
+    text("A1", &buffet::as_of(cal));
+    text("A2", buffet::bell(cal));
+    text("A3", buffet::FIRM_LINE);
+    for (k, label) in buffet::NET_WORTH_LABELS.iter().enumerate() {
+        text(&format!("A{}", 5 + k), label);
+    }
+    for (k, pocket) in [buffet::FIRM, buffet::PERSONAL].into_iter().enumerate() {
+        let worth = plate.cash(pocket, starts[k]) + plate.holdings(pocket, prices);
+        text(&format!("B{}", 6 + k), &buffet::two_decimals(worth));
+    }
+    text(
+        "A9",
+        &buffet::weather_line(market.tenths(DIFFICULTY, cal), LOOK_BACK),
+    );
+    let headlines = headline_texts();
+    let row = buffet::headline(seed, cal.day, headlines.len() as u64);
+    text(
+        "A11",
+        &format!("{}{}", buffet::HEADLINE_LABEL, headlines[row as usize - 1]),
+    );
+    let shown = disclosure(cal.day, texts.len() as u64, DAYS_A_DISCLOSURE);
+    text("A13", &texts[shown as usize - 1]);
 }
 
 /// The stocks' names, the Stocks sheet's `A5:A8`, which every view and the
@@ -802,8 +973,8 @@ fn market_cells(cart: &Cartridge, cal: &Calendar, window: &str) -> impl Fn(&str,
 
 /// The waves and the three columns of workings, `B8:E26`: each wave's speed
 /// and tier 1's phases, the cycle on the first day, and the session's day, the
-/// look back and the session before, each column's terms, trend, cycle, tiers
-/// and index.
+/// look back, twenty days before the last close made since `FRONT.3`, and the
+/// session before, each column's terms, trend, cycle, tiers and index.
 fn waves_held(cart: &Cartridge, cal: &Calendar, market: &Market, difficulty: u64) {
     let cell = market_cells(cart, cal, "B8:E26");
     let mut waves = vec![(YEAR, 0.0)];
@@ -818,7 +989,7 @@ fn waves_held(cart: &Cartridge, cal: &Calendar, market: &Market, difficulty: u64
     let session = cal.session as f64;
     let days = [
         ("B", session),
-        ("C", session - LOOK_BACK as f64),
+        ("C", cal.last_close() as f64 - LOOK_BACK as f64),
         ("D", cal.before as f64),
     ];
     for (column, day) in days {
@@ -1087,17 +1258,23 @@ fn a_factor_written_moves_the_hours_and_no_close() {
 /// time shown the hand's, which reads the bells alone: twenty seconds a frame
 /// from 9:30 to 16:00 and two minutes a frame through the night, the clock to
 /// the five minutes in session and the half hour between, the market open
-/// throughout.
+/// throughout. And the weather (`FRONT.3`), keyed on the bells as the pace is:
+/// the last close made the session's own from its close, the market open or
+/// not, held at every frame through Tuesday's close and half an hour past it,
+/// Monday's session being its own session before, so that its night reads
+/// one close either way.
 #[test]
 fn the_pace_follows_the_bells_and_never_the_open() {
     let mut cart = cartridge();
     let edit = "(cell \"Day\" \"B19\" 1)";
     cart.write(edit)
         .unwrap_or_else(|r| panic!("{edit}: {} {}", r.refusal.id, r.refusal.text));
+    let market = Market::new(seed(&cart));
     let mut cal = Calendar::new(PACE, DAYS_A_YEAR);
-    for _ in 0..1_711 {
+    for _ in 0..2_881 {
         cart.step(0);
         cal.tick();
+        weather_held(&cart, &cal, &market, DIFFICULTY);
         let got = values(&cart, "Day", "B4:B31");
         for (addr, want) in [
             ("B4", cal.seconds()),
@@ -1117,8 +1294,8 @@ fn the_pace_follows_the_bells_and_never_the_open() {
     }
     assert_eq!(
         (cal.day, cal.hour, cal.minute),
-        (1, 9, 35),
-        "Tuesday's first tick"
+        (1, 16, 30),
+        "half an hour past Tuesday's close"
     );
 }
 
@@ -1313,7 +1490,7 @@ fn at_difficulty_0_the_index_is_the_kiddie_pools() {
             &cart,
             &cal,
             ("Market", "B8:E26"),
-            cal.session,
+            workings_key(&cal),
             &mut kept.workings,
             || waves_held(&cart, &cal, &market, 0),
         );
@@ -1332,7 +1509,8 @@ fn at_difficulty_0_the_index_is_the_kiddie_pools() {
 
 /// A hundred years at a frame a day, both paces written 86,400, every
 /// frame the opening bell's minute of the next day: the session's close, the
-/// close twenty days before it and the session before's, and every rung's
+/// close twenty days before the last close made (`FRONT.3`) and the session
+/// before's, and every rung's
 /// price now, over the index now, and at the last close and its dividend, held to the
 /// hand on every one of the 36,500 days, a weekend's showing Friday's
 /// session, across the whole range a long game reaches, the drift raised
@@ -1352,9 +1530,10 @@ fn a_hundred_years_at_a_frame_a_day_are_the_market_by_hand() {
         assert_eq!(cal.day, day);
         let got = values(&cart, "Market", "B26:D26");
         let session = cal.session as f64;
+        let back = cal.last_close() as f64 - LOOK_BACK as f64;
         let days = [
             ("B26", market.index(DIFFICULTY, session)),
-            ("C26", market.index(DIFFICULTY, session - LOOK_BACK as f64)),
+            ("C26", market.index(DIFFICULTY, back)),
             ("D26", market.index(DIFFICULTY, cal.before as f64)),
         ];
         for (addr, want) in days {
@@ -1720,7 +1899,8 @@ fn tabs(cart: &Cartridge) -> Vec<(String, String)> {
 /// `BACK.1`'s 2, 4 and 9, `GUARD.1`'s 9 and 10, and its hand test's Cash
 /// sheet after the books it reads; `PLATE.1`'s Trading beside the Portfolio,
 /// its Orders, Positions and Ledger among the model's, and its Commands and
-/// Write sheets after the Camera). A state the source forgot
+/// Write sheets after the Camera; `FRONT.3`'s Overview after the Certificate
+/// and its Headlines hidden among the content). A state the source forgot
 /// would leave its sheet visible, which the engine makes a sheet first named
 /// by a cell.
 #[test]
@@ -1752,6 +1932,7 @@ fn every_sheet_is_written_bare_and_each_content_sheet_in_its_state() {
         ("Screen", "hidden"),
         ("Exam", "visible"),
         ("Certificate", "visible"),
+        ("Overview", "visible"),
         ("Portfolio", "visible"),
         ("Trading", "visible"),
         ("Gigs", "visible"),
@@ -1768,6 +1949,7 @@ fn every_sheet_is_written_bare_and_each_content_sheet_in_its_state() {
         ("Disclosures", "hidden"),
         ("Questions", "hidden"),
         ("Firms", "hidden"),
+        ("Headlines", "hidden"),
         ("Caveats", "visible"),
         ("Keys", "visible"),
         ("Camera", "visible"),
@@ -1939,16 +2121,140 @@ fn the_portfolio_heads_its_columns_and_names_its_stocks_from_the_model() {
     }
 }
 
+/// The Overview (`FRONT.3`): at its first frames, the exam waived and the
+/// Overview shown as the host shows it, every cell the hand's, the weather's
+/// line and the day's headline among them; and, while it shows, no key the
+/// Keys sheet binds and no command of the cartridge's own holding, the view
+/// having no act of its own (keyboard-first: no act, no key). Its two columns
+/// as wide as its labels and its dollars; and the Market sheet's weather table,
+/// the hand's words and their tenths, Rain below them all with none of its own.
+#[test]
+fn the_overview_states_its_lines_and_binds_no_key() {
+    let mut cart = cartridge();
+    let seed = seed(&cart);
+    let market = Market::new(seed);
+    let texts = disclosure_texts(&cart);
+    let mut host = Host::new(buffet::OVERVIEW);
+    let mut cal = Calendar::new(PACE, DAYS_A_YEAR);
+    for _ in 0..3 {
+        host.step(&mut cart, &[]);
+        cal.tick();
+        let stocks = values(&cart, "Stocks", "E5:I8");
+        overview_cells(
+            &cart,
+            &cal,
+            (seed, &market),
+            &texts,
+            &Plate::default(),
+            ([WAIVED_CAPITAL, buffet::PERSONAL_CASH], prices_of(&stocks)),
+        );
+        let bound: Vec<&String> = host.keys.values().filter(|c| !c.is_empty()).collect();
+        assert!(
+            bound.is_empty(),
+            "frame {}: keys bound while the Overview shows: {bound:?}",
+            cal.frame
+        );
+        assert!(
+            host.commands.iter().all(|(_, holds, _)| !holds),
+            "frame {}: a command holds while the Overview shows",
+            cal.frame
+        );
+    }
+    assert_eq!(host.now.sheet, buffet::OVERVIEW);
+    let table = values(&cart, "Market", "A114:B119");
+    assert_eq!(
+        table.get("A114").map(String::as_str),
+        Some("the weather"),
+        "Market!A114"
+    );
+    for (k, (word, from)) in buffet::WEATHER.iter().enumerate() {
+        let r = 115 + k;
+        assert_eq!(
+            table.get(&format!("A{r}")).map(String::as_str),
+            Some(*word),
+            "Market!A{r}"
+        );
+        assert_eq!(
+            table.get(&format!("B{r}")),
+            Some(&from.to_string()),
+            "Market!B{r}"
+        );
+    }
+    assert_eq!(
+        table.get("A119").map(String::as_str),
+        Some(buffet::WEATHER_BELOW),
+        "Market!A119"
+    );
+    assert!(
+        !table.contains_key("B119"),
+        "Rain below every word's tenths, none of its own"
+    );
+    let text = lf(&read(CARTRIDGE));
+    for (column, width) in [("A", 22), ("B", buffet::DOLLARS_COLUMN)] {
+        let row = format!("(column \"Overview\" \"{column}\" {width} shown none)");
+        assert!(text.lines().any(|l| l == row), "{row}");
+    }
+}
+
+/// The Headlines sheet (`FRONT.3`): its header and labels as the library's
+/// `strings` writes them; its rows counted in `D1`, course 0's ten, every
+/// headline one line within its column's width and none empty; and at a frame
+/// a day, the exam waived, the row shown each day the hand's draw and the text
+/// shown its headline, through the first forty days.
+#[test]
+fn the_headlines_sheet_counts_its_rows_and_shows_the_days_draw() {
+    let (mut cart, mut cal) = at_pace(A_DAY_LONG);
+    let seed = seed(&cart);
+    let file = content(HEADLINES);
+    assert_eq!(file.fields, [("Headline".to_string(), 100)]);
+    let headlines = headline_texts();
+    assert_eq!(headlines.len(), 10, "course 0's ten headlines");
+    for (k, h) in headlines.iter().enumerate() {
+        let n = h.chars().count() as u64;
+        assert!(
+            !h.trim().is_empty() && !h.contains('\n') && n <= file.fields[0].1,
+            "headline {}: {n} characters, past its column's {}",
+            k + 1,
+            file.fields[0].1
+        );
+    }
+    let got = values(&cart, "Headlines", "A1:D3");
+    for (addr, text) in [
+        ("A1", "Headline"),
+        ("C1", "rows"),
+        ("C2", "the row shown"),
+        ("C3", "shown"),
+    ] {
+        assert_eq!(
+            got.get(addr).map(String::as_str),
+            Some(text),
+            "Headlines!{addr}"
+        );
+    }
+    assert_eq!(
+        got.get("D1"),
+        Some(&headlines.len().to_string()),
+        "Headlines!D1"
+    );
+    for _ in 0..40 {
+        cart.step(0);
+        cal.tick();
+        headlines_held(&cart, &cal, seed);
+    }
+}
+
 /// The columns a view's dollars stand in (`POT.10`'s second hand test): each
 /// [`buffet::DOLLARS_COLUMN`] characters wide, the width the library's
 /// `dollars` and the Portfolio's change are padded for, so that each text
 /// ends where a number ends: the Portfolio's prices and changes, Gigs' fees,
 /// and since `PLATE.1` the Portfolio's cost, value and gain and Trading's
-/// prices and cash, which the views' frames hold to the hand's spelling.
+/// prices and cash, and since `FRONT.3` the Overview's net worth, which the
+/// views' frames hold to the hand's spelling.
 #[test]
 fn every_column_of_dollars_is_the_width_its_padding_is_measured_for() {
     let text = lf(&read(CARTRIDGE));
     for (sheet, column) in [
+        ("Overview", "B"),
         ("Portfolio", "B"),
         ("Portfolio", "C"),
         ("Portfolio", "F"),
@@ -3372,7 +3678,7 @@ fn the_draw_never_repeats_a_question_at_any_seed_of_a_thousand() {
 /// certificate's button by a click and its key before the eleventh, refused,
 /// the key unbound; the eleventh by its key, the style; the Camera showing the
 /// Certificate, an option's key unbound there; the certificate's key, the
-/// game begun and the Portfolio shown; then the market's first ten minutes,
+/// game begun and the Overview shown; then the market's first ten minutes,
 /// the bell at the game's first frame and twenty seconds a frame after it, its
 /// first move at 9:35 (`POT.11`).
 #[test]
@@ -3427,7 +3733,7 @@ fn a_scripted_exam_holds_every_frame_to_the_hand() {
         (41, &[], Some((Tap::Option(3), true))), // the eleventh, the style, by its key; the Camera shows the Certificate
         (43, &[Key("KeyA", true)], None), // an option's key on the Certificate, unbound: nothing
         (44, &[Key("KeyA", false)], None),
-        (46, &[Key("KeyO", true)], None), // the certificate's key: the game begins, the Portfolio shown
+        (46, &[Key("KeyO", true)], None), // the certificate's key: the game begins, the Overview shown
         (47, &[Key("KeyO", false)], None),
     ];
     let last_frame = 46 + 30;
@@ -4130,6 +4436,7 @@ fn plate_frame_held(
     commands_held(cart, f, &names, (plate.picked, plate.funding()), &now.sheet);
     trading_cells(cart, cal, &stocks, texts, plate, starts);
     portfolio_cells(cart, cal, &stocks, texts, plate, starts);
+    overview_cells(cart, cal, (seed, market), texts, plate, (starts, prices));
     let wrote = plate.fills.len() > landed;
     assert_eq!(
         host.pending.len(),

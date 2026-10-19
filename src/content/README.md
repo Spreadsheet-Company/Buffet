@@ -13,11 +13,12 @@ cheapest pull request there is.*
    GitHub: `disclosures.vla` holds the fine print, a disclosure a row;
    `questions.vla` the exam's bank, a question a row; `firms.vla` the four
    styles the exam's last question offers, a style a row, of which the exam
-   shows the first four; and `caveats.vla` the things this game gets wrong,
-   a caveat a row.
+   shows the first four; `headlines.vla` the ticker, a headline a row, of
+   which the Overview shows one a day; and `caveats.vla` the things this game
+   gets wrong, a caveat a row.
 2. Add your row above the file's last line, the one that opens with `))`.
    A row is the sheet's fields, in the order the file names them above its
-   rows. A disclosure or a style is one line:
+   rows. A disclosure, a style or a headline is one line:
 
    ```text
    ("Your text here.")

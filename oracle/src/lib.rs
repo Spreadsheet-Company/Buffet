@@ -19,7 +19,9 @@
 //! walked a row at a time, its answers, its score, the firm's capital and
 //! style, its keys by view and state, and the bell waiting for it, and since
 //! `PLATE.1` the order desk, its buttons and commands, its fills and books,
-//! each pocket's cash and the ledger's ring; the host's derived writes, the
+//! each pocket's cash and the ledger's ring, and since `FRONT.3` the overview,
+//! the last close made, the weather's word and the day's headline; the host's
+//! derived writes, the
 //! Write sheet's rows as the host reads them; the door
 //! the runners and the tests
 //! share, which reads a source of the repository and the texts it includes

@@ -62,6 +62,10 @@
 ;           frame while the market trades, ten minutes a second, and two minutes a frame
 ;           between sessions, an hour a second; a price every five minutes; and a factor
 ;           of the Market sheet on the day's swings, its closes the waves'.
+;   FRONT.3 the overview: the Overview, the view the certificate leads to, each pocket's
+;           net worth, the market's weather, a word read off its change in the twenty
+;           days to the last close, and the day's headline, which the day's market draw
+;           picks from the Headlines sheet, a content sheet of its own.
 ;
 ; The market's clock (BD-7). A frame is twenty seconds of the market's time in the
 ; regular session and two minutes between sessions, so at the manifest's rate of thirty
@@ -98,7 +102,7 @@
   (seed 791886)                     ; every first game's market: a first year that dips early and closes 10% up
   (author "Spreadsheet Company")
   (license "AGPL-3.0-or-later AND CC-BY-SA-4.0")
-  (notes "Buffet: All You Can Sheet. The front office is open for business: the game opens on the Series 777, the regulator's exam for a fund manager, eleven questions answered by a click or a key, ten of them scored, each right answer $500 more of the firm's $5,000, and the last the firm's style; then its certificate; then the Portfolio at Monday's opening bell, which waits for you to leave the exam room, the day, the hour and four stocks on it, each its price, its change since the last close and the holding of it, the firm's or your own, its shares, their cost, their value and the gain, the market open from 9:30 to 16:00 on weekdays, ten minutes a second while it trades and an hour a second between, and moving every five minutes, and under them the cash on hand and the net worth, the firm's and yours, with the fine print at its foot. Beside it, Trading, where each stock's six buttons buy one share, ten or as many as the cash covers, and sell one, ten or all, at the price shown while the market is open, by a click or by a key: 1 to 4 pick a stock, then B, N and M buy and S, D and F sell, each also a command of the page's palette; and beside the cash, a switch, or C, turns whose cash an order spends, the firm's or your own, moving none of it. And Gigs, where a prospectus is proofread for $250, by a click on its button or by P, a day's work, one a week and four a run, Compliance permitting. Behind them, the back office: the market's calendar and its hours; its dice, rolled once a day where anyone can watch them roll; the market itself, four waves and a drift, and each session's five minutes between two closes, their swings a factor of its own; four stocks priced off it in whole cents, the dearest paying a dividend four days a year, paid to the shares held; the hustle's books, every prospectus counted; the proctor's books, the exam's draw and every answer; the order desk's books, every button and command and the order they make; the positions, each pocket's shares, cost and gains; the cash, the holdings and the net worth, the firm's and yours; the ledger, the last hundred orders filled; the fine print, a disclosure a month; the Series 777's question bank, twenty questions; the firms' four styles; and the model's caveats, the things this game gets wrong, each with Management's response. A returning candidate may waive the exam by writing 1 into Proctor!B3, at five correct answers. Pick the Day, the Dice, the Market, the Stocks, the Hustle, the Proctor, the Orders, the Positions, the Cash or the Ledger sheet to watch the model work, or the Caveats sheet to read, or the Disclosures, the Questions or the Firms sheet among the hidden sheets."))
+  (notes "Buffet: All You Can Sheet. The front office is open for business: the game opens on the Series 777, the regulator's exam for a fund manager, eleven questions answered by a click or a key, ten of them scored, each right answer $500 more of the firm's $5,000, and the last the firm's style; then its certificate; then the Overview at Monday's opening bell, which waits for you to leave the exam room: the day and the hour, the net worth of the firm and your own, the market's weather, a word for how far it moved in the twenty days to the last close, and the day's headline, with the fine print at its foot. Beside it, the Portfolio, four stocks, each its price, its change since the last close and the holding of it, the firm's or your own, its shares, their cost, their value and the gain, the market open from 9:30 to 16:00 on weekdays, ten minutes a second while it trades and an hour a second between, and moving every five minutes, and under them the cash on hand and the net worth, the firm's and yours. Beside that, Trading, where each stock's six buttons buy one share, ten or as many as the cash covers, and sell one, ten or all, at the price shown while the market is open, by a click or by a key: 1 to 4 pick a stock, then B, N and M buy and S, D and F sell, each also a command of the page's palette; and beside the cash, a switch, or C, turns whose cash an order spends, the firm's or your own, moving none of it. And Gigs, where a prospectus is proofread for $250, by a click on its button or by P, a day's work, one a week and four a run, Compliance permitting. Behind them, the back office: the market's calendar and its hours; its dice, rolled once a day where anyone can watch them roll; the market itself, four waves and a drift, and each session's five minutes between two closes, their swings a factor of its own, and its weather, a word read off its change; four stocks priced off it in whole cents, the dearest paying a dividend four days a year, paid to the shares held; the hustle's books, every prospectus counted; the proctor's books, the exam's draw and every answer; the order desk's books, every button and command and the order they make; the positions, each pocket's shares, cost and gains; the cash, the holdings and the net worth, the firm's and yours; the ledger, the last hundred orders filled; the fine print, a disclosure a month; the Series 777's question bank, twenty questions; the firms' four styles; the headlines, one a day; and the model's caveats, the things this game gets wrong, each with Management's response. A returning candidate may waive the exam by writing 1 into Proctor!B3, at five correct answers. Pick the Day, the Dice, the Market, the Stocks, the Hustle, the Proctor, the Orders, the Positions, the Cash or the Ledger sheet to watch the model work, or the Caveats sheet to read, or the Disclosures, the Questions, the Firms or the Headlines sheet among the hidden sheets."))
 
 ; The libraries whose macros this source calls, both beside it: the kit, Alonzo's
 ; common.vla copied at the pin (sheets, labels, headers, on, cells, formulas, hold,
@@ -114,6 +118,7 @@
 (include "content/disclosures.vla")
 (include "content/questions.vla")
 (include "content/firms.vla")
+(include "content/headlines.vla")
 (include "content/caveats.vla")
 
 ; The tabs. The Screen, the device a game draws its frame on, holds nothing here, the
@@ -121,14 +126,15 @@
 ; until a game shows it, an ending (FRONT.7); the manifest's screen line is the window it
 ; would be drawn through. Then the views, first, the game opening on the first visible
 ; sheet (Alonzo's SPEC.md section 3.1, version 4), the Exam, whose Camera hands the game
-; to the Certificate and then to the Portfolio (GUARD.1), and Trading beside it
-; (PLATE.1); then the model's sheets, visible, a spreadsheet a player may open (AD-6),
+; to the Certificate and then to the Overview (GUARD.1, FRONT.3), the views after it in
+; the order a player meets them, the Portfolio and Trading beside it (PLATE.1), then
+; Gigs; then the model's sheets, visible, a spreadsheet a player may open (AD-6),
 ; each after the books it reads; the content sheets stand after them, where each is
 ; called below, then the Keys, the Camera, the Commands and the Write sheet, the devices
 ; the game writes, and the engine's own devices last.
 
 (sheet "Screen" hidden)             ; the framebuffer, unused: each view is a sheet of its own
-(sheets "Exam" "Certificate" "Portfolio" "Trading" "Gigs" "Day" "Dice" "Market" "Stocks" "Hustle" "Proctor" "Orders" "Positions" "Cash" "Ledger")
+(sheets "Exam" "Certificate" "Overview" "Portfolio" "Trading" "Gigs" "Day" "Dice" "Market" "Stocks" "Hustle" "Proctor" "Orders" "Positions" "Cash" "Ledger")
 
 ; ---- POT.1, POT.10, POT.11: the calendar, the market's hours and the pace -------------
 ; A block of settings and its workings, a label in column A beside each value in B, the
@@ -233,7 +239,7 @@
     "draw 51" "draw 52" "draw 53" "draw 54" "draw 55" "draw 56" "draw 57" "draw 58" "draw 59" "draw 60"
     "draw 61" "draw 62" "draw 63" "draw 64" "draw 65" "draw 66" "draw 67" "draw 68" "draw 69" "draw 70"
     "draw 71" "draw 72" "draw 73" "draw 74" "draw 75" "draw 76" "draw 77" "draw 78" "draw 79" "draw 80"
-    "draw 81" "draw 82")
+    "draw 81" "draw 82" "draw 83")
   (cells ("C1" "uniform"))
   (hold                             ; the market's die, the stream's state:
     "B1"                            ;   its cell
@@ -241,7 +247,7 @@
     "MOD(IF(Day!$B$3=0,Clock!$B$3,Dice.last!B1)*$F$2,2147483647)")   ; what it rolls to: the seed on the first day, else yesterday's die, jumped a day's draws
   (draws                            ; the market's draws, read by the dish that needs one:
     "B2"                            ;   the first, beneath the die
-    82)                             ;   how many a day so far: POT.2's four phases, then POT.11's 78 five minutes of a session
+    83)                             ;   how many a day so far: POT.2's four phases, then POT.11's 78 five minutes of a session, then FRONT.3's headline
   (labels "E1" "a day's jump, in draws" "its multiplier" "the exam's jump, in draws" "its multiplier")
   (cells
     ("F1" 1017)                     ; a day's jump: the first past a thousand whose multiplier is below 2^22
@@ -267,9 +273,11 @@
 ; POT.10), every formula of C and D being B's own fill, so that the index twenty days back
 ; and the last close are the index's own formula at those days, recomputed and never
 ; remembered. Tier 1 opens at 1 on the first day, so that a price opens at its rung. The
-; session's close is B26, twenty days back C26 and the session before's close D26; and
-; between the last close and the session's own, the index now, B112, the session's five
-; minutes (below).
+; session's close is B26, the session before's close D26, and twenty days before the last
+; close made C26 (FRONT.3), the last close made being the session before's while the
+; session trades and the session's own from its closing bell; between the last close and
+; the session's own, the index now, B112, the session's five minutes; and at the foot the
+; weather, a word for the market's change over the look back (below).
 
 (on "Market"
   (labels "A1" "pi" "the drift, a day" "the difficulty: 0 the Kiddie Pool, 1 the Day Trader" "the look back, in days" "the half hour's swing, of the index" "the volatility factor, within the day")
@@ -277,7 +285,7 @@
     ("B1" 3.141592653589793)        ; pi, a number, since PI() parses and is never evaluated
     ("B2" 1.0002)                   ; the drift: the trend's growth a day, about 7.6% a year
     ("B3" 1)                        ; the difficulty: tier 1, until POT.6 makes the cell a picker
-    ("B4" 20)                       ; the look back: how many days back the weather reads the index
+    ("B4" 20)                       ; the look back: how many days before the last close the weather reads the index (FRONT.3)
     ("B5" 0.0028)                   ; the half hour's swing: the most one half hour of a session moves the index at a factor of 1, 0.28% (POT.10)
     ("B6" 16))                      ; the volatility factor: every five minutes' move sixteen times the half hour's spread, and no close (POT.11, the owner's word at its hand test)
   (headers "A7" "the waves" "period, in days" "amplitude" "speed, radians a day" "phase, radians")
@@ -304,7 +312,7 @@
   (labels "A15" "the day" "a year's wave" "the Kitchin" "the Juglar" "the Kuznets" "the Kondratiev" "the trend, the drift to the day" "the cycle: one and the four waves" "the cycle on the first day" "tier 0, the Kiddie Pool" "tier 1, the Day Trader" "the index")
   (formulas
     ("B15" "=Day!$B$20")                        ; the session's day, today's from its opening bell
-    ("C15" "=B15-$B$4")                         ; the look back's day, before day 20 a day below zero
+    ("C15" "=IF(Day!$B$29=1,D15,B15)-$B$4")     ; the look back's day: twenty days before the last close made (FRONT.3), before day 20 a day below zero
     ("D15" "=Day!$B$21")                        ; the session before it, the first session's its own
     ("B16:D20" "=$C8*SIN($D8*B$15+$E8)")        ; each wave's term on its column's day
     ("B21:D21" "=$B$2^B15")                     ; the trend: the drift raised to the day
@@ -353,7 +361,36 @@
     ("B109" "=B108/Day!$B$23")                  ; its share of the session, from 0 to 1
     ("B110" "=$B$5*$B$6/6^0.5")                 ; the five minutes' swing: the half hour's over the root of six, times the factor
     ("B111" "=B110*(CHOOSE(B108+1,0,C29,C30,C31,C32,C33,C34,C35,C36,C37,C38,C39,C40,C41,C42,C43,C44,C45,C46,C47,C48,C49,C50,C51,C52,C53,C54,C55,C56,C57,C58,C59,C60,C61,C62,C63,C64,C65,C66,C67,C68,C69,C70,C71,C72,C73,C74,C75,C76,C77,C78,C79,C80,C81,C82,C83,C84,C85,C86,C87,C88,C89,C90,C91,C92,C93,C94,C95,C96,C97,C98,C99,C100,C101,C102,C103,C104,C105,C106)-B109*C106)")   ; the swing at the tick: 0 at the bell and at the close
-    ("B112" "=(D26*(1-B109)+B26*B109)*(1+B111)")))   ; the index now: from the last close to the session's, and the swing
+    ("B112" "=(D26*(1-B109)+B26*B109)*(1+B111)"))    ; the index now: from the last close to the session's, and the swing
+  ; The weather (FRONT.3): one word for the market's change over the look back, read at
+  ; the last close made, the session before's while the session trades and the session's
+  ; own from its closing bell, so that the word changes at most once a session, at its
+  ; close, and never reads a close the session has not yet made, the open book's B26
+  ; staying the Market's own (caveat 20). The change is the last close over the look
+  ; back's, C26, less one, then in whole tenths of a percent, rounded half up; the word is
+  ; the first of the table's whose tenths the change reaches, from the top, and the last
+  ; below them all: sunny from a rise of 1.0%, calm at 0.0%, rain from a fall of 1.0%,
+  ; which at the seed reads Overcast at the first bell, Calm from day 93, Partly sunny
+  ; from day 112 and Sunny from day 263. The words and their tenths are settings a
+  ; person may edit (AD-6), plain words a player reads at a glance, as the bell's lines
+  ; are; the forecast that replaces them blends many indicators (POT.4, course 3).
+  (headers "A114" "the weather" "from, in tenths of a percent")
+  (cells
+    ("A115" "Sunny")                ; the market up 1.0% or more
+    ("B115" 10)
+    ("A116" "Partly sunny")         ; up
+    ("B116" 1)
+    ("A117" "Calm")                 ; flat, within a twentieth of a percent either way
+    ("B117" 0)
+    ("A118" "Overcast")             ; down
+    ("B118" -9)
+    ("A119" "Rain"))                ; down 1.0% or more: below every tenth above it
+  (labels "A121" "the last close made" "the change over the look back" "the change, in tenths of a percent" "the weather")
+  (formulas
+    ("B121" "=IF(Day!$B$29=1,D26,B26)")         ; the last close made: the session before's while the session trades, the session's own from its close
+    ("B122" "=B121/C26-1")                      ; the change since the close twenty days before it
+    ("B123" "=INT(B122*1000+0.5)")              ; in whole tenths of a percent, rounded half up
+    ("B124" "=IF(B123>=B115,A115,IF(B123>=B116,A116,IF(B123>=B117,A117,IF(B123>=B118,A118,A119))))")))   ; the weather: the first word whose tenths the change reaches, from the top
 
 ; ---- STATION.1: the stocks ----------------------------------------------------------
 ; The first station, four rungs of shares, a rung a row, cheapest first: each its start
@@ -466,7 +503,8 @@
 ; them. The settings first: the contract's capital, $5,000 and $500 a correct answer, in
 ; whole cents; the waiver, a person's edit of B3 that skips the exam, a returning
 ; candidate's, with the score and the style a waiver takes; and where the certificate
-; leads, a view's name, so that the Overview takes it with no formula moved (FRONT.3).
+; leads, a view's name, the Overview since FRONT.3, where the Portfolio stood, a value, so
+; that a view laid out or renamed moves no formula.
 ; Then the draw: ten questions from the bank, from a start the exam's first draw picks
 ; and a stride its second picks among the first ten primes above 1,547, each coprime to
 ; every bank a picker holds (MENU.2), so that no question repeats; the bank's size its
@@ -493,7 +531,7 @@
     ("B3" 0)                        ; the waiver: a person's edit of 1 skips the exam, the game beginning at the next step
     ("B4" 5)                        ; a waiver's correct answers: the middle of 0 to 10
     ("B5" 1)                        ; a waiver's style: the first
-    ("B6" "Portfolio"))             ; where the certificate leads: the Portfolio, until the Overview (FRONT.3)
+    ("B6" "Overview"))              ; where the certificate leads: the Overview, the game's first view after the exam (FRONT.3)
   (labels "A8" "the bank's questions" "the start, from 0" "the stride, a prime above 1,547")
   (formulas
     ("B8" "=Questions!$K$1")        ; the bank's size, its own count: a question added joins the draw
@@ -836,6 +874,23 @@
   (formulas
     ("D2" "=MAX(Proctor!$B$40,1)")))   ; the row shown: the style chosen, the first before one is
 
+; ---- FRONT.3: the ticker ------------------------------------------------------------
+; The Headlines sheet: a headline a row, of which the Overview shows one a day, the row
+; the day's 83rd market draw picks, its uniform times the rows counted, rounded down, from
+; the first: a headline a calendar day, weekends among them, drawn where anyone can watch
+; the dice roll (BD-3), so that tomorrow's is no rota a player counts off, and a row added
+; joins the draw with no formula edited. One field, so its table is column A and its
+; values stand in D: the count in D1, the row shown D2 and its picker D3. Course 0's
+; headlines are color alone, and no price reads them until the events sheet gives the
+; ticker teeth (SPECIAL.1).
+
+(sheet "Headlines" hidden)          ; the ticker: reference data, at the back of the workbook
+(headlines)                         ; the Headlines sheet: its header, its rows, their count and their picker
+
+(on "Headlines"
+  (formulas
+    ("D2" "=INT(Dice!$C$84*D1)+1")))   ; the row shown: the uniform of the day's 83rd market draw times the rows, from the first
+
 ; ---- MENU.5: the caveats ------------------------------------------------------------
 ; The Caveats sheet: the things this game gets wrong, each beside what the real world
 ; does, Management's response and the cell it qualifies (BD-5). It is the one content
@@ -949,9 +1004,35 @@
     ("A18" "Signed for the regulator by the proctor, whose signature is, on inspection, a doodle of a bull."))
   (fine-print "A20"))               ; the fine print, every view's
 
-; The Portfolio: the sheet the certificate leads to, the game's opening before the Exam
-; (FRONT.1, GUARD.1). Its date, and under it the bell's line, whether the market
-; is open and when it opens or closes (POT.10); then whose holdings these are; then a
+; The Overview (FRONT.3): where the certificate leads, the game's first view after the
+; exam, the firm at a glance, two numbers, a word and a headline (BD-4: checkers first).
+; Its date and the bell's line, every view's; the firm's line, its name pending until the
+; Firms sheet names it beside the style (BACK.2); each pocket's net worth, the Cash
+; sheet's, in dollars, the Portfolio keeping the stocks, the holdings and the cash on
+; hand one tab over; the market's weather, the Market sheet's word and the change it is
+; read off, in tenths of a percent, over the look back's days; the day's headline, the
+; Headlines sheet's; and the fine print. The Overview holds no button and binds no key,
+; having no act of its own at course 0: an alert that links to its panel is an act, and
+; enters with the dish that raises it, its key and its command beside it.
+
+(on "Overview"
+  (column "A" 22 shown none)        ; the labels; the date, the lines and the fine print spill past them
+  (column "B" 12 shown none)        ; the net worth, in dollars: 12 characters, the width the dollars are padded for
+  (as-of "A1")                      ; the date, every view's
+  (bell "A2")                       ; the market's hours, every view's
+  (cells
+    ("A3" "Your firm: name pending registration."))   ; the firm's name: a placeholder, until BACK.2 names the firm from the Firms sheet
+  (labels "A5" "Net worth ($)" "  Firm" "  Personal")   ; each pocket's net worth, its cash and its holdings
+  (dollars "B6:B7" "Cash!B9")       ; the firm's and your own, the Cash sheet's B9 and B10
+  (formulas
+    ("A9" "=\"Market weather: \"&Market!$B$124&\", the market \"&IF(Market!$B$123=0,\"flat\",IF(Market!$B$123<0,\"down \",\"up \")&INT(ABS(Market!$B$123)/10)&\".\"&MOD(ABS(Market!$B$123),10)&\"%\")&\" in the \"&Market!$B$4&\" days to the last close.\"")   ; the weather: its word and the change it is read off
+    ("A11" "=\"Today's headline: \"&Headlines!$D$3"))   ; the ticker: the day's headline
+  (fine-print "A13"))               ; the fine print, every view's
+
+; The Portfolio: the game's opening before the Exam (FRONT.1), and the sheet the
+; certificate led to until the Overview (GUARD.1, FRONT.3). Its date, and under it the
+; bell's line, whether the market is open and when it opens or closes (POT.10); then
+; whose holdings these are; then a
 ; row a stock, on the Stocks sheet's own rows, each its name, the model's, its price now
 ; and its change since the last close, in dollars, and beside the change which way it
 ; went (FRONT.2), a glyph read off the cents the change is spelled from, so the two never

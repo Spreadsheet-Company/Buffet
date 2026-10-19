@@ -98,4 +98,12 @@
      "A price that falls during the day can keep falling, and studies of day traders find most of them lose money."
      "Management attributes the trading desk's results to skill."
      "Market!B26")
+    ("The weather is one word for one number: the market's change in the twenty days to the last close."
+     "A trend says where prices have been, not where they will go; forecasters weigh many signals and still miss turns."
+     "Management checks the forecast in hindsight, where it has never been wrong."
+     "Market!B124")
+    ("The news moves nothing: a headline here is color, and no price reads it."
+     "Prices react to news, often within seconds, and traders pay to read a headline a moment sooner."
+     "Management reads only the headlines, which the Series 777 recognizes as a style."
+     "Headlines!D3")
     ))                              ; the sheet's end: a caveat added goes above this line

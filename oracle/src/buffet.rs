@@ -102,6 +102,15 @@
 //! the session is today's. The path's 78 steps share the bridge with the
 //! cells as the half hours did; the hand finds each draw by its place beneath
 //! the day's die, where the cells step a column down from it.
+//!
+//! The overview (`FRONT.3`) shares none of its rules with its cells. The cells
+//! choose the last close made by whether the clock stands between the bells,
+//! and the weather's word by comparing the change with each word's tenths from
+//! the top; the hand asks how far its session has ticked, and counts the words
+//! whose tenths the change reaches. The change itself is the market's, taken
+//! in the cells' order as the waves are. The cells pick the day's headline by
+//! the draw's uniform times the rows, rounded down; the hand divides the draw
+//! times the rows by the modulus in whole numbers.
 
 use std::collections::BTreeSet;
 
@@ -499,6 +508,19 @@ impl Calendar {
             self.pace.between
         }
     }
+
+    /// The day of the last close made (`FRONT.3`), which the weather reads:
+    /// the session before's until the session's tick reaches its close, and
+    /// the session's own from it. The cells ask whether the clock stands
+    /// between the bells, `Day!B29`; the hand asks how far its session has
+    /// ticked.
+    pub fn last_close(&self) -> u64 {
+        if self.tick < CLOSING_TICK {
+            self.before
+        } else {
+            self.session
+        }
+    }
 }
 
 /// Pi, the Market sheet's `B1`, written there as `3.141592653589793`, this
@@ -510,7 +532,8 @@ pub const DRIFT: f64 = 1.0002;
 /// The difficulty, `B3`: tier 1 until `POT.6` makes the cell a picker; a
 /// person who writes 0 plays tier 0.
 pub const DIFFICULTY: u64 = 1;
-/// The look back, `B4`: how many days back the weather reads the index.
+/// The look back, `B4`: how many days before the last close made the weather
+/// reads the index (`FRONT.3`).
 pub const LOOK_BACK: u64 = 20;
 
 /// A wave of the market: its period, a whole number of days, and its
@@ -681,10 +704,13 @@ pub const SWING: f64 = 0.0028;
 /// `POT.5`'s walk takes it.
 pub const FACTOR: f64 = 16.0;
 /// The first of the market's draws a session's steps take each day, the
-/// fifth: `POT.2`'s four phases take the four before it; and the day's draws,
-/// the session's 78 after them.
+/// fifth: `POT.2`'s four phases take the four before it; the draw the day's
+/// headline takes, the next free after the session's 78 (`FRONT.3`), the
+/// 83rd; and the day's draws, through it.
 pub const SESSION_DRAW: u64 = 5;
-pub const DRAWS_A_DAY: u64 = SESSION_DRAW + CLOSING_TICK - 1;
+pub const HEADLINE_DRAW: u64 = SESSION_DRAW + CLOSING_TICK;
+pub const DRAWS_A_DAY: u64 = HEADLINE_DRAW;
+const _: () = assert!(HEADLINE_DRAW == 83);
 /// The widest a bridge of 78 steps strays from its line, in steps: at its
 /// middle tick, `2m(78-m)/78` at the 39th, every step against the rest.
 pub const WIDEST: f64 = 39.0;
@@ -1019,6 +1045,92 @@ pub fn glyph(now: i64, was: i64) -> &'static str {
     }
 }
 
+/// The Overview (`FRONT.3`): where the certificate leads, and its firm's line,
+/// a placeholder until the Firms sheet names the firm (`BACK.2`).
+pub const OVERVIEW: &str = "Overview";
+pub const FIRM_LINE: &str = "Your firm: name pending registration.";
+/// The Overview's label over each pocket's net worth, and the pockets' own, in
+/// its column A from row 5.
+pub const NET_WORTH_LABELS: [&str; 3] = ["Net worth ($)", "  Firm", "  Personal"];
+
+/// The weather's table (`FRONT.3`), the Market sheet's `A115:B119`: each word
+/// beside the change over the look back, in whole tenths of a percent, that
+/// it begins at, from the top; and the last word, below them all. Sunny from a
+/// rise of 1.0%, Calm at 0.0% and Rain from a fall of 1.0%: at the seed, a
+/// century's trading days read 4.9% Rain, 23.4% Overcast, 4.5% Calm, 42.1%
+/// Partly sunny and 25.0% Sunny, and 2,000 seeds' first five years alike.
+pub const WEATHER: [(&str, i64); 4] = [
+    ("Sunny", 10),
+    ("Partly sunny", 1),
+    ("Calm", 0),
+    ("Overcast", -9),
+];
+pub const WEATHER_BELOW: &str = "Rain";
+
+impl Market {
+    /// The market's change over the look back at a calendar's frame
+    /// (`FRONT.3`), the Market sheet's `B122`: the index at the last close made
+    /// over its index the look back's days before, less one, in the cells'
+    /// operations and order, `=B121/C26-1`; and in whole tenths of a percent,
+    /// rounded half up, `B123`, `=INT(B122*1000+0.5)`.
+    pub fn change(&self, difficulty: u64, cal: &Calendar) -> f64 {
+        let day = cal.last_close() as f64;
+        self.index(difficulty, day) / self.index(difficulty, day - LOOK_BACK as f64) - 1.0
+    }
+    pub fn tenths(&self, difficulty: u64, cal: &Calendar) -> i64 {
+        (self.change(difficulty, cal) * 1000.0 + 0.5).floor() as i64
+    }
+}
+
+/// The weather's word for a change in whole tenths of a percent, the Market
+/// sheet's `B124`. The cells compare the change with each word's tenths from
+/// the top and take the first it reaches; the hand counts the words whose
+/// tenths it reaches and reads the table from the bottom by that count.
+pub fn weather(tenths: i64) -> &'static str {
+    let reached = WEATHER.iter().filter(|(_, from)| tenths >= *from).count();
+    if reached == 0 {
+        WEATHER_BELOW
+    } else {
+        WEATHER[WEATHER.len() - reached].0
+    }
+}
+
+/// The weather's line on the Overview: the word, then the change it is read
+/// off, up, down or flat, in tenths of a percent, over the look back's days.
+/// The cell joins the whole tenths over ten and their remainder by ten; the
+/// hand formats the size's digits.
+pub fn weather_line(tenths: i64, days: u64) -> String {
+    let size = tenths.unsigned_abs();
+    let moved = match tenths.signum() {
+        0 => "flat".to_string(),
+        s => format!(
+            "{} {}.{}%",
+            if s < 0 { "down" } else { "up" },
+            size / 10,
+            size % 10
+        ),
+    };
+    format!(
+        "Market weather: {}, the market {moved} in the {days} days to the last close.",
+        weather(tenths)
+    )
+}
+
+/// The ticker's label on the Overview, before the day's headline.
+pub const HEADLINE_LABEL: &str = "Today's headline: ";
+
+/// The day's headline (`FRONT.3`): the row of the Headlines sheet, from 1,
+/// that the day's 83rd market draw picks among `rows`, the sheet's `D2`. The
+/// cell multiplies the draw's uniform by the rows and rounds down; the hand
+/// divides the draw times the rows by the modulus, in whole numbers. The two
+/// agree at every draw: the modulus is prime and the draw and the rows below
+/// it, so the quotient is never a whole number and stands at least one part
+/// in the modulus, about 4.7e-10, from the next, where the double's two
+/// roundings move it less than 4e-13 for any sheet a picker holds.
+pub fn headline(seed: u64, day: u64, rows: u64) -> u64 {
+    market_draw(seed, day, HEADLINE_DRAW) * rows / MODULUS + 1
+}
+
 /// The fee a prospectus proofread pays (`BACK.1`), in whole cents, the
 /// Hustle sheet's `B1`: $250, the owner's word at `GUARD.1`'s hand test,
 /// where the contract had $25.
@@ -1220,8 +1332,9 @@ pub const WAIVED_STYLE: u64 = 1;
 pub const PERSONAL_CASH: u64 = 10_000;
 /// The waiver's cell, which a person's edit of 1 waives the exam by, `B3`.
 pub const WAIVER: (&str, &str) = ("Proctor", "B3");
-/// Where the certificate leads, `B6`, and the exam's two views.
-pub const LEAD: &str = "Portfolio";
+/// Where the certificate leads, `B6`: the Overview since `FRONT.3`, where the
+/// Portfolio stood; and the exam's two views.
+pub const LEAD: &str = OVERVIEW;
 pub const EXAM: &str = "Exam";
 pub const CERTIFICATE: &str = "Certificate";
 /// The most rows one picker holds (`MISE.3`'s probe 3), so the most a bank
@@ -3022,5 +3135,94 @@ mod tests {
             "a trade clicked beside the switch's command fills from the pocket shown"
         );
         assert_eq!(p.pocket, PERSONAL, "and switches nothing");
+    }
+
+    /// The weather's word (`FRONT.3`) is the first of the table's whose tenths
+    /// a change reaches, from the top, and Rain below them all: at each word's
+    /// own tenths and a tenth under it, and far past both ends; the table
+    /// descending, each word once, and the lines spelled up, down and flat.
+    #[test]
+    fn the_weather_reads_the_first_word_its_tenths_reach() {
+        for pair in WEATHER.windows(2) {
+            assert!(pair[0].1 > pair[1].1, "{pair:?}: descending");
+        }
+        for (k, (word, from)) in WEATHER.iter().enumerate() {
+            assert_eq!(weather(*from), *word, "at {from} tenths");
+            let below = WEATHER.get(k + 1).map_or(WEATHER_BELOW, |(w, _)| *w);
+            assert_eq!(weather(from - 1), below, "a tenth under {from}");
+        }
+        assert_eq!(weather(10_000), "Sunny");
+        assert_eq!(weather(-10_000), WEATHER_BELOW);
+        assert_eq!(
+            weather_line(8, 20),
+            "Market weather: Partly sunny, the market up 0.8% in the 20 days to the last close."
+        );
+        assert_eq!(
+            weather_line(-15, 20),
+            "Market weather: Rain, the market down 1.5% in the 20 days to the last close."
+        );
+        assert_eq!(
+            weather_line(0, 5),
+            "Market weather: Calm, the market flat in the 5 days to the last close."
+        );
+        assert_eq!(
+            weather_line(123, 20),
+            "Market weather: Sunny, the market up 12.3% in the 20 days to the last close."
+        );
+    }
+
+    /// The first game's weather (`FRONT.3`), at a frame each five minutes of
+    /// its first year: Overcast at the first bell, the market easing into the
+    /// year's dip, then Calm from day 93's close, Partly sunny from day 112's
+    /// and Sunny from day 263's, each change at a closing bell and none at any
+    /// other five minutes, the word reading the last close made.
+    #[test]
+    fn the_first_years_weather_turns_three_times_each_at_a_close() {
+        let market = Market::new(SEED);
+        let mut c = Calendar::new(Pace::every(MINUTES_A_TICK * 60), DAYS_A_YEAR);
+        c.tick();
+        let mut was = weather(market.tenths(DIFFICULTY, &c));
+        assert_eq!(was, "Overcast", "the first bell's weather");
+        let mut turns = Vec::new();
+        while c.day < DAYS_A_YEAR {
+            c.tick();
+            let now = weather(market.tenths(DIFFICULTY, &c));
+            if now != was {
+                turns.push((c.day, c.hour * 60 + c.minute, now));
+                was = now;
+            }
+        }
+        assert_eq!(
+            turns,
+            [
+                (93, CLOSING_BELL, "Calm"),
+                (112, CLOSING_BELL, "Partly sunny"),
+                (263, CLOSING_BELL, "Sunny"),
+            ]
+        );
+    }
+
+    /// The day's headline (`FRONT.3`): the hand's whole-number rule is the
+    /// cell's double one, the draw's uniform times the rows rounded down, at
+    /// every day of the first game's century and at each count of rows from
+    /// one to twenty and at the most a picker holds; and in the first year each
+    /// of the ten rows is the day's headline on some day.
+    #[test]
+    fn the_headline_rule_is_the_cells_at_every_day_of_a_century() {
+        let mut seen = [false; 10];
+        for day in 0..100 * DAYS_A_YEAR {
+            let z = market_draw(SEED, day, HEADLINE_DRAW);
+            for rows in (1..=20).chain([PICKER_ROWS]) {
+                let cell = (uniform(z) * rows as f64).floor() as u64 + 1;
+                assert_eq!(headline(SEED, day, rows), cell, "day {day}, {rows} rows");
+            }
+            if day < DAYS_A_YEAR {
+                seen[headline(SEED, day, 10) as usize - 1] = true;
+            }
+        }
+        assert!(
+            seen.iter().all(|s| *s),
+            "every headline of ten in the first year: {seen:?}"
+        );
     }
 }
