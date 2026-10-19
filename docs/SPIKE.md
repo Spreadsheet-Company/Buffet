@@ -49,6 +49,10 @@ empty.*
 
   *Closed 2026-10-17.* Predicted `~days`; cost one session over two days, the scoping, its approval, the build, its measurements and three hand tests, the first two amending it. What landed: the Day sheet a calendar of minutes, the Dice's seventeen market draws and the exam's stream moved to `H1:J3`, the Market's session `B27:B45` and its swing, the Stocks' price now over the index now and the change in cents, the Hustle's week and day's work, and the views' date, bell and dollars in the source and its cartridge, 569 rows and 201 formula cells; `bell` and `dollars` in `src/kitchen.vla`, and `as-of` with the weekday and the time; the caveats' rows 2, 11 and 12 rewritten and 13 and 14 added, drafts for the owner; the hand's calendar counted in minutes, its session's path, its bells, its hustle by the day and the half hour, and its spelling of dollars; 56 tests, the long runs each at the pace it needs; the describe golden blessed again; and, in `OMAKASE.md`, the contract, `BD-7` restated, and the notes on `PLATE.1`, `GUARD.1`, `MISE.4`, `MISE.5`, `PLATE.3`, `RECIPE.1`, `CRITIC.1`, `FRONT.2` and `MISE.6`, whose number format was asked of Frazaro and Alonzo at the hand test. Five of the nine predictions missed in part, each named beside its number: the describe golden's order and the waves' run (P2); a half hour's turn over its range (P4); the longest test, the hundred years' and not the hour's year (P5); the page's blocks (P6); and the dial's 120, half a frame's cost where the same was predicted, with the bell in the owner's Chrome (P8). The build found that a harness attaching after the game is picked misses its first frames; the hand tests asked a price each half hour, a prospectus a week and a day's work, two decimals on every dollar, and those dollars flush right, the record holding no number format; and a column dragged wider or narrower moves its cell's edge and not a padded text.
 
+- ✅ **`POT.11` — the pace and the volatility factor: ten minutes a second while the market trades, an hour a second between, a price every five minutes.** *Minted, scoped and built 2026-10-19 in one sitting at the owner's word, its sixteen decisions built as recommended; passed at the owner's hand test the same day, which kept the ticks and the caveats' drafts and set the factor at 16 and the clock between sessions to the half hour: the scoping, every prediction beside its number, what the build found and the owner's hand test are under THE ITEMS, SCOPED.* Minted at the owner's word from `PLATE.2`'s hand test ("the gameplay feels too fast. The trading windows is too narrow") and the owner's adjudications of the same day: twenty seconds of the market's time a frame in the regular session, 9:30 to 16:00, and two minutes outside it, the Clock's rate staying 30, the time a sum over its twin in seconds; the pace keyed on the regular session's bells and never on the cell that says orders fill, so that the extended hours a license unlocks later, 4:00 to 20:00, run at an hour a second and every player plays a seed at one pace; a price every five minutes, 78 a session, each step scaled by 1/√6 so that the day's spread holds at a factor of 1; the clock on every view to the five minutes in session and to the half hour between; and a volatility factor within the day, a setting of the Market sheet, 16, each close staying the waves' (`BD-3`), across days `POT.5`'s. No player control of time, and no license that changes the clock. *Oracle:* the hand's calendar in seconds at both paces and its path of 78 ticks with the factor; every frame of a weekday and its night at the game's pace, the long runs at their own paces; the factor written; `B19` written open at every hour; mutants. *Pays into:* every dish that reads the calendar; the license's extended hours, unminted; `POT.5`'s walk, which takes the factor across days. `~days`
+
+  *Closed 2026-10-19.* Predicted `~days`; cost one sitting, the scoping, the build, its measurements and mutants, and the owner's hand test, which amended it. What landed: the Day sheet's time in seconds, a sum over its twin at two paces, its pace now, in session and the time shown, and the tick each five minutes; the Dice's 82 draws; the Market's factor, its waves and workings a row down, its session of 78 five minutes and the index now at `B112`; the Stocks over it; the Hustle's due a day from the time shown, spelled to the minute; the Ledger's header; the source's notes and comments; 1,198 rows and 790 formula cells; the caveats' rows 13 and 14 rewritten and 19 and 20 added; the hand's calendar in seconds at a `Pace`, its path with the factor, the bound and the kind year at 16; 76 tests, the every-frame run a weekday and its night where ten days stood, the long runs holding the dice and the session's table whole at each day's turn and byte for byte between; eighteen mutants caught; the describe golden blessed again; and, in `OMAKASE.md`, the contract, `BD-7` restated, `BD-5`'s rows, `POT.5`'s line rescoped to take the factor across days, and the notes on `CRITIC.1`, `MISE.4`, `MISE.5` and `MISE.6`. Four of the nine predictions missed in part, each named beside its number: the plan's depth (P2), the load (P3), midnight and the bell (P4), and the page's blocks (P6). The build found the long runs' parse of the day's draws dearer than the market's frames, and the plan 98 levels deep by the draws' chain; the hand test set the factor at 16, found the sure gain of a dip bought below a close known at the bell, a caveat until `POT.5`, kept the clock between sessions to the half hour, and asked again for a dragged column's width kept a sheet, Alonzo's, unminted there.
+
 ## 🍳 THE STATIONS
 
 - ✅ **`STATION.1`, first slice — stocks: four rungs.** *Scoped and built 2026-10-14, hand-tested 2026-10-15: the scoping, its fifteen decisions approved whole by the owner, every prediction beside its number, what the build found and the owner's hand test are under THE ITEMS, SCOPED.* The Stocks sheet, its name plain as the model's are, a rung a row, cheapest first: four fictional rungs at $1, $5, $25 and $100, labeled `rung 1` to `rung 4`, the working labels (a penny stock, a small cap, a mid cap and a blue chip) kept in the docs and never in a cell until `MENU.3` names them, since real index and fund names are others' marks; each rung's start in whole cents, its beta and its dividend yield as values, and its workings one fill a column. A price is `=INT(<start>*Market!$B$25^<beta>+0.5)`, the index the difficulty picks to the rung's beta, whole cents, one rounding, half up: a power, so that a beta holds at every level of the index and no price reaches zero at any seed, none falling below 11, 96, 833 and 4,386 cents, a bound the hand holds; the betas 2, 1.5, 1 and 0.75, the third the market itself. Yesterday's price is the same formula over yesterday's index, `Market!D25`, the Market sheet's fills reaching a column D, recomputed and never remembered. The fourth rung pays a dividend, 2% a year, 50 cents a share fixed from its start, on the year's 91st, 182nd, 273rd and 364th days, so that income exists from the first quarter, the cell holding it all that day for `PLATE.1` to pay at the day's first frame. Written as rows and not yet a ladder, a rung at a time, in the order a walk over a list of rungs writes, since the ladder is the pattern's second appearance and enters the library with the bonds (`STATION.2`). *Oracle, met:* `buffet.rs`, every price today and yesterday, each dividend and the dividend today held at every frame of two years and two days and on every day of a hundred years at one frame a day; the opening exactly the starts; each rung's least at or above the bound; the dividend on exactly four days a year, the days the hand lists; `BD-7`'s scan and the census's `(every-frame 0)` kept; the owner's hand test in Alonzo's page, every cell it showed the hand's. *Pays into:* `PLATE.1`'s rows, one a rung; the Market panel's prices and their change; the ladder hoist at course 1, whose proof is that this slice expands to its bytes unchanged, which a scratch ladder of 24 lines has already met. `~days`
@@ -6348,4 +6352,455 @@ narrow, so I wonder if we should default the gamplay to 1 real-world second to
 on. To spice up the gameplay a little biut, we should add a volatility factor
 to the market which increases the price movement so the game doesn't feel like
 the prices are flat for the first 5-10 minutes of play." Taken up as `POT.11`.
+
+## `POT.11` — the pace and the volatility factor: ten minutes a second while the market trades, an hour a second between, a price every five minutes
+
+*Minted, scoped and built 2026-10-19 at the owner's word, "Mint, scope and
+implement POT.11 in Buffet (Delta/Buffet): the pace and the volatility
+factor, at the owner's adjudications of 2026-10-19", in one sitting as
+`PLATE.1` and `PLATE.2` were: each decision below stands as recommended and
+was built, the owner's to approve, amend or strike at the hand test, and the
+texts a player reads are drafts. Minted alone, the stock pot's next free;
+what else the scoping found stands under Found, unminted. Read for it:
+`BD-3`, `BD-5` and `BD-7`, the opening contract and `POT.5`'s line in
+`OMAKASE.md`; `PLATE.2`'s record above, whose hand test holds the owner's
+first words on the pace; `POT.10`'s (the calendar of minutes, the session's
+bridge, its decision 13), `POT.1`'s (the calendar's design, `BD-7`'s oracle)
+and `GUARD.1`'s (the bell's wait); the source's Day, Dice and Market
+sections, the hand's calendar and path, and the tests' paces. Alonzo's and
+Frazaro's trees were read and never touched.*
+
+**The owner's words**, 2026-10-19, after `PLATE.2`'s hand test, deliberated
+in chat the same day. The pace: "5 minutes per second when the market is
+open, an hour a second when the market is closed, originally 9:30-16:00
+market hours with 4:00-20:00 unlocked after licensing"; then "78 trading
+seconds to 17.5 feels disproportional, so what if we bump it to 10 minutes
+per second during trading hours and keep everything else the same?"; then
+"Pre- and post-market trading should probably move at the same speed as
+closed market hours to avoid changing the pace of the game once pre- and
+post-market trading hours are unlocked. Otherwise two players could play the
+same game at two different paces if only one opts to license for extended
+trading hours." The ticks every five minutes approved, and the clock "to the
+minute" with them while a minute was a second. The factor's reach: "If this
+item belongs in POT.5, then we don't need to pull it forward arbitrarily if
+POT.5 just needs to be rescoped to handle added volatility." And, declining
+the speed keys offered as a later dish: "Pacing is key to passive games, and
+I'm wary to expose pacing to the player because it can demolish the
+objectivity of the game by allowing players to arbitrarily bend time and lose
+sight of the real game: trading and investing."
+
+**What it stands on, read on the day** (Buffet at `11f6803`, two ahead of
+its remote, the tree clean; `alonzo` 0.2.0 and `vla-lang` 0.10.0).
+- *The calendar* (`POT.10`, `GUARD.1`). The time in minutes, `Day!B4`
+  `=(Clock!B1-1-B26)*B1+B9`: the frames since the first times the minutes a
+  frame, `B1`, 2, from the first frame's 570, less the frames the bell
+  waited, `B26`; every other cell of the calendar reads the time to the half
+  hour, `B14`. `B4`, `B5` and `B14` compute at every frame, and no other cell
+  of the game.
+- *Every reader of the half hour*, the cartridge grepped: `Day!B14` by the
+  hustle's due, `Hustle!B15` through its twin and `B16`; `Day!B16`, the time
+  shown, by the five views' dates (the library's `as-of`) and by the
+  ledger's when, `Write!C3` through its twin; the mark and the closing mark,
+  `Day!B22` and `B23`, by the Market's session, `B42` and `B43`; the half
+  hour spelled once more in `Hustle!B19`, the due shown,
+  `IF(MOD(B15,60)=0,"00","30")`; and the caveats that name it, row 13 at
+  `Day!B22` and row 14 at `Market!B45`. Nothing outside the Day sheet reads
+  the time to the minute (`BD-7`'s scan).
+- *The session's path* (`POT.10`'s decision 6, amended): thirteen marks a
+  session, each half hour's step the uniform of one of the day's market
+  draws 5 to 17 set between -1 and 1, the half hour's swing 0.0028 of the
+  index at `Market!B5`, and the index now, `B45`, a bridge from the last
+  close to the session's own, each end exact.
+- *The dialect* (`vla-lang` 0.10.0's `calc/library.rs`): fourteen functions
+  and no `SQRT`; `^` is the platform's power.
+- *The clock* (`SPEC.md` §3.5, §3.9): the host steps at the Clock's rate and
+  a cartridge cannot write its own rate, so a pace that changes with the
+  hours is the calendar's to keep (`POT.10`'s Found).
+- *The suite*: 73 tests green, the crate's 28 and the cartridge's 45.
+  `PLATE.2`'s P5, each alone: the ten days at every frame 3.07 to 3.10 s, the
+  hour's year 5.51 to 5.55, the hundred years 5.12 to 5.14, the orders' and
+  the switch's sessions 0.28 to 0.30, the dividend's 1.02 to 1.03; the whole
+  on eight threads 6.0 to 6.4 s. At the new pace the ten days would be 14,715
+  frames where 6,915 stand (*derived*).
+
+**The decisions.**
+
+1. **The pace: twenty seconds of the market's time a frame in the regular
+   session, two minutes outside it, none while the exam holds the bell; the
+   time a sum over its twin, in seconds (the owner's).** At the manifest's
+   rate of 30, ten minutes a second from 9:30 to 16:00 on a weekday and an
+   hour a second at every other hour, as today. The time, `Day!B4`, becomes
+   seconds from day 0's midnight,
+   `=IF(Clock!B1=1,B9*60,Day.last!B4+Day.last!B30)`: the first frame's time,
+   then the last frame's time and the last frame's pace. A frame's pace,
+   `B30`, is none while the bell waits, the session's in the regular
+   session's hours and the pace between sessions at every other hour,
+   `=IF(B25=1,0,IF(B29=1,B28,B1))`. The bells are multiples of 120 seconds,
+   9:30 and 16:00 and the 4:00 and 20:00 of a license to come, so the steps
+   between sessions land on the opening bell exactly and the session's on the
+   closing bell, 1,170 steps a session. `B1`, the minutes a frame, becomes the
+   seconds a frame between sessions, 120, today's pace in seconds; the
+   session's, 20, is a value of its own, `B28`. A pace a person writes now
+   moves the clock from the next frame, where the time read off the frame
+   jumped at every edit. *Derived* at the manifest's rate: a session 39 s, a
+   weeknight 17.5 s, a weekend 65.5 s, a weekday 56.5 s, a week 5 min 30.5 s;
+   day 30 begins at 23:45 of play, the hustle's fourth fee is paid at about
+   17:20 at the earliest, the first dividend and the first quarter's end come
+   at 1:11:03, and the first year at about 4 h 47 min; the market open 59% of
+   the time played, and 73% with the extended hours of the license to come.
+   *The alternatives:* the time computed from the frame piece by piece, the
+   session's frames and the night's counted from each day's turn, which
+   reads the frame in more cells and breaks at every edit of a pace; a pace
+   the host changes, which a cartridge cannot ask.
+
+2. **The pace keyed on the regular session's bells, never on the cell that
+   says orders fill (the owner's).** `B29`, in session,
+   `=IF(AND(B17<B12,B15>=B10,B15<B11),1,0)`: a trading day between the bells
+   `B10` and `B11`, whatever the exam or a license says; open, `B19`, reads
+   it, `=IF(AND(B25=0,B29=1),1,0)`, where it repeated the comparisons. So the
+   license's item widens `B19` alone, its 4:00 to 20:00 trading at the pace
+   between sessions, an hour a second, and every player plays a seed at one
+   pace: the license opens 9.5 seconds of trading a weekday, 24% on the
+   session's 39, and never a different clock. Held by a test that writes
+   `B19` open at every hour, as a license would widen it, and finds every
+   step of the clock unmoved. *The alternative:* the pace keyed on `B19`,
+   which the license would move.
+
+3. **A price every five minutes of the market's time, 78 a session (the
+   owner's, approved).** The time to the five minutes, `B14`
+   `=INT(B4/300)*5`, in minutes, so that every cell below it reads minutes as
+   now; the mark becomes the tick, `B22`
+   `=IF(AND(B20=B3,B15<B11),INT(B15/5)-INT(B10/5),B23)`, 0 at the opening
+   bell and one more each five minutes, and the closing tick, `B23`
+   `=INT(B11/5)-INT(B10/5)`, 78, from the close to the next bell. The day's
+   market draws grow from 17 to 82, the session's steps the draws 5 to 82,
+   and the Market's session table from 13 rows to 78. At this pace a tick is
+   fifteen frames in the session, two a real second. *The fallback, flagged
+   for the hand test:* ten-minute ticks, 39 a session, one a second, each
+   step scaled by 1/√3.
+
+4. **Each tick's step scaled by 1/√6, so that the day's spread holds at a
+   factor of 1.** A half hour of six steps, each 1/√6 of the half hour's
+   swing, wanders as far as one step of it did: the five minutes' swing,
+   `Market!B110`, `=$B$5*$B$6/6^0.5`, the half hour's swing, 0.0028 at `B5`,
+   the owner's tuned number kept, times the factor (decision 5), over the
+   root of six by the dialect's power, there being no `SQRT`; the swing at the
+   tick, `B111`, `=B110*(CHOOSE(B108+1,0,C29,...,C106)-B109*C106)`; and the
+   index now, `B112`, `=(D26*(1-B109)+B26*B109)*(1+B111)`, `POT.10`'s bridge,
+   so that every open and every close is its day's index to the bit
+   (`BD-3`). The widest a bridge of 78 steps strays is 39 steps, at its
+   middle tick, where thirteen strayed 84/13 of a step; so the rungs' bound no
+   seed passes falls, recomputed at the build.
+
+5. **The volatility factor: a setting of the Market sheet, 4, within the day
+   only (the owner's, the number theirs to tune at the hand test).**
+   `Market!B6`, beside the half hour's swing, multiplies every tick's move
+   and never a close: each close stays the waves' (`BD-3`), so the factor
+   widens the hours between two closes and leaves the days as they were.
+   Across days is `POT.5`'s, its line rewritten so that its AR(1) walk takes
+   the same factor. The settings block grows a row, so the waves' table and
+   the workings move down one: the index `Market!B26` where `B25` stood, the
+   last close the Stocks read `D26`. *The alternative:* the factor at the head
+   of the session's table, every address above it standing, which puts the
+   knob the owner tunes and `POT.5`'s walk reads in the middle of the sheet.
+   *(Amended at the owner's hand test, 2026-10-19, the owner's words: "Factor
+   of 16 approved", after "I'm almost tempted to bump intra-day volatility
+   factor to 16 to promote day trading": `B6` 16, the five minutes' swing
+   0.018290 of the index, the day's widest stray 6.9% at p50, the first year's
+   lowest tick 0.8210, and the sure dip of the hand test's paragraph a caveat
+   of its own, decision 10's.)*
+
+6. **The clock on every view to the five minutes (the owner's, approved as
+   "to the minute" when a minute was a second).** `Day!B16`
+   `=INT(B15/60)&":"&IF(MOD(B15,60)<10,"0","")&MOD(B15,60)`, 9:30, 9:35,
+   16:00; every view's date and the ledger's when read it as they did. In the
+   session it turns with the prices, twice a real second; between sessions it
+   turns every two or three frames, twelve times a second, the hour a second
+   shown by its minutes (flagged for the hand test; the alternative, the
+   clock between sessions shown to the half hour by `B16` alone). *(Amended
+   at the owner's hand test, 2026-10-19, the owner's words: "only show the
+   half hour while the market is closed". So the time shown is a cell of its
+   own, `Day!B31` `=IF(B29=1,B14,INT(B14/30)*30)`, in minutes from day 0's
+   midnight, the five minutes in session and the half hour between, which
+   `B16` spells; keyed on the session's bells as the pace is, `B29`, and not on
+   the open, `B19`, so that it shows the half hour exactly while the market is
+   closed today, the exam's wait standing at 9:30 either way, and a license's
+   extended hours, at an hour a second, keep the half hour with the pace. A
+   test writing `B19` open at every hour holds it.)*
+
+7. **The other readers of the half hour, settled.** The hustle's due moves
+   to the five minutes: `Hustle!B15` the five minutes the person saw and a
+   day's work, `B16` comparing it with `Day!B14`, and `B19` spelling any
+   minute, `...&IF(MOD(B15,60)<10,"0","")&MOD(B15,60)` where it spelled 00 or
+   30, so that a prospectus claimed at 10:15 is paid at 10:15 tomorrow, as the
+   hand's `time_shown` already spells it. The ledger's when follows `Day!B16`,
+   the five minutes the person saw, its header "when, the time shown" where it
+   named the half hour. The views' clock, decision 6. Nothing outside the
+   Day sheet reads the time in seconds. *(Amended with decision 6 at the
+   owner's hand test: the hustle's due runs a day from the time shown,
+   `Hustle!B15` reading `Day.last!$B$31`, so that a claim between sessions,
+   seen at 20:00 when the five minutes are 20:05, is paid tomorrow at 20:00,
+   a time the clock shows, and a claim in session at its five minutes; and
+   the ledger's when is always a session's five minutes, an order filling only
+   in session.)*
+
+8. **The exam's wait: a pace of none while the bell waits; `B26` kept as
+   its record.** `GUARD.1` took the frames the bell waited out of the time;
+   with the time a sum, a pace of none stands it still by itself, and the
+   game's first frame after the wait stands at 9:30 too, as before. `B26`, the
+   frames waited, enters the time no more and stays the record of the wait
+   that caveat 16 names, computing at each frame of the exam and never after.
+   *The alternative:* `B26` struck and caveat 16 pointed at `B25`.
+
+9. **`BD-7` restated.** A frame is twenty seconds of the market's time in
+   the regular session and two minutes between sessions; the Day sheet alone
+   reads the frame, at the first frame, and its time in seconds, `B4`, the one
+   calendar cell that changes every frame once the bell has rung; every other
+   formula reads the day, the time to the five minutes, the session and its
+   tick, each changing at most once every five minutes of the market's time,
+   fifteen frames in the session and two or three between sessions; so an
+   ordinary frame computes `B4`, `B5` and `B14` as now. Held as now by the
+   scan, its list `Clock!B1`, `Day!B4` and `Day!B26` with their twins, and by
+   the census's `(every-frame 0)`.
+
+10. **The caveats (`BD-5`), drafts.** Row 13 rewritten, "Prices move every
+    five minutes and stand still between.", its place the tick, `Day!B22`;
+    row 14's "the half hours" become "the five minutes", its place the index
+    now, `Market!B112`; rows 3 and 5 at `Market!B26` and row 4 at
+    `Market!A9:E12`, where the rows moved. And row 19, owed by the factor:
+    "Within a day prices swing four times wider than the closes move, by a
+    setting, and every swing is back by the close." beside "A day's swings
+    and its close are one market: a market that swings widely within its days
+    moves widely between them.", and Management's response, "Volatility keeps
+    business hours.", its place `Market!B6`. Row 11 stays true: the $1 share
+    moves a penny at a time, and its closes are the waves'. *(Amended at the
+    owner's hand test, 2026-10-19, the drafts kept, "The caveat reads fine for
+    now": row 19 at the factor of 16, "sixteen times wider", its field widened
+    to 105 characters; and a twentieth, the sure dip the hand test's numbers
+    found, drafts: "A share bought below the day's close is a sure gain: every
+    dip comes back by the closing bell." beside "A price that falls during the
+    day can keep falling, and studies of day traders find most of them lose
+    money." and Management's response, "Management attributes the trading
+    desk's results to skill.", its place `Market!B26`, the close shown from the
+    bell; the studies marked for `MENU.8`'s read (*check*: Barber, Lee, Liu and
+    Odean on Taiwan's day traders, 2014, and Chague, De-Losso and Giovannetti on
+    Brazil's, 2019).)*
+
+11. **The kind first year, restated.** The closes keep it, the waves
+    untouched (`BD-3`): the year's low 0.98943 on day 91 and day 365 at
+    1.10155. The hours wander four times wider, so the hand's test that every
+    half hour stays above 0.98 becomes every tick above the bound the build
+    finds at the factor of 4, within the year's first four months, recorded
+    beside it. *(Found at the build: 0.95006 on day 39 at 12:25. Amended with
+    decision 5 at the owner's hand test: 0.82 at the factor of 16, the year's
+    lowest tick 0.8210 the same day and minute, and the rungs' bound no seed
+    passes 1, 15, 239 and 1,719 cents.)*
+
+12. **No player control of time (the owner's standing rule).** No speed key,
+    no fast-forward act, no license or upgrade that changes the clock. The
+    paces, `Day!B1` and `B28`, and the Clock's rate stay cells a person may
+    edit (`AD-6`), as the tests write them; whether a scored run fixes them at
+    its start is `CRITIC.1`'s to scope (Found).
+
+13. **The oracle (rec).** The hand's calendar counts seconds at its two
+    paces, a step chosen by where the last frame stood, each five minutes
+    reached turning the tick while the session is today's and the bell
+    ringing at 9:30 within a step; its path of 78 ticks with the factor; the
+    bridge's widest stray, 39 steps, proved over every tick by the extreme of
+    a sum linear in each step, where `POT.10` enumerated all 8,192 patterns of
+    thirteen. The runs: every frame of a weekday and its night at the default
+    pace, Monday's bell through Tuesday's first ticks, where ten days stood;
+    the hour's year, the eight hundred days and the hundred years at a frame a
+    day, and the year at difficulty 0, each at its own pace, both paces
+    written; the hustle's session at a frame each quarter hour, where each
+    half hour stood, so that its claims fall at 10:15 and its due is spelled
+    to the minute; the exam's and the waiver's frames at the default pace;
+    `PLATE.1`'s and `PLATE.2`'s sessions at the default pace, their acts at
+    their frames, now the ticks at 9:35, 9:40 and 9:45 where 10:00, 10:30 and
+    11:00 stood, and their closing bell's acts at frames 1,171 and 1,172
+    where 196 and 197; a factor written as a person's edit; and `B19` written
+    open at every hour. Mutants, each into the source or a content file by
+    one anchor, each failing the test named for it: the session's pace the
+    one between; the pace between sessions off the bells, 100 seconds; the
+    bell's wait walked, no pace of none; the pace keyed on `B19`; the tick at
+    the half hour; the steps unscaled; the factor not read; the bridge
+    unpinned; the clock to the half hour; the due spelled to the half hour;
+    the draws 17 a day; the tick's `CHOOSE` a step behind; the weekend in
+    session; caveat 19's place empty.
+
+14. **What it costs, measured (rec).** Natively, as `PLATE.2` measured it: a
+    release runner over `HEAD`'s texts and this tree's, alternated, pinned to
+    the performance cores and opted out of Windows' throttling, a fixed
+    computation before and after: the pass and the load; an ordinary frame,
+    a tick, a five minutes' turn between sessions, the bell, the close,
+    midnight and the first frame, each beside `HEAD`'s ordinary frame, half
+    hour, mark, bell, close, midnight and first frame. The browser's frames
+    at the hand test.
+
+15. **The stale places, rewritten at the build.** In `OMAKASE.md`: the line
+    (🟡); the contract's pace; `COURSE.0`'s table; `BD-7` (decision 9); `BD-5`'s
+    taken rows; `POT.5`'s line, the factor across days; `CRITIC.1`'s first card
+    at 1:11:03; `MISE.4`'s fixture, both paces written a day; `MISE.5`'s year of
+    frames; the open decisions' pace. The source's opening comment, its notes
+    and the Day, Dice, Market, Hustle, Ledger and views' comments;
+    `kitchen.vla`'s `as-of`; the caveats' file; the hand's module comment, its
+    calendar, path, constants and tests; `oracle/tests/cartridge.rs`' module
+    comment and the sessions' comments; the describe golden; `Delta/CLAUDE.md`'s
+    calendar paragraph; the memory.
+
+16. **The hand test, the owner's, on the page built here:** the Portfolio's
+    clock at 9:30, 9:35 and on, five minutes a half second, the prices with
+    it; the session's 39 seconds; 16:00 and the night at an hour a second, the
+    clock's minutes turning fast; Tuesday's bell 17.5 seconds after the close;
+    the factor written in the drawer, 1 and then 6, and the swings with it;
+    the ticks' flicker judged (decision 3's fallback); Gigs' due to the five
+    minutes; the Day sheet's paces and the caveats' rows 13, 14 and 19;
+    Build's bytes the file's.
+
+**Found at the scoping**, none minted:
+- *The license's extended hours.* Its item decides what prices do outside
+  the session, where they stand at the last close today, a pre-market price
+  wanting a path of its own; and that five-minute ticks fall two and a half
+  frames apart at the pace between sessions, an hour a second, twelve ticks
+  a second where the session's are two.
+- *The closes' texture is `POT.5`'s.* With the first week inside the first
+  five minutes of play, the closes at the seed move 0.09% across it, rung 4
+  $100.00 to $99.93, and slide 1.0% across the first hour's eleven weeks, a
+  smooth line (*derived*, verified at the build); only `POT.5`'s walk gives
+  them texture, and its place in the order is the owner's call.
+- *A scored run's pace.* Whether a scored run fixes the paces and the rate at
+  its start, as `POT.6` fixes the tier, is `CRITIC.1`'s to scope.
+- *The bound and the factor.* No price reaches zero while the five minutes'
+  swing times 39 stays under 1, a factor up to 22 at the half hour's 0.0028;
+  a person's edit past it can, at some seed, in principle.
+- *The time spelled twice.* `Day!B16` and `Hustle!B19` spell a time of day
+  alike, each inside a formula of its own; a third writing would bring a verb
+  to `kitchen.vla`.
+
+**The predictions, before any number.** The numbers column is filled at the
+build, P9 at the owner's hand test.
+
+| | What | Predicted | The number |
+|---|---|---|---|
+| P1 | the cartridge | 1,185 to 1,200 rows where 1,048, about 1,193: the Dice's 65 labels more, the Market's 65 session labels, its two settings' cells and one working with its label, the Day's six, caveat 19's four; 785 to 795 formula cells where 526, about 789: the Dice's draws and uniforms 130 more, the session's steps and sums 130, the Day's two and the Market's one | *Measurement*: the runner printed `(rows 1192) (loads yes)`, one under about 1,193; 789 formula cells, as about 789 predicted, the describe golden's count |
+| P2 | the describe golden | `(budget 30 789 23670 2000000)`, give or take five cells; the plan's shapes 204 to 208 where 203, `(every-frame 0)`, `(cycles 0)`; levels 34 or 35; the readers of `Day.last` 11 or 12 where 10, `Clock` 4; the Market's and the Dice's readers rows as before but for their counts; every shape renumbered from the Day sheet's on | *Measurement*: `(budget 30 789 23670 2000000)`, exactly; `(plan (shapes 206) (texts 203) (formulas 789) (levels 98) (runs 44) (lanes 256) (alone 533) (every-frame 0) (cycles 0))`; `(readers "Day.last" 12)`, `(readers "Clock" 4)`, `(readers "Dice" 10)`, `(readers "Market" 124 (most 8))` where 57 and `(readers "Caveats" 81 (most 8))` where 77; the shapes renumbered from the Day sheet's on. **Missed** in one: the plan's levels 98 where 34 or 35, the day's 82 draws a chain each reading the one above, 82 levels from the die, then their uniforms, the steps and the 78 steps so far, another chain, so that the index now stands at level 91 and the views after it; `alone` 533 where 270, the chains' 319 cells each evaluated alone, as the thirteen were |
+| P3 | the pass and the load | the pass 0.5 to 1.5 ms longer than `HEAD`'s; the load 0.5 to 1.5 ms longer | *Measurement*, one release runner over `HEAD`'s texts and this tree's (the source, the cartridge, the library and the caveats), six runs alternated, 200 passes and 200 loads a run, pinned to the performance cores and opted out of Windows' throttling, a fixed computation before and after within 1.1%: the pass 9.14 to 9.20 ms where `HEAD`'s took 8.04 to 8.14, the medians 1.05 apart, inside. **Missed** in one: the load 7.72 to 8.01 ms where 7.49 to 7.57, the medians 0.36 apart, under the 0.5 priced |
+| P4 | the step | an ordinary frame within 0.3 µs of `HEAD`'s; a tick within 15% of `HEAD`'s mark; a five minutes' turn between sessions within 20% of `HEAD`'s half hour's turn; the bell and the close within 15% of `HEAD`'s; midnight 10 to 25 µs above `HEAD`'s, its 65 more draws, steps and sums; the first frame 30 to 80 µs above `HEAD`'s | *Measurement*, the same runs, ten days of each text's own frames, the exam waived, 6,914 at `HEAD`'s pace and 14,714 at this one, each frame filed in a first pass by what its own cells say turned and timed in a second that reads nothing, three times over: an ordinary frame 2.3 µs where 2.0 to 2.1, inside at its edge; a tick 32.2 to 33.0 µs where `HEAD`'s mark took 31.1 to 31.8, inside; a five minutes' turn between sessions 13.3 to 13.6 where `HEAD`'s half hour took 13.0 to 13.3, inside; the close 37.2 to 39.2 where 34.8 to 35.7, inside; the first frame 287 to 294 µs where 258 to 267, the medians 31.5 apart, inside at its edge. **Missed** in two: midnight 52.0 to 62.5 µs where 25.9 to 30.0, the medians 31.5 apart, over the 25 priced, its 260 more cells each alone at about a tenth of a microsecond; and the bell 27.2 to 27.5 µs where 22.7 to 22.9, a run's 35.4 set aside, 20% over, past the 15% priced, the session's own cells, in session and the pace now, turning with it |
+| P5 | the suite | 75 to 77 tests where 73; the weekday every frame 0.8 to 1.6 s alone; `PLATE.1`'s and `PLATE.2`'s sessions 1.2 to 2.2 s each, to the closing bell's frame 1,171; the hour's year within 30% of `HEAD`'s, its windows wider; the whole on eight threads within 1.5 s of `HEAD`'s | *Measurement*, the two test binaries alternated, each pinned and opted out, two rounds: 76 green, the crate's 29 and the cartridge's 47, inside; the weekday at every frame 0.88 to 0.89 s alone, where the ten days took 3.07, inside; `PLATE.1`'s session 1.50 s and `PLATE.2`'s 1.63 to 1.64 where 0.27 and 0.29, inside; the hour's year 6.23 s where 5.50 to 5.53, 13%, inside; the whole on eight threads 6.93 to 7.09 s where 6.19 to 6.23, inside. At the first green run the hour's year took 9.50 s and the whole 11.34, each frame parsing the day's 82 draws and 78 steps afresh; the build holds them whole at each day's turn and byte for byte between, as the Portfolio is held between its ticks (below). The hundred years 6.12 to 6.31 s where 5.07 to 5.12, the year at difficulty 0 2.38 to 2.40 where 1.95 to 1.97, the eight hundred days 1.22 where 0.65, a frame a day turning the day at every frame; the hustle's session 0.62 to 0.64 where 0.31 to 0.32, its frames doubled |
+| P6 | the page | the cartridge's block 8,000 to 12,000 characters longer, the source's 6,000 to 10,000, the caveats' 250 to 400 | *Measurement*: 2,473,548 characters where `HEAD`'s texts make 2,462,137, built in scratch with the same module: the caveats' block 296 longer, inside. **Missed** in three: the cartridge's 5,749, under its 8,000, and the source's 5,233, under its 6,000, the 130 labels of the draws and the five minutes shorter than priced; and the library's 133, not priced at all, its comments, as `MENU.1` and `POT.10` once forgot it; the four adding to the page's growth exactly |
+| P7 | the checks | four checks and four controls green, none edited, no file added under `src/` | *Measurement*, as predicted: ALL GREEN, four checks and four controls, none edited, no file added under `src/`; `cargo fmt --check` and `cargo clippy -D warnings` clean |
+| P8 | the numbers given | the real-time figures of decision 1 exact; at the seed over day 0's first 300 market minutes at five-minute ticks, the $1 share moving on 10 of 60 ticks at a factor of 1 and on 26 at 4, from $0.97 to $1.02, the $100 share on 59 of 60, $98.84 to $100.93, and half-hour marks at a factor of 1 moving the $1 share 2 of 10 times, as the deliberation's scratch found them; the closes 0.09% across the first week and 1.0% across the first hour | *Measurement*, by the hand at the seed in a scratch runner, as predicted: the frames of the game's pace put day 30's midnight at 23:45.5 of play, the first dividend's day and the quarter's end at 1:11:03.0, day 365 at 4:47:13.0, the first session's close at 0:39.0, Tuesday's bell at 0:56.5 and the second Monday's at 5:30.5; at five-minute ticks over day 0's first 300 minutes, the $1 share moving on 10 of 60 ticks at a factor of 1, $0.99 to $1.01, and on 26 at 4, $0.97 to $1.02; the $100 share on 58 of 60 at 1 and 59 at 4, $98.84 to $100.93; and `POT.10`'s half hours at 1 moving the $1 share 2 of 10 times; the closes: day 4 at 0.99913, rung 4 $99.93, and day 77 at 0.98970, 1.03% down. And the year's lowest tick, 0.95006 on day 39 at 12:25 at the factor of 4 (0.98233 at 1), where its lowest close is 0.98943 on day 91 |
+| P9 | the hand test | the clock and the prices turning together twice a second through a session of 39 seconds; the night at an hour a second; the factor in the drawer changing the swings and no close; Gigs' due to the five minutes; the caveats' three rows; Build's bytes the file's | The owner's, on the page built here (`web/index.html`, 2,473,548 characters), 2026-10-19: two moves a second kept, "it feels more like a live, actual, active market"; the Day sheet on Saturday at 2:40, its paces 120 and 20, `B29` 0 and `B30` 120, the time 441,840 seconds and the bell having waited 362 frames; the Market's factor and its session's rows; the caveats' rows read "fine for now"; Build's bytes the file's, "same bytes (80804 characters)"; then the factor set at 16 and the clock between sessions to the half hour, the owner's words, and the commit (the paragraph below) |
+
+**What the build found.** The pace held as the decisions drew it. The time
+summed over its twin met the hand's clock, counted five minutes at a time in
+seconds, at every frame of every run from the first: the weekday and its
+night at the game's pace, 1,170 steps of twenty seconds landing on the
+closing bell and 525 of two minutes on Tuesday's opening one; the hour's
+year, the eight hundred days and the hundred years at their own paces, both
+paces written; the exam's frames, the time standing at 9:30 through the wait
+by a pace of none, the game's first frame there too and 9:40 thirty frames
+on; and the hustle at a frame each quarter hour, where every one of its four
+claims fell at a quarter past or a quarter to, so that each due is spelled to
+the minute, where three were priced. The hand's own tests hold the calendar's
+turns at the frames the arithmetic gives, 1,171 the closing bell, 1,696
+Tuesday's, 9,916 the second Monday's and 516,991 the year's turn, a step that
+crosses the bell ringing it within the step, every open and every close of the
+first year to the bit at every five minutes, and the bridge's widest stray of
+39 steps by the extreme of a sum linear in its steps, the rule held first
+against all 8,192 patterns of thirteen. The rungs' bound no seed passes falls
+to 8, 72, 685 and 3,786 cents at the factor of 4, where it stood at 11, 94,
+818 and 4,327. Fifteen mutants, each written into the source or the caveats'
+file by one anchor, applied once and expanded before its test ran, each failed
+the test named for it: the session's pace the one between and the pace between
+off the bells, the weekday's first frame; the bell's wait walked, the exam's
+first frame; the pace keyed on the open, `B19` written open, at the 1,171st
+frame; the time summed over this frame's pace, refused at the pass as a cycle;
+the tick at the half hour, the clock to the half hour, the steps unscaled, the
+bridge unpinned, the draws 17 a day and the tick's `CHOOSE` a step behind, the
+weekday; the factor not read, the factor written 1; the due spelled to the
+half hour, the hustle at its first claim; the weekend in session, the hour's
+year at Saturday's 9:30; and caveat 19's place empty. At the first green run
+the suite's whole took 11.3 s where `HEAD`'s took 7.3, the long runs parsing
+the day's 82 draws and 78 steps at every frame; held whole at each day's turn
+and byte for byte between, as the Portfolio is held between its ticks, the
+dice's and the table's records compared as texts, the hour's year fell from
+9.5 s to 6.2 and the whole to 7.0 (P5). Natively a tick costs what a mark did
+and a five minutes between sessions what a half hour did, an ordinary frame a
+quarter of a microsecond more, and midnight twice its cost, its 260 more cells
+of the dice and the session's table each alone (P4): at the game's pace about
+130 µs of stepping a second in session and 200 between, natively.
+
+Found at the build, none minted:
+- *The plan's depth.* The day's draws are a chain, each the one above times
+  16807, and the steps so far another, so that the plan stands 98 levels deep
+  where 34 and the index now at level 91. Nothing measured pays for it beyond
+  midnight's cells; a draw found by its place from the die, the hand's way,
+  would let the dice compute in lanes, at the price of a jump's multiplier a
+  draw, `16807^k` modulo the prime, in a column of constants.
+- *The clock between sessions.* At an hour a second the clock to the five
+  minutes turns twelve times a second, and the views' date with it, 2,125 of
+  ten days' 14,714 frames each a patch of every view's date (P4's turns): the
+  hand test's to judge, decision 6's alternative one cell's spelling.
+
+**The owner's hand test.** On the page built here, 2026-10-19, over three
+screenshots: the Day sheet on Saturday at 2:40, frame 8,635, its paces 120 and
+20, out of session and the pace now 120, the time 441,840 seconds and the bell
+having waited 362 frames; the Market sheet at frame 8,976, the factor 4 at `B6`
+and the session's rows from "9:30 to 9:35"; and the Caveats sheet's rows 13, 14
+and 19. Build's bytes the file's, "same bytes (80804 characters)". Decision 3
+kept, the owner's words: "Two moves per second is fine, it feels more like a
+live, actual, active market this way." Decision 10's drafts kept: "The caveat
+reads fine for now. I expect them to change as the game matures to account for
+gaps in realism." And the factor's number opened again: "I'm almost tempted to
+bump intra-day volatility factor to 16 to promote day trading to alleviate the
+feeling of waiting for assets to grow over time. Day trading is, after all, the
+most common activity in the real world market which traders use to stave off
+the boredom of value investing (wink)." Asked of the hand test, not of this
+dish: "Why does changing the column width on one sheet change the same column
+on every other sheet? I thought that was already minted and addressed in an
+Alonzo item where each tab becomes its own independent sheet?" Answered: Alonzo's
+`ENGINE.18` gave each view the widths its own record names; the width a person
+drags is one map for every sheet, keyed by the column's letters
+(`web/viewport.js` at `v0.2.0`, `state.widths`), which `PLATE.1`'s hand test
+found and `MISE.6` holds as a finding for Alonzo, never minted there, its next
+free `ENGINE.26`.
+
+What a factor of 16 does, by the hand at the seed over the first year at a
+frame each five minutes (*derived*, beside 4 and 8): the day's widest stray
+from its line 6.91% at p50 and 17.33% at the most, where 4 strays 1.73% and
+4.33%; the year's lowest tick 0.8210, on day 39 at 12:25, where 4 reaches
+0.9501, so the kind year's floor, `KIND_TICK`, would fall to 0.82; the $1 share
+moving on 39% of ticks where 21%; and the rungs' bound no seed passes 1, 15,
+239 and 1,719 cents, the $1 share's a cent, every price above zero up to a
+factor of 22. And what it pays: the session is a bridge to a close fixed by the
+waves before the bell (caveat 14), shown at `Market!B26` from the bell, and the
+next bell opens at it to the cent, so a share bought below the close is sold at
+or near it for a gain known in advance. The best such trade a session, bought at
+the session's lowest tick below its close, averages at p50 2.9% on the $1 share
+and 1.0% on the $100 at a factor of 4, 5.4% and 2.1% at 8, and 11.4% and 4.3% at
+16: day trading made riskless, its gains growing with the factor, until
+`POT.5`'s walk lets a close wander from the waves as far as the hours do.
+
+Then, the same day, the owner's words: "Factor of 16 approved; only show the
+half hour while the market is closed; then commit before suggesting next steps
+from Buffet's OMAKASE.md." So decisions 5, 6, 7, 10 and 11 were amended, each
+dated above: the factor 16; the time shown a cell of its own, `Day!B31`, the
+five minutes in session and the half hour between, keyed on the bells as the
+pace is; the hustle's due a day from the time shown; caveat 19 at sixteen times
+and a twentieth naming the sure dip, drafts; and the kind year's floor 0.82.
+What moved: 1,198 rows and 790 formula cells, `(budget 30 790 23700 2000000)`,
+`(plan (shapes 207) (texts 204) (formulas 790) (levels 98) ...)`; 76 tests
+green, the test writing `B19` open now holding the time shown too; eighteen
+mutants caught, four new, each by the test named for it: the clock to the half
+hour in session too and to the five minutes between sessions, the weekday's;
+the clock keyed on the open, the open test's at 16:05, `B31` 965 where 960; and
+the due counted from the model's five minutes, the hustle's at its claim seen at
+0:15 on day 7. Natively, the same runner over `HEAD`'s texts and these, six runs
+alternated: a five minutes' turn between sessions 2.6 to 2.7 µs where it took
+13.3 to 13.6 with the clock to the five minutes, the views' date now turning at
+the half hour alone, so that a second between sessions steps in about 75 µs
+where 200; a tick 33.5 to 34.0 where `HEAD`'s mark took 31.1 to 31.7; midnight
+50.4 to 59.3; an ordinary frame 2.3. The page 2,475,244 characters, its blocks
+the files'. Committed at the owner's word.
 

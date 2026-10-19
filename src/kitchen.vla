@@ -45,6 +45,8 @@
 ; the same day, the owner's word, "Thousands separators need to be implemented": dollars
 ; groups the thousands by commas, and the Portfolio's change, its signed twin, came here
 ; as signed-dollars, so that the grouping is one text written once for both.
+; Since POT.11 (2026-10-19): as-of's time to the five minutes, which the Day sheet spells
+; now, the verb's formula unchanged.
 
 ; ---- the dice (POT.1) ---------------------------------------------------------------
 ; A stream is a die and its draws. The die is one cell, the stream's state, which the
@@ -193,7 +195,7 @@
 ; Gigs, the second view, wrote them again, so they came here at their second writing;
 ; the bell came here at its first dish, both views writing it; each a verb of one formula
 ; row taking the view's sheet and a cell. The date is the calendar's day's name, its
-; year and day of the year, each from 1, and its time to the half hour, unaudited, as
+; year and day of the year, each from 1, and its time to the five minutes, unaudited, as
 ; every number of a view is until the examiner calls (GUARD.3). The bell's line says
 ; whether the market is open and when it opens or closes: open; before the game's
 ; first bell, which waits for the exam (GUARD.1); a trading day before its bell; after
@@ -204,7 +206,7 @@
 ; reference, so that no view holds its text in a formula.
 
 (defmacro (as-of sheet at)
-  "a view's date in one cell, from the Day sheet's day's name, year, day of the year and time to the half hour: As of Monday, year 1, day 1, 9:30 (unaudited)"
+  "a view's date in one cell, from the Day sheet's day's name, year, day of the year and time to the five minutes: As of Monday, year 1, day 1, 9:35 (unaudited)"
   (formula sheet at "=\"As of \"&Day!$B$18&\", year \"&Day!$B$6&\", day \"&Day!$B$7&\", \"&Day!$B$16&\" (unaudited)\""))
 
 (defmacro (bell sheet at)

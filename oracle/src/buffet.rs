@@ -92,6 +92,16 @@
 //! other at a switch, and keep one act a frame by gating each command on the
 //! clicks; the hand flips the pocket it holds, and takes a frame's acts in
 //! turn, a click's before a command's, stopping at the first it takes.
+//!
+//! The pace (`POT.11`) shares none with its cells either. The cells sum the
+//! time over its twin, each frame the last frame's time and its pace, the
+//! pace chosen by a cell that compares the time to the five minutes with the
+//! bells; the hand moves its clock five minutes at a time by the pace where
+//! it last stood, by its own reading of the hour and the weekday, hears the
+//! bell at the five minutes it rings and turns the tick at every other while
+//! the session is today's. The path's 78 steps share the bridge with the
+//! cells as the half hours did; the hand finds each draw by its place beneath
+//! the day's die, where the cells step a column down from it.
 
 use std::collections::BTreeSet;
 
@@ -131,14 +141,39 @@ const _: () = assert!(EXAM_OFFSET / DAY_STRIDE > 1_000_000);
 const _: () = assert!(EXAM_OFFSET / DAY_STRIDE / DAYS_A_YEAR > 2_800);
 const _: () = assert!(MODULUS - 1 - EXAM_OFFSET > 1_000_000_000);
 
-/// The minutes of the market's time a frame (`POT.10`), the Day sheet's `B1`:
-/// two, so thirty frames an hour and an hour a second at the manifest's rate,
-/// which a test holds; a person who writes 60 plays a frame an hour, and
-/// 1,440 a frame a day.
-pub const MINUTES_A_FRAME: u64 = 2;
-/// The minutes a frame for a frame an hour and for a frame a day, the
-/// oracle's longer runs.
-pub const AN_HOUR: u64 = 60;
+/// The game's pace (`POT.11`, the owner's words of 2026-10-19): the seconds of
+/// the market's time a frame in the regular session, the Day sheet's `B28`,
+/// twenty, ten minutes a second at the manifest's rate; and between sessions,
+/// `B1`, a hundred and twenty, an hour a second, as every hour ran before; the
+/// manifest's rate a test holds beside them.
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+pub struct Pace {
+    pub session: u64,
+    pub between: u64,
+}
+
+impl Pace {
+    /// One pace at every hour, both cells written alike: the oracle's longer
+    /// runs, a frame each quarter hour, each hour or each day.
+    pub const fn every(seconds: u64) -> Pace {
+        Pace {
+            session: seconds,
+            between: seconds,
+        }
+    }
+}
+
+pub const PACE: Pace = Pace {
+    session: 20,
+    between: 120,
+};
+/// The seconds of a quarter hour, an hour and a day, each one pace at every
+/// hour for the oracle's longer runs: a frame each quarter hour, each hour,
+/// each day.
+pub const QUARTER_HOUR: u64 = 900;
+pub const AN_HOUR: u64 = 3_600;
+pub const A_DAY_LONG: u64 = 86_400;
+/// The minutes of a day, the calendar's own unit below its time in seconds.
 pub const A_DAY: u64 = 1_440;
 /// The days a year, every one a day of the calendar, five in seven a session.
 pub const DAYS_A_YEAR: u64 = 365;
@@ -153,11 +188,16 @@ pub const CLOSING_BELL: u64 = 960;
 /// The first frame's time, `B9`: the opening bell on day 0, a Monday, so that
 /// the game opens on a market that moves.
 pub const FIRST_MINUTE: u64 = 570;
-/// The closing mark, `B23`: the session's mark at the closing bell, and from
-/// it to the next bell, the marks being 0 at the opening bell and one more at
-/// each half hour of the session, 10:00 to 16:00 (the owner's word at the
-/// hand test: "Why don't prices move on the half hour, too?").
-pub const CLOSING_MARK: u64 = 13;
+/// The minutes of a tick (`POT.11`, the owner's approval of 2026-10-19): a
+/// price every five minutes of the market's time, where `POT.10` priced each
+/// half hour; and the ticks a half hour, six, by whose root a tick's step is
+/// scaled so that the half hour's spread holds.
+pub const MINUTES_A_TICK: u64 = 5;
+pub const TICKS_A_HALF_HOUR: u64 = 6;
+/// The closing tick, `B23`: the session's tick at the closing bell, and from
+/// it to the next bell, the ticks being 0 at the opening bell and one more at
+/// each five minutes of the session, 9:35 to 16:00.
+pub const CLOSING_TICK: u64 = (CLOSING_BELL - OPENING_BELL) / MINUTES_A_TICK;
 /// The days' names, Monday's first, as the views show them.
 pub const DAY_NAMES: [&str; DAYS_A_WEEK as usize] = [
     "Monday",
@@ -169,8 +209,16 @@ pub const DAY_NAMES: [&str; DAYS_A_WEEK as usize] = [
     "Sunday",
 ];
 
-// The game opens on the opening bell, and the hand's calendar counts from it.
+// The game opens on the opening bell, and the hand's calendar counts from it;
+// a session is 78 ticks; and every bell is a whole number of the pace's
+// steps from midnight, so the steps between sessions land on the opening bell
+// and the session's on the closing bell, 1,170 of them (`POT.11`).
 const _: () = assert!(FIRST_MINUTE == OPENING_BELL);
+const _: () = assert!(CLOSING_TICK == 78);
+const _: () =
+    assert!(OPENING_BELL * 60 % PACE.between == 0 && CLOSING_BELL * 60 % PACE.between == 0);
+const _: () = assert!((CLOSING_BELL - OPENING_BELL) * 60 / PACE.session == 1_170);
+const _: () = assert!((CLOSING_BELL - OPENING_BELL) * 60 % PACE.session == 0);
 /// The seed of every first game, the manifest's `(seed 791886)`: one market
 /// and one exam for every first player, chosen by the owner on 2026-10-14
 /// for a kind first year, the index dipping 1.1% to day 91 and closing the
@@ -235,21 +283,24 @@ pub fn uniform(draw: u64) -> f64 {
     draw as f64 / MODULUS as f64
 }
 
-/// The calendar (`POT.1`, counted in minutes since `POT.10`): a frame at a
-/// time, its minutes rolling into the hour, the hour into the day, the day
-/// into the week and the year; the session the hand last heard the bell for,
-/// and the one before it; and the session's mark, counted as its hours turn.
+/// The calendar (`POT.1`, counted in minutes since `POT.10` and in seconds at
+/// two paces since `POT.11`): a frame at a time, its seconds rolling into the
+/// minute, the minute into the hour, the hour into the day, the day into the
+/// week and the year; the session the hand last heard the bell for, and the
+/// one before it; and the session's tick, counted as its five minutes turn.
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 pub struct Calendar {
-    pub minutes_a_frame: u64,
+    pub pace: Pace,
     pub days_a_year: u64,
     /// The frame last counted: 0 before the first.
     pub frame: u64,
     /// The day, from 0.
     pub day: u64,
-    /// The hour of the day, from 0, and the minute of the hour.
+    /// The hour of the day, from 0, the minute of the hour and the second of
+    /// the minute.
     pub hour: u64,
     pub minute: u64,
+    pub second: u64,
     /// The day of the week, 0 a Monday.
     pub weekday: u64,
     /// The year, from 1, and the day of the year, from 1.
@@ -263,10 +314,10 @@ pub struct Calendar {
     /// The session before it; the first session's is its own, so that the
     /// game opens at the starts.
     pub before: u64,
-    /// The session's mark: 0 at the opening bell, one more as each half hour
-    /// of the session turns, [`CLOSING_MARK`] from the closing bell to the
-    /// next.
-    pub mark: u64,
+    /// The session's tick: 0 at the opening bell, one more as each five
+    /// minutes of the session turns, [`CLOSING_TICK`] from the closing bell to
+    /// the next.
+    pub tick: u64,
     /// Whether the exam holds the bell at this frame (`GUARD.1`), the Day
     /// sheet's `B25`: the game not yet begun, the market closed and its time
     /// standing; and the frames before this one it held it, `B26`.
@@ -275,22 +326,23 @@ pub struct Calendar {
 }
 
 impl Calendar {
-    /// The calendar before its first frame, the minutes a frame apart.
-    pub fn new(minutes_a_frame: u64, days_a_year: u64) -> Calendar {
+    /// The calendar before its first frame, at a pace.
+    pub fn new(pace: Pace, days_a_year: u64) -> Calendar {
         Calendar {
-            minutes_a_frame,
+            pace,
             days_a_year,
             frame: 0,
             day: 0,
             hour: 0,
             minute: 0,
+            second: 0,
             weekday: 0,
             year: 1,
             day_of_year: 1,
             turned: false,
             session: 0,
             before: 0,
-            mark: CLOSING_MARK,
+            tick: CLOSING_TICK,
             waits: false,
             waited: 0,
         }
@@ -304,56 +356,69 @@ impl Calendar {
     }
 
     /// One frame on, `waits` whether the exam holds the bell at the new
-    /// frame. The first frame stands at the first frame's time on day 0; a
-    /// frame after one the bell waited stands where that one stood, the
-    /// frames waited counted; each other frame is its minutes on, a half hour
-    /// at a time: each half hour reached turns the session's mark while the
-    /// session is today's, the hour's second rolling into the next hour and
-    /// the day's last hour into the next day. Then, if it is a trading day's
-    /// hours and the session is not today's, the bell has rung: the session is
-    /// today's, the one before it the last, and the mark 0.
+    /// frame. The first frame stands at the first frame's time on day 0, the
+    /// opening bell, which rings there. Each other frame is the last frame's
+    /// pace on (`POT.11`): none while the bell waited, the frames waited
+    /// counted; the session's seconds if the last frame stood in session, and
+    /// the seconds between sessions if it did not. The clock moves five
+    /// minutes at a time, its seconds rolling into the minute, the hour and
+    /// the day; at each five minutes reached, the opening bell of a trading
+    /// day rings, the session today's, the one before it the last and the
+    /// tick 0, and any other five minutes turns the tick while the session is
+    /// today's, to the closing tick at the closing bell.
     pub fn tick_waiting(&mut self, waits: bool) {
-        let stands = self.frame >= 1 && self.waits;
-        if stands {
+        let step = self.pace_now();
+        if self.frame >= 1 && self.waits {
             self.waited += 1;
         }
+        let first = self.frame == 0;
         self.frame += 1;
         self.waits = waits;
-        self.turned = self.frame == 1;
-        if self.frame == 1 {
-            (self.hour, self.minute) = (FIRST_MINUTE / 60, FIRST_MINUTE % 60);
-        } else if !stands {
-            let mut left = self.minutes_a_frame;
-            while left > 0 {
-                let to_half = 30 - self.minute % 30;
-                if left < to_half {
-                    self.minute += left;
-                    break;
-                }
-                left -= to_half;
-                self.minute += to_half;
-                if self.minute == 60 {
-                    self.minute = 0;
-                    self.hour += 1;
-                    if self.hour == 24 {
-                        self.hour = 0;
-                        self.next_day();
-                    }
-                }
-                if self.session == self.day && self.mark < CLOSING_MARK {
-                    self.mark += 1;
+        self.turned = first;
+        if first {
+            (self.hour, self.minute, self.second) = (FIRST_MINUTE / 60, FIRST_MINUTE % 60, 0);
+            self.ring();
+            return;
+        }
+        let mut left = step;
+        while left > 0 {
+            let into = (self.minute % MINUTES_A_TICK) * 60 + self.second;
+            let to_tick = MINUTES_A_TICK * 60 - into;
+            if left < to_tick {
+                self.second += left;
+                self.minute += self.second / 60;
+                self.second %= 60;
+                break;
+            }
+            left -= to_tick;
+            let at = self.minute * 60 + self.second + to_tick;
+            (self.minute, self.second) = (at / 60, 0);
+            if self.minute == 60 {
+                self.minute = 0;
+                self.hour += 1;
+                if self.hour == 24 {
+                    self.hour = 0;
+                    self.next_day();
                 }
             }
+            if self.weekday < TRADING_DAYS && self.hour * 60 + self.minute == OPENING_BELL {
+                self.ring();
+            } else if self.session == self.day && self.tick < CLOSING_TICK {
+                self.tick += 1;
+            }
         }
-        if self.trading() && (self.frame == 1 || self.session != self.day) {
-            self.before = if self.frame == 1 {
-                self.day
-            } else {
-                self.session
-            };
-            self.session = self.day;
-            self.mark = 0;
-        }
+    }
+
+    /// The opening bell heard: the session today's, the one before it the
+    /// last session, or its own at the game's first, and the tick 0.
+    fn ring(&mut self) {
+        self.before = if self.frame == 1 {
+            self.day
+        } else {
+            self.session
+        };
+        self.session = self.day;
+        self.tick = 0;
     }
 
     /// The day turned: the next weekday, the next day of the year, and the
@@ -372,32 +437,67 @@ impl Calendar {
         self.turned = true;
     }
 
-    /// The time of day to the half hour, in minutes after midnight, the Day
-    /// sheet's `B15`.
+    /// The time of day to the five minutes, in minutes after midnight, the
+    /// Day sheet's `B15`; and to the half hour.
+    pub fn five(&self) -> u64 {
+        self.hour * 60 + self.minute - self.minute % MINUTES_A_TICK
+    }
     pub fn half_hour(&self) -> u64 {
         self.hour * 60 + if self.minute >= 30 { 30 } else { 0 }
     }
 
-    /// The time in minutes from day 0's midnight, `B4`, and to the half hour,
-    /// `B14`.
-    pub fn minutes(&self) -> u64 {
-        self.day * A_DAY + self.hour * 60 + self.minute
+    /// The time shown, in minutes from day 0's midnight, `B31`, and of the
+    /// day, the clock every view shows (`POT.11`, the owner's word at its hand
+    /// test: "only show the half hour while the market is closed"): the five
+    /// minutes in session, where the prices turn with it, and the half hour
+    /// between sessions, where an hour passes a second. The cells round the
+    /// time to the five minutes down to the half hour; the hand reads its hour
+    /// and its minute.
+    pub fn shown(&self) -> u64 {
+        self.day * A_DAY + self.clock()
     }
-    pub fn half_hours(&self) -> u64 {
-        self.day * A_DAY + self.half_hour()
+    pub fn clock(&self) -> u64 {
+        if self.in_session() {
+            self.five()
+        } else {
+            self.half_hour()
+        }
     }
 
-    /// Whether it is a trading day's hours: a trading day, from its opening
-    /// bell's half hour to its closing bell's, the session's own whether or
-    /// not the bell waits.
-    pub fn trading(&self) -> bool {
-        self.weekday < TRADING_DAYS && (OPENING_BELL..CLOSING_BELL).contains(&self.half_hour())
+    /// The time in seconds from day 0's midnight, `B4`, and to the five
+    /// minutes in minutes from day 0's midnight, `B14`.
+    pub fn seconds(&self) -> u64 {
+        ((self.day * A_DAY + self.hour * 60 + self.minute) * 60) + self.second
+    }
+    pub fn five_minutes(&self) -> u64 {
+        self.day * A_DAY + self.five()
     }
 
-    /// Whether the market is open, `B19`: a trading day's hours, and the bell
-    /// not waiting for the exam (`GUARD.1`).
+    /// Whether the clock stands in the regular session, `B29`: a trading day,
+    /// from its opening bell to its closing one, whether or not the bell waits
+    /// and whatever a license opens (`POT.11`), which the pace is keyed on.
+    pub fn in_session(&self) -> bool {
+        self.weekday < TRADING_DAYS
+            && (OPENING_BELL..CLOSING_BELL).contains(&(self.hour * 60 + self.minute))
+    }
+
+    /// Whether the market is open, `B19`: in session, and the bell not
+    /// waiting for the exam (`GUARD.1`).
     pub fn open(&self) -> bool {
-        !self.waits && self.trading()
+        !self.waits && self.in_session()
+    }
+
+    /// The pace now, the seconds the next frame moves the clock, `B30`: none
+    /// while the bell waits, the session's in session, and the pace between
+    /// sessions at every other hour.
+    pub fn pace_now(&self) -> u64 {
+        if self.waits {
+            0
+        } else if self.in_session() {
+            self.pace.session
+        } else {
+            self.pace.between
+        }
     }
 }
 
@@ -491,19 +591,23 @@ const _: () = {
 
 /// The market of a seed (`POT.2`): tier 1's four phases, each a turn times
 /// the uniform of the market's draw 1 to 4 on the first day, and tier 1's
-/// cycle on that day.
+/// cycle on that day; and the volatility factor within the day (`POT.11`).
 #[derive(Clone, Copy, Debug, PartialEq)]
 pub struct Market {
     /// Tier 1's phases in radians, Kitchin's first: the Market sheet's
-    /// `E8:E11`, taken on day 0 and kept.
+    /// `E9:E12`, taken on day 0 and kept.
     pub phases: [f64; 4],
-    /// Tier 1's cycle on day 0, `B22`, which tier 1 divides by so that it
+    /// Tier 1's cycle on day 0, `B23`, which tier 1 divides by so that it
     /// opens at 1.
     pub first_cycle: f64,
+    /// The volatility factor within the day, `B6`: [`FACTOR`], unless a
+    /// person's edit wrote another.
+    pub factor: f64,
 }
 
 impl Market {
-    /// The market of `seed`, its phases from the hand's own dice.
+    /// The market of `seed`, its phases from the hand's own dice, at the
+    /// setting's factor.
     pub fn new(seed: u64) -> Market {
         let phases = std::array::from_fn(|k| {
             let draw = market_draw(seed, 0, k as u64 + 1);
@@ -512,42 +616,43 @@ impl Market {
         let mut market = Market {
             phases,
             first_cycle: 1.0,
+            factor: FACTOR,
         };
         market.first_cycle = market.cycle(0.0);
         market
     }
 
-    /// Tier 1's four terms on `day`, Kitchin's first: `B16:B19` or `C16:C19`.
+    /// Tier 1's four terms on `day`, Kitchin's first: `B17:B20` or `C17:C20`.
     pub fn terms(&self, day: f64) -> [f64; 4] {
         std::array::from_fn(|k| WAVES[k].term(self.phases[k], day))
     }
 
-    /// Tier 1's cycle on `day`, one and its four waves: `=1+B16+B17+B18+B19`.
+    /// Tier 1's cycle on `day`, one and its four waves: `=1+B17+B18+B19+B20`.
     pub fn cycle(&self, day: f64) -> f64 {
         let [kitchin, juglar, kuznets, kondratiev] = self.terms(day);
         1.0 + kitchin + juglar + kuznets + kondratiev
     }
 
-    /// The trend on `day`, the drift raised to the day: `=$B$2^B14`.
+    /// The trend on `day`, the drift raised to the day: `=$B$2^B15`.
     pub fn trend(day: f64) -> f64 {
         DRIFT.powf(day)
     }
 
     /// Tier 0 on `day`, the Kiddie Pool, the trend times one and the year's
-    /// wave: `=B20*(1+B15)`.
+    /// wave: `=B21*(1+B16)`.
     pub fn tier0(day: f64) -> f64 {
         Market::trend(day) * (1.0 + YEAR.term(0.0, day))
     }
 
     /// Tier 1 on `day`, the Day Trader, the trend times the cycle over the
     /// cycle on the first day, so that it opens at exactly 1:
-    /// `=B20*B21/$B$22`.
+    /// `=B21*B22/$B$23`.
     pub fn tier1(&self, day: f64) -> f64 {
         Market::trend(day) * self.cycle(day) / self.first_cycle
     }
 
     /// The index on `day`, as the difficulty picks, 0 tier 0 and 1 tier 1:
-    /// `=CHOOSE($B$3+1,B23,B24)`. A tier not yet built is `POT.6`'s to refuse.
+    /// `=CHOOSE($B$3+1,B24,B25)`. A tier not yet built is `POT.6`'s to refuse.
     pub fn index(&self, difficulty: u64, day: f64) -> f64 {
         match difficulty {
             0 => Market::tier0(day),
@@ -555,60 +660,95 @@ impl Market {
             _ => panic!("tier {difficulty} is not built"),
         }
     }
+
+    /// The five minutes' swing (`POT.11`), `B110`: the half hour's swing over
+    /// the root of the ticks a half hour, six steps of it wandering as far as
+    /// one of the half hour's did, times the factor, `=$B$5*$B$6/6^0.5`, the
+    /// root by the power, as the dialect has no `SQRT`.
+    pub fn tick_swing(&self) -> f64 {
+        SWING * self.factor / (TICKS_A_HALF_HOUR as f64).powf(0.5)
+    }
 }
 
 /// The half hour's swing (`POT.10`), the Market sheet's `B5`: the most one
-/// half hour of a session moves the index, 0.28% of it, which wanders a
-/// session as far as 0.4% an hour did and keeps the first year above 0.98 at
-/// every half hour.
+/// half hour of a session moved the index, 0.28% of it, which wandered a
+/// session as far as 0.4% an hour did; since `POT.11` the spread of a half
+/// hour's six ticks at a factor of 1.
 pub const SWING: f64 = 0.0028;
+/// The volatility factor within the day (`POT.11`), the Market sheet's `B6`:
+/// every tick's move sixteen times the half hour's spread, and no close, the
+/// owner's word at the hand test, where the scoping had four; across days
+/// `POT.5`'s walk takes it.
+pub const FACTOR: f64 = 16.0;
 /// The first of the market's draws a session's steps take each day, the
-/// fifth: `POT.2`'s four phases take the four before it.
+/// fifth: `POT.2`'s four phases take the four before it; and the day's draws,
+/// the session's 78 after them.
 pub const SESSION_DRAW: u64 = 5;
-/// The widest a bridge of thirteen steps strays from its line, in steps: at
-/// the sixth or the seventh mark, `2m(13-m)/13`, every step against the rest.
-pub const WIDEST: f64 = 84.0 / 13.0;
+pub const DRAWS_A_DAY: u64 = SESSION_DRAW + CLOSING_TICK - 1;
+/// The widest a bridge of 78 steps strays from its line, in steps: at its
+/// middle tick, `2m(78-m)/78` at the 39th, every step against the rest.
+pub const WIDEST: f64 = 39.0;
 
-/// A session's path at a frame (`POT.10`), the Market sheet's rows 28 to 45.
+/// 16807 to each power up to a day's last draw, modulo [`MODULUS`]: a draw
+/// found by its place beneath the day's die in one multiplication, so that a
+/// session's 78 cost the hand one search of the stream a day and no more.
+const BENEATH: [u64; DRAWS_A_DAY as usize + 1] = {
+    let mut out = [1u64; DRAWS_A_DAY as usize + 1];
+    let mut k = 1;
+    while k < out.len() {
+        out[k] = power(MULTIPLIER, k as u64);
+        k += 1;
+    }
+    out
+};
+
+/// A session's path at a frame (`POT.10`, five minutes at a time since
+/// `POT.11`), the Market sheet's rows 29 to 112.
 #[derive(Clone, Copy, Debug, PartialEq)]
 pub struct Path {
-    /// Each half hour's step, `B28:B40`: the uniform of the day's market draw
-    /// 5 to 17 set between -1 and 1, `2u-1`.
-    pub steps: [f64; CLOSING_MARK as usize],
-    /// The steps so far, `C28:C40`: the first step, then each the one before
+    /// Each five minutes' step, `B29:B106`: the uniform of the day's market
+    /// draw 5 to 82 set between -1 and 1, `2u-1`.
+    pub steps: [f64; CLOSING_TICK as usize],
+    /// The steps so far, `C29:C106`: the first step, then each the one before
     /// and its own.
-    pub sums: [f64; CLOSING_MARK as usize],
-    /// The mark's share of the session, `B43`, from 0 at the bell to 1.
+    pub sums: [f64; CLOSING_TICK as usize],
+    /// The tick's share of the session, `B109`, from 0 at the bell to 1.
     pub share: f64,
-    /// The swing at the mark, `B44`.
+    /// The five minutes' swing, `B110`.
+    pub tick_swing: f64,
+    /// The swing at the tick, `B111`.
     pub swing: f64,
-    /// The index now, `B45`.
+    /// The index now, `B112`.
     pub now: f64,
 }
 
 impl Market {
-    /// The session's path at a calendar's frame (`POT.10`), each value in its
-    /// cell's operations and order: from the session before's close to the
-    /// session's own, weighed by the mark's share, times one and the swing,
-    /// `=(D25*(1-B43)+B25*B43)*(1+B44)`; the swing the half hour's swing times
-    /// the steps so far less the share of all thirteen,
-    /// `=$B$5*(CHOOSE(B42+1,0,C28,...,C40)-B43*C40)`. The steps are the
-    /// calendar day's draws, which a session reads in its own hours and which
-    /// the swing multiplies away outside them.
+    /// The session's path at a calendar's frame (`POT.10`, `POT.11`), each value
+    /// in its cell's operations and order: from the session before's close to
+    /// the session's own, weighed by the tick's share, times one and the swing,
+    /// `=(D26*(1-B109)+B26*B109)*(1+B111)`; the swing the five minutes' swing
+    /// times the steps so far less the share of all 78,
+    /// `=B110*(CHOOSE(B108+1,0,C29,...,C106)-B109*C106)`. The steps are the
+    /// calendar day's draws, found by their place beneath the day's die, which
+    /// a session reads in its own hours and which the swing multiplies away
+    /// outside them.
     pub fn path(&self, seed: u64, difficulty: u64, cal: &Calendar) -> Path {
-        let steps: [f64; CLOSING_MARK as usize] = std::array::from_fn(|k| {
-            2.0 * uniform(market_draw(seed, cal.day, SESSION_DRAW + k as u64)) - 1.0
+        let die = market_die(seed, cal.day);
+        let steps: [f64; CLOSING_TICK as usize] = std::array::from_fn(|k| {
+            let draw = die * BENEATH[SESSION_DRAW as usize + k] % MODULUS;
+            2.0 * uniform(draw) - 1.0
         });
         let mut sums = steps;
         for k in 1..sums.len() {
             sums[k] = sums[k - 1] + steps[k];
         }
-        let share = cal.mark as f64 / CLOSING_MARK as f64;
-        let so_far = match cal.mark {
+        let share = cal.tick as f64 / CLOSING_TICK as f64;
+        let so_far = match cal.tick {
             0 => 0.0,
             m => sums[m as usize - 1],
         };
-        let swing = SWING * (so_far - share * sums[sums.len() - 1]);
+        let tick_swing = self.tick_swing();
+        let swing = tick_swing * (so_far - share * sums[sums.len() - 1]);
         let last = self.index(difficulty, cal.before as f64);
         let close = self.index(difficulty, cal.session as f64);
         let now = (last * (1.0 - share) + close * share) * (1.0 + swing);
@@ -616,24 +756,26 @@ impl Market {
             steps,
             sums,
             share,
+            tick_swing,
             swing,
             now,
         }
     }
 }
 
-/// The least the index can be at any half hour a price reads, at any seed and
-/// at either tier built (`STATION.1`'s decision 8, `POT.10`): tier 1's cycle
-/// and its cycle on the first day are each between one less and one more than
-/// the amplitudes' sum, a half, so their quotient is at least a third; the
-/// trend is at least the drift to day 0, the earliest day a price reads, since
-/// the first session opens from its own close; tier 0 is never below nine
-/// tenths of its trend; and a half hour's index strays below the line between
-/// two closes by at most the half hour's swing times the widest a bridge of
-/// thirteen steps goes.
+/// The least the index can be at any five minutes a price reads, at any seed
+/// and at either tier built, at the setting's factor (`STATION.1`'s decision
+/// 8, `POT.10`, `POT.11`): tier 1's cycle and its cycle on the first day are
+/// each between one less and one more than the amplitudes' sum, a half, so
+/// their quotient is at least a third; the trend is at least the drift to day
+/// 0, the earliest day a price reads, since the first session opens from its
+/// own close; tier 0 is never below nine tenths of its trend; and a tick's
+/// index strays below the line between two closes by at most the five
+/// minutes' swing times the widest a bridge of 78 steps goes.
 pub fn least_index() -> f64 {
     let swing: f64 = WAVES.iter().map(|w| w.amplitude).sum();
-    Market::trend(0.0) * (1.0 - swing) / (1.0 + swing) * (1.0 - SWING * WIDEST)
+    let tick = SWING * FACTOR / (TICKS_A_HALF_HOUR as f64).powf(0.5);
+    Market::trend(0.0) * (1.0 - swing) / (1.0 + swing) * (1.0 - tick * WIDEST)
 }
 
 /// A rung of a station's ladder (`STATION.1`): its start, a share's price on
@@ -825,15 +967,16 @@ pub fn time_shown(minutes: u64) -> String {
 }
 
 /// A view's date at a frame (`FRONT.1`, `POT.10`): the day's name, the year
-/// and the day of the year, each from 1, and the time to the half hour, as of
-/// which its numbers stand, none of them audited.
+/// and the day of the year, each from 1, and the time shown since `POT.11`,
+/// the five minutes in session and the half hour between, as of which its
+/// numbers stand, none of them audited.
 pub fn as_of(cal: &Calendar) -> String {
     format!(
         "As of {}, year {}, day {}, {} (unaudited)",
         DAY_NAMES[cal.weekday as usize],
         cal.year,
         cal.day_of_year,
-        time_shown(cal.half_hour())
+        time_shown(cal.clock())
     )
 }
 
@@ -855,7 +998,7 @@ pub fn bell(cal: &Calendar) -> &'static str {
         BELL_OPEN
     } else if cal.waits {
         BELL_WAIT
-    } else if cal.weekday < TRADING_DAYS && cal.half_hour() < OPENING_BELL {
+    } else if cal.weekday < TRADING_DAYS && cal.five() < OPENING_BELL {
         BELL_BEFORE
     } else if cal.weekday + 1 < TRADING_DAYS {
         BELL_CLOSED
@@ -943,10 +1086,12 @@ pub fn clicked(now: &Inputs, last: &Inputs, (view, column, row): (&str, u64, u64
 
 /// The side hustle by hand (`BACK.1`, a week and a day's work since
 /// `POT.10`): its claims in the order they were made, each the day it counted
-/// against and the half hour, in minutes from day 0's midnight, the person
-/// saw when making it. The cells judge a press by `shut`'s twin and keep the
-/// day the next prospectus arrives and the time the last one is done; the
-/// hand keeps the list and reads its length and its last claim.
+/// against and the time shown, in minutes from day 0's midnight, the person
+/// saw when making it (the half hour until `POT.11`, and since, the five
+/// minutes in session and the half hour between). The cells judge a press
+/// by `shut`'s twin and keep the day the next prospectus arrives and the time
+/// the last one is done; the hand keeps the list and reads its length and its
+/// last claim.
 #[derive(Clone, Debug, PartialEq, Eq)]
 pub struct Hustle {
     /// The claims a run, [`CLAIMS_A_RUN`] unless a person's edit raised it.
@@ -995,19 +1140,19 @@ impl Hustle {
 
     /// A frame of the hustle, its inputs beside the last frame's: a press
     /// claims when the hustle was open on the day the person saw, the last
-    /// frame's, and counts against that day, its work running from the half
-    /// hour the person saw. Whether a claim was made.
-    pub fn frame(&mut self, now: &Inputs, last: &Inputs, day_shown: u64, half_shown: u64) -> bool {
+    /// frame's, and counts against that day, its work running from the time
+    /// the person saw. Whether a claim was made.
+    pub fn frame(&mut self, now: &Inputs, last: &Inputs, day_shown: u64, time_seen: u64) -> bool {
         let pressed = Hustle::clicked(now, last) || Hustle::keyed(now, last);
         let claim = pressed && self.open(day_shown);
         if claim {
-            self.claims.push((day_shown, half_shown));
+            self.claims.push((day_shown, time_seen));
         }
         claim
     }
 
-    /// Whether the last claim's work is under way at the half hour `at`, in
-    /// minutes from day 0's midnight: a day's work not yet done.
+    /// Whether the last claim's work is under way at the five minutes `at`,
+    /// in minutes from day 0's midnight: a day's work not yet done.
     pub fn proofreading(&self, at: u64) -> bool {
         self.claims.last().is_some_and(|&(_, t)| t + WORK > at)
     }
@@ -1025,7 +1170,7 @@ impl Hustle {
     /// its fee is paid, the run's claims spent, this week's made and when the
     /// next arrives, or a prospectus waiting.
     pub fn status(&self, cal: &Calendar) -> String {
-        let at = cal.half_hours();
+        let at = cal.five_minutes();
         match self.claims.last() {
             Some(&(_, t)) if self.proofreading(at) => {
                 let due = t + WORK;
@@ -1443,7 +1588,7 @@ pub enum Outcome {
 
 /// What the last frame showed, by which an order is judged: whether the market
 /// was open, each stock's price now in whole cents, each pocket's cash, and
-/// the half hour the person saw, as the ledger writes it.
+/// the time the person saw, as the ledger writes it.
 #[derive(Clone, Debug, Default, PartialEq, Eq)]
 pub struct Shown {
     pub open: bool,
@@ -2018,7 +2163,7 @@ mod tests {
     /// A calendar standing at a day and a time of day in minutes, for the
     /// hustle's sentences.
     fn when(day: u64, minutes: u64) -> Calendar {
-        let mut c = Calendar::new(MINUTES_A_FRAME, DAYS_A_YEAR);
+        let mut c = Calendar::new(PACE, DAYS_A_YEAR);
         (c.day, c.weekday) = (day, day % DAYS_A_WEEK);
         (c.hour, c.minute) = (minutes / 60, minutes % 60);
         c
@@ -2035,7 +2180,7 @@ mod tests {
 
     /// The hustle by hand (`BACK.1`; a week and a day's work since `POT.10`):
     /// a press claims once a week, against the day the person saw, and four
-    /// times a run, its fee paid a day after the half hour the person saw. A
+    /// times a run, its fee paid a day after the time the person saw. A
     /// key's press on day 0 at 10:00 claims, and the prospectus is being
     /// proofread, its fee due tomorrow and then today at 10:00, and paid at
     /// day 1's 10:00; the week counts down to the next; a press within it is
@@ -2197,31 +2342,35 @@ mod tests {
         assert_eq!(z, DAY_JUMP);
     }
 
-    /// The calendar's turns at two minutes a frame (`POT.10`): the first frame
-    /// is Monday's opening bell on day 0, the session its own and its mark 0;
-    /// the sixteenth 10:00, the first half hour's mark; the 196th the closing
-    /// bell, the thirteenth;
-    /// the 436th midnight, Tuesday, the dice's frame, the session still
-    /// Monday's; the 721st Tuesday's bell, its session Tuesday's and the one
-    /// before Monday's; Saturday's midnight, Friday's session standing through
-    /// the weekend; Monday's bell after it, the session before it Friday's;
-    /// and the year's turn, day 365 a Tuesday.
+    /// The calendar's turns at the game's pace (`POT.11`): the first frame is
+    /// Monday's opening bell on day 0, the session its own and its tick 0; the
+    /// second twenty seconds on; the sixteenth 9:35, the first tick; the
+    /// 1,170th 15:59:40, the 77th; the 1,171st the closing bell, the 78th, the
+    /// last of the session's twenty-second steps landing on it; then two
+    /// minutes a frame, 16:02 and 23:58; the 1,411th midnight, Tuesday, the
+    /// dice's frame, the session still Monday's; the 1,695th 9:28 and the
+    /// 1,696th Tuesday's bell, the night's steps landing on it, its session
+    /// Tuesday's and the one before Monday's; Saturday's midnight, Friday's
+    /// session standing through the weekend; Monday's bell after it, the
+    /// session before it Friday's; and the year's turn, day 365 a Tuesday.
     #[test]
     fn the_calendar_turns_at_its_bells_and_its_midnights() {
-        let mut c = Calendar::new(MINUTES_A_FRAME, DAYS_A_YEAR);
-        let wanted = [1, 2, 16, 195, 196, 435, 436, 721, 3_316, 5_041, 262_516];
+        let mut c = Calendar::new(PACE, DAYS_A_YEAR);
+        let wanted = [
+            1, 2, 16, 1_170, 1_171, 1_172, 1_410, 1_411, 1_695, 1_696, 1_697, 8_191, 9_916, 516_991,
+        ];
         let mut at = Vec::new();
-        while c.frame < 262_516 {
+        while c.frame < 516_991 {
             c.tick();
             if wanted.contains(&c.frame) {
                 at.push((
                     c.frame,
                     c.day,
                     c.weekday,
-                    time_shown(c.hour * 60 + c.minute),
+                    format!("{}:{:02}", time_shown(c.hour * 60 + c.minute), c.second),
                     c.turned,
                     c.open(),
-                    (c.session, c.before, c.mark),
+                    (c.session, c.before, c.tick),
                     (c.year, c.day_of_year),
                 ));
             }
@@ -2232,45 +2381,57 @@ mod tests {
         assert_eq!(
             at,
             vec![
-                row(1, 0, 0, "9:30", true, true, (0, 0, 0), (1, 1)),
-                row(2, 0, 0, "9:32", false, true, (0, 0, 0), (1, 1)),
-                row(16, 0, 0, "10:00", false, true, (0, 0, 1), (1, 1)),
-                row(195, 0, 0, "15:58", false, true, (0, 0, 12), (1, 1)),
-                row(196, 0, 0, "16:00", false, false, (0, 0, 13), (1, 1)),
-                row(435, 0, 0, "23:58", false, false, (0, 0, 13), (1, 1)),
-                row(436, 1, 1, "0:00", true, false, (0, 0, 13), (1, 2)),
-                row(721, 1, 1, "9:30", false, true, (1, 0, 0), (1, 2)),
-                row(3_316, 5, 5, "0:00", true, false, (4, 3, 13), (1, 6)),
-                row(5_041, 7, 0, "9:30", false, true, (7, 4, 0), (1, 8)),
-                row(262_516, 365, 1, "0:00", true, false, (364, 361, 13), (2, 1)),
+                row(1, 0, 0, "9:30:00", true, true, (0, 0, 0), (1, 1)),
+                row(2, 0, 0, "9:30:20", false, true, (0, 0, 0), (1, 1)),
+                row(16, 0, 0, "9:35:00", false, true, (0, 0, 1), (1, 1)),
+                row(1_170, 0, 0, "15:59:40", false, true, (0, 0, 77), (1, 1)),
+                row(1_171, 0, 0, "16:00:00", false, false, (0, 0, 78), (1, 1)),
+                row(1_172, 0, 0, "16:02:00", false, false, (0, 0, 78), (1, 1)),
+                row(1_410, 0, 0, "23:58:00", false, false, (0, 0, 78), (1, 1)),
+                row(1_411, 1, 1, "0:00:00", true, false, (0, 0, 78), (1, 2)),
+                row(1_695, 1, 1, "9:28:00", false, false, (0, 0, 78), (1, 2)),
+                row(1_696, 1, 1, "9:30:00", false, true, (1, 0, 0), (1, 2)),
+                row(1_697, 1, 1, "9:30:20", false, true, (1, 0, 0), (1, 2)),
+                row(8_191, 5, 5, "0:00:00", true, false, (4, 3, 78), (1, 6)),
+                row(9_916, 7, 0, "9:30:00", false, true, (7, 4, 0), (1, 8)),
+                row(
+                    516_991,
+                    365,
+                    1,
+                    "0:00:00",
+                    true,
+                    false,
+                    (364, 361, 78),
+                    (2, 1)
+                ),
             ]
         );
     }
 
-    /// The same days at a frame an hour and at a frame a day: the hour's
-    /// frames see a session's even marks, from 9:30 to 16:30, two half hours
-    /// turning in each, and the closing mark, and the day's frames every bell,
-    /// a Saturday's showing Friday's session.
+    /// The same days at a frame an hour and at a frame a day, one pace at
+    /// every hour: the hour's frames see a session's ticks twelve apart, from
+    /// 9:30 to 16:30, and the closing tick, and the day's frames every bell, a
+    /// Saturday's showing Friday's session.
     #[test]
     fn an_hour_or_a_day_a_frame_counts_the_same_sessions() {
-        let mut h = Calendar::new(AN_HOUR, DAYS_A_YEAR);
-        let mut marks = Vec::new();
+        let mut h = Calendar::new(Pace::every(AN_HOUR), DAYS_A_YEAR);
+        let mut ticks = Vec::new();
         for _ in 0..8 {
             h.tick();
-            marks.push((time_shown(h.hour * 60 + h.minute), h.mark, h.open()));
+            ticks.push((time_shown(h.hour * 60 + h.minute), h.tick, h.open()));
         }
-        assert_eq!(marks.first(), Some(&("9:30".to_string(), 0, true)));
-        assert_eq!(marks.last(), Some(&("16:30".to_string(), 13, false)));
+        assert_eq!(ticks.first(), Some(&("9:30".to_string(), 0, true)));
+        assert_eq!(ticks.last(), Some(&("16:30".to_string(), 78, false)));
         assert_eq!(
-            marks.iter().map(|m| m.1).collect::<Vec<_>>(),
-            [0, 2, 4, 6, 8, 10, 12, 13]
+            ticks.iter().map(|m| m.1).collect::<Vec<_>>(),
+            [0, 12, 24, 36, 48, 60, 72, 78]
         );
-        let mut d = Calendar::new(A_DAY, DAYS_A_YEAR);
+        let mut d = Calendar::new(Pace::every(A_DAY_LONG), DAYS_A_YEAR);
         let mut sessions = Vec::new();
         for _ in 0..9 {
             d.tick();
             assert!(d.turned && (d.hour, d.minute) == (9, 30));
-            sessions.push((d.day, d.session, d.before, d.mark));
+            sessions.push((d.day, d.session, d.before, d.tick));
         }
         assert_eq!(
             sessions,
@@ -2280,24 +2441,47 @@ mod tests {
                 (2, 2, 1, 0),
                 (3, 3, 2, 0),
                 (4, 4, 3, 0),
-                (5, 4, 3, 13),
-                (6, 4, 3, 13),
+                (5, 4, 3, 78),
+                (6, 4, 3, 78),
                 (7, 7, 4, 0),
                 (8, 8, 7, 0),
             ]
         );
     }
 
-    /// A session leaves the last close and reaches its own exactly (`POT.10`):
-    /// over every session of the first game's first year, at a frame each half
-    /// hour, the index at the opening bell is the session before's close to
-    /// the bit, at the closing bell the session's own, and at every mark
-    /// between no further off the line between them than the half hour's
-    /// swing times the widest a bridge of thirteen steps strays.
+    /// A step that crosses the opening bell rings it there and counts the
+    /// ticks after it (`POT.11`): from 9:00 a frame an hour, the bell heard at
+    /// 9:30 inside the step and 10:00 the sixth tick, as the cells' tick reads
+    /// the time; and a step of a whole session at 9:30 lands on the close.
+    #[test]
+    fn a_step_across_the_bell_rings_it_inside() {
+        let mut c = Calendar::new(Pace::every(AN_HOUR), DAYS_A_YEAR);
+        c.tick();
+        (c.day, c.weekday, c.hour, c.minute, c.session, c.tick) = (1, 1, 9, 0, 0, CLOSING_TICK);
+        c.tick();
+        assert_eq!(
+            (c.hour, c.minute, c.session, c.before, c.tick),
+            (10, 0, 1, 0, 6)
+        );
+        let mut s = Calendar::new(Pace::every((CLOSING_BELL - OPENING_BELL) * 60), DAYS_A_YEAR);
+        s.tick();
+        s.tick();
+        assert_eq!(
+            (s.hour, s.minute, s.tick, s.open()),
+            (16, 0, CLOSING_TICK, false)
+        );
+    }
+
+    /// A session leaves the last close and reaches its own exactly (`POT.10`,
+    /// `POT.11`): over every session of the first game's first year, at a frame
+    /// each five minutes, the index at the opening bell is the session
+    /// before's close to the bit, at the closing bell the session's own, and at
+    /// every tick between no further off the line between them than the five
+    /// minutes' swing times the widest a bridge of 78 steps strays.
     #[test]
     fn a_session_leaves_the_last_close_and_reaches_its_own() {
         let market = Market::new(SEED);
-        let mut c = Calendar::new(30, DAYS_A_YEAR);
+        let mut c = Calendar::new(Pace::every(MINUTES_A_TICK * 60), DAYS_A_YEAR);
         let (mut opens, mut closes, mut closed) = (0, 0, None);
         while c.day < DAYS_A_YEAR {
             c.tick();
@@ -2307,44 +2491,57 @@ mod tests {
             let p = market.path(SEED, DIFFICULTY, &c);
             let last = market.index(DIFFICULTY, c.before as f64);
             let close = market.index(DIFFICULTY, c.session as f64);
-            if c.mark == 0 {
+            if c.tick == 0 {
                 assert_eq!(p.now.to_bits(), last.to_bits(), "day {}'s bell", c.day);
                 opens += 1;
             }
-            if c.mark == CLOSING_MARK && closed != Some(c.day) {
+            if c.tick == CLOSING_TICK && closed != Some(c.day) {
                 assert_eq!(p.now.to_bits(), close.to_bits(), "day {}'s close", c.day);
                 (closes, closed) = (closes + 1, Some(c.day));
             }
             let line = last * (1.0 - p.share) + close * p.share;
             assert!(
-                (p.now / line - 1.0).abs() <= SWING * WIDEST,
-                "day {}, mark {}: {} off its line {line}",
+                (p.now / line - 1.0).abs() <= market.tick_swing() * WIDEST,
+                "day {}, tick {}: {} off its line {line}",
                 c.day,
-                c.mark,
+                c.tick,
                 p.now
             );
         }
         assert_eq!((opens, closes), (261, 261), "the first year's sessions");
     }
 
-    /// The widest a bridge of thirteen steps strays, `84/13` of a step: over
-    /// every pattern of steps at -1 and 1, the extremes of a sum linear in
-    /// each step, the most `W(m) - (m/13)W(13)` reaches at any mark.
+    /// The widest a bridge of `n` steps strays at its `m`th, over every pattern
+    /// of steps at -1 and 1: the sum `W(m) - (m/n)W(n)` is linear in each step,
+    /// its coefficient `1 - m/n` for the first `m` and `-m/n` for the rest, so
+    /// its extreme takes each step at the sign of its coefficient,
+    /// `2m(n-m)/n`. Held against every pattern of a bridge of thirteen,
+    /// `POT.10`'s, whose widest is `84/13`; then a bridge of 78, `POT.11`'s,
+    /// strays at most 39 steps, at its 39th tick.
     #[test]
-    fn a_bridge_of_thirteen_steps_strays_at_most_84_13_of_a_step() {
-        let k = CLOSING_MARK as usize;
-        let mut most = 0.0f64;
-        for pattern in 0..1u32 << k {
-            let steps: Vec<f64> = (0..k)
-                .map(|j| if pattern >> j & 1 == 1 { 1.0 } else { -1.0 })
-                .collect();
-            let all: f64 = steps.iter().sum();
-            for m in 0..=k {
+    fn a_bridge_of_78_steps_strays_at_most_39_steps() {
+        let widest = |n: usize, m: usize| 2.0 * m as f64 * (n - m) as f64 / n as f64;
+        let k = 13;
+        for m in 0..=k {
+            let mut most = 0.0f64;
+            for pattern in 0..1u32 << k {
+                let steps: Vec<f64> = (0..k)
+                    .map(|j| if pattern >> j & 1 == 1 { 1.0 } else { -1.0 })
+                    .collect();
+                let all: f64 = steps.iter().sum();
                 let so_far: f64 = steps[..m].iter().sum();
                 most = most.max((so_far - m as f64 / k as f64 * all).abs());
             }
+            assert!(
+                (most - widest(k, m)).abs() < 1e-12,
+                "thirteen at {m}: {most}"
+            );
         }
-        assert!((most - WIDEST).abs() < 1e-12, "{most}");
+        let n = CLOSING_TICK as usize;
+        let at: Vec<f64> = (0..=n).map(|m| widest(n, m)).collect();
+        let most = at.iter().copied().fold(0.0, f64::max);
+        assert_eq!((most, at[n / 2]), (WIDEST, WIDEST));
+        assert_eq!(widest(13, 6), 84.0 / 13.0);
     }
 
     /// The bell's lines name the bells (`POT.10`): the open line the closing
@@ -2422,12 +2619,20 @@ mod tests {
         );
     }
 
+    /// The least the index reaches at any tick of the first year at the
+    /// factor of 16 (`POT.11`), the five minutes wandering sixteen times the
+    /// half hours' spread: a floor under the year's lowest tick, 0.8210 on day
+    /// 39 at 12:25 (0.9501 there at a factor of 4 and 0.98233 at 1).
+    const KIND_TICK: f64 = 0.82;
+
     /// The first game's year is kind, as the owner chose its seed to be: the
-    /// index dips no more than 2% and only in the first four months, at the
-    /// close of any day and at any half hour of any session (`POT.10`), the weather
-    /// turns within them, and the report card at day 365 reads at least 5% up.
-    /// A change to the waves or the session's swing that spoils the first year
-    /// fails here, and the seed is chosen again with it.
+    /// index dips no more than 2% and only in the first four months at the
+    /// close of any day, the weather turns within them, and the report card at
+    /// day 365 reads at least 5% up; and at any five minutes of any session,
+    /// the hours wandering sixteen times wider since `POT.11`, the index stays
+    /// above [`KIND_TICK`], its lowest within the first four months too. A
+    /// change to the waves, the session's swing or the factor that spoils the
+    /// first year fails here, and the seed is chosen again with it.
     #[test]
     fn the_first_game_opens_on_a_kind_year() {
         let market = Market::new(SEED);
@@ -2442,18 +2647,18 @@ mod tests {
             low > 0.98 && low_day <= 120,
             "the year's low, {low}, on day {low_day}"
         );
-        let mut c = Calendar::new(30, DAYS_A_YEAR);
-        let (mut hour_low, mut hour_day) = (f64::INFINITY, 0);
+        let mut c = Calendar::new(Pace::every(MINUTES_A_TICK * 60), DAYS_A_YEAR);
+        let (mut tick_low, mut tick_day) = (f64::INFINITY, 0);
         while c.day < DAYS_A_YEAR {
             c.tick();
             let now = market.path(SEED, DIFFICULTY, &c).now;
-            if now < hour_low {
-                (hour_low, hour_day) = (now, c.day);
+            if now < tick_low {
+                (tick_low, tick_day) = (now, c.day);
             }
         }
         assert!(
-            hour_low > 0.98 && hour_day <= 120,
-            "the year's lowest half hour, {hour_low}, on day {hour_day}"
+            tick_low > KIND_TICK && tick_day <= 120,
+            "the year's lowest tick, {tick_low}, on day {tick_day}"
         );
         let turns = |day: i64| index(day) >= index(day - 20);
         let turn = (1..=365).find(|&day| turns(day) != turns(day - 1));
@@ -2478,20 +2683,26 @@ mod tests {
         }
     }
 
+    /// The rungs' least prices no seed passes at the factor of 16, in cents.
+    const FLOOR_CENTS: [u64; 4] = [1, 15, 239, 1_719];
+
     /// No seed prices a rung at or below zero (`STATION.1`'s decision 8):
-    /// at the least the index can be at any half hour (`POT.10`), a third of
-    /// the trend at day 0 less the widest a half hour strays from its line, the four
-    /// rungs are 11, 94, 818 and 4,327 cents, where a day's least made them 11,
-    /// 96, 833 and 4,386.
+    /// at the least the index can be at any five minutes (`POT.11`), a third of
+    /// the trend at day 0 less the widest a tick strays from its line at the
+    /// factor of 16, the four rungs are 1, 15, 239 and 1,719 cents, where the
+    /// factor of 4 made them 8, 72, 685 and 3,786, a half hour's least 11, 94,
+    /// 818 and 4,327 (`POT.10`) and a day's 11, 96, 833 and 4,386; a factor
+    /// past 22 would let a price reach zero.
     #[test]
     fn no_seed_prices_a_rung_at_or_below_zero() {
         let least = least_index();
+        let tick = SWING * FACTOR / 6f64.sqrt();
         assert!(
-            (least - (1.0 - SWING * WIDEST) / 3.0).abs() < 1e-15,
+            (least - (1.0 - tick * WIDEST) / 3.0).abs() < 1e-15,
             "{least}"
         );
         let floor: Vec<u64> = RUNGS.iter().map(|r| r.price_at(least)).collect();
-        assert_eq!(floor, [11, 94, 818, 4_327]);
+        assert_eq!(floor, FLOOR_CENTS);
     }
 
     /// The dividend falls four times a year, 91 days apart, its last inside
@@ -2731,30 +2942,34 @@ mod tests {
 
     /// The calendar waits at the first bell (`GUARD.1`): while the exam holds
     /// it, every frame stands at the first frame's time, day 0's session at
-    /// its mark 0, the market closed and the bell's line the wait's, the
-    /// frames counted; the game's first frame stands there too, the market
-    /// open; and the frame after it is two minutes on.
+    /// its tick 0, the market closed and the bell's line the wait's, the pace
+    /// none (`POT.11`) and the frames counted; the game's first frame stands
+    /// there too, the market open; and the frame after it is the session's
+    /// twenty seconds on.
     #[test]
     fn the_calendar_waits_at_the_first_bell_until_the_game_begins() {
-        let mut c = Calendar::new(MINUTES_A_FRAME, DAYS_A_YEAR);
+        let mut c = Calendar::new(PACE, DAYS_A_YEAR);
         for f in 1..=5 {
             c.tick_waiting(true);
             assert_eq!(
-                (c.minutes(), c.session, c.mark, c.waited),
-                (FIRST_MINUTE, 0, 0, f - 1)
+                (c.seconds(), c.session, c.tick, c.waited, c.pace_now()),
+                (FIRST_MINUTE * 60, 0, 0, f - 1, 0)
             );
-            assert!(c.waits && c.trading() && !c.open() && c.turned == (f == 1));
+            assert!(c.waits && c.in_session() && !c.open() && c.turned == (f == 1));
             assert_eq!(bell(&c), BELL_WAIT);
         }
         c.tick_waiting(false);
         assert_eq!(
-            (c.minutes(), c.waited),
-            (FIRST_MINUTE, 5),
+            (c.seconds(), c.waited, c.pace_now()),
+            (FIRST_MINUTE * 60, 5, PACE.session),
             "the game's first frame stands at the bell"
         );
         assert!(c.open() && bell(&c) == BELL_OPEN);
         c.tick_waiting(false);
-        assert_eq!((c.minutes(), c.waited), (FIRST_MINUTE + MINUTES_A_FRAME, 5));
+        assert_eq!(
+            (c.seconds(), c.waited),
+            (FIRST_MINUTE * 60 + PACE.session, 5)
+        );
     }
 
     /// Every book of both pockets, each pocket's cash and the fills: what a

@@ -13,7 +13,9 @@
 //! date and its dollars spelled by text, since `BACK.1` the side hustle, its
 //! presses, its claims and its cap, since `POT.10` the market's hours,
 //! the calendar counted in minutes, the session's bells and marks, and its
-//! path between two closes, and since `GUARD.1` the Series 777, its draw
+//! path between two closes (since `POT.11` the calendar in seconds at two
+//! paces, a tick every five minutes and the volatility factor), and since
+//! `GUARD.1` the Series 777, its draw
 //! walked a row at a time, its answers, its score, the firm's capital and
 //! style, its keys by view and state, and the bell waiting for it, and since
 //! `PLATE.1` the order desk, its buttons and commands, its fills and books,

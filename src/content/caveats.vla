@@ -13,7 +13,7 @@
 (defmacro (caveats)
   "the model's caveats: the Caveats sheet, a thing this game gets wrong a row"
   (strings "Caveats"                ; the sheet, which the source shows among the tabs
-    ("Things this game gets wrong" 104   ; its fields, each its header and its width in characters: the simplification, plainly
+    ("Things this game gets wrong" 105   ; its fields, each its header and its width in characters: the simplification, plainly
      "In the real world" 115        ;   what the world does, plainly, which a finance educator reads before a release
      "Management's response" 103    ;   the joke: the model's owner answering the finding
      "Where" 15)                    ;   the cell or range it qualifies, as a formula writes one, or empty for the whole game
@@ -29,15 +29,15 @@
     ("Tomorrow's price is a formula of the seed and the day, and anyone can read it."
      "No one knows tomorrow's price, and anyone who says otherwise is selling something."
      "Reading ahead is not insider trading, since everyone can. Compliance finds this unsettling."
-     "Market!B25")
+     "Market!B26")
     ("The market is four waves and a drift, and each wave keeps its period to the day."
      "Real business cycles vary in length and depth, and economists still argue whether the longest ones exist at all."
      "The Kondratiev wave is fitted to a handful of 50-year cycles. Statistics has requested a larger sample."
-     "Market!A8:E11")
+     "Market!A9:E12")
     ("Day to day, the market barely moves: no news, no noise, no crash."
      "A broad index can move 1% on an ordinary day, and on October 19, 1987, US stocks fell more than 20%."
      "Trading in news has been halted, pending an announcement."
-     "Market!B25")
+     "Market!B26")
     ("Beneath the waves, the market grows 7.6% a year, every year, forever."
      "US stocks have returned about 10% a year over a century, dividends included, but unevenly: 2000 to 2009 lost money."
      "Here, past performance is indicative of future results. Management asks that this not get around."
@@ -66,14 +66,14 @@
      "A workbook formats its numbers for people: $12.30, 2.00%, 1,000,000."
      "The decimal point has returned from furlough, on a text-only contract."
      "Portfolio!B5:C8")
-    ("Prices move on the half hour and stand still between."
+    ("Prices move every five minutes and stand still between."
      "A share's price moves with every trade, many times a second, from the opening bell to the closing one."
      "Management prefers prices that keep to a timetable."
      "Day!B22")
-    ("Each day's close is decided before the bell: the half hours wander off it and always come back."
+    ("Each day's close is decided before the bell: the five minutes wander off it and always come back."
      "Nobody knows a day's close before the closing bell, which is the point of having one."
      "Management confirms the close was agreed in advance, as a courtesy to the auditors."
-     "Market!B45")
+     "Market!B112")
     ("The Series 777 cannot be failed, and ten questions license you to manage other people's money."
      "FINRA's qualification exams can be failed: the Series 7 asks 125 scored questions and passes at 72%."
      "Management passed the Series 777 on its first attempt, as everyone does."
@@ -90,4 +90,12 @@
      "Savings earn interest, and prices rise: US consumer prices rose about 3% a year on average over the last century."
      "Inflation has been classified as transitory, permanently."
      "Cash!B3:B4")
+    ("Within a day prices swing sixteen times wider than across days, by a setting, and come back by the close."
+     "A day's swings and its close are one market: a market that swings widely within its days moves widely between them."
+     "Volatility keeps business hours."
+     "Market!B6")
+    ("A share bought below the day's close is a sure gain: every dip comes back by the closing bell."
+     "A price that falls during the day can keep falling, and studies of day traders find most of them lose money."
+     "Management attributes the trading desk's results to skill."
+     "Market!B26")
     ))                              ; the sheet's end: a caveat added goes above this line
