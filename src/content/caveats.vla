@@ -110,4 +110,12 @@
      "A firm chooses its own name and registers it where it is formed; an adviser also reports it on Form ADV."
      "Management's first choice, Guaranteed Returns LLC, was declined by Compliance."
      "Firms!E4")
+    ("A grade reads returns alone: a book wilder than the market beats it in any rally, however bumpy the ride."
+     "Alpha is measured after taking out the market's own push, beta, and judged beside risk, as the Sharpe ratio does."
+     "Management finds volatility character-building, for the clients."
+     "Performance!B19")
+    ("A card is issued the moment its quarter ends, its figures checked by no one."
+     "A fund reports its quarter weeks later, once its administrator has checked the figures; an auditor checks the year."
+     "Management's figures are unaudited, which saves everyone time."
+     "Day!B35")
     ))                              ; the sheet's end: a caveat added goes above this line

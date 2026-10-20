@@ -120,6 +120,19 @@
 //! first slice) are the hand's own, each on its rung as the Stocks sheet keeps
 //! each on its rung's row, and every view, book, sentence and command that
 //! names a stock is held to them, never to the Stocks sheet's.
+//!
+//! The report card (`CRITIC.1`) shares none of its rules with its cells. The
+//! cells divide the day of the year by the year's days over four, count the
+//! quarters, and mark a turn by the count against its twin; they hold the
+//! worths at the last card and the one before it, at the year's start and the
+//! last year's, each over its twin. The hand lists the quarters' last days,
+//! counts the quarters as its calendar turns, and keeps every turn's worth in
+//! a list, reading a card's starts off it by search. The cells round a return
+//! by dividing two doubles and rounding down; the hand rounds the same
+//! quotient in whole numbers, the two the same below 2^53. The cells grade by
+//! comparing the alpha with each grade's from the top; the hand counts the
+//! grades it reaches. And the percent the view spells: the cells pad it by
+//! comparing with powers of ten, and the hand counts its digits.
 
 use std::collections::BTreeSet;
 
@@ -341,6 +354,10 @@ pub struct Calendar {
     /// standing; and the frames before this one it held it, `B26`.
     pub waits: bool,
     pub waited: u64,
+    /// Whether this frame turned the quarter (`CRITIC.1`), the Day sheet's
+    /// `B35`: the quarters counted moved since the frame before, never at the
+    /// game's first frame.
+    pub quarter_turned: bool,
 }
 
 impl Calendar {
@@ -363,6 +380,7 @@ impl Calendar {
             tick: CLOSING_TICK,
             waits: false,
             waited: 0,
+            quarter_turned: false,
         }
     }
 
@@ -385,6 +403,13 @@ impl Calendar {
     /// tick 0, and any other five minutes turns the tick while the session is
     /// today's, to the closing tick at the closing bell.
     pub fn tick_waiting(&mut self, waits: bool) {
+        let quarters = self.quarters();
+        self.advance(waits);
+        self.quarter_turned = self.frame > 1 && self.quarters() != quarters;
+    }
+
+    /// The frame's clock moved on, `tick_waiting`'s, the quarter aside.
+    fn advance(&mut self, waits: bool) {
         let step = self.pace_now();
         if self.frame >= 1 && self.waits {
             self.waited += 1;
@@ -1470,6 +1495,10 @@ pub struct Exam {
     pub waived: bool,
     pub begun: bool,
     pub frames: u64,
+    /// The frame the game began at, its certificate's button or a waiver's,
+    /// counted as `frames` counts (`CRITIC.1`: the Camera shows the lead there
+    /// alone).
+    pub begun_at: Option<u64>,
 }
 
 impl Exam {
@@ -1482,6 +1511,7 @@ impl Exam {
             waived: false,
             begun: false,
             frames: 0,
+            begun_at: None,
         }
     }
 
@@ -1549,12 +1579,18 @@ impl Exam {
         }
     }
 
-    /// The sheet the game shows, the Camera's `B3`: the exam's while a
-    /// question is open, its certificate's after the eleventh, and where the
-    /// certificate leads once the game has begun.
+    /// The sheet the game shows, the Camera's `B3`, at the frame last played:
+    /// the exam's while a question is open, its certificate's after the
+    /// eleventh, where the certificate leads at the frame the game began, and
+    /// none, the empty text, at every frame after it (`CRITIC.1`), so that a
+    /// card's Report is a change of its own; [`camera`] adds the cards.
     pub fn shows(&self) -> &'static str {
         if self.begun {
-            LEAD
+            if self.begun_at == Some(self.frames) {
+                LEAD
+            } else {
+                ""
+            }
         } else if self.open() {
             EXAM
         } else {
@@ -1604,18 +1640,23 @@ impl Exam {
         if let (true, Some(o)) = (answered, option) {
             self.answers.push(o);
         }
-        if begins {
+        if begins && !self.begun {
             self.begun = true;
+            self.begun_at = Some(self.frames + 1);
         }
         self.frames += 1;
         answered
     }
 
     /// A waiver, a person's edit of the Proctor's `B3`: the exam closed and
-    /// the game begun, at the waiver's score and style.
+    /// the game begun, at the waiver's score and style, from the next frame
+    /// played.
     pub fn waive(&mut self) {
         self.waived = true;
-        self.begun = true;
+        if !self.begun {
+            self.begun = true;
+            self.begun_at = Some(self.frames + 1);
+        }
     }
 
     /// Where the exam stands, the Exam's `A3`, its second sentence the
@@ -2132,6 +2173,318 @@ pub fn command_words(picked: u64, pocket: u64) -> Vec<String> {
         ),
     ]);
     out
+}
+
+/// The view a card is shown on (`CRITIC.1`), the Performance sheet's `B1`,
+/// which the Camera names at each quarter's turn.
+pub const CARD_VIEW: &str = "Report";
+
+/// The last day of each quarter of the year, from 1 (`CRITIC.1`): 91, 182,
+/// 273 and 365, so quarters of 91, 91, 91 and 92 days, listed here where the
+/// Day sheet divides the day of the year by the year's days over four.
+pub const QUARTER_ENDS: [u64; 4] = [91, 182, 273, 365];
+
+/// The quarter of a day of the year, from 1: the first whose last day it does
+/// not pass.
+pub fn quarter_of(day_of_year: u64) -> u64 {
+    QUARTER_ENDS
+        .iter()
+        .position(|&end| day_of_year <= end)
+        .map_or(QUARTER_ENDS.len() as u64, |k| k as u64 + 1)
+}
+
+impl Calendar {
+    /// The quarter of the calendar's day, `Day!B33`, and the quarters counted
+    /// from the game's first, `B34`: the years before this one's four each,
+    /// and this year's.
+    pub fn quarter(&self) -> u64 {
+        quarter_of(self.day_of_year)
+    }
+    pub fn quarters(&self) -> u64 {
+        (self.year - 1) * QUARTER_ENDS.len() as u64 + self.quarter()
+    }
+}
+
+/// The broad rung the card grades against (`CRITIC.1`): Average Co., the
+/// third, the market itself.
+pub const BENCHMARK: usize = 2;
+
+/// A return in whole hundredths of a percent, from a worth at the start to one
+/// at the end, each in whole cents: the gain times 10,000 over the start,
+/// rounded half up, in whole numbers. The cell divides two doubles and rounds
+/// down, `INT(((e-s)*20000+s)/(2*s))`; the two agree at every worth whose
+/// numerator stays below 2^53 (*derived*: both are whole, so a double holds
+/// each exactly; and the quotient of two whole numbers, if not whole, stands
+/// at least one over the divisor below the next whole number, while a
+/// double's rounding of it moves it less than the quotient over 2^53, so its
+/// floor is the true one).
+pub fn points(start: u64, end: u64) -> i64 {
+    let (s, e) = (i128::from(start), i128::from(end));
+    ((e - s) * 20_000 + s).div_euclid(2 * s) as i64
+}
+
+/// The grades (`CRITIC.1`), the Performance sheet's `A25:B29`: each letter
+/// beside the alpha it begins at, in whole hundredths of a point, from the top,
+/// and F below them all: A from two points ahead of the market, B from half a
+/// point, C within half a point either way, D to two points behind.
+pub const GRADES: [(&str, i64); 4] = [("A", 200), ("B", 50), ("C", -50), ("D", -200)];
+pub const GRADE_BELOW: &str = "F";
+
+/// A grade for an alpha in hundredths of a point: its place, 1 for A to 5 for
+/// F, and its letter. The cells compare the alpha with each grade's from the
+/// top and take the first it reaches; the hand counts the grades it reaches
+/// and reads the table from the bottom by that count.
+pub fn grade(alpha: i64) -> (u64, &'static str) {
+    let reached = GRADES.iter().filter(|(_, from)| alpha >= *from).count();
+    if reached == 0 {
+        (GRADES.len() as u64 + 1, GRADE_BELOW)
+    } else {
+        let k = GRADES.len() - reached;
+        (k as u64 + 1, GRADES[k].0)
+    }
+}
+
+/// A percent's spaces before its sign and twice its whole percent's digits
+/// (`CRITIC.1`): in a column of [`DOLLARS_COLUMN`] characters the text then
+/// ends short of a number's edge at every scale, the percent sign about three
+/// spaces wide.
+pub const PERCENT_UNITS: usize = 10;
+
+/// Whole hundredths of a percent as a view spells them, the library's
+/// `percent`: a gain's or nothing's `+`, a loss's space and `-`, the whole
+/// percent, a point, two digits and the percent sign, after the spaces that
+/// make [`PERCENT_UNITS`] with twice the whole percent's digits. The cell
+/// chooses its padding by comparing the hundredths with powers of ten; the hand
+/// counts the whole percent's digits.
+pub fn percent(points: i64) -> String {
+    let sign = if points < 0 { " -" } else { "+" };
+    let p = points.unsigned_abs();
+    let whole = p / 100;
+    let digits = whole.checked_ilog10().map_or(1, |d| d as usize + 1);
+    let pad = " ".repeat(PERCENT_UNITS.saturating_sub(2 * digits));
+    format!("{pad}{sign}{whole}.{:02}%", p % 100)
+}
+
+/// A turn of the quarter, as the hand keeps it: the quarter that ended and its
+/// year, each from 1, and the worth of the firm and of the benchmark bought and
+/// held at the turn, in whole cents.
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+pub struct Turn {
+    pub quarter: u64,
+    pub year: u64,
+    pub worth: [u64; 2],
+}
+
+/// The report card by hand (`CRITIC.1`): the benchmark bought at the begin, and
+/// every worth the card reads, the begin's and each turn's, kept in a list. The
+/// cells hold the last two of each kind over their twins, at the last card and
+/// the one before, at the year's start and the last year's, keyed on the
+/// calendar's turn; the hand keeps every turn in order and reads a card off the
+/// list, a quarter's start the turn before it and a year's start the turn that
+/// closed the year before, by search.
+#[derive(Clone, Debug, Default, PartialEq, Eq)]
+pub struct Cards {
+    /// Average Co.'s shares the firm's capital buys at the begin's price, and
+    /// the cents left over, kept as cash.
+    pub shares: u64,
+    pub left: u64,
+    /// The worth of the firm and of the benchmark at the begin.
+    pub begin: [u64; 2],
+    pub turns: Vec<Turn>,
+    /// The quarters counted at the frame last played, none before the first.
+    pub counted: Option<u64>,
+}
+
+/// A card, read off the hand's list: its quarter and year; the worth at the
+/// card, at its quarter's start and at its year's start, the firm's first; each
+/// return in whole hundredths of a percent, over the quarter and over the year
+/// so far, the firm's and the benchmark's; each period's alpha and grade; and
+/// the grade the proctor remarks on, the year's at a fourth quarter's card.
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+pub struct Card {
+    pub quarter: u64,
+    pub year: u64,
+    pub worth: [u64; 2],
+    pub quarter_start: [u64; 2],
+    pub year_start: [u64; 2],
+    /// `[period][who]`: the quarter's and the year so far's, the firm's and
+    /// the benchmark's.
+    pub returns: [[i64; 2]; 2],
+    pub alpha: [i64; 2],
+    pub grades: [(u64, &'static str); 2],
+    pub remark: u64,
+}
+
+impl Cards {
+    /// The benchmark's worth at a price of Average Co., in whole cents: its
+    /// shares at the price and the cents left over.
+    pub fn benchmark(&self, price: u64) -> u64 {
+        self.shares * price + self.left
+    }
+
+    /// A frame of the card's books after it is played: until the frame the game
+    /// begins, the benchmark bought again with the capital so far at the price
+    /// now, and the begin's worth the frame's; then, when the quarters counted
+    /// moved since the frame before, the game's first frame excepted, a turn,
+    /// the quarter that ended the one the frame before stood in, at the firm's
+    /// worth now and the benchmark's. `begun_before`, whether the game had begun
+    /// by the frame before; `capital`, the exam's; `price`, Average Co.'s now;
+    /// `firm`, the firm's net worth now. Whether a card was issued.
+    pub fn frame(
+        &mut self,
+        cal: &Calendar,
+        begun_before: bool,
+        capital: u64,
+        price: u64,
+        firm: u64,
+    ) -> bool {
+        if !begun_before {
+            self.shares = capital / price;
+            self.left = capital - self.shares * price;
+            self.begin = [firm, self.benchmark(price)];
+        }
+        let now = cal.quarters();
+        let turned = matches!(self.counted, Some(was) if was != now);
+        if turned {
+            let was = self.counted.unwrap_or(1);
+            let per_year = QUARTER_ENDS.len() as u64;
+            self.turns.push(Turn {
+                quarter: (was - 1) % per_year + 1,
+                year: (was - 1) / per_year + 1,
+                worth: [firm, self.benchmark(price)],
+            });
+        }
+        self.counted = Some(now);
+        turned
+    }
+
+    /// The worth at the last turn, or at the begin before the first; and at the
+    /// turn before it, or at the begin at the first card, or none before it.
+    pub fn last(&self) -> [u64; 2] {
+        self.turns.last().map_or(self.begin, |t| t.worth)
+    }
+    pub fn before(&self) -> Option<[u64; 2]> {
+        match self.turns.len() {
+            0 => None,
+            1 => Some(self.begin),
+            n => Some(self.turns[n - 2].worth),
+        }
+    }
+
+    /// The worth at the year's start, the turn that closed the last fourth
+    /// quarter or the begin; and at the year's start before it, or none before
+    /// a year has closed.
+    pub fn year_start(&self) -> [u64; 2] {
+        self.turns
+            .iter()
+            .rev()
+            .find(|t| t.quarter == 4)
+            .map_or(self.begin, |t| t.worth)
+    }
+    pub fn last_year_start(&self) -> Option<[u64; 2]> {
+        let mut years = self.turns.iter().rev().filter(|t| t.quarter == 4);
+        years.next()?;
+        Some(years.next().map_or(self.begin, |t| t.worth))
+    }
+
+    /// The card issued last, none before the first turn.
+    pub fn card(&self) -> Option<Card> {
+        let n = self.turns.len();
+        let t = self.turns.last()?;
+        let quarter_start = if n == 1 {
+            self.begin
+        } else {
+            self.turns[n - 2].worth
+        };
+        let year_start = self.turns[..n - 1]
+            .iter()
+            .rev()
+            .find(|u| u.quarter == 4 && u.year + 1 == t.year)
+            .map_or(self.begin, |u| u.worth);
+        let returns = [quarter_start, year_start]
+            .map(|start| [points(start[0], t.worth[0]), points(start[1], t.worth[1])]);
+        let alpha = returns.map(|r| r[0] - r[1]);
+        let grades = alpha.map(grade);
+        let remark = if t.quarter == 4 {
+            grades[1].0
+        } else {
+            grades[0].0
+        };
+        Some(Card {
+            quarter: t.quarter,
+            year: t.year,
+            worth: t.worth,
+            quarter_start,
+            year_start,
+            returns,
+            alpha,
+            grades,
+            remark,
+        })
+    }
+}
+
+/// The sheet the game shows at the frame last played, the Camera's `B3`
+/// (`CRITIC.1`): the Report at a card's turn once the game has begun, and
+/// otherwise the exam's choice, [`Exam::shows`].
+pub fn camera(exam: &Exam, card: bool) -> &'static str {
+    if exam.begun && card {
+        CARD_VIEW
+    } else {
+        exam.shows()
+    }
+}
+
+/// The Report's lines (`CRITIC.1`): the card's header for a firm, by its name
+/// or pending registration, and the market it was graded on; its title, which
+/// quarter of which year, or when the first card comes; the header of its last
+/// column; the grades in a sentence; the remark's lead; and the line on your
+/// own account.
+pub const NO_CARD: &str =
+    "No card yet: the first is issued when the first quarter ends, after its 91st day.";
+pub const QUARTER_NAMES: [&str; 4] = ["first", "second", "third", "fourth"];
+pub const OWN_ACCOUNT: &str = "Your own account is not graded: the proctor grades the firm's book, and your own money is your own business.";
+pub const ALPHA_LABEL: &str = "Alpha, the difference";
+pub const CARD_HEADERS: [&str; 2] = ["Worth ($)", "The quarter"];
+pub const REMARK_LEAD: &str = "The proctor remarks: ";
+
+pub fn card_header(firm: Option<&str>, seed: u64, tier: u64) -> String {
+    format!(
+        "Report card for {}, graded by the proctor at seed {seed} and tier {tier}.",
+        firm.unwrap_or("a firm pending registration")
+    )
+}
+pub fn card_title(card: Option<&Card>) -> String {
+    match card {
+        None => NO_CARD.to_string(),
+        Some(c) => format!(
+            "The {} quarter of year {}, to its last close.",
+            QUARTER_NAMES[c.quarter as usize - 1],
+            c.year
+        ),
+    }
+}
+pub fn year_header(card: Option<&Card>) -> &'static str {
+    if card.is_some_and(|c| c.quarter == 4) {
+        "The year"
+    } else {
+        "The year so far"
+    }
+}
+pub fn grade_line(card: Option<&Card>) -> String {
+    match card {
+        None => String::new(),
+        Some(c) => format!(
+            "Grade: {} for the quarter, and {} for the {}.",
+            c.grades[0].1,
+            c.grades[1].1,
+            if c.quarter == 4 {
+                "year"
+            } else {
+                "year so far"
+            }
+        ),
+    }
 }
 
 #[cfg(test)]
@@ -3061,7 +3414,9 @@ mod tests {
     /// The score funds the firm as the contract says (`GUARD.1`): $5,000 and
     /// $500 a right answer, from $5,000 to $10,000 as the right answers of
     /// the ten run from none to all, the eleventh counting nothing; and a
-    /// waiver's five, $7,500, its style the first, at any answer.
+    /// waiver's five, $7,500, its style the first, at any answer, the Camera
+    /// naming the lead at the waiver's frame and nothing at the next
+    /// (`CRITIC.1`).
     #[test]
     fn every_score_funds_the_contracts_capital() {
         let mut first = Exam::new(SEED, letters());
@@ -3084,7 +3439,16 @@ mod tests {
         w.frame(None, false);
         assert!(w.frame(Some(w.right()), false));
         w.waive();
-        assert!(!w.open() && w.begun && w.shows() == LEAD);
+        assert!(!w.open() && w.begun);
+        w.frame(None, false);
+        assert_eq!(w.shows(), LEAD, "the lead at the waiver's frame");
+        assert_eq!(
+            camera(&w, true),
+            CARD_VIEW,
+            "a card's turn names the Report"
+        );
+        w.frame(None, false);
+        assert_eq!(w.shows(), "", "and nothing at the frame after it");
         assert_eq!(
             (w.score(), w.style(), w.capital()),
             (WAIVED_SCORE, WAIVED_STYLE, 750_000)
@@ -3322,6 +3686,231 @@ mod tests {
         assert_eq!(
             firm_line(Some(("I feel the market", "Vibes LLC"))),
             "Your firm: Vibes LLC. Investment style: I feel the market."
+        );
+    }
+
+    /// The quarters (`CRITIC.1`): 91, 91, 91 and 92 days, the year's days, each
+    /// day of the year in the quarter whose last day it does not pass; and at a
+    /// frame a day over three years, the count moving at the first frame of the
+    /// year's 92nd, 183rd and 274th days and of each next year's first, twelve
+    /// turns, never at the game's first frame.
+    #[test]
+    fn the_quarters_turn_at_their_days() {
+        let lengths: Vec<u64> = QUARTER_ENDS
+            .iter()
+            .scan(0, |was, &end| {
+                let n = end - *was;
+                *was = end;
+                Some(n)
+            })
+            .collect();
+        assert_eq!(lengths, [91, 91, 91, 92]);
+        assert_eq!(QUARTER_ENDS[3], DAYS_A_YEAR);
+        for (day, q) in [
+            (1, 1),
+            (91, 1),
+            (92, 2),
+            (182, 2),
+            (183, 3),
+            (273, 3),
+            (274, 4),
+            (365, 4),
+        ] {
+            assert_eq!(quarter_of(day), q, "day {day} of the year");
+        }
+        let mut c = Calendar::new(Pace::every(A_DAY_LONG), DAYS_A_YEAR);
+        let mut turns = Vec::new();
+        let mut was: Option<u64> = None;
+        while c.year < 4 {
+            c.tick();
+            let now = c.quarters();
+            if was.is_some_and(|w| w != now) {
+                turns.push((c.year, c.day_of_year));
+            }
+            was = Some(now);
+        }
+        let want: Vec<(u64, u64)> = (1..=3)
+            .flat_map(|y| [(y, 92), (y, 183), (y, 274), (y + 1, 1)])
+            .collect();
+        assert_eq!(turns, want, "the turns, by year and day of the year");
+    }
+
+    /// A return in whole hundredths of a percent (`CRITIC.1`): rounded half up,
+    /// a half's both ways at once; and the cell's spelling of it, two doubles
+    /// divided and rounded down, `INT(((e-s)*20000+s)/(2*s))`, the hand's at
+    /// every pair of worths from 1 to 1,000 cents and their next thousand, and
+    /// beside every power of two to 2^40 cents, where the numerator stays below
+    /// 2^53.
+    #[test]
+    fn a_return_is_rounded_half_up_in_whole_numbers() {
+        assert_eq!(points(20_000, 20_001), 1, "half a hundredth up rounds up");
+        assert_eq!(
+            points(20_000, 19_999),
+            0,
+            "half a hundredth down rounds up to 0"
+        );
+        assert_eq!(points(750_000, 742_200), -104);
+        assert_eq!(points(750_000, 825_600), 1_008);
+        assert_eq!(points(100, 0), -10_000, "all of it lost");
+        let cell = |s: u64, e: u64| -> i64 {
+            let (s, e) = (s as f64, e as f64);
+            (((e - s) * 20_000.0 + s) / (2.0 * s)).floor() as i64
+        };
+        for s in 1..=1_000u64 {
+            for e in 0..=2_000u64 {
+                assert_eq!(points(s, e), cell(s, e), "{s} to {e} cents");
+            }
+        }
+        for k in 10..=40u32 {
+            let s = 1u64 << k;
+            for e in [
+                s - 1,
+                s,
+                s + 1,
+                s / 2,
+                s * 3 / 2,
+                s + s / 20_000,
+                s - s / 20_000,
+            ] {
+                assert_eq!(points(s, e), cell(s, e), "{s} to {e} cents");
+            }
+        }
+    }
+
+    /// A grade (`CRITIC.1`) is the first whose alpha the card's reaches, from the
+    /// top, and F below them all: at each grade's own alpha and a hundredth
+    /// under it, and far past both ends; the table descending.
+    #[test]
+    fn a_grade_is_the_first_its_alpha_reaches() {
+        for pair in GRADES.windows(2) {
+            assert!(pair[0].1 > pair[1].1, "{pair:?}: descending");
+        }
+        for (k, (letter, from)) in GRADES.iter().enumerate() {
+            assert_eq!(grade(*from), (k as u64 + 1, *letter), "at {from}");
+            let below = GRADES.get(k + 1).map_or(GRADE_BELOW, |(l, _)| *l);
+            assert_eq!(grade(from - 1).1, below, "a hundredth under {from}");
+        }
+        assert_eq!(grade(i64::MAX), (1, "A"));
+        assert_eq!(grade(i64::MIN), (5, GRADE_BELOW));
+        assert_eq!(grade(0).1, "C", "the market's own return, bought and held");
+    }
+
+    /// The percents a view spells (`CRITIC.1`): their sign, two decimals and the
+    /// percent sign; and each, by the widths measured at 13 pixels of Segoe UI,
+    /// ending short of a number's edge in a column of 12 characters at every
+    /// scale from 100% to 200%, the viewport's font, column and pads rounded to
+    /// device pixels, and within ten device pixels of it, from one whole digit
+    /// to five.
+    #[test]
+    fn a_percent_ends_short_of_a_numbers_edge() {
+        for (p, text) in [
+            (0, "        +0.00%"),
+            (-104, "         -1.04%"),
+            (1_008, "      +10.08%"),
+            (-1_008, "       -10.08%"),
+            (5, "        +0.05%"),
+            (12_345, "    +123.45%"),
+            (-9_999_999, " -99999.99%"),
+        ] {
+            assert_eq!(percent(p), text, "{p} hundredths");
+        }
+        let width = |text: &str| -> f64 {
+            let body = text.trim_start_matches(' ');
+            let spaces = (text.len() - body.len()) as f64;
+            let body = body.trim_start_matches(['+', '-']);
+            let digits = body.chars().filter(char::is_ascii_digit).count() as f64;
+            // a space 3.561, a digit 7.008, the point 2.818, the percent sign
+            // 10.639, the plus 8.893; a space and a minus 8.760, the sign's
+            // space counted among the spaces above
+            let sign = if text.contains('-') {
+                8.760 - 3.561
+            } else {
+                8.893
+            };
+            spaces * 3.561 + sign + digits * 7.008 + 2.818 + 10.639
+        };
+        for p in [
+            0i64, 999, 1_000, 9_999, 10_000, 99_999, 100_000, 999_999, 1_000_000, 9_999_999,
+        ] {
+            for p in [p, -p] {
+                let w = width(&percent(p));
+                for scale in [1.0f64, 1.25, 1.5, 1.75, 2.0] {
+                    let font = (13.0 * scale).round();
+                    let edge = (84.0 * scale).round() - 2.0 * (4.0 * scale).round();
+                    let ends = w * font / 13.0;
+                    assert!(
+                        ends <= edge && edge - ends < 10.0,
+                        "{p} at {scale}: ends at {ends:.2} of {edge}"
+                    );
+                }
+            }
+        }
+    }
+
+    /// The first year's cards at the seed (`CRITIC.1`), the firm at rest, its
+    /// cash its worth: each turn at the game's pace at its frame, the first
+    /// 1:11:27 of play; and at a frame a day, the four cards' returns, Average
+    /// Co. bought with $7,500 at the begin's $25.00, 300 shares and no cents
+    /// left: the firm's 0.00% at each, the benchmark's -1.04%, +1.09%, +3.64% and
+    /// +6.17%, the year +10.08%; so the alphas their negation and the grades B,
+    /// D, F and F, the year's F, the remark at the fourth card the year's.
+    #[test]
+    fn the_first_years_cards_at_the_seed() {
+        let mut c = Calendar::new(PACE, DAYS_A_YEAR);
+        let mut was = None;
+        let mut frames = Vec::new();
+        while frames.len() < 4 {
+            c.tick();
+            let now = c.quarters();
+            if was.is_some_and(|w| w != now) {
+                frames.push(c.frame);
+            }
+            was = Some(now);
+        }
+        assert_eq!(frames, [128_611, 257_506, 386_401, 516_991]);
+        let play = |f: u64| (f - 1) as f64 / 30.0;
+        assert_eq!(
+            play(frames[0]),
+            4_287.0,
+            "the first card at 1:11:27 of play"
+        );
+        assert_eq!(play(frames[3]), 17_233.0, "the year's at 4:47:13");
+
+        let market = Market::new(SEED);
+        let capital = CAPITAL_BEFORE + CAPITAL_A_RIGHT * WAIVED_SCORE;
+        let mut cal = Calendar::new(Pace::every(A_DAY_LONG), DAYS_A_YEAR);
+        let mut cards = Cards::default();
+        let mut issued = Vec::new();
+        for frame in 1..=366u64 {
+            cal.tick();
+            let price = RUNGS[BENCHMARK].price_at(market.path(SEED, DIFFICULTY, &cal).now);
+            if cards.frame(&cal, frame > 1, capital, price, capital) {
+                issued.push(cards.card().expect("a card"));
+            }
+        }
+        assert_eq!((cards.shares, cards.left), (300, 0));
+        let got: Vec<(u64, i64, i64, &str)> = issued
+            .iter()
+            .map(|c| (c.quarter, c.returns[0][1], c.alpha[0], c.grades[0].1))
+            .collect();
+        assert_eq!(
+            got,
+            [
+                (1, -104, 104, "B"),
+                (2, 109, -109, "D"),
+                (3, 364, -364, "F"),
+                (4, 617, -617, "F"),
+            ]
+        );
+        let year = issued[3];
+        assert_eq!(
+            (year.returns[1], year.alpha[1], year.grades[1], year.remark),
+            ([0, 1_008], -1_008, (5, "F"), 5)
+        );
+        assert_eq!(
+            issued[1].returns[1],
+            [0, 4],
+            "the year so far at the second card"
         );
     }
 }

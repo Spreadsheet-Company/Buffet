@@ -20,7 +20,7 @@ WHAT IT HOLDS, four things, none needing a host, cargo or the network:
      how-to, src/content/README.md. Any other file under src/ fails by name.
      Each kind is counted against the count pinned for it below: sources 1,
      cartridges 1, libraries 2, how-tos 1, and content sheets (a .vla of
-     src/content/) 5 since FRONT.3 wrote the fifth. No course has a folder:
+     src/content/) 6 since CRITIC.1 wrote the sixth. No course has a folder:
      a course is a tranche of the one game, never a frozen copy of it (the
      owner's word of 2026-10-15, docs/OMAKASE.md, BD-1, amended).
   2. The cartridge's second line is the pass's banner naming its source,
@@ -54,10 +54,10 @@ WHAT IT HOLDS, four things, none needing a host, cargo or the network:
      file defines its rows and the source calls them: an include among the
      source's first forms defines macros alone.
 
--Control proves the check on a scratch copy of the ten files: the clean
+-Control proves the check on a scratch copy of the eleven files: the clean
 copy passes; a stray file under src/, the cartridge missing, a banner naming
 another source, an include in kitchen.vla, the source's includes out of
-order, a sixth content sheet past its pin, a content sheet the source does
+order, a seventh content sheet past its pin, a content sheet the source does
 not include, a content sheet that includes, a content sheet that defines a
 second macro, a content sheet with a capital letter in its name, a content
 sheet whose macro bears another file's name,
@@ -88,7 +88,9 @@ $repoRoot = Split-Path -Parent $PSScriptRoot
 # them; the same day, MENU.2, the second, the Questions sheet's, the exam's
 # bank, and MENU.5, the third, the Caveats sheet's. 2026-10-17, GUARD.1: the
 # fourth, the Firms sheet's, the exam's last question's styles. 2026-10-19,
-# FRONT.3: the fifth, the Headlines sheet's, the ticker's headline of the day.
+# FRONT.3: the fifth, the Headlines sheet's, the ticker's headline of the day;
+# and the same day, CRITIC.1, the sixth, the Remarks sheet's, the proctor's
+# remark on a report card's grade.
 $sourceName = 'buffet.source.vla'
 $cartridgeName = 'buffet.vla'
 $includeOrder = @('common.vla', 'kitchen.vla')
@@ -113,7 +115,7 @@ $kinds = @(
     @{ Kind = 'how-to'; Plural = 'how-tos'; Pinned = 1; Names = @($howTo)
        Missing = 'the How to add a row beside the content sheets, for a stranger with five minutes (MENU.1)'
        Raise = 'a file added or removed moves its name and this pin together, in this file' },
-    @{ Kind = 'content sheet'; Plural = 'content sheets'; Pinned = 5; Folder = $contentFolder; Unit = 'file'
+    @{ Kind = 'content sheet'; Plural = 'content sheets'; Pinned = 6; Folder = $contentFolder; Unit = 'file'
        Raise = 'a sheet arrives with the dish that reads it (MENU.1''s decision 1), which raises this pin and adds its include to the source' }
 )
 
@@ -330,7 +332,8 @@ if ($Control) {
         $caveatsName = 'caveats.vla'
         $firmsName = 'firms.vla'
         $headlinesName = 'headlines.vla'
-        $copied = @($sourceName, $cartridgeName) + $includeOrder + @($howTo, "$contentFolder/$sheetName", "$contentFolder/$bankName", "$contentFolder/$caveatsName", "$contentFolder/$firmsName", "$contentFolder/$headlinesName")
+        $remarksName = 'remarks.vla'
+        $copied = @($sourceName, $cartridgeName) + $includeOrder + @($howTo, "$contentFolder/$sheetName", "$contentFolder/$bankName", "$contentFolder/$caveatsName", "$contentFolder/$firmsName", "$contentFolder/$headlinesName", "$contentFolder/$remarksName")
         foreach ($n in $copied) {
             $from = Join-Path (Join-Path $repoRoot 'src') $n
             if (-not (Test-Path -LiteralPath $from -PathType Leaf)) {
@@ -348,6 +351,7 @@ if ($Control) {
         $caveatsC = Join-Path $contentC $caveatsName
         $firmsC = Join-Path $contentC $firmsName
         $headlinesC = Join-Path $contentC $headlinesName
+        $remarksC = Join-Path $contentC $remarksName
         $howToC = Join-Path $tsrc $howTo
         $source0 = [System.IO.File]::ReadAllBytes($sourceC)
         $cart0 = [System.IO.File]::ReadAllBytes($cartC)
@@ -357,6 +361,7 @@ if ($Control) {
         $caveats0 = [System.IO.File]::ReadAllBytes($caveatsC)
         $firms0 = [System.IO.File]::ReadAllBytes($firmsC)
         $headlines0 = [System.IO.File]::ReadAllBytes($headlinesC)
+        $remarks0 = [System.IO.File]::ReadAllBytes($remarksC)
         $howTo0 = [System.IO.File]::ReadAllBytes($howToC)
         $stray = Join-Path $tsrc 'notes.txt'
         $second = Join-Path $contentC 'jokes.vla'
@@ -370,11 +375,11 @@ if ($Control) {
         $verdicts = New-Object System.Collections.Generic.List[string]
         $ok = $true
         $clean = Get-Report $tmp
-        if ($clean.Failures.Count -eq 0 -and $clean.Files -eq 10) {
-            $verdicts.Add("the clean copy: passes, 10 files read ($(Format-Found $clean.Found))")
+        if ($clean.Failures.Count -eq 0 -and $clean.Files -eq 11) {
+            $verdicts.Add("the clean copy: passes, 11 files read ($(Format-Found $clean.Found))")
         } else {
             $ok = $false
-            $verdicts.Add("the clean copy: $($clean.Failures.Count) problem(s), $($clean.Files) file(s) read; wanted 0 and 10: $($clean.Failures -join ' | ')")
+            $verdicts.Add("the clean copy: $($clean.Failures.Count) problem(s), $($clean.Files) file(s) read; wanted 0 and 11: $($clean.Failures -join ' | ')")
         }
 
         $mutants = @(
@@ -398,10 +403,10 @@ if ($Control) {
                Apply = { $l = Get-LfLines $sourceC; $a = [Array]::IndexOf($l, $incKit); $b = [Array]::IndexOf($l, $incLib); if ($a -ge 0 -and $b -ge 0) { $l[$a] = $incLib; $l[$b] = $incKit }; [System.IO.File]::WriteAllText($sourceC, ($l -join "`r`n"), $utf8) }
                Applied = { $l = Get-LfLines $sourceC; $a = [Array]::IndexOf($l, $incKit); $b = [Array]::IndexOf($l, $incLib); ($a -ge 0) -and ($b -ge 0) -and ($b -lt $a) }
                Want = "includes: src/$sourceName includes kitchen.vla, then common.vla" },
-            @{ Name = 'a sixth content sheet past its pin'
+            @{ Name = 'a seventh content sheet past its pin'
                Apply = { [System.IO.File]::WriteAllText($second, "; SPDX-License-Identifier: CC-BY-SA-4.0`r`n", $utf8) }
                Applied = { Test-Path -LiteralPath $second }
-               Want = "count: content sheets, 6 under src/ (src/$contentFolder/$caveatsName, src/$contentFolder/$sheetName, src/$contentFolder/$firmsName, src/$contentFolder/$headlinesName, src/$contentFolder/jokes.vla, src/$contentFolder/$bankName)" },
+               Want = "count: content sheets, 7 under src/ (src/$contentFolder/$caveatsName, src/$contentFolder/$sheetName, src/$contentFolder/$firmsName, src/$contentFolder/$headlinesName, src/$contentFolder/jokes.vla, src/$contentFolder/$bankName, src/$contentFolder/$remarksName)" },
             @{ Name = 'a content sheet the source does not include'
                Apply = { $l = Get-LfLines $sourceC; $script:hits = @($l | Where-Object { $_ -ceq $incSheet }).Count; [System.IO.File]::WriteAllText($sourceC, ((@($l | Where-Object { $_ -cne $incSheet })) -join "`r`n"), $utf8) }
                Applied = { $l = Get-LfLines $sourceC; ($script:hits -eq 1) -and (@($l | Where-Object { $_ -ceq $incSheet }).Count -eq 0) }
@@ -462,6 +467,7 @@ if ($Control) {
             [System.IO.File]::WriteAllBytes($caveatsC, $caveats0)
             [System.IO.File]::WriteAllBytes($firmsC, $firms0)
             [System.IO.File]::WriteAllBytes($headlinesC, $headlines0)
+            [System.IO.File]::WriteAllBytes($remarksC, $remarks0)
             [System.IO.File]::WriteAllBytes($howToC, $howTo0)
         }
         foreach ($v in $verdicts) { Write-Host ('control: ' + $v) }

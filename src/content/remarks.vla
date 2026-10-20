@@ -1,0 +1,22 @@
+; SPDX-License-Identifier: CC-BY-SA-4.0
+; remarks.vla - the proctor's remarks: the Remarks sheet, a remark a row, a row's place
+; its grade, A, B, C, D and F, the grade a report card gives the firm against the market
+; (docs/OMAKASE.md, CRITIC.1). Words alone: one macro named after this file, whose body is
+; one call of the library's strings. The source includes this file after its manifest,
+; with every other include, and calls (remarks) where the sheet's rows belong. The Report
+; shows the remark of the card's grade, the quarter's at the first three cards of a year
+; and the year's at the fourth, so the first five rows are the grades', A first, and a
+; row past them is never shown. The proctor who administers every exam grades the cards
+; too, and has not been promoted. To change a remark, read README.md beside this file.
+
+(defmacro (remarks)
+  "the proctor's remarks: the Remarks sheet, a remark a row, a row's place its grade"
+  (strings "Remarks"                ; the sheet, hidden among the tabs
+    ("Remark" 100)                  ; its field, its header and its width in characters
+    ; each row: the remark on a grade, A's first, then B's, C's, D's and F's
+    ("Well ahead of the market. The proctor has referred your file to Compliance, as a formality.")
+    ("Ahead of the market. The proctor notes that legends and cautionary tales both start this way.")
+    ("In line with the market, which Average Co. also managed, unattended.")
+    ("Behind the market. The proctor reminds you that Average Co. was available the whole time.")
+    ("Well behind the market. The proctor has left a pamphlet on index funds in your tray.")
+    ))                              ; the sheet's end: the five grades' remarks stand above this line

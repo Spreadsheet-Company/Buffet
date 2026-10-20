@@ -111,16 +111,25 @@
 //! name read by no number of the game; and with it `MENU.3`'s first slice, the
 //! four stocks' names, the hand's, held on the Stocks sheet's rows and in every
 //! view, book, sentence, ledger row and command that names a stock, each name
-//! inside every column that shows it.
+//! inside every column that shows it. Since `CRITIC.1`: the report card, the Day
+//! sheet's quarter and its turn at every frame the calendar is held; the
+//! Performance sheet's books and card and the Report held to the hand's at every
+//! card of the long runs, at every bell and day's turn of the hour's year, and at
+//! every frame of a scripted quarter with orders in both pockets and a
+//! prospectus claimed in it and paid in the next; the Camera showing the Report
+//! at every card and the person's tabs their own between; the Report binding no
+//! key; the Remarks sheet; and the style and your own pocket moving no figure of
+//! the card.
 
 use std::collections::{BTreeMap, BTreeSet, VecDeque};
 use std::sync::OnceLock;
 
 use alonzo::cartridge::{Cartridge, Seed};
 use buffet_oracle::buffet::{
-    self, disclosure, least_index, Calendar, Exam, Hustle, Inputs, Market, Order, Pace, Plate,
-    Shown, AN_HOUR, A_DAY, A_DAY_LONG, CLOSING_TICK, DAYS_A_DISCLOSURE, DAYS_A_YEAR, DIFFICULTY,
-    DIVIDEND_DAYS, DRAWS_A_DAY, FIRST_MINUTE, LOOK_BACK, PACE, QUARTER_HOUR, RUNGS, WAVES, YEAR,
+    self, disclosure, least_index, Calendar, Cards, Exam, Hustle, Inputs, Market, Order, Pace,
+    Plate, Shown, AN_HOUR, A_DAY, A_DAY_LONG, CLOSING_TICK, DAYS_A_DISCLOSURE, DAYS_A_YEAR,
+    DIFFICULTY, DIVIDEND_DAYS, DRAWS_A_DAY, FIRST_MINUTE, LOOK_BACK, PACE, QUARTER_HOUR, RUNGS,
+    WAVES, YEAR,
 };
 use buffet_oracle::{derived, expand_source, gather, lf, load, read, root, values};
 use vla_lang::form::Form;
@@ -141,15 +150,18 @@ const CAVEATS: &str = "src/content/caveats.vla";
 const FIRMS: &str = "src/content/firms.vla";
 /// The ticker's headlines, the Overview's headline of the day (`FRONT.3`).
 const HEADLINES: &str = "src/content/headlines.vla";
+/// The proctor's remarks, a report card's remark on its grade (`CRITIC.1`).
+const REMARKS: &str = "src/content/remarks.vla";
 /// The content sheets, each written by a file of `src/content/`: the sheet,
 /// its file, and the state the source writes before its call, hidden as a
 /// workbook keeps its reference data at the back, or visible for the one a
 /// player reads whole (`MENU.5`'s decision 2).
-const CONTENT: [(&str, &str, &str); 5] = [
+const CONTENT: [(&str, &str, &str); 6] = [
     ("Disclosures", DISCLOSURES, "hidden"),
     ("Questions", QUESTIONS, "hidden"),
     ("Firms", FIRMS, "hidden"),
     ("Headlines", HEADLINES, "hidden"),
+    ("Remarks", REMARKS, "hidden"),
     ("Caveats", CAVEATS, "visible"),
 ];
 /// The exam's bank's fields, in their columns from A (`MENU.2`'s decision 1,
@@ -171,15 +183,17 @@ const CAVEAT_FIELDS: [&str; 4] = [
 /// formula reads. A view enters this list with the dish that fills it: Gigs
 /// with `BACK.1`, the side hustle's; the Exam and the Certificate with
 /// `GUARD.1`, standing before the Portfolio, the game opening on the Exam;
-/// Trading with `PLATE.1`, beside the Portfolio; and the Overview with
-/// `FRONT.3`, after the Certificate, where the certificate leads.
-const VIEWS: [&str; 6] = [
+/// Trading with `PLATE.1`, beside the Portfolio; the Overview with `FRONT.3`,
+/// after the Certificate, where the certificate leads; and the Report with
+/// `CRITIC.1`, after Gigs, where a player meets it at the first card.
+const VIEWS: [&str; 7] = [
     "Exam",
     "Certificate",
     "Overview",
     "Portfolio",
     "Trading",
     "Gigs",
+    "Report",
 ];
 /// Gigs' labels down its column A from row 7 (`BACK.1`'s decision 3), beside
 /// the prospectuses proofread, what remains of the run's claims and the fees.
@@ -369,12 +383,14 @@ fn disclosures_held(cart: &Cartridge, cal: &Calendar, texts: &[String], days: u6
 /// bells and the trading days; the time to the five minutes and of the day, the
 /// time shown, the weekday and its name; whether the market is open; the
 /// session's day, the one before it, the tick and the closing tick; whether
-/// the exam holds the bell and the frames it held it (`GUARD.1`); and the
+/// the exam holds the bell and the frames it held it (`GUARD.1`); the
 /// session's seconds a frame, whether it is in session, the pace now and the
-/// time shown, the five minutes in session and the half hour between.
+/// time shown, the five minutes in session and the half hour between; and the
+/// quarter, the quarters counted and whether this frame turned one
+/// (`CRITIC.1`).
 fn day_held(cart: &Cartridge, cal: &Calendar) {
     let f = cal.frame;
-    let got = values(cart, "Day", "B1:B31");
+    let got = values(cart, "Day", "B1:B35");
     let want = [
         ("B1", cal.pace.between.to_string()),
         ("B2", cal.days_a_year.to_string()),
@@ -403,6 +419,9 @@ fn day_held(cart: &Cartridge, cal: &Calendar) {
         ("B29", u8::from(cal.in_session()).to_string()),
         ("B30", cal.pace_now().to_string()),
         ("B31", cal.shown().to_string()),
+        ("B33", cal.quarter().to_string()),
+        ("B34", cal.quarters().to_string()),
+        ("B35", u8::from(cal.quarter_turned).to_string()),
     ];
     for (addr, text) in want {
         assert_eq!(
@@ -422,7 +441,8 @@ fn day_held(cart: &Cartridge, cal: &Calendar) {
 /// draws and 78 steps a day, spelled again at every frame, having taken the
 /// hour's year from 5.8 s to 9.5; `FRONT.3`, the look back at the last close
 /// made). And the session last held, so that the Overview and the weather are
-/// held whole at each bell as well as at each day's turn (`FRONT.3`).
+/// held whole at each bell as well as at each day's turn (`FRONT.3`); and the
+/// hand's report card, its books kept at every frame (`CRITIC.1`).
 #[derive(Default)]
 struct Held {
     portfolio: Option<(u64, String)>,
@@ -430,6 +450,7 @@ struct Held {
     table: Option<(u64, String)>,
     workings: Option<(u64, String)>,
     session: Option<u64>,
+    cards: Cards,
 }
 
 /// The firms (`BACK.2`), its content file's rows read once by the language's own
@@ -568,7 +589,10 @@ fn workings_key(cal: &Calendar) -> u64 {
 /// at each session and each close, byte for byte between (`Held`). Since
 /// `FRONT.3`, at each bell and each day's turn, the Overview at rest and the
 /// Market sheet's weather, the one reading the last close made in session and
-/// the other outside it; and the day's headline at each day's turn.
+/// the other outside it; and the day's headline at each day's turn. Since
+/// `CRITIC.1`, the hand's report card kept at every frame, the firm at rest and
+/// its worth its capital; the Performance sheet held at each day's turn and at
+/// each card, and the Report at each bell, each day's turn and each card.
 fn held(
     cart: &Cartridge,
     cal: &Calendar,
@@ -637,6 +661,18 @@ fn held(
             ([WAIVED_CAPITAL, buffet::PERSONAL_CASH], prices_of(&stocks)),
             buffet::WAIVED_STYLE,
         );
+    }
+    // The report card (CRITIC.1): the firm at rest, its worth its capital, and
+    // Average Co. at the Stocks sheet's own price now, held to the hand above.
+    let price = prices_of(&stocks)[buffet::BENCHMARK];
+    let card = kept
+        .cards
+        .frame(cal, cal.frame > 1, WAIVED_CAPITAL, price, WAIVED_CAPITAL);
+    if card || cal.turned {
+        performance_held(cart, cal, &kept.cards, price, WAIVED_CAPITAL);
+    }
+    if card || rang || cal.turned {
+        report_cells(cart, cal, &kept.cards, (seed, texts), buffet::WAIVED_STYLE);
     }
 }
 
@@ -746,6 +782,173 @@ fn overview_cells(
     );
     let shown = disclosure(cal.day, texts.len() as u64, DAYS_A_DISCLOSURE);
     text("A13", &texts[shown as usize - 1]);
+}
+
+/// The proctor's remarks (`CRITIC.1`), its content file's rows read once by the
+/// language's own reader, a row's place its grade, which
+/// `each_content_sheet_is_its_file` holds the Remarks sheet to.
+fn remark_texts() -> &'static [String] {
+    static TEXTS: OnceLock<Vec<String>> = OnceLock::new();
+    TEXTS.get_or_init(|| {
+        content(REMARKS)
+            .rows
+            .into_iter()
+            .map(|mut r| r.words.remove(0))
+            .collect()
+    })
+}
+
+/// A flag as a cell holds it, 1 or 0.
+fn flag(b: bool) -> String {
+    u8::from(b).to_string()
+}
+
+/// The Performance sheet at this frame (`CRITIC.1`), every cell the hand's: the
+/// view a card is shown on; Average Co.'s price now, `price`, and the shares and
+/// cents left over the capital bought at the begin; the calendar's turns, a
+/// quarter's and a year's; the cards issued and the last card's quarter and
+/// year, 0 before the first; each one's worth, the firm's now, `firm`, and the
+/// benchmark's, then at the last card or the begin, at the one before it, at
+/// the year's start or the begin, at the last year's start, 0 before each is
+/// taken, and at the card's own year's start; the card's returns, alphas,
+/// grades and remark, the empty text and the first remark before the first
+/// card; and the grades' table.
+fn performance_held(cart: &Cartridge, cal: &Calendar, cards: &Cards, price: u64, firm: u64) {
+    let got = values(cart, "Performance", "A1:G29");
+    let card = cards.card();
+    let zero = [0, 0];
+    let mut want: Vec<(String, String)> = vec![
+        ("B1".into(), buffet::CARD_VIEW.into()),
+        ("B3".into(), price.to_string()),
+        ("B4".into(), cards.shares.to_string()),
+        ("B5".into(), cards.left.to_string()),
+        ("B6".into(), flag(cal.quarter_turned)),
+        ("B7".into(), flag(cal.quarter_turned && cal.quarter() == 1)),
+        ("B8".into(), cards.turns.len().to_string()),
+        ("B9".into(), card.map_or(0, |c| c.quarter).to_string()),
+        ("B10".into(), card.map_or(0, |c| c.year).to_string()),
+        ("B22".into(), card.map_or(1, |c| c.remark).to_string()),
+    ];
+    let worths = [
+        ("B", [firm, cards.benchmark(price)]),
+        ("C", cards.last()),
+        ("D", cards.before().unwrap_or(zero)),
+        ("E", cards.year_start()),
+        ("F", cards.last_year_start().unwrap_or(zero)),
+        ("G", card.map_or(cards.year_start(), |c| c.year_start)),
+    ];
+    for (column, worth) in worths {
+        for (k, w) in worth.iter().enumerate() {
+            want.push((format!("{column}{}", 13 + k), w.to_string()));
+        }
+    }
+    for (p, column) in ["B", "C"].iter().enumerate() {
+        let figures: [String; 5] = match card {
+            None => std::array::from_fn(|_| String::new()),
+            Some(c) => [
+                c.returns[p][0].to_string(),
+                c.returns[p][1].to_string(),
+                c.alpha[p].to_string(),
+                c.grades[p].0.to_string(),
+                c.grades[p].1.to_string(),
+            ],
+        };
+        for (r, figure) in (17..).zip(figures) {
+            want.push((format!("{column}{r}"), figure));
+        }
+    }
+    for (k, (letter, from)) in buffet::GRADES.iter().enumerate() {
+        want.push((format!("A{}", 25 + k), letter.to_string()));
+        want.push((format!("B{}", 25 + k), from.to_string()));
+    }
+    want.push(("A29".into(), buffet::GRADE_BELOW.into()));
+    for (addr, text) in want {
+        assert_eq!(
+            got.get(&addr),
+            Some(&text),
+            "frame {}, day {}, {}: Performance!{addr}",
+            cal.frame,
+            cal.day,
+            buffet::time_shown(cal.hour * 60 + cal.minute)
+        );
+    }
+    assert_eq!(got.get("B29"), None, "F below every grade, none of its own");
+}
+
+/// Every cell of the Report at this frame (`CRITIC.1`), the hand's: its date
+/// and the bell's line; the card's header, by the firm's name the style gives
+/// it, or pending registration, the seed and the tier; its title; its columns'
+/// headers, the last the year's own at a fourth card; the firm's row by its
+/// name and Average Co.'s, each one's worth at the last card or the begin in
+/// dollars, its returns in percent and the alphas under them, empty before the
+/// first card; the grades in a sentence; the proctor's remark, the Remarks
+/// sheet's row of the card's grade; the line on your own account; and the fine
+/// print.
+fn report_cells(
+    cart: &Cartridge,
+    cal: &Calendar,
+    cards: &Cards,
+    (seed, texts): (u64, &[String]),
+    style: u64,
+) {
+    let got = values(cart, buffet::CARD_VIEW, "A1:D16");
+    let text = |addr: &str, want: &str| {
+        assert_eq!(
+            got.get(addr).map(String::as_str),
+            Some(want),
+            "frame {}, day {}, {}: Report!{addr}",
+            cal.frame,
+            cal.day,
+            buffet::time_shown(cal.hour * 60 + cal.minute)
+        );
+    };
+    let card = cards.card();
+    let firm = match style {
+        0 => None,
+        s => Some(firm_rows()[s as usize - 1].1.as_str()),
+    };
+    text("A1", &buffet::as_of(cal));
+    text("A2", buffet::bell(cal));
+    text("A3", &buffet::card_header(firm, seed, DIFFICULTY));
+    text("A5", &buffet::card_title(card.as_ref()));
+    text("B6", buffet::CARD_HEADERS[0]);
+    text("C6", buffet::CARD_HEADERS[1]);
+    text("D6", buffet::year_header(card.as_ref()));
+    text("A7", firm.unwrap_or("Your firm"));
+    text(
+        "A8",
+        &format!("{}, bought and held", RUNGS[buffet::BENCHMARK].name),
+    );
+    text("A9", buffet::ALPHA_LABEL);
+    for (k, worth) in cards.last().iter().enumerate() {
+        text(&format!("B{}", 7 + k), &buffet::two_decimals(*worth));
+    }
+    for (p, column) in ["C", "D"].iter().enumerate() {
+        let figures: [String; 3] = match card {
+            None => std::array::from_fn(|_| String::new()),
+            Some(c) => [
+                buffet::percent(c.returns[p][0]),
+                buffet::percent(c.returns[p][1]),
+                buffet::percent(c.alpha[p]),
+            ],
+        };
+        for (r, figure) in (7..).zip(&figures) {
+            text(&format!("{column}{r}"), figure);
+        }
+    }
+    text("A11", &buffet::grade_line(card.as_ref()));
+    let remark = match card {
+        None => String::new(),
+        Some(c) => format!(
+            "{}{}",
+            buffet::REMARK_LEAD,
+            remark_texts()[c.remark as usize - 1]
+        ),
+    };
+    text("A12", &remark);
+    text("A14", buffet::OWN_ACCOUNT);
+    let shown = disclosure(cal.day, texts.len() as u64, DAYS_A_DISCLOSURE);
+    text("A16", &texts[shown as usize - 1]);
 }
 
 /// Every cell of Trading at this frame (`PLATE.1`), the hand's: its date, the
@@ -1550,12 +1753,17 @@ fn at_difficulty_0_the_index_is_the_kiddie_pools() {
 /// session, across the whole range a long game reaches, the drift raised
 /// past the 36,000th power and the Kondratiev two turns on. No rung's price
 /// falls below the bound no seed passes, and the dearest rung pays its
-/// dividend on exactly four days a year.
+/// dividend on exactly four days a year. And every report card of the century
+/// (`CRITIC.1`), 399, the firm at rest: the Performance sheet and the Report
+/// the hand's at each.
 #[test]
 fn a_hundred_years_at_a_frame_a_day_are_the_market_by_hand() {
     let (mut cart, mut cal) = at_pace(A_DAY_LONG);
     let seed = seed(&cart);
     let market = Market::new(seed);
+    let texts = disclosure_texts(&cart);
+    let mut cards = Cards::default();
+    let mut issued = 0;
     let mut least = [u64::MAX; RUNGS.len()];
     let mut paid = 0;
     for day in 0..100 * DAYS_A_YEAR {
@@ -1590,7 +1798,14 @@ fn a_hundred_years_at_a_frame_a_day_are_the_market_by_hand() {
         if stocks["H8"] != "0" {
             paid += 1;
         }
+        let price = prices_of(&stocks)[buffet::BENCHMARK];
+        if cards.frame(&cal, day > 0, WAIVED_CAPITAL, price, WAIVED_CAPITAL) {
+            issued += 1;
+            performance_held(&cart, &cal, &cards, price, WAIVED_CAPITAL);
+            report_cells(&cart, &cal, &cards, (seed, &texts), buffet::WAIVED_STYLE);
+        }
     }
+    assert_eq!(issued, 399, "a card at every quarter's turn of the century");
     let bound: Vec<u64> = RUNGS.iter().map(|r| r.price_at(least_index())).collect();
     for (k, (least, bound)) in least.iter().zip(&bound).enumerate() {
         assert!(
@@ -1934,7 +2149,9 @@ fn tabs(cart: &Cartridge) -> Vec<(String, String)> {
 /// sheet after the books it reads; `PLATE.1`'s Trading beside the Portfolio,
 /// its Orders, Positions and Ledger among the model's, and its Commands and
 /// Write sheets after the Camera; `FRONT.3`'s Overview after the Certificate
-/// and its Headlines hidden among the content). A state the source forgot
+/// and its Headlines hidden among the content; `CRITIC.1`'s Report after Gigs,
+/// its Performance after the Ledger and its Remarks hidden among the content).
+/// A state the source forgot
 /// would leave its sheet visible, which the engine makes a sheet first named
 /// by a cell.
 #[test]
@@ -1970,6 +2187,7 @@ fn every_sheet_is_written_bare_and_each_content_sheet_in_its_state() {
         ("Portfolio", "visible"),
         ("Trading", "visible"),
         ("Gigs", "visible"),
+        ("Report", "visible"),
         ("Day", "visible"),
         ("Dice", "visible"),
         ("Market", "visible"),
@@ -1980,10 +2198,12 @@ fn every_sheet_is_written_bare_and_each_content_sheet_in_its_state() {
         ("Positions", "visible"),
         ("Cash", "visible"),
         ("Ledger", "visible"),
+        ("Performance", "visible"),
         ("Disclosures", "hidden"),
         ("Questions", "hidden"),
         ("Firms", "hidden"),
         ("Headlines", "hidden"),
+        ("Remarks", "hidden"),
         ("Caveats", "visible"),
         ("Keys", "visible"),
         ("Camera", "visible"),
@@ -2336,11 +2556,16 @@ fn the_headlines_sheet_counts_its_rows_and_shows_the_days_draw() {
 /// ends where a number ends: the Portfolio's prices and changes, Gigs' fees,
 /// and since `PLATE.1` the Portfolio's cost, value and gain and Trading's
 /// prices and cash, and since `FRONT.3` the Overview's net worth, which the
-/// views' frames hold to the hand's spelling.
+/// views' frames hold to the hand's spelling; and since `CRITIC.1` the Report's
+/// worth, and its percents, which the library's `percent` pads for the same
+/// width.
 #[test]
 fn every_column_of_dollars_is_the_width_its_padding_is_measured_for() {
     let text = lf(&read(CARTRIDGE));
     for (sheet, column) in [
+        (buffet::CARD_VIEW, "B"),
+        (buffet::CARD_VIEW, "C"),
+        (buffet::CARD_VIEW, "D"),
         ("Overview", "B"),
         ("Portfolio", "B"),
         ("Portfolio", "C"),
@@ -4046,8 +4271,8 @@ fn reads_cell(formula: &str, sheet: &str, cell: &str) -> bool {
 
 /// The model's sheets and the windows that hold their every cell, the devices
 /// the game writes among them: what a style must leave as it found it.
-const MODEL: [(&str, &str); 12] = [
-    ("Day", "A1:B31"),
+const MODEL: [(&str, &str); 13] = [
+    ("Day", "A1:B35"),
     ("Dice", "A1:J84"),
     ("Market", "A1:F124"),
     ("Stocks", "A1:I8"),
@@ -4057,6 +4282,7 @@ const MODEL: [(&str, &str); 12] = [
     ("Positions", "A1:M15"),
     ("Cash", "A1:B10"),
     ("Ledger", "A1:G101"),
+    ("Performance", "A1:G29"),
     ("Commands", "A1:D12"),
     ("Keys", "A1:E10"),
 ];
@@ -4064,8 +4290,10 @@ const MODEL: [(&str, &str); 12] = [
 /// The style names the firm and moves no number (`BACK.2`; `BD-4`, flavor and
 /// never power): every formula of another sheet that reads the style, the
 /// Proctor's `B40`, or reads the Firms sheet is the style's own twin, the Firms
-/// sheet's row shown, the Exam's options, the Certificate's name or the
-/// Overview's firm line; the Firms sheet's firms, as many as the exam's
+/// sheet's row shown, the Exam's options, the Certificate's name, the
+/// Overview's firm line, or since `CRITIC.1` the Report's header and its firm's
+/// row, and the Performance sheet's card, which grades every style alike, is
+/// among the model compared; the Firms sheet's firms, as many as the exam's
 /// options, each a style and a name within its column, none empty and no name
 /// twice; and a waiver's style, each of the four written as a person's edit of
 /// the Proctor's `B5` before the first frame, naming its firm on the
@@ -4099,6 +4327,8 @@ fn the_style_names_the_firm_and_moves_no_number() {
         ("Exam", "A7:A10"),
         ("Certificate", "B9"),
         (buffet::OVERVIEW, "A3"),
+        (buffet::CARD_VIEW, "A3"),
+        (buffet::CARD_VIEW, "A7"),
     ]
     .iter()
     .map(|(s, r)| (s.to_string(), r.to_string()))
@@ -4922,7 +5152,9 @@ fn the_ledger_rings_past_a_hundred_fills() {
 /// palette's switch the frame before, the dividend still paid to the ten
 /// shares held as the day before closed, the record date. At the game's pace
 /// a day's first frame is midnight, when no order fills, so only a pace of a
-/// day a frame or more meets the two.
+/// day a frame or more meets the two. Since `CRITIC.1` the Camera shows the
+/// Report at each quarter's turn, eight of them on the way, so Trading is
+/// shown again after the last before the switch.
 #[test]
 fn a_dividend_is_paid_to_the_shares_held_at_the_days_turn() {
     use Act::{Key, Left, Point, Run, Show};
@@ -4943,6 +5175,7 @@ fn a_dividend_is_paid_to_the_shares_held_at_the_days_turn() {
             3 => vec![Left(false), Key("KeyC", true)],           // the switch by its key: your own
             4 => vec![Left(true), Key("KeyC", false)],           // Buy 10 of the fourth, your own
             5 => vec![Left(false)],
+            735 => vec![Show("Trading")], // after the year's turn, the Report shown at day 730's card
             820 => vec![Run("switch-cash")], // the palette's switch: the firm's again
             821 => vec![Point(10, 9), Left(true)], // Sell all of the fourth, on a dividend's frame
             822 => vec![Left(false)],
@@ -5313,4 +5546,365 @@ fn a_switch_moves_no_balance_and_the_views_follow_it() {
     );
     assert_eq!(plate.picked, 1, "the pick beside the switch dropped");
     assert_eq!(host.now.sheet, buffet::TRADING);
+}
+
+/// The Report (`CRITIC.1`): at its first frames, the exam waived and the Report
+/// shown as the host shows it, before any card, every cell the hand's, the
+/// begin's worth side by side and the card's figures empty, and the Performance
+/// sheet's books, its settings and its grades; while it shows, no key the Keys
+/// sheet binds and no command of the cartridge's own holding, the Report having
+/// no act of its own (keyboard-first: no act, no key); its columns as wide as
+/// its labels, its dollars and its percents; every firm's name and Average
+/// Co.'s line inside its first column; and the Remarks sheet, a remark a grade,
+/// five, each one line inside its column.
+#[test]
+fn the_report_states_its_lines_and_binds_no_key() {
+    let mut cart = cartridge();
+    let seed = seed(&cart);
+    let texts = disclosure_texts(&cart);
+    let mut host = Host::new(buffet::EXAM);
+    let mut cal = Calendar::new(PACE, DAYS_A_YEAR);
+    let mut cards = Cards::default();
+    for frame in 1..=3u64 {
+        host.step(&mut cart, &[Act::Show(buffet::CARD_VIEW)]);
+        cal.tick();
+        let stocks = values(&cart, "Stocks", "E5:I8");
+        let price = prices_of(&stocks)[buffet::BENCHMARK];
+        assert!(!cards.frame(&cal, frame > 1, WAIVED_CAPITAL, price, WAIVED_CAPITAL));
+        performance_held(&cart, &cal, &cards, price, WAIVED_CAPITAL);
+        report_cells(&cart, &cal, &cards, (seed, &texts), buffet::WAIVED_STYLE);
+        if frame > 1 {
+            let bound: Vec<&String> = host.keys.values().filter(|c| !c.is_empty()).collect();
+            assert!(
+                bound.is_empty(),
+                "frame {frame}: keys bound while the Report shows: {bound:?}"
+            );
+            assert!(
+                host.commands.iter().all(|(_, holds, _)| !holds),
+                "frame {frame}: a command holds while the Report shows"
+            );
+        }
+    }
+    assert_eq!(host.now.sheet, buffet::CARD_VIEW);
+    assert_eq!((cards.shares, cards.left), (300, 0), "300 shares at $25.00");
+    let text = lf(&read(CARTRIDGE));
+    for (column, width) in [
+        ("A", 30),
+        ("B", buffet::DOLLARS_COLUMN),
+        ("C", buffet::DOLLARS_COLUMN),
+        ("D", buffet::DOLLARS_COLUMN),
+    ] {
+        let row = format!("(column \"Report\" \"{column}\" {width} shown none)");
+        assert!(text.lines().any(|l| l == row), "{row}");
+    }
+    let line = format!("{}, bought and held", RUNGS[buffet::BENCHMARK].name);
+    let names = firm_rows().iter().map(|(_, n)| n.as_str());
+    for name in names.chain([line.as_str(), buffet::ALPHA_LABEL]) {
+        let n = name.chars().count();
+        assert!(n <= 30, "{name:?}: {n} characters, past Report!A's 30");
+    }
+    let file = content(REMARKS);
+    assert_eq!(file.fields, [("Remark".to_string(), 100)]);
+    let remarks = remark_texts();
+    assert_eq!(
+        remarks.len(),
+        buffet::GRADES.len() + 1,
+        "a remark a grade, A to D and F"
+    );
+    for (k, r) in remarks.iter().enumerate() {
+        let n = r.chars().count() as u64;
+        assert!(
+            !r.trim().is_empty() && !r.contains('\n') && n <= file.fields[0].1,
+            "remark {}: {n} characters, past its column's {}",
+            k + 1,
+            file.fields[0].1
+        );
+    }
+    // A capital the begin's price does not divide: the capital before the exam
+    // written $5,001.00 as a person's edit, the waiver's five making it
+    // $7,501.00, so 300 whole shares of Average Co. at $25.00 and $1.00 left
+    // over, held as cash, the two worth the capital side by side.
+    let mut cart = loaded();
+    for edit in [
+        "(cell \"Proctor\" \"B1\" 500100)",
+        "(cell \"Proctor\" \"B3\" 1)",
+    ] {
+        cart.write(edit)
+            .unwrap_or_else(|r| panic!("{edit}: {} {}", r.refusal.id, r.refusal.text));
+    }
+    let mut cards = Cards::default();
+    let mut cal = Calendar::new(PACE, DAYS_A_YEAR);
+    for frame in 1..=2u64 {
+        assert!(cart.step(0).done);
+        cal.tick();
+        cards.frame(&cal, frame > 1, 750_100, 2_500, 750_100);
+        performance_held(&cart, &cal, &cards, 2_500, 750_100);
+    }
+    assert_eq!(
+        (cards.shares, cards.left, cards.begin),
+        (300, 100, [750_100; 2])
+    );
+}
+
+/// The Camera at every card (`CRITIC.1`): at a frame a day through the first
+/// year and its turn, the exam waived, the host showing the Overview at the
+/// game's first frame, where the certificate leads, and then the sheet each
+/// tab gives it; at each quarter's turn, the Camera's `B3` the Report and the
+/// host showing it at the frame's end, the second card as the first, its cells
+/// the hand's; at every other frame after the first, `B3` the empty text, and
+/// the person's tab kept until the next card. Every frame the order desk's and
+/// the views' too: the firm in cash for three quarters, then Average Co.
+/// bought with all of it on Trading at the fourth's second day, so that the
+/// year's card grades the quarter C and the year F, and the proctor remarks
+/// on the year's.
+#[test]
+fn the_camera_shows_every_card_and_the_tabs_win_between() {
+    use Act::{Left, Point, Show};
+    let (mut cart, mut cal) = at_pace(A_DAY_LONG);
+    let seed = seed(&cart);
+    let texts = disclosure_texts(&cart);
+    let market = Market::new(seed);
+    let mut host = Host::new(buffet::EXAM);
+    let mut plate = Plate::default();
+    let mut cards = Cards::default();
+    let starts = [WAIVED_CAPITAL, buffet::PERSONAL_CASH];
+    let mut shown_at: Vec<u64> = Vec::new();
+    let tabs = ["Portfolio", "Gigs", buffet::OVERVIEW, buffet::TRADING];
+    let mut tab: Option<&str> = None;
+    for frame in 1..=370u64 {
+        let mut set: Vec<Act> = match tab {
+            Some(t) if host.now.sheet == buffet::CARD_VIEW => vec![Show(t)],
+            _ => Vec::new(),
+        };
+        match frame {
+            276 => set.extend([Point(7, 8), Left(true)]), // Buy max of Average Co., the firm's
+            277 => set.push(Left(false)),
+            _ => {}
+        }
+        let shown = shown(&cal, seed, &market, &plate, starts);
+        let (last, now) = host.step(&mut cart, &set);
+        plate_frame_held(
+            &cart,
+            &host,
+            (&now, &last),
+            &mut plate,
+            &mut cal,
+            (seed, &market),
+            &shown,
+            starts,
+            &texts,
+        );
+        let index = market.path(seed, DIFFICULTY, &cal).now;
+        let prices: [u64; 4] = std::array::from_fn(|k| RUNGS[k].price_at(index));
+        let firm = plate.cash(buffet::FIRM, WAIVED_CAPITAL) + plate.holdings(buffet::FIRM, prices);
+        let price = prices[buffet::BENCHMARK];
+        let card = cards.frame(&cal, frame > 1, WAIVED_CAPITAL, price, firm);
+        performance_held(&cart, &cal, &cards, price, firm);
+        let camera = values(&cart, "Camera", "B3")
+            .remove("B3")
+            .unwrap_or_default();
+        let want = if frame == 1 {
+            buffet::LEAD
+        } else if card {
+            buffet::CARD_VIEW
+        } else {
+            ""
+        };
+        assert_eq!(camera, want, "frame {frame}: Camera!B3");
+        if card {
+            assert_eq!(
+                host.now.sheet,
+                buffet::CARD_VIEW,
+                "frame {frame}: the card shown"
+            );
+            report_cells(&cart, &cal, &cards, (seed, &texts), buffet::WAIVED_STYLE);
+            shown_at.push(frame);
+            tab = Some(tabs[shown_at.len() % tabs.len()]);
+        } else if let Some(t) = tab {
+            if frame > shown_at.last().copied().unwrap_or(0) + 1 {
+                assert_eq!(host.now.sheet, t, "frame {frame}: the person's tab kept");
+            }
+        } else if frame > 1 {
+            assert_eq!(host.now.sheet, buffet::LEAD, "frame {frame}: the lead kept");
+        }
+    }
+    assert_eq!(shown_at, [92, 183, 274, 366], "a card shown at each turn");
+    assert_eq!(
+        plate
+            .fills
+            .iter()
+            .map(|f| (f.pocket, f.stock))
+            .collect::<Vec<_>>(),
+        [(buffet::FIRM, 3)],
+        "Average Co. bought once, the firm's"
+    );
+    let year = cards.card().expect("the year's card");
+    assert_eq!(
+        (
+            year.quarter,
+            year.grades[0].1,
+            year.grades[1].1,
+            year.remark
+        ),
+        (4, "C", "F", 5),
+        "the fourth quarter in line with the market, the year well behind, the remark the year's"
+    );
+}
+
+/// A quarter scripted (`CRITIC.1`), every frame held to the hand: the order
+/// desk, the books, the cash, the ledger, the commands, the views, the
+/// Performance sheet and the Report, the exam waived. Day 0 and day 1 at a
+/// frame an hour: ten shares of Longshot Mining and ten of Average Co. bought
+/// for the firm, the switch by C, a share of Average Co. bought for your own,
+/// and the firm's again by C; then a frame a day from day 2 to day 87, both
+/// paces written 86,400 as a person's edits, and a frame an hour again from
+/// day 87, written 3,600: the firm's Longshot Mining sold on Friday, day 88; a
+/// prospectus claimed on Sunday, day 90, its fee paid a day later, in the next
+/// quarter; the quarter's turn at Monday's first frame, the card issued and the
+/// Report shown, the firm's book graded and your own pocket's orders and fee
+/// moving none of its figures; and a share of General Widget bought for the
+/// firm on Monday, the next quarter's.
+#[test]
+fn a_scripted_quarter_holds_every_card_to_the_hand() {
+    use Act::{Key, Left, Point, Show};
+    // Each act at its day and its hour, the frame landing on the half hour; a
+    // pace written before a frame moves the clock from the frame after it.
+    let script: &[(u64, u64, &[Act])] = &[
+        (0, 9, &[Show("Trading")]),
+        (0, 10, &[Show("Trading")]),
+        (0, 11, &[Point(6, 6), Left(true)]), // Buy 10 of Longshot Mining, the firm's
+        (0, 12, &[Left(false)]),
+        (0, 13, &[Point(6, 8), Left(true)]), // Buy 10 of Average Co., the firm's
+        (0, 14, &[Left(false)]),
+        (0, 15, &[Key("KeyC", true)]), // the switch: your own
+        (0, 16, &[Key("KeyC", false)]),
+        (1, 10, &[Point(5, 8), Left(true)]), // Buy 1 of Average Co., your own
+        (1, 11, &[Left(false)]),
+        (1, 12, &[Key("KeyC", true)]), // the switch: the firm's again
+        (1, 13, &[Key("KeyC", false)]),
+        (88, 14, &[Point(10, 6), Left(true)]), // Sell all of Longshot Mining, the firm's, on Friday
+        (88, 15, &[Left(false)]),
+        (90, 18, &[Show("Gigs")]),
+        (90, 20, &[Key("KeyP", true)]), // a prospectus claimed on Sunday, paid on Monday
+        (90, 21, &[Key("KeyP", false)]),
+        (91, 9, &[Show("Trading")]),
+        (91, 10, &[Point(5, 9), Left(true)]), // Buy 1 of General Widget, the firm's, the next quarter's
+        (91, 11, &[Left(false)]),
+    ];
+    let paces: &[(u64, u64, u64)] = &[(1, 14, A_DAY_LONG), (87, 14, AN_HOUR)];
+    let (mut cart, mut cal) = at_pace(AN_HOUR);
+    let seed = seed(&cart);
+    let market = Market::new(seed);
+    let texts = disclosure_texts(&cart);
+    let mut host = Host::new(buffet::EXAM);
+    let mut plate = Plate::default();
+    let mut hustle = Hustle::default();
+    let mut cards = Cards::default();
+    let mut played = 0;
+    let mut orders = Vec::new();
+    let mut issued = Vec::new();
+    loop {
+        let mut next = cal;
+        next.tick();
+        if (next.day, next.hour) > (92, 1) {
+            break;
+        }
+        let at = (next.day, next.hour);
+        let lines: Vec<&(u64, u64, &[Act])> =
+            script.iter().filter(|(d, h, _)| (*d, *h) == at).collect();
+        played += lines.len();
+        let set: Vec<Act> = lines
+            .iter()
+            .flat_map(|(_, _, acts)| acts.iter().copied())
+            .collect();
+        let pace = paces.iter().find(|(d, h, _)| (*d, *h) == at).map(|p| p.2);
+        if let Some(seconds) = pace {
+            for edit in pace_edits(Pace::every(seconds)) {
+                cart.write(&edit)
+                    .unwrap_or_else(|r| panic!("{edit}: {} {}", r.refusal.id, r.refusal.text));
+            }
+        }
+        let starts_last = [
+            WAIVED_CAPITAL,
+            buffet::PERSONAL_CASH + hustle.earned(cal.five_minutes()),
+        ];
+        let starts = [
+            WAIVED_CAPITAL,
+            buffet::PERSONAL_CASH + hustle.earned(next.five_minutes()),
+        ];
+        let shown = shown(&cal, seed, &market, &plate, starts_last);
+        let (day_shown, seen) = (cal.day, cal.shown());
+        let (last, now) = host.step(&mut cart, &set);
+        hustle.frame(&now, &last, day_shown, seen);
+        let order = plate_frame_held(
+            &cart,
+            &host,
+            (&now, &last),
+            &mut plate,
+            &mut cal,
+            (seed, &market),
+            &shown,
+            starts,
+            &texts,
+        );
+        if let Some(seconds) = pace {
+            cal.pace = Pace::every(seconds);
+        }
+        if let Some(o) = order {
+            orders.push(((cal.day, cal.hour), o.pocket, o.stock, o.outcome));
+        }
+        let now_index = market.path(seed, DIFFICULTY, &cal).now;
+        let prices: [u64; 4] = std::array::from_fn(|k| RUNGS[k].price_at(now_index));
+        let firm = plate.cash(buffet::FIRM, WAIVED_CAPITAL) + plate.holdings(buffet::FIRM, prices);
+        let price = prices[buffet::BENCHMARK];
+        if cards.frame(&cal, cal.frame > 1, WAIVED_CAPITAL, price, firm) {
+            issued.push((cal.day, cal.hour, cards.card().expect("a card")));
+            assert_eq!(host.now.sheet, buffet::CARD_VIEW, "the card shown");
+        }
+        performance_held(&cart, &cal, &cards, price, firm);
+        report_cells(&cart, &cal, &cards, (seed, &texts), buffet::WAIVED_STYLE);
+        assert_eq!(
+            values(&cart, "Hustle", "B18").get("B18"),
+            Some(&hustle.earned(cal.five_minutes()).to_string()),
+            "frame {}: Hustle!B18, the fees",
+            cal.frame
+        );
+    }
+    assert_eq!(played, script.len(), "every act of the script played");
+    use buffet::Outcome::Filled;
+    use buffet::{FIRM, PERSONAL};
+    assert_eq!(
+        orders,
+        [
+            ((0, 11), FIRM, 1, Filled),
+            ((0, 13), FIRM, 3, Filled),
+            ((1, 10), PERSONAL, 3, Filled),
+            ((88, 14), FIRM, 1, Filled),
+            ((91, 10), FIRM, 4, Filled),
+        ],
+        "the orders taken, by day and hour, each its pocket"
+    );
+    let claimed: Vec<u64> = hustle.claims.iter().map(|&(d, _)| d).collect();
+    assert_eq!(claimed, [90], "the prospectus claimed on day 90");
+    assert_eq!(issued.len(), 1, "one card, the first quarter's");
+    let (day, hour, card) = issued[0];
+    assert_eq!((day, hour, card.quarter, card.year), (91, 0, 1, 1));
+    assert_eq!(
+        card.quarter_start,
+        [WAIVED_CAPITAL, WAIVED_CAPITAL],
+        "the begin's worth, side by side"
+    );
+    assert_eq!(
+        card.returns[0], card.returns[1],
+        "the first quarter, the year so far"
+    );
+    assert!(
+        card.returns[0][0] != 0 && card.alpha[0] == card.returns[0][0] - card.returns[0][1],
+        "the firm's book graded: {card:?}"
+    );
+    assert_eq!(
+        hustle.earned(cal.five_minutes()),
+        buffet::FEE,
+        "the fee paid in the next quarter"
+    );
 }

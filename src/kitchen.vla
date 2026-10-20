@@ -47,6 +47,10 @@
 ; as signed-dollars, so that the grouping is one text written once for both.
 ; Since POT.11 (2026-10-19): as-of's time to the five minutes, which the Day sheet spells
 ; now, the verb's formula unchanged.
+; Since CRITIC.1 (2026-10-19): percent, a view's return or alpha as a column's figure, at
+; its first dish, the report card writing it six times over two fills, as bell came with
+; both views writing it; the weather's change on the Overview, a percent too, is a phrase
+; of a sentence, up or down by words and in tenths, and keeps its own spelling.
 
 ; ---- the dice (POT.1) ---------------------------------------------------------------
 ; A stream is a die and its draws. The die is one cell, the stream's state, which the
@@ -259,6 +263,27 @@
 (defmacro (dollars-grouped sheet at whole sign pad g1 g2 g3 g4)
   "the dollars' formula: the padding, the sign if any, and the dollars, under a thousand at the first comparison; else their leading group by their size, each later group of three after its comma where the dollars reach it, each written once, the last always; then a point and two digits of cents"
   (formula sheet at (&expand "=" pad sign "&IF(" whole "<100000,INT(" whole "/100),IF(" whole "<100000000,INT(" whole "/100000),IF(" whole "<100000000000,INT(" whole "/100000000),IF(" whole "<100000000000000,INT(" whole "/100000000000),INT(" whole "/100000000000000))))&IF(" whole ">=100000000000000,\",\"&" g4 ",\"\")&IF(" whole ">=100000000000,\",\"&" g3 ",\"\")&IF(" whole ">=100000000,\",\"&" g2 ",\"\")&\",\"&" g1 ")&\".\"&IF(MOD(" whole ",100)<10,\"0\",\"\")&MOD(" whole ",100)")))
+
+; ---- a view's percent (CRITIC.1) ----------------------------------------------------
+; A return or an alpha reaches a view as whole hundredths of a percent, a number of the
+; model rounded once, so that a difference of two of them is exact and reads as the two
+; above it subtract; and spelled as a text, since the record draws no number format
+; (MISE.6): its sign, a gain's or nothing's + and a loss's space and -, each as wide as
+; the other, as the signed dollars' are; the whole percent, a point and two digits; and
+; the percent sign. Padded on the left to end where a number ends, in a column 12
+; characters wide as every column of a view's dollars is: the spaces before the sign and
+; twice the whole percent's digits make 10, from one digit to five, and none from six. The percent
+; sign is about three spaces wide (a canvas at 13 pixels of Segoe UI, at CRITIC.1's
+; scoping: 10.639 pixels, a space 3.561, a digit 7.008, the plus 8.893), so the text ends
+; short of a number's edge at every scale from 100% to 200%, and never past it, where 11
+; would pass it by two device pixels at 150%. A model's figure that is the empty text, a
+; report card's before its first card, shows nothing. The Overview's weather is a percent
+; too, but a phrase of a sentence, its sign in words and its figure in tenths, which keeps
+; its spelling; this verb is a column's figure, a number once the record draws formats.
+
+(defmacro (percent sheet at points)
+  "a view's percent in one cell or a fill: whole hundredths of a percent either way, spelled as a text with two decimals after a gain's or nothing's + or a loss's space and -, then the percent sign, padded to end where a number ends in a column 12 characters wide; the empty text where the model's figure is the empty text"
+  (formula sheet at (&expand "=IF(" points "=\"\",\"\",IF(ABS(" points ")<1000,\"        \",IF(ABS(" points ")<10000,\"      \",IF(ABS(" points ")<100000,\"    \",IF(ABS(" points ")<1000000,\"  \",\"\"))))&IF(" points "<0,\" -\",\"+\")&INT(ABS(" points ")/100)&\".\"&IF(MOD(ABS(" points "),100)<10,\"0\",\"\")&MOD(ABS(" points "),100)&\"%\")")))
 
 ; ---- a view's buttons (BACK.1, GUARD.1) ---------------------------------------------
 ; A button is a cell of a view, and its press a cell of the model that holds 0 between

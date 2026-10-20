@@ -21,7 +21,9 @@
 //! `PLATE.1` the order desk, its buttons and commands, its fills and books,
 //! each pocket's cash and the ledger's ring, and since `FRONT.3` the overview,
 //! the last close made, the weather's word and the day's headline, and since
-//! `BACK.2` the firm's line and the stocks' names; the host's
+//! `BACK.2` the firm's line and the stocks' names, and since `CRITIC.1` the
+//! report card, the quarters, the benchmark bought and held, every turn's
+//! worth, the returns, the grades and the percents spelled; the host's
 //! derived writes, the
 //! Write sheet's rows as the host reads them; the door
 //! the runners and the tests

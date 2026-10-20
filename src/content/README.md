@@ -15,11 +15,13 @@ cheapest pull request there is.*
    a firm a row, each the style the exam's last question offers and the name
    that style gives the firm, of which the exam offers the first four;
    `headlines.vla` the ticker, a headline a row, of which the Overview shows
-   one a day; and `caveats.vla` the things this game gets wrong, a caveat a
-   row.
+   one a day; `remarks.vla` the proctor's remarks on a report card, a remark
+   a grade, the first five rows A's, B's, C's, D's and F's in that order, so
+   that a remark is rewritten in its place rather than added; and
+   `caveats.vla` the things this game gets wrong, a caveat a row.
 2. Add your row above the file's last line, the one that opens with `))`.
    A row is the sheet's fields, in the order the file names them above its
-   rows. A disclosure or a headline is one line:
+   rows. A disclosure, a headline or a remark is one line:
 
    ```text
    ("Your text here.")

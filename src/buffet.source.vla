@@ -71,6 +71,12 @@
 ;           printing the name and the Overview the name and the style, words that move no
 ;           number; and MENU.3's first slice, the four stocks' names, each on its own row
 ;           of the Stocks sheet.
+;   CRITIC.1 the report card: the Report, the firm's book graded at each quarter's end
+;           against Average Co. bought at the opening bell and held, its return over the
+;           quarter and over the year so far, the difference its alpha, a grade for each
+;           and the proctor's remark, the Camera showing it at every card; the Performance
+;           sheet, its books; the Day sheet's quarter; and the Remarks sheet, the
+;           proctor's remarks, a content sheet of its own.
 ;
 ; The market's clock (BD-7). A frame is twenty seconds of the market's time in the
 ; regular session and two minutes between sessions, so at the manifest's rate of thirty
@@ -107,12 +113,12 @@
   (seed 791886)                     ; every first game's market: a first year that dips early and closes 10% up
   (author "Spreadsheet Company")
   (license "AGPL-3.0-or-later AND CC-BY-SA-4.0")
-  (notes "Buffet: All You Can Sheet. The front office is open for business: the game opens on the Series 777, the regulator's exam for a fund manager, eleven questions answered by a click or a key, ten of them scored, each right answer $500 more of the firm's $5,000, and the last the firm's style, which names the firm; then its certificate; then the Overview at Monday's opening bell, which waits for you to leave the exam room: the day and the hour, the firm's name and style, the net worth of the firm and your own, the market's weather, a word for how far it moved in the twenty days to the last close, and the day's headline, with the fine print at its foot. Beside it, the Portfolio, four stocks, each its price, its change since the last close and the holding of it, the firm's or your own, its shares, their cost, their value and the gain, the market open from 9:30 to 16:00 on weekdays, ten minutes a second while it trades and an hour a second between, and moving every five minutes, and under them the cash on hand and the net worth, the firm's and yours. Beside that, Trading, where each stock's six buttons buy one share, ten or as many as the cash covers, and sell one, ten or all, at the price shown while the market is open, by a click or by a key: 1 to 4 pick a stock, then B, N and M buy and S, D and F sell, each also a command of the page's palette; and beside the cash, a switch, or C, turns whose cash an order spends, the firm's or your own, moving none of it. And Gigs, where a prospectus is proofread for $250, by a click on its button or by P, a day's work, one a week and four a run, Compliance permitting. Behind them, the back office: the market's calendar and its hours; its dice, rolled once a day where anyone can watch them roll; the market itself, four waves and a drift, and each session's five minutes between two closes, their swings a factor of its own, and its weather, a word read off its change; four stocks priced off it in whole cents, the dearest paying a dividend four days a year, paid to the shares held; the hustle's books, every prospectus counted; the proctor's books, the exam's draw and every answer; the order desk's books, every button and command and the order they make; the positions, each pocket's shares, cost and gains; the cash, the holdings and the net worth, the firm's and yours; the ledger, the last hundred orders filled; the fine print, a disclosure a month; the Series 777's question bank, twenty questions; the four firms, each its style and its name; the headlines, one a day; and the model's caveats, the things this game gets wrong, each with Management's response. A returning candidate may waive the exam by writing 1 into Proctor!B3, at five correct answers and the first style's firm, or another's by writing 2, 3 or 4 into Proctor!B5. Pick the Day, the Dice, the Market, the Stocks, the Hustle, the Proctor, the Orders, the Positions, the Cash or the Ledger sheet to watch the model work, or the Caveats sheet to read, or the Disclosures, the Questions, the Firms or the Headlines sheet among the hidden sheets."))
+  (notes "Buffet: All You Can Sheet. The front office is open for business: the game opens on the Series 777, the regulator's exam for a fund manager, eleven questions answered by a click or a key, ten of them scored, each right answer $500 more of the firm's $5,000, and the last the firm's style, which names the firm; then its certificate; then the Overview at Monday's opening bell, which waits for you to leave the exam room: the day and the hour, the firm's name and style, the net worth of the firm and your own, the market's weather, a word for how far it moved in the twenty days to the last close, and the day's headline, with the fine print at its foot. Beside it, the Portfolio, four stocks, each its price, its change since the last close and the holding of it, the firm's or your own, its shares, their cost, their value and the gain, the market open from 9:30 to 16:00 on weekdays, ten minutes a second while it trades and an hour a second between, and moving every five minutes, and under them the cash on hand and the net worth, the firm's and yours. Beside that, Trading, where each stock's six buttons buy one share, ten or as many as the cash covers, and sell one, ten or all, at the price shown while the market is open, by a click or by a key: 1 to 4 pick a stock, then B, N and M buy and S, D and F sell, each also a command of the page's palette; and beside the cash, a switch, or C, turns whose cash an order spends, the firm's or your own, moving none of it. And Gigs, where a prospectus is proofread for $250, by a click on its button or by P, a day's work, one a week and four a run, Compliance permitting. And at each quarter's end the Report, the report card, which the game shows you: the firm's return over the quarter and over the year so far against Average Co. bought at the opening bell and held, the difference its alpha, a grade for each and the proctor's remark. Behind them, the back office: the market's calendar and its hours; its dice, rolled once a day where anyone can watch them roll; the market itself, four waves and a drift, and each session's five minutes between two closes, their swings a factor of its own, and its weather, a word read off its change; four stocks priced off it in whole cents, the dearest paying a dividend four days a year, paid to the shares held; the hustle's books, every prospectus counted; the proctor's books, the exam's draw and every answer; the order desk's books, every button and command and the order they make; the positions, each pocket's shares, cost and gains; the cash, the holdings and the net worth, the firm's and yours; the ledger, the last hundred orders filled; the performance, the report card's books, the firm's worth and Average Co.'s at each card; the fine print, a disclosure a month; the Series 777's question bank, twenty questions; the four firms, each its style and its name; the headlines, one a day; the proctor's remarks, one a grade; and the model's caveats, the things this game gets wrong, each with Management's response. A returning candidate may waive the exam by writing 1 into Proctor!B3, at five correct answers and the first style's firm, or another's by writing 2, 3 or 4 into Proctor!B5. Pick the Day, the Dice, the Market, the Stocks, the Hustle, the Proctor, the Orders, the Positions, the Cash, the Ledger or the Performance sheet to watch the model work, or the Caveats sheet to read, or the Disclosures, the Questions, the Firms, the Headlines or the Remarks sheet among the hidden sheets."))
 
 ; The libraries whose macros this source calls, both beside it: the kit, Alonzo's
 ; common.vla copied at the pin (sheets, labels, headers, on, cells, formulas, hold,
 ; pressed, count and camera), then Buffet's own, kitchen.vla (draws, strings, picker,
-; as-of, bell, fine-print, dollars, signed-dollars and clicked); then the content sheets, each a file of src/content/ that defines
+; as-of, bell, fine-print, dollars, signed-dollars, percent and clicked); then the content sheets, each a file of src/content/ that defines
 ; one macro of its rows, called where its sheet belongs. The manifest stands first, the
 ; cartridge's own form, then every include, then the code (the owner's word,
 ; 2026-10-15), so that a file missing is refused at the top; and each include defines
@@ -124,6 +130,7 @@
 (include "content/questions.vla")
 (include "content/firms.vla")
 (include "content/headlines.vla")
+(include "content/remarks.vla")
 (include "content/caveats.vla")
 
 ; The tabs. The Screen, the device a game draws its frame on, holds nothing here, the
@@ -133,13 +140,14 @@
 ; sheet (Alonzo's SPEC.md section 3.1, version 4), the Exam, whose Camera hands the game
 ; to the Certificate and then to the Overview (GUARD.1, FRONT.3), the views after it in
 ; the order a player meets them, the Portfolio and Trading beside it (PLATE.1), then
-; Gigs; then the model's sheets, visible, a spreadsheet a player may open (AD-6),
-; each after the books it reads; the content sheets stand after them, where each is
-; called below, then the Keys, the Camera, the Commands and the Write sheet, the devices
-; the game writes, and the engine's own devices last.
+; Gigs, then the Report, which the Camera shows at the first quarter's end (CRITIC.1);
+; then the model's sheets, visible, a spreadsheet a player may open (AD-6), each after
+; the books it reads; the content sheets stand after them, where each is called below,
+; then the Keys, the Camera, the Commands and the Write sheet, the devices the game
+; writes, and the engine's own devices last.
 
 (sheet "Screen" hidden)             ; the framebuffer, unused: each view is a sheet of its own
-(sheets "Exam" "Certificate" "Overview" "Portfolio" "Trading" "Gigs" "Day" "Dice" "Market" "Stocks" "Hustle" "Proctor" "Orders" "Positions" "Cash" "Ledger")
+(sheets "Exam" "Certificate" "Overview" "Portfolio" "Trading" "Gigs" "Report" "Day" "Dice" "Market" "Stocks" "Hustle" "Proctor" "Orders" "Positions" "Cash" "Ledger" "Performance")
 
 ; ---- POT.1, POT.10, POT.11: the calendar, the market's hours and the pace -------------
 ; A block of settings and its workings, a label in column A beside each value in B, the
@@ -172,8 +180,15 @@
 ; a license's hours show the clock as they keep the pace; a claim's work counts from it,
 ; the time the person saw. Three cells compute at every frame, the time, the boundary and
 ; the time to the five minutes, and no other cell of the game does. In the formulas, 60 is
-; the seconds a minute, 300 the seconds in five minutes, 1440 the minutes a day and 7 the
-; days a week, arithmetic and no settings.
+; the seconds a minute, 300 the seconds in five minutes, 1440 the minutes a day, 7 the
+; days a week and 4 the quarters a year, arithmetic and no settings.
+;
+; The quarter (CRITIC.1), the report card's period: the year's days in four quarters of
+; the year's days over four, rounded down, 91, the fourth taking the year's last day, so
+; 91, 91, 91 and 92 days, as calendar quarters run from 90 to 92; the quarters counted from
+; the game's first, the year's four a year; and a quarter's turn, 1 in the frame the
+; count moves, the first frame of a quarter's first day, midnight at the game's pace, and 0
+; at the game's first frame, whose last counted none. A quarter turns at most once a day.
 ;
 ; The first bell waits for the exam (GUARD.1). While the Proctor's books say the game has
 ; not begun, the exam holds the bell: the market is closed and the pace is none, so the
@@ -224,7 +239,12 @@
   (formulas
     ("B29" "=IF(AND(B17<B12,B15>=B10,B15<B11),1,0)")   ; in session: a trading day, from the opening bell to the closing one, whatever the exam or a license says
     ("B30" "=IF(B25=1,0,IF(B29=1,B28,B1))")   ; the pace now: none while the bell waits, the session's in session, else the pace between sessions
-    ("B31" "=IF(B29=1,B14,INT(B14/30)*30)")))   ; the time shown, in minutes from day 0's midnight: the five minutes in session, the half hour between
+    ("B31" "=IF(B29=1,B14,INT(B14/30)*30)"))   ; the time shown, in minutes from day 0's midnight: the five minutes in session, the half hour between
+  (labels "A33" "quarter, from 1" "quarters, counted from the first" "a quarter's turn")
+  (formulas
+    ("B33" "=MIN(INT((B7-1)/INT(B2/4))+1,4)")   ; the quarter of the year: 91 days each, the fourth taking the year's last
+    ("B34" "=(B6-1)*4+B33")         ; the quarters, counted from the game's first, four a year
+    ("B35" "=IF(AND(B34<>Day.last!B34,Day.last!B34>0),1,0)")))   ; a quarter's turn: 1 in the frame the count moves, never the game's first
 
 ; ---- POT.1, POT.10, POT.11: the dice -------------------------------------------------
 ; Two streams, each a die and its draws, the draws by the library's verb, side by side:
@@ -825,6 +845,95 @@
   (column "G" 21 shown none)        ; the cash after, in cents
   (headers "A1" "order" "when, the time shown" "pocket" "stock" "shares" "price, in cents" "cash after, in cents"))
 
+; ---- CRITIC.1: the performance ------------------------------------------------------
+; The report card's books: the firm's book graded at each quarter's turn against the
+; market bought and held on the same days of the same seed, so that a score is alpha over
+; a benchmark and never a raw net worth (BD-3), and a card at the turn into a year's first
+; quarter is the year's (the owner's words at POT.10's approval, 2026-10-16: "report cards
+; should come quarterly and annually instead of just annually"). The firm's book alone: its
+; capital takes no flow at course 0, no client's money and no draw, so its return is its
+; net worth at a card over its net worth at the period's start, less one, with nothing to
+; take out; your own pocket takes the hustle's fees, and is graded with the firm's clients
+; and draws when they come (the firm line, course 2). The benchmark is the broad rung,
+; Average Co., the market itself (STATION.1's decision 6), bought with the firm's capital
+; at the begin's price, $25 at every seed, the index opening at 1, in whole shares, the
+; cents left over held as cash, and held: what Buy max of Average Co. at the first bell
+; would have made of the capital, a dividend's none, since it pays none (the income line,
+; course 1). The books are the turn's frame's: the price now, which at the turn stands at
+; the quarter's last close, the frame before the bell or between sessions.
+;
+; Settings first: the view a card is shown on, a value, as the certificate's lead is the
+; Proctor's, so that a view renamed moves no formula. Then the benchmark: Average Co.'s
+; price now, and its shares and the cents left over, taken until the game begins and held
+; from the begin's frame. Then the turns, the calendar's: a quarter's, and a year's, a
+; quarter's turn into the first quarter; the cards issued, and the card's quarter and its
+; year, each the last frame's, the quarter that ended. Then each one's worth in cents, the
+; firm's and Average Co.'s, a row each: now; at the last card, or the begin; at the card
+; before it; at the year's start, or the begin; at the last year's start; and at the
+; card's own year's start, the last year's at the fourth card and this year's at the
+; others. Then the card: each return over the quarter and over the year so far, in whole
+; hundredths of a percent rounded half up, exactly, the quotient of whole numbers rounded
+; down below 2^53; alpha, the difference; each one's grade, its place and its letter; and
+; the remark's grade, the year's at the fourth card and the quarter's at the others. The
+; card's figures are the empty text until the first card. At the foot the grades, each
+; letter beside the alpha in hundredths of a point it begins at, from the top, F below
+; them all, settings a person may edit (AD-6): A from two points ahead of the market, B
+; from half a point, C within half a point either way, D to two points behind.
+
+(on "Performance"
+  (column "A" 42 shown none)        ; the labels: as wide as the longest, the shares'
+  (column "B" 16 shown none)        ; each column of worth as wide as its header
+  (column "C" 16 shown none)
+  (column "D" 16 shown none)
+  (column "E" 16 shown none)
+  (column "F" 16 shown none)
+  (column "G" 16 shown none)
+  (labels "A1" "where a card is shown")
+  (cells
+    ("B1" "Report"))                ; the view the Camera shows at each card
+  (labels "A3" "Average Co.'s price now, in cents" "its shares, bought with the capital at the begin" "the cents left over, held" "a quarter's turn" "a year's turn" "cards issued" "the card's quarter, 1 to 4" "the card's year")
+  (formulas
+    ("B3" "=Stocks!$E$7"))          ; Average Co.'s price now, the broad rung's
+  (hold "B4" "Proctor.last!$B$41<>1" "INT(Proctor!$B$39/B3)")   ; its shares: as many as the capital buys at the begin's price, and held from the begin
+  (hold "B5" "Proctor.last!$B$41<>1" "Proctor!$B$39-B4*B3")     ; the cents left over, held as cash
+  (formulas
+    ("B6" "=Day!$B$35")             ; a quarter's turn, the calendar's
+    ("B7" "=IF(AND(B6=1,Day!$B$33=1),1,0)"))   ; a year's turn: a quarter's turn into the first quarter
+  (count "B8" "$B$6")               ; the cards issued
+  (hold "B9" "$B$6=1" "Day.last!$B$33")   ; the card's quarter: the last frame's, the quarter that ended
+  (hold "B10" "$B$6=1" "Day.last!$B$6")   ; the card's year
+  (headers "A12" "worth, in cents" "now" "at the last card" "at the one before" "at the year's start" "at the last year's" "at the card's year")
+  (labels "A13" "the firm" "Average Co., bought and held")
+  (formulas
+    ("B13" "=Cash!$B$9")            ; the firm's net worth now
+    ("B14" "=$B$4*$B$3+$B$5"))      ; Average Co.'s, bought and held, now
+  (hold "C13:C14" "OR(Proctor.last!$B$41<>1,$B$6=1)" "B13")   ; at the last card, or the begin
+  (hold "D13:D14" "$B$6=1" "Performance.last!C13")           ; at the card before it
+  (hold "E13:E14" "OR(Proctor.last!$B$41<>1,$B$7=1)" "B13")   ; at the year's start, or the begin
+  (hold "F13:F14" "$B$7=1" "Performance.last!E13")           ; at the last year's start
+  (formulas
+    ("G13:G14" "=IF($B$9=4,F13,E13)"))   ; at the card's year's start: the last year's at the fourth card, the year's own at the others
+  (headers "A16" "the card, in hundredths of a percent" "the quarter" "the year so far")
+  (labels "A17" "the firm's return" "Average Co.'s return" "alpha, the difference" "the grade, 1 for A to 5 for F" "the grade" "the remark's grade, 1 to 5")
+  (formulas
+    ("B17:B18" "=IF($B$8=0,\"\",INT(((C13-D13)*20000+D13)/(2*D13)))")   ; each return over the quarter, rounded half up
+    ("C17:C18" "=IF($B$8=0,\"\",INT(((C13-G13)*20000+G13)/(2*G13)))")   ; and over the year so far
+    ("B19:C19" "=IF($B$8=0,\"\",B17-B18)")   ; alpha, the difference
+    ("B20:C20" "=IF($B$8=0,\"\",IF(B19>=$B$25,1,IF(B19>=$B$26,2,IF(B19>=$B$27,3,IF(B19>=$B$28,4,5)))))")   ; the grade: the first whose alpha it reaches, from the top
+    ("B21:C21" "=IF($B$8=0,\"\",CHOOSE(B20,$A$25,$A$26,$A$27,$A$28,$A$29))")   ; its letter
+    ("B22" "=IF($B$8=0,1,IF($B$9=4,C20,B20))"))   ; the remark's grade: the year's at the fourth card, the quarter's at the others
+  (headers "A24" "the grades" "from, in hundredths of a point")
+  (cells
+    ("A25" "A")                     ; two points or more ahead of the market
+    ("B25" 200)
+    ("A26" "B")                     ; ahead
+    ("B26" 50)
+    ("A27" "C")                     ; in line, within half a point either way
+    ("B27" -50)
+    ("A28" "D")                     ; behind
+    ("B28" -200)
+    ("A29" "F")))                   ; two points or more behind: below every grade above
+
 ; ---- MENU.1: the strings ------------------------------------------------------------
 ; The content sheets, each a file of src/content/ that holds the words alone, a
 ; stranger's cheapest pull request: one macro of its rows, named after its file, whose
@@ -903,6 +1012,22 @@
 (on "Headlines"
   (formulas
     ("D2" "=INT(Dice!$C$84*D1)+1")))   ; the row shown: the uniform of the day's 83rd market draw times the rows, from the first
+
+; ---- CRITIC.1: the remarks ----------------------------------------------------------
+; The Remarks sheet: the proctor's remarks on a report card, a remark a row, a row's
+; place its grade, A, B, C, D and F, so that the first five rows are the grades' and a row
+; past them is never shown. The proctor who administers every exam grades the cards too,
+; and has not been promoted. One field, so its table is column A and its values stand in
+; D: the count in D1, the row shown D2 and its picker D3, which the Report reads. The row
+; shown is the Performance sheet's remark's grade: the year's at the fourth card and the
+; quarter's at the others, the first before any card, which the Report shows no remark for.
+
+(sheet "Remarks" hidden)            ; the remarks: reference data, at the back of the workbook
+(remarks)                           ; the Remarks sheet: its header, its rows, their count and their picker
+
+(on "Remarks"
+  (formulas
+    ("D2" "=Performance!$B$22")))   ; the row shown: the card's grade's place, the remark's
 
 ; ---- MENU.5: the caveats ------------------------------------------------------------
 ; The Caveats sheet: the things this game gets wrong, each beside what the real world
@@ -1205,13 +1330,60 @@
     ("B6:B9" "=IF(AND(Input!$B$19=Proctor!B24,Proctor!$B$33=1),Proctor!E24,\"\")")   ;   held by A, B, C and D while the Exam shows a question open,
     ("B10" "=IF(AND(Input!$B$19=Proctor!B28,Proctor!$B$32=11,Proctor!$B$41=0),Proctor!E28,\"\")")))   ;   and by O while the Certificate waits for its button
 
+; The Report (CRITIC.1): the report card, which the Camera shows at each quarter's turn,
+; after Gigs among the tabs, where a player meets it, an hour and eleven minutes into the
+; game. Its date and the bell's line, every view's; whose card it is, the firm's name,
+; pending registration until the exam's last answer gives it (BACK.2), and the seed and the
+; tier it was graded at, which every firm at that seed and tier plays; which quarter of which
+; year, or when the first card comes; then a row each for the firm and for Average Co.
+; bought at the opening bell and held, each one's worth at the card in dollars, the
+; library's dollars, and its return over the quarter and over the year so far, the year's
+; at the fourth card, in percent, the library's percent, and under them alpha, the
+; difference; the grade of each, in a sentence; the proctor's remark, the Remarks sheet's;
+; a line on why your own account goes ungraded; and the fine print. Before the first card
+; the worth is the begin's, the two side by side at the start, and the card's other figures
+; are empty. The Report holds no button and binds no key, having no act of its own.
+
+(on "Report"
+  (column "A" 30 shown none)        ; the labels: as wide as the longest name a firm's row holds, and Average Co.'s line
+  (column "B" 12 shown none)        ; the worth, in dollars: 12 characters, the width the dollars are padded for
+  (column "C" 12 shown none)        ; the quarter's percents, as wide, the width the percents are padded for
+  (column "D" 12 shown none)        ; the year's
+  (as-of "A1")                      ; the date, every view's
+  (bell "A2")                       ; the market's hours, every view's
+  (formulas
+    ("A3" "=\"Report card for \"&IF(Proctor!$B$40=0,\"a firm pending registration\",Firms!$E$4)&\", graded by the proctor at seed \"&Clock!$B$3&\" and tier \"&Market!$B$3&\".\"")   ; whose card, and the market it was graded on
+    ("A5" "=IF(Performance!$B$8=0,\"No card yet: the first is issued when the first quarter ends, after its 91st day.\",\"The \"&CHOOSE(Performance!$B$9,\"first\",\"second\",\"third\",\"fourth\")&\" quarter of year \"&Performance!$B$10&\", to its last close.\")"))   ; which quarter, or when the first card comes
+  (cells
+    ("B6" "Worth ($)")
+    ("C6" "The quarter"))
+  (formulas
+    ("D6" "=IF(Performance!$B$9=4,\"The year\",\"The year so far\")")   ; the year's own at the fourth card
+    ("A7" "=IF(Proctor!$B$40=0,\"Your firm\",Firms!$E$4)")   ; the firm, by its name once it has one
+    ("A8" "=Stocks!$A$7&\", bought and held\""))   ; the benchmark, by the broad rung's name
+  (cells
+    ("A9" "Alpha, the difference"))
+  (dollars "B7:B8" "Performance!C13")   ; each one's worth at the card, or at the begin before the first
+  (percent "C7:C9" "Performance!B17")   ; each return over the quarter, and alpha
+  (percent "D7:D9" "Performance!C17")   ; over the year so far
+  (formulas
+    ("A11" "=IF(Performance!$B$8=0,\"\",\"Grade: \"&Performance!$B$21&\" for the quarter, and \"&Performance!$C$21&\" for the \"&IF(Performance!$B$9=4,\"year.\",\"year so far.\"))")   ; the grades, in a sentence
+    ("A12" "=IF(Performance!$B$8=0,\"\",\"The proctor remarks: \"&Remarks!$D$3)"))   ; the proctor's remark on the card
+  (cells
+    ("A14" "Your own account is not graded: the proctor grades the firm's book, and your own money is your own business."))
+  (fine-print "A16"))               ; the fine print, every view's
+
 ; The Camera (GUARD.1), the other device the game writes: its first two rows the Screen's
 ; window, at A1, unused while the Screen is hidden but two whole numbers for the host to
 ; read; and its third, the sheet the game shows (SPEC.md section 3.8, version 4). At the
 ; load it holds no value, so the game opens on the first visible sheet, the Exam; then it
 ; names the Exam while a question is open, the Certificate once the eleventh is answered,
-; and where the certificate leads once the game begins, each change shown once, and the
-; person's tabs their own between them. The views' names are the Proctor's values.
+; where the certificate leads at the frame the game begins, and, from CRITIC.1, the
+; Report at each quarter's turn, each change to a sheet shown once at the frame's end.
+; Between them, once the game has begun, it names nothing, the empty text, which moves
+; nothing, so that every card's name is a change and is shown, the second card as the
+; first, and the person's tabs win between with nothing shown again. The views' names
+; are the model's values, the Proctor's and the Performance sheet's.
 
 (sheet "Camera" visible)            ; the window and the sheet shown
 (camera 1 1)                        ; the Screen's window at A1, the kit's two rows
@@ -1219,7 +1391,7 @@
   (cells
     ("A3" "sheet"))                 ; the third row's label,
   (formulas
-    ("B3" "=IF(Proctor!$B$41=1,Proctor!$B$6,IF(Proctor!$B$33=1,Proctor!$B$24,Proctor!$B$28))")))   ;   and the sheet the game shows: the exam's, its certificate's, then the game's
+    ("B3" "=IF(Proctor!$B$41=1,IF(Performance!$B$6=1,Performance!$B$1,IF(Proctor.last!$B$41=1,\"\",Proctor!$B$6)),IF(Proctor!$B$33=1,Proctor!$B$24,Proctor!$B$28))")))   ;   and the sheet the game shows: the exam's, its certificate's, the lead at the begin, the Report at each card, and none between
 
 ; The Commands (PLATE.1), the cartridge's own, the page's version 5 (SPEC.md section
 ; 3.10): a row a command, its name, its words, whether it holds now and its key, which

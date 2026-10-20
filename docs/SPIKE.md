@@ -113,6 +113,12 @@ empty.*
 
   *Closed 2026-10-15.* Predicted `~hours`; cost one session, the scoping, the build and the owner's hand test, the content rows' strike committed beneath the build (`adc1bc7`), which was built on a snapshot of it in a scratch worktree and moved onto the commit unchanged. What landed: `src/content/caveats.vla`; `strings` without a sheet's state, in `src/kitchen.vla`; the source's include, the three states, the call, the row shown, the labels' width and the game's notes; three tests of the cartridge more and two extended, 41 in all; the describe golden blessed again; the layout check's pin and control; the *How to add a row* for the third sheet; the README's and `SECURITY.md`'s statements, their British spellings respelled; and, in `OMAKASE.md`, `BD-5`'s line, `GUARD.1`'s note and the hoist ledger's row, and `BUFFET.md` §10's line. Two of the nine predictions missed in part: the describe golden's `most`, 8 where 4 was predicted, the census indexing a sheet's readers by row; and the source's block in the page, 2,062 characters where 1,400. A mutant found the test of the plain statement too weak at its first writing, the word *advice* standing in the caveat's explanation too, and it was strengthened before the hand test.
 
+## ⭐ THE CRITIC
+
+- ✅ **`CRITIC.1` — the report card: alpha over the same seed.** *Scoped and built 2026-10-19 in one sitting at the owner's word, its eleven decisions built as recommended; passed at the owner's hand test the same day with no change asked: the scoping, every prediction beside its number, what the build found and the owner's hand test are under THE ITEMS, SCOPED.* At every quarter's end and every year's end (*the quarters the owner's word of 2026-10-16 at `POT.10`'s approval: "report cards should come quarterly and annually instead of just annually"; the first card comes about 36 minutes in at the manifest's rate, the quarter already the model's in the dividend's 91 days, and at this seed it reads the market near the year's low; at 1:11:03 of play since `POT.11`'s pace, 2026-10-19, and at 1:11:27 since the scoping, the quarter's turn at Monday's midnight*) a Report sheet and panel: the pocket's return against buy-and-hold of the broad rung, on the same seed, and against a 60/40 once bonds exist; Sharpe and maximum drawdown beside (*at course 3 since the scoping, its risk line*); the tier and the seed printed; a grade and the proctor's remark; the course's own line, added a course at a time (income at 1, the firm at 2, drawdown at 3, the option book at 4, the bot at 5, every class at 6). The score the open-book problem cannot spoil (`BD-3`). *Oracle:* the Report sheet is the replay golden's window; the benchmark held to `buffet.rs`. *Pays into:* every course's ending reads here; the league table (`CRITIC.2`), the leaderboard (`CRITIC.3`), the classroom's rubric (`CRITIC.5`). *Found at `BACK.2`, 2026-10-19 (`SPIKE.md`):* the header's firm name is the Firms sheet's `E4`, read beside the Proctor's style, `B40`, which is 0 and the name pending registration until the exam's last answer; and the broad rung the card scores against is named, Average Co., on its own row of the Stocks sheet, `A7`. *Scoped and built 2026-10-19 in one sitting (`SPIKE.md`), each decision built as recommended, the owner's to approve, amend or strike at the hand test, every text a draft:* the firm's book graded, its capital taking no flow at course 0, so its plain return is its time-weighted one, your own pocket ungraded until the firm line; against Average Co. bought with the capital at the begin's price, $25.00 at every seed, in whole shares, the cents left over held, and held; a card at each quarter's turn, quarters of 91, 91, 91 and 92 days on the Day sheet (`B33:B35`), the year's card the fourth's second column, each a snapshot until the next; the returns over the quarter and the year so far in whole hundredths of a percent, alpha their difference, a grade each by a table of five, A from two points ahead to F past two behind, and the proctor's remark from a content sheet of its own, Remarks; the view the Report, after Gigs, which the Camera shows at every card, naming nothing between; its books the Performance sheet, after the Ledger; `kitchen.vla`'s `percent`; caveats 24 and 25; Sharpe and the maximum drawdown moved to course 3, measured meaningless at tier 1 (a quarter's Sharpe ratio -12.5 to 28.2 at the seed, every drawdown after the first quarter 0.000%). `~days`
+
+  *Closed 2026-10-19.* Predicted `~days`; cost one sitting, the scoping, the build, its measurements and mutants, and the owner's hand test, which passed it whole. What landed: the Report, the seventh view, after Gigs, which the Camera names at every card and at nothing between; the Performance sheet after the Ledger, the benchmark's shares and cents left `B3:B5`, the card's turn and the year's `B6:B10`, the worths `A12:G14`, the card `B17:C22` and the grades `A25:B29`; the Day sheet's quarter, its count and its turn, `B33:B35`; the Remarks sheet, `src/content/remarks.vla`, five remarks, the layout check's pin raised to 6; `kitchen.vla`'s `percent`; caveats 24 and 25; the source's notes and comments; 1,389 rows and 861 formula cells; the hand's quarters, returns, grades, percents and cards, and the exam's begin by its frame; 92 tests, the Performance sheet held at every card and every day's turn of the long runs and the Report at every card, bell and day's turn, a year at a day a frame with every card shown and the tabs between, and a scripted quarter at an hour a frame and a day a frame; thirty mutants caught; the describe golden blessed again; in `OMAKASE.md`, the income and the firm lines' notes, the risk line renamed from the drawdown line, `BD-5`'s rows, `POT.6`'s note and the hoists' `percent`; and `Delta/CLAUDE.md`'s map. Four of the ten predictions missed in part, each named beside its number: the step's half hour between sessions 1.8 µs dearer for the Report's own date line, the bell and the close inside their noise, and the first days' midnights cheaper than priced; the eight hundred days 14% longer where 3 to 10%, every frame there a day's turn; the caveats' block 623 characters, under the 700 priced; and thirty mutants where twenty to twenty-six.
+
 ## 🔪 MISE EN PLACE
 
 - ✅ **`MISE.3` — the first measurements: three probes, each a day in scratch, each deciding a spelling.** *Scoped, measured and hand-run 2026-10-14: the scoping, every number beside its prediction, the owner's hand run and what it found are under THE ITEMS, SCOPED.* Run over Alonzo's own page and runner with a Buffet-shaped scratch cartridge, before a row of the game is written, and each number written in `SPIKE.md` beside its prediction so that course 0's scoping cites them. (1) **The window's cost.** An 80 by 50 panel of texts and numbers drawn in Chrome at `(rate 30)`. The host draws from the full record until `ENGINE.8`'s second slice lands, and the record carries every formula's text: by `vla-lang` 0.9.3's release notes, an 80 by 50 window of one short formula costs 10.3 ms natively from the record and 1.7 to 1.9 ms from the `values` view (1.3 to 1.4 in the browser). A panel of many short formulas is Buffet's shape and nobody has measured it. The number decides whether course 0 ships over the record or asks Alonzo for the slice with the number in hand (`MISE.6`), and it is re-measured on the real window at first light (`HOUSE.4`). (2) **A number format with a glyph.** Whether the viewport honors a number format with a literal glyph in it (the record's `format` row carries a number format and `KERNEL.5`'s painter spells numbers by it; a `▲` in a format is (check)), which decides `FRONT.2`'s spelling of gains: a format, or a glyph cell beside the number. (3) **The picker's limit.** `CHOOSE` over references against the 8,192-character formula, about a thousand references, and the text join `&`, which the dialect has (the language's `Concat`, checked 2026-10-14), so that a ledger row's address may be joined from a count and not chosen; the number decides `MENU.1`'s picker and `PLATE.1`'s ledger ring. The fourth question the draft asked, the boundary frame against the ordinary frame, needs a model to measure and is answered by the first model: it is `POT.1`'s oracle. *Needs:* nothing. *Oracle:* the three numbers written beside their predictions. *Pays into:* `MISE.1`'s decisions, `FRONT.2`, `MENU.1`, `PLATE.1`, the ask of `ENGINE.8`. *Measured 2026-10-14, every number beside its prediction in `SPIKE.md`:* course 0's densest panel draws a frame in 1.5 to 1.7 ms in Chrome at full screen, so course 0 ships over the record; the spellings the numbers settle, approved by the owner the same day, stand as dated lines on `FRONT.1`, `FRONT.2`, `MENU.1`, `PLATE.1`, `MISE.1` and `MISE.6`; the owner's hand run in the owner's own Chrome made the browser number real, 1.4 ms a frame at p50. `~days`
@@ -7440,4 +7446,459 @@ word.
   shown" is cut by the value beside it on every content sheet but the Caveats',
   whose source gives its labels' column a width; the library could give the
   column its longest label's width, a row more for each content sheet.
+
+## `CRITIC.1` — the report card: alpha over the same seed
+
+*Scoped and built 2026-10-19 at the owner's word, "Scope and implement CRITIC.1
+in Buffet (Delta/Buffet): the report card, alpha over the same seed", in one
+sitting as `PLATE.1`, `PLATE.2`, `POT.11`, `FRONT.3` and `BACK.2` were: each
+decision below stands as recommended and was built, the owner's to approve,
+amend or strike at the hand test, and every text a player reads is a draft.
+Minted already, its line in `COURSE.0` and a line of its own in each later
+course; nothing else was minted, and what else the scoping found stands under
+Found. Read for it: the item's line and its notes in `OMAKASE.md`, its later
+lines (the income line at course 1, the firm line at 2, the drawdown line at 3,
+the option book's at 4, the bot's at 5, every class's at 6), `CRITIC.2`,
+`CRITIC.3` and `CRITIC.5`, which read the card, `POT.6`, `BD-3`, `BD-4`, `BD-5`,
+`BD-7` and `BD-9`, and the opening contract; `POT.10`'s record above (the
+quarters, the owner's word at its approval, and the quarter the model's in the
+dividend's 91 days); `GUARD.1`'s (the Camera's third row, its decisions 10 and
+11); `FRONT.3`'s (the weather's tenths spelled inline, its decision 5 and its
+Found on a link's mechanism); `PLATE.1`'s and `PLATE.2`'s (each pocket's
+books); `BACK.1`'s (the hustle's fees into your own cash); `BACK.2`'s (the four
+styles' games compared, the hand's names); `BUFFET.md`'s §2, §4, §5 and §16, as
+design reference; the source's Day, Market, Stocks, Positions, Cash, Proctor and
+Camera sheets and the views; `kitchen.vla`'s dollars; the tests' long runs and
+their holders; the hand's plate, calendar and rungs; and Alonzo's `SPEC.md` at
+`v0.2.0`, the tag the pin names, §3.8, with its host's reading of the Camera
+(`web/host.js`, `_readCameraSheet` and `_cameraSheetName`). Alonzo's and
+Frazaro's trees were read and never touched.*
+
+**What it stands on, read on the day** (Buffet at `c56d22f`, five ahead of its
+remote, the tree clean; `alonzo` 0.2.0 and `vla-lang` 0.10.0).
+- *The pockets.* The firm's cash, `Cash!B3`, the exam's capital, final at the
+  begin (`Proctor!B39`), and its books' flows; its holdings, `B6`, and its net
+  worth, `B9`. Your own, `B4`, `B7` and `B10`: $100 at the start and the
+  hustle's fees, $250 each and four at most, each paid at the five minutes its
+  prospectus is done (`Hustle!B18`). At course 0 the firm's capital takes no
+  flow but its own trades and its dividends.
+- *The broad rung.* Average Co., `Stocks!A7`, a beta of 1, $25.00 at the start,
+  no dividend. The game always begins at day 0's bell, the calendar waiting for
+  the exam, where the index is 1 at every seed, so its price at the begin is its
+  start; and every capital the exam gives, $5,000 and $500 a right answer, is a
+  multiple of $25.
+- *The quarter.* `Stocks!B2`, 91, the year over the dividends a year: the
+  dividend's days, the year's 91st, 182nd, 273rd and 364th, each a quarter's
+  last day but the year's.
+- *The Camera.* `B3` named the Exam, the Certificate, then the lead,
+  `Proctor!B6`, from the begin for good. The host shows a sheet when the value
+  changes and names a sheet the grid holds, compared without case; the empty
+  text names none and moves nothing (`SPEC.md` §3.8; `_readCameraSheet` sets a
+  show only for a changed value `_cameraSheetName` names). So a `B3` left naming
+  the lead could show a card's Report once and never again, and one that went
+  back to the lead after a card would take the person to the Overview the frame
+  after.
+- *A percent.* The Overview's weather spells its change inline in tenths, "down
+  0.5%", the first percent a view writes, with no verb.
+- *The suite.* 84 tests green, the crate's 33 and the cartridge's 51.
+
+**The decisions.**
+
+1. **What the card grades: the firm's book, by its plain return, against Average
+   Co. bought at the begin and held (rec).** The firm's pocket alone. Its
+   capital takes no flow at course 0, no client's money, no draw and no
+   contribution, only its own trades and dividends, so its return over a
+   period is its net worth at the period's end over its net worth at the start,
+   less one, which is the time-weighted return with no flow to take out; and it
+   is the book a fund manager is graded on, where your own pocket is the
+   partner's. Your own pocket takes the hustle's fees, up to $1,000 against a
+   start of $100, so a raw return would count a fee as a gain, and a return that
+   takes them out wants each fee's day (modified Dietz) or the worth at each fee
+   (time-weighted): a flow-adjusted return built for $100 and four fees, which
+   the firm line at course 2 needs anyway for draws, contributions and clients
+   (`BACK.6`, `BACK.3`). So your own pocket goes ungraded at course 0, and the
+   Report says so in a line (decision 5). The benchmark: Average Co. bought with
+   the firm's capital at the begin's price, $25.00 at every seed, in whole
+   shares, as Buy max at the first bell would buy them, the cents left over held
+   as cash, and held; its worth at a card its shares at the price now and the
+   cents. Every capital the exam gives buys whole shares with nothing left over,
+   200 to 400 of them; a capital a person's edit makes indivisible keeps its
+   cents. No dividend: Average Co. pays none at course 0, and the income line
+   (course 1) makes both total returns by name. The returns over the quarter and
+   over the year so far, each from the last card or the begin; alpha, the firm's
+   return less the benchmark's, in percentage points, each return rounded once to
+   a whole hundredth of a percent, half up and exactly, so that alpha is a
+   difference of two whole numbers and the card's figures subtract as printed.
+   *The alternatives:* each pocket graded, your own by a time-weighted return over
+   its fees, by modified Dietz over the fees' days, or with the fees taken out,
+   a fee's own gain counted as the pocket's; your own alone, `BUFFET.md` §4's
+   "personal wealth is the score", against `BD-3`'s never a raw net worth and the
+   smaller book by far; the benchmark in fractions of a share, the price's own
+   return, the same at every capital the exam gives; the benchmark bought again
+   at each quarter's start, which forgets the year; alpha after beta, Jensen's,
+   a regression the dialect has no function for (the caveat says so).
+
+2. **What else the card holds at course 0 (rec).** A header naming the firm,
+   `Firms!E4`, pending registration until the exam's last answer names it
+   (`BACK.2`'s rule), and the seed and the tier it was graded at, printed as they
+   stand, `Clock!B3` and `Market!B3`, since every firm at a seed and a tier plays
+   one market (`BD-3`). A grade for each of its two columns by one table of five,
+   A from two points ahead of the market, B from half a point, C within half a
+   point either way, D to two points behind and F past that, settings a person
+   may edit (`AD-6`), chosen from the hand's measurement after the predictions
+   were written: at the seed, a firm that sits in cash grades B, D, F and F over
+   the first year's quarters and F for the year, the benchmark returning -1.04%,
+   +1.09%, +3.64% and +6.17%, +10.08% for the year; Average Co. itself, held,
+   grades C at every card, average as in Average Co.; Longshot Mining, the beta
+   of 2, D, B, A and A, A for the year, which the caveat flags (decision 7); and
+   General Widget B, C, C and D, D for the year. Over 2,000 seeds the benchmark's
+   first quarter runs from -3.88% to +7.72% between its 5th and 95th percentiles,
+   so a firm in cash meets every grade. The proctor's remark, the Remarks
+   sheet's, a content sheet of its own (`MENU.1`'s rule, a sheet a kind of
+   string): a remark a grade, a row's place its grade, the quarter's at the first
+   three cards and the year's at the fourth, drafts; `check_layout.ps1`'s pin 5 to
+   6. Sharpe and the maximum drawdown wait for course 3, where the drawdown has
+   its line already and Sharpe joins it, its line amended. At tier 1 the closes
+   are four smooth waves and a drift (`POT.2`), so a quarter's daily returns
+   barely vary: Average Co.'s daily closes give an annualized Sharpe ratio of
+   -12.5, 10.7, 25.6 and 25.7 over the seed's first year's quarters and 26.0 to
+   28.2 over the second's, a daily spread of 0.02% to 0.07%, where a real fund's
+   ratio runs about 0.5 to 1.5; and a maximum drawdown of 1.04% in the first
+   quarter and 0.000% in each of the next seven. Cash earns nothing until
+   `POT.3`, the rate a Sharpe ratio subtracts, and `POT.5`'s noise (course 3) is
+   what gives the days a spread. No scored run is built: whether a run's tier,
+   paces and rate are fixed at its start is `POT.6`'s, whose picker fixes the tier
+   (`POT.11`'s Found settled here). The card's every figure is a function of the
+   days and the books, which no pace moves (`BD-3`, `BD-7`), so a pace written
+   mid-run changes how long a person has to act and not what the card reads, and
+   the replays `CRITIC.3` and `CRITIC.5` grade record every edit. *The
+   alternatives:* Sharpe and the drawdown on the card now, as the line wrote them;
+   the drawdown alone now, its course-3 line struck; the remarks as rows of the
+   Caveats or the Headlines sheet, words of another kind on a sheet a player reads
+   whole or one the ticker draws from; the tier by its name, the Day Trader, which
+   `POT.6`'s picker names; the seed and the tier held with each card, a
+   sandbox's edit of either after it then not printed.
+
+3. **When a card comes: at each quarter's turn, the year's card the fourth's
+   second column, each a snapshot until the next (rec).** The year's days in four
+   quarters of the year's days over four, 91, the fourth taking the year's last
+   day: 91, 91, 91 and 92 days, the year's 91st, 182nd, 273rd and 365th each a
+   quarter's last, as calendar quarters run 90 to 92 days and end with the year.
+   The Day sheet keeps them beside the calendar: the quarter, `B33`; the quarters
+   counted from the game's first, `B34`; and a quarter's turn, `B35`, 1 in the
+   frame the count moves, the first frame of a quarter's first day, midnight at
+   the game's pace, and never the game's first frame; four the quarters a year,
+   arithmetic and no setting. A card is read off the books at that frame, whose
+   prices stand at the quarter's last close (between sessions the price now is
+   the session's close, and at a bell the last one, so every pace the oracle
+   plays turns there), and held until the next turn: a report card is a document
+   of a date. The year's card is the fourth's second column, the year so far
+   become the year, so the year's and the fourth quarter's come together and are
+   shown once, where a year's card apart would come a day after the fourth's and
+   show the Report twice in a row. At the game's pace the cards come at 1:11:27.0
+   of play after the exam, 2:23:03.5, 3:34:40.0, and the year's at 4:47:13.0, the
+   first 24 seconds after the first dividend's day begins (`POT.11`'s 1:11:03.0).
+   The quarter is the calendar's and not the dividend's, so a person who writes a
+   dividend a month moves no card. No cell of it computes every frame: the Day
+   sheet's three change once a day at most, and the census holds
+   `(every-frame 0)`. *The alternatives:* the quarter read off `Stocks!B2`, a
+   dividend's setting moving the card; quarters of 91 and the year's card apart, at
+   the end of the year's 365th day, or the year's last day a quarter's stub; the
+   turn at the quarter's last close, Friday's in the first year, a session keyed on
+   a day the quarter may outlive by two; live figures beside the last card, the
+   quarter so far, which is the Overview's kind of line.
+
+4. **How the player meets it: the Camera shows the Report at every card (rec).**
+   The game shows its card as it showed the certificate: the Camera's `B3` names
+   the Report at a card's turn, the Performance sheet's value `B1` as the lead is
+   the Proctor's, and once the game has begun names nothing between, the empty
+   text, so that the lead at the begin's frame and the Report at each card are
+   each a change from nothing, shown once at the frame's end, every card and not
+   the first alone, and between them the person's tabs win with nothing shown
+   again. `FRONT.3`'s Found is settled so: a `B3` that followed the sheet shown,
+   `Input!B19`, between links would work too, but would show again, a frame after
+   each click of a tab, the sheet the person just clicked, a view and a draw each
+   time, and would read the Input sheet. No pause and no control of time: the
+   market keeps its pace through the card, the turn at midnight and the next bell
+   9.5 seconds of play later. The Report stands after Gigs among the tabs, where a
+   player meets it, an hour and eleven minutes in; it holds no button and binds
+   no key, having no act (keyboard-first: no act, no key). *The alternatives:* a
+   line on the Overview linking to the Report, an alert, an act with its key and
+   its command (`FRONT.3`'s decision 5), which a player who never looks at the
+   Overview never sees; the Report beside the Overview, before the Portfolio;
+   `B3` following `Input!B19` between links.
+
+5. **The view: the Report (rec).**
+
+   | | A | B | C | D |
+   |---|---|---|---|---|
+   | 1 | the date, every view's | | | |
+   | 2 | the bell's line, every view's | | | |
+   | 3 | `Report card for Prudent & Sons, graded by the proctor at seed 791886 and tier 1.` | | | |
+   | 5 | `The first quarter of year 1, to its last close.` | | | |
+   | 6 | | `Worth ($)` | `The quarter` | `The year so far` |
+   | 7 | the firm, by its name | its worth | its return | its return |
+   | 8 | `Average Co., bought and held` | its worth | its return | its return |
+   | 9 | `Alpha, the difference` | | alpha | alpha |
+   | 11 | `Grade: B for the quarter, and B for the year so far.` | | | |
+   | 12 | `The proctor remarks: ...` | | | |
+   | 14 | `Your own account is not graded: the proctor grades the firm's book, and your own money is your own business.` | | | |
+   | 16 | the fine print | | | |
+
+   Column A 30 characters, the longest name a firm's row holds; B to D 12, the
+   width the dollars and the percents are padded for. The last column reads "The
+   year" at a fourth quarter's card. Before the first card the title says when it
+   comes, "No card yet: the first is issued when the first quarter ends, after its
+   91st day.", the worth column is the begin's, the firm and Average Co. side by
+   side at the start, and the card's other cells are empty. The dollars by the
+   library's `dollars`; the percents by its new `percent`, a column's figure, whole
+   hundredths of a percent, signed as the change's dollars are, a gain's or
+   nothing's + and a loss's space and -, and padded so that the spaces and twice
+   the whole percent's digits make 10, which ends short of a number's edge at every
+   scale from 100% to 200%, the percent sign measured at the scoping at 10.639
+   pixels of 13-pixel Segoe UI, about three spaces (11 would pass the edge by two
+   device pixels at 150%); the empty text for the model's empty text. The verb
+   enters the library at its first dish, written six times over two fills, as
+   `bell` came with both views writing it. The Overview's weather is the first
+   percent a view writes, but a phrase of a sentence, up or down by words and in
+   tenths, and keeps its own spelling; this verb is a column's figure, which a
+   number format replaces when the record draws one (`MISE.6`). 18 formula cells
+   where a view may hold 1,000; nothing reads it, the Camera reading the
+   Performance sheet's name of it. *The alternatives:* the card's figures as
+   sentences, no columns and no verb; the percents in tenths, the weather's
+   precision; each period's start and end in dollars, two columns more; the
+   weather rewritten over a verb of a phrase, its bytes moved, the sentence's
+   percent and the column's one pattern.
+
+6. **The model: the Performance sheet, after the Ledger (rec).** The card's
+   books, a model sheet a player may open (`AD-6`), each formula the card's:
+
+   | | A | B | C | D | E | F | G |
+   |---|---|---|---|---|---|---|---|
+   | 1 | where a card is shown | `Report` | | | | | |
+   | 3 | Average Co.'s price now | `=Stocks!$E$7` | | | | | |
+   | 4 | its shares, bought at the begin | held from the begin: `INT(capital/B3)` | | | | | |
+   | 5 | the cents left over, held | held: the capital less the shares | | | | | |
+   | 6 | a quarter's turn | `=Day!$B$35` | | | | | |
+   | 7 | a year's turn | a turn into the first quarter | | | | | |
+   | 8 | cards issued | a count of `B6` | | | | | |
+   | 9 | the card's quarter | held at a turn: `Day.last!$B$33` | | | | | |
+   | 10 | the card's year | held at a turn: `Day.last!$B$6` | | | | | |
+   | 12 | worth, in cents | now | at the last card | at the one before | at the year's start | at the last year's | at the card's year |
+   | 13 | the firm | `=Cash!$B$9` | held: the begin, then each turn | held: the last card's, at each turn | held: the begin, then each year's turn | held: the year's start's, at each year's turn | the last year's at a fourth card, else the year's |
+   | 14 | Average Co., bought and held | its shares at the price now and the cents | each the firm's row's formula, filled | | | | |
+   | 16 | the card, in hundredths of a percent | the quarter | the year so far | | | | |
+   | 17 | the firm's return | `INT(((C13-D13)*20000+D13)/(2*D13))` | over `G13` | | | | |
+   | 18 | Average Co.'s return | the same, row 14 | | | | | |
+   | 19 | alpha, the difference | `B17-B18` | `C17-C18` | | | | |
+   | 20 | the grade, 1 for A to 5 for F | the first whose alpha it reaches, from the top | | | | | |
+   | 21 | the grade | its letter | | | | | |
+   | 22 | the remark's grade | the year's at a fourth card, else the quarter's | | | | | |
+   | 24 to 29 | the grades | A 200, B 50, C -50, D -200, F below | | | | | |
+
+   Each hold takes the books "until the game has begun", `Proctor.last!$B$41<>1`,
+   so that the begin's frame, a waiver's mid-exam included, takes the capital as
+   final, and each turn after it. The card's figures are the empty text until the
+   first card. A return is `INT(((e-s)*20000+s)/(2*s))`, the gain times 10,000
+   over the start rounded half up by a quotient of two whole numbers rounded down,
+   which is the exact rounding whenever the numerator stays below 2^53 (*derived*:
+   both numbers are whole and held exactly, and a quotient of two whole numbers,
+   if not whole, stands at least one over the divisor below the next whole number,
+   while a double's rounding moves it less than the quotient over 2^53), any worth
+   below about $4.5 billion. 31 formula cells. *The alternatives:* the card's
+   books on the Report, a view holding state; the benchmark's worth recomputed at
+   each card from the index's return, no shares; the returns as doubles, their
+   rounding left to the view, alpha a difference of two unrounded numbers that
+   prints a hundredth off now and then.
+
+7. **The caveats (`BD-5`), drafts.** Row 24, its place `Performance!B19`, the
+   quarter's alpha: "A grade reads returns alone: a book wilder than the market
+   beats it in any rally, however bumpy the ride." beside "Alpha is measured after
+   taking out the market's own push, beta, and judged beside risk, as the Sharpe
+   ratio does." and Management's response, "Management finds volatility
+   character-building, for the clients." Row 25, its place `Day!B35`, the turn: "A
+   card is issued the moment its quarter ends, its figures checked by no one."
+   beside "A fund reports its quarter weeks later, once its administrator has
+   checked the figures; an auditor checks the year." and "Management's figures are
+   unaudited, which saves everyone time." Both real-world lines marked for
+   `MENU.8`'s read. The card brings no caveat for your own pocket ungraded, which
+   its own line says, nor for the quarters' 91 to 92 days, as calendar quarters run.
+
+8. **The oracle (rec).** The hand shares none of the card's rules with its cells.
+   The cells divide the day of the year by the year's days over four, count the
+   quarters and mark a turn by the count against its twin, and hold the worths at
+   the last card and the one before it, at the year's start and the last year's,
+   over their twins; the hand lists the quarters' last days, `QUARTER_ENDS`,
+   counts the quarters as its calendar turns, and keeps every turn's worth in a
+   list, `Cards`, reading a card's starts off it by search. The cells round a
+   return by dividing two doubles; the hand rounds the same quotient in whole
+   numbers, the two the same below 2^53, held over every pair of worths from 1 to
+   1,000 cents and their next 2,000 and beside every power of two to 2^40. The
+   cells grade by comparing from the top; the hand counts the grades it reaches.
+   The cells pad a percent by comparing with powers of ten; the hand counts its
+   digits, and holds its width at every scale by the measured glyphs. The Camera:
+   the hand's exam knows the frame the game began, so the lead stands there alone,
+   and the Report at the card's. The runs: the Day sheet's three new cells at
+   every frame the calendar is held; the Performance sheet and the Report at every
+   card of the hour's year and of the hundred years at a frame a day, 399 cards,
+   the firm at rest, and at each day's turn and bell of the hour's year and of the
+   eight hundred days; a scripted quarter at two paces, every frame held whole,
+   ten shares of Longshot Mining and ten of Average Co. bought for the firm on day
+   0, a share of Average Co. for your own on day 1 between two switches by C, the
+   firm's Longshot sold on Friday, day 88, a prospectus claimed on Sunday, day 90,
+   and paid on Monday, after the turn, and a share of General Widget bought for
+   the firm in the new quarter: the card grading the firm's book and nothing of
+   your own; the Camera at every card of a year at a frame a day, a tab clicked
+   between each, the firm in cash three quarters and then Average Co. bought with
+   all of it, so the year's card grades the quarter C and the year F and the
+   proctor remarks on the year's; the Report's own test, its lines before the
+   first card, no key and no command while it shows, its columns, every firm's
+   name inside its first, the remarks whole, and a capital the begin's price does
+   not divide keeping its cents; the style's test, the Report's two lines among
+   the readers of the name and the Performance sheet among the model compared; the
+   tab order; the columns of dollars and of percents; and the describe golden.
+   Mutants, each into the source, the library or a content file by one anchor,
+   each failing the test named for it: a turn at the game's first frame; the
+   year's last day a fifth quarter; the card's quarter the new one; the benchmark
+   bought again at every frame; its shares in fractions; its worth without its
+   cents; a return rounded down; alpha's sign turned; B from a point and a
+   twentieth; the letters a place off; the remark the quarter's at the fourth
+   card; the remark the year's at every card; the year so far from the quarter's
+   start; the year's start never turned; the Report shown at the first card alone;
+   the lead named after the begin; the Report never shown; your own pocket graded;
+   the fee in the firm's book; the firm's book read off its twin; the card's worth
+   the year's start; the year's header at every card; the grades' sentence the
+   quarter's twice; the remark's row a place off; the Report before Gigs; P bound
+   on the Report; the percent padded by eleven; a loss's percent without its
+   space; and each caveat's place empty.
+
+9. **What it costs, measured (rec).** Natively, as `BACK.2` measured it: a
+   release runner over `HEAD`'s texts and this tree's, alternated, pinned to the
+   performance cores and opted out of Windows' throttling, the pass, the load,
+   the first frame, ten days of frames filed by what each turned, and a third
+   pass to the first quarter's turn at the game's pace, timing the card's frame
+   beside the midnights before it. The suite, the two test binaries alternated.
+   The browser at the hand test.
+
+10. **The stale places, rewritten at the build.** In `OMAKASE.md`: the line (🟡),
+    its Sharpe and drawdown and its first card's time; course 3's line, the risk
+    line; course 1's and course 2's lines, the benchmark's dividends and your own
+    pocket's return; `BD-5`'s taken rows; `POT.6`'s scored run; the hoists'
+    table, `percent`. The source's served list, notes, the tabs', the Day's, the
+    Camera's and the views' comments; `kitchen.vla`'s history and its new verb; the
+    caveats' file; the new remarks' file; the content's `README.md`;
+    `check_layout.ps1`'s pin, its baseline's history and its control; the hand's
+    module comment, its exam's begin, its calendar's quarter and the card; the
+    oracle's crate comment; `oracle/tests/cartridge.rs`' module comment, the views,
+    the content sheets, the holders, the style's readers and model, and the
+    dividend's script, which shows Trading again after the eighth card it crosses;
+    the describe golden; `Delta/CLAUDE.md`'s Buffet paragraph; and the memory.
+
+11. **The hand test, the owner's, on the page built here:** the strip; the
+    Report before its first card; both paces written a day a frame in the drawer
+    before the game begins, so that every frame lands on a bell (Found: a turn's
+    frame at another pace), the Camera showing the Report at the first quarter's
+    turn about three seconds later and at each card after; a tab clicked between
+    kept; the year's card; the
+    drafts read, the grades, the remarks and the two caveats; no key on the
+    Report; Build's bytes the file's.
+
+**Found at the scoping**, none minted:
+- *A history of cards.* The Report shows the last card, so the year's goes when
+  the next year's first quarter comes; a ledger of cards written through the Write
+  sheet, as the order desk's ledger is, would keep them all. Course 7's careers
+  and their saves (`ENGINE.5`) would want it.
+- *Since the begin.* A third column, the return since the game began, which equals
+  the year so far through the first year; a second year's card would want it.
+- *A turn's frame at another pace.* The card reads the books at the turn's frame,
+  which at the game's pace is midnight, where no order fills, no dividend falls and
+  the price now is the quarter's last close; and so at a frame an hour (0:30) and
+  at a day a frame from the first bell (9:30, the price now the last close). A day
+  a frame written in the afternoon lands every frame in the afternoon, so the
+  turn's frame stands after the new quarter's first session: its books are valued
+  at that session's close, and an order there counts in the quarter it closes.
+  Valuing the books at the quarter's last trading day's close, with the shares as
+  the last frame left them, would make every pace alike: a column of the Market
+  sheet's for that day and the four prices over it, a formula of the twins of every
+  pocket's books. A sandbox's pace, `AD-6`'s, and no game's; the hand test writes
+  its paces before the first bell.
+- *The tier's name.* The card prints "tier 1"; the picker's names, the Kiddie Pool
+  to the Documentary (`BUFFET.md` §5), are `POT.6`'s.
+- *A seed written mid-run.* The market reads the seed on day 0 alone, so a seed a
+  person writes later moves no market, but the card would print it; `CRITIC.4`'s
+  host's seed decides what a seed written mid-run means.
+- *The remarks past the fifth.* A sixth row of the Remarks sheet never shows, as a
+  fifth firm is never offered; several remarks a grade, drawn, want a lookup
+  (`KERNEL.8`) or a fixed count a grade.
+- *The Overview's line on the last card.* A summary line, "Last report card: B",
+  is a kin of `FRONT.3`'s alerts; the Camera shows each card instead.
+
+**The predictions, before any number.** Written before any number was taken
+but one, the percent sign's width, measured at the scoping on a canvas in headless
+Chrome beside the record's widths, which it reproduced, to decide a spelling; the
+numbers column was filled at the build, P10 at the owner's hand test.
+
+| | What | Predicted | The number |
+|---|---|---|---|
+| P1 | the cartridge | 1,365 to 1,400 rows where 1,271, about 1,383; 852 to 868 formula cells where 807, about 861 | *Measurement*: `(rows 1389) (loads yes)` at the first expansion, inside; 861 formula cells, as about 861 predicted, the describe golden's budget |
+| P2 | the describe golden | `(budget 30 861 25830 2000000)` give or take five cells; shapes 245 to 258 where 218; texts 240 to 256 where 215; levels 103 to 110 where 98; `(every-frame 0)` and `(cycles 0)`; the views' date, bell and fine print at `(sheets 7)`; readers rows new for Performance and Remarks; Cash's readers 9 where 8; every shape from the Report's on renumbered | *Measurement*: `(budget 30 861 25830 2000000)`, exactly; `(plan (shapes 254) (texts 250) (formulas 861) (levels 107) (runs 45) (lanes 260) (alone 601) (every-frame 0) (cycles 0))`; `(sheets 7)`; `(readers "Performance" 57 (most 9))`, `(readers "Remarks" 7)` and `(readers "Performance.last" 9)`; `(readers "Cash" 9)`; every shape from the Report's on renumbered, the year's percents one text with the quarter's, `(same 43)`. Inside, each |
+| P3 | the pass and the load | the pass 0.5 to 1.5 ms longer; the load 0.4 to 1.2 ms longer | *Measurement*, one release runner over `HEAD`'s texts and these, two sets of six runs alternated, pinned and opted out, the fixed computation within 1.9%: the pass 10.51 to 10.67 ms where 9.64 to 9.84, the medians 0.82 and 0.93 apart; the load 9.40 to 9.65 where 8.37 to 8.69, 1.09 and 0.95 apart. Inside, each |
+| P4 | the step, natively | an ordinary frame within 0.2 µs; a tick 1 to 5 µs dearer; a half hour between sessions within 1 µs; the bell 1 to 4 µs dearer; the close 1 to 5 µs dearer; an ordinary midnight 2 to 8 µs dearer; the first frame 30 to 90 µs dearer; a card's turn 15 to 60 µs dearer than an ordinary midnight | *Measurement*, the same runs, ten days of each text's own frames, the exam waived, three passes each, the medians: an ordinary frame 2.3 µs either way; a tick 37.7 where 35.6, 2.1 dearer; the first frame 337 to 341 µs where 307 to 310, 30 to 32 dearer; the first quarter's turn 110.4 to 111.7 µs where `HEAD`'s same midnight is 50.9 to 51.5, and 51.8 above this tree's thirty-one midnights before it, 58.6. Inside, each. **Missed** in four: a half hour between sessions 17.3 to 17.4 µs where 15.5 to 15.6, 1.8 dearer, the Report's own date line turning there, a seventh view's at about 1.8 µs; the bell no dearer, 28.6 where 28.9, and the close 0.9 dearer, each over seven or eight frames a run and inside their noise; and the first ten days' midnights 1.0 to 1.1 dearer, under the 2 priced, the thirty-one before the turn 2.4 |
+| P5 | the suite | 90 to 95 tests where 84; the hour's year 2 to 6% longer; the hundred years 3 to 10% longer; the eight hundred days 3 to 10% longer; the whole on eight threads within 0.6 s | *Measurement*, the two test binaries alternated, each pinned and opted out, two rounds: 92 green, the crate's 38 and the cartridge's 54; the hour's year 6.69 to 6.74 s where 6.35 to 6.41, 5%; the hundred years 6.83 to 6.84 where 6.42 to 6.43, 6%; the whole on eight threads 7.47 to 7.55 s where 7.17 to 7.18, 0.30 to 0.37 longer. Inside, each. **Missed** in one: the eight hundred days 1.51 to 1.53 s where 1.32 to 1.33, 14%, every frame there a day's turn, so the Performance sheet and the Report held at each. Beside them the weekday 3 to 5% longer, the order desk's sessions 1 to 3%, the dividend's 3%; and the new tests, the Camera's year 0.55 s, the scripted quarter 0.36 and the Report's own 0.04 |
+| P6 | the page | the cartridge's block 8,000 to 12,000 characters longer; the source's 9,000 to 15,000; the library's 1,200 to 2,500; the remarks' new block 1,300 to 2,200; the caveats' 700 to 1,100; the page 21,000 to 32,000 longer | *Measurement*: 2,521,961 characters where 2,493,215, 28,746 longer; the cartridge's block 10,155 longer, the source's 13,644, the library's 2,472 and the remarks' new block 1,854 with its tags, inside. **Missed** in one: the caveats' 623, under the 700 priced |
+| P7 | the checks | ALL GREEN, four checks and four controls; `check_layout.ps1` the only check edited; one file added under `src/`; fmt and clippy clean | *Measurement*, as predicted: ALL GREEN, four checks and four controls, the layout's control a clean copy of eleven files and fourteen mutants; `src/content/remarks.vla` the one file added; `cargo fmt --check` and `cargo clippy -D warnings` clean once `cargo fmt` had rewrapped three places |
+| P8 | the numbers given | the cards at 1:11:27.0, 2:23:03.5, 3:34:40.0 and 4:47:13.0 of play; Average Co. bought and held -0.8% to -1.3% over the first quarter, +9.6% to +10.4% over the year, each later quarter -1% to +7%; a firm in cash 0.00% at every card, its alpha the benchmark's return negated, positive at the first card and negative over the year; each stock held, its alpha about its beta less one times the benchmark's, General Widget's lifted about half a point a quarter; Average Co.'s quarterly Sharpe ratio at tier 1 between 2 and 40 in size, its first quarter's maximum drawdown 0.8% to 1.5%; the percent at 10 units never past a number's edge | *Measurement*, by the hand at the seed: the turns at frames 128,611, 257,506, 386,401 and 516,991, 1:11:27.0, 2:23:03.5, 3:34:40.0 and 4:47:13.0, as predicted; Average Co. -1.04%, then +1.09%, +3.64% and +6.17%, +10.08% for the year; the firm in cash 0.00% and alphas +1.04, -1.09, -3.64, -6.17 and -10.08; Longshot Mining's -0.96, +0.95, +4.36 and +5.87, the year's +10.92, General Widget's +0.75, +0.24, -0.45 and -1.18, the year's -0.62; the Sharpe ratios -12.5 to +28.2 and the first quarter's drawdown 1.04%, then 0.000%; the percent at 10 units 2.3 to 5.7 CSS pixels short of a number's edge from 100% to 200%, never past it. Inside, each |
+| P9 | mutants | 20 to 26, each by one anchor, each applying once; at most one lives at the first run | *Measurement*: 30 written, each anchor applying once, each expanded and caught by the test named for it at the first run. **Missed** in one: 30 where 20 to 26 |
+| P10 | the hand test | the strip's Report after Gigs; the paces written a day a frame, the Camera showing the Report at the first quarter's turn about three seconds later, its header the firm's name, its title the first quarter of year 1, both worths, the returns and alpha, a grade and the proctor's remark; a tab kept; the Report shown again at the next card; the year's card, "The year"; no key on the Report; caveats 24 and 25; Build's bytes the file's | The owner's, on the page built here, 2026-10-19 (the paragraph below): the strip's Report after Gigs and the Performance sheet after the Ledger; the Report before any card at frame 545, mid-exam, the firm pending registration and $5,000.00 twice; the paces and the waiver written in the drawer at frames 828, 938 and 1,076; the four cards, B and B, D and C, F and F, and the year's F and F under "The year", each figure the hand's; caveats 24 and 25 and the count 25; passed with no change asked |
+
+**What the build found.** The source expanded to 1,389 rows and loaded at its
+first expansion, and the cartridge stepped by hand to the year's card read the
+hand's every figure before the hand was written: a firm in cash, B, D, F and F,
+the Report shown at each turn and the Camera empty between. The suite's first run
+failed two tests: the describe golden, blessed again, and the dividend's, whose
+script at a frame a day crosses eight quarters' turns before its last two acts:
+the Camera showed the Report at each, and its palette's switch and its click then
+landed on the Report, where no command holds and no button stands. Its script
+now shows Trading after the year's turn; a player at a day a frame meets a card
+every three seconds. Thirty mutants, each written into the source, the library
+or a content file by one anchor, applied once and expanded before its test ran,
+each failed the test named for it at the first run; the remark's mutants needed
+a card whose quarter's grade and year's differ, which a firm in cash never gives
+at the seed (F and F at the fourth), so the Camera's test buys Average Co. with
+the firm's cash at the fourth quarter's second day, C for the quarter and F for
+the year; and the fractional shares needed a capital the price does not divide,
+which no exam gives, so the Report's test writes one. Natively a card's turn
+costs about 52 µs more than a midnight, the card's thirty cells once a quarter,
+and the views' date line about 1.8 µs a turn more, the Report's own.
+
+**The owner's hand test.** On the page built here (`web/index.html`, 2,521,961
+characters), 2026-10-19, over six screenshots. The strip's Report after Gigs
+and the Performance sheet after the Ledger. At frame 545, the exam open, the
+Report before any card: "As of Monday, year 1, day 1, 9:30 (unaudited)", "The
+market opens when you leave the exam room.", "Report card for a firm pending
+registration, graded by the proctor at seed 791886 and tier 1.", "No card yet:
+the first is issued when the first quarter ends, after its 91st day.",
+$5,000.00 beside "Your firm" and beside "Average Co., bought and held", every
+percent empty, and the line on your own account. In the drawer, the paces
+written a day a frame at frames 828 and 938 and the waiver at 1,076, the firm
+Prudent & Sons; every as-of line after it at 9:30, each frame at this pace
+landing on the bell, so that by the calendar the turns fell at frames 1,167,
+1,258, 1,349 and 1,441, a card every three seconds. Paused at frame 1,213,
+day 138, the first card: "The first quarter of year 1, to its last close.",
+Prudent & Sons $7,500.00 at +0.00% and +0.00%, Average Co. $7,422.00 at -1.04%
+and -1.04%, alpha +1.04% and +1.04%, "Grade: B for the quarter, and B for the
+year so far." and B's remark; at frame 1,289, day 214, the second, $7,503.00,
++1.09% and +0.04%, alpha -1.09% and -0.04%, D and C, and D's remark; at frame
+1,369, day 294, the third, $7,776.00, +3.64% and +3.68%, alpha -3.64% and
+-3.68%, F and F, and F's remark; at frame 1,465, year 2, day 25, the year's
+card, its last column "The year", $8,256.00, +6.17% and +10.08%, alpha -6.17%
+and -10.08%, "Grade: F for the quarter, and F for the year." and F's remark:
+each figure the hand's at the seed, as the hand test listed them. The Caveats
+sheet's rows 25 and 26, caveats 24 and 25 with their four fields, and its count
+25. Not among the screenshots: the keys pressed on the Report before the first
+card, the tab kept between cards, and Build's line, each a check the owner's
+word passed. The owner's words: "Tests pass; commit, then recommend next
+steps." So every decision and every draft stands as built: the bands, the five
+remarks, the two caveats, the labels and the headers. Committed at the owner's
+word.
 
