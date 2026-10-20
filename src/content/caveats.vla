@@ -106,4 +106,8 @@
      "Prices react to news, often within seconds, and traders pay to read a headline a moment sooner."
      "Management reads only the headlines, which the Series 777 recognizes as a style."
      "Headlines!D3")
+    ("Your firm's name is one of four, and the exam's last answer picks it."
+     "A firm chooses its own name and registers it where it is formed; an adviser also reports it on Form ADV."
+     "Management's first choice, Guaranteed Returns LLC, was declined by Compliance."
+     "Firms!E4")
     ))                              ; the sheet's end: a caveat added goes above this line

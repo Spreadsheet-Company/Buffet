@@ -66,6 +66,11 @@
 ;           net worth, the market's weather, a word read off its change in the twenty
 ;           days to the last close, and the day's headline, which the day's market draw
 ;           picks from the Headlines sheet, a content sheet of its own.
+;   BACK.2  the firm's name: the exam's last answer, the firm's style, names the firm
+;           from the Firms sheet, where each style stands beside its firm, the certificate
+;           printing the name and the Overview the name and the style, words that move no
+;           number; and MENU.3's first slice, the four stocks' names, each on its own row
+;           of the Stocks sheet.
 ;
 ; The market's clock (BD-7). A frame is twenty seconds of the market's time in the
 ; regular session and two minutes between sessions, so at the manifest's rate of thirty
@@ -102,7 +107,7 @@
   (seed 791886)                     ; every first game's market: a first year that dips early and closes 10% up
   (author "Spreadsheet Company")
   (license "AGPL-3.0-or-later AND CC-BY-SA-4.0")
-  (notes "Buffet: All You Can Sheet. The front office is open for business: the game opens on the Series 777, the regulator's exam for a fund manager, eleven questions answered by a click or a key, ten of them scored, each right answer $500 more of the firm's $5,000, and the last the firm's style; then its certificate; then the Overview at Monday's opening bell, which waits for you to leave the exam room: the day and the hour, the net worth of the firm and your own, the market's weather, a word for how far it moved in the twenty days to the last close, and the day's headline, with the fine print at its foot. Beside it, the Portfolio, four stocks, each its price, its change since the last close and the holding of it, the firm's or your own, its shares, their cost, their value and the gain, the market open from 9:30 to 16:00 on weekdays, ten minutes a second while it trades and an hour a second between, and moving every five minutes, and under them the cash on hand and the net worth, the firm's and yours. Beside that, Trading, where each stock's six buttons buy one share, ten or as many as the cash covers, and sell one, ten or all, at the price shown while the market is open, by a click or by a key: 1 to 4 pick a stock, then B, N and M buy and S, D and F sell, each also a command of the page's palette; and beside the cash, a switch, or C, turns whose cash an order spends, the firm's or your own, moving none of it. And Gigs, where a prospectus is proofread for $250, by a click on its button or by P, a day's work, one a week and four a run, Compliance permitting. Behind them, the back office: the market's calendar and its hours; its dice, rolled once a day where anyone can watch them roll; the market itself, four waves and a drift, and each session's five minutes between two closes, their swings a factor of its own, and its weather, a word read off its change; four stocks priced off it in whole cents, the dearest paying a dividend four days a year, paid to the shares held; the hustle's books, every prospectus counted; the proctor's books, the exam's draw and every answer; the order desk's books, every button and command and the order they make; the positions, each pocket's shares, cost and gains; the cash, the holdings and the net worth, the firm's and yours; the ledger, the last hundred orders filled; the fine print, a disclosure a month; the Series 777's question bank, twenty questions; the firms' four styles; the headlines, one a day; and the model's caveats, the things this game gets wrong, each with Management's response. A returning candidate may waive the exam by writing 1 into Proctor!B3, at five correct answers. Pick the Day, the Dice, the Market, the Stocks, the Hustle, the Proctor, the Orders, the Positions, the Cash or the Ledger sheet to watch the model work, or the Caveats sheet to read, or the Disclosures, the Questions, the Firms or the Headlines sheet among the hidden sheets."))
+  (notes "Buffet: All You Can Sheet. The front office is open for business: the game opens on the Series 777, the regulator's exam for a fund manager, eleven questions answered by a click or a key, ten of them scored, each right answer $500 more of the firm's $5,000, and the last the firm's style, which names the firm; then its certificate; then the Overview at Monday's opening bell, which waits for you to leave the exam room: the day and the hour, the firm's name and style, the net worth of the firm and your own, the market's weather, a word for how far it moved in the twenty days to the last close, and the day's headline, with the fine print at its foot. Beside it, the Portfolio, four stocks, each its price, its change since the last close and the holding of it, the firm's or your own, its shares, their cost, their value and the gain, the market open from 9:30 to 16:00 on weekdays, ten minutes a second while it trades and an hour a second between, and moving every five minutes, and under them the cash on hand and the net worth, the firm's and yours. Beside that, Trading, where each stock's six buttons buy one share, ten or as many as the cash covers, and sell one, ten or all, at the price shown while the market is open, by a click or by a key: 1 to 4 pick a stock, then B, N and M buy and S, D and F sell, each also a command of the page's palette; and beside the cash, a switch, or C, turns whose cash an order spends, the firm's or your own, moving none of it. And Gigs, where a prospectus is proofread for $250, by a click on its button or by P, a day's work, one a week and four a run, Compliance permitting. Behind them, the back office: the market's calendar and its hours; its dice, rolled once a day where anyone can watch them roll; the market itself, four waves and a drift, and each session's five minutes between two closes, their swings a factor of its own, and its weather, a word read off its change; four stocks priced off it in whole cents, the dearest paying a dividend four days a year, paid to the shares held; the hustle's books, every prospectus counted; the proctor's books, the exam's draw and every answer; the order desk's books, every button and command and the order they make; the positions, each pocket's shares, cost and gains; the cash, the holdings and the net worth, the firm's and yours; the ledger, the last hundred orders filled; the fine print, a disclosure a month; the Series 777's question bank, twenty questions; the four firms, each its style and its name; the headlines, one a day; and the model's caveats, the things this game gets wrong, each with Management's response. A returning candidate may waive the exam by writing 1 into Proctor!B3, at five correct answers and the first style's firm, or another's by writing 2, 3 or 4 into Proctor!B5. Pick the Day, the Dice, the Market, the Stocks, the Hustle, the Proctor, the Orders, the Positions, the Cash or the Ledger sheet to watch the model work, or the Caveats sheet to read, or the Disclosures, the Questions, the Firms or the Headlines sheet among the hidden sheets."))
 
 ; The libraries whose macros this source calls, both beside it: the kit, Alonzo's
 ; common.vla copied at the pin (sheets, labels, headers, on, cells, formulas, hold,
@@ -410,9 +415,14 @@
 ; the Positions sheet pays it at the day's first frame to the shares held (PLATE.1). The
 ; rungs' rows are written a rung at a time, each rung's values across its row and then
 ; one fill a column, the order a walk over a list of rungs writes, so that the ladder
-; (STATION.2, course 1) rewrites them byte for byte (BD-1).
+; (STATION.2, course 1) rewrites them byte for byte (BD-1). Each rung's name stands first on
+; its own row (MENU.3's first slice, with BACK.2; MENU.1's decision 2), a fictional company
+; of its rung's kind: the views, the order desk, the books, the ledger and the commands
+; read it there and hold none of their own, so a name changed here moves no formula; and
+; column A is as wide as the longest of the names and the labels.
 
 (on "Stocks"
+  (column "A" 20 shown none)        ; the labels and the names: as wide as the longest, the days between two
   (labels "A1" "dividends a year" "the days between two")
   (cells
     ("B1" 4))                       ; dividends a year: one a quarter
@@ -420,19 +430,19 @@
     ("B2" "=INT(Day!$B$2/B1)"))     ; the days between two: 91, the year over the dividends, rounded down
   (headers "A4" "the rungs" "start, in cents" "beta" "dividend yield, a year" "price now, in cents" "price at the last close, in cents" "a dividend, in cents a share" "the dividend today, in cents a share" "the change since the last close, in cents")
   (cells
-    ("A5" "rung 1")                 ; the cheapest share, and the wildest:
+    ("A5" "Longshot Mining")        ; the cheapest share, and the wildest, a penny miner's long odds:
     ("B5" 100)                      ;   its start, in cents: $1
     ("C5" 2)                        ;   its beta: twice the index's swing
     ("D5" 0)                        ;   its dividend yield: none
-    ("A6" "rung 2")                 ; the second:
+    ("A6" "Disruptr")               ; the second, a small startup, spelled as startups spell:
     ("B6" 500)                      ;   $5
     ("C6" 1.5)                      ;   half again the index's swing
     ("D6" 0)                        ;   no dividend
-    ("A7" "rung 3")                 ; the market itself, the broad rung the report card scores against:
+    ("A7" "Average Co.")            ; the market itself, the broad rung the report card scores against:
     ("B7" 2500)                     ;   $25
     ("C7" 1)                        ;   the index's own swing
     ("D7" 0)                        ;   no dividend
-    ("A8" "rung 4")                 ; the dearest share, and the steadiest:
+    ("A8" "General Widget")         ; the dearest share, and the steadiest, the economics textbook's firm:
     ("B8" 10000)                    ;   $100
     ("C8" 0.75)                     ;   three quarters of the index's swing
     ("D8" 0.02))                    ;   2% a year, a quarter at a time: 50 cents a share
@@ -530,7 +540,7 @@
     ("B2" 50000)                    ; $500 a correct answer, the contract's
     ("B3" 0)                        ; the waiver: a person's edit of 1 skips the exam, the game beginning at the next step
     ("B4" 5)                        ; a waiver's correct answers: the middle of 0 to 10
-    ("B5" 1)                        ; a waiver's style: the first
+    ("B5" 1)                        ; a waiver's style: the first, which names its firm (BACK.2)
     ("B6" "Overview"))              ; where the certificate leads: the Overview, the game's first view after the exam (FRONT.3)
   (labels "A8" "the bank's questions" "the start, from 0" "the stride, a prime above 1,547")
   (formulas
@@ -721,7 +731,7 @@
 
 (on "Positions"
   (column "A" 8 shown none)         ; the pocket, 1 or 2
-  (column "C" 10 shown none)        ; the stock's name
+  (column "C" 15 shown none)        ; the stock's name: as wide as the longest, Longshot Mining
   (headers "A1" "pocket" "rung" "stock" "filled now, in shares" "shares" "cost basis, in cents" "bought, in cents" "sold, in cents" "dividends, in cents" "price now, in cents" "value, in cents" "unrealized gain, in cents" "realized gain, in cents")
   (cells
     ("A2:A5" 1)                     ; the firm's four,
@@ -809,7 +819,7 @@
   (column "A" 6 shown none)         ; the order's number
   (column "B" 36 shown none)        ; when: as wide as Wednesday, year 10, day 365, 15:55
   (column "C" 9 shown none)         ; the pocket: Personal
-  (column "D" 10 shown none)        ; the stock
+  (column "D" 15 shown none)        ; the stock: as wide as the longest name, Longshot Mining
   (column "E" 7 shown none)         ; the shares
   (column "F" 16 shown none)        ; the price, in cents
   (column "G" 21 shown none)        ; the cash after, in cents
@@ -859,20 +869,23 @@
   (formulas
     ("K2" "=Proctor!$B$34")))       ; the row shown: the draw's row for the question asked
 
-; ---- GUARD.1: the firms' styles -----------------------------------------------------
+; ---- GUARD.1, BACK.2: the firms -----------------------------------------------------
 ; The Firms sheet: the four answers to the Series 777's last question, ungraded, "Which
-; best describes you?", each the style of the firm it founds, which BACK.2 names beside
-; it. One field, so its table is column A and its values stand in D: the count in D1 and
-; its picker in D3. The exam shows its rows as the question's four options; the row
-; shown, D2, is the style chosen, the first until the eleventh answer gives one, so that
-; the picker is the certificate's style.
+; best describes you?", each the style of the firm it founds and the name it gives the
+; firm (BACK.2). Two fields, so its table runs from A to B and its values stand in E: the
+; count in E1 and a picker a field in E3 and E4. The exam shows its styles as the
+; question's four options; the row shown, E2, is the style chosen, the first until the
+; eleventh answer gives one, so that the pickers are the firm's style and its name, which
+; the certificate and the Overview print. A waiver's style names its firm as an answer's
+; does. The style is flavor and never power (BD-4): no number of the game reads it or the
+; name, so that every firm plays the same market at the same seed (BD-3).
 
-(sheet "Firms" hidden)              ; the firms' styles: reference data, at the back of the workbook
-(firms)                             ; the Firms sheet: its header, its rows, their count and their picker
+(sheet "Firms" hidden)              ; the firms: reference data, at the back of the workbook
+(firms)                             ; the Firms sheet: its headers, its rows, their count and a picker a field
 
 (on "Firms"
   (formulas
-    ("D2" "=MAX(Proctor!$B$40,1)")))   ; the row shown: the style chosen, the first before one is
+    ("E2" "=MAX(Proctor!$B$40,1)")))   ; the row shown: the style chosen, the first before one is
 
 ; ---- FRONT.3: the ticker ------------------------------------------------------------
 ; The Headlines sheet: a headline a row, of which the Overview shows one a day, the row
@@ -955,7 +968,7 @@
   (as-of "A1")                      ; the date, every view's
   (bell "A2")                       ; the market's hours, every view's: the bell waits for the exam
   (formulas
-    ("A3" "=IF(Proctor!$B$33=1,IF(Proctor!$B$32<10,\"The Series 777, question \"&(Proctor!$B$32+1)&\" of 11. Correct answers earn starting capital.\",\"The Series 777, question 11 of 11, ungraded: it sets your firm's style.\"),IF(Proctor!$B$3=1,\"The Series 777: waived.\",\"Pencils down. Your certificate is on its sheet.\"))")   ; where the exam stands, the second sentence the owner's words at the hand test
+    ("A3" "=IF(Proctor!$B$33=1,IF(Proctor!$B$32<10,\"The Series 777, question \"&(Proctor!$B$32+1)&\" of 11. Correct answers earn starting capital.\",\"The Series 777, question 11 of 11, ungraded: it names your firm.\"),IF(Proctor!$B$3=1,\"The Series 777: waived.\",\"Pencils down. Your certificate is on its sheet.\"))")   ; where the exam stands, the second sentence the owner's words at the hand test
     ("A5" "=IF(Proctor!$B$33=0,\"\",IF(Proctor!$B$32<10,Questions!$K$4,\"Which best describes you?\"))")   ; the question: the bank's, or the eleventh, the view's own
     ("A7:A10" "=IF(Proctor!$B$33=0,\"\",IF(Proctor!$B$32<10,\"[ \"&Proctor!A24&\" ]  \"&Questions!K5,\"[ \"&Proctor!A24&\" ]  \"&Firms!A2))")   ; its options, each a button: the Proctor's buttons name these cells
     ("A12" "=IF(Proctor!$B$33=1,\"Click an answer, or press its letter: A, B, C or D.\",\"\")"))   ; the keys, the Keys sheet's B6:B9 while a question is open
@@ -969,7 +982,8 @@
 ; The Certificate (GUARD.1): what the exam decided, shown by the Camera at the eleventh
 ; answer. Its date and the bell's line; its title; whether the exam is still pending,
 ; waived or passed, as every candidate passes; the correct answers, the firm's capital
-; in dollars and its style; the button that opens the firm for business, and its key;
+; in dollars and its name, which the eleventh answer's style gives it, pending
+; registration until then (BACK.2); the button that opens the firm for business, and its key;
 ; the game's plain statement that it is not advice, the Caveats sheet's first row, under
 ; its heading (the owner's word at the hand test: "The caveat should have a "Caveat:"
 ; cell above it so the caveat doesn't read like a random "You. ... statement" hanging on
@@ -986,12 +1000,12 @@
     ("A3" "The Series 777: a certificate of completion"))
   (formulas
     ("A5" "=IF(Proctor!$B$33=1,\"Pending: the proctor certifies after the eleventh question.\",IF(Proctor!$B$3=1,\"Waived: the regulator assumes you would have passed.\",\"The bearer has sat the Series 777 and passed, as every candidate does.\"))"))   ; pending, waived or passed
-  (labels "A7" "Correct answers" "Firm capital ($)" "Style")
+  (labels "A7" "Correct answers" "Firm capital ($)" "Firm name")
   (formulas
     ("B7" "=Proctor!$B$38&\" of 10\""))   ; the score, of the ten
   (dollars "B8" "Proctor!B39")      ; the firm's capital: whole cents spelled with two decimals
   (formulas
-    ("B9" "=IF(Proctor!$B$40=0,\"asked last\",Firms!$D$3)"))   ; the style, the Firms sheet's, once the eleventh answer gives it
+    ("B9" "=IF(Proctor!$B$40=0,\"pending registration\",Firms!$E$4)"))   ; the firm's name, the Firms sheet's, once the eleventh answer gives its style
   (cells
     ("A11" "[ Open for business ]")   ; the button: the Proctor's buttons name this cell
     ("B11" "or press O"))           ; its key, the Keys sheet's B10
@@ -1006,8 +1020,9 @@
 
 ; The Overview (FRONT.3): where the certificate leads, the game's first view after the
 ; exam, the firm at a glance, two numbers, a word and a headline (BD-4: checkers first).
-; Its date and the bell's line, every view's; the firm's line, its name pending until the
-; Firms sheet names it beside the style (BACK.2); each pocket's net worth, the Cash
+; Its date and the bell's line, every view's; the firm's line, its name and its investment
+; style, the Firms sheet's, once the exam's last answer gives them, and pending
+; registration until then (BACK.2); each pocket's net worth, the Cash
 ; sheet's, in dollars, the Portfolio keeping the stocks, the holdings and the cash on
 ; hand one tab over; the market's weather, the Market sheet's word and the change it is
 ; read off, in tenths of a percent, over the look back's days; the day's headline, the
@@ -1020,8 +1035,8 @@
   (column "B" 12 shown none)        ; the net worth, in dollars: 12 characters, the width the dollars are padded for
   (as-of "A1")                      ; the date, every view's
   (bell "A2")                       ; the market's hours, every view's
-  (cells
-    ("A3" "Your firm: name pending registration."))   ; the firm's name: a placeholder, until BACK.2 names the firm from the Firms sheet
+  (formulas
+    ("A3" "=IF(Proctor!$B$40=0,\"Your firm: name pending registration.\",\"Your firm: \"&Firms!$E$4&\". Investment style: \"&Firms!$E$3&\".\")"))   ; the firm's name and its style, pending until the eleventh answer gives them
   (labels "A5" "Net worth ($)" "  Firm" "  Personal")   ; each pocket's net worth, its cash and its holdings
   (dollars "B6:B7" "Cash!B9")       ; the firm's and your own, the Cash sheet's B9 and B10
   (formulas
@@ -1063,7 +1078,7 @@
   (headers "A4" "Security" "Price ($)" "Change ($)")
   (headers "E4" "Shares" "Cost ($)" "Value ($)" "Gain ($)")
   (formulas
-    ("A5:A8" "=Stocks!A5"))                     ; each stock's name, the model's, until MENU.3 names them
+    ("A5:A8" "=Stocks!A5"))                     ; each stock's name, the model's, on its rung's row (MENU.3)
   (dollars "B5:B8" "Stocks!E5")                 ; its price now: whole cents spelled with two decimals
   (signed-dollars "C5:C8" "Stocks!I5")         ; its change since the last close: two decimals and its sign, a gain's +, a loss's space and -, each as wide as the other
   (formulas
@@ -1224,7 +1239,7 @@
 (headers "Commands" "A1" "name" "words" "holds" "key")
 (on "Commands"
   (column "A" 11 shown none)        ; the names: as wide as the longest, switch-cash
-  (column "B" 64 shown none)        ; the words
+  (column "B" 67 shown none)        ; the words: as wide as the longest, buy-max's before a stock is picked
   (cells
     ("A2" "rung-1")                 ; the first stock picked,
     ("D2" "Digit1")                 ;   by 1

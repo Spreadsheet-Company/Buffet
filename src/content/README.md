@@ -11,17 +11,25 @@ cheapest pull request there is.*
 
 1. Open the sheet's file in this folder and press the pencil to edit it on
    GitHub: `disclosures.vla` holds the fine print, a disclosure a row;
-   `questions.vla` the exam's bank, a question a row; `firms.vla` the four
-   styles the exam's last question offers, a style a row, of which the exam
-   shows the first four; `headlines.vla` the ticker, a headline a row, of
-   which the Overview shows one a day; and `caveats.vla` the things this game
-   gets wrong, a caveat a row.
+   `questions.vla` the exam's bank, a question a row; `firms.vla` the firms,
+   a firm a row, each the style the exam's last question offers and the name
+   that style gives the firm, of which the exam offers the first four;
+   `headlines.vla` the ticker, a headline a row, of which the Overview shows
+   one a day; and `caveats.vla` the things this game gets wrong, a caveat a
+   row.
 2. Add your row above the file's last line, the one that opens with `))`.
    A row is the sheet's fields, in the order the file names them above its
-   rows. A disclosure, a style or a headline is one line:
+   rows. A disclosure or a headline is one line:
 
    ```text
    ("Your text here.")
+   ```
+
+   a firm one line of two fields, its style as a candidate says it, then
+   the firm's name:
+
+   ```text
+   ("I read the footnotes" "Your Firm's Name")
    ```
 
    and a question or a caveat a field a line:
@@ -44,7 +52,9 @@ cheapest pull request there is.*
 
    Write each text between the double quotes, with single quotes inside it
    if it needs any.
-3. A question has four options, one of them right, and its answer is that
+3. A firm's name is invented: one that points at a living company or a real
+   mark is marked `(check)` in a comment beside its row, for a reader's
+   glance. A question has four options, one of them right, and its answer is that
    option's letter, a capital from A to D. Its why is one line of at most
    140 characters that names no option, since a concept card quotes it on
    its own; and its concept is the idea it tests, which the exam never shows

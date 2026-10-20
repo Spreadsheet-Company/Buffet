@@ -104,6 +104,14 @@
 //! its tenths and its word, at the same frames, and with `B19` written open at
 //! every hour; the look back moved to the last close made; and the Headlines
 //! sheet, its rows whole, its row shown the hand's draw at every day's turn.
+//! Since `BACK.2`: the firm named by the exam's last answer, its style's row of
+//! the Firms sheet, the Certificate's name line and the Overview's firm line
+//! held to the hand at every frame of the scripted exam, pending until the
+//! eleventh answer, and to each style's firm at a waiver; the style and the
+//! name read by no number of the game; and with it `MENU.3`'s first slice, the
+//! four stocks' names, the hand's, held on the Stocks sheet's rows and in every
+//! view, book, sentence, ledger row and command that names a stock, each name
+//! inside every column that shows it.
 
 use std::collections::{BTreeMap, BTreeSet, VecDeque};
 use std::sync::OnceLock;
@@ -128,7 +136,8 @@ const DISCLOSURES: &str = "src/content/disclosures.vla";
 const QUESTIONS: &str = "src/content/questions.vla";
 /// The caveats' content file, and the sheet its call writes (`MENU.5`).
 const CAVEATS: &str = "src/content/caveats.vla";
-/// The firms' styles, the exam's eleventh question's options (`GUARD.1`).
+/// The firms, each its style, one of the exam's eleventh question's options
+/// (`GUARD.1`), and the name the style gives the firm (`BACK.2`).
 const FIRMS: &str = "src/content/firms.vla";
 /// The ticker's headlines, the Overview's headline of the day (`FRONT.3`).
 const HEADLINES: &str = "src/content/headlines.vla";
@@ -423,6 +432,36 @@ struct Held {
     session: Option<u64>,
 }
 
+/// The firms (`BACK.2`), its content file's rows read once by the language's own
+/// reader, each its style and its name, which `each_content_sheet_is_its_file`
+/// holds the Firms sheet to.
+fn firm_rows() -> &'static [(String, String)] {
+    static ROWS: OnceLock<Vec<(String, String)>> = OnceLock::new();
+    ROWS.get_or_init(|| {
+        content(FIRMS)
+            .rows
+            .into_iter()
+            .map(|r| match r.words.as_slice() {
+                [style, name] => (style.clone(), name.clone()),
+                w => panic!("{FIRMS}: a firm is its style and its name: {w:?}"),
+            })
+            .collect()
+    })
+}
+
+/// The Overview's firm line for a style (`BACK.2`), the hand's: pending at 0,
+/// else the name and the style of the firm's row the style is the place of.
+fn firm_line_of(style: u64) -> String {
+    let rows = firm_rows();
+    buffet::firm_line(match style {
+        0 => None,
+        s => {
+            let (style, name) = &rows[s as usize - 1];
+            Some((style.as_str(), name.as_str()))
+        }
+    })
+}
+
 /// The ticker's headlines (`FRONT.3`), its content file's rows read once by the
 /// language's own reader, which `each_content_sheet_is_its_file` holds the
 /// Headlines sheet to.
@@ -596,6 +635,7 @@ fn held(
             texts,
             &Plate::default(),
             ([WAIVED_CAPITAL, buffet::PERSONAL_CASH], prices_of(&stocks)),
+            buffet::WAIVED_STYLE,
         );
     }
 }
@@ -658,11 +698,12 @@ fn headlines_held(cart: &Cartridge, cal: &Calendar, seed: u64) {
 }
 
 /// Every cell of the Overview at this frame (`FRONT.3`), the hand's: its date
-/// and the bell's line, every view's; the firm's line; each pocket's net worth,
-/// its cash from its start at this frame and its holdings at the price now
-/// (`starts`, `prices`), in dollars, under its label; the weather's line, the
-/// hand's word and change at the last close made; the day's headline, the row
-/// the hand draws; and the fine print.
+/// and the bell's line, every view's; the firm's line, by the style the exam
+/// gave (`BACK.2`, `style`, a waiver's in the runs that waive it); each
+/// pocket's net worth, its cash from its start at this frame and its holdings
+/// at the price now (`starts`, `prices`), in dollars, under its label; the
+/// weather's line, the hand's word and change at the last close made; the
+/// day's headline, the row the hand draws; and the fine print.
 fn overview_cells(
     cart: &Cartridge,
     cal: &Calendar,
@@ -670,6 +711,7 @@ fn overview_cells(
     texts: &[String],
     plate: &Plate,
     (starts, prices): ([u64; 2], [u64; 4]),
+    style: u64,
 ) {
     let got = values(cart, "Overview", "A1:B13");
     let text = |addr: &str, want: &str| {
@@ -684,7 +726,7 @@ fn overview_cells(
     };
     text("A1", &buffet::as_of(cal));
     text("A2", buffet::bell(cal));
-    text("A3", buffet::FIRM_LINE);
+    text("A3", &firm_line_of(style));
     for (k, label) in buffet::NET_WORTH_LABELS.iter().enumerate() {
         text(&format!("A{}", 5 + k), label);
     }
@@ -706,16 +748,9 @@ fn overview_cells(
     text("A13", &texts[shown as usize - 1]);
 }
 
-/// The stocks' names, the Stocks sheet's `A5:A8`, which every view and the
-/// order desk read.
-fn stock_names(cart: &Cartridge) -> [String; 4] {
-    let got = values(cart, "Stocks", "A5:A8");
-    std::array::from_fn(|k| got[&format!("A{}", 5 + k)].clone())
-}
-
 /// Every cell of Trading at this frame (`PLATE.1`), the hand's: its date, the
 /// bell's line and where an order's money comes from; its headers; each
-/// stock's mark when picked, its name, its price now, the Stocks sheet's cents
+/// stock's mark when picked, its name, the hand's (`MENU.3`), its price now, the Stocks sheet's cents
 /// (`stocks`) spelled as dollars, the pocket's shares of it and its six
 /// buttons; the pocket's cash, and beside it the switch and its key
 /// (`PLATE.2`); the last order's sentence; the keys' line; and the fine print.
@@ -740,7 +775,6 @@ fn trading_cells(
             buffet::time_shown(cal.hour * 60 + cal.minute)
         );
     };
-    let names = stock_names(cart);
     let pocket = plate.funding();
     text("A1", &buffet::as_of(cal));
     text("A2", buffet::bell(cal));
@@ -748,7 +782,7 @@ fn trading_cells(
     for (k, header) in TRADING_HEADERS.iter().enumerate() {
         text(&address(5, 2 + k), header);
     }
-    for (k, name) in names.iter().enumerate() {
+    for (k, name) in buffet::names().iter().enumerate() {
         let row = buffet::STOCK_ROWS[k] as usize;
         let mark = if plate.picked == k as u64 + 1 {
             "▸"
@@ -775,8 +809,7 @@ fn trading_cells(
     text("D11", buffet::SWITCH_TEXT);
     text("E11", buffet::SWITCH_KEY_TEXT);
     let said = match plate.last {
-        Some(o) if o.stock > 0 => o.sentence(&names[o.stock as usize - 1]),
-        Some(o) => o.sentence(""),
+        Some(o) => o.sentence(),
         None => buffet::NO_ORDER.to_string(),
     };
     text("A13", &said);
@@ -867,7 +900,7 @@ fn portfolio_held(
 
 /// Every cell of the Portfolio at this frame (`FRONT.1`, `FRONT.2`, `GUARD.1`'s
 /// hand test, `PLATE.1`), the hand's: its date, the bell's line and whose
-/// holdings it shows; each stock's price now and its change since the last
+/// holdings it shows; each stock's name (`MENU.3`), its price now and its change since the last
 /// close, the Stocks sheet's own cents (`stocks`, held to the hand just before)
 /// spelled as dollars, and its glyph; the pocket's holding of it, its shares,
 /// their cost basis, their value at the price now and the gain not yet taken,
@@ -908,6 +941,7 @@ fn portfolio_cells(
         };
         let (now, was) = (cents("E"), cents("F"));
         prices[k] = now as u64;
+        text(&format!("A{row}"), RUNGS[k].name);
         text(&format!("B{row}"), &buffet::two_decimals(now as u64));
         text(&format!("C{row}"), &buffet::signed_two_decimals(now - was));
         text(&format!("D{row}"), buffet::glyph(now, was));
@@ -1390,10 +1424,10 @@ fn the_market_sheet_states_its_settings() {
 }
 
 /// The Stocks sheet states its rungs, and they are the hand's: each rung's
-/// label, its start in cents, its beta and its dividend yield; the dividends
+/// name, its start in cents, its beta and its dividend yield; the dividends
 /// a year; and, once the first frame has computed it, the days between two,
-/// the hand's first dividend day. A rung's label is its place on the ladder,
-/// and no name, until `MENU.3`'s first slice names the four.
+/// the hand's first dividend day. A rung's name stands on its own row since
+/// `MENU.3`'s first slice, where its label, its place on the ladder, stood.
 #[test]
 fn the_stocks_sheet_states_its_rungs() {
     let mut cart = cartridge();
@@ -1407,11 +1441,11 @@ fn the_stocks_sheet_states_its_rungs() {
     };
     assert_eq!(number("B1"), buffet::DIVIDENDS_A_YEAR as f64, "Stocks!B1");
     assert_eq!(number("B2"), DIVIDEND_DAYS[0] as f64, "Stocks!B2");
-    for (row, (k, rung)) in (5..).zip(RUNGS.iter().enumerate()) {
+    for (row, rung) in (5..).zip(RUNGS.iter()) {
         assert_eq!(
-            got.get(&format!("A{row}")),
-            Some(&format!("rung {}", k + 1)),
-            "Stocks!A{row}"
+            got.get(&format!("A{row}")).map(String::as_str),
+            Some(rung.name),
+            "Stocks!A{row}, the rung's name (MENU.3)"
         );
         assert_eq!(
             number(&format!("B{row}")),
@@ -2121,6 +2155,58 @@ fn the_portfolio_heads_its_columns_and_names_its_stocks_from_the_model() {
     }
 }
 
+/// Every stock's name inside every column that shows it (`MENU.3`'s first
+/// slice): the Stocks sheet's own, the Portfolio's and Trading's, the order
+/// desk's, the books' and the ledger's, each its width by the cartridge's own
+/// row, since a text is drawn into the empty cells on its right and no further
+/// and each of these columns holds a value beside every name; and every
+/// command's words, which name a stock, inside the Commands sheet's column of
+/// words. A column with no row of its own is the default width, which cuts a
+/// name, and fails here.
+#[test]
+fn every_stock_name_fits_every_column_that_shows_it() {
+    let text = lf(&read(CARTRIDGE));
+    let width_of = |sheet: &str, column: &str| -> u64 {
+        let head = format!("(column \"{sheet}\" \"{column}\" ");
+        let row = text
+            .lines()
+            .find(|l| l.starts_with(&head))
+            .unwrap_or_else(|| panic!("{sheet}!{column} has no width of its own"));
+        row[head.len()..]
+            .split(' ')
+            .next()
+            .and_then(|w| w.parse().ok())
+            .unwrap_or_else(|| panic!("{row}: a width"))
+    };
+    for (sheet, column) in [
+        ("Stocks", "A"),
+        ("Portfolio", "A"),
+        (buffet::TRADING, "B"),
+        ("Orders", "A"),
+        ("Positions", "C"),
+        ("Ledger", "D"),
+    ] {
+        let width = width_of(sheet, column);
+        for name in buffet::names() {
+            let n = name.chars().count() as u64;
+            assert!(
+                n <= width,
+                "{name}: {n} characters, past {sheet}!{column}'s {width}"
+            );
+        }
+    }
+    let words = width_of("Commands", "B");
+    for picked in 0..=buffet::names().len() as u64 {
+        for line in buffet::command_words(picked, buffet::FIRM) {
+            let n = line.chars().count() as u64;
+            assert!(
+                n <= words,
+                "{line:?}: {n} characters, past Commands!B's {words}"
+            );
+        }
+    }
+}
+
 /// The Overview (`FRONT.3`): at its first frames, the exam waived and the
 /// Overview shown as the host shows it, every cell the hand's, the weather's
 /// line and the day's headline among them; and, while it shows, no key the
@@ -2147,6 +2233,7 @@ fn the_overview_states_its_lines_and_binds_no_key() {
             &texts,
             &Plate::default(),
             ([WAIVED_CAPITAL, buffet::PERSONAL_CASH], prices_of(&stocks)),
+            buffet::WAIVED_STYLE,
         );
         let bound: Vec<&String> = host.keys.values().filter(|c| !c.is_empty()).collect();
         assert!(
@@ -3421,10 +3508,12 @@ impl Host {
 /// The exam's two views at this frame (`GUARD.1`), every cell the hand's: the
 /// Exam's date and bell, where the exam stands, the question shown, its four
 /// options each a button with its letter, the line of keys and the fine print,
-/// a closed exam's question, options and keys empty; and the Certificate's
-/// date and bell, its title, its headline, the correct answers, the capital in
-/// dollars, the style, its button and its key, the plain statement whole under
-/// its heading, the signature and the fine print.
+/// a closed exam's question, options and keys empty; the Certificate's date
+/// and bell, its title, its headline, the correct answers, the capital in
+/// dollars, the firm's name, pending until the eleventh answer gives the style
+/// that names it (`BACK.2`), its button and its key, the plain statement whole
+/// under its heading, the signature and the fine print; and the Overview's firm
+/// line, pending until then too.
 fn exam_views_held(cart: &Cartridge, cal: &Calendar, exam: &Exam, w: &Words) {
     let f = cal.frame;
     let open = exam.open();
@@ -3470,13 +3559,13 @@ fn exam_views_held(cart: &Cartridge, cal: &Calendar, exam: &Exam, w: &Words) {
         ("B7", format!("{} of {}", exam.score(), buffet::SCORED)),
         ("A8", "Firm capital ($)".to_string()),
         ("B8", buffet::two_decimals(exam.capital())),
-        ("A9", "Style".to_string()),
+        ("A9", buffet::NAME_LABEL.to_string()),
         (
             "B9",
             if style == 0 {
-                buffet::STYLE_UNASKED.to_string()
+                buffet::NAME_PENDING.to_string()
             } else {
-                w.styles[style - 1].clone()
+                firm_rows()[style - 1].1.clone()
             },
         ),
         ("A11", buffet::OPEN_TEXT.to_string()),
@@ -3492,6 +3581,11 @@ fn exam_views_held(cart: &Cartridge, cal: &Calendar, exam: &Exam, w: &Words) {
     for (addr, text) in want {
         assert_eq!(got.get(addr), Some(&text), "frame {f}: Certificate!{addr}");
     }
+    assert_eq!(
+        values(cart, "Overview", "A3").get("A3"),
+        Some(&firm_line_of(style as u64)),
+        "frame {f}: Overview!A3, the firm's line"
+    );
 }
 
 /// The proctor's books at this frame (`GUARD.1`), every working the hand's:
@@ -3931,6 +4025,154 @@ fn a_waiver_skips_the_exam_at_any_frame() {
     assert_eq!(host.now.sheet, buffet::LEAD);
 }
 
+/// Whether a formula reads a cell of another sheet, `sheet!` or its twin's
+/// `sheet.last!` before the cell's letters and digits, its anchors ignored and
+/// no digit after it, without case.
+fn reads_cell(formula: &str, sheet: &str, cell: &str) -> bool {
+    let f = formula.replace('$', "").to_ascii_lowercase();
+    let cell = cell.to_ascii_lowercase();
+    [format!("{sheet}!{cell}"), format!("{sheet}.last!{cell}")]
+        .iter()
+        .any(|read| {
+            f.match_indices(read.to_ascii_lowercase().as_str())
+                .any(|(at, m)| {
+                    !f[at + m.len()..]
+                        .chars()
+                        .next()
+                        .is_some_and(|c| c.is_ascii_digit())
+                })
+        })
+}
+
+/// The model's sheets and the windows that hold their every cell, the devices
+/// the game writes among them: what a style must leave as it found it.
+const MODEL: [(&str, &str); 12] = [
+    ("Day", "A1:B31"),
+    ("Dice", "A1:J84"),
+    ("Market", "A1:F124"),
+    ("Stocks", "A1:I8"),
+    ("Hustle", "A1:B19"),
+    ("Proctor", "A1:G41"),
+    ("Orders", "A1:I47"),
+    ("Positions", "A1:M15"),
+    ("Cash", "A1:B10"),
+    ("Ledger", "A1:G101"),
+    ("Commands", "A1:D12"),
+    ("Keys", "A1:E10"),
+];
+
+/// The style names the firm and moves no number (`BACK.2`; `BD-4`, flavor and
+/// never power): every formula of another sheet that reads the style, the
+/// Proctor's `B40`, or reads the Firms sheet is the style's own twin, the Firms
+/// sheet's row shown, the Exam's options, the Certificate's name or the
+/// Overview's firm line; the Firms sheet's firms, as many as the exam's
+/// options, each a style and a name within its column, none empty and no name
+/// twice; and a waiver's style, each of the four written as a person's edit of
+/// the Proctor's `B5` before the first frame, naming its firm on the
+/// Certificate and the Overview, while every cell of the model's sheets, the
+/// style's two excepted, is the first style's at each of the first frames,
+/// however a formula reads the style, so that every firm plays the same market
+/// and the same books at the same seed (`BD-3`).
+#[test]
+fn the_style_names_the_firm_and_moves_no_number() {
+    let text = lf(&read(CARTRIDGE));
+    let mut readers = BTreeSet::new();
+    for row in text.lines() {
+        let Some(rest) = row.strip_prefix("(formula \"") else {
+            continue;
+        };
+        let Some((sheet, rest)) = rest.split_once("\" \"") else {
+            panic!("{row}: a formula row names its sheet, then its cells");
+        };
+        let Some((range, formula)) = rest.split_once('"') else {
+            panic!("{row}: a formula row names its cells, then its formula");
+        };
+        let firms = formula.to_ascii_lowercase().contains("firms!")
+            || formula.to_ascii_lowercase().contains("firms.last!");
+        if firms || reads_cell(formula, "Proctor", "B40") {
+            readers.insert((sheet.to_string(), range.to_string()));
+        }
+    }
+    let want: BTreeSet<(String, String)> = [
+        ("Proctor", "B40"),
+        ("Firms", "E2"),
+        ("Exam", "A7:A10"),
+        ("Certificate", "B9"),
+        (buffet::OVERVIEW, "A3"),
+    ]
+    .iter()
+    .map(|(s, r)| (s.to_string(), r.to_string()))
+    .collect();
+    assert_eq!(
+        readers, want,
+        "the formulas that read the style or the Firms sheet"
+    );
+    let file = content(FIRMS);
+    let rows = firm_rows();
+    assert_eq!(
+        rows.len(),
+        buffet::OPTIONS.len(),
+        "a firm for each of the exam's options"
+    );
+    let names: BTreeSet<&str> = rows.iter().map(|(_, n)| n.as_str()).collect();
+    assert_eq!(names.len(), rows.len(), "no firm's name twice: {names:?}");
+    for (k, (style, name)) in rows.iter().enumerate() {
+        for (word, (header, width)) in [style, name].into_iter().zip(&file.fields) {
+            let n = word.chars().count() as u64;
+            assert!(
+                !word.trim().is_empty() && n <= *width,
+                "firm {}: its {header}, {word:?}, {n} characters where its column holds {width}",
+                k + 1
+            );
+        }
+    }
+    let model = |cart: &Cartridge| -> BTreeMap<String, String> {
+        let mut out = BTreeMap::new();
+        for (sheet, window) in MODEL {
+            for (addr, v) in values(cart, sheet, window) {
+                if !(sheet == "Proctor" && (addr == "B5" || addr == "B40")) {
+                    out.insert(format!("{sheet}!{addr}"), v);
+                }
+            }
+        }
+        out
+    };
+    let mut first: Vec<BTreeMap<String, String>> = Vec::new();
+    for k in 1..=rows.len() as u64 {
+        let mut cart = cartridge();
+        let edit = format!("(cell \"Proctor\" \"B5\" {k})");
+        cart.write(&edit)
+            .unwrap_or_else(|r| panic!("{edit}: {} {}", r.refusal.id, r.refusal.text));
+        for frame in 0..3 {
+            assert!(cart.step(0).done);
+            let now = model(&cart);
+            if k == 1 {
+                first.push(now);
+            } else if now != first[frame] {
+                let moved: Vec<&String> = now
+                    .iter()
+                    .filter(|(a, v)| first[frame].get(*a) != Some(*v))
+                    .map(|(a, _)| a)
+                    .collect();
+                panic!(
+                    "the style {k} moved the model at frame {}: {moved:?}",
+                    frame + 1
+                );
+            }
+        }
+        assert_eq!(
+            values(&cart, "Certificate", "B9").get("B9"),
+            Some(&rows[k as usize - 1].1),
+            "a waiver's style {k}: Certificate!B9, the firm's name"
+        );
+        assert_eq!(
+            values(&cart, buffet::OVERVIEW, "A3").get("A3"),
+            Some(&firm_line_of(k)),
+            "a waiver's style {k}: Overview!A3, the firm's line"
+        );
+    }
+}
+
 /// The proctor's settings and buttons, and the views' buttons at their places
 /// (`GUARD.1`'s decisions 3, 7 and 9): the capital, the waiver, a waiver's
 /// score and style, and the lead, the hand's; the buttons' table, each
@@ -4122,7 +4364,7 @@ fn prices_of(stocks: &BTreeMap<String, String>) -> [u64; 4] {
 /// pocket's cash now; the last order as it was taken, every cell 0 before
 /// the first; and since `PLATE.2` the pocket the hand holds after this frame,
 /// and the switch, its place, its click, its command run and whether it
-/// switched.
+/// switched. Each stock's name is the hand's (`MENU.3`).
 #[allow(clippy::too_many_arguments)]
 fn orders_held(
     cart: &Cartridge,
@@ -4133,7 +4375,6 @@ fn orders_held(
     order: Option<Order>,
     shown: &Shown,
     starts: [u64; 2],
-    names: &[String; 4],
 ) {
     let (now, last) = io;
     let flag = |b: bool| u8::from(b).to_string();
@@ -4141,7 +4382,7 @@ fn orders_held(
         if s == 0 {
             String::new()
         } else {
-            names[s as usize - 1].clone()
+            RUNGS[s as usize - 1].name.to_string()
         }
     };
     let press = Plate::clicked(now, last);
@@ -4229,17 +4470,16 @@ fn orders_held(
 }
 
 /// The books at this frame (`PLATE.1`), every cell the hand's: a row a pocket
-/// and a stock, its pocket, rung and name, this frame's fill on its row, the
-/// shares, the cost basis, the cents spent and received, the dividends, the
-/// price now, the value, the gain not yet taken and the gain taken; and the
-/// rows shown, the pocket an order funds.
+/// and a stock, its pocket, rung and name, the hand's (`MENU.3`), this frame's
+/// fill on its row, the shares, the cost basis, the cents spent and received,
+/// the dividends, the price now, the value, the gain not yet taken and the gain
+/// taken; and the rows shown, the pocket an order funds.
 fn positions_held(
     cart: &Cartridge,
     frame: u64,
     plate: &Plate,
     order: Option<Order>,
     prices: [u64; 4],
-    names: &[String; 4],
 ) {
     let got = values(cart, "Positions", "A2:M15");
     let mut want: Vec<(String, String)> = Vec::new();
@@ -4256,7 +4496,7 @@ fn positions_held(
             let cells = [
                 ("A", pocket.to_string()),
                 ("B", stock.to_string()),
-                ("C", names[stock as usize - 1].clone()),
+                ("C", RUNGS[stock as usize - 1].name.to_string()),
                 ("D", filled.to_string()),
                 ("E", b.shares.to_string()),
                 ("F", b.basis.to_string()),
@@ -4285,7 +4525,7 @@ fn positions_held(
         let cells = [
             ("A", pocket.to_string()),
             ("B", stock.to_string()),
-            ("C", names[stock as usize - 1].clone()),
+            ("C", RUNGS[stock as usize - 1].name.to_string()),
             ("D", b.shares.to_string()),
             ("E", b.basis.to_string()),
             ("F", value.to_string()),
@@ -4304,9 +4544,9 @@ fn positions_held(
 
 /// The ledger at this frame (`PLATE.1`): exactly the hand's ring of the fills
 /// landed, those of the frames before this one, the Write sheet's rows being
-/// made a frame late; each row its fill's number, when, pocket, stock, shares,
-/// price and cash after, and no other cell.
-fn ledger_held(cart: &Cartridge, frame: u64, plate: &Plate, landed: usize, names: &[String; 4]) {
+/// made a frame late; each row its fill's number, when, pocket, stock by the
+/// hand's name (`MENU.3`), shares, price and cash after, and no other cell.
+fn ledger_held(cart: &Cartridge, frame: u64, plate: &Plate, landed: usize) {
     let got = values(cart, "Ledger", "A2:G101");
     let mut want = BTreeMap::new();
     for row in 2..2 + buffet::LEDGER_ROWS {
@@ -4315,7 +4555,7 @@ fn ledger_held(cart: &Cartridge, frame: u64, plate: &Plate, landed: usize, names
                 ("A", f.number.to_string()),
                 ("B", f.when.clone()),
                 ("C", buffet::POCKET_NAMES[f.pocket as usize - 1].to_string()),
-                ("D", names[f.stock as usize - 1].clone()),
+                ("D", RUNGS[f.stock as usize - 1].name.to_string()),
                 ("E", f.shares.to_string()),
                 ("F", f.price.to_string()),
                 ("G", f.cash_after.to_string()),
@@ -4332,18 +4572,12 @@ fn ledger_held(cart: &Cartridge, frame: u64, plate: &Plate, landed: usize, names
 }
 
 /// The commands at this frame (`PLATE.1`, the page's version 5): each the
-/// hand's name and key, its words by the stock picked, and the switch's by the
-/// pocket it turns to (`PLATE.2`), and whether it holds, while Trading shows,
-/// the sheet this frame's inputs named.
-fn commands_held(
-    cart: &Cartridge,
-    frame: u64,
-    names: &[String; 4],
-    (picked, pocket): (u64, u64),
-    sheet: &str,
-) {
+/// hand's name and key, its words by the stock picked, by the hand's names
+/// (`MENU.3`), and the switch's by the pocket it turns to (`PLATE.2`), and
+/// whether it holds, while Trading shows, the sheet this frame's inputs named.
+fn commands_held(cart: &Cartridge, frame: u64, (picked, pocket): (u64, u64), sheet: &str) {
     let got = values(cart, "Commands", "A2:D12");
-    let words = buffet::command_words(names, picked, pocket);
+    let words = buffet::command_words(picked, pocket);
     let holds = if sheet.eq_ignore_ascii_case(buffet::TRADING) {
         "true"
     } else {
@@ -4404,7 +4638,6 @@ fn plate_frame_held(
         shown,
         starts,
     );
-    let names = stock_names(cart);
     let f = cal.frame;
     let stocks = stocks_held(cart, cal, seed, market, DIFFICULTY);
     let prices = prices_of(&stocks);
@@ -4417,9 +4650,8 @@ fn plate_frame_held(
         order,
         shown,
         starts,
-        &names,
     );
-    positions_held(cart, f, plate, order, prices, &names);
+    positions_held(cart, f, plate, order, prices);
     books_cash_held(
         cart,
         f,
@@ -4432,11 +4664,19 @@ fn plate_frame_held(
             plate.holdings(buffet::PERSONAL, prices),
         ],
     );
-    ledger_held(cart, f, plate, landed, &names);
-    commands_held(cart, f, &names, (plate.picked, plate.funding()), &now.sheet);
+    ledger_held(cart, f, plate, landed);
+    commands_held(cart, f, (plate.picked, plate.funding()), &now.sheet);
     trading_cells(cart, cal, &stocks, texts, plate, starts);
     portfolio_cells(cart, cal, &stocks, texts, plate, starts);
-    overview_cells(cart, cal, (seed, market), texts, plate, (starts, prices));
+    overview_cells(
+        cart,
+        cal,
+        (seed, market),
+        texts,
+        plate,
+        (starts, prices),
+        buffet::WAIVED_STYLE,
+    );
     let wrote = plate.fills.len() > landed;
     assert_eq!(
         host.pending.len(),
@@ -4766,10 +5006,13 @@ fn the_order_desk_states_its_settings_its_buttons_and_its_commands() {
         let at = address(5, 4 + t);
         assert_eq!(orders.get(&at), Some(&column.to_string()), "Orders!{at}");
     }
-    let names = stock_names(&cart);
     for (s, row) in buffet::STOCK_ROWS.iter().enumerate() {
         let r = 6 + s;
-        assert_eq!(orders.get(&format!("A{r}")), Some(&names[s]));
+        assert_eq!(
+            orders.get(&format!("A{r}")).map(String::as_str),
+            Some(RUNGS[s].name),
+            "Orders!A{r}, the stock's name, the hand's"
+        );
         assert_eq!(orders.get(&format!("B{r}")), Some(&(s + 1).to_string()));
         assert_eq!(orders.get(&format!("C{r}")), Some(&row.to_string()));
     }

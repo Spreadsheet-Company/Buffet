@@ -111,6 +111,15 @@
 //! in the cells' order as the waves are. The cells pick the day's headline by
 //! the draw's uniform times the rows, rounded down; the hand divides the draw
 //! times the rows by the modulus in whole numbers.
+//!
+//! The firm's name (`BACK.2`) shares none of its rule with its cells. The cells
+//! name the firm by the Firms sheet's pickers, their row the style the
+//! Proctor's books hold or the first before one; the hand takes the content
+//! file's row at the place its own exam's last answer gives, and spells the
+//! certificate's line and the Overview's itself. The stocks' names (`MENU.3`'s
+//! first slice) are the hand's own, each on its rung as the Stocks sheet keeps
+//! each on its rung's row, and every view, book, sentence and command that
+//! names a stock is held to them, never to the Stocks sheet's.
 
 use std::collections::BTreeSet;
 
@@ -804,13 +813,15 @@ pub fn least_index() -> f64 {
     Market::trend(0.0) * (1.0 - swing) / (1.0 + swing) * (1.0 - tick * WIDEST)
 }
 
-/// A rung of a station's ladder (`STATION.1`): its start, a share's price on
-/// day 0 in whole cents; its beta, the power of the index its price follows;
-/// its dividend yield, a year; and its dividend, the whole cents a share it
-/// pays on each dividend day, as the contract states it, where the Stocks
-/// sheet computes it from the yield.
+/// A rung of a station's ladder (`STATION.1`): its name, a fictional company's
+/// (`MENU.3`'s first slice, with `BACK.2`); its start, a share's price on day 0
+/// in whole cents; its beta, the power of the index its price follows; its
+/// dividend yield, a year; and its dividend, the whole cents a share it pays on
+/// each dividend day, as the contract states it, where the Stocks sheet
+/// computes it from the yield.
 #[derive(Clone, Copy, Debug, PartialEq)]
 pub struct Rung {
+    pub name: &'static str,
     pub start: u64,
     pub beta: f64,
     pub dividend_yield: f64,
@@ -818,35 +829,45 @@ pub struct Rung {
 }
 
 /// The stocks' four rungs, cheapest first, the Stocks sheet's rows 5 to 8:
-/// $1, $5, $25 and $100 a share, the cheapest the wildest, the third the
-/// market itself, and the dearest paying 2% a year, 50 cents a share on each
-/// of the year's four dividend days.
+/// $1, $5, $25 and $100 a share, the cheapest the wildest, a penny miner's
+/// long odds, the second a small startup, the third the market itself, the
+/// average company, and the dearest the textbook's widget maker, paying 2% a
+/// year, 50 cents a share on each of the year's four dividend days.
 pub const RUNGS: [Rung; 4] = [
     Rung {
+        name: "Longshot Mining",
         start: 100,
         beta: 2.0,
         dividend_yield: 0.0,
         dividend: 0,
     },
     Rung {
+        name: "Disruptr",
         start: 500,
         beta: 1.5,
         dividend_yield: 0.0,
         dividend: 0,
     },
     Rung {
+        name: "Average Co.",
         start: 2_500,
         beta: 1.0,
         dividend_yield: 0.0,
         dividend: 0,
     },
     Rung {
+        name: "General Widget",
         start: 10_000,
         beta: 0.75,
         dividend_yield: 0.02,
         dividend: 50,
     },
 ];
+
+/// The stocks' names, cheapest first.
+pub fn names() -> [&'static str; 4] {
+    RUNGS.map(|r| r.name)
+}
 
 /// The dividends a year, the Stocks sheet's `B1`: one a quarter.
 pub const DIVIDENDS_A_YEAR: u64 = 4;
@@ -1045,10 +1066,22 @@ pub fn glyph(now: i64, was: i64) -> &'static str {
     }
 }
 
-/// The Overview (`FRONT.3`): where the certificate leads, and its firm's line,
-/// a placeholder until the Firms sheet names the firm (`BACK.2`).
+/// The Overview (`FRONT.3`): where the certificate leads, and its firm's line
+/// before the exam's last answer gives the firm its style and its name
+/// (`BACK.2`).
 pub const OVERVIEW: &str = "Overview";
 pub const FIRM_LINE: &str = "Your firm: name pending registration.";
+
+/// The Overview's firm line (`BACK.2`), its `A3`: the line pending before a
+/// style is given, then the firm's name and its investment style, the
+/// candidate's own words, `(style, name)`, the Firms sheet's row the style
+/// picks.
+pub fn firm_line(firm: Option<(&str, &str)>) -> String {
+    match firm {
+        None => FIRM_LINE.to_string(),
+        Some((style, name)) => format!("Your firm: {name}. Investment style: {style}."),
+    }
+}
 /// The Overview's label over each pocket's net worth, and the pockets' own, in
 /// its column A from row 5.
 pub const NET_WORTH_LABELS: [&str; 3] = ["Net worth ($)", "  Firm", "  Personal"];
@@ -1366,8 +1399,11 @@ pub const STYLE_PROMPT: &str = "Which best describes you?";
 /// stands whole with its letter, so that every character of it is its
 /// button.
 pub const EXAM_COLUMN: u64 = 100;
-/// The certificate's style before the eleventh answer gives one.
-pub const STYLE_UNASKED: &str = "asked last";
+/// The certificate's line naming the firm (`BACK.2`), where the style stood:
+/// its label, and its value before the eleventh answer gives the style that
+/// names the firm.
+pub const NAME_LABEL: &str = "Firm name";
+pub const NAME_PENDING: &str = "pending registration";
 /// The heading over the certificate's plain statement, the owner's word at
 /// the hand test, so that its "You." does not stand alone.
 pub const CAVEAT_HEADING: &str = "Caveat:";
@@ -1593,7 +1629,7 @@ impl Exam {
                 )
             } else {
                 format!(
-                    "The Series 777, question {ASKED} of {ASKED}, ungraded: it sets your firm's style."
+                    "The Series 777, question {ASKED} of {ASKED}, ungraded: it names your firm."
                 )
             }
         } else if self.waived {
@@ -1728,9 +1764,13 @@ pub struct Order {
 }
 
 impl Order {
-    /// What Trading says of the order, `A13`, by the stock's name: what was
-    /// bought or sold, or why nothing was.
-    pub fn sentence(&self, name: &str) -> String {
+    /// What Trading says of the order, `A13`, by the stock's name, the hand's
+    /// (`MENU.3`): what was bought or sold, or why nothing was.
+    pub fn sentence(&self) -> String {
+        let name = match self.stock {
+            0 => "",
+            s => RUNGS[s as usize - 1].name,
+        };
         match self.outcome {
             Outcome::Filled => {
                 let n = self.filled.unsigned_abs();
@@ -2063,18 +2103,17 @@ pub fn holdings_line(pocket: u64) -> &'static str {
 }
 
 /// The words of the Commands sheet's rows from 2, a command's sentence the
-/// palette shows: each pick's by its stock's name, each trade's by the stock
-/// picked's, or none yet, and the switch's by the pocket it turns to, the
-/// other than `pocket`'s (`PLATE.2`).
-pub fn command_words(names: &[String; 4], picked: u64, pocket: u64) -> Vec<String> {
-    let stock = if picked == 0 {
-        "the stock picked, none yet".to_string()
-    } else {
-        names[picked as usize - 1].clone()
+/// palette shows: each pick's by its stock's name, the hand's (`MENU.3`), each
+/// trade's by the stock picked's, or none yet, and the switch's by the pocket
+/// it turns to, the other than `pocket`'s (`PLATE.2`).
+pub fn command_words(picked: u64, pocket: u64) -> Vec<String> {
+    let stock = match picked {
+        0 => "the stock picked, none yet",
+        p => RUNGS[p as usize - 1].name,
     };
-    let mut out: Vec<String> = names
+    let mut out: Vec<String> = RUNGS
         .iter()
-        .map(|name| format!("Pick {name}: the buy and sell commands trade it"))
+        .map(|r| format!("Pick {}: the buy and sell commands trade it", r.name))
         .collect();
     out.extend([
         format!("Buy 1 share of {stock}"),
@@ -2943,7 +2982,7 @@ mod tests {
         );
         assert_eq!(
             e.status(),
-            "The Series 777, question 11 of 11, ungraded: it sets your firm's style."
+            "The Series 777, question 11 of 11, ungraded: it names your firm."
         );
         assert_eq!(e.style(), 0, "no style before the eleventh");
         assert!(e.frame(Some(3), false), "the eleventh");
@@ -3223,6 +3262,66 @@ mod tests {
         assert!(
             seen.iter().all(|s| *s),
             "every headline of ten in the first year: {seen:?}"
+        );
+    }
+
+    /// The names (`BACK.2`, `MENU.3`'s first slice): four stocks, each a name of
+    /// its own, none a working label, each one line; the order's sentence and
+    /// the commands' words naming the stock by the hand's name; and the firm's
+    /// line pending until a style is given, then the name and the style.
+    #[test]
+    fn the_stocks_and_the_firm_are_named() {
+        let names = names();
+        let distinct: BTreeSet<&str> = names.iter().copied().collect();
+        assert_eq!(distinct.len(), names.len(), "four names: {names:?}");
+        for (k, name) in names.iter().enumerate() {
+            assert!(
+                !name.trim().is_empty()
+                    && !name.contains('\n')
+                    && !name.to_lowercase().contains("rung"),
+                "stock {}: {name:?}",
+                k + 1
+            );
+        }
+        let order = Order {
+            pocket: FIRM,
+            stock: 1,
+            trade: 2,
+            open: true,
+            price: 100,
+            cash: 750_000,
+            held: 0,
+            filled: 10,
+            outcome: Outcome::Filled,
+        };
+        assert_eq!(
+            order.sentence(),
+            "Bought 10 shares of Longshot Mining at the price shown."
+        );
+        assert_eq!(
+            Order {
+                stock: 0,
+                filled: 0,
+                outcome: Outcome::NoStock,
+                ..order
+            }
+            .sentence(),
+            "Refused: no stock is picked. Press 1 to 4 to pick one, or click a button on its row."
+        );
+        let words = command_words(3, FIRM);
+        assert_eq!(
+            words[2],
+            "Pick Average Co.: the buy and sell commands trade it"
+        );
+        assert_eq!(words[4], "Buy 1 share of Average Co.");
+        assert_eq!(
+            command_words(0, FIRM)[9],
+            "Sell every share of the stock picked, none yet"
+        );
+        assert_eq!(firm_line(None), FIRM_LINE);
+        assert_eq!(
+            firm_line(Some(("I feel the market", "Vibes LLC"))),
+            "Your firm: Vibes LLC. Investment style: I feel the market."
         );
     }
 }

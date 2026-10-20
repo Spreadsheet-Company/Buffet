@@ -75,6 +75,10 @@ empty.*
 
   *Closed 2026-10-16.* Predicted `~days`; cost one session, the scoping, its approval, the build, its measurements, the owner's hand test and its amendment. What landed: Gigs, the Hustle sheet and the Keys sheet's one key in the source and its cartridge, 474 rows and 125 formula cells; `as-of` and `fine-print` in `src/kitchen.vla`; the hand's hustle and its test; the scripted session and the binding's test, 49 tests in all; the describe golden blessed again; and, in the same commit, the five Linux cells run 38939138517 answered, `MENU.1`'s, `MENU.2`'s, `MENU.5`'s, `FRONT.1`'s and `FRONT.2`'s. Five of the nine predictions missed in part, each named beside its number: the describe golden's shapes, the views' date and fine print being one shape over two sheets; the step after a write of the Input rows; the cartridge's block in the page; P beside a click in Chrome; and the key, bound on every sheet as decision 9 had it until the owner's word at the hand test. The build found that every record lists every sheet, so that each sheet a dish adds makes the oracle's long tests dearer; and the owner, playing the game, asked before any other dish for an hour a second and the market's trading hours, recorded with the hand test for the item that takes it.
 
+- ✅ **`BACK.2` — the firm's name and flavor, and `MENU.3`'s first slice, four names.** *Scoped and built 2026-10-19 in one sitting at the owner's word, its eight decisions built as recommended; passed at the owner's hand test the same day with no change asked: the scoping, every prediction beside its number, what the build found and the owner's hand test are under THE ITEMS, SCOPED.* The last exam answer picks one of four archetypes, the archetype names the firm from the Firms sheet (`MENU.1`'s name for the line's Names) and sets its flavor, never its power; the certificate panel prints the name, the date and the score; the firm's capital is the exam's. With it `MENU.3`'s first slice: four rung names, fictional, and the firms' four. The second slice, every vehicle's name with the lawyer's glance, is course 6's. *Pays into:* the overview's name (`FRONT.3`), the report card's header (`CRITIC.1`). *Recommended at `MENU.2`'s first slice, 2026-10-15 (`SPIKE.md`):* the exam's last question, the one that picks the archetype, reads its four options off the Firms sheet, a column beside the firm each picks, so the sheet arrives with `GUARD.1`, which asks the question, and this dish names the firms beside them. *Arrived with `GUARD.1`, 2026-10-17 (`SPIKE.md`):* the Firms sheet, hidden, `src/content/firms.vla`, its column of four styles the last question's options, the style answered `Proctor!B40`, 0 until then, the row shown `Firms!D2` and its text `D3`; the Certificate prints the date, the score, the capital and the style, its style line where this dish's name will stand. *Found at `FRONT.3`'s build, 2026-10-19 (`SPIKE.md`):* the Overview's `A3` holds the firm's line, a value and a placeholder, "Your firm: name pending registration.", which this dish makes a formula of the Firms sheet's name. *Scoped and built 2026-10-19 in one sitting, each decision the owner's to approve, amend or strike at the hand test (`SPIKE.md`):* the Firms sheet two fields, each style beside the name it gives the firm, Prudent & Sons, Above the Fold Capital (the draft's Headline Capital being a living venture firm's name), Read-the-Room Partners and Vibes LLC, its row shown `E2` and its pickers `E3` and `E4`; the eleventh answer, or a waiver's style, picks both; the Certificate prints the name where the style stood, "pending registration" until then, the Overview's `A3` the name and the style, and the Exam's eleventh line says the answer names the firm; the flavor words alone at course 0, read by no number of the game; and `MENU.3`'s first slice, the four stocks named on their own rows of the Stocks sheet, Longshot Mining, Disruptr, Average Co. and General Widget, every column that shows them wide enough; caveat 23, the name the exam picks. `~days`
+
+  *Closed 2026-10-19.* Predicted `~days`; cost one sitting, the scoping, the build, its measurements and mutants, and the owner's hand test, which passed it whole. What landed: the Firms sheet's second field, the name, `src/content/firms.vla` four firms, its values moved from `D` to `E`; the Certificate's name line and the Overview's firm line, each pending registration until the eleventh answer, and the Exam's eleventh line; the four stocks named on `Stocks!A5:A8`, the Stocks sheet's column `A` given its width, the Positions' `C` and the Ledger's `D` widened, and the Commands' words widened for a line of `PLATE.1`'s the new test found cut; caveat 23; the source's notes and comments; 1,271 rows and 807 formula cells; the hand's names on its rungs, its firm line, its order's sentence and its commands' words by them; 84 tests, every reader of a name held to the hand's names, each name inside every column that shows it, and the style moving no number by a scan and by the four styles' games compared cell for cell; twenty-two mutants caught; the describe golden blessed again; and, in `OMAKASE.md`, `BD-5`'s row and the notes on `CRITIC.1` and `STATION.1`'s second slice. Five of the ten predictions missed in part, each named beside its number: the Firms sheet's readers 14 where 9 to 11; the pass and the load cheaper than priced, inside the noise; the caveats' block eight characters under; three columns given widths where two were priced; and twenty-two mutants where fifteen to twenty.
+
 ## 🛡 THE SNEEZE GUARD
 
 - ✅ **`GUARD.1` — the Series 777: the opening screen and its controls tutorial.** *Scoped 2026-10-17, its twenty decisions approved whole by the owner the same day, built that day, and amended at the owner's hand test, eleven questions, the dollars grouped by thousands, the buttons in lavender, the caveat's heading, the cash on hand and $250 a prospectus; passed at the second the same day: the scoping, the approval, every prediction beside its number, what the build found and the owner's two hand tests are under THE ITEMS, SCOPED.* The game opens on the Exam, a view of its own first among the tabs: ten questions drawn from the bank by the exam's own die (`POT.1`), a seeded start and a stride among the first ten primes above 1,547, coprime to every bank a picker holds, so that none repeats; then an eleventh, ungraded, "Which best describes you?", its options the four styles of the Firms sheet, `src/content/firms.vla`, the answer the firm's style (eleven at the owner's word at the hand test, where the scoping had nine and a tenth). Each question shows with its four options, each a button in Lovelace Lavender, answered by a click, the press the library's `clicked` at its second writing, or by its key, A to D, bound on the Exam alone while a question is open (the Keys sheet's free buttons, until `ENGINE.25`'s commands are released and pinned). An answer is judged by the question the last frame showed, as an order fills at the price shown; the score is a count, the firm's capital $5,000 and $500 a right answer; the exam cannot be failed. The Proctor sheet keeps its books: the settings, the draw, the buttons' table and the workings. The Camera hands the game over: the Exam, the Certificate at the eleventh answer, then where the certificate leads, a value, the Portfolio until the Overview (`FRONT.3`), by the certificate's button or O. The Certificate: the score of ten, the capital in dollars, the style, its button, and the plain statement that the game is not advice under its heading, "Caveat:", the proctor's signature beneath. The market's first bell waits for the certificate's button, the Day sheet counting the frames it waited and taking them out of the time (`BD-7`'s clause), so that no market day passes under an exam. A second run may skip the exam by a waiver, a person's edit of `Proctor!B3`, at five correct answers, $7,500, and the first style. And at the hand test, at the owner's words: every view's dollars grouped by thousands, `dollars` and the new `signed-dollars`; the Cash sheet, the personal cash at the start, $100, the firm's cash and the personal, shown on the Portfolio as its cash on hand; and the prospectus's fee $250 where $25 (`BACK.1`). *Oracle, met:* the draw at every seed of a thousand and the contract's, the hand's and never a question twice; every frame of a scripted exam answered by clicks and by keys, the proctor's books, both views, the keys each view binds, the Camera's hand-over, the bell's wait and the cash held to the hand, then the market's first hour after the bell; the score funding the firm as the contract says at every score of the ten and at a waiver's; a waiver at the first frame and in the middle; the settings, the buttons at their places, every option whole inside its column and the buttons' looks; every amount spelled with its thousands grouped, beside every power of ten to 2^53 cents; `BD-7`'s scan and the census's `(every-frame 0)`; the describe golden blessed again; 28 mutants, each caught by the test written for it; the cost natively and in Chrome at full screen, an answer shown 49 ms after its click at p95, the contract's 100 ms met by half; and the owner's two hand tests. *Pays into:* the firm's capital and name (`BACK.2`), the pockets (`PLATE.2`), and the license ladder (`GUARD.2`), whose every exam is this one over another bank. `~days`
@@ -7124,4 +7128,316 @@ sheet's rows 22 and 23; the Proctor's `B6`, Overview. The Market sheet's numbers
 at its foot drew `#######` in its default columns (Found, above). The owner's
 words: "Hand tests pass; commit before suggesting next steps." So every decision
 and every draft stands as built. Committed at the owner's word.
+
+## `BACK.2` — the firm's name and flavor, and `MENU.3`'s first slice: the exam's last answer names the firm, and four stocks named
+
+*Scoped and built 2026-10-19 at the owner's word, "Scope and implement BACK.2
+in Buffet (Delta/Buffet): the firm's name and flavor, with MENU.3's first slice,
+four names", in one sitting as `PLATE.1`, `PLATE.2`, `POT.11` and `FRONT.3`
+were: each decision below stands as recommended and was built, the owner's to
+approve, amend or strike at the hand test, and every text a player reads is a
+draft. Minted already, `MENU.3`'s first slice riding with it by its line;
+nothing else was minted, and what else the scoping found stands under Found.
+Read for it: the item's line in `OMAKASE.md` and its three notes; `STATION.1`'s
+second slice and `CRITIC.1`'s line; `BD-1`, `BD-2`, `BD-4` and `BD-5`;
+`GUARD.1`'s record above (the Firms sheet, its decision 13, the style at
+`Proctor!B40`, a waiver's style `B5`, the Certificate's style line `B9`);
+`MENU.1`'s (Names became Firms, a rung's name on the rung's own row, its
+decision 2); `STATION.1`'s decision 2 and `FRONT.1`'s decision 9 (the labels
+`rung 1` to `rung 4`, the views reading the model's names); `FRONT.3`'s (the
+Overview's `A3`, a value to become a formula; Found: the Market sheet's default
+columns); `BUFFET.md`'s §2, §3 and Appendix A, as design reference;
+`CONTRIBUTING.md`'s content policy and `TRADEMARK.md`; the source's Firms
+section, the Certificate, the Overview, the Stocks sheet and every reader of its
+names; `src/content/firms.vla` and the content's `README.md`; and the tests that
+hold them. Alonzo's and Frazaro's trees were read and never touched; the drafts'
+names were searched on the web for living companies of the same name.*
+
+**What it stands on, read on the day** (Buffet at `af36987`, four ahead of its
+remote, the tree clean; `alonzo` 0.2.0 and `vla-lang` 0.10.0).
+- *The Firms sheet* (`GUARD.1`'s decision 13). One field, `Style`, 40
+  characters wide, four rows, the styles the eleventh question offers; its row
+  shown `D2`, `=MAX(Proctor!$B$40,1)`, the style answered or the first before
+  it, and its picker `D3`, which the Certificate's `B9` printed, "asked last"
+  until the eleventh answer. A waiver's style is `Proctor!B5`, 1, a value.
+- *The Overview's firm line* (`FRONT.3`'s decision 2). `A3`, a value: "Your
+  firm: name pending registration."
+- *The names.* `Stocks!A5:A8`, values, `rung 1` to `rung 4` (`STATION.1`'s
+  decision 2), in column A at the default width, 8.43 characters; read by the
+  Portfolio's `A5:A8` and the order desk's `A6:A9`, each `=Stocks!A5` filled,
+  by the Positions' `C2:C9` through a `CHOOSE` and their `C12:C15`, and through
+  the order desk by Trading's `B6:B9`, its picks' and acts' words on the
+  Commands sheet, the stock picked and the order's (`Orders!B17`, `B18`, held
+  at `B32`), Trading's last order's sentence and the Ledger's stock, the Write
+  sheet's fourth row. The columns that show them: the Portfolio's `A` and
+  Trading's `B`, 22 characters; the order desk's `A`, 46; the Positions' `C` and
+  the Ledger's `D`, 10; the Commands' words, `B`, 64.
+- *The oracle.* The tests read the names off the Stocks sheet's cells
+  (`stock_names`) and held every reader to them, so the hand had no names of its
+  own and a reader was held to the cells it reads.
+- *The policy.* `BD-2`: punch up, fictional names, a parody of a living mark
+  gets the glance, PG-13, a forced pun weak comedy; `CONTRIBUTING.md`: a parody
+  that points at a living company or a real mark is marked `(check)` in the row;
+  `TRADEMARK.md`: the name's pun's other half is a living person, whose name,
+  face and words the game keeps out.
+- *The suite.* 81 tests green, the crate's 32 and the cartridge's 49.
+
+**The decisions.**
+
+1. **The firm's name: a field beside its style on the Firms sheet, the eleventh
+   answer picking both (rec).** `src/content/firms.vla` grows a second field,
+   `Name`, 30 characters wide, so the sheet's table runs from A to B and its
+   values move from D to E, as the library's `strings` lays out a sheet of two
+   fields: the rows counted `E1`, the row shown `E2`, `=MAX(Proctor!$B$40,1)` as
+   `D2` was, the style `E3` and the name `E4`, beside the labels `D1:D4`, the last
+   the field's header, `Name`. One row shown picks both, so the style and the
+   name can never disagree, and a contributor adds a firm as one line of two
+   fields (the content's `README.md`). The four drafts, held to `BD-2`:
+
+   | The style | `BUFFET.md` §3's draft | Built | The verdict |
+   |---|---|---|---|
+   | I read the prospectus | Prudent & Sons | Prudent & Sons | kept: the old-line family firm for the reader of the fine print; no firm of the name was found; "Prudent" is a word Prudential's mark shares and points at no company, so no `(check)` |
+   | I read the headlines | Headline Capital | Above the Fold Capital | renamed: Headline is a living venture firm, e.ventures until its rebranding in 2021, so "Headline Capital" in a fund manager's game points at it; a front page's headlines run above the fold, and the Overview sets the style beside the name; nothing was found of the name |
+   | I read the room | Read-the-Room Partners | Read-the-Room Partners | kept: the idiom as a partnership; nothing found |
+   | I feel the market | Vibes LLC | Vibes LLC | kept: the slang as a limited liability company; Vibes, a Chicago marketing company, and Vibe Capital, a venture firm, share a word and are not its target |
+
+   Four legal forms for four firms, a family firm, a capital fund, a partnership
+   and an LLC, and no forced pun among them. A waiver names the firm of its
+   style, the first, Prudent & Sons, and a person's edit of `Proctor!B5` from 1
+   to 4 picks another, which the manifest's notes now say. The Certificate's
+   style line becomes the firm's, `A9` "Firm name" and `B9`
+   `=IF(Proctor!$B$40=0,"pending registration",Firms!$E$4)`, the placeholder's
+   wink kept for the state before the eleventh answer. The Overview's `A3`
+   becomes a formula: "Your firm: name pending registration." until then, and
+   then "Your firm: Above the Fold Capital. Investment style: I read the
+   headlines.", the style printed as a fund's fact sheet prints its investment
+   style. And the Exam's eleventh line says what the answer does: "The Series
+   777, question 11 of 11, ungraded: it names your firm.", where it said "it
+   sets your firm's style"; the options stay the styles, so the name is the
+   certificate's reveal. *The alternatives:* the names as the eleventh's
+   options, the reveal lost and the question no longer the candidate's
+   self-description; the certificate keeping the style beside the name, a row
+   more and its button moved; a waiver's firm of its own, a fifth row the exam
+   never offers; "Headline Capital" kept and marked `(check)`, or "Front Page
+   Capital".
+
+2. **The flavor, never the power: words alone at course 0 (rec).** The style
+   changes two lines a player reads, the Certificate's name and the Overview's
+   firm line, and no number, rule, key or price. At course 0 every mechanic is
+   a number, the capital, the fills, the prospectus's fee, the prices, so any
+   flavor that was not words would be power (`BD-4`), and a style that moved a
+   number would split the field into four games where a score compares on the
+   same seed (`BD-3`, `CRITIC.1`). Held two ways: no formula of another sheet
+   reads the style or the Firms sheet but the Firms sheet's row shown, the
+   Exam's options, the Certificate's name and the Overview's line; and the four
+   styles' waived games, cell for cell over every model sheet, the style's two
+   cells excepted, are one game. Later dishes may color by the same row in
+   words: the report card's header (`CRITIC.1`), Mildred's memos (`MENU.4`), the
+   rivals as the other archetypes (`CRITIC.2`). *The alternatives:* a motto, a
+   third field, four more strings to review and the Overview's line longer; an
+   archetype's own lines on every view, a `CHOOSE` in each; a flavor of
+   mechanics, a default pocket or a headline kind by style, power by another
+   name.
+
+3. **`MENU.3`'s first slice: the four stocks named on their own rows (rec).**
+   `Stocks!A5:A8`, where the labels stood (`MENU.1`'s decision 2: a rung's name
+   belongs on the rung's own row), each a fictional company of its rung's kind:
+
+   | Rung | Start | Beta | The name | Why |
+   |---|---|---|---|---|
+   | 1 | $1 | 2 | Longshot Mining | the penny miner whose odds the name states, the wildest rung |
+   | 2 | $5 | 1.5 | Disruptr | the small startup, spelled as startups spell themselves |
+   | 3 | $25 | 1 | Average Co. | the market itself, the average company, which the report card scores against: losing to Average Co. is the lesson |
+   | 4 | $100 | 0.75, 2% | General Widget | the economics textbook's firm under an old conglomerate's name, steady and paying its dividend |
+
+   None points at a living company or a real mark, so none is marked
+   `(check)`; nothing of the four names was found but a historic Arizona mine
+   site called Long Shot and a few small businesses called Disruptr, none a
+   stock. Set aside: Moonshot (Moonshot AI, a living company preparing a
+   listing); Mr. Market (Graham's allegory, which Buffett's letters to his
+   shareholders made famous, near enough to his words that `TRADEMARK.md`
+   keeps out); Penny Dreadful (a television series' mark beside the Victorian
+   term); Shell Co. (Shell's mark); Upstart (a listed lender); Benchmark (a
+   venture firm). Every reader stands as it was, each a formula of the rung's
+   row, so the names reach the Portfolio, Trading, the order desk, the books,
+   the ledger and the commands with no formula edited. The columns that show
+   them: the Stocks sheet's `A` given its first width, 20, its longest label's,
+   "the days between two", where the default cut every name; the Positions' `C`
+   and the Ledger's `D` from 10 to 15, the longest name's, Longshot Mining. The
+   commands keep their names, `rung-1` to `rung-4`, since a person's keymap
+   binds a command by its name (`ENGINE.23`), and their words name the stocks.
+   *The alternatives:* names of ten characters or fewer and no width moved,
+   Longshot and Widget Co.; the names on a content sheet the Stocks sheet reads,
+   which `MENU.1`'s decision 2 set aside; tickers beside the names (Found); the
+   commands renamed by their stocks, `buffet.longshot-mining`, every saved
+   binding orphaned.
+
+4. **The caveat (`BD-5`), a draft.** Row 23, its place `Firms!E4`: "Your
+   firm's name is one of four, and the exam's last answer picks it." beside "A
+   firm chooses its own name and registers it where it is formed; an adviser
+   also reports it on Form ADV." and Management's response, "Management's first
+   choice, Guaranteed Returns LLC, was declined by Compliance." (the phrase
+   Mildred's memo forbids). The real-world line marked for `MENU.8`'s read. The
+   stocks' names bring no caveat of their own: caveat 7 already says the four
+   follow one index and none can go bust.
+
+5. **The oracle (rec).** The hand states the stocks' names on its rungs,
+   `RUNGS[k].name`, as the Stocks sheet keeps each on its rung's row, and the
+   order's sentence and the commands' words read the hand's names; every test
+   that read the Stocks sheet's names to hold a reader now holds it to the
+   hand's: the Stocks sheet's rows, the Portfolio at every hold, Trading, the
+   order desk, the books, the ledger and the commands at every frame of the
+   order desk's sessions. The firm: the hand takes the content file's row at
+   its own exam's style, read by the language's reader, and spells the
+   Certificate's line and the Overview's (`firm_line`), where the cells pick the
+   row by the Proctor's `B40` through the Firms sheet's pickers; held at every
+   frame of the scripted exam, pending until the eleventh answer and then the
+   third firm, the Overview's line beside the Certificate's; at every bell and
+   day's turn of the long runs, a waiver's first firm; and at each of the four
+   styles by a waiver. The new tests: the hand's names and the firm line;
+   every stock's name inside every column that shows it, by the cartridge's own
+   column rows, and every command's words inside theirs; the style naming the
+   firm and moving no number, by the scan and the four games compared. The
+   describe golden blessed again. Mutants, each into the source or a content
+   file by one anchor, each failing the test named for it: the row shown read
+   off the waiver's style alone; the Certificate naming the style; the
+   Certificate naming the firm before the eleventh answer; the Overview's line
+   pending for good; the Overview naming the firm before the eleventh; the name
+   and the style swapped; the capital moved by the style; a cash reading the
+   Firms sheet; a waiver naming the first firm whatever its style; a stock left
+   its working label; a stock named as another; the books' names by the wrong
+   rungs; the picks' words a row off; the Portfolio's names a row off; each of
+   the four narrow columns at its old width; the eleventh's line as it read; a
+   firm without its name; two firms of one name; and the caveat's place empty.
+
+6. **What it costs, measured (rec).** Natively, as `FRONT.3` measured it: a
+   release runner over `HEAD`'s texts and this tree's, alternated, pinned to
+   the performance cores and opted out of Windows' throttling; the pass, the
+   load, the first frame and ten days of frames filed by what each turned. The
+   suite, the two test binaries alternated. The browser at the hand test.
+
+7. **The stale places, rewritten at the build.** In `OMAKASE.md`: the line
+   (🟡); `BD-5`'s taken row; `STATION.1`'s second slice, the first slice of
+   `MENU.3` taken; `CRITIC.1`'s line, the header's name and the benchmark's.
+   The source's served list, its notes, the Stocks', the Firms', the
+   Certificate's, the Overview's, the Portfolio's and the Proctor's comments;
+   `firms.vla` and its header; the caveats' file; the content's `README.md`;
+   the hand's module comment, its rungs, its sentence, its commands' words and
+   its tests; the oracle's crate comment; `oracle/tests/cartridge.rs`' module
+   comment and every holder of a name; the describe golden;
+   `Delta/CLAUDE.md`'s Buffet paragraph; and the memory.
+
+8. **The hand test, the owner's, on the page built here:** the eleventh's line;
+   the Certificate and the Overview pending before the eleventh answer and
+   naming the firm after it; the four names on the Portfolio, Trading, an
+   order's sentence, the palette, the Positions, the Ledger, the Stocks and the
+   Commands, each whole; caveat 23; a waiver's firm by `B5`; Build's bytes the
+   file's.
+
+**Found at the scoping**, none minted:
+- *Tickers.* A stock list usually carries a ticker beside the name, four or
+  five letters, which would suit the books' and the ledger's narrow columns; a
+  field of the Stocks sheet's rows and a joke each, `MENU.3`'s second slice's
+  or a looks pass's.
+- *The Stocks sheet's other headers.* Its row 4's headers stand in default
+  columns and are cut where a value stands beside them, as the Market sheet's
+  labels and numbers are (`FRONT.3`'s Found): a looks pass or the next Stocks
+  dish.
+- *A style out of range.* A person's edit of `Proctor!B5` past the Firms
+  sheet's rows, 5 or more, draws an error value on the Certificate and the
+  Overview, the picker's `CHOOSE` past its last reference, as any sandbox edit
+  may (`AD-6`); `PLATE.6`'s error jokes would land there.
+- *The archetype's later flavor.* The report card's header (`CRITIC.1`, noted on
+  its line), Mildred's memos addressed to the firm (`MENU.4`) and the rivals as
+  the other three archetypes (`CRITIC.2`), each words read off the same row.
+
+**The predictions, before any number.** Written before any number was taken;
+the numbers column was filled at the build, P10 at the owner's hand test.
+
+| | What | Predicted | The number |
+|---|---|---|---|
+| P1 | the cartridge | 1,268 to 1,274 rows where 1,258, about 1,271; 806 to 808 formula cells where 805, about 807 | *Measurement*: `(rows 1271) (loads yes)`, as about 1,271 predicted; 807 formula cells, as about 807 predicted, the describe golden's budget |
+| P2 | the describe golden | `(budget 30 807 24210 2000000)` give or take a cell; shapes 217 to 219 where 216; texts up by 1 to 3 where 213; levels 98; `(every-frame 0)`, `(cycles 0)`; alone up by 1 to 3; the Firms' readers up by 2 to 4 where 7, the Proctor's by 1 where 69; every shape from the Overview's `A3` on renumbered | *Measurement*: `(budget 30 807 24210 2000000)`, exactly; `(plan (shapes 218) (texts 215) (formulas 807) (levels 98) (runs 45) (lanes 260) (alone 547) (every-frame 0) (cycles 0))`; `(readers "Proctor" 70 (most 8))`; every shape from the Overview's `A3` on renumbered. **Missed** in one: the Firms' readers 14 where 9 to 11, the second picker's five reads of its own sheet counted with the Certificate's and the Overview's; and, unpriced, the Caveats' 97 where 93, each of the four pickers reading one more row |
+| P3 | the pass and the load | the pass 0.05 to 0.30 ms longer; the load 0.05 to 0.30 ms longer | *Measurement*, one release runner over `HEAD`'s texts and these, six runs alternated, pinned and opted out, the fixed computation within 1.4% but a first run's warm start: the pass 9.53 to 9.61 ms where 9.56 to 9.60, the medians 0.03 apart; the load 8.44 to 8.53 where 8.39 to 8.47, 0.02 apart. **Missed**, each cheaper than priced and inside the noise |
+| P4 | the step | an ordinary frame, a tick, a half hour, the bell, the close and midnight each within 3% of `HEAD`'s; the first frame 0 to 8 µs dearer | *Measurement*, the same runs, ten days of each text's own frames, the exam waived, three passes each, the medians: an ordinary frame 2.3 µs either way; a tick 35.3 where 35.5; a half hour between sessions 15.4 where 15.5; a five minutes' turn 2.6 either way; the bell 26.8 where 27.2; the close 44.2 where 44.5; midnight 53.2 where 54.2; the first frame 312.1 where 308.9, 3.2 dearer. Inside, each |
+| P5 | the suite | 83 to 86 tests where 81, about 84; every long run within 3% of `HEAD`'s, the order desk's two sessions 0 to 5% shorter; the whole on eight threads within 0.3 s | *Measurement*, the two test binaries alternated, each pinned and opted out, two rounds: 84 green, the crate's 33 and the cartridge's 51; the weekday 0.88 to 0.89 s either way; the hour's year 6.34 to 6.36 where 6.35 to 6.36; the hundred years 6.39 to 6.45 where 6.39 to 6.42; the eight hundred days 1.30 to 1.31 where 1.33; the order desk's session 1.51 to 1.52 where 1.56 to 1.57, and the switch's 1.64 to 1.65 where 1.69 to 1.71, each 2 to 4% shorter; the whole on eight threads 7.03 to 7.40 s where 7.10 to 7.18. Inside, each |
+| P6 | the page | the cartridge's block 800 to 1,600 characters longer; the source's 800 to 2,000; firms.vla's 150 to 400; the caveats' 300 to 500; the library's none; the page 2,000 to 4,500 longer | *Measurement*: 2,493,215 characters where 2,489,690, 3,525 longer; the cartridge's block 988 longer, the source's 1,859, firms.vla's 386 and the library's none, inside. **Missed** in one: the caveats' 292, eight under |
+| P7 | the checks | four checks and four controls green, no check edited and no file added under `src/`; fmt and clippy clean | *Measurement*, as predicted: ALL GREEN, four checks and four controls, the content pin at 5; `cargo fmt --check` and `cargo clippy -D warnings` clean once `cargo fmt` had wrapped three calls |
+| P8 | the numbers given | the longest stock name 15 characters, inside every column that shows it once two are widened; the commands' words at most 56 characters of their 64; the Overview's firm line at most 76 characters; the scripted exam's eleventh, the third style, naming the third firm on the Certificate and the Overview at frame 41 | *Measurement*: Longshot Mining, 15; the commands' words that name a stock 56 at most, buy-max's for Longshot Mining; the firm line 74 at most, Above the Fold Capital's; the scripted exam's frame 41, the Certificate's "Read-the-Room Partners" and the Overview's line. **Missed** in one, and one found: three columns given widths where two were priced, the Stocks sheet's `A` having none of its own; and beside the words that name a stock, a line that names none passes the Commands' column, `PLATE.1`'s buy-max words before a stock is picked, 67 characters (below) |
+| P9 | mutants | 15 to 20, each into the source or a content file by one anchor; at most one lives at the first run | *Measurement*: 22 written, each anchor applying once, each expanded and caught by the test named for it at the first run. **Missed** in one: 22 where 15 to 20 |
+| P10 | the hand test | the Exam's eleventh line names the firm; the Certificate names the firm of the style chosen; the Overview's `A3` the name and the style; the stocks' names on the Portfolio, Trading, an order's sentence, the palette's words, the Positions and the Ledger, each whole; caveat 23 read; Build's bytes the file's | The owner's, on the page built here, 2026-10-19 (the paragraph below): the Certificate and the Overview pending at the eleventh question, the Certificate naming Read-the-Room Partners at the eleventh answer and the Overview the name and its style after O; the four names whole on the Portfolio, Trading, its order's sentence, the palette, the Stocks sheet, the Positions, the Ledger and the Commands; caveat 23; the waiver's fourth style naming Vibes LLC; passed with no change asked |
+
+**What the build found.** The source expanded to 1,271 rows and loaded at its
+first expansion, and the suite was green at its second run, 84 tests. The
+first run's two failures were the describe golden, blessed again, and the new
+column test, which found a line of `PLATE.1`'s too wide for its column: the
+Commands sheet's words for buy-max before a stock is picked, "Buy as many
+shares of the stock picked, none yet as the cash covers", 67 characters where
+the column held 64, cut on the Commands sheet where its `holds` stands beside
+it (the palette shows it whole); the column was widened to 67 at the build, a
+value of the device sheet's, a mutant its control. Writing the mutants found a
+hole in the first form of the style's test: it scanned the formulas of other
+sheets for a read of `Proctor!B40`, so a formula of the Proctor sheet reading
+`B40` bare, or a range over it, would have moved a number past it; the test now
+also plays the four styles' waived games side by side, every cell of the
+model's sheets compared at each of the first frames, and the mutant that adds
+the style to the capital failed there, at `Cash!B3`, `B9`, `Orders!B31` and
+`Proctor!B39`. Twenty-two mutants, each written into the source or a content
+file by one anchor, applied once and expanded before its test ran, each failed
+the test named for it at the first run. Natively nothing moved but the first
+frame, 3.2 µs dearer, two cells more computed once; in the suite the order
+desk's sessions run 2 to 4% shorter, the hand's names read from its constants
+where the tests read the Stocks sheet at every frame.
+
+**The owner's hand test.** On the page built here (`web/index.html`, 2,493,215
+characters), 2026-10-19, over fourteen screenshots. The exam sat by hand at two
+right answers of ten: at frame 677, the eleventh question still open, the
+Certificate's "Pending: the proctor certifies after the eleventh question.",
+2 of 10, $6,000.00 and "Firm name" beside "pending registration", and at frame
+1,118 the Overview's "Your firm: name pending registration."; at frame 1,581,
+the eleventh answered, the Certificate's "The bearer has sat the Series 777 and
+passed, as every candidate does." and "Firm name" beside "Read-the-Room
+Partners", whole; at frame 1,993, after O, Monday at 10:40, the Overview's "Your
+firm: Read-the-Room Partners. Investment style: I read the room." over the net
+worths, the weather and the headline. The Portfolio at 13:35, its Security column
+Longshot Mining, Disruptr, Average Co. and General Widget, each whole beside its
+price, change and glyph. Trading at frame 4,886, Wednesday at midnight: the four
+names whole, the first marked picked, "Bought 1 share of Longshot Mining at the
+price shown.", and the palette opened on "pick", `buffet.rung-1` to `rung-4`
+worded "Pick Longshot Mining: the buy and sell commands trade it" to "Pick
+General Widget: ...". The Stocks sheet's `A` with its labels and the four names
+whole; the Positions' `C`, every name whole in both pockets' rows and the rows
+shown; the Ledger's first row, "Tuesday, year 1, day 2, 14:20", Firm, Longshot
+Mining, 1 at 108 cents; the Commands sheet's every line whole, the trades worded
+for Longshot Mining. The Caveats sheet's row 24, its four fields, and its count
+23; the hidden Firms sheet's two fields and four firms, its pickers "I read the
+room" and "Read-the-Room Partners". A second load: the waiver written at frame
+416 and the fourth style at 604, the Overview's "Your firm: Vibes LLC.
+Investment style: I feel the market." over $7,500.00, and the Certificate's
+"Waived: the regulator assumes you would have passed.", 5 of 10, $7,500.00 and
+"Firm name" beside "Vibes LLC". Not among the screenshots: the Exam's eleventh
+line, held at every frame by the scripted exam; the Commands sheet's buy-max
+words before a pick, held by the column test; and Build's line. Seen on the
+hidden Firms sheet, and the page's (Found, below): its columns `A` to `C` drawn
+at the widths of the Caveats sheet shown before it, and `E` about a character
+wide, so that its count and its row shown drew `#` and its pickers' texts
+spilled into `F`; and its label "the row shown" cut at `D`'s default width, as on
+every content sheet but the Caveats'. The owner's words: "Tests pass; commit."
+So every decision and every draft stands as built. Committed at the owner's
+word.
+
+**Found at the hand test**, none minted:
+- *A sheet drawn at another's widths.* The page at `alonzo` 0.2.0 draws a
+  column at a width a person dragged, kept by its letters for every sheet
+  (`web/viewport.js`, `state.widths`, `PLATE.1`'s finding, `ENGINE.26` closed in
+  Alonzo and not yet released), else at its sheet's record's: the hidden Firms
+  sheet drew `A` to `C` at the Caveats sheet's widths and `E` about a character
+  wide, the Caveats sheet's `E` as narrow. Whether a drag or the hidden sheet's
+  widths not read, it is the page's, the owner's to pass on to Alonzo; the
+  cartridge's widths are held by its tests.
+- *A content sheet's labels.* `strings` writes the labels "rows", "the row
+  shown" and "shown" in a column it leaves at the default width, so "the row
+  shown" is cut by the value beside it on every content sheet but the Caveats',
+  whose source gives its labels' column a width; the library could give the
+  column its longest label's width, a row more for each content sheet.
 

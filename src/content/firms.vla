@@ -1,20 +1,24 @@
 ; SPDX-License-Identifier: CC-BY-SA-4.0
-; firms.vla - the firms' styles: the Firms sheet, the four answers to the Series 777's
-; last question, ungraded, "Which best describes you?", each the style of the firm it
-; founds (docs/OMAKASE.md, GUARD.1 and BACK.2). Words alone: one macro named after this
-; file, whose body is one call of the library's strings. The source includes this file
-; after its manifest, with every other include, and calls (firms) where the sheet's
-; rows belong. The exam shows the first four rows as the question's options, a row's
-; place its letter, and the certificate the one chosen; the firms' own names come with
-; BACK.2, a field beside the style. To add a row, read README.md beside this file.
+; firms.vla - the firms: the Firms sheet, the four answers to the Series 777's last
+; question, ungraded, "Which best describes you?", each the style of the firm it founds
+; and the name it gives the firm (docs/OMAKASE.md, GUARD.1 and BACK.2). Words alone: one
+; macro named after this file, whose body is one call of the library's strings. The
+; source includes this file after its manifest, with every other include, and calls
+; (firms) where the sheet's rows belong. The exam shows the first four rows' styles as
+; the question's options, a row's place its letter; the certificate prints the name of
+; the one chosen, and the Overview the name and the style. A name is fictional: one
+; that points at a living company or a real mark is marked (check) beside its row and
+; gets a reader's glance before it ships (CONTRIBUTING.md). To add a row, read README.md
+; beside this file.
 
 (defmacro (firms)
-  "the firms' styles: the Firms sheet, a style a row, the exam's last question's options"
+  "the firms: the Firms sheet, a firm a row, its style the exam's last question's option and its name"
   (strings "Firms"                  ; the sheet, hidden among the tabs
-    ("Style" 40)                    ; its field, its header and its width in characters: the style, as a candidate describes it
-    ; each row: its one field, the style in the candidate's own words
-    ("I read the prospectus")
-    ("I read the headlines")
-    ("I read the room")
-    ("I feel the market")
-    ))                              ; the sheet's end: a style added goes above this line
+    ("Style" 40                     ; its fields, each its header and its width in characters: the style, as a candidate describes it,
+     "Name" 30)                     ;   and the firm's name, which the style gives it
+    ; each row: the style in the candidate's own words, then the firm's name
+    ("I read the prospectus" "Prudent & Sons")
+    ("I read the headlines" "Above the Fold Capital")
+    ("I read the room" "Read-the-Room Partners")
+    ("I feel the market" "Vibes LLC")
+    ))                              ; the sheet's end: a firm added goes above this line
