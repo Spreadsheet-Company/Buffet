@@ -38,9 +38,11 @@
 //! text, the dollars, a point and the cents less their trailing zeros, so
 //! that the tests hold what `MISE.3` derived, that whole cents over 100 draw
 //! their own two decimals at their shortest. Since `POT.10`'s hand test a
-//! view's dollars are a text of two decimals instead, which the cell pads by
-//! comparing its cents with powers of ten and the hand by counting its
-//! dollars' digits. The glyph beside each change (`FRONT.2`) shares no
+//! view draws two decimals and since `GUARD.1`'s its thousands grouped, texts
+//! the cells spelled until `FRONT.2`'s second slice and a format's code draws
+//! since: the code is the language's, and the hand spells the same cents by
+//! counting digits back from the last, sharing no rule with it. The glyph
+//! beside each change (`FRONT.2`) shares no
 //! comparison with its cell: the cell reads the sign of the change in cents,
 //! the hand compares the two prices.
 //!
@@ -131,8 +133,8 @@
 //! by dividing two doubles and rounding down; the hand rounds the same
 //! quotient in whole numbers, the two the same below 2^53. The cells grade by
 //! comparing the alpha with each grade's from the top; the hand counts the
-//! grades it reaches. And the percent the view spells: the cells pad it by
-//! comparing with powers of ten, and the hand counts its digits.
+//! grades it reaches. And the percent a view draws: a format's code over the
+//! hundredths divided by 10,000, where the hand spells the whole number's digits.
 
 use std::collections::BTreeSet;
 
@@ -965,27 +967,15 @@ pub fn dollars(cents: i64) -> String {
     }
 }
 
-/// The width in characters of every column a view's dollars stand in
-/// (`POT.10`), which their padding is measured for.
+/// The width in characters of the columns a view's dollars stand in
+/// (`POT.10`): wide enough for $9,999,999.99 under a format's code, past which
+/// the viewport draws `#`s and a person drags the column wider, as in Excel.
 pub const DOLLARS_COLUMN: u64 = 12;
-
-/// A price's spaces, twice its dollars' digits and its commas (`POT.10`'s
-/// second hand test, the commas since `GUARD.1`'s): in a column of
-/// [`DOLLARS_COLUMN`] characters, the text then ends where a number ends, the
-/// viewport drawing a text from its cell's left and a number to its right, a
-/// space being half a digit to within a sixtieth and a comma four fifths of a
-/// space, so that each comma takes a space off and leaves its text a fifth of
-/// a space short of the others, never past a number's edge.
-pub const PRICE_UNITS: usize = 16;
-
-/// A change's spaces before its sign, twice its dollars' digits and its
-/// commas, the sign being about a space and a digit wide.
-pub const CHANGE_UNITS: usize = 14;
 
 /// Whole dollars with their thousands grouped by commas (`GUARD.1`'s hand
 /// test, the owner's word: "Thousands separators need to be implemented"):
-/// 1,234,567. The cell joins the leading group and each later group's three
-/// digits by their places; the hand counts the digits back from the last.
+/// 1,234,567. The cell's format writes it by its code's `#,##0`; the hand counts
+/// the digits back from the last.
 pub fn grouped(dollars: u64) -> String {
     let digits = dollars.to_string();
     let mut out = String::with_capacity(digits.len() + digits.len() / 3);
@@ -998,38 +988,19 @@ pub fn grouped(dollars: u64) -> String {
     out
 }
 
-/// The width a spelling of whole dollars takes in units of a space: twice its
-/// digits and one a comma.
-fn units(dollars: u64) -> usize {
-    let digits = dollars.checked_ilog10().map_or(1, |d| d as usize + 1);
-    2 * digits + (digits - 1) / 3
-}
-
-/// Whole cents, never negative, as a view spells them since `POT.10`'s hand
-/// test, the library's `dollars`: the dollars, their thousands grouped by
-/// commas since `GUARD.1`'s, a point and the cents in two digits, after the
-/// spaces that make [`PRICE_UNITS`] with twice the dollars' digits and their
-/// commas, and none from seven digits. The cell chooses its padding by
-/// comparing the cents with powers of ten; the hand counts the dollars'
-/// digits.
+/// Whole cents, never negative, as a view draws them (`POT.10`'s hand test, the
+/// library's `dollars`): the dollars, their thousands grouped by commas since
+/// `GUARD.1`'s, a point and the cents in two digits.
 pub fn two_decimals(cents: u64) -> String {
-    let dollars = cents / 100;
-    let pad = " ".repeat(PRICE_UNITS.saturating_sub(units(dollars)));
-    format!("{pad}{}.{:02}", grouped(dollars), cents % 100)
+    format!("{}.{:02}", grouped(cents / 100), cents % 100)
 }
 
-/// A change in whole cents as the Portfolio spells it (`POT.10`, the
-/// library's `signed-dollars` since `GUARD.1`'s hand test): two decimals, the
-/// thousands grouped, and its sign, a gain's or nothing's `+` and a loss's
-/// space and `-`, each as wide as the other in the grid's font, after the
-/// spaces that make [`CHANGE_UNITS`] with twice its dollars' digits and their
-/// commas, and none from seven digits.
+/// A change in whole cents as a view draws it (`POT.10`, the library's
+/// `signed-dollars`): two decimals, the thousands grouped, after a gain's or
+/// nothing's `+` or a loss's `-`.
 pub fn signed_two_decimals(cents: i64) -> String {
-    let sign = if cents < 0 { " -" } else { "+" };
-    let c = cents.unsigned_abs();
-    let dollars = c / 100;
-    let pad = " ".repeat(CHANGE_UNITS.saturating_sub(units(dollars)));
-    format!("{pad}{sign}{}.{:02}", grouped(dollars), c % 100)
+    let sign = if cents < 0 { "-" } else { "+" };
+    format!("{sign}{}", two_decimals(cents.unsigned_abs()))
 }
 
 /// A time of day in minutes after midnight as the views show it (`POT.10`):
@@ -1432,10 +1403,22 @@ pub const NAME_PENDING: &str = "pending registration";
 /// The heading over the certificate's plain statement, the owner's word at
 /// the hand test, so that its "You." does not stand alone.
 pub const CAVEAT_HEADING: &str = "Caveat:";
-/// The buttons' look (`GUARD.1`'s hand test): format 1, a fill of Lovelace
-/// Lavender, the house's primary, the text the grid's own until the record
-/// holds a text's color.
-pub const BUTTON_FORMAT: &str = "(format 1 \"A080E0\" general nowrap)";
+/// The buttons' look (`GUARD.1`'s hand test, the owner's words: "lavender
+/// background and white text"; `FRONT.2`'s second slice): format 1, a button of
+/// Trading's grid, white on Lovelace Lavender's deep shade, not bold at the owner's
+/// word at `FRONT.2`'s second hand test, centered, its right and bottom edges the
+/// gridlines' gray, since a fill covers its own, so that two side by side stay two.
+pub const BUTTON_FORMAT: &str = "(format 1 \"6B4FC8\" general nowrap (font \"FFFFFF\") (align center) (border (right thin \"D9D9D2\") (bottom thin \"D9D9D2\")))";
+/// An exam's option, a button whose long text reads from its left, bold as every
+/// white over lavender is (`FRONT.2`'s hand test, the owner's word).
+pub const OPTION_FORMAT: &str = "(format 11 \"6B4FC8\" general nowrap (font bold \"FFFFFF\") (align left) (border (right thin \"D9D9D2\") (bottom thin \"D9D9D2\")))";
+/// A button standing alone, its four edges the view's ink (`FRONT.2`'s hand test,
+/// the owner's word): the certificate's, the switch and the hustle's.
+pub const LONE_BUTTON_FORMAT: &str = "(format 13 \"6B4FC8\" general nowrap (font bold \"FFFFFF\") (align center) (border (left medium \"1D1D1B\") (right medium \"1D1D1B\") (top medium \"1D1D1B\") (bottom medium \"1D1D1B\")))";
+/// The buttons' format's index, an option's, and a button's standing alone.
+pub const BUTTON_LOOK: u64 = 1;
+pub const OPTION_LOOK: u64 = 11;
+pub const LONE_BUTTON_LOOK: u64 = 13;
 
 /// The first ten primes above `floor`, by trial division.
 pub const fn primes_above(floor: u64) -> [u64; 10] {
@@ -1747,6 +1730,14 @@ pub const TRADE_COMMANDS: [(&str, &str); 6] = [
     ("sell-10", "KeyD"),
     ("sell-all", "KeyF"),
 ];
+/// A command's key as Trading says it, `KeyB` as B and `Digit1` as 1: over each
+/// trade's buttons, and beside each stock not picked (`FRONT.2`'s hand test, the
+/// owner's word).
+pub fn key_hint(key: &str) -> &str {
+    key.strip_prefix("Key")
+        .or_else(|| key.strip_prefix("Digit"))
+        .unwrap_or(key)
+}
 /// The switch (`PLATE.2`): its place on Trading, column D and row 11 beside
 /// the cash available, the Orders sheet's `B43:B44`; its text and its key's
 /// beside it; and its command, its name and its key, the Commands sheet's
@@ -2244,25 +2235,14 @@ pub fn grade(alpha: i64) -> (u64, &'static str) {
     }
 }
 
-/// A percent's spaces before its sign and twice its whole percent's digits
-/// (`CRITIC.1`): in a column of [`DOLLARS_COLUMN`] characters the text then
-/// ends short of a number's edge at every scale, the percent sign about three
-/// spaces wide.
-pub const PERCENT_UNITS: usize = 10;
-
-/// Whole hundredths of a percent as a view spells them, the library's
-/// `percent`: a gain's or nothing's `+`, a loss's space and `-`, the whole
-/// percent, a point, two digits and the percent sign, after the spaces that
-/// make [`PERCENT_UNITS`] with twice the whole percent's digits. The cell
-/// chooses its padding by comparing the hundredths with powers of ten; the hand
-/// counts the whole percent's digits.
+/// Whole hundredths of a percent as a view draws them, the library's `percent`:
+/// a gain's or nothing's `+`, a loss's `-`, the whole percent, a point, two
+/// digits and the percent sign. The cell divides by 10,000 under a format's
+/// code; the hand spells the whole number's digits.
 pub fn percent(points: i64) -> String {
-    let sign = if points < 0 { " -" } else { "+" };
+    let sign = if points < 0 { "-" } else { "+" };
     let p = points.unsigned_abs();
-    let whole = p / 100;
-    let digits = whole.checked_ilog10().map_or(1, |d| d as usize + 1);
-    let pad = " ".repeat(PERCENT_UNITS.saturating_sub(2 * digits));
-    format!("{pad}{sign}{whole}.{:02}%", p % 100)
+    format!("{sign}{}.{:02}%", p / 100, p % 100)
 }
 
 /// A turn of the quarter, as the hand keeps it: the quarter that ended and its
@@ -2518,46 +2498,28 @@ mod tests {
         );
     }
 
-    /// The views' dollars since `POT.10`'s hand test, two decimals as a text,
-    /// each ending where a number ends in its column of 12 characters (the
-    /// owner's second hand test), the thousands grouped by commas since
-    /// `GUARD.1`'s: a price or a fee after the spaces that make 16 with twice
-    /// its dollars' digits and its commas, a space being half a digit in the
-    /// grid's font and a comma four fifths of a space (7.008, 3.561 and 2.818
-    /// px at 13 px, measured); and a change after the spaces that make 14 with
-    /// the same, then its sign, a gain's `+` or a loss's space and `-` (8.893
-    /// and 8.760 px), about a space and a digit. Each spells its cents back,
-    /// its groups three digits after the first's one to three, for every
-    /// count of cents to $10,000, every change to $1,000 either way, and
-    /// beside every power of ten to 10^15 cents; no price is padded from
-    /// seven digits of dollars, and no change from seven.
+    /// The views' dollars since `POT.10`'s hand test, two decimals, their
+    /// thousands grouped by commas since `GUARD.1`'s, and a change's sign. Each
+    /// spells its cents back, its groups three digits after the first's one to
+    /// three, for every count of cents to $10,000, every change to $1,000 either
+    /// way, and beside every power of ten to 10^15 cents.
     #[test]
-    fn whole_cents_spell_two_decimals_padded() {
+    fn whole_cents_spell_two_decimals() {
         assert_eq!(
             [0, 7, 999, 1_000, 65_536, 1_234_567].map(grouped),
             ["0", "7", "999", "1,000", "65,536", "1,234,567"]
         );
-        let padded = |spaces: usize, text: &str| format!("{}{text}", " ".repeat(spaces));
         assert_eq!(
-            [100, 499, 2_498, 9_993, 10_000, 0, 2_500].map(two_decimals),
+            [100, 499, 2_498, 10_000, 0, 100_000, 99_999_999, 100_000_000].map(two_decimals),
             [
-                padded(14, "1.00"),
-                padded(14, "4.99"),
-                padded(12, "24.98"),
-                padded(12, "99.93"),
-                padded(10, "100.00"),
-                padded(14, "0.00"),
-                padded(12, "25.00")
-            ]
-        );
-        assert_eq!(
-            [100_000, 550_000, 99_999_999, 100_000_000, 9_999_999_999].map(two_decimals),
-            [
-                padded(7, "1,000.00"),
-                padded(7, "5,500.00"),
-                padded(3, "999,999.99"),
-                padded(0, "1,000,000.00"),
-                padded(0, "99,999,999.99")
+                "1.00",
+                "4.99",
+                "24.98",
+                "100.00",
+                "0.00",
+                "1,000.00",
+                "999,999.99",
+                "1,000,000.00"
             ]
         );
         assert_eq!(
@@ -2566,25 +2528,16 @@ mod tests {
             "2^53 cents less one, the most a double holds exactly"
         );
         assert_eq!(
-            [17, -2, 0, -1_234, 1_234].map(signed_two_decimals),
+            [17, -2, 0, -1_234, -123_456, 100_000_000].map(signed_two_decimals),
             [
-                padded(12, "+0.17"),
-                padded(12, " -0.02"),
-                padded(12, "+0.00"),
-                padded(10, " -12.34"),
-                padded(10, "+12.34")
+                "+0.17",
+                "-0.02",
+                "+0.00",
+                "-12.34",
+                "-1,234.56",
+                "+1,000,000.00"
             ]
         );
-        assert_eq!(
-            [-123_456, -99_999_999, 100_000_000].map(signed_two_decimals),
-            [
-                padded(5, " -1,234.56"),
-                padded(1, " -999,999.99"),
-                padded(0, "+1,000,000.00")
-            ]
-        );
-        let digits = |dollars: u64| dollars.checked_ilog10().map_or(1, |d| d as usize + 1);
-        let commas = |dollars: u64| (digits(dollars) - 1) / 3;
         // The cents a spelling reads back, from its dollars, each comma three
         // digits before the point or the next comma and the first group one
         // to three, and its two digits of cents, read as whole numbers.
@@ -2600,45 +2553,22 @@ mod tests {
                 + part.parse::<u64>().expect("cents")
         };
         for c in 0..1_000_000u64 {
-            let s = two_decimals(c);
-            let text = s.trim_start_matches(' ');
-            let spaces = s.len() - text.len();
-            assert_eq!(
-                spaces + 2 * digits(c / 100) + commas(c / 100),
-                PRICE_UNITS,
-                "{c} cents: {s:?}"
-            );
-            assert_eq!(cents(text), c, "{s:?}");
+            assert_eq!(cents(&two_decimals(c)), c, "{c} cents");
         }
         for p in 0..=15 {
             let ten = 10u64.pow(p);
             for c in [ten - 1, ten, ten + 1] {
-                let s = two_decimals(c);
-                let text = s.trim_start_matches(' ');
-                assert_eq!(cents(text), c, "{s:?}");
-                assert_eq!(
-                    s.len() - text.len(),
-                    PRICE_UNITS.saturating_sub(2 * digits(c / 100) + commas(c / 100)),
-                    "{c} cents: {s:?}"
-                );
+                assert_eq!(cents(&two_decimals(c)), c, "{c} cents");
             }
         }
         for c in -100_000..=100_000i64 {
             let s = signed_two_decimals(c);
-            let text = s.trim_start_matches(' ');
-            let (minus, rest) = match text.strip_prefix('-') {
+            let (minus, rest) = match s.strip_prefix('-') {
                 Some(rest) => (true, rest),
-                None => (false, text.strip_prefix('+').expect("a sign")),
+                None => (false, s.strip_prefix('+').expect("a sign")),
             };
             assert_eq!(minus, c < 0, "{s:?}");
             assert_eq!(cents(rest), c.unsigned_abs(), "{s:?}");
-            let before = s.len() - text.len() - usize::from(minus);
-            let dollars = c.unsigned_abs() / 100;
-            assert_eq!(
-                before + 2 * digits(dollars) + commas(dollars),
-                CHANGE_UNITS,
-                "{c} cents: {s:?}"
-            );
         }
     }
 
@@ -3795,55 +3725,20 @@ mod tests {
         assert_eq!(grade(0).1, "C", "the market's own return, bought and held");
     }
 
-    /// The percents a view spells (`CRITIC.1`): their sign, two decimals and the
-    /// percent sign; and each, by the widths measured at 13 pixels of Segoe UI,
-    /// ending short of a number's edge in a column of 12 characters at every
-    /// scale from 100% to 200%, the viewport's font, column and pads rounded to
-    /// device pixels, and within ten device pixels of it, from one whole digit
-    /// to five.
+    /// The percents a view draws (`CRITIC.1`): their sign, two decimals and the
+    /// percent sign, from one whole digit to five.
     #[test]
-    fn a_percent_ends_short_of_a_numbers_edge() {
+    fn a_percent_spells_its_sign_and_two_decimals() {
         for (p, text) in [
-            (0, "        +0.00%"),
-            (-104, "         -1.04%"),
-            (1_008, "      +10.08%"),
-            (-1_008, "       -10.08%"),
-            (5, "        +0.05%"),
-            (12_345, "    +123.45%"),
-            (-9_999_999, " -99999.99%"),
+            (0, "+0.00%"),
+            (-104, "-1.04%"),
+            (1_008, "+10.08%"),
+            (-1_008, "-10.08%"),
+            (5, "+0.05%"),
+            (12_345, "+123.45%"),
+            (-9_999_999, "-99999.99%"),
         ] {
             assert_eq!(percent(p), text, "{p} hundredths");
-        }
-        let width = |text: &str| -> f64 {
-            let body = text.trim_start_matches(' ');
-            let spaces = (text.len() - body.len()) as f64;
-            let body = body.trim_start_matches(['+', '-']);
-            let digits = body.chars().filter(char::is_ascii_digit).count() as f64;
-            // a space 3.561, a digit 7.008, the point 2.818, the percent sign
-            // 10.639, the plus 8.893; a space and a minus 8.760, the sign's
-            // space counted among the spaces above
-            let sign = if text.contains('-') {
-                8.760 - 3.561
-            } else {
-                8.893
-            };
-            spaces * 3.561 + sign + digits * 7.008 + 2.818 + 10.639
-        };
-        for p in [
-            0i64, 999, 1_000, 9_999, 10_000, 99_999, 100_000, 999_999, 1_000_000, 9_999_999,
-        ] {
-            for p in [p, -p] {
-                let w = width(&percent(p));
-                for scale in [1.0f64, 1.25, 1.5, 1.75, 2.0] {
-                    let font = (13.0 * scale).round();
-                    let edge = (84.0 * scale).round() - 2.0 * (4.0 * scale).round();
-                    let ends = w * font / 13.0;
-                    assert!(
-                        ends <= edge && edge - ends < 10.0,
-                        "{p} at {scale}: ends at {ends:.2} of {edge}"
-                    );
-                }
-            }
         }
     }
 

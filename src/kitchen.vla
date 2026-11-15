@@ -15,7 +15,8 @@
 ; following at the next pin. The rules are the kit's, which are the language's:
 ; template macros alone, no gensym and no eval; a parameter never the name of a row it
 ; writes; a verb's pieces are strings, or &expand of strings and of the expand-time
-; primitives.
+; primitives, but for a view's figures, whose pieces are expressions, as the kit's verbs'
+; have been since its KIT.5.
 ;
 ; Since POT.1 (2026-10-14): draws, a stream's draws down a column beneath its die.
 ; Since MENU.1 (2026-10-15): strings, a content sheet from a file of src/content/, and
@@ -51,6 +52,9 @@
 ; its first dish, the report card writing it six times over two fills, as bell came with
 ; both views writing it; the weather's change on the Overview, a percent too, is a phrase
 ; of a sentence, up or down by words and in tenths, and keeps its own spelling.
+; Since FRONT.2's second slice (2026-10-30): dollars, signed-dollars and percent write
+; numbers under a format's code, where they wrote texts of nested IFs padded to a number's
+; edge, the page drawing a code since alonzo 0.3.0; each verb's call keeps its shape.
 
 ; ---- the dice (POT.1) ---------------------------------------------------------------
 ; A stream is a die and its draws. The die is one cell, the stream's state, which the
@@ -221,69 +225,36 @@
   "a view's fine print in one cell: the Disclosures sheet's disclosure of the month, read through a reference"
   (formula sheet at "=Disclosures!$D$3"))
 
-; ---- a view's dollars (POT.10, GUARD.1) ---------------------------------------------
-; The record spells a number at its shortest, $1.00 as 1 and $12.30 as 12.3, and holds
-; no number format (vla-lang 0.9.4: General and Text), so a view's dollars are a text:
-; the dollars, their thousands grouped by commas, a point and the cents in two digits,
-; from whole cents that are never negative, a price, a fee or the cash on hand; and a
-; change, a difference that may be either, is its signed twin, a gain's or nothing's +
-; and a loss's space and -, each as wide as the other. A text is drawn from its cell's
-; left and a number to its right, so each is padded on the left to end where a number
-; ends, in a column 12 characters wide, as every column of a view's dollars is: a
-; price's spaces, twice its dollars' digits and its commas make 16, and a change's
-; spaces before its sign 14. A space is half a digit's width in the grid's font to
-; within a sixtieth, and a comma is the point's width, four fifths of a space (system-ui,
-; Segoe UI here, at 13 pixels: a digit 7.008, a space 3.561, the point and the comma
-; 2.818), so a comma takes a space off and its text ends a fifth of a space short of the
-; others, never past a number's edge (the owner's words at POT.10's second hand test,
-; and at GUARD.1's, "Thousands separators need to be implemented"). The dialect has no
-; TEXT and no LEN, so the groups are whole numbers joined: the leading group, then each
-; of the next three digits by its place, the dollars taken whole first, which a double
-; holds exactly to 2^53 cents, past $90 trillion. A sum or a comparison reads the
-; model's cents and never this text. When the record holds a number format, these
-; verbs become formats.
+; ---- a view's figures (POT.10, GUARD.1, CRITIC.1, FRONT.2) ---------------------------
+; Money is whole cents in every cell of the model and reaches a view by one division by
+; 100 (MISE.3), and a return or an alpha is whole hundredths of a percent and reaches it
+; by one division by 10,000: a number, right-aligned as a number is, drawn by its format's
+; code, a text the record holds beside the value and the viewport draws (vla-lang's
+; KERNEL.47, alonzo 0.3.0's ENGINE.28). So a dollar shows two decimals and its thousands
+; grouped by commas (the owner's words at POT.10's hand test, "All dollar cells should
+; show two decimals", and at GUARD.1's, "Thousands separators need to be implemented"),
+; and a change and a percent their sign, a gain's or nothing's + and a loss's -. Until
+; FRONT.2's second slice these verbs wrote texts of nested IFs, padded to end where a
+; number ends. A sum or a comparison reads the model's cents and never a view. A code
+; draws fifteen significant digits, as Excel does: past $10 trillion a view rounds its
+; cents, and the model's stay exact to 2^53 cents. The codes are the source's own formats,
+; named where the rest of the house's looks are named, so that this file names a look by
+; its word and holds no index.
 
 (defmacro (dollars sheet at cents)
-  "a view's dollars in one cell or a fill: whole cents, never negative, spelled as a text with two decimals, their thousands grouped by commas, and padded to end where a number ends in a column 12 characters wide"
-  (dollars-spelled sheet at cents "" "              " "            " "          " "       " "     " "   "))
+  "a view's dollars in one cell or a fill: whole cents over 100, drawn with two decimals and their thousands grouped by commas"
+  (rule sheet at (/ cents 100))
+  (style sheet at dollars-look))
 
 (defmacro (signed-dollars sheet at cents)
-  "a view's change in one cell or a fill: whole cents either way, spelled as dollars with two decimals, their thousands grouped by commas, after a gain's or nothing's + or a loss's space and -, and padded to end where a number ends in a column 12 characters wide"
-  (quasiquote (dollars-spelled (unquote sheet) (unquote at) (unquote (&expand "ABS(" cents ")")) (unquote (&expand "&IF(" cents "<0,\" -\",\"+\")")) "            " "          " "        " "     " "   " " ")))
-
-(defmacro (dollars-spelled sheet at whole sign p1 p2 p3 p4 p5 p6)
-  "the dollars' walk: the padding by the dollars' count of digits and commas, from one digit to six, none from seven; and each group of three digits after the leading one, from the lowest, each digit by its place in the dollars taken whole, handed on as texts"
-  (quasiquote (dollars-grouped (unquote sheet) (unquote at) (unquote whole) (unquote sign)
-    (unquote (&expand "IF(" whole "<1000,\"" p1 "\",IF(" whole "<10000,\"" p2 "\",IF(" whole "<100000,\"" p3 "\",IF(" whole "<1000000,\"" p4 "\",IF(" whole "<10000000,\"" p5 "\",IF(" whole "<100000000,\"" p6 "\",\"\"))))))"))
-    (unquote (&expand "MOD(INT(INT(" whole "/100)/100),10)&MOD(INT(INT(" whole "/100)/10),10)&MOD(INT(" whole "/100),10)"))
-    (unquote (&expand "MOD(INT(INT(" whole "/100)/100000),10)&MOD(INT(INT(" whole "/100)/10000),10)&MOD(INT(INT(" whole "/100)/1000),10)"))
-    (unquote (&expand "MOD(INT(INT(" whole "/100)/100000000),10)&MOD(INT(INT(" whole "/100)/10000000),10)&MOD(INT(INT(" whole "/100)/1000000),10)"))
-    (unquote (&expand "MOD(INT(INT(" whole "/100)/100000000000),10)&MOD(INT(INT(" whole "/100)/10000000000),10)&MOD(INT(INT(" whole "/100)/1000000000),10)")))))
-
-(defmacro (dollars-grouped sheet at whole sign pad g1 g2 g3 g4)
-  "the dollars' formula: the padding, the sign if any, and the dollars, under a thousand at the first comparison; else their leading group by their size, each later group of three after its comma where the dollars reach it, each written once, the last always; then a point and two digits of cents"
-  (formula sheet at (&expand "=" pad sign "&IF(" whole "<100000,INT(" whole "/100),IF(" whole "<100000000,INT(" whole "/100000),IF(" whole "<100000000000,INT(" whole "/100000000),IF(" whole "<100000000000000,INT(" whole "/100000000000),INT(" whole "/100000000000000))))&IF(" whole ">=100000000000000,\",\"&" g4 ",\"\")&IF(" whole ">=100000000000,\",\"&" g3 ",\"\")&IF(" whole ">=100000000,\",\"&" g2 ",\"\")&\",\"&" g1 ")&\".\"&IF(MOD(" whole ",100)<10,\"0\",\"\")&MOD(" whole ",100)")))
-
-; ---- a view's percent (CRITIC.1) ----------------------------------------------------
-; A return or an alpha reaches a view as whole hundredths of a percent, a number of the
-; model rounded once, so that a difference of two of them is exact and reads as the two
-; above it subtract; and spelled as a text, since the record draws no number format
-; (MISE.6): its sign, a gain's or nothing's + and a loss's space and -, each as wide as
-; the other, as the signed dollars' are; the whole percent, a point and two digits; and
-; the percent sign. Padded on the left to end where a number ends, in a column 12
-; characters wide as every column of a view's dollars is: the spaces before the sign and
-; twice the whole percent's digits make 10, from one digit to five, and none from six. The percent
-; sign is about three spaces wide (a canvas at 13 pixels of Segoe UI, at CRITIC.1's
-; scoping: 10.639 pixels, a space 3.561, a digit 7.008, the plus 8.893), so the text ends
-; short of a number's edge at every scale from 100% to 200%, and never past it, where 11
-; would pass it by two device pixels at 150%. A model's figure that is the empty text, a
-; report card's before its first card, shows nothing. The Overview's weather is a percent
-; too, but a phrase of a sentence, its sign in words and its figure in tenths, which keeps
-; its spelling; this verb is a column's figure, a number once the record draws formats.
+  "a view's change in one cell or a fill: whole cents either way over 100, drawn as dollars after a gain's or nothing's + or a loss's -"
+  (rule sheet at (/ cents 100))
+  (style sheet at change-look))
 
 (defmacro (percent sheet at points)
-  "a view's percent in one cell or a fill: whole hundredths of a percent either way, spelled as a text with two decimals after a gain's or nothing's + or a loss's space and -, then the percent sign, padded to end where a number ends in a column 12 characters wide; the empty text where the model's figure is the empty text"
-  (formula sheet at (&expand "=IF(" points "=\"\",\"\",IF(ABS(" points ")<1000,\"        \",IF(ABS(" points ")<10000,\"      \",IF(ABS(" points ")<100000,\"    \",IF(ABS(" points ")<1000000,\"  \",\"\"))))&IF(" points "<0,\" -\",\"+\")&INT(ABS(" points ")/100)&\".\"&IF(MOD(ABS(" points "),100)<10,\"0\",\"\")&MOD(ABS(" points "),100)&\"%\")")))
+  "a view's percent in one cell or a fill: whole hundredths of a percent either way over 10,000, drawn after a gain's or nothing's + or a loss's -, and a figure not yet made, the empty text, showing nothing"
+  (rule sheet at (if (= points "") "" (/ points 10000)))
+  (style sheet at percent-look))
 
 ; ---- a view's buttons (BACK.1, GUARD.1) ---------------------------------------------
 ; A button is a cell of a view, and its press a cell of the model that holds 0 between

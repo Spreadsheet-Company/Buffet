@@ -122,7 +122,13 @@
 //! the card. Since the pin to `alonzo` 0.3.0: the page's version 6, each view the
 //! game's and read-only and every other sheet a work sheet, the Caveats read-only;
 //! and every frame of every run holding, the kit's verbs in expressions expanding
-//! to their bytes.
+//! to their bytes. Since `FRONT.2`'s second slice: a view's figures numbers under a
+//! format's code, what each draws held at every frame the views are, and each code
+//! held to the hand's spelling; and the looks, drawn by the viewport's rule over
+//! each view's own record: every format a view draws reading at 4.5:1 or more, a
+//! band under each table's headers, each glyph its shade, every button, and each
+//! heading; and Trading's keys at every frame, over each column of buttons and
+//! beside each stock not picked.
 
 use std::collections::{BTreeMap, BTreeSet, VecDeque};
 use std::sync::OnceLock;
@@ -135,8 +141,10 @@ use buffet_oracle::buffet::{
     WAVES, YEAR,
 };
 use buffet_oracle::{derived, expand_source, gather, lf, load, read, root, values};
+use vla_lang::calc::value::Value;
 use vla_lang::form::Form;
 use vla_lang::machine::Viewed;
+use vla_lang::numfmt::Code;
 use vla_lang::reader::read_forms;
 
 const SOURCE: &str = "src/buffet.source.vla";
@@ -988,12 +996,18 @@ fn trading_cells(
     for (k, header) in TRADING_HEADERS.iter().enumerate() {
         text(&address(5, 2 + k), header);
     }
+    for (t, (_, key)) in buffet::TRADE_COMMANDS.iter().enumerate() {
+        text(
+            &address(5, buffet::TRADE_COLUMNS[t] as usize),
+            buffet::key_hint(key),
+        );
+    }
     for (k, name) in buffet::names().iter().enumerate() {
         let row = buffet::STOCK_ROWS[k] as usize;
         let mark = if plate.picked == k as u64 + 1 {
             "▸"
         } else {
-            ""
+            buffet::key_hint(buffet::PICKS[k].1)
         };
         text(&format!("A{row}"), mark);
         text(&format!("B{row}"), name);
@@ -1001,7 +1015,7 @@ fn trading_cells(
         text(&format!("C{row}"), &buffet::two_decimals(now));
         text(
             &format!("D{row}"),
-            &plate.book(pocket, k as u64 + 1).shares.to_string(),
+            &buffet::grouped(plate.book(pocket, k as u64 + 1).shares),
         );
         for (t, label) in buffet::TRADE_TEXTS.iter().enumerate() {
             text(&address(row, buffet::TRADE_COLUMNS[t] as usize), label);
@@ -1153,7 +1167,7 @@ fn portfolio_cells(
         text(&format!("D{row}"), buffet::glyph(now, was));
         let book = plate.book(pocket, k as u64 + 1);
         let value = book.shares * now as u64;
-        text(&format!("E{row}"), &book.shares.to_string());
+        text(&format!("E{row}"), &buffet::grouped(book.shares));
         text(&format!("F{row}"), &buffet::two_decimals(book.basis));
         text(&format!("G{row}"), &buffet::two_decimals(value));
         text(
@@ -2591,21 +2605,17 @@ fn the_headlines_sheet_counts_its_rows_and_shows_the_days_draw() {
 }
 
 /// The columns a view's dollars stand in (`POT.10`'s second hand test): each
-/// [`buffet::DOLLARS_COLUMN`] characters wide, the width the library's
-/// `dollars` and the Portfolio's change are padded for, so that each text
-/// ends where a number ends: the Portfolio's prices and changes, Gigs' fees,
-/// and since `PLATE.1` the Portfolio's cost, value and gain and Trading's
-/// prices and cash, and since `FRONT.3` the Overview's net worth, which the
-/// views' frames hold to the hand's spelling; and since `CRITIC.1` the Report's
-/// worth, and its percents, which the library's `percent` pads for the same
-/// width.
+/// [`buffet::DOLLARS_COLUMN`] characters wide, so that a number drawn under its
+/// format's code fits to $9,999,999.99 and a column of figures reads as one: the
+/// Portfolio's prices, changes, cost, value and gain, Gigs' fees, Trading's prices
+/// and cash, the Overview's net worth, and the Report's worth and the quarter's
+/// percents, the year's standing as wide as its own header.
 #[test]
-fn every_column_of_dollars_is_the_width_its_padding_is_measured_for() {
+fn every_column_of_dollars_is_as_wide_as_the_others() {
     let text = lf(&read(CARTRIDGE));
     for (sheet, column) in [
         (buffet::CARD_VIEW, "B"),
         (buffet::CARD_VIEW, "C"),
-        (buffet::CARD_VIEW, "D"),
         ("Overview", "B"),
         ("Portfolio", "B"),
         ("Portfolio", "C"),
@@ -2625,23 +2635,23 @@ fn every_column_of_dollars_is_the_width_its_padding_is_measured_for() {
 }
 
 /// The views' dollars with their thousands grouped (`GUARD.1`'s hand test,
-/// the owner's word: "Thousands separators need to be implemented"): the
-/// cells that spell whole cents, the library's `dollars` and
-/// `signed-dollars`, held to the hand's spelling beside every power of ten to
-/// 10^15 cents and at 2^53 cents less one, the most a double holds exactly:
+/// the owner's word: "Thousands separators need to be implemented"): the cells
+/// of the library's `dollars` and `signed-dollars`, what each draws held to the
+/// hand's spelling beside every power of ten to 10^15 cents, less one at the
+/// last, the fifteen significant digits a format's code draws, as Excel does:
 /// the firm's capital, written as a person's edit of the capital before the
 /// exam with no answer given, on the Certificate and the Portfolio's cash on
 /// hand; and a change either way, written over the Stocks sheet's own, on the
-/// Portfolio.
+/// Portfolio. Past them the view rounds its cents and the model's stay exact.
 #[test]
 fn every_amount_is_spelled_with_its_thousands_grouped() {
     let mut cart = loaded();
-    let mut amounts: Vec<u64> = vec![(1 << 53) - 1, 123_456_789_012_345, 550_000];
-    for p in 0..=15 {
+    let mut amounts: Vec<u64> = vec![123_456_789_012_345, 550_000, 10u64.pow(15) - 1];
+    for p in 0..15 {
         let ten = 10u64.pow(p);
         amounts.extend([ten - 1, ten, ten + 1]);
     }
-    for c in amounts {
+    let mut write = |c: u64| {
         let loss = -(c as i64);
         let edits = format!(
             "(cell \"Proctor\" \"B1\" {c})\n(cell \"Stocks\" \"I5\" {c})\n(cell \"Stocks\" \"I6\" {loss})"
@@ -2649,8 +2659,14 @@ fn every_amount_is_spelled_with_its_thousands_grouped() {
         cart.write(&edits)
             .unwrap_or_else(|r| panic!("{edits}: {} {}", r.refusal.id, r.refusal.text));
         assert!(cart.step(0).done);
-        let cert = values(&cart, "Certificate", "B8");
-        let view = values(&cart, "Portfolio", "B5:C12");
+        (
+            values(&cart, "Certificate", "B8"),
+            values(&cart, "Portfolio", "B5:C12"),
+        )
+    };
+    for c in amounts {
+        let (cert, view) = write(c);
+        let loss = -(c as i64);
         for (got, want, at) in [
             (cert.get("B8"), buffet::two_decimals(c), "Certificate!B8"),
             (view.get("B11"), buffet::two_decimals(c), "Portfolio!B11"),
@@ -2667,6 +2683,568 @@ fn every_amount_is_spelled_with_its_thousands_grouped() {
         ] {
             assert_eq!(got, Some(&want), "{c} cents: {at}");
         }
+    }
+    let (cert, _) = write((1 << 53) - 1);
+    assert_eq!(
+        cert.get("B8").map(String::as_str),
+        Some("90,071,992,547,409.90"),
+        "2^53 cents less one: the view rounds to fifteen digits, where the hand's cents read .91"
+    );
+}
+
+/// The codes the views draw by (`FRONT.2`'s second slice), each as the
+/// cartridge's own format row spells it and the language writes it, held to the
+/// hand's spelling, which shares no rule with it: every count of cents to
+/// $5,000 and beside each power of ten, every change to $1,000 either way,
+/// every percent to 100.00% either way and beside each power of ten, and a count
+/// of shares beside each.
+#[test]
+fn the_codes_draw_the_hands_spellings() {
+    let code = |index: u64| -> Code {
+        let formats = formats_of(&lf(&read(CARTRIDGE)));
+        let at = &formats[&index];
+        let spelled = at.code.as_deref().expect("a format's code");
+        Code::parse(spelled).unwrap_or_else(|e| panic!("{spelled}: {e:?}"))
+    };
+    let drawn = |c: &Code, n: f64| c.text(&Value::Number(n)).expect("a code's text");
+    let (dollars, change, percent, shares) = (code(2), code(3), code(4), code(5));
+    let powers: Vec<u64> = (0..15)
+        .flat_map(|p| {
+            let ten = 10u64.pow(p);
+            [ten - 1, ten, ten + 1]
+        })
+        .collect();
+    let cents = (0..500_000).chain(powers.iter().copied());
+    for c in cents {
+        assert_eq!(
+            drawn(&dollars, c as f64 / 100.0),
+            buffet::two_decimals(c),
+            "{c} cents"
+        );
+    }
+    let changes = (-100_000..=100_000).chain(powers.iter().flat_map(|&p| [p as i64, -(p as i64)]));
+    for c in changes {
+        assert_eq!(
+            drawn(&change, c as f64 / 100.0),
+            buffet::signed_two_decimals(c),
+            "a change of {c} cents"
+        );
+    }
+    let points = (-10_000..=10_000).chain(
+        powers
+            .iter()
+            .filter(|&&p| p < 10u64.pow(9))
+            .flat_map(|&p| [p as i64, -(p as i64)]),
+    );
+    for p in points {
+        assert_eq!(
+            drawn(&percent, p as f64 / 10_000.0),
+            buffet::percent(p),
+            "{p} hundredths of a percent"
+        );
+    }
+    for n in powers {
+        assert_eq!(drawn(&shares, n as f64), buffet::grouped(n), "{n} shares");
+    }
+}
+
+/// A format as the record spells it (`FRONT.2`'s second slice): its fill, its
+/// number format's code where it has one, and what it says of a font, an
+/// alignment and its edges, each `None` where it does not say. No predicate of
+/// the viewport's is shared: this reads the row's own words.
+#[derive(Clone, Debug, Default, PartialEq)]
+struct Drawn {
+    fill: Option<String>,
+    code: Option<String>,
+    bold: Option<bool>,
+    ink: Option<String>,
+    align: Option<String>,
+    edges: BTreeMap<String, String>,
+}
+
+impl Drawn {
+    /// A look over a cell's own, as the viewport draws one (Alonzo's `SPEC.md`
+    /// section 3.1, `ENGINE.28`): the look's fill and code whole, and what it
+    /// says of a font, an alignment or an edge, else the cell's own.
+    fn over(&self, own: &Drawn) -> Drawn {
+        let mut edges = own.edges.clone();
+        edges.extend(self.edges.clone());
+        Drawn {
+            fill: self.fill.clone(),
+            code: self.code.clone(),
+            bold: self.bold.or(own.bold),
+            ink: self.ink.clone().or_else(|| own.ink.clone()),
+            align: self.align.clone().or_else(|| own.align.clone()),
+            edges,
+        }
+    }
+
+    /// The ink a text draws in over the fill it draws on, the view's own dark
+    /// and the sheet's white where a format says neither.
+    fn contrast(&self) -> f64 {
+        contrast(
+            self.ink.as_deref().unwrap_or(VIEW_INK),
+            self.fill.as_deref().unwrap_or(SHEET_WHITE),
+        )
+    }
+}
+
+/// The ink the viewport draws a value in and the sheet's white, where a format
+/// says neither (Alonzo's `web/viewport.js`).
+const VIEW_INK: &str = "1D1D1B";
+const SHEET_WHITE: &str = "FFFFFF";
+/// The bar a format a view draws must read at, WCAG's 1.4.3 for text
+/// (`FRONT.2`'s decision 9): an author who wants a color past it lowers the bar
+/// in the same commit.
+const LEGIBLE: f64 = 4.5;
+/// The house's colors (`FRONT.2`): the gridlines' gray, each said where a fill
+/// covers the grid's own; the deep lavender a button and a band stand on under
+/// white; Lovelace Lavender, the logo's own (`BD-6`), on which white reads too
+/// faintly to stand; and the owner's mint and burgundy.
+const GRIDLINE: &str = "D9D9D2";
+const DEEP_LAVENDER: &str = "6B4FC8";
+const LOVELACE: &str = "A080E0";
+const MINT: &str = "ADEBB3";
+const BURGUNDY: &str = "800020";
+
+/// WCAG 2's contrast of two colors, each six hex digits.
+fn contrast(a: &str, b: &str) -> f64 {
+    let luminance = |hex: &str| -> f64 {
+        let channel = |at: usize| -> f64 {
+            let c = f64::from(u8::from_str_radix(&hex[at..at + 2], 16).expect("hex")) / 255.0;
+            if c <= 0.03928 {
+                c / 12.92
+            } else {
+                ((c + 0.055) / 1.055).powf(2.4)
+            }
+        };
+        0.2126 * channel(0) + 0.7152 * channel(2) + 0.0722 * channel(4)
+    };
+    let (la, lb) = (luminance(a), luminance(b));
+    (la.max(lb) + 0.05) / (la.min(lb) + 0.05)
+}
+
+/// The record's `format` rows by index, read by the language's own reader.
+fn formats_of(record: &str) -> BTreeMap<u64, Drawn> {
+    let mut out = BTreeMap::new();
+    for line in record.lines().filter(|l| l.starts_with("(format ")) {
+        let forms = read_forms(line).unwrap_or_else(|r| panic!("{line}: {}", r.text));
+        let [Form::List(row)] = forms.as_slice() else {
+            panic!("{line}: one form");
+        };
+        let [_, Form::Sym(index), fill, code, Form::Sym(_), groups @ ..] = row.items.as_slice()
+        else {
+            panic!("{line}: a format's index, fill, number format and wrap");
+        };
+        let mut f = Drawn {
+            fill: match fill {
+                Form::Str(hex) => Some(hex.clone()),
+                _ => None,
+            },
+            code: match code {
+                Form::Str(code) => Some(code.clone()),
+                _ => None,
+            },
+            ..Drawn::default()
+        };
+        for group in groups {
+            let Form::List(group) = group else {
+                panic!("{line}: a group is a list");
+            };
+            let [Form::Sym(head), said @ ..] = group.items.as_slice() else {
+                panic!("{line}: a group has a head");
+            };
+            for word in said {
+                match (head.as_str(), word) {
+                    ("font", Form::Sym(w)) if w == "bold" => f.bold = Some(true),
+                    ("font", Form::Str(hex)) => f.ink = Some(hex.clone()),
+                    ("align", Form::Sym(w)) => f.align = Some(w.clone()),
+                    ("border", Form::List(edge)) => {
+                        let [Form::Sym(side), Form::Sym(_), Form::Str(hex)] = edge.items.as_slice()
+                        else {
+                            panic!("{line}: an edge's side, line and color");
+                        };
+                        f.edges.insert(side.clone(), hex.clone());
+                    }
+                    _ => panic!("{line}: {head} says what this reader does not know"),
+                }
+            }
+        }
+        out.insert(index.parse().expect("a format's index"), f);
+    }
+    out
+}
+
+/// What each cell of a window draws with at this frame, by the viewport's rule:
+/// a cell's value matched to a look first, over the cell's own format; else its
+/// own, its `style` row's; else format 0. A cell with no value is not there.
+fn drawn_cells(cart: &Cartridge, sheet: &str, window: &str) -> BTreeMap<String, Drawn> {
+    let record = record(cart, sheet, window);
+    let formats = formats_of(&record);
+    let of = |index: &str| -> Drawn {
+        let index: u64 = index.parse().expect("a format's index");
+        formats.get(&index).cloned().unwrap_or_default()
+    };
+    let mut looks: BTreeMap<String, Drawn> = BTreeMap::new();
+    let look_head = format!("(look \"{sheet}\" ");
+    for line in record.lines() {
+        if let Some((value, index)) = line
+            .strip_prefix(look_head.as_str())
+            .and_then(|rest| rest.strip_suffix(')'))
+            .and_then(|rest| rest.rsplit_once(' '))
+        {
+            looks.insert(value.to_string(), of(index));
+        }
+    }
+    let mut own: BTreeMap<String, Drawn> = BTreeMap::new();
+    let style_head = format!("(style \"{sheet}\" \"");
+    for line in record.lines() {
+        if let Some((addr, index)) = line
+            .strip_prefix(style_head.as_str())
+            .and_then(|rest| rest.strip_suffix(')'))
+            .and_then(|rest| rest.split_once("\" "))
+        {
+            own.insert(addr.to_string(), of(index));
+        }
+    }
+    let mut out = BTreeMap::new();
+    for head in [
+        format!("(value \"{sheet}\" \""),
+        format!("(cell \"{sheet}\" \""),
+    ] {
+        for line in record.lines() {
+            if let Some((addr, value)) = line
+                .strip_prefix(head.as_str())
+                .and_then(|rest| rest.strip_suffix(')'))
+                .and_then(|rest| rest.split_once("\" "))
+            {
+                let cell = own.get(addr).cloned().unwrap_or_default();
+                let drew = match looks.get(value) {
+                    Some(look) => look.over(&cell),
+                    None => cell,
+                };
+                out.insert(addr.to_string(), drew);
+            }
+        }
+    }
+    out
+}
+
+/// A format's words of a view's cell, for a test's message.
+fn drawn_at<'a>(cells: &'a BTreeMap<String, Drawn>, sheet: &str, addr: &str) -> &'a Drawn {
+    cells
+        .get(addr)
+        .unwrap_or_else(|| panic!("{sheet}!{addr} holds no value"))
+}
+
+type Columns = &'static [usize];
+
+/// Each band of the views (`FRONT.2`'s decision 6): its row, its last column, each
+/// starting at the first; the columns from the left whose headers stand to the
+/// left, over a text, and those centered, a key over its buttons or a header over a
+/// column that stands centered, the rest standing to the right, over a figure.
+const BANDS: [(&str, usize, usize, Columns, Columns); 3] = [
+    ("Portfolio", 4, 8, &[1, 4], &[]),
+    ("Trading", 5, 10, &[1, 2], &[4, 5, 6, 7, 8, 9, 10]),
+    ("Report", 6, 4, &[1], &[]),
+];
+
+/// The views' states a test of their looks draws: as they stand at the exam, and
+/// with the exam waived and the market in session. So that a look of a state
+/// shows, a stock is written rising, one falling and one flat over the model's own
+/// change; an option is held at the exam, and emptied once it is over.
+fn each_state(mut hold: impl FnMut(&Cartridge, &str)) {
+    let mut exam = loaded();
+    for _ in 0..3 {
+        exam.step(0);
+    }
+    hold(&exam, "at the exam");
+    let mut game = cartridge();
+    for _ in 0..3 {
+        game.step(0);
+    }
+    let edits =
+        "(cell \"Stocks\" \"I5\" 125)\n(cell \"Stocks\" \"I6\" -125)\n(cell \"Stocks\" \"I7\" 0)";
+    game.write(edits)
+        .unwrap_or_else(|r| panic!("{edits}: {} {}", r.refusal.id, r.refusal.text));
+    game.step(0);
+    hold(&game, "in session");
+}
+
+/// Every format a view draws with reads (`FRONT.2`'s decision 9), since
+/// `describe` prints no look: drawn by the viewport's rule at each state, every
+/// cell of every view that holds a text or a number at 4.5:1 or more, its ink over
+/// its fill, a cell emptied having nothing to read. And no look on a view is keyed
+/// on a number, which would shade every cell holding it (`MISE.3`), and no format
+/// stands on the model's sheets, whose numbers the tests read as the model holds
+/// them (a caveat's).
+#[test]
+fn every_format_a_view_draws_reads() {
+    each_state(|cart, state| {
+        for view in VIEWS {
+            let shown = values(cart, view, "A1:J30");
+            for (addr, drawn) in drawn_cells(cart, view, "A1:J30") {
+                if shown.get(&addr).is_some_and(String::is_empty) {
+                    continue;
+                }
+                let read = drawn.contrast();
+                assert!(
+                    read >= LEGIBLE,
+                    "{state}: {view}!{addr} reads at {read:.2}:1 under {drawn:?}"
+                );
+            }
+        }
+    });
+    let text = lf(&read(CARTRIDGE));
+    for line in text.lines() {
+        if let Some(rest) = line.strip_prefix("(look \"") {
+            let (sheet, value) = rest.split_once("\" ").expect("a look's sheet");
+            assert!(VIEWS.contains(&sheet), "{line}: a look on the model");
+            assert!(
+                value.starts_with('"'),
+                "{line}: a look keyed on a number shades every cell holding it"
+            );
+        }
+        if let Some(rest) = line.strip_prefix("(style \"") {
+            let (sheet, _) = rest.split_once('"').expect("a style's sheet");
+            assert!(VIEWS.contains(&sheet), "{line}: a format on the model");
+        }
+    }
+}
+
+/// The house's looks where a person meets them (`FRONT.2`'s second slice), drawn
+/// by the viewport's rule. A band under each table's headers, white and bold on the
+/// deep lavender, spanning its table, each header to the side of what stands under
+/// it, and inside its column; the band down Trading's keys too; and every other cell
+/// of a view on that fill saying a button's brackets, so a band is never taken for a
+/// button. Each glyph its shade: a gain's on the mint, a loss's in the burgundy on the
+/// sheet's white, a flat day's in the view's ink, the shape saying which way whatever
+/// the color; each centered in its column. A button white on the deep lavender, each
+/// among others saying the gridlines' gray on its right and bottom so that two side by
+/// side stay two, and each standing alone saying the view's ink on all four sides;
+/// bold, but for Trading's grid; an exam's option reading from its left; and an option
+/// emptied after the exam no button at all. The figures each under their code, Trading's
+/// shares centered and the Portfolio's not. And a bold label heading what stands under it.
+#[test]
+fn the_views_draw_the_houses_looks() {
+    let text = lf(&read(CARTRIDGE));
+    let column_width = |sheet: &str, column: &str| -> u64 {
+        let head = format!("(column \"{sheet}\" \"{column}\" ");
+        text.lines()
+            .find_map(|l| l.strip_prefix(head.as_str()))
+            .and_then(|rest| rest.split(' ').next())
+            .and_then(|w| w.parse().ok())
+            .unwrap_or_else(|| panic!("{sheet}!{column}'s width"))
+    };
+    let mut game = cartridge();
+    for _ in 0..3 {
+        game.step(0);
+    }
+    let edits =
+        "(cell \"Stocks\" \"I5\" 125)\n(cell \"Stocks\" \"I6\" -125)\n(cell \"Stocks\" \"I7\" 0)";
+    game.write(edits)
+        .unwrap_or_else(|r| panic!("{edits}: {} {}", r.refusal.id, r.refusal.text));
+    game.step(0);
+
+    // The bands: each spanning its table, white on the deep lavender.
+    for (sheet, row, last, to_the_left, centered) in BANDS {
+        let cells = drawn_cells(&game, sheet, "A1:J30");
+        let shown = values(&game, sheet, "A1:J30");
+        for column in 1..=last {
+            let addr = address(row, column);
+            let drawn = drawn_at(&cells, sheet, &addr);
+            assert_eq!(
+                drawn.fill.as_deref(),
+                Some(DEEP_LAVENDER),
+                "{sheet}!{addr}: the band"
+            );
+            assert_eq!(
+                drawn.ink.as_deref(),
+                Some(SHEET_WHITE),
+                "{sheet}!{addr}: the band's ink"
+            );
+            assert_eq!(drawn.bold, Some(true), "{sheet}!{addr}: a header is bold");
+            let side = if to_the_left.contains(&column) {
+                None
+            } else if centered.contains(&column) {
+                Some("center")
+            } else {
+                Some("right")
+            };
+            assert_eq!(
+                drawn.align.as_deref(),
+                side,
+                "{sheet}!{addr}: a header to the side of what stands under it"
+            );
+            let header = shown.get(&addr).expect("a header's cell holds a text");
+            let width = column_width(sheet, &letters(column));
+            assert!(
+                header.chars().count() as u64 <= width,
+                "{sheet}!{addr}: {header:?} is wider than its {width} characters"
+            );
+        }
+    }
+    for view in VIEWS {
+        let band = BANDS.iter().find(|b| b.0 == view);
+        let shown = values(&game, view, "A1:J30");
+        for (addr, drawn) in drawn_cells(&game, view, "A1:J30") {
+            let on_band = band.is_some_and(|b| {
+                let digits = addr.trim_start_matches(|c: char| c.is_ascii_uppercase());
+                digits.parse::<usize>() == Ok(b.1)
+            });
+            let on_keys = view == buffet::TRADING
+                && buffet::STOCK_ROWS
+                    .iter()
+                    .any(|row| addr == format!("A{row}"));
+            let bracketed = shown.get(&addr).is_some_and(|s| s.starts_with("[ "));
+            assert!(
+                on_band || on_keys || bracketed || drawn.fill.as_deref() != Some(DEEP_LAVENDER),
+                "{view}!{addr}: the deep lavender off a band, with no button's brackets"
+            );
+        }
+    }
+    assert!(
+        contrast(SHEET_WHITE, DEEP_LAVENDER) >= LEGIBLE
+            && contrast(SHEET_WHITE, LOVELACE) < LEGIBLE,
+        "a band and a button stand on the deep lavender, white reading too faintly on the logo's own"
+    );
+
+    // The glyphs: which way each change went, and its shade.
+    let shown = values(&game, "Portfolio", "D5:D8");
+    let cells = drawn_cells(&game, "Portfolio", "D5:D8");
+    assert_eq!(shown.get("D5").map(String::as_str), Some("▲"), "a gain");
+    assert_eq!(shown.get("D6").map(String::as_str), Some("▼"), "a loss");
+    assert_eq!(shown.get("D7").map(String::as_str), Some("="), "a flat day");
+    let rise = drawn_at(&cells, "Portfolio", "D5");
+    assert_eq!(rise.fill.as_deref(), Some(MINT), "a gain's on the mint");
+    assert_eq!(rise.ink, None, "a gain's in the view's own ink");
+    assert_eq!(rise.edges.get("right").map(String::as_str), Some(GRIDLINE));
+    assert_eq!(rise.edges.get("bottom").map(String::as_str), Some(GRIDLINE));
+    let fall = drawn_at(&cells, "Portfolio", "D6");
+    assert_eq!(fall.fill, None, "a loss's on the sheet's white");
+    assert_eq!(
+        fall.ink.as_deref(),
+        Some(BURGUNDY),
+        "a loss's in the burgundy"
+    );
+    let flat = drawn_at(&cells, "Portfolio", "D7");
+    assert_eq!((flat.fill.as_deref(), flat.ink.as_deref()), (None, None));
+    for drawn in [rise, fall, flat] {
+        assert_eq!(drawn.align.as_deref(), Some("center"), "{drawn:?}");
+    }
+
+    // The buttons, by a look of their text or a style of their cell.
+    let is_button = |drawn: &Drawn, at: &str, edge: &str, sides: &[&str]| {
+        assert_eq!(drawn.fill.as_deref(), Some(DEEP_LAVENDER), "{at}: its fill");
+        assert_eq!(drawn.ink.as_deref(), Some(SHEET_WHITE), "{at}: its ink");
+        let said: Vec<&str> = drawn.edges.keys().map(String::as_str).collect();
+        let mut due = sides.to_vec();
+        due.sort_unstable();
+        assert_eq!(said, due, "{at}: the sides it says");
+        for side in sides {
+            assert_eq!(
+                drawn.edges.get(*side).map(String::as_str),
+                Some(edge),
+                "{at}: its {side} edge"
+            );
+        }
+    };
+    let among_others = ["right", "bottom"];
+    let alone = ["left", "right", "top", "bottom"];
+    let trading = drawn_cells(&game, "Trading", "A1:J30");
+    for row in 6..=9 {
+        for column in 5..=10 {
+            let at = address(row, column);
+            let drawn = drawn_at(&trading, "Trading", &at);
+            is_button(drawn, &format!("Trading!{at}"), GRIDLINE, &among_others);
+            assert_eq!(
+                drawn.bold, None,
+                "Trading!{at}: the grid reads under its bold band and keys"
+            );
+            assert_eq!(drawn.align.as_deref(), Some("center"), "Trading!{at}");
+        }
+        // The band down the keys' column, and the shares in the middle of theirs.
+        let at = format!("A{row}");
+        let key = drawn_at(&trading, "Trading", &at);
+        assert_eq!(key.fill.as_deref(), Some(DEEP_LAVENDER), "Trading!{at}");
+        assert_eq!(key.ink.as_deref(), Some(SHEET_WHITE), "Trading!{at}");
+        assert_eq!(key.bold, Some(true), "Trading!{at}: as the band across is");
+        assert_eq!(key.align.as_deref(), Some("center"), "Trading!{at}");
+        let at = format!("D{row}");
+        let shares = drawn_at(&trading, "Trading", &at);
+        assert_eq!(shares.align.as_deref(), Some("center"), "Trading!{at}");
+    }
+    let portfolio = drawn_cells(&game, "Portfolio", "E5:E8");
+    for (at, shares) in &portfolio {
+        assert_eq!(
+            shares.align, None,
+            "Portfolio!{at}: among the figures, as they stand"
+        );
+    }
+    assert_eq!(portfolio.len(), 4, "the Portfolio's shares");
+    for (sheet, at) in [("Trading", "D11"), ("Gigs", "A5"), ("Certificate", "A11")] {
+        let cells = drawn_cells(&game, sheet, "A1:J30");
+        let drawn = drawn_at(&cells, sheet, at);
+        is_button(drawn, &format!("{sheet}!{at}"), VIEW_INK, &alone);
+        assert_eq!(drawn.bold, Some(true), "{sheet}!{at}");
+        assert_eq!(drawn.align.as_deref(), Some("center"), "{sheet}!{at}");
+    }
+    let mut exam = loaded();
+    exam.step(0);
+    let cells = drawn_cells(&exam, buffet::EXAM, "A7:A10");
+    let mut emptied = cartridge();
+    emptied.step(0);
+    let over = drawn_cells(&emptied, buffet::EXAM, "A7:A10");
+    for row in 7..=10 {
+        let at = format!("A{row}");
+        let drawn = drawn_at(&cells, buffet::EXAM, &at);
+        is_button(drawn, &format!("Exam!{at}"), GRIDLINE, &among_others);
+        assert_eq!(drawn.bold, Some(true), "Exam!{at}");
+        assert_eq!(
+            drawn.align.as_deref(),
+            Some("left"),
+            "an option reads from its left"
+        );
+        let gone = drawn_at(&over, buffet::EXAM, &at);
+        assert_eq!(gone.fill, None, "an option emptied stands on no button");
+    }
+
+    // The figures, each under its code, and each heading bold.
+    for (sheet, range, code) in [
+        ("Portfolio", "B5:B8", "#,##0.00"),
+        ("Portfolio", "F5:G8", "#,##0.00"),
+        ("Portfolio", "B11:B12", "#,##0.00"),
+        ("Portfolio", "B15:B16", "#,##0.00"),
+        ("Portfolio", "C5:C8", "+#,##0.00;-#,##0.00;+0.00"),
+        ("Portfolio", "H5:H8", "+#,##0.00;-#,##0.00;+0.00"),
+        ("Portfolio", "E5:E8", "#,##0"),
+        ("Trading", "C6:C9", "#,##0.00"),
+        ("Trading", "C11:C11", "#,##0.00"),
+        ("Trading", "D6:D9", "#,##0"),
+        ("Overview", "B6:B7", "#,##0.00"),
+        ("Certificate", "B8:B8", "#,##0.00"),
+        ("Gigs", "B9:B9", "#,##0.00"),
+        ("Report", "B7:B8", "#,##0.00"),
+    ] {
+        let cells = drawn_cells(&game, sheet, range);
+        assert!(!cells.is_empty(), "{sheet}!{range} holds values");
+        for (addr, drawn) in cells {
+            assert_eq!(drawn.code.as_deref(), Some(code), "{sheet}!{addr}");
+        }
+    }
+    for (sheet, at) in [
+        ("Certificate", "A3"),
+        ("Certificate", "A13"),
+        ("Overview", "A5"),
+        ("Portfolio", "A10"),
+        ("Portfolio", "A14"),
+    ] {
+        let cells = drawn_cells(&game, sheet, "A1:A20");
+        assert_eq!(
+            drawn_at(&cells, sheet, at).bold,
+            Some(true),
+            "{sheet}!{at}: a heading"
+        );
     }
 }
 
@@ -3118,9 +3696,13 @@ fn the_hustle_states_its_settings_and_binds_one_key() {
         buffet::BUTTON_TEXT.chars().count() <= width,
         "the button's text runs past its column of {width} characters, and a click on the spill is the next cell's"
     );
-    let style = format!("(style \"{sheet}\" \"{}\" 1)", address(row, column));
+    let style = format!(
+        "(style \"{sheet}\" \"{}\" {})",
+        address(row, column),
+        buffet::LONE_BUTTON_LOOK
+    );
     assert!(
-        text.lines().any(|l| l == style) && text.lines().any(|l| l == buffet::BUTTON_FORMAT),
+        text.lines().any(|l| l == style) && text.lines().any(|l| l == buffet::LONE_BUTTON_FORMAT),
         "the button drawn as the buttons are, in lavender (GUARD.1's hand test): {style}"
     );
 
@@ -4511,26 +5093,40 @@ fn the_proctor_states_its_settings_and_its_buttons() {
         let row = format!("(column \"{sheet}\" \"A\" {width} shown none)");
         assert!(text.lines().any(|l| l == row), "{sheet}!A: {row}");
     }
-    // The buttons' look (the owner's word at the hand test): format 1, a fill
-    // of Lovelace Lavender, on every option's cell and the certificate's
-    // button; and an option emptied after the exam drawn in the default look.
-    assert!(
-        text.lines().any(|l| l == buffet::BUTTON_FORMAT),
-        "the buttons' format: {}",
-        buffet::BUTTON_FORMAT
-    );
-    let (view, column, row) = buffet::OPEN_BUTTON;
-    let looks = buffet::OPTIONS
-        .iter()
-        .map(|&(_, row, _)| (buffet::EXAM, buffet::OPTION_COLUMN, row))
-        .chain([(view, column, row)]);
-    for (sheet, column, row) in looks {
-        let style = format!(
-            "(style \"{sheet}\" \"{}\" 1)",
-            address(row as usize, column as usize)
+    // The buttons' look (the owner's word at the hand test): a fill of Lovelace
+    // Lavender, on every option's cell and the certificate's button, which stands
+    // alone; and an option emptied after the exam drawn in the default look.
+    for format in [buffet::OPTION_FORMAT, buffet::LONE_BUTTON_FORMAT] {
+        assert!(
+            text.lines().any(|l| l == format),
+            "the buttons' format: {format}"
         );
-        assert!(text.lines().any(|l| l == style), "a button's look: {style}");
     }
+    let (view, column, row) = buffet::OPEN_BUTTON;
+    let button = format!(
+        "(style \"{view}\" \"{}\" {})",
+        address(row as usize, column as usize),
+        buffet::LONE_BUTTON_LOOK
+    );
+    assert!(
+        text.lines().any(|l| l == button),
+        "a button's look: {button}"
+    );
+    let rows: Vec<u64> = buffet::OPTIONS.iter().map(|&(_, row, _)| row).collect();
+    let options = format!(
+        "(style \"{}\" \"{}:{}\" {})",
+        buffet::EXAM,
+        address(rows[0] as usize, buffet::OPTION_COLUMN as usize),
+        address(
+            rows[rows.len() - 1] as usize,
+            buffet::OPTION_COLUMN as usize
+        ),
+        buffet::OPTION_LOOK
+    );
+    assert!(
+        text.lines().any(|l| l == options),
+        "the options' look: {options}"
+    );
     assert!(
         text.lines().any(|l| l == "(look \"Exam\" \"\" 0)"),
         "an option emptied after the exam, in the default look"
@@ -5311,8 +5907,23 @@ fn the_order_desk_states_its_settings_its_buttons_and_its_commands() {
             label.chars().count() as u64 <= buffet::BUTTON_COLUMN,
             "{label}"
         );
-        let look = format!("(look \"Trading\" \"{label}\" 1)");
+        let look = format!("(look \"Trading\" \"{label}\" {})", buffet::BUTTON_LOOK);
         assert!(text.lines().any(|l| l == look), "a button's look: {look}");
+        // Over each column the key that makes its trade, the command's own.
+        let hint = address(5, column);
+        assert_eq!(
+            view.get(&hint).map(String::as_str),
+            Some(buffet::key_hint(buffet::TRADE_COMMANDS[t].1)),
+            "Trading!{hint}, the key of {label}"
+        );
+    }
+    // Beside each stock its key while none is picked, the digit of its pick.
+    for (s, row) in buffet::STOCK_ROWS.iter().enumerate() {
+        assert_eq!(
+            view.get(&format!("A{row}")).map(String::as_str),
+            Some(buffet::key_hint(buffet::PICKS[s].1)),
+            "Trading!A{row}, the key that picks it"
+        );
     }
     assert!(text.lines().any(|l| l == buffet::BUTTON_FORMAT));
     let (view_name, column, row) = buffet::SWITCH;
@@ -5343,7 +5954,7 @@ fn the_order_desk_states_its_settings_its_buttons_and_its_commands() {
     );
     assert!(text.lines().any(|l| l == width), "{width}");
     assert!(buffet::SWITCH_TEXT.chars().count() as u64 <= buffet::BUTTON_COLUMN);
-    let style = format!("(style \"Trading\" \"{at}\" 1)");
+    let style = format!("(style \"Trading\" \"{at}\" {})", buffet::LONE_BUTTON_LOOK);
     assert!(
         text.lines().any(|l| l == style),
         "the switch's look: {style}"
@@ -5632,7 +6243,7 @@ fn the_report_states_its_lines_and_binds_no_key() {
         ("A", 30),
         ("B", buffet::DOLLARS_COLUMN),
         ("C", buffet::DOLLARS_COLUMN),
-        ("D", buffet::DOLLARS_COLUMN),
+        ("D", 15),
     ] {
         let row = format!("(column \"Report\" \"{column}\" {width} shown none)");
         assert!(text.lines().any(|l| l == row), "{row}");

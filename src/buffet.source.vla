@@ -81,6 +81,13 @@
 ;           read-only, so that a stray key or Delete writes no view, and the Caveats
 ;           read-only; the model's sheets stay a person's to edit; and every call of the
 ;           kit's verbs written in expressions, each row expanding to its bytes.
+;   FRONT.2 the looks, its second slice: each view's figures numbers under a format's
+;           code, dollars with two decimals and their thousands grouped, a change and a
+;           percent signed, a count of shares grouped; a button white and bold on the deep
+;           lavender, one standing alone bordered in the view's ink; a band under each
+;           table's headers, in the same shade and ink; each glyph its shade, a gain's on
+;           the mint and a loss's in the burgundy; a bold label over what it heads; and
+;           Trading's keys, over each column of buttons and beside each stock not picked.
 ;
 ; The market's clock (BD-7). A frame is twenty seconds of the market's time in the
 ; regular session and two minutes between sessions, so at the manifest's rate of thirty
@@ -1070,24 +1077,75 @@
 ; naming them before the model (the owner's word, 2026-10-15: "the UI is a workbook").
 ; A view shows the model and holds none of it: its formulas read the model's sheets and
 ; the calendar, never the frame (BD-7), and no formula reads a view, so a dish lays a
-; view out again without moving a formula. Money reaches a view as whole cents spelled
-; with two decimals as a text, the library's dollars, padded so that it ends where a
-; number ends in its column of 12 characters (the owner's word at POT.10's hand test:
-; "All dollar cells should show two decimals"; and at its second, that they sat left of
-; center), since the record spells a number at its shortest, 12.3 for $12.30 (MISE.3);
-; and a change is the model's difference of two prices in cents, spelled with its sign
-; and padded alike, the library's signed-dollars; and each its thousands grouped by
-; commas (the owner's word at GUARD.1's hand test: "Thousands separators need to be
-; implemented").
-;
-; A view's buttons are drawn in Lovelace Lavender, the house's primary, #A080E0, the
-; owner's word at GUARD.1's hand test: "Buttons like [ Open for business ] should be
-; highlighted with lavender background and white text". The fill is format 1, which each
-; button's cell takes by a style row; the record holds no color for a text (vla-lang
-; 0.9.4), so a button's text stays the grid's dark until it does, its white asked of
-; Frazaro and Alonzo (MISE.6).
+; view out again without moving a formula. Money reaches a view as whole cents over 100,
+; a number under a format's code, the library's dollars, and a change the model's
+; difference of two prices in cents, the same division under a code that signs it, the
+; library's signed-dollars (see kitchen.vla).
 
-(format 1 "A080E0" general nowrap)  ; the buttons' look: Lovelace Lavender, the text the grid's own
+; ---- FRONT.2: the looks -------------------------------------------------------------
+; The house's formats, the workbook's own, each named once here and by that word wherever
+; a view's style or look draws with it, so that an author recolors every view in this one
+; place. A format is a row the load reads: a player who wants another color becomes its
+; author, by the page's drawer, Build and Load.
+;
+; A button is Lovelace Lavender's deep shade under a white ink (the owner's words at
+; GUARD.1's hand test: "lavender background and white text"), which reads at 5.87:1 where
+; white on the logo's own #A080E0 reads at 3.2:1; bold (at FRONT.2's: white over lavender
+; "should be bolded for readability"), but for Trading's grid of them, under a band and
+; beside a column of keys that are (at its second: "E6:J9 need not be bolded"); centered in
+; its cell, but for an exam's option, whose long text reads from its left. A view's band
+; takes the same shade and ink, bold (the owner's word at FRONT.2's hand test), a header
+; over a text's column to the left, over a figure's to the right, and a key or a column
+; whose values stand centered in the middle, the band running down Trading's keys as well
+; as across its headers (at the second); a button's brackets tell it from a band. A fill covers its cell's
+; gridlines, as Excel's does, so that a button among others or a glyph's shade says the
+; gridlines' gray itself on its right and bottom, and two side by side stay two; a button
+; standing alone says the view's ink on all four sides (the owner's word, the same hand
+; test), since it has no neighbor to be told from and a page to stand out on.
+;
+; The glyphs take the owner's two colors each in the role its lightness can play (the
+; owner's words, 2026-10-16: "upward glyphs should be a minty green like #ADEBB3, while
+; downward glyphs should be a burgundy like #800020"): the mint a fill behind the view's
+; ink, 12.31:1, since as a glyph's own color it reads at 1.37:1 on white, and the burgundy a
+; glyph's own ink on white, 10.83:1. A flat day's = takes no look, and the direction never
+; rests on a color, the glyph's shape saying it. A look keys on the glyph's own text, never
+; on a number, which would shade every cell holding it (MISE.3).
+;
+; The figures' codes: a dollar, a change, a percent and a count of shares, each the
+; library's verb's or a view's own style, Trading's shares centered (the same word). A bold
+; label heads what stands under it.
+
+(define button-look 1)
+(define dollars-look 2)
+(define change-look 3)
+(define percent-look 4)
+(define shares-look 5)
+(define band-look 6)
+(define band-figures-look 7)
+(define rise-look 8)
+(define fall-look 9)
+(define glyph-look 10)
+(define option-look 11)
+(define heading-look 12)
+(define lone-button-look 13)
+(define band-center-look 14)
+(define shares-center-look 15)
+
+(format button-look "6B4FC8" general nowrap (font "FFFFFF") (align center) (border (right thin "D9D9D2") (bottom thin "D9D9D2")))   ; a button among others: white on the deep lavender, centered
+(format dollars-look none "#,##0.00" nowrap)   ; dollars
+(format change-look none "+#,##0.00;-#,##0.00;+0.00" nowrap)   ; a change in dollars, a gain's or nothing's + and a loss's -
+(format percent-look none "+0.00%;-0.00%;+0.00%" nowrap)   ; a percent, signed as a change is
+(format shares-look none "#,##0" nowrap)   ; a count of shares
+(format band-look "6B4FC8" general nowrap (font bold "FFFFFF"))   ; the band under a view's headers, over a text's column: white on the deep lavender, as a button
+(format band-figures-look "6B4FC8" general nowrap (font bold "FFFFFF") (align right))   ; the band over a figure's column, the header to the figures' side
+(format rise-look "ADEBB3" general nowrap (border (right thin "D9D9D2") (bottom thin "D9D9D2")))   ; a gain's glyph: the mint behind the view's ink
+(format fall-look none general nowrap (font "800020"))   ; a loss's glyph: the burgundy, its own ink on white
+(format glyph-look none general nowrap (align center))   ; the glyphs' column, each glyph in the middle of its 3 characters
+(format option-look "6B4FC8" general nowrap (font bold "FFFFFF") (align left) (border (right thin "D9D9D2") (bottom thin "D9D9D2")))   ; an exam's option: a button whose long text reads from its left
+(format heading-look none general nowrap (font bold))   ; a bold label, heading what stands under it
+(format lone-button-look "6B4FC8" general nowrap (font bold "FFFFFF") (align center) (border (left medium "1D1D1B") (right medium "1D1D1B") (top medium "1D1D1B") (bottom medium "1D1D1B")))   ; a button standing alone: a button, bold, its edges the view's ink
+(format band-center-look "6B4FC8" general nowrap (font bold "FFFFFF") (align center) (border (right thin "D9D9D2") (bottom thin "D9D9D2")))   ; the band in the middle of its cell: a key, or a header over a centered column
+(format shares-center-look none "#,##0" nowrap (align center))   ; a count of shares in the middle of its column
 
 ; The Exam (GUARD.1): the sheet the game opens on, the first visible among the tabs, the
 ; Series 777 one question at a time. Its date and the bell's line, every view's; the
@@ -1099,8 +1157,9 @@
 ; describes you?", its options the Firms sheet's styles. Nothing here says whether an
 ; answer was right: the next question is the answer's echo, and the proctor's remarks
 ; wait for an exam that answers on screen (MENU.2's decision 9). The options are drawn
-; as the buttons are, in lavender, and an option emptied once the exam is over draws in
-; the default look by a look of the empty text, so that no button stands where none is.
+; as the buttons are, in the deep lavender, and an option emptied once the exam is over
+; draws in the default look by a look of the empty text, so that no button stands where
+; none is.
 
 (on "Exam"
   (column "A" 100 shown none)       ; the question and its options: as wide as the longest option with its letter
@@ -1111,10 +1170,7 @@
     ("A5" "=IF(Proctor!$B$33=0,\"\",IF(Proctor!$B$32<10,Questions!$K$4,\"Which best describes you?\"))")   ; the question: the bank's, or the eleventh, the view's own
     ("A7:A10" "=IF(Proctor!$B$33=0,\"\",IF(Proctor!$B$32<10,\"[ \"&Proctor!A24&\" ]  \"&Questions!K5,\"[ \"&Proctor!A24&\" ]  \"&Firms!A2))")   ; its options, each a button: the Proctor's buttons name these cells
     ("A12" "=IF(Proctor!$B$33=1,\"Click an answer, or press its letter: A, B, C or D.\",\"\")"))   ; the keys, the Keys sheet's B6:B9 while a question is open
-  (style "A7" 1)                    ; each option drawn as a button, in lavender,
-  (style "A8" 1)
-  (style "A9" 1)
-  (style "A10" 1)
+  (style "A7:A10" option-look)      ; each option drawn as a button,
   (look "" 0)                       ;   and an option emptied after the exam in the default look
   (fine-print "A14"))               ; the fine print, every view's
 
@@ -1132,25 +1188,27 @@
 
 (on "Certificate"
   (column "A" 21 shown none)        ; the labels and the button: as wide as the button's text
-  (column "B" 12 shown none)        ; the values: 12 characters, the width the dollars are padded for
+  (column "B" 12 shown none)        ; the values: 12 characters, the width of a view's dollars
   (as-of "A1")                      ; the date, every view's
   (bell "A2")                       ; the market's hours, every view's
   (cells
     ("A3" "The Series 777: a certificate of completion"))
+  (style "A3" heading-look)         ; its title
   (formulas
     ("A5" "=IF(Proctor!$B$33=1,\"Pending: the proctor certifies after the eleventh question.\",IF(Proctor!$B$3=1,\"Waived: the regulator assumes you would have passed.\",\"The bearer has sat the Series 777 and passed, as every candidate does.\"))"))   ; pending, waived or passed
   (labels "A7" "Correct answers" "Firm capital ($)" "Firm name")
   (formulas
     ("B7" "=Proctor!$B$38&\" of 10\""))   ; the score, of the ten
-  (dollars "B8" "Proctor!B39")      ; the firm's capital: whole cents spelled with two decimals
+  (dollars "B8" Proctor!B39)        ; the firm's capital
   (formulas
     ("B9" "=IF(Proctor!$B$40=0,\"pending registration\",Firms!$E$4)"))   ; the firm's name, the Firms sheet's, once the eleventh answer gives its style
   (cells
     ("A11" "[ Open for business ]")   ; the button: the Proctor's buttons name this cell
     ("B11" "or press O"))           ; its key, the Keys sheet's B10
-  (style "A11" 1)                   ; the button drawn as a button, in lavender
+  (style "A11" lone-button-look)    ; the button drawn as a button
   (cells
     ("A13" "Caveat:"))              ; the plain statement's heading, the owner's word
+  (style "A13" heading-look)
   (formulas
     ("A14:A16" "=Caveats!G3"))      ; the plain statement whole, its three fields: the game is not advice
   (cells
@@ -1171,13 +1229,14 @@
 
 (on "Overview"
   (column "A" 22 shown none)        ; the labels; the date, the lines and the fine print spill past them
-  (column "B" 12 shown none)        ; the net worth, in dollars: 12 characters, the width the dollars are padded for
+  (column "B" 12 shown none)        ; the net worth, in dollars: 12 characters, the width of a view's dollars
   (as-of "A1")                      ; the date, every view's
   (bell "A2")                       ; the market's hours, every view's
   (formulas
     ("A3" "=IF(Proctor!$B$40=0,\"Your firm: name pending registration.\",\"Your firm: \"&Firms!$E$4&\". Investment style: \"&Firms!$E$3&\".\")"))   ; the firm's name and its style, pending until the eleventh answer gives them
   (labels "A5" "Net worth ($)" "  Firm" "  Personal")   ; each pocket's net worth, its cash and its holdings
-  (dollars "B6:B7" "Cash!B9")       ; the firm's and your own, the Cash sheet's B9 and B10
+  (style "A5" heading-look)
+  (dollars "B6:B7" Cash!B9)         ; the firm's and your own, the Cash sheet's B9 and B10
   (formulas
     ("A9" "=\"Market weather: \"&Market!$B$124&\", the market \"&IF(Market!$B$123=0,\"flat\",IF(Market!$B$123<0,\"down \",\"up \")&INT(ABS(Market!$B$123)/10)&\".\"&MOD(ABS(Market!$B$123),10)&\"%\")&\" in the \"&Market!$B$4&\" days to the last close.\"")   ; the weather: its word and the change it is read off
     ("A11" "=\"Today's headline: \"&Headlines!$D$3"))   ; the ticker: the day's headline
@@ -1189,12 +1248,12 @@
 ; whose holdings these are; then a
 ; row a stock, on the Stocks sheet's own rows, each its name, the model's, its price now
 ; and its change since the last close, in dollars, and beside the change which way it
-; went (FRONT.2), a glyph read off the cents the change is spelled from, so the two never
+; went (FRONT.2), a glyph read off the cents the change is taken from, so the two never
 ; disagree; then the holding of it (PLATE.1), the pocket's shares, their cost basis,
 ; their value at the price now and the gain not yet taken, each the Positions sheet's
 ; rows shown, the pocket an order funds, the firm's or your own as the switch on Trading
-; turns it (PLATE.2). The glyph has
-; no color yet, the looks waiting for an aesthetic pass. Under the stocks, the cash on
+; turns it (PLATE.2). The headers stand on the band, and each glyph takes its shade (the
+; looks above). Under the stocks, the cash on
 ; hand, the firm's and the personal pocket's, each the Cash sheet's, in dollars (the
 ; owner's word at GUARD.1's hand test, both pockets the owner's choice), and each
 ; pocket's net worth, its cash and its holdings. And the fine print at its foot, a
@@ -1203,7 +1262,7 @@
 
 (on "Portfolio"
   (column "A" 22 shown none)        ; the names; the date, the bell and the fine print spill past them
-  (column "B" 12 shown none)        ; the price, in dollars: 12 characters, the width the dollars are padded for
+  (column "B" 12 shown none)        ; the price, in dollars: 12 characters, the width of a view's dollars
   (column "C" 12 shown none)        ; the change since the last close, in dollars, as wide
   (column "D" 3 shown none)         ; which way the change went, a glyph (FRONT.2)
   (column "E" 12 shown none)        ; the shares held
@@ -1216,34 +1275,48 @@
     ("A3" "=IF(Orders!$B$19=2,\"Your own holdings, at the price now.\",\"The firm's holdings, at the price now.\")"))   ; whose holdings, the pocket an order funds
   (headers "A4" "Security" "Price ($)" "Change ($)")
   (headers "E4" "Shares" "Cost ($)" "Value ($)" "Gain ($)")
+  (cells
+    ("D4" ""))                                  ; the glyphs' column heads nothing, the band spanning it
+  (style "A4" band-look)                        ; the band, a text's header to the left and a figure's to the right
+  (style "B4:C4" band-figures-look)
+  (style "D4" band-look)
+  (style "E4:H4" band-figures-look)
   (formulas
     ("A5:A8" "=Stocks!A5"))                     ; each stock's name, the model's, on its rung's row (MENU.3)
-  (dollars "B5:B8" "Stocks!E5")                 ; its price now: whole cents spelled with two decimals
-  (signed-dollars "C5:C8" "Stocks!I5")         ; its change since the last close: two decimals and its sign, a gain's +, a loss's space and -, each as wide as the other
+  (dollars "B5:B8" Stocks!E5)                   ; its price now
+  (signed-dollars "C5:C8" Stocks!I5)            ; its change since the last close
   (formulas
-    ("D5:D8" "=IF(Stocks!I5>0,\"▲\",IF(Stocks!I5<0,\"▼\",\"=\"))")   ; which way it went: up, down or flat, read off the cents the change is spelled from
+    ("D5:D8" "=IF(Stocks!I5>0,\"▲\",IF(Stocks!I5<0,\"▼\",\"=\"))")   ; which way it went: up, down or flat, read off the cents the change is taken from
     ("E5:E8" "=Positions!D12"))                 ; the shares held, the pocket's
-  (dollars "F5:F8" "Positions!E12")             ; their cost basis
-  (dollars "G5:G8" "Positions!F12")             ; their value at the price now
-  (signed-dollars "H5:H8" "Positions!G12")     ; the gain not yet taken, either way
+  (style "D5:D8" glyph-look)                    ; each glyph in the middle of its column,
+  (look "▲" rise-look)                          ;   a gain's on the mint
+  (look "▼" fall-look)                          ;   and a loss's in the burgundy
+  (style "E5:E8" shares-look)
+  (dollars "F5:F8" Positions!E12)               ; their cost basis
+  (dollars "G5:G8" Positions!F12)               ; their value at the price now
+  (signed-dollars "H5:H8" Positions!G12)        ; the gain not yet taken, either way
   (labels "A10" "Cash on hand ($)" "  Firm" "  Personal")   ; the cash on hand, each pocket's (the owner's word at GUARD.1's hand test)
-  (dollars "B11" "Cash!B3")                    ; the firm's: the exam's capital and its books' flows
-  (dollars "B12" "Cash!B4")                    ; the personal: $100, the hustle's fees once paid, and its books' flows
+  (style "A10" heading-look)
+  (dollars "B11" Cash!B3)                       ; the firm's: the exam's capital and its books' flows
+  (dollars "B12" Cash!B4)                       ; the personal: $100, the hustle's fees once paid, and its books' flows
   (labels "A14" "Net worth ($)" "  Firm" "  Personal")   ; each pocket's net worth, its cash and its holdings
-  (dollars "B15" "Cash!B9")
-  (dollars "B16" "Cash!B10")
+  (style "A14" heading-look)
+  (dollars "B15" Cash!B9)
+  (dollars "B16" Cash!B10)
   (fine-print "A18"))                          ; the fine print, a disclosure a month (MENU.1)
 
 ; Trading (PLATE.1): the order desk, beside the Portfolio. Its date and the bell's line;
-; where an order's money comes from; then a row a stock, its mark when picked, its name,
+; where an order's money comes from; then a row a stock, its mark when picked and the key
+; that picks it when not (the owner's word at FRONT.2's hand test), its name,
 ; its price now, the price an order fills at a frame later, and the pocket's shares of
 ; it; then its six buttons, Buy 1, Buy 10, Buy max, Sell 1, Sell 10 and Sell all, each a
 ; text in brackets in a column of 12 characters, so that every character of it is the
-; button, drawn in the buttons' lavender by a look keyed on its text, one look an act
-; for its four buttons, where a style row would stand at each; the Orders sheet names
+; button, drawn as a button by a look keyed on its text, one look an act
+; for its four buttons, where a style row would stand at each, and over each column in
+; the band the key that makes its trade (the same word); the Orders sheet names
 ; their places in values, so that this sheet is laid out again with no formula moved.
 ; Under them the pocket's cash, and beside it the switch (PLATE.2), a text in brackets
-; in a column of 12 characters drawn in lavender by a style row, as Gigs' one button is,
+; in a column of 12 characters drawn as a button by a style row, as Gigs' one button is,
 ; and its key: a click or C turns which pocket an order funds, the firm's or your own,
 ; and the line on whose cash, the shares and the cash available follow it, moving no
 ; money; the last order, filled or refused and why; the keys, the Commands sheet's,
@@ -1265,12 +1338,25 @@
   (formulas
     ("A3" "=\"Orders fill at the price shown, while the market is open, from \"&IF(Orders!$B$19=2,\"your own cash.\",\"the firm's cash, which is to say other people's money.\")"))   ; where an order's money comes from
   (headers "B5" "Security" "Price ($)" "Shares")
+  (cells
+    ("A5" "")                       ; the band spans the mark's column,
+    ("E5" "B")                      ;   and over each button's column its trade's key, the Commands sheet's
+    ("F5" "N")
+    ("G5" "M")
+    ("H5" "S")
+    ("I5" "D")
+    ("J5" "F"))
+  (style "A5:B5" band-look)         ; the band, a text's header to the left and a figure's to the right,
+  (style "C5" band-figures-look)
+  (style "D5:J5" band-center-look)  ;   and in the middle the shares' header and each key over the buttons it makes
   (formulas
-    ("A6:A9" "=IF(Orders!$B$16=Orders!B6,\"▸\",\"\")")   ; the stock picked, marked
+    ("A6:A9" "=IF(Orders!$B$16=Orders!B6,\"▸\",Orders!B6)")   ; the stock picked, marked; each other its key, 1 to 4
     ("B6:B9" "=Orders!A6"))         ; each stock's name, the order desk's
-  (dollars "C6:C9" "Stocks!E5")     ; its price now
+  (style "A6:A9" band-center-look)  ; the band down the keys' column, in the middle of its 3 characters
+  (dollars "C6:C9" Stocks!E5)       ; its price now
   (formulas
     ("D6:D9" "=Positions!D12"))     ; the pocket's shares of it
+  (style "D6:D9" shares-center-look)
   (cells
     ("E6:E9" "[ Buy 1 ]")           ; each stock's six buttons, an act a column: the Orders sheet names these cells
     ("F6:F9" "[ Buy 10 ]")
@@ -1278,18 +1364,18 @@
     ("H6:H9" "[ Sell 1 ]")
     ("I6:I9" "[ Sell 10 ]")
     ("J6:J9" "[ Sell all ]"))
-  (look "[ Buy 1 ]" 1)              ; each drawn as a button, in lavender, by its text
-  (look "[ Buy 10 ]" 1)
-  (look "[ Buy max ]" 1)
-  (look "[ Sell 1 ]" 1)
-  (look "[ Sell 10 ]" 1)
-  (look "[ Sell all ]" 1)
+  (look "[ Buy 1 ]" button-look)    ; each drawn as a button, by its text
+  (look "[ Buy 10 ]" button-look)
+  (look "[ Buy max ]" button-look)
+  (look "[ Sell 1 ]" button-look)
+  (look "[ Sell 10 ]" button-look)
+  (look "[ Sell all ]" button-look)
   (labels "B11" "Cash available ($)")
-  (dollars "C11" "Orders!B31")      ; the pocket's cash now
+  (dollars "C11" Orders!B31)        ; the pocket's cash now
   (cells
     ("D11" "[ Switch ]")            ; the switch, beside the cash it turns: Orders!B43:B44 name this cell
     ("E11" "or press C"))           ; its key, the Commands sheet's D12
-  (style "D11" 1)                   ; the switch drawn as a button, in lavender
+  (style "D11" lone-button-look)    ; the switch drawn as a button
   (formulas
     ("A13" "=CHOOSE(Orders!$B$41+1,\"No order yet.\",IF(Orders!$B$40>0,\"Bought \",\"Sold \")&ABS(Orders!$B$40)&IF(ABS(Orders!$B$40)=1,\" share of \",\" shares of \")&Orders!$B$32&\" at the price shown.\",\"Refused: the market was closed. Orders fill from the opening bell to the closing bell.\",\"Refused: no stock is picked. Press 1 to 4 to pick one, or click a button on its row.\",\"Refused: the cash does not cover \"&IF(Orders!$B$35=2,\"10 shares\",\"a share\")&\" of \"&Orders!$B$32&\".\",\"Refused: \"&IF(Orders!$B$39=0,\"no shares of \"&Orders!$B$32&\" to sell.\",\"fewer than 10 shares of \"&Orders!$B$32&\" to sell.\"))"))   ; the last order: filled, or refused and why
   (cells
@@ -1299,8 +1385,8 @@
 ; ---- BACK.1: the gigs ---------------------------------------------------------------
 ; Gigs, the game's second view, where the side hustle is worked: its button, the key
 ; beside it, the prospectuses proofread, what remains of the run's four, the fees, and
-; where the hustle stands, in a sentence. The button is a text in brackets, drawn in the
-; buttons' lavender since GUARD.1's hand test, in a column as wide as its text, so that a
+; where the hustle stands, in a sentence. The button is a text in brackets, drawn as a
+; button since GUARD.1's hand test, in a column as wide as its text, so that a
 ; click on any of it is a click on the button: a text spills only into the empty cells
 ; on its right, and a click there is the next cell's. The Hustle sheet names the
 ; button's place in values, so that this sheet is laid out again with no formula moved;
@@ -1316,19 +1402,19 @@
 
 (on "Gigs"
   (column "A" 26 shown none)        ; the button and the labels: as wide as the button's text
-  (column "B" 12 shown none)        ; the counts, the fees and the button's key: 12 characters, the width the dollars are padded for
+  (column "B" 12 shown none)        ; the counts, the fees and the button's key: 12 characters, the width of a view's dollars
   (as-of "A1")                      ; the date, every view's
   (bell "A2")                       ; the market's hours, every view's
   (cells
     ("A3" "Proofreading prospectuses at $250 apiece, a day's work and one a week, paid by the prospectus and not by the page.")
     ("A5" "[ Proofread a prospectus ]")   ; the button: Hustle!B3:B5 name this cell
     ("B5" "or press P"))            ; its key, the Keys sheet's B5
-  (style "A5" 1)                    ; the button drawn as a button, in lavender
+  (style "A5" lone-button-look)     ; the button drawn as a button
   (labels "A7" "Proofread" "Left this run" "Fees earned ($)")
   (formulas
     ("B7" "=Hustle!B17")            ; the prospectuses proofread, their work done
     ("B8" "=Hustle!B2-Hustle!B12")) ; what remains of the run's claims
-  (dollars "B9" "Hustle!B18")       ; the fees: whole cents spelled with two decimals
+  (dollars "B9" Hustle!B18)         ; the fees
   (formulas
     ("A11" "=IF(Hustle!B16=1,\"Proofreading: the fee is paid \"&Hustle!B19&\".\",IF(Hustle!B12>=Hustle!B2,\"Compliance has approved \"&Hustle!B2&\" a run, and you have proofread \"&Hustle!B12&\".\",IF(Hustle!B14=1,\"Done for the week: the next prospectus arrives \"&IF(Hustle!B13-Day!$B$3=1,\"tomorrow\",\"in \"&(Hustle!B13-Day!$B$3)&\" days\")&\".\",\"A prospectus awaits. Nobody else has read one either.\")))"))   ; where the hustle stands: one being proofread, the run spent, this week's made, or open
   (fine-print "A13"))               ; the fine print, every view's
@@ -1360,26 +1446,29 @@
 
 (on "Report"
   (column "A" 30 shown none)        ; the labels: as wide as the longest name a firm's row holds, and Average Co.'s line
-  (column "B" 12 shown none)        ; the worth, in dollars: 12 characters, the width the dollars are padded for
-  (column "C" 12 shown none)        ; the quarter's percents, as wide, the width the percents are padded for
-  (column "D" 12 shown none)        ; the year's
+  (column "B" 12 shown none)        ; the worth, in dollars: 12 characters, the width of a view's dollars
+  (column "C" 12 shown none)        ; the quarter's percents, as wide
+  (column "D" 15 shown none)        ; the year's, as wide as its header, The year so far
   (as-of "A1")                      ; the date, every view's
   (bell "A2")                       ; the market's hours, every view's
   (formulas
     ("A3" "=\"Report card for \"&IF(Proctor!$B$40=0,\"a firm pending registration\",Firms!$E$4)&\", graded by the proctor at seed \"&Clock!$B$3&\" and tier \"&Market!$B$3&\".\"")   ; whose card, and the market it was graded on
     ("A5" "=IF(Performance!$B$8=0,\"No card yet: the first is issued when the first quarter ends, after its 91st day.\",\"The \"&CHOOSE(Performance!$B$9,\"first\",\"second\",\"third\",\"fourth\")&\" quarter of year \"&Performance!$B$10&\", to its last close.\")"))   ; which quarter, or when the first card comes
   (cells
+    ("A6" "")                       ; the band spans the labels' column, which heads nothing
     ("B6" "Worth ($)")
     ("C6" "The quarter"))
   (formulas
     ("D6" "=IF(Performance!$B$9=4,\"The year\",\"The year so far\")")   ; the year's own at the fourth card
     ("A7" "=IF(Proctor!$B$40=0,\"Your firm\",Firms!$E$4)")   ; the firm, by its name once it has one
     ("A8" "=Stocks!$A$7&\", bought and held\""))   ; the benchmark, by the broad rung's name
+  (style "A6" band-look)            ; the band, a text's header to the left and a figure's to the right
+  (style "B6:D6" band-figures-look)
   (cells
     ("A9" "Alpha, the difference"))
-  (dollars "B7:B8" "Performance!C13")   ; each one's worth at the card, or at the begin before the first
-  (percent "C7:C9" "Performance!B17")   ; each return over the quarter, and alpha
-  (percent "D7:D9" "Performance!C17")   ; over the year so far
+  (dollars "B7:B8" Performance!C13) ; each one's worth at the card, or at the begin before the first
+  (percent "C7:C9" Performance!B17) ; each return over the quarter, and alpha
+  (percent "D7:D9" Performance!C17) ; over the year so far
   (formulas
     ("A11" "=IF(Performance!$B$8=0,\"\",\"Grade: \"&Performance!$B$21&\" for the quarter, and \"&Performance!$C$21&\" for the \"&IF(Performance!$B$9=4,\"year.\",\"year so far.\"))")   ; the grades, in a sentence
     ("A12" "=IF(Performance!$B$8=0,\"\",\"The proctor remarks: \"&Remarks!$D$3)"))   ; the proctor's remark on the card

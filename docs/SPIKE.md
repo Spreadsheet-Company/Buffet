@@ -95,6 +95,10 @@ empty.*
 
   *Closed 2026-10-16.* Predicted `~days` for the whole dish; the first slice cost one session, the scoping, its approval, the build, its measurements and the owner's hand test, beside the pin's move to `alonzo` 0.1.5, a `HOUSE.2` commit of its own. What landed: the Portfolio's column `D` and the glyph's fill in the source and its cartridge, 431 rows and 111 formula cells; the hand's `glyph` and its test; the Portfolio held over `A1:D10`; 46 tests; the describe golden blessed again. Five of the nine predictions missed in part, each named beside its number: the cartridge's characters by three, each escaped glyph counted short; the load under its range and a day's first frame where the fine print stays a tenth under it, both inside the noise; the source's block under its range, its comments shorter than priced; and the main thread's least a hundredth under. The colors stand as the second slice, an aesthetic pass, the scoping's findings with them.
 
+- ✅ **`FRONT.2`, second slice — the looks: Lovelace Lavender on the views, and the glyphs' shades.** *Scoped and built 2026-10-30 at the owner's word, over the pin to `alonzo` 0.3.0 and `vla-lang` 0.12.0, a `HOUSE.2` commit of its own; amended at the owner's two hand tests the same day and passed at the third, 2026-11-15: its decisions, the oracle, the measurements and what the hand tests found are under THE ITEMS, SCOPED.* The views' figures numbers under a format's code, the library's `dollars`, `signed-dollars` and `percent` written over `rule`, the padded texts of nested IFs gone; a button white on Lovelace Lavender's deep `#6B4FC8`, bold but for Trading's grid, and one standing alone bordered in the view's ink; a band of the same shade and ink under each table's headers, and down Trading's keys; a gain's glyph on the owner's mint and a loss's in the burgundy; a bold label over what it heads; and Trading's keys, over each column of buttons and beside each stock not picked. *Oracle, met:* every format a view draws reading at 4.5:1 or more by the viewport's rule; each code held to the hand's spelling; the looks where a person meets them; every frame of every run held; 69 mutants, each caught by a test other than the describe golden. `~days`
+
+  *Closed 2026-11-15.* Predicted `~days`; cost one session, the scoping and the build beside the pin, two rounds of the owner's changes at the hand test, and the third, which passed it. What landed: fifteen formats named by `define` in one section of the source; the kitchen's three verbs of a view's figures over `rule`; the views' looks; Trading's keys; the caveat on number formats rewritten; 96 tests, the describe golden blessed again; the cartridge 84,227 bytes where 99,451, a tick of the session 20.0 µs where 37.9 and the load 8.1 ms where 12.0, and a window viewed whole dearer, 82 µs where 51. Found, each a finding for Alonzo on the asks table and the owner's to pass on: a format's font lost on a patch's second and later rows, which leaves the Exam's options plain from the second question until a pin carries the one-line fix; the loop oracle's `grid` case, which gates `HOUSE.4`'s second slice; a text piece unrefused at the pass; the selection's wash over a button and the date; and a stray key answered in an author's words.
+
 - ✅ **`FRONT.3` — the overview, the ticker, the weather word.** *Scoped and built 2026-10-19 in one sitting at the owner's word, its ten decisions built as recommended; passed at the owner's hand test the same day with no change asked: the scoping, every prediction beside its number, what the build found and the owner's hand test are under THE ITEMS, SCOPED.* The dashboard: both pockets' net worth, the day and the year, the firm's name, the weather word from the index's slope, the ticker's headline of the day by `CHOOSE` over the Headlines sheet, course 0's ten headlines flavor alone and moving nothing until `SPECIAL.1`; the alerts that link to their panel (a margin call, a maturity, a redemption) as later courses add them; and the live sheet's strategy guide beside it, a column of payback times anyone can read (`AD-6`). *Oracle:* `buffet.rs`; the headline of the day held to the picker. *Pays into:* every alert a later course raises. *Found at `GUARD.1`'s build, 2026-10-17 (`SPIKE.md`):* the certificate leads to the sheet named at `Proctor!B6`, a value, the Portfolio until this dish writes the Overview's name there; the Camera shows it at the certificate's button, so one value moves the game's first view after the exam. *Scoped and built 2026-10-19 in one sitting, each decision the owner's to approve, amend or strike at the hand test (`SPIKE.md`):* the Overview after the Certificate, where the certificate now leads; the firm's line a placeholder until `BACK.2`; each pocket's net worth; the weather, five words by the market's change in tenths of a percent over the twenty days to the last close made, the session before's in session and the session's own from its close, `Market!B114:B124`, the look back moved with it, so that the word changes at most once a session, at its close; the Headlines sheet, ten rows of `BUFFET.md`'s fifteen, a headline a calendar day by the day's 83rd market draw; the alerts and the guide of payback times left to the dishes that give them something to hold, the Overview binding no key; caveats 21 and 22. `~days`
 
   *Closed 2026-10-19.* Predicted `~days`; cost one sitting, the scoping, the build, its measurements and mutants, and the owner's hand test, which passed it whole. What landed: the Overview, the sixth view, after the Certificate, `Proctor!B6` naming it; the Market's weather at its foot, `B114:B124`, and its look back moved to the last close made; the Dice's 83rd draw; the Headlines sheet, `src/content/headlines.vla`, ten rows; caveats 21 and 22; the source's notes and comments; 1,258 rows and 805 formula cells; the hand's last close made, its change, its weather and its headline; 81 tests, the Overview and the weather held at every bell and every day's turn of the long runs and at every frame of the order desk's sessions, the run that writes the open reaching Tuesday's close; eighteen mutants caught; the describe golden blessed again; `check_layout`'s content pin at 5; and, in `OMAKASE.md`, `BD-5`'s rows and the notes on `BACK.2`, `MENU.7`, `SPECIAL.1` and `POT.4`. Three of the nine predictions missed in part, each named beside its number: Cash's readers 8 where 9; the bell no dearer where 1 to 6 µs were priced, and the first frame 19.4 µs dearer, under the 20; and the suite cheaper than priced, the hour's year 3% longer, the weekday 1% and the whole 0.15 s.
@@ -3662,6 +3666,197 @@ the median, though this one holds more, and each test timed alone in both
 trees found the opposite and where it lies, the two years' test 0.17 s
 dearer, so the eight threads' difference was the machine's and a second
 alternation agreed (P5).
+
+### The second slice: the looks, over the pin to `alonzo` 0.3.0
+
+*Scoped and built 2026-10-30 at the owner's word, "Move the Alonzo and vla-lang pins, then
+proceed with FRONT.2's second slice", from this section's decisions 1, 2, 3 and 6, the line
+in `OMAKASE.md` and its rows in `MISE.6`. Each decision below is built as recommended, for
+the owner to amend at the hand test, and decisions 3 and 4 and the two after 9 stand as the owner's
+two hand tests of the same day amended them. The pin is a `HOUSE.2` commit of its own, as `ce6f126`
+stood beside the first slice.*
+
+*Passed at the owner's third hand test, 2026-11-15, "Tests pass; commit", and committed after the
+pin; closed in the ledger, 🛎 THE FRONT OF HOUSE.*
+
+**The pin.** Tried in scratch earlier the same day, a target a copy. `alonzo` 0.3.0 and
+`vla-lang` 0.12.0 compile under the oracle with no port, and over the old kit every frame
+holds and the cartridge is its source expanded: only the describe golden moves, by the
+census's words (`slot` for `lookup`, `(unlowered text)`), its plan's `(every-frame 0)`
+standing. The cost is the kit. `KIT.5`'s verbs take expressions, and a text is one, so 35
+calls (`hold` 15, `count` 11, `pressed` 2, `put` 7, two rows each) wrote 42 rows of quoted
+texts, `=IF("B11=1",...)`: the pass said `(loads yes)`, `--check` said `same` once expanded
+again, and 27 of the cartridge's 54 tests failed, its frames alone catching it. All 42 came
+back through `formula_syntax::read` and `write` byte for byte, so each piece was respelled
+as its expression, and the pass proved it: the rows that moved from the committed cartridge
+were the manifest's three and no other. And the page: a character typed on a cell opens its
+edit, and Delete empties it, on any sheet a `(spec 6)` manifest does not name in `(read ...)`
+(`CART.9`, `SPEC.5`), a cartridge at `(spec 5)` among them. So:
+
+1. **The views the game's and read-only, the Caveats read-only, every other sheet a person's
+   (rec).** `(game ...)` and `(read ...)` each name the seven views, and `(read ...)` the
+   Caveats too. The model stays the open book (`BD-3`): the waiver `Proctor!B3`, the paces
+   `Day!B1` and `B28`, sandbox edits by the owner's word of 2026-10-19, and `PLATE.6`'s edit
+   are a person's writes into it. *Alternative:* the model read-only too, which turns those
+   three into rows no person may make. Seen in Chrome: Q and Delete on the Portfolio refused
+   by the sheet's name and no cell moved; Q on the Day sheet opens its edit; the views' keys
+   and clicks as before.
+
+**The slice's decisions.**
+
+2. **A view's figures numbers under a format's code (rec, the `MISE.6` row's own plan).**
+   `dollars`, `signed-dollars` and `percent` keep their calls and write `=Stocks!E5/100` and
+   a `style` row over the fill, where they wrote nested IFs of over a thousand characters a
+   row, padded to a number's edge. The codes `#,##0.00`, `+#,##0.00;-#,##0.00;+0.00` and
+   `+0.00%;-0.00%;+0.00%`, a flat figure keeping the `+0.00` the owner has seen; and `#,##0`
+   on the shares, the owner's "Thousands separators" reaching them. `values`, the oracle's
+   reader, reads what a cell draws, the record's `text` row. The hand spells the same cents by
+   counting digits, sharing no rule with the code, and the padding's constants are gone.
+   *Found:* a code draws fifteen significant digits, as Excel does, so past $10 trillion a
+   view rounds its cents, $90,071,992,547,409.91 drawing `.90`, where the texts were exact to
+   2^53 cents; the model's cents stay exact, and `every_amount_...` holds the drawing to 10^15
+   cents less one and the rounding once. No caveat: it is Excel's own behavior. A figure too
+   wide for its 12 characters draws `#`s, as Excel does and a person drags wider: past
+   $9,999,999.99, as seen, and by the widths `CRITIC.1` measured a change past $999,999.99 and a
+   percent past 99,999.99%; a code refuses a color,
+   `[Red]`, so a glyph's shade stays a look.
+3. **A button white on `#6B4FC8`, centered and bold, but for Trading's grid (rec, the owner's
+   words at `GUARD.1`'s hand test).** 5.87:1, where white on the logo's `#A080E0` reads at 3.2:1, the shade the
+   grid card already stands in for. An exam's option the same, reading from its left, its text
+   long, first built not bold and bold at the owner's word at the hand test: "the white text over
+   lavender background should be bolded for readability". The widest of the bank's and the firms'
+   84 options, bold and with its letter, takes 580 of the column's 692 pixels at 100%, and the same
+   share at every ratio measured to 225%, so none spills white onto the sheet's white. Trading's 24
+   buttons plain at the second hand test, "perhaps E6:J9 need not be bolded?", under a bold band and
+   beside a bold column of keys; the buttons standing alone and the options stay bold. A fill
+   covers its cell's gridlines since `ENGINE.28`, which at the pin
+   alone drew Trading's 24 buttons and the Exam's four options as one lavender block each, so
+   each button says the gridlines' gray itself on its right and bottom, as Superposition's
+   sites do. An option emptied keeps those edges and takes the default's fill by `(look "" 0)`.
+4. **The band white and bold on `#6B4FC8`, spanning each table (the owner's word at the hand
+   test: "white text on lavender fill, also, for readability").** The Portfolio's `A4:H4`,
+   Trading's `A5:J5` and the Report's `A6:D6`, 5.87:1, a header to the left over a text's column
+   and to the right over a figure's, and centered, with the gridlines' gray on its right and
+   bottom, over a column that stands centered (format 14). First built in the logo's `#A080E0`
+   under the view's ink,
+   5.35:1, decision 6's shade; white on that shade reads at 3.2:1, under the bar, so the band
+   takes the button's. A button's brackets now tell the two apart, every other cell of a view on
+   that fill saying them. A `style` row needs a written cell, so each column a band spans and no
+   header names holds an empty text.
+5. **Each glyph its shade, by decision 1's roles (rec).** A gain's `▲` on the mint `#ADEBB3`
+   under the view's ink, 12.31:1; a loss's `▼` in the burgundy `#800020` on the sheet's white,
+   10.83:1; a flat day's `=` in the view's ink; each centered in its 3 characters. By a look of
+   the glyph's own text, never a number. The mint says the gridlines' gray too.
+6. **A bold label over what it heads (rec).** The Portfolio's and the Overview's headings and
+   the Certificate's title and `Caveat:`. No size is said, so no row moves.
+7. **The formats named once, by `define` (rec, over decision 3).** Fifteen formats in a section
+   before the views, each a word, `button-look`, `dollars-look` and the rest, which a view's
+   rows and the kitchen's verbs name; the expansion spells the indices as ever. *Alternative:*
+   bare numbers, as decision 3 had them when the language held no names.
+8. **The Report's year column 15 characters (found at the build).** "The year so far", bold
+   and to the right, cut on its left in 12, its neighbor holding a text. The test holds every
+   band's header to its column.
+9. **The caveat on number formats rewritten, a draft (`BD-5`).** "Only the views format their
+   numbers: in the model, $12.30 is 1230 and 2% reads 0.02", its `Where` `Stocks!E5:E8`, and
+   its joke "The decimal point has returned from furlough, to the front office only." The
+   model's cents keep no format, so the oracle reads them as the model holds them; a thousands
+   separator on them is one row a range, not taken unasked.
+10. **A button standing alone bordered (the owner's word at the hand test: "maybe it needs a
+    border?").** Format 13, a button whose four edges are the view's ink, `medium`: the
+    Certificate's `[ Open for business ]`, Trading's `[ Switch ]` and Gigs' `[ Proofread a
+    prospectus ]`, one rule for the three. `thin` is one device pixel at every ratio, which at the
+    owner's 150% could still read as no border, so `medium`, seen beside it at that ratio.
+    Trading's 24 and the Exam's four stay among others, the gridlines' gray between them.
+11. **Trading's keys where they act (the owner's word at the hand test).** In the band over each
+    column of buttons, centered, the key that makes its trade: B, N, M, S, D and F. Beside each
+    stock not picked, centered in column A, the key that picks it, 1 to 4, the stock picked keeping
+    its mark, `=IF(Orders!$B$16=Orders!B6,"▸",Orders!B6)`, and at the second hand test on the band
+    itself, "the same lavender background and white text as row 5", so that the band turns the
+    corner down `A6:A9`. The shares and their header centered at the same word, `D5:D9`, by format
+    14 and format 15, a count of shares in the middle of its column; the Portfolio's stay to the
+    right among its figures, the word naming Trading. No column is ever picked, a key acting at
+    once, so each stands always. The keys over the columns are text cells, as `or press C` is, and
+    the hand reads each from its command's key, `key_hint`, so that a key moved on the Commands
+    sheet with its hint left behind fails. A person's own binding in the drawer's keymap, `(bind "V"
+    buffet.buy-1)`, moves a key no cell knows of, as it does for `or press C` and the line at `A15`,
+    each saying the cartridge's own.
+
+**The oracle.** `every_format_a_view_draws_reads`, each view's own record drawn by the
+viewport's rule at the exam and in session, a look over the cell's own property by property,
+every cell that holds something at 4.5:1 or more, no look keyed on a number and no format on
+the model. `the_views_draw_the_houses_looks`, the bands, the glyphs, the buttons, the codes and
+the headings. `the_codes_draw_the_hands_spellings`, each code as the cartridge's row spells it
+through the language's `numfmt`, against the hand, to $5,000 by the cent, a change to $1,000
+either way, a percent to 100.00% either way, and beside each power of ten.
+`the_views_are_the_games_and_no_person_writes_them`, the manifest's sheets. 96 tests, 38 and
+58, where 92 stood; every frame of every run held. 32 mutants, each written into a copy of the
+source or the kitchen by one anchor and expanded, each failing: a text piece again; a view off
+either list and the model on it; the glyph reversed; a look on a number and on the model; the
+band dropped, off its row and in the deep shade; the gain's fill the burgundy and the loss's ink
+the mint; a button's ink, shade and edges; an option centered and an emptied one still a button;
+each code wrong; a figure at the wrong scale; a percent not yet made; the year's column narrow;
+a format on the model; a heading lost. Two of them, written inside an `on` first, were refused
+at the pass for their spelling, and were written again at the top level and caught. After the hand
+test 26 more, each failing a test other than the describe golden: an option not bold; each band's
+shade and ink and its weight; a lone button's edges, gone, gray and thin; each of the three among
+others, and one of the 24 alone; a key wrong, gone and two swapped over the columns; a stock not
+picked saying nothing or its row, the stock picked saying its key, the marks reversed; the keys and
+the mark off center; the deep shade off a band with no brackets; and a command's key and a pick's
+moved with the hint left behind. After the second, 11 more, by the same rule: the grid bold again; the
+keys off the band and to its left; the centered band not bold and off center, and a key not on it; the
+shares' header to the right; Trading's shares to the right and to the left, the Portfolio's centered,
+and the centered code ungrouped.
+
+**The measurements**, natively, a runner a pin pinned to the performance cores and opted out of
+the throttling, seven alternated runs each, median:
+
+| | `f5dcde1` at 0.2.0 | the pin at 0.3.0 | the slice at 0.3.0 |
+|---|---|---|---|
+| the load | 11.6 ms | 12.0 ms | 8.1 ms |
+| an ordinary frame | 2.3 µs | 1.4 µs | 1.4 µs |
+| a mark, a tick of the session | 38.0 µs | 37.9 µs | 20.0 µs |
+| the Portfolio's window viewed whole | 46 µs | 51 µs | 82 µs |
+| Trading's | 48 µs | 52 µs | 78 µs |
+| the cartridge | 99,281 bytes | 99,451 | 84,227 |
+
+The texts' nested IFs gone halve a mark; a whole window costs more to view, each figure's code
+writing its text there, which a frame's patch pays for its changed cells alone. The page
+3,882,538 characters where 2,521,977 and its module 1,866,609 bytes where 1,038,867, the
+language's library and expander, 0.3.0's own (its `RELEASES.md`). In Chrome at 100% and 150%:
+the exam by clicks and keys, the certificate's button, orders by click and by key, the switch,
+Gigs' button, every view drawn, no error in the console; a card reached in about 3 s with the
+paces written.
+
+**Found, unminted.** (a) `MISE.6`, a finding for Alonzo: a text where a verb wants an expression
+goes unrefused at the pass, and 0.3.0's notes for a game that carries the page do not name it. (b)
+`MISE.6`, a finding for Alonzo: a press leaves the selection's wash on a button, white on it about
+2.9:1 until the selection moves. (c) `MISE.6`, a finding for Alonzo that gates `HOUSE.4`'s second
+slice: the page's loop oracle runs 15 cases on a game's page, 14 pass over Buffet's module, and
+`grid` fails on the Exam at both ratios under Alonzo's own runner: scrolled to its last column the
+viewport shows one column and one row past the record's window. The same at the pin's stage and
+at a column A of 40 characters, so neither this slice nor the wide column; the case's moves are
+newer than 0.2.0's page, whose `grid` passes. The cells there are 100 columns past anything Buffet
+draws, so no person sees it today. (d) `MISE.6`, a finding for Alonzo: a stray key on a read-only
+view paints the page's own sentence in red and it stays there, "Certificate is a read-only sheet,
+named by the manifest's (read ...): a key there writes nothing, and the cartridge's own rows still
+write it (version 6, docs/SPEC.md section 7.2)", seen in the owner's own hand test after the exam;
+words for an author, where a player pressed a letter. (e) The owner's Snipping Tool captures brighten
+every color by 3 in linear light and clip at white: `#6B4FC8` lands as `#B185FF`, `#A080E0` as `#FFD2FF`
+and the view's ink as `#363633`, and the mint is lost altogether; measured from the shots themselves,
+so a shot of the owner's says nothing of a color. Chrome reads that display as `(dynamic-range: high)`,
+and its own capture of a window on it, the call DevTools' "Capture screenshot" makes, holds `#6B4FC8`
+to the digit. (f) `MISE.6`, a finding for Alonzo, the owner's question at the second hand test, "Why
+is only the first option highlighted": a format's font is lost on a patch's second and later rows.
+`_repaint` paints each changed row under its own `clipped`, whose `ctx.restore()` takes the canvas's
+font back, while the painter's note `p.font`, `ENGINE.28`'s, keeps the bold, so the next row's `if
+(p.font !== font)` sets nothing and draws plain until a full paint. The Exam's four options change in
+one frame, so `A7` alone draws bold from the second question on, and a tab away and back draws all
+four bold; a pick moved on Trading leaves one key plain, its second row. Keeping the note beside the
+canvas's state in `clipped` is one line, and in a scratch copy of the page every option draws bold at
+every question. Buffet's vendored file is not edited, and the options stay bold, the owner's word
+standing and no page public, until the pin that carries it. My own walks shot the first question
+alone, and the hand's frames hold a cell's text and no font drawn: a look on a cell whose text moves
+wants its picture after a patch, not only at the opening.
 
 ## `BACK.1` — the side hustle, the first button: a prospectus proofread for $25, by a click or a key
 

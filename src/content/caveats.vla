@@ -62,10 +62,10 @@
      "A real stock near $1 can swing several percent a day, and under $1 it may be quoted to a hundredth of a cent."
      "Analysts rate it a Hold, which it does."
      "Stocks!E5")
-    ("Numbers have no formats: $12.30 is 1230 in the model's cents and text on the Portfolio; 2% reads 0.02."
-     "A workbook formats its numbers for people: $12.30, 2.00%, 1,000,000."
-     "The decimal point has returned from furlough, on a text-only contract."
-     "Portfolio!B5:C8")
+    ("Only the views format their numbers: in the model, $12.30 is 1230 and 2% reads 0.02."
+     "A workbook formats its numbers for people on every sheet: $12.30, 2.00%, 1,000,000."
+     "The decimal point has returned from furlough, to the front office only."
+     "Stocks!E5:E8")
     ("Prices move every five minutes and stand still between."
      "A share's price moves with every trade, many times a second, from the opening bell to the closing one."
      "Management prefers prices that keep to a timetable."

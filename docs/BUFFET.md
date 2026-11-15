@@ -819,8 +819,8 @@ The game written by hand in the engine's tests, every frame held; closed forms (
 - **No formulas at run time.** The step computes values only (`AD-7`). Every vehicle exists at load, locked; adding a class is data, not engine work. A person may type formulas (the Strategy sheet is within the rules).
 - **The Write sheet is short.** One formula row per write, evaluated every frame (`SPEC.md` 3.9). Positions as formula state where possible.
 - **Text is data.** Strings are cell values. A picker is `CHOOSE(k, ref1, ref2, ...)`, limited by the 8,192-character formula limit: about a thousand references. A kit macro generates it.
-- **Grid mode.** The UI is a grid-mode cartridge (`ENGINE.8`): a window of at most 80 by 50 cells; a cell shows its value's text; a `look` fills by value; **a format has no font color** (found at `CART.4`). Whether custom number formats with literal glyphs (`▲0.0%;▼0.0%`) are honored by the viewport is (check).
-- **Palette.** Lovelace Lavender: `#A080E0`, `#E2D8F6`, `#F7F4FC`, `#6B4FC8`, and the dark lavender grays; nothing else.
+- **Grid mode.** The UI is a grid-mode cartridge (`ENGINE.8`): a window of at most 80 by 50 cells; a cell shows its value's text; a `look` draws by value; a format says a fill, a number's code, a font with its color, an alignment and a border (`ENGINE.28`, `alonzo` 0.3.0, where `CART.4` found no font color). A code draws a sign and two decimals, and a glyph stays a cell of its own (`FRONT.2`).
+- **Palette.** Lovelace Lavender the primary (`BD-6`): `#A080E0`, `#E2D8F6`, `#F7F4FC`, `#6B4FC8`, and the dark lavender grays; beside it the owner's mint and burgundy on the glyphs.
 - **Numbers.** Doubles end near 1.8e308 and then an error value; "no NaN reaches a cell". The end of the game is a designed thing.
 - **Time.** The frame number is the only clock; the host writes no time into any cell. Offline progress is a seek (`ENGINE.13`), not a wall-clock read in a formula.
 - **Determinism.** The same module gives the same bits on every browser; the native runner may differ in a transcendental's last bit, so goldens are held on the module. `SIN` and `^` are computed inside it.

@@ -99,15 +99,17 @@ pub fn load(path: &str) -> Result<Cartridge, String> {
         .map_err(|r| format!("line {}: {} {}", r.line, r.refusal.id, r.refusal.text))
 }
 
-/// The values of a window of a sheet as the `values` record prints them, by
-/// address: a number as its shortest text, a text without its quotes. A cell
-/// with no value is not there.
+/// What a window of a sheet draws, as the `values` record prints it, by
+/// address: a number as its shortest text, or under a format's code as the
+/// text that code writes, the record's `text` row (`FRONT.2`'s second slice,
+/// the viewport drawing that row and never respelling a value), and a text
+/// without its quotes. A cell with no value is not there.
 pub fn values(cart: &Cartridge, sheet: &str, window: &str) -> BTreeMap<String, String> {
     let Ok(Viewed::Text(record)) = cart.view("values", sheet, Some(window)) else {
         panic!("the {sheet} sheet's record of {window}");
     };
     let mut out = BTreeMap::new();
-    for head in ["(value ", "(cell "] {
+    for head in ["(value ", "(cell ", "(text "] {
         let head = format!("{head}\"{sheet}\" \"");
         for line in record.lines() {
             if let Some((addr, v)) = line
