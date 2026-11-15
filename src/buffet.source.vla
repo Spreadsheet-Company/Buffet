@@ -77,6 +77,10 @@
 ;           and the proctor's remark, the Camera showing it at every card; the Performance
 ;           sheet, its books; the Day sheet's quarter; and the Remarks sheet, the
 ;           proctor's remarks, a content sheet of its own.
+;   HOUSE.2 the pin to alonzo 0.3.0: the page's version 6, each view the game's and
+;           read-only, so that a stray key or Delete writes no view, and the Caveats
+;           read-only; the model's sheets stay a person's to edit; and every call of the
+;           kit's verbs written in expressions, each row expanding to its bytes.
 ;
 ; The market's clock (BD-7). A frame is twenty seconds of the market's time in the
 ; regular session and two minutes between sessions, so at the manifest's rate of thirty
@@ -106,24 +110,30 @@
 ; under 2^53 and exact in a double, as Park and Miller's own step is.
 
 (cartridge "buffet"
-  (spec 5)                          ; the page's version 5: a game's views on sheets of their own, a click on any of them the game's, and commands of its own
+  (spec 6)                          ; the page's version 6: a game's views on sheets of their own, a click on any of them the game's, commands of its own, and the keyboard's sheets
   (title "Buffet")
   (rate 30)
   (screen grid 80 50)
   (seed 791886)                     ; every first game's market: a first year that dips early and closes 10% up
+  (game "Exam" "Certificate" "Overview" "Portfolio" "Trading" "Gigs" "Report")   ; the views: the game's keys hold on them and on no other sheet
+  (read "Exam" "Certificate" "Overview" "Portfolio" "Trading" "Gigs" "Report" "Caveats")   ; no key or row of a person's writes a view or the Caveats; the model's sheets stay the open book, a person's to edit (BD-3)
   (author "Spreadsheet Company")
   (license "AGPL-3.0-or-later AND CC-BY-SA-4.0")
   (notes "Buffet: All You Can Sheet. The front office is open for business: the game opens on the Series 777, the regulator's exam for a fund manager, eleven questions answered by a click or a key, ten of them scored, each right answer $500 more of the firm's $5,000, and the last the firm's style, which names the firm; then its certificate; then the Overview at Monday's opening bell, which waits for you to leave the exam room: the day and the hour, the firm's name and style, the net worth of the firm and your own, the market's weather, a word for how far it moved in the twenty days to the last close, and the day's headline, with the fine print at its foot. Beside it, the Portfolio, four stocks, each its price, its change since the last close and the holding of it, the firm's or your own, its shares, their cost, their value and the gain, the market open from 9:30 to 16:00 on weekdays, ten minutes a second while it trades and an hour a second between, and moving every five minutes, and under them the cash on hand and the net worth, the firm's and yours. Beside that, Trading, where each stock's six buttons buy one share, ten or as many as the cash covers, and sell one, ten or all, at the price shown while the market is open, by a click or by a key: 1 to 4 pick a stock, then B, N and M buy and S, D and F sell, each also a command of the page's palette; and beside the cash, a switch, or C, turns whose cash an order spends, the firm's or your own, moving none of it. And Gigs, where a prospectus is proofread for $250, by a click on its button or by P, a day's work, one a week and four a run, Compliance permitting. And at each quarter's end the Report, the report card, which the game shows you: the firm's return over the quarter and over the year so far against Average Co. bought at the opening bell and held, the difference its alpha, a grade for each and the proctor's remark. Behind them, the back office: the market's calendar and its hours; its dice, rolled once a day where anyone can watch them roll; the market itself, four waves and a drift, and each session's five minutes between two closes, their swings a factor of its own, and its weather, a word read off its change; four stocks priced off it in whole cents, the dearest paying a dividend four days a year, paid to the shares held; the hustle's books, every prospectus counted; the proctor's books, the exam's draw and every answer; the order desk's books, every button and command and the order they make; the positions, each pocket's shares, cost and gains; the cash, the holdings and the net worth, the firm's and yours; the ledger, the last hundred orders filled; the performance, the report card's books, the firm's worth and Average Co.'s at each card; the fine print, a disclosure a month; the Series 777's question bank, twenty questions; the four firms, each its style and its name; the headlines, one a day; the proctor's remarks, one a grade; and the model's caveats, the things this game gets wrong, each with Management's response. A returning candidate may waive the exam by writing 1 into Proctor!B3, at five correct answers and the first style's firm, or another's by writing 2, 3 or 4 into Proctor!B5. Pick the Day, the Dice, the Market, the Stocks, the Hustle, the Proctor, the Orders, the Positions, the Cash, the Ledger or the Performance sheet to watch the model work, or the Caveats sheet to read, or the Disclosures, the Questions, the Firms, the Headlines or the Remarks sheet among the hidden sheets."))
 
 ; The libraries whose macros this source calls, both beside it: the kit, Alonzo's
-; common.vla copied at the pin (sheets, labels, headers, on, cells, formulas, hold,
-; pressed, count and camera), then Buffet's own, kitchen.vla (draws, strings, picker,
+; common.vla copied at the pin (sheets, labels, headers, on, cells, formulas, rule, hold,
+; pressed, count, put and camera), then Buffet's own, kitchen.vla (draws, strings, picker,
 ; as-of, bell, fine-print, dollars, signed-dollars, percent and clicked); then the content sheets, each a file of src/content/ that defines
 ; one macro of its rows, called where its sheet belongs. The manifest stands first, the
 ; cartridge's own form, then every include, then the code (the owner's word,
 ; 2026-10-15), so that a file missing is refused at the top; and each include defines
 ; macros alone, since the pass takes the first form that is no include and no macro
-; for the manifest.
+; for the manifest. A piece of the kit's verbs, hold, count, pressed and put among them,
+; is an expression since its KIT.5, (hold "B13" (= B11 1) Day.last!$B$3), the formula
+; syntax writing the row's text; a text there is a text in the formula, =IF("B11=1",...),
+; which the pass and the load both take and only the frames held refuse. The formulas verb
+; alone keeps a text, a formula as Excel shows it.
 (include "common.vla")
 (include "kitchen.vla")
 (include "content/disclosures.vla")
@@ -232,7 +242,7 @@
   (labels "A25" "the exam holds the bell" "frames the bell waited")
   (formulas
     ("B25" "=IF(Proctor!$B$41=1,0,1)"))   ; the exam holds the bell: 1 until the game begins, at the certificate's button or a waiver
-  (count "B26" "Day.last!B25")      ; frames the bell waited: the frames before this one that the exam held it, the wait's record
+  (count "B26" Day.last!B25)        ; frames the bell waited: the frames before this one that the exam held it, the wait's record
   (labels "A28" "seconds a frame, in session" "in session" "seconds a frame, now" "time shown, in minutes")
   (cells
     ("B28" 20))                     ; seconds a frame in session: ten minutes a second at the manifest's rate
@@ -268,8 +278,8 @@
   (cells ("C1" "uniform"))
   (hold                             ; the market's die, the stream's state:
     "B1"                            ;   its cell
-    "Day!$B$5=1"                    ;   when it rolls: a day's first frame, and no other
-    "MOD(IF(Day!$B$3=0,Clock!$B$3,Dice.last!B1)*$F$2,2147483647)")   ; what it rolls to: the seed on the first day, else yesterday's die, jumped a day's draws
+    (= Day!$B$5 1)                  ;   when it rolls: a day's first frame, and no other
+    (mod (* (if (= Day!$B$3 0) Clock!$B$3 Dice.last!B1) $F$2) 2147483647))   ; what it rolls to: the seed on the first day, else yesterday's die, jumped a day's draws
   (draws                            ; the market's draws, read by the dish that needs one:
     "B2"                            ;   the first, beneath the die
     83)                             ;   how many a day so far: POT.2's four phases, then POT.11's 78 five minutes of a session, then FRONT.3's headline
@@ -331,8 +341,8 @@
     ("D8:D12" "=2*$B$1/B8"))        ; each wave's speed: a turn over its period
   (hold                             ; each of tier 1's phases, taken on the first day and kept:
     "E9:E12"                        ;   its cells
-    "Day!$B$3=0"                    ;   when it is taken: the first day, day 0, and no other
-    "2*$B$1*Dice!$C2")              ;   what it is: a turn times the uniform of the market's draws 1 to 4
+    (= Day!$B$3 0)                  ;   when it is taken: the first day, day 0, and no other
+    (* 2 $B$1 Dice!$C2))            ;   what it is: a turn times the uniform of the market's draws 1 to 4
   (headers "B14" "the session" "the look back" "the session before")
   (labels "A15" "the day" "a year's wave" "the Kitchin" "the Juglar" "the Kuznets" "the Kondratiev" "the trend, the drift to the day" "the cycle: one and the four waves" "the cycle on the first day" "tier 0, the Kiddie Pool" "tier 1, the Day Trader" "the index")
   (formulas
@@ -512,14 +522,14 @@
     "$B$3"                          ;   the button's view,
     "$B$4"                          ;   its column
     "$B$5")                         ;   and its row, values of this sheet
-  (pressed "B10" "Input!B5")        ; a key: the a button's rising edge, held by P
+  (pressed "B10" Input!B5)          ; a key: the a button's rising edge, held by P
   (formulas
     ("B11" "=IF(AND(OR(B9=1,B10=1),Hustle.last!B14=0),1,0)"))   ; a claim: a press while the last frame showed it open
-  (count "B12" "B11")               ; the claims so far
-  (hold "B13" "B11=1" "Day.last!$B$3+$B$6")   ; open from day: after a claim, a week after the day shown
+  (count "B12" B11)                 ; the claims so far
+  (hold "B13" (= B11 1) (+ Day.last!$B$3 $B$6))   ; open from day: after a claim, a week after the day shown
   (formulas
     ("B14" "=IF(OR(B12>=$B$2,B13>Day!$B$3),1,0)"))   ; shut: the run's claims spent, or this week's made
-  (hold "B15" "B11=1" "Day.last!$B$31+$B$7")   ; due: after a claim, a day's work after the time shown
+  (hold "B15" (= B11 1) (+ Day.last!$B$31 $B$7))   ; due: after a claim, a day's work after the time shown
   (formulas
     ("B16" "=IF(AND(B12>0,B15>Day!$B$14),1,0)")   ; proofreading: a claim's work not yet done
     ("B17" "=B12-B16")              ; done: the claims whose work is done
@@ -603,26 +613,26 @@
     "B24"                           ;   its view,
     "C24"                           ;   its column
     "D24")                          ;   and its row, values a layout moves
-  (pressed "G24:G28" "Input!B6")    ; each button's key: the rising edge of b, x, y, start and select, each held by its key while its view shows
+  (pressed "G24:G28" Input!B6)      ; each button's key: the rising edge of b, x, y, start and select, each held by its key while its view shows
   (labels "A30" "the option pressed" "answered" "answers" "a question open" "the row shown" "the right option" "correct" "correct so far" "the score" "the firm's capital, in cents" "the style" "begun")
   (formulas
     ("B30" "=IF(OR(F24=1,G24=1),1,IF(OR(F25=1,G25=1),2,IF(OR(F26=1,G26=1),3,IF(OR(F27=1,G27=1),4,0))))")   ; the option pressed: the first by letter, by a click or a key, 0 for none
     ("B31" "=IF(AND(B30>0,Proctor.last!B33=1),1,0)"))   ; answered: a press while the last frame showed a question open
-  (count "B32" "B31")               ; the answers given
+  (count "B32" B31)                 ; the answers given
   (formulas
     ("B33" "=IF(AND(B32<11,$B$3=0),1,0)")   ; a question open: fewer than eleven answered, and no waiver
     ("B34" "=CHOOSE(MIN(B32+1,10),B12,B13,B14,B15,B16,B17,B18,B19,B20,B21)")   ; the row shown: the next question's, the tenth's from the eleventh on, which the bank's row shown reads
     ("B35" "=IF(Questions!$K$9=\"A\",1,IF(Questions!$K$9=\"B\",2,IF(Questions!$K$9=\"C\",3,IF(Questions!$K$9=\"D\",4,0))))")   ; the right option of the question shown, its letter as a number
     ("B36" "=IF(AND(B31=1,Proctor.last!B32<10,B30=Proctor.last!B35),1,0)"))   ; correct: an answer to one of the ten, the right option of the question the person saw
-  (count "B37" "B36")               ; correct so far
+  (count "B37" B36)                 ; correct so far
   (formulas
     ("B38" "=IF($B$3=1,$B$4,B37)")  ; the score: a waiver's, or the right answers
     ("B39" "=$B$1+$B$2*B38")        ; the firm's capital, in whole cents
     ("B40" "=IF($B$3=1,$B$5,IF(AND(B31=1,Proctor.last!B32=10),B30,Proctor.last!B40))"))   ; the style: the eleventh answer, 1 to 4, 0 until it is given
   (hold                             ; begun, the game's: once 1, for good:
     "B41"                           ;   its cell
-    "OR($B$3=1,AND(OR(F28=1,G28=1),Proctor.last!B32=11))"   ;   when: a waiver, or the certificate's button after the eleventh answer
-    "1"))                           ;   what it holds then
+    (or (= $B$3 1) (and (or (= F28 1) (= G28 1)) (= Proctor.last!B32 11)))   ;   when: a waiver, or the certificate's button after the eleventh answer
+    1))                             ;   what it holds then
 
 ; ---- PLATE.1: the order desk --------------------------------------------------------
 ; The order desk's books: every order a person places on Trading, by a click on one of
@@ -698,7 +708,7 @@
     ("B13" "=Input!$B$20")          ; the command run at this frame, its name, or empty
     ("B14" "=IF(B13=Commands!$A$2,1,IF(B13=Commands!$A$3,2,IF(B13=Commands!$A$4,3,IF(B13=Commands!$A$5,4,0))))")   ; the stock a command picks: the Commands sheet's rows 2 to 5
     ("B15" "=IF(B13=Commands!$A$6,1,IF(B13=Commands!$A$7,2,IF(B13=Commands!$A$8,3,IF(B13=Commands!$A$9,4,IF(B13=Commands!$A$10,5,IF(B13=Commands!$A$11,6,0))))))"))   ; the act a command orders: its rows 6 to 11
-  (hold "B16" "OR(B11>0,AND(B14>0,B45=0))" "IF(B11>0,B11,B14)")   ; the stock picked: the last a click or a command named, a click's first, the switch's too, none at the start
+  (hold "B16" (or (> B11 0) (and (> B14 0) (= B45 0))) (if (> B11 0) B11 B14))   ; the stock picked: the last a click or a command named, a click's first, the switch's too, none at the start
   (formulas
     ("B17" "=IF(B16=0,\"the stock picked, none yet\",CHOOSE(B16,A6,A7,A8,A9))")   ; the stock picked, by name, which the commands' words say
     ("B18" "=IF(B20=0,\"\",CHOOSE(B20,A6,A7,A8,A9))")   ; the order's stock, by name
@@ -712,15 +722,15 @@
     ("B26" "=IF(OR(B21=0,B22<>1,B20=0),0,CHOOSE(B21,IF(B23<=B24,1,0),IF(10*B23<=B24,10,0),INT(B24/B23),IF(B25>=1,-1,0),IF(B25>=10,-10,0),0-B25))")   ; filled: a share or ten whole, as many as the cash covers, every share held; a sale negative
     ("B27" "=IF(B21=0,0,IF(B22<>1,2,IF(B20=0,3,IF(B26<>0,1,IF(B21<=3,4,5)))))"))   ; the outcome, 0 for no order
   (labels "A29" "orders filled" "the ledger's row" "the pocket's cash now, in cents")
-  (count "B29" "IF(B26<>0,1,0)")   ; the orders filled, this one too
+  (count "B29" (if (<> B26 0) 1 0))   ; the orders filled, this one too
   (formulas
     ("B30" "=MOD(B29-1,100)+2")     ; the ledger's row: the fills' place in a ring of a hundred, from row 2
     ("B31" "=IF(B19=2,Cash!$B$4,Cash!$B$3)"))   ; the pocket's cash now, after this frame's order
   (labels "A32" "the last order: its stock, by name" "its pocket" "its stock" "its act" "the market shown open" "the price shown, in cents" "the cash shown, in cents" "the shares shown" "filled, in shares" "the outcome")
   (hold                             ; the last order, as it was taken, which the view says:
     "B32:B41"                       ;   its cells, B18 to B27's
-    "$B$21>0"                       ;   when: an order, filled or refused
-    "B18")                          ;   what each holds then
+    (> $B$21 0)                     ;   when: an order, filled or refused
+    B18)                            ;   what each holds then
   (labels "A43" "the switch's column on the view" "its row" "the switch clicked" "the switch run" "switched")
   (cells
     ("B43" 4)                       ; the switch: column D on the view,
@@ -767,13 +777,17 @@
   (formulas
     ("C2:C9" "=CHOOSE(B2,Stocks!$A$5,Stocks!$A$6,Stocks!$A$7,Stocks!$A$8)")   ; the stock's name, the model's
     ("D2:D9" "=IF(AND(Orders!$B$19=A2,Orders!$B$20=B2),Orders!$B$26,0)"))   ; filled now: the order desk's fill, on its pocket's and its stock's row
-  (count "E2:E9" "D2")              ; the shares: the last frame's and the fill
+  (count "E2:E9" D2)                ; the shares: the last frame's and the fill
   (count                            ; the cost basis, at the average cost:
     "F2:F9"                         ;   its cells
-    "IF(D2>0,D2*Orders!$B$23,IF(D2<0,0-IF(D2+Positions.last!E2=0,Positions.last!F2,INT((0-D2)*Positions.last!F2/Positions.last!E2+0.5)),0))")   ; a purchase's cost, or the shares sold's share of the basis
-  (count "G2:G9" "IF(D2>0,D2*Orders!$B$23,0)")   ; bought: the cents spent buying
-  (count "H2:H9" "IF(D2<0,(0-D2)*Orders!$B$23,0)")   ; sold: the cents received selling
-  (count "I2:I9" "IF(Day!$B$5=1,Positions.last!E2*CHOOSE(B2,Stocks!$H$5,Stocks!$H$6,Stocks!$H$7,Stocks!$H$8),0)")   ; dividends: at a day's first frame, the last frame's shares at the dividend today
+    (if (> D2 0)
+        (* D2 Orders!$B$23)         ;   a purchase's cost,
+        (if (< D2 0)                ;   or the shares sold's share of the basis, all of it with the last share
+            (- 0 (if (= (+ D2 Positions.last!E2) 0) Positions.last!F2 (int (+ (/ (* (- 0 D2) Positions.last!F2) Positions.last!E2) 0.5))))
+            0)))
+  (count "G2:G9" (if (> D2 0) (* D2 Orders!$B$23) 0))   ; bought: the cents spent buying
+  (count "H2:H9" (if (< D2 0) (* (- 0 D2) Orders!$B$23) 0))   ; sold: the cents received selling
+  (count "I2:I9" (if (= Day!$B$5 1) (* Positions.last!E2 (choose B2 Stocks!$H$5 Stocks!$H$6 Stocks!$H$7 Stocks!$H$8)) 0))   ; dividends: at a day's first frame, the last frame's shares at the dividend today
   (formulas
     ("J2:J9" "=CHOOSE(B2,Stocks!$E$5,Stocks!$E$6,Stocks!$E$7,Stocks!$E$8)")   ; the price now, the stock's
     ("K2:K9" "=E2*J2")              ; the value: the shares at the price now
@@ -894,23 +908,23 @@
   (labels "A3" "Average Co.'s price now, in cents" "its shares, bought with the capital at the begin" "the cents left over, held" "a quarter's turn" "a year's turn" "cards issued" "the card's quarter, 1 to 4" "the card's year")
   (formulas
     ("B3" "=Stocks!$E$7"))          ; Average Co.'s price now, the broad rung's
-  (hold "B4" "Proctor.last!$B$41<>1" "INT(Proctor!$B$39/B3)")   ; its shares: as many as the capital buys at the begin's price, and held from the begin
-  (hold "B5" "Proctor.last!$B$41<>1" "Proctor!$B$39-B4*B3")     ; the cents left over, held as cash
+  (hold "B4" (<> Proctor.last!$B$41 1) (int (/ Proctor!$B$39 B3)))   ; its shares: as many as the capital buys at the begin's price, and held from the begin
+  (hold "B5" (<> Proctor.last!$B$41 1) (- Proctor!$B$39 (* B4 B3)))   ; the cents left over, held as cash
   (formulas
     ("B6" "=Day!$B$35")             ; a quarter's turn, the calendar's
     ("B7" "=IF(AND(B6=1,Day!$B$33=1),1,0)"))   ; a year's turn: a quarter's turn into the first quarter
-  (count "B8" "$B$6")               ; the cards issued
-  (hold "B9" "$B$6=1" "Day.last!$B$33")   ; the card's quarter: the last frame's, the quarter that ended
-  (hold "B10" "$B$6=1" "Day.last!$B$6")   ; the card's year
+  (count "B8" $B$6)                 ; the cards issued
+  (hold "B9" (= $B$6 1) Day.last!$B$33)   ; the card's quarter: the last frame's, the quarter that ended
+  (hold "B10" (= $B$6 1) Day.last!$B$6)   ; the card's year
   (headers "A12" "worth, in cents" "now" "at the last card" "at the one before" "at the year's start" "at the last year's" "at the card's year")
   (labels "A13" "the firm" "Average Co., bought and held")
   (formulas
     ("B13" "=Cash!$B$9")            ; the firm's net worth now
     ("B14" "=$B$4*$B$3+$B$5"))      ; Average Co.'s, bought and held, now
-  (hold "C13:C14" "OR(Proctor.last!$B$41<>1,$B$6=1)" "B13")   ; at the last card, or the begin
-  (hold "D13:D14" "$B$6=1" "Performance.last!C13")           ; at the card before it
-  (hold "E13:E14" "OR(Proctor.last!$B$41<>1,$B$7=1)" "B13")   ; at the year's start, or the begin
-  (hold "F13:F14" "$B$7=1" "Performance.last!E13")           ; at the last year's start
+  (hold "C13:C14" (or (<> Proctor.last!$B$41 1) (= $B$6 1)) B13)   ; at the last card, or the begin
+  (hold "D13:D14" (= $B$6 1) Performance.last!C13)           ; at the card before it
+  (hold "E13:E14" (or (<> Proctor.last!$B$41 1) (= $B$7 1)) B13)   ; at the year's start, or the begin
+  (hold "F13:F14" (= $B$7 1) Performance.last!E13)           ; at the last year's start
   (formulas
     ("G13:G14" "=IF($B$9=4,F13,E13)"))   ; at the card's year's start: the last year's at the fourth card, the year's own at the others
   (headers "A16" "the card, in hundredths of a percent" "the quarter" "the year so far")
@@ -1455,10 +1469,10 @@
 (sheet "Write" visible)             ; the derived writes: a device the game writes
 (headers "Write" "A1" "sheet" "address" "value")
 (on "Write"
-  (put "A2" "Ledger" "Orders!$B$26<>0" "\"A\"&Orders!$B$30" "Orders!$B$29")   ; the order's number
-  (put "A3" "Ledger" "Orders!$B$26<>0" "\"B\"&Orders!$B$30" "Day.last!$B$18&\", year \"&Day.last!$B$6&\", day \"&Day.last!$B$7&\", \"&Day.last!$B$16")   ; when, the five minutes the person saw
-  (put "A4" "Ledger" "Orders!$B$26<>0" "\"C\"&Orders!$B$30" "IF(Orders!$B$19=2,\"Personal\",\"Firm\")")   ; the pocket
-  (put "A5" "Ledger" "Orders!$B$26<>0" "\"D\"&Orders!$B$30" "Orders!$B$18")   ; the stock
-  (put "A6" "Ledger" "Orders!$B$26<>0" "\"E\"&Orders!$B$30" "Orders!$B$26")   ; the shares, a sale negative
-  (put "A7" "Ledger" "Orders!$B$26<>0" "\"F\"&Orders!$B$30" "Orders!$B$23")   ; the price, in cents
-  (put "A8" "Ledger" "Orders!$B$26<>0" "\"G\"&Orders!$B$30" "Orders!$B$31"))   ; the pocket's cash after it, in cents
+  (put "A2" "Ledger" (<> Orders!$B$26 0) (& "A" Orders!$B$30) Orders!$B$29)   ; the order's number
+  (put "A3" "Ledger" (<> Orders!$B$26 0) (& "B" Orders!$B$30) (& Day.last!$B$18 ", year " Day.last!$B$6 ", day " Day.last!$B$7 ", " Day.last!$B$16))     ; when, the five minutes the person saw
+  (put "A4" "Ledger" (<> Orders!$B$26 0) (& "C" Orders!$B$30) (if (= Orders!$B$19 2) "Personal" "Firm"))  ; the pocket
+  (put "A5" "Ledger" (<> Orders!$B$26 0) (& "D" Orders!$B$30) Orders!$B$18)   ; the stock
+  (put "A6" "Ledger" (<> Orders!$B$26 0) (& "E" Orders!$B$30) Orders!$B$26)   ; the shares, a sale negative
+  (put "A7" "Ledger" (<> Orders!$B$26 0) (& "F" Orders!$B$30) Orders!$B$23)   ; the price, in cents
+  (put "A8" "Ledger" (<> Orders!$B$26 0) (& "G" Orders!$B$30) Orders!$B$31))   ; the pocket's cash after it, in cents

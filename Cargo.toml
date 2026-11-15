@@ -6,18 +6,20 @@
 # never copied here, as a stranger consumes them.
 #
 # The pins are exact and never a range, and a registry version and never a
-# git rev (the owner's route, 2026-10-14): alonzo 0.2.0, the release whose
-# page runs every act of the player as a named command from one palette, a
-# keymap a person rebinds and a cartridge's own commands at the page's version
-# 5 (ENGINE.22 to ENGINE.25), beside 0.1.5's edit and continue (ENGINE.7) and
-# 0.1.4's views on a game's own sheets (ENGINE.18); and vla-lang 0.10.0, the
-# version that release pins, so that the lock holds one copy of the language,
-# a fill's cells read as slices, a cell computed alone run compiled once, and
-# a sheet read in the frame being computed read as an array (Frazaro's
-# KERNEL.43, KERNEL.44 and KERNEL.31), every answer the same to the bit. Both
-# resolve from crates.io since alonzo 0.1.0, the engine's first release, was
-# published (2026-10-14): the local patch that stood in for it is deleted,
-# and Cargo.lock is committed (HOUSE.2). What this repository copies from the
+# git rev (the owner's route, 2026-10-14): alonzo 0.3.0, the release whose
+# viewport draws what a format says, a number by its code and a text's weight,
+# color and alignment and a cell's borders (ENGINE.28), keeps a dragged width
+# a sheet's (ENGINE.26), and whose page's version 6 says which sheets' keys are
+# the game's and which no person writes (SPEC.5), beside 0.2.0's palette and a
+# cartridge's own commands (ENGINE.22 to ENGINE.25), 0.1.5's edit and continue
+# (ENGINE.7) and 0.1.4's views on a game's own sheets (ENGINE.18); and vla-lang
+# 0.12.0, the version that release pins, so that the lock holds one copy of the
+# language, a formula cell held in about 14 to 19 bytes (Frazaro's KERNEL.49),
+# the library's second slice (KERNEL.8), a format's looks (KERNEL.50) and the
+# expander's loops and names (VLA.5, VLA.6 and VLA.15), every answer the same
+# to the bit. Both resolve from crates.io since alonzo 0.1.0, the engine's first
+# release, was published (2026-10-14): the local patch that stood in for it is
+# deleted, and Cargo.lock is committed (HOUSE.2). What this repository copies from the
 # engine's, the kit and the page, is copied at the tag this pin names, and
 # tools/check_vendored.ps1 fails when the pin moves without the copies
 # (HOUSE.4).
@@ -34,8 +36,8 @@ license = "AGPL-3.0-or-later"
 repository = "https://github.com/Spreadsheet-Company/Buffet"
 
 [workspace.dependencies]
-alonzo = "=0.2.0"
-vla-lang = "=0.10.0"
+alonzo = "=0.3.0"
+vla-lang = "=0.12.0"
 
 [profile.dev.package."*"]
 # The engine and the language, every package that is not the workspace's,

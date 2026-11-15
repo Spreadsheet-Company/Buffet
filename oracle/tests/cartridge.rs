@@ -119,7 +119,10 @@
 //! prospectus claimed in it and paid in the next; the Camera showing the Report
 //! at every card and the person's tabs their own between; the Report binding no
 //! key; the Remarks sheet; and the style and your own pocket moving no figure of
-//! the card.
+//! the card. Since the pin to `alonzo` 0.3.0: the page's version 6, each view the
+//! game's and read-only and every other sheet a work sheet, the Caveats read-only;
+//! and every frame of every run holding, the kit's verbs in expressions expanding
+//! to their bytes.
 
 use std::collections::{BTreeMap, BTreeSet, VecDeque};
 use std::sync::OnceLock;
@@ -2226,8 +2229,9 @@ fn every_sheet_is_written_bare_and_each_content_sheet_in_its_state() {
 }
 
 /// The game opens on the Exam (`GUARD.1`'s decisions 9 and 10, after
-/// `FRONT.1`'s 2 to 5). The cartridge is written to the page's version 5 since
-/// `PLATE.1` (version 4 since `FRONT.1`, which version 5 keeps whole), whose
+/// `FRONT.1`'s 2 to 5). The cartridge is written to the page's version 6 since
+/// the pin to `alonzo` 0.3.0 (version 5 since `PLATE.1` and version 4 since
+/// `FRONT.1`, each kept whole by the next), whose
 /// host opens a grid cartridge on the sheet its Camera's third row names
 /// at the load, a value or a formula's `value` row, else on the first visible
 /// sheet of its own order (Alonzo's `SPEC.md` sections 3.1 and 3.8): the
@@ -2240,8 +2244,8 @@ fn the_game_opens_on_the_exam() {
     let cart = loaded();
     assert_eq!(
         cart.manifest().spec,
-        5,
-        "the page's version 5: a game's views on sheets of their own, and commands of its own"
+        6,
+        "the page's version 6: a game's views on sheets of their own, commands of its own, and the keyboard's sheets"
     );
     let Ok(Viewed::Text(camera)) = cart.view("grid", "Camera", Some("A1:B3")) else {
         panic!("the Camera's record");
@@ -2277,6 +2281,42 @@ fn the_game_opens_on_the_exam() {
             .any(|(name, state)| name == "Screen" && state == "hidden"),
         "the Screen hidden: the views are sheets of their own"
     );
+}
+
+/// The keyboard's sheets (the pin to `alonzo` 0.3.0, the page's version 6, its
+/// `SPEC.5`). At that page a character typed on a cell of a sheet no manifest
+/// names opens the cell's edit and Delete empties it, so each view is the
+/// game's and read-only, the game's keys holding there and no person's key or
+/// row writing it, and the Caveats, which a player reads whole, read-only. Every
+/// other sheet is named by neither, a work sheet: the model is the open book
+/// (`BD-3`), and the waiver (`GUARD.1`), the paces (`POT.11`) and a sandbox edit
+/// (`PLATE.6`) are a person's writes into it.
+#[test]
+fn the_views_are_the_games_and_no_person_writes_them() {
+    let cart = loaded();
+    let manifest = cart.manifest();
+    assert_eq!(
+        manifest.game, VIEWS,
+        "the game's keys hold on the views alone"
+    );
+    let mut read: Vec<&str> = VIEWS.to_vec();
+    read.push("Caveats");
+    assert_eq!(
+        manifest.read, read,
+        "no person writes a view or the Caveats"
+    );
+    assert!(
+        manifest.work.is_empty(),
+        "every other sheet a work sheet by being named by neither: {:?}",
+        manifest.work
+    );
+    let model = ["Day", "Proctor", "Cash", "Market", "Orders", "Hustle"];
+    for sheet in model {
+        assert!(
+            !manifest.read.iter().any(|named| named == sheet),
+            "{sheet} stays a person's to edit: the open book (BD-3)"
+        );
+    }
 }
 
 /// The cells of a cell or a range as a cartridge's row writes it, `A5` or

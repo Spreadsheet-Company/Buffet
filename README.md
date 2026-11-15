@@ -71,7 +71,7 @@ cargo test --workspace
 tools\run_checks.ps1
 ```
 
-Both pins, `alonzo = "=0.2.0"` and `vla-lang = "=0.10.0"`, the language
+Both pins, `alonzo = "=0.3.0"` and `vla-lang = "=0.12.0"`, the language
 that release pins, resolve from crates.io, and `Cargo.lock` is committed.
 
 The page is Alonzo's player, its template and scripts vendored unchanged
