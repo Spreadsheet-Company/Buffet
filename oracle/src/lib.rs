@@ -25,7 +25,8 @@
 //! report card, the quarters, the benchmark bought and held, every turn's
 //! worth, the returns, the grades and the percents spelled, and since
 //! `PLATE.6` the limit, a typed number past the end of the numbers counted
-//! by its digits, where its error lands and the order it refuses; the host's
+//! by its digits, where its error lands and the order it refuses, and since its
+//! second slice the books' ceiling, a person's judged exactly; the host's
 //! derived writes, the
 //! Write sheet's rows as the host reads them; the door
 //! the runners and the tests

@@ -73,6 +73,10 @@ empty.*
 
   *Closed 2026-11-15.* Predicted `~days` for the dish; the first slice cost one sitting, the scoping, the build, its measurements and mutants, and the owner's hand test the same day, which passed it with one change, the joke's words. What landed: the Errors sheet, `src/content/errors.vla`, five jokes, the layout check's content pin raised to 7; `kitchen.vla`'s `error-joke`; the eight joke cells of four views; the order desk's guard, `ISERROR(Orders!B24)`, its sixth outcome and Trading's seventh sentence; caveat 26; the source's notes and comments; 1,478 rows and 871 formula cells; the hand's end of the numbers, counted by a typed number's digits, the capital at a worth, the landing and the sixth outcome; 103 tests, the crate's 42 and the cartridge's 61, the edited game held cell by cell against a twin held to the hand through the edit, refused orders, a switch, a Delete and the undo; twenty mutants caught; the describe golden blessed again; in `OMAKASE.md`, `BD-5`'s row and two rows of the asks table; `BUFFET.md`'s appendix in the owner's words; and `Delta/CLAUDE.md`'s map. Three of the eight predictions missed in part, each named beside its number: the pass 0.5 ms dearer where 0.4 at most, the limit's test just under its range, and the page 9,398 characters longer where 8,000 at most. The build found the hand's guard against the end drawn too wide, a score of none raising ten to the 308th, and a joke reading its view's own figure living until a test of the library's rule caught it. The hand test saw `Proctor!B2` drawn as `#`s, the record's spelling of 1E+308, on the asks table.
 
+- ✅ **`PLATE.6`, second slice — the ceiling: no book counts past the end of the numbers.** Taken into course 0 from `FRONT.7`'s line at the owner's word, 2026-11-15, "Ceiling now, island later": an order whose fill would take a book past the end is refused, so that no count, book or ledger row keeps `#NUM!` once an edit is undone; the island at a stated net worth stays `FRONT.7`'s, the third slice. *Oracle:* a session of a person's ceilings held to the hand cell by cell, each rule of the guard refusing alone and each boundary filling; a session near the end where no book, cash or ledger row holds an error; a mutant for each rule. *Pays into:* every book a later course adds counts under the ceiling. *Scoped and built 2026-11-15 in one sitting, its decisions built as recommended for the owner's hand test to amend (`SPIKE.md`, under THE ITEMS, SCOPED):* the ceiling 1E+307 cents, `Orders!B49`, a setting below the end by a factor of nearly eighteen, so that four books summed and ten times a basis stay numbers; an order refused, the seventh outcome, whose cents take its stock's cents bought past the ceiling, or a sale's its cents sold or the pocket's cash after it, or whose cents no number holds; each book compared with the ceiling less the cents, so that the guard sums nothing that could pass the end; Trading's sentence, "Refused: the order would take the books past their ceiling."; and caveat 27. *Passed at the owner's hand test the same day with no change asked.* `~days`
+
+  *Closed 2026-11-15.* Predicted `~days` for the slice; it cost one sitting, the question of how to take it, the scoping, the build, its measurements and mutants, and the owner's hand test the same day, which passed it whole. What landed: the Orders sheet's ceiling and guard, `B49:B54`, `B26` the order asked unless refused, the seventh outcome in `B27` and Trading's eighth sentence; caveat 27; the source's notes and comments; 1,494 rows and 876 formula cells; the hand's ceiling, a person's judged exactly, the seventh outcome and the order's asked and books; 107 tests, the crate's 44 and the cartridge's 63, the desk's six new cells held at every frame of every session, a session of a person's ceilings held cell by cell, and a session near the end of the numbers scanning the books, with witnesses for each refusal; thirteen mutants caught; the describe golden blessed again; in `OMAKASE.md`, `FRONT.7`'s line amended, its slice the third, and `BD-5`'s row; and `Delta/CLAUDE.md`'s map. Three of the eight predictions missed in part, each named beside its number: the pass 0.38 ms longer where 0.3 at most, the exact session under its range, and the page 5,037 characters longer where 5,000 at most. The build found the guard as first written summing a book and the order's cents, which near the end is `#NUM!` and the fill's, and compared them by a difference instead. The hand test found a paste by Control+V into a cell missing from Alonzo's page.
+
 ## 🧽 THE BACK OF HOUSE
 
 - ✅ **`BACK.1` — the dish pit: the side hustle, the first button.** *Scoped 2026-10-16, approved the same day with the view named by the owner, built and hand-tested that day, and amended at the hand test, the key bound on its view alone: the scoping, the approval, every prediction beside its number, what the build found and the owner's hand test are under THE ITEMS, SCOPED.* Gigs, the game's second view, the owner's name for "the sheet where various clicker jobs can produce cash at varying speeds, cooldowns, and pay rates", and its one job at course 0, proofreading a prospectus: a button cell, `[ Proofread a prospectus ]` in a column as wide as its text, pressed by a click on it while Gigs shows, the pointer on the cell and the left button's rising edge, or by P while Gigs shows, the Keys sheet binding P on that view alone by a formula of the sheet shown, so that every view binds keys of its own (the owner's word at the hand test: "keybindings should be scoped to each tab to avoid limiting the entire application to 26 key commands"); each press a cell that holds 0 between presses; $25 a claim, once a market day, at most four claims a run, the owner's cap over a claim a day for good, four claims being $100, about twice a perfect trader's first year on the personal pocket's $100. A claim is judged by what the last frame showed and counts against the day shown, as an order fills at the price shown; its books stand on the Hustle sheet, the fee, the cap and the button's place as values, so that a layout of the view moves no formula; the fees are the claims times the fee, which `PLATE.2`'s personal pocket reads when it comes; the day moving reopens the hustle, and nothing reads the boundary. The views' date and fine print entered `kitchen.vla` at their second writing, `as-of` and `fine-print`, the Portfolio expanding over them to its bytes unchanged. *Oracle, met:* every frame of a scripted session of clicks and keys, written as the host writes them and the Keys sheet read after every step as the host reads it, held to the hand, the cap, the day a press counts against, the reset and the key's binding among them; Gigs at rest on every day of two years and two days and of eight hundred at one frame a day; the settings, the button at their place and the one key bound on its view; nothing reads a view, `BD-7`'s scan and the census's `(every-frame 0)` kept; the describe golden blessed again; nine mutants, each caught by the test written for it; a click's cost natively and in Chrome at full screen, a claim shown 48 to 50 ms after the click at p95, the contract's 100 ms met by half; and the owner's hand test in the page, twice. *Pays into:* `PLATE.1`'s six buttons a rung and `GUARD.1`'s four options a question, each a press's cell, its place values of the model and its keys its view's; the gigs to come, each its own speed, cooldown and pay. `~days`
@@ -8375,4 +8379,178 @@ your own cash's buy, the Delete's `#VALUE!` with no joke and the firm's buy afte
 undo, passed by the owner's word. Amended the same day and committed once the suite,
 the expansion and every check with its control had run green over the amendment, the
 page built again, 3,892,029 characters.
+
+## `PLATE.6`, second slice — the ceiling: no book counts past the end of the numbers
+
+*Scoped and built 2026-11-15, the sitting of the first slice's close, at the owner's
+word, "commit before proceeding with slice 2 of PLATE.6"; and, asked how to take a
+slice that stood in `FRONT.7`'s line of course 7, beside the endings' panels and after
+`STATION.7`'s island rung, "Ceiling now, island later": the part no later course
+rewrites built now, an order whose fill would take a book past the end refused so that
+no count, book or ledger row keeps `#NUM!` once an edit is undone; the island at a
+stated net worth left to `FRONT.7`, the slice's third. Each decision below stands as
+recommended and was built, the owner's to approve, amend or strike at the hand test,
+and every text a player reads is a draft. Nothing was minted. Read for it: the first
+slice's record above and its Found, the books past the end by play; `FRONT.7`'s line;
+`BUFFET.md`'s "Numbers", "The ceiling" and its pitch, a net worth that needs
+scientific notation; the order desk, the positions and the cash in the source; and
+`vla-lang` 0.12.0's `calc/value.rs` (`number_to_text`, the join's spelling).*
+
+**The gap, named first.** No break-infinity convention exists in the formula language
+(`FRONT.7`'s line): a number ends near 1.8E+308, as Excel's does. Filling it would
+change the rows the cartridge writes, a ceiling moving or going, but not cheaply, and
+against the treaty Frazaro keeps with Excel, whose numbers end where a double does; and
+`BUFFET.md` asks for the end of the game designed within it ("Numbers"). So nothing here
+waits on the language, and the slice designs the books within the end.
+
+**What it stands on, read on the day** (Buffet at `9afabd3`, the first slice, committed
+and not pushed; 103 tests).
+- *The books.* Each pocket's each stock keeps its shares, cost basis, cents bought,
+  cents sold and dividends as counts over their twins. Bought and sold are gross and
+  grow with every order, while the cash, the start and the fees less the four bought
+  with the four sold and the dividends, nets them: turnover alone passes the end long
+  before any balance does, an edit of your own cash near the end and two orders (the
+  first slice's Found).
+- *The sums the books feed.* The cash sums four rows of each kind (`Cash!B3:B4`); a
+  sale of part of a holding takes its share of the basis as the shares sold times the
+  basis over the shares held, ten times the basis before the division at Sell 10, the
+  largest part a button sells, Sell all taking the basis whole.
+- *A guard's own arithmetic.* A book near the end and an order's cents summed are
+  `#NUM!` themselves, and an error in `IF`'s condition is the `IF`'s value (the first
+  slice's reading of `IF`), so a guard that sums would hand the fill its own error.
+- *Exact cents.* Whole cents are exact below 2^53 cents, $90,071,992,547,409.91; past
+  it a sum of them rounds (`CRITIC.1`'s record).
+
+**The decisions.**
+
+1. **The ceiling: 1E+307 cents, a setting (rec).** `Orders!B49`, a value a person may
+   edit, the open book (`BD-3`), below the end of the numbers by a factor of nearly
+   eighteen, so that four books under it summed, and ten times a basis under it, are
+   numbers (the hand's `the_ceiling_leaves_every_sum_of_the_books_a_number`, by digits:
+   seventeen times it a number, eighteen past the end). *The alternatives:* the end
+   itself, each sum asked whether it is an error, which the cash's four rows and a
+   partial sale's ten times the basis pass while each book is a number, and which
+   rounds at the boundary where the guard and the books add in different orders; 2^53
+   cents, $90 trillion, where whole cents stop being exact, under the pitch's net worth
+   that needs scientific notation, so that `FRONT.7`'s island would move it; a ceiling
+   for each pocket's sums.
+2. **The books the guard reads (rec).** A purchase: the pocket's cents bought of its
+   stock, which bounds the stock's basis and shares. A sale: its cents sold, and the
+   pocket's cash after it. Each as the last frame showed it, `Orders!B52:B53` over
+   `Positions.last!G2:H9`, as the cash shown and the shares are. Dividends are paid to
+   the shares held, at no order, and stand unguarded (Found). *The alternatives:* each
+   pocket's sums of four, which no single book passes first; the shares and the basis,
+   bounded already by the cents bought.
+3. **Each book compared with the ceiling less the order's cents, never summed (rec,
+   found at the build).** `B52>B49-B51`: the ceiling and the cents are each a number
+   under the end, so is their difference, and no operand of the guard is a sum that
+   could pass it. Written first as `B52+B51>B49`, the near-end session, written before
+   its first run, found it failing: a book near a person's ceiling near the end and an
+   order's cents summed to `#NUM!`, and the guard's own error became the fill's. Its
+   mutant is kept (M6).
+4. **Cents no number holds, refused (rec).** A sale's shares at a price a person's edit
+   sent past the end make cents of `#NUM!`; `ISERROR(B49-B51)` refuses that order, and a
+   ceiling a person wrote as no number refuses every order. *The alternative:* the error
+   passed through, the fill `#NUM!` and every book with it.
+5. **The seventh outcome and its sentence, a draft (rec).** `B27`'s 7, after the error's
+   6 and before a fill, its label "7 the ceiling"; Trading's sentence, "Refused: the
+   order would take the books past their ceiling.", plain, with no number, since the
+   ceiling is a setting and the sentence speaks for the last order after the setting
+   moves; the number stands in `Orders!B49` and in caveat 27. The order asked is `B50`,
+   the fill the desk makes but for the ceiling, and `B26` it unless refused. *The
+   alternative:* the number in the sentence, read from the setting now, which would name
+   a ceiling the order never met.
+6. **The hand takes a person's ceiling (rec).** `Plate::ceiling`, `None` for the
+   cartridge's own, which no book of whole cents below 2^64 reaches, and a person's
+   ceiling in whole cents judged exactly, a purchase by its cents bought and a sale by
+   its cents sold and its cash shown, the order keeping what it asked and the books it
+   was judged by. So the oracle is a session at lowered ceilings held cell by cell by the
+   order desk's holders, every rule of the guard refusing alone and each boundary
+   filling, and a second session near the end for what the hand's integers cannot hold,
+   its refusals witnessed by the cells' own numbers. *The alternative:* a decimal hand
+   near the end, which the first slice's counting of digits held for one cell and the
+   books' every cell would not.
+7. **Caveat 27 (`BD-5`), a draft (rec).** "The books stop counting at 1E+307 cents: an
+   order that would take them past it is refused."; "A broker refuses an order too large
+   for its limits, against a fat finger; a ledger never refuses a digit."; "Management
+   has capped ambition at a level it describes as aspirational."; its place
+   `Orders!B49`. Marked for `MENU.8`.
+8. **No view shows the ceiling (rec).** The refusal says it, the caveat states it and the
+   Orders sheet holds it; a view's line for a limit no play at course 0 meets would teach
+   nothing.
+
+**Found at the scoping and the build**, none minted:
+- *A person's edit near the end still passes it.* The ceiling refuses orders and shrinks
+  nothing: cash edited past it may buy, a purchase lowering it, and while the cash shown
+  is past it no sale fills, not even a share's; an edit of the start, the capital or a
+  price past the end is the first slice's error.
+- *A holding's value past the end by its price.* Shares bought under the ceiling are
+  worth past the end at a price eighteen times their cost's: a value's error, shown with
+  its joke, which recovers as the price falls; and a sale of them is refused, its cents
+  no number (decision 4), until it does.
+- *Dividends unguarded.* At the ceiling the dividends' count passes the end after about
+  670 years of game time, General Widget's 50 cents a share a quarter on the 1.3E+303
+  shares its start's price lets the ceiling buy.
+- *The card's own ceiling* stands below this one (the first slice's Found, 9E+303 cents a
+  worth): a firm's book under the ceiling can still give a card `#NUM!` at its turn.
+- *An undo after orders near the end* leaves your own cash at the orders' real result,
+  near the end and of either sign, every book a number: the ceiling keeps the books
+  counting, and the sandbox's money is the sandbox's.
+- *Exact cents end at 2^53 cents*, $90 trillion, far under the ceiling; past it whole
+  cents sum inexactly, the owner's decimal-precision item's question (Frazaro's,
+  unminted), not this slice's.
+
+**The predictions, before any number.** Written at the scoping and the build, each
+before its number was taken (the rows' range before the first expansion).
+
+| | What | Predicted | The number |
+|---|---|---|---|
+| P1 | the cartridge | 1,490 to 1,500 rows; 876 formula cells; `(every-frame 0)` and `(cycles 0)` standing | *Measurement*, as predicted: `(rows 1494) (loads yes)`, 88,008 bytes where 86,433; 876 formula cells, the budget `(budget 30 876 26280 2000000)`, shapes 266 where 261, alone 616 where 611, levels 107 either way; the Orders sheet's readers 130 where 115; the shapes below the fill three levels deeper, 10 to 13 |
+| P2 | the pass and the load | each 0.0 to 0.3 ms longer than `HEAD`'s | *Measurement*, one release runner over `HEAD`'s tree and this one, three rounds alternated, each a median of 21: the load 7.66 to 8.20 ms where 7.45 to 8.35, inside; the pass 11.08 to 11.40 where 10.75 to 10.86, its medians 0.38 apart. **Missed** in one: the pass dearer than priced, the order desk's comments and sixteen rows |
+| P3 | the step, natively | an ordinary frame and a tick within 3% of `HEAD`'s; an order's frame 0 to 2 µs dearer | *Measurement*, the same runner, five sessions of 1,200 frames, a share bought every fifteen frames, each frame's median: an ordinary frame 1.3 to 1.4 µs either way; a tick 22.4 to 24.1 where 23.0 to 23.5, its medians 2% apart; an order's frame 17.4 to 18.3 where 16.8 to 17.1, 0.4 to 1.4 dearer; inside, each. Unpriced: the frame after an order 9.1 to 9.6 where 8.9 to 9.1 |
+| P4 | the suite | 4 to 6 tests more; the ceiling's exact session 0.3 to 1.5 s alone; the near-end session under 0.5 s; the whole on eight threads within 0.5 s of `HEAD`'s | *Measurement*: 107 where 103, the hand's 44 and the cartridge's 63; the two new sessions 0.12 s together on one thread, three runs; the cartridge's whole on eight threads 9.28 to 9.36 s where 9.20 to 9.52, alternated, inside. **Missed** in one: the exact session under its range, its 32 frames cheaper than priced |
+| P5 | the page | 2,000 to 5,000 characters longer | *Measurement*: 3,897,066 characters where 3,892,029, 5,037 longer. **Missed**, by 37: the source's comments |
+| P6 | the checks | ALL GREEN, four checks and four controls; no check edited; no file added | *Measurement*, as predicted: ALL GREEN; fmt and clippy clean; `expand --check` the same |
+| P7 | mutants | 10 to 14, at most one living at the first run | *Measurement*: 13 written, each anchor applying once, each expanded and loading, all caught at the first run by a test other than the describe golden (below) |
+| P8 | the hand test | the owner's, below | The owner's, 2026-11-15, on the page built here: passed, "Tests pass", no change asked; `Orders!B49` drawn as `#`s, as predicted; a paste by Control+V into a cell found missing, Alonzo's (below) |
+
+**What the build found.** The source expanded to 1,494 rows and loaded at its first
+expansion, and the rows that moved were the outcome's label, `B26` and `B27`, the
+ceiling's block of twelve, caveat 27 with the Caveats' count and its four pickers,
+Trading's sentence and the notes. The suite's first run failed the describe golden
+alone: every frame of every existing session held the six new cells of the desk, the
+ceiling spelled as the record spells 1E+307, its 308 digits. The ceiling's session
+failed once, at frame 28, where your own pocket held nineteen shares and ten sold left
+nine, so ten more were a shortage of shares and no ceiling's; a share more was written
+in its place. The near-end session, written before it ran, found decision 3: the guard
+as first written summed. Its witnesses were added after its first pass, so that each
+refusal is shown to be the one the script means: the cents alone past the cartridge's
+own ceiling, the sale's cents and the holding's value errors, and the book and the cents
+summing past the end in a double. The thirteen mutants: the fill unguarded and a
+purchase unguarded, each caught by both new sessions; the guard summing and cents no
+number holds unguarded, by the near-end session alone; a sale's cents sold unguarded, its
+cash after unguarded and a refusal at the ceiling itself, by the exact session alone; the
+cartridge's own ceiling at the end, the books shown of the other pocket and the cents sold
+read as the cents bought, by both and every session the desk's holders hold, nine, eight
+and seven tests; the seventh outcome unsaid and Trading's sentence gone, by both, the
+near-end session finding Trading's last line an error after the undo; and the caveat's
+place an empty cell, by the caveats' own test. Natively an order's frame is about a microsecond
+dearer, the guard's five cells, and no other frame moves.
+
+**The owner's hand test.** On the page built here (`web/index.html`, 3,897,066
+characters), 2026-11-15: passed, "Tests pass; if everything looks good, commit before
+suggesting next steps", no change asked. The owner's shots, in order: the Orders sheet
+after the waiver at frame 344, the ceiling's block in rows 49 to 54 under its six labels,
+`B49` drawn `#######` as predicted (1E+307 spelled in full, the first slice's Found), the
+guard's cells 0 with no order; Trading after Monday's closing bell, "Bought 10 shares of
+Longshot Mining at the price shown." and the firm's cash available $7,490.00; and, after
+`Cash!B1` written 1.7E+308 at frame 4234, the Caveats' row 28, caveat 27's four fields.
+The steps no shot shows, the lowered ceiling's three orders, your own pocket's buy and
+sale, the ceiling written back and the refusal near the end, passed by the owner's word.
+
+**Found at the hand test**, none minted: *a paste by Control+V into a cell.* The owner,
+pasting 1E+307 into `Orders!B49`: "I realized we have not yet implemented copy/paste
+keyboard shortcuts in Alonzo." The page writes a typed cell (`cellEditRow`) and Delete's
+empty text (`cellClearRow`), and a copy of a cell or a paste into one by the keyboard is
+neither; Alonzo's, its `ENGINE` family's, the owner's to mint.
 

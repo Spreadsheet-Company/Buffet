@@ -135,7 +135,10 @@
 //! each balance it lands on its joke from the Errors sheet, an order against it
 //! refused and no book moved, and every cell the twin's again once the edit is
 //! undone; the Errors sheet itself; and in every run, every balance's joke cell
-//! empty.
+//! empty. Since its second slice: the books' ceiling, the order desk's guard
+//! held in every run, a person's ceilings held to the hand cell by cell, each
+//! rule refusing alone and each boundary filling, and a session near the end of
+//! the numbers where no fill, count, cash or ledger row holds an error.
 
 use std::collections::{BTreeMap, BTreeSet, VecDeque};
 use std::sync::OnceLock;
@@ -4919,7 +4922,7 @@ const MODEL: [(&str, &str); 13] = [
     ("Stocks", "A1:I8"),
     ("Hustle", "A1:B19"),
     ("Proctor", "A1:G41"),
-    ("Orders", "A1:I47"),
+    ("Orders", "A1:I54"),
     ("Positions", "A1:M15"),
     ("Cash", "A1:B10"),
     ("Ledger", "A1:G101"),
@@ -5262,7 +5265,7 @@ fn orders_held(
     shown: &Shown,
     starts: [u64; 2],
 ) {
-    let got = values(cart, "Orders", "A1:I47");
+    let got = values(cart, "Orders", "A1:I54");
     for (addr, text) in orders_want(plate, io, command, order, shown, starts, None) {
         assert_eq!(got.get(&addr), Some(&text), "frame {frame}: Orders!{addr}");
     }
@@ -5377,6 +5380,29 @@ fn orders_want(
         ("B45", flag(switch)),
         ("B46", flag(command == buffet::SWITCH_COMMAND.0)),
         ("B47", flag(Plate::switches(press, switch, command))),
+    ]);
+    // The books' ceiling (`PLATE.6`'s second slice): the setting, the
+    // cartridge's own or a person's; the order asked and its cents; the
+    // stock's books as the last frame showed them; and whether it was refused.
+    want.extend([
+        (
+            "B49",
+            plate
+                .ceiling
+                .map_or(buffet::CEILING.spelled(), |c| c.to_string()),
+        ),
+        ("B50", o.map_or(0, |o| o.asked).to_string()),
+        (
+            "B51",
+            o.map_or(0, |o| o.asked.unsigned_abs() * o.price)
+                .to_string(),
+        ),
+        ("B52", o.map_or(0, |o| o.bought).to_string()),
+        ("B53", o.map_or(0, |o| o.sold).to_string()),
+        (
+            "B54",
+            flag(o.is_some_and(|o| o.outcome == buffet::Outcome::Ceiling)),
+        ),
     ]);
     out.extend(
         want.into_iter()
@@ -6983,5 +7009,287 @@ fn a_balance_past_the_end_is_an_error_through_every_sum_and_recovers_when_undone
         grid(&edited),
         grid(&twin),
         "the edited game, undone, is the twin cell for cell"
+    );
+}
+
+/// The ceiling a frame of the ceiling's session writes before its step
+/// (`PLATE.6`'s second slice): a person's, at the pocket's cents bought or
+/// sold of a stock, from 1, and ten of its shares more at the price shown, or
+/// a sum of cents; or the cartridge's own, written back as a person writes it.
+#[derive(Clone, Copy)]
+enum Ceil {
+    Bought(usize),
+    Sold(usize),
+    Cents(u64),
+    Own,
+}
+
+/// The books' ceiling, held to the hand (`PLATE.6`'s second slice): a
+/// person's edits of the ceiling, `Orders!B49`, lowered to a session's books
+/// and written back, every frame of it held whole by the order desk's holders,
+/// the desk and its ceiling's cells, the books, the cash, the ledger, the
+/// commands and both views. Under the cartridge's own ceiling the firm buys
+/// every share its cash covers and sells them; a ceiling at the stock's cents
+/// bought and ten shares more, so that ten fill to it, and a share more is
+/// refused, the seventh outcome and its sentence; ten of the second stock
+/// clicked under it; a ceiling of $1,000, which the firm's cash shown passes,
+/// so that a sale of a share is refused by the cash alone; your own pocket
+/// buying, selling and buying again, then a ceiling at its cents sold and ten
+/// shares more, so that ten sold fill to it and a share more is refused by
+/// the cents sold alone; and the cartridge's own ceiling written back, and the
+/// rest selling.
+#[test]
+fn the_books_refuse_an_order_past_their_ceiling() {
+    use buffet::Outcome::{Ceiling, Filled};
+    use Act::{Key, Left, Point, Run, Show};
+    let script: &[(u64, &[Act], Option<Ceil>)] = &[
+        (1, &[Show("Trading")], None),
+        (3, &[Show("Trading")], None), // the Camera showed the lead at the begin
+        (4, &[Key("Digit1", true)], None),
+        (5, &[Key("Digit1", false)], None),
+        (6, &[Run("buy-max")], None), // every share the firm's cash covers
+        (8, &[Run("sell-all")], None),
+        (10, &[Run("buy-10")], Some(Ceil::Bought(1))), // ten, to the ceiling
+        (12, &[Run("buy-1")], None),                   // a share past it: refused
+        (14, &[Point(6, 7), Left(true)], None),        // Buy 10 of the second, under it
+        (15, &[Left(false)], None),
+        (16, &[Run("sell-1")], Some(Ceil::Cents(100_000))), // the cash shown past $1,000
+        (18, &[Key("KeyC", true)], None),                   // your own pocket
+        (19, &[Key("KeyC", false)], None),
+        (20, &[Run("buy-max")], None),
+        (22, &[Run("sell-all")], None),
+        (24, &[Run("buy-max")], None),
+        (26, &[Run("sell-10")], Some(Ceil::Sold(2))), // ten sold, to the ceiling
+        (28, &[Run("sell-1")], None),                 // a share more past it: refused
+        (30, &[Run("sell-all")], Some(Ceil::Own)),    // the cartridge's own again
+    ];
+    let last_frame = 32;
+    let mut cart = cartridge();
+    let seed = seed(&cart);
+    let market = Market::new(seed);
+    let texts = disclosure_texts(&cart);
+    let mut cal = Calendar::new(PACE, DAYS_A_YEAR);
+    let mut host = Host::new(buffet::EXAM);
+    let mut plate = Plate::default();
+    let starts = [WAIVED_CAPITAL, buffet::PERSONAL_CASH];
+    let mut steps = script.iter().peekable();
+    let mut outcomes: Vec<(u64, buffet::Outcome)> = Vec::new();
+    for frame in 1..=last_frame {
+        let mut set: Vec<Act> = Vec::new();
+        let mut ceil: Option<Ceil> = None;
+        while let Some((_, more, c)) = steps.next_if(|(at, ..)| *at == frame) {
+            set.extend_from_slice(more);
+            ceil = ceil.or(*c);
+        }
+        let shown = shown(&cal, seed, &market, &plate, starts);
+        if let Some(c) = ceil {
+            let pocket = plate.funding();
+            let ten_more = |s: usize| 10 * shown.prices[s - 1];
+            plate.ceiling = match c {
+                Ceil::Bought(s) => Some(plate.book(pocket, s as u64).bought + ten_more(s)),
+                Ceil::Sold(s) => Some(plate.book(pocket, s as u64).sold + ten_more(s)),
+                Ceil::Cents(n) => Some(n),
+                Ceil::Own => None,
+            };
+            let row = match plate.ceiling {
+                Some(cents) => format!(
+                    "(cell \"{}\" \"{}\" {cents})",
+                    buffet::CEILING_CELL.0,
+                    buffet::CEILING_CELL.1
+                ),
+                None => buffet::CEILING.row(buffet::CEILING_CELL),
+            };
+            cart.write(&row)
+                .unwrap_or_else(|r| panic!("{row}: {} {}", r.refusal.id, r.refusal.text));
+        }
+        let (last, now) = host.step(&mut cart, &set);
+        let order = plate_frame_held(
+            &cart,
+            &host,
+            (&now, &last),
+            &mut plate,
+            &mut cal,
+            (seed, &market),
+            &shown,
+            starts,
+            &texts,
+        );
+        let Some(o) = order else { continue };
+        outcomes.push((frame, o.outcome));
+        let ceiling = plate.ceiling.unwrap_or(u64::MAX);
+        let cents = o.asked.unsigned_abs() * o.price;
+        match frame {
+            10 => assert_eq!(
+                plate.book(o.pocket, o.stock).bought,
+                ceiling,
+                "ten bought to the ceiling and no further"
+            ),
+            16 => assert!(
+                o.sold + cents <= ceiling && o.cash + cents > ceiling,
+                "the cash shown alone past the ceiling: {o:?}"
+            ),
+            26 => assert_eq!(
+                plate.book(o.pocket, o.stock).sold,
+                ceiling,
+                "ten sold to the ceiling and no further"
+            ),
+            28 => assert!(
+                o.sold + cents > ceiling && o.cash + cents <= ceiling,
+                "the cents sold alone past the ceiling: {o:?}"
+            ),
+            _ => {}
+        }
+    }
+    assert!(steps.next().is_none(), "every act of the script played");
+    assert_eq!(
+        outcomes,
+        [
+            (6, Filled),
+            (8, Filled),
+            (10, Filled),
+            (12, Ceiling),
+            (14, Filled),
+            (16, Ceiling),
+            (20, Filled),
+            (22, Filled),
+            (24, Filled),
+            (26, Filled),
+            (28, Ceiling),
+            (30, Filled),
+        ],
+        "the orders taken, by frame"
+    );
+}
+
+/// No book keeps an error at the end of the numbers (`PLATE.6`'s second
+/// slice): your own cash edited near the end, `Cash!B1` written 1.7E+308, and
+/// orders by the palette. Buy max is refused, its cents past the cartridge's
+/// own ceiling; with a person's ceiling of 1.79E+308, every share the cash
+/// covers is bought; then, the first stock's start written a thousand times
+/// dearer, its holding's value past the end, an error by the first slice's
+/// rule and a value's, Sell all is refused, its cents no number at all; the
+/// start written back, Sell all fills; and Buy max is refused again, its
+/// cents bought past the ceiling, where its cents and the book would have
+/// summed past the end; and every edit is undone. At every frame no fill, no
+/// count of the books, no cash, no field of the Write sheet and no row of the
+/// ledger holds an error, each fill writing the ledger's seven fields; and
+/// from the frame after the undo no cell of the game holds one.
+#[test]
+fn no_book_keeps_an_error_at_the_end_of_the_numbers() {
+    use Act::{Key, Run, Show};
+    let script: &[(u64, &[Act], &[&str])] = &[
+        (1, &[Show("Trading")], &[]),
+        (3, &[Show("Trading")], &[]),
+        (4, &[Key("Digit1", true)], &[]),
+        (5, &[Key("Digit1", false)], &[]),
+        (6, &[Key("KeyC", true)], &[]), // your own pocket
+        (7, &[Key("KeyC", false)], &[]),
+        (8, &[], &["(cell \"Cash\" \"B1\" 1.7E+308)"]),
+        (10, &[Run("buy-max")], &[]), // past the cartridge's own ceiling: refused
+        (12, &[], &["(cell \"Orders\" \"B49\" 1.79E+308)"]),
+        (14, &[Run("buy-max")], &[]), // under a person's: every share filled
+        (16, &[], &["(cell \"Stocks\" \"B5\" 100000)"]),
+        (18, &[Run("sell-all")], &[]), // its cents past the end: refused
+        (20, &[], &["(cell \"Stocks\" \"B5\" 100)"]),
+        (22, &[Run("sell-all")], &[]), // filled
+        (24, &[Run("buy-max")], &[]),  // its cents bought past the ceiling: refused
+        (
+            26,
+            &[],
+            &[
+                "(cell \"Orders\" \"B49\" 1E+307)",
+                "(cell \"Cash\" \"B1\" 10000)",
+            ],
+        ),
+    ];
+    let last_frame = 30;
+    let books: [(&str, &str); 5] = [
+        ("Positions", "D2:I9"),
+        ("Orders", "B26:B29"),
+        ("Cash", "B3:B4"),
+        ("Write", "C2:C8"),
+        ("Ledger", "A2:G101"),
+    ];
+    let mut cart = cartridge();
+    let mut host = Host::new(buffet::EXAM);
+    let mut steps = script.iter().peekable();
+    let mut outcomes: Vec<(u64, String)> = Vec::new();
+    for frame in 1..=last_frame {
+        let mut set: Vec<Act> = Vec::new();
+        while let Some((_, more, edits)) = steps.next_if(|(at, ..)| *at == frame) {
+            set.extend_from_slice(more);
+            for row in *edits {
+                cart.write(row)
+                    .unwrap_or_else(|r| panic!("{row}: {} {}", r.refusal.id, r.refusal.text));
+            }
+        }
+        let ordered = set.iter().any(|a| matches!(a, Run(_)));
+        host.step(&mut cart, &set);
+        for (sheet, window) in books {
+            for (addr, v) in values(&cart, sheet, window) {
+                assert!(
+                    !v.starts_with("(error"),
+                    "frame {frame}: {sheet}!{addr} holds {v}"
+                );
+            }
+        }
+        let desk = values(&cart, "Orders", "B26:B54");
+        if ordered {
+            outcomes.push((frame, desk["B27"].clone()));
+        }
+        // The witnesses that each refusal is the one the script means.
+        let number = |addr: &str| -> f64 {
+            desk[addr]
+                .parse()
+                .unwrap_or_else(|e| panic!("frame {frame}: Orders!{addr}, {}: {e}", desk[addr]))
+        };
+        match frame {
+            10 => assert!(
+                number("B51") > number("B49"),
+                "the cents alone past the cartridge's own ceiling"
+            ),
+            18 => {
+                assert!(
+                    desk["B51"].starts_with("(error"),
+                    "the sale's cents no number: {}",
+                    desk["B51"]
+                );
+                let value = values(&cart, "Positions", "K6:K6");
+                assert!(
+                    value["K6"].starts_with("(error"),
+                    "the holding's value past the end, a value's error: {}",
+                    value["K6"]
+                );
+            }
+            24 => assert!(
+                (number("B52") + number("B51")).is_infinite(),
+                "the book and the cents would sum past the end"
+            ),
+            _ => {}
+        }
+        let filled = desk["B26"] != "0";
+        assert_eq!(
+            host.pending.len(),
+            if filled { 7 } else { 0 },
+            "frame {frame}: the ledger's seven fields while an order fills, each a number: {:?}",
+            host.pending
+        );
+        if frame > 26 {
+            let errors: Vec<String> = grid(&cart)
+                .into_iter()
+                .filter(|(_, v)| v.starts_with("(error"))
+                .map(|((sheet, addr), v)| format!("{sheet}!{addr} {v}"))
+                .collect();
+            assert!(errors.is_empty(), "frame {frame}, undone: {errors:?}");
+        }
+    }
+    assert!(steps.next().is_none(), "every act of the script played");
+    let by = |pairs: &[(u64, &str)]| -> Vec<(u64, String)> {
+        pairs.iter().map(|(f, o)| (*f, o.to_string())).collect()
+    };
+    assert_eq!(
+        outcomes,
+        by(&[(10, "7"), (14, "1"), (18, "7"), (22, "1"), (24, "7")]),
+        "the orders by frame: refused at the ceiling, filled, and so on"
     );
 }

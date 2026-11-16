@@ -1771,9 +1771,13 @@ pub const NO_ORDER: &str = "No order yet.";
 /// (`PLATE.6`), plain as every refusal is, being a line a player acts on.
 pub const UNCOUNTED: &str =
     "Refused: the cash shown is an error. Orders fill against cash the books can count.";
+/// Trading's sentence for an order refused at the books' ceiling (`PLATE.6`'s
+/// second slice), as plain.
+pub const PAST_THE_CEILING: &str = "Refused: the order would take the books past their ceiling.";
 
 /// Why an order filled or did not, the Orders sheet's `B27`; since `PLATE.6`
-/// the sixth, the pocket's cash shown an error.
+/// the sixth, the pocket's cash shown an error, and since its second slice the
+/// seventh, the books' ceiling.
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 pub enum Outcome {
     Filled = 1,
@@ -1782,6 +1786,7 @@ pub enum Outcome {
     NoCash = 4,
     NoShares = 5,
     Uncounted = 6,
+    Ceiling = 7,
 }
 
 /// What the last frame showed, by which an order is judged: whether the market
@@ -1802,7 +1807,10 @@ pub struct Shown {
 /// 0 for none picked, and its trade from 1; what the last frame showed of the
 /// market, the price, the pocket's cash and its shares of the stock; the
 /// shares filled, a sale negative; and why. Since `PLATE.6`, the cash shown's
-/// error, where it showed one in place of the cash.
+/// error, where it showed one in place of the cash; and since its second
+/// slice the shares the order asked, the fill the desk makes but for the
+/// ceiling, and the pocket's cents bought and sold of the stock as the last
+/// frame showed them, against which the ceiling is judged.
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 pub struct Order {
     pub pocket: u64,
@@ -1815,6 +1823,9 @@ pub struct Order {
     pub filled: i64,
     pub outcome: Outcome,
     pub error: Option<&'static str>,
+    pub asked: i64,
+    pub bought: u64,
+    pub sold: u64,
 }
 
 impl Order {
@@ -1847,6 +1858,7 @@ impl Order {
             Outcome::NoShares if self.held == 0 => format!("Refused: no shares of {name} to sell."),
             Outcome::NoShares => format!("Refused: fewer than 10 shares of {name} to sell."),
             Outcome::Uncounted => UNCOUNTED.to_string(),
+            Outcome::Ceiling => PAST_THE_CEILING.to_string(),
         }
     }
 }
@@ -1882,7 +1894,11 @@ pub struct Book {
 /// order taken. The cells keep each book as state over its twin and derive
 /// the gain taken from three sums; the hand keeps the fills and folds them, a
 /// share's cost averaged sale by sale, and finds a click by matching the
-/// pointer to a button's place and a command by its name.
+/// pointer to a button's place and a command by its name. Since `PLATE.6`'s
+/// second slice, the books' ceiling a person wrote into `Orders!B49`, in whole
+/// cents, where they wrote one; none for the cartridge's own, 10^307, which no
+/// book of whole cents below 2^64 reaches, so that the hand's books meet the
+/// ceiling only where a person lowered it.
 #[derive(Clone, Debug, PartialEq, Eq)]
 pub struct Plate {
     pub pocket: u64,
@@ -1890,6 +1906,7 @@ pub struct Plate {
     pub fills: Vec<Fill>,
     pub dividends: [[u64; 4]; 2],
     pub last: Option<Order>,
+    pub ceiling: Option<u64>,
 }
 
 impl Default for Plate {
@@ -1900,6 +1917,7 @@ impl Default for Plate {
             fills: Vec::new(),
             dividends: [[0; 4]; 2],
             last: None,
+            ceiling: None,
         }
     }
 }
@@ -2032,7 +2050,11 @@ impl Plate {
     /// frame, the one the person saw marked, and none for a frame with
     /// neither. A filled order is a fill, the pocket's cash after it found
     /// from `starts`, each pocket's start at this frame (and this frame's
-    /// dividends, paid first). The order taken, filled or refused.
+    /// dividends, paid first). Since `PLATE.6`'s second slice, an order the
+    /// desk would fill is refused at the books' ceiling where one is written:
+    /// a purchase whose cents take the stock's cents bought past it, a sale
+    /// whose cents take its cents sold or the pocket's cash shown past it, each
+    /// book as the last frame showed it. The order taken, filled or refused.
     pub fn frame(
         &mut self,
         press: Option<(u64, usize)>,
@@ -2075,12 +2097,13 @@ impl Plate {
         };
         let cash = shown.cash[p];
         let error = shown.errors[p];
-        let held = if stock == 0 {
-            0
+        let book = if stock == 0 {
+            Book::default()
         } else {
-            self.book(pocket, stock).shares
+            self.book(pocket, stock)
         };
-        let filled: i64 = if !shown.open || stock == 0 || error.is_some() {
+        let held = book.shares;
+        let asked: i64 = if !shown.open || stock == 0 || error.is_some() {
             0
         } else {
             match TRADES[trade - 1] {
@@ -2092,12 +2115,24 @@ impl Plate {
                 Trade::SellAll => -(held as i64),
             }
         };
+        let cents = asked.unsigned_abs() * price;
+        let past = asked != 0
+            && self.ceiling.is_some_and(|ceiling| {
+                if asked > 0 {
+                    book.bought + cents > ceiling
+                } else {
+                    book.sold + cents > ceiling || cash + cents > ceiling
+                }
+            });
+        let filled = if past { 0 } else { asked };
         let outcome = if !shown.open {
             Outcome::Closed
         } else if stock == 0 {
             Outcome::NoStock
         } else if error.is_some() {
             Outcome::Uncounted
+        } else if past {
+            Outcome::Ceiling
         } else if filled != 0 {
             Outcome::Filled
         } else if trade <= 3 {
@@ -2131,6 +2166,9 @@ impl Plate {
             filled,
             outcome,
             error,
+            asked,
+            bought: book.bought,
+            sold: book.sold,
         };
         self.last = Some(order);
         Some(order)
@@ -2693,6 +2731,24 @@ pub fn landed(
     out
 }
 
+// ---- PLATE.6's second slice: the books' ceiling ------------------------------------
+
+/// The books' ceiling (`PLATE.6`'s second slice): the Orders sheet's `B49`, a
+/// setting, in cents, 10^307, below the end of the numbers by a factor of
+/// nearly eighteen. Every book of the order desk stays under it, so that each
+/// sum the cash takes of four books is a number, and so is ten times a cost
+/// basis, the share of it ten shares sold take before its division.
+pub const CEILING: Typed = Typed::Number {
+    digits: 1,
+    power: 307,
+};
+pub const CEILING_CELL: (&str, &str) = ("Orders", "B49");
+/// The books a sum of the cash takes of one kind, a pocket's four stocks; and
+/// the most shares a sale takes a share of the basis for, the rest being all
+/// of it with the last share.
+pub const BOOKS_SUMMED: u64 = 4;
+pub const SHARES_OF_A_BASIS: u64 = 10;
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -2851,6 +2907,134 @@ mod tests {
             p.frame(None, false, "buy-1", &shown, starts)
                 .map(|o| o.outcome),
             Some(Outcome::Filled)
+        );
+    }
+
+    /// The books' ceiling where it stands (`PLATE.6`'s second slice), counted
+    /// by digits: 10^307, the page's row for it, and the record's spelling;
+    /// under the end of the numbers four books of it summed and ten times a
+    /// basis of it, and past the end eighteen of it.
+    #[test]
+    fn the_ceiling_leaves_every_sum_of_the_books_a_number() {
+        assert_eq!(
+            CEILING.row(CEILING_CELL),
+            "(cell \"Orders\" \"B49\" 1E+307)"
+        );
+        assert_eq!(CEILING.spelled(), format!("1{}", "0".repeat(307)));
+        let Typed::Number { digits, power } = CEILING else {
+            panic!("a number")
+        };
+        for times in [BOOKS_SUMMED, SHARES_OF_A_BASIS, 17] {
+            assert!(
+                !past_the_end(digits * times, power),
+                "{times} times the ceiling"
+            );
+        }
+        assert!(
+            past_the_end(digits * 18, power),
+            "eighteen times the ceiling"
+        );
+    }
+
+    /// An order at the books' ceiling, by hand (`PLATE.6`'s second slice): with
+    /// none written, the cartridge's own, nothing refused; then a ceiling of a
+    /// person's: a purchase taking the stock's cents bought to it filling, and
+    /// one share more refused, the seventh outcome, its sentence, no fill and
+    /// every balance as it was; a sale whose cents and the cash shown pass it
+    /// refused, the cash alone deciding; a sale under it filling; and one whose
+    /// cents take the cents sold past it refused, the sold alone deciding.
+    #[test]
+    fn an_order_past_the_ceiling_is_refused_and_moves_no_balance() {
+        let shown = Shown {
+            open: true,
+            prices: [100, 500, 2_500, 10_000],
+            cash: [750_000, 10_000],
+            when: "Monday, year 1, day 1, 9:30".to_string(),
+            errors: [None, None],
+        };
+        let starts = [750_000, 10_000];
+        let mut p = Plate::default();
+        assert_eq!(
+            p.frame(Some((1, 3)), false, "", &shown, starts)
+                .map(|o| (o.outcome, o.filled)),
+            Some((Outcome::Filled, 7_500)),
+            "no ceiling written: the cartridge's own, which no book reaches"
+        );
+        p.frame(None, false, "sell-all", &shown, starts);
+        let bought = p.book(FIRM, 1).bought;
+        p.ceiling = Some(bought + 1_000);
+        let o = p
+            .frame(None, false, "buy-10", &shown, starts)
+            .expect("an order");
+        assert_eq!(
+            (o.outcome, o.asked, o.filled, o.bought),
+            (Outcome::Filled, 10, 10, bought),
+            "to the ceiling and no further: filled"
+        );
+        let before = balances(&p, starts);
+        let o = p
+            .frame(None, false, "buy-1", &shown, starts)
+            .expect("an order");
+        assert_eq!(
+            (o.outcome, o.asked, o.filled, o.bought),
+            (Outcome::Ceiling, 1, 0, bought + 1_000)
+        );
+        assert_eq!(o.sentence(), PAST_THE_CEILING);
+        assert_eq!(
+            balances(&p, starts),
+            before,
+            "a purchase refused moved a balance"
+        );
+        // The second stock, never sold: ten of it under the ceiling; then the
+        // firm's cash shown, $7,500, past a ceiling of $1,000, so no sale.
+        assert_eq!(
+            p.frame(Some((2, 2)), false, "", &shown, starts)
+                .map(|o| o.outcome),
+            Some(Outcome::Filled)
+        );
+        let before = balances(&p, starts);
+        p.ceiling = Some(100_000);
+        let o = p
+            .frame(None, false, "sell-1", &shown, starts)
+            .expect("an order");
+        assert_eq!((o.outcome, o.asked, o.filled), (Outcome::Ceiling, -1, 0));
+        assert!(o.sold + 500 <= 100_000, "the cash alone decides");
+        assert_eq!(
+            balances(&p, starts),
+            before,
+            "a sale refused moved a balance"
+        );
+        // Your own, the second stock at $5: twenty bought, sold and bought
+        // again, then a ceiling at the cents sold and ten shares more.
+        p.pocket = PERSONAL;
+        let mut mine = shown.clone();
+        for command in ["buy-max", "sell-all", "buy-max"] {
+            mine.cash[1] = p.cash(PERSONAL, starts[1]);
+            p.frame(None, false, command, &mine, starts);
+        }
+        let sold = p.book(PERSONAL, 2).sold;
+        assert_eq!(sold, 10_000);
+        p.ceiling = Some(sold + 5_000);
+        mine.cash[1] = p.cash(PERSONAL, starts[1]);
+        let o = p
+            .frame(None, false, "sell-10", &mine, starts)
+            .expect("an order");
+        assert_eq!(
+            (o.outcome, o.filled),
+            (Outcome::Filled, -10),
+            "the cents sold to the ceiling: filled"
+        );
+        mine.cash[1] = p.cash(PERSONAL, starts[1]);
+        let o = p
+            .frame(None, false, "sell-10", &mine, starts)
+            .expect("an order");
+        assert_eq!(
+            (o.outcome, o.filled, o.sold),
+            (Outcome::Ceiling, 0, sold + 5_000)
+        );
+        assert!(
+            mine.cash[1] + 5_000 <= sold + 5_000,
+            "the cents sold alone decide"
         );
     }
 
@@ -3972,6 +4156,9 @@ mod tests {
             filled: 10,
             outcome: Outcome::Filled,
             error: None,
+            asked: 10,
+            bought: 0,
+            sold: 0,
         };
         assert_eq!(
             order.sentence(),

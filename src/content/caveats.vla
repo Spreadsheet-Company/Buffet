@@ -122,4 +122,8 @@
      "A ledger keeps as many digits as a sum needs and has no ceiling; all the world's wealth is under $500 trillion."
      "Management considers the ceiling a long-term goal."
      "Cash!B9:B10")
+    ("The books stop counting at 1E+307 cents: an order that would take them past it is refused."
+     "A broker refuses an order too large for its limits, against a fat finger; a ledger never refuses a digit."
+     "Management has capped ambition at a level it describes as aspirational."
+     "Orders!B49")
     ))                              ; the sheet's end: a caveat added goes above this line
