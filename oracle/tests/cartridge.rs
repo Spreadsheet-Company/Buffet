@@ -128,7 +128,14 @@
 //! each view's own record: every format a view draws reading at 4.5:1 or more, a
 //! band under each table's headers, each glyph its shade, every button, and each
 //! heading; and Trading's keys at every frame, over each column of buttons and
-//! beside each stock not picked.
+//! beside each stock not picked. Since `PLATE.6`'s first slice: the limit, a
+//! sandbox edit pushing the firm's capital past what a double holds, every cell
+//! of every sheet held at every frame against a twin with no edit, itself held
+//! to the hand, the error landing where the hand says and nowhere else, beside
+//! each balance it lands on its joke from the Errors sheet, an order against it
+//! refused and no book moved, and every cell the twin's again once the edit is
+//! undone; the Errors sheet itself; and in every run, every balance's joke cell
+//! empty.
 
 use std::collections::{BTreeMap, BTreeSet, VecDeque};
 use std::sync::OnceLock;
@@ -163,16 +170,20 @@ const FIRMS: &str = "src/content/firms.vla";
 const HEADLINES: &str = "src/content/headlines.vla";
 /// The proctor's remarks, a report card's remark on its grade (`CRITIC.1`).
 const REMARKS: &str = "src/content/remarks.vla";
+/// The error values' jokes, each shown beside a balance where its error lands
+/// (`PLATE.6`).
+const ERRORS: &str = "src/content/errors.vla";
 /// The content sheets, each written by a file of `src/content/`: the sheet,
 /// its file, and the state the source writes before its call, hidden as a
 /// workbook keeps its reference data at the back, or visible for the one a
 /// player reads whole (`MENU.5`'s decision 2).
-const CONTENT: [(&str, &str, &str); 6] = [
+const CONTENT: [(&str, &str, &str); 7] = [
     ("Disclosures", DISCLOSURES, "hidden"),
     ("Questions", QUESTIONS, "hidden"),
     ("Firms", FIRMS, "hidden"),
     ("Headlines", HEADLINES, "hidden"),
     ("Remarks", REMARKS, "hidden"),
+    ("Errors", ERRORS, "hidden"),
     ("Caveats", CAVEATS, "visible"),
 ];
 /// The exam's bank's fields, in their columns from A (`MENU.2`'s decision 1,
@@ -760,7 +771,7 @@ fn overview_cells(
     (starts, prices): ([u64; 2], [u64; 4]),
     style: u64,
 ) {
-    let got = values(cart, "Overview", "A1:B13");
+    let got = values(cart, "Overview", "A1:C13");
     let text = |addr: &str, want: &str| {
         assert_eq!(
             got.get(addr).map(String::as_str),
@@ -780,6 +791,7 @@ fn overview_cells(
     for (k, pocket) in [buffet::FIRM, buffet::PERSONAL].into_iter().enumerate() {
         let worth = plate.cash(pocket, starts[k]) + plate.holdings(pocket, prices);
         text(&format!("B{}", 6 + k), &buffet::two_decimals(worth));
+        text(&format!("C{}", 6 + k), ""); // no error, so no joke (PLATE.6)
     }
     text(
         "A9",
@@ -1028,6 +1040,7 @@ fn trading_cells(
     );
     text("D11", buffet::SWITCH_TEXT);
     text("E11", buffet::SWITCH_KEY_TEXT);
+    text("C12", ""); // no error, so no joke (PLATE.6)
     let said = match plate.last {
         Some(o) => o.sentence(),
         None => buffet::NO_ORDER.to_string(),
@@ -1185,6 +1198,9 @@ fn portfolio_cells(
             &format!("B{}", 15 + k),
             &buffet::two_decimals(cash + plate.holdings(pocket, prices)),
         );
+        for row in [11 + k, 15 + k] {
+            text(&format!("C{row}"), ""); // no error, so no joke (PLATE.6)
+        }
     }
     let shown = disclosure(cal.day, texts.len() as u64, DAYS_A_DISCLOSURE);
     text("A18", &texts[shown as usize - 1]);
@@ -2167,7 +2183,8 @@ fn tabs(cart: &Cartridge) -> Vec<(String, String)> {
 /// its Orders, Positions and Ledger among the model's, and its Commands and
 /// Write sheets after the Camera; `FRONT.3`'s Overview after the Certificate
 /// and its Headlines hidden among the content; `CRITIC.1`'s Report after Gigs,
-/// its Performance after the Ledger and its Remarks hidden among the content).
+/// its Performance after the Ledger and its Remarks hidden among the content;
+/// and `PLATE.6`'s Errors hidden among the content, after the Remarks).
 /// A state the source forgot
 /// would leave its sheet visible, which the engine makes a sheet first named
 /// by a cell.
@@ -2221,6 +2238,7 @@ fn every_sheet_is_written_bare_and_each_content_sheet_in_its_state() {
         ("Firms", "hidden"),
         ("Headlines", "hidden"),
         ("Remarks", "hidden"),
+        ("Errors", "hidden"),
         ("Caveats", "visible"),
         ("Keys", "visible"),
         ("Camera", "visible"),
@@ -4406,6 +4424,7 @@ fn exam_views_held(cart: &Cartridge, cal: &Calendar, exam: &Exam, w: &Words) {
         ("B7", format!("{} of {}", exam.score(), buffet::SCORED)),
         ("A8", "Firm capital ($)".to_string()),
         ("B8", buffet::two_decimals(exam.capital())),
+        ("C8", String::new()), // no error, so no joke (PLATE.6)
         ("A9", buffet::NAME_LABEL.to_string()),
         (
             "B9",
@@ -4424,7 +4443,7 @@ fn exam_views_held(cart: &Cartridge, cal: &Calendar, exam: &Exam, w: &Words) {
         ("A18", SIGNATURE.to_string()),
         ("A20", fine),
     ];
-    let got = values(cart, "Certificate", "A1:B20");
+    let got = values(cart, "Certificate", "A1:C20");
     for (addr, text) in want {
         assert_eq!(got.get(addr), Some(&text), "frame {f}: Certificate!{addr}");
     }
@@ -5212,6 +5231,7 @@ fn shown(cal: &Calendar, seed: u64, market: &Market, plate: &Plate, starts: [u64
             cal.day_of_year,
             buffet::time_shown(cal.clock())
         ),
+        errors: [None, None],
     }
 }
 
@@ -5242,8 +5262,30 @@ fn orders_held(
     shown: &Shown,
     starts: [u64; 2],
 ) {
+    let got = values(cart, "Orders", "A1:I47");
+    for (addr, text) in orders_want(plate, io, command, order, shown, starts, None) {
+        assert_eq!(got.get(&addr), Some(&text), "frame {frame}: Orders!{addr}");
+    }
+}
+
+/// The Orders sheet's cells `orders_held` holds, each with what the hand says
+/// it holds: the grid's presses, then the workings, the last order and the
+/// switch. Since `PLATE.6`, `capital` is the firm's capital's error at this
+/// frame, where it holds one, which the pocket's cash now holds while the
+/// firm's pocket funds; the cash shown is `shown`'s error where it shows one,
+/// and the last order's what that order saw.
+fn orders_want(
+    plate: &Plate,
+    io: (&Inputs, &Inputs),
+    command: &str,
+    order: Option<Order>,
+    shown: &Shown,
+    starts: [u64; 2],
+    capital: Option<&'static str>,
+) -> Vec<(String, String)> {
     let (now, last) = io;
     let flag = |b: bool| u8::from(b).to_string();
+    let spelled = |e: &str| format!("(error \"{e}\")");
     let name = |s: u64| {
         if s == 0 {
             String::new()
@@ -5252,16 +5294,11 @@ fn orders_held(
         }
     };
     let press = Plate::clicked(now, last);
-    let grid = values(cart, "Orders", "D6:I9");
-    for (s, &row) in buffet::STOCK_ROWS.iter().enumerate() {
+    let mut out: Vec<(String, String)> = Vec::new();
+    for s in 0..buffet::STOCK_ROWS.len() {
         for t in 0..buffet::TRADES.len() {
             let at = address(6 + s, 4 + t);
-            let want = flag(press == Some((s as u64 + 1, t + 1)));
-            assert_eq!(
-                grid.get(&at),
-                Some(&want),
-                "frame {frame}: Orders!{at}, the button on Trading's row {row}"
-            );
+            out.push((at, flag(press == Some((s as u64 + 1, t + 1)))));
         }
     }
     let (stock_clicked, trade_clicked) = press.unwrap_or((0, 0));
@@ -5289,7 +5326,13 @@ fn orders_held(
         ("B21", o.map_or(0, |o| o.trade).to_string()),
         ("B22", flag(shown.open)),
         ("B23", o.map_or(0, |o| o.price).to_string()),
-        ("B24", shown.cash[pocket as usize - 1].to_string()),
+        (
+            "B24",
+            match shown.errors[pocket as usize - 1] {
+                Some(e) => spelled(e),
+                None => shown.cash[pocket as usize - 1].to_string(),
+            },
+        ),
         ("B25", o.map_or(0, |o| o.held).to_string()),
         ("B26", o.map_or(0, |o| o.filled).to_string()),
         ("B27", o.map_or(0, |o| o.outcome as u8).to_string()),
@@ -5297,7 +5340,10 @@ fn orders_held(
         ("B30", ((n as i64 - 1).rem_euclid(100) + 2).to_string()),
         (
             "B31",
-            plate.cash(pocket, starts[pocket as usize - 1]).to_string(),
+            match capital {
+                Some(e) if pocket == buffet::FIRM => spelled(e),
+                _ => plate.cash(pocket, starts[pocket as usize - 1]).to_string(),
+            },
         ),
     ];
     let held: [String; 10] = match plate.last {
@@ -5308,7 +5354,10 @@ fn orders_held(
             l.trade.to_string(),
             flag(l.open),
             l.price.to_string(),
-            l.cash.to_string(),
+            match l.error {
+                Some(e) => spelled(e),
+                None => l.cash.to_string(),
+            },
             l.held.to_string(),
             l.filled.to_string(),
             (l.outcome as u8).to_string(),
@@ -5329,10 +5378,11 @@ fn orders_held(
         ("B46", flag(command == buffet::SWITCH_COMMAND.0)),
         ("B47", flag(Plate::switches(press, switch, command))),
     ]);
-    let got = values(cart, "Orders", "B1:B47");
-    for (addr, text) in want {
-        assert_eq!(got.get(addr), Some(&text), "frame {frame}: Orders!{addr}");
-    }
+    out.extend(
+        want.into_iter()
+            .map(|(addr, text)| (addr.to_string(), text)),
+    );
+    out
 }
 
 /// The books at this frame (`PLATE.1`), every cell the hand's: a row a pocket
@@ -6557,5 +6607,381 @@ fn a_scripted_quarter_holds_every_card_to_the_hand() {
         hustle.earned(cal.five_minutes()),
         buffet::FEE,
         "the fee paid in the next quarter"
+    );
+}
+
+/// Every cell of the game's own sheets at this frame, by sheet and address, as
+/// `values` reads each across its extent: every sheet but the twins, which hold
+/// the last frame's, and the Input sheet, which is the host's writing of the
+/// person's acts and not the game's (`PLATE.6`).
+fn grid(cart: &Cartridge) -> BTreeMap<(String, String), String> {
+    let mut out = BTreeMap::new();
+    for (sheet, _) in tabs(cart) {
+        if sheet.ends_with(".last") || sheet == "Input" {
+            continue;
+        }
+        let head = format!("(extent \"{sheet}\" \"");
+        let Some(extent) = record(cart, &sheet, "A1:A1").lines().find_map(|l| {
+            l.strip_prefix(head.as_str())
+                .and_then(|rest| rest.strip_suffix("\")"))
+                .map(str::to_string)
+        }) else {
+            continue;
+        };
+        for (addr, v) in values(cart, &sheet, &extent) {
+            out.insert((sheet.clone(), addr), v);
+        }
+    }
+    out
+}
+
+/// The joke of the error the Errors sheet shows, its content file's row of
+/// that error's name, read by the language's own reader (`PLATE.6`).
+fn joke_shown() -> String {
+    content(ERRORS)
+        .rows
+        .into_iter()
+        .find(|r| r.words[0] == buffet::ERROR_SHOWN)
+        .map(|mut r| r.words.remove(1))
+        .expect("the Errors sheet's row of the error it shows")
+}
+
+/// The Errors sheet (`PLATE.6`): its five rows, an error a row, each its name
+/// as a cell draws it, one of the errors the language names, beside its joke,
+/// `BUFFET.md`'s appendix, `#NUM!` first; each inside its column; and the row
+/// shown the first, the error a sum past the end of the numbers becomes, its
+/// two pickers its name and its joke, which every view's joke reads.
+#[test]
+fn the_errors_sheet_shows_the_ends_joke_first() {
+    let mut cart = cartridge();
+    cart.step(0);
+    let file = content(ERRORS);
+    let names: Vec<&str> = file.rows.iter().map(|r| r.words[0].as_str()).collect();
+    assert_eq!(names, ["#NUM!", "#DIV/0!", "#REF!", "#VALUE!", "#N/A"]);
+    for row in &file.rows {
+        assert!(
+            vla_lang::calc::value::ErrorKind::parse(&row.words[0]).is_some(),
+            "{}: an error the language names",
+            row.words[0]
+        );
+        for (word, (header, width)) in row.words.iter().zip(&file.fields) {
+            assert!(
+                !word.is_empty() && word.chars().count() as u64 <= *width && !word.contains('\n'),
+                "{header} {word:?}: one line inside its {width} characters"
+            );
+        }
+    }
+    assert_eq!(names[0], buffet::ERROR_SHOWN);
+    let got = values(&cart, "Errors", "E1:E4");
+    assert_eq!(
+        got.get("E2").map(String::as_str),
+        Some("1"),
+        "the row shown"
+    );
+    assert_eq!(got.get("E3").map(String::as_str), Some(buffet::ERROR_SHOWN));
+    assert_eq!(got.get("E4"), Some(&joke_shown()));
+}
+
+/// Each joke reads the model's cell its figure divides (`PLATE.6`, the library's
+/// `error-joke`): beside every balance a view shows, the firm's rows and your own,
+/// the joke's formula row counts an error in the very reference the figure's row
+/// divides by 100, a model sheet's and never the view's own, as a glyph reads the
+/// model's cents; and no other cell of a view counts one.
+#[test]
+fn each_joke_reads_the_cell_its_figure_divides() {
+    let text = lf(&read(CARTRIDGE));
+    let formula_at = |sheet: &str, at: &str| -> String {
+        let head = format!("(formula \"{sheet}\" \"{at}");
+        text.lines()
+            .find(|l| {
+                l.strip_prefix(head.as_str())
+                    .is_some_and(|rest| rest.starts_with('"') || rest.starts_with(':'))
+            })
+            .unwrap_or_else(|| panic!("{sheet}!{at}: a formula row starts there"))
+            .to_string()
+    };
+    let between = |row: &str, open: &str, close: &str| -> String {
+        let from = row.find(open).unwrap_or_else(|| panic!("{row}: {open}")) + open.len();
+        let to = from
+            + row[from..]
+                .find(close)
+                .unwrap_or_else(|| panic!("{row}: {close}"));
+        row[from..to].to_string()
+    };
+    let mut figures: Vec<(&str, &str, &str)> = buffet::FIRM_FIGURES.to_vec();
+    figures.push(buffet::FUNDING_FIGURE);
+    for (sheet, figure, beside) in figures {
+        let divides = between(&formula_at(sheet, figure), "\"=", "/100\"");
+        let counts = between(&formula_at(sheet, beside), "COUNTIF(", ",");
+        assert_eq!(
+            counts, divides,
+            "{sheet}!{beside}'s joke reads what {figure} divides"
+        );
+        assert!(
+            counts.contains('!') && !VIEWS.iter().any(|v| counts.starts_with(&format!("{v}!"))),
+            "{sheet}!{beside}: a model sheet's cell, {counts}"
+        );
+    }
+    let jokes: Vec<&str> = text
+        .lines()
+        .filter(|l| l.starts_with("(formula \"") && l.contains("COUNTIF("))
+        .collect();
+    assert_eq!(
+        jokes.len(),
+        5,
+        "the five joke rows, the Certificate's, the Overview's, the Portfolio's two and Trading's: {jokes:?}"
+    );
+}
+
+/// The acts of a frame of the limit's session (`PLATE.6`): its frame, the acts
+/// of both games, the acts of the edited game alone, and the person's edit of
+/// the edited game's `Proctor!B2`, written before the frame's step.
+type LimitFrame = (u64, &'static [Act], &'static [Act], Option<buffet::Typed>);
+
+/// The limit, as a test (`PLATE.6`'s first slice): a sandbox edit pushing the
+/// firm's capital past what a double holds, held cell by cell against a twin
+/// of the same game with no edit, and the twin held to the hand at every frame.
+/// A person writes 1E+308 into `Proctor!B2`, a correct answer's worth, so the
+/// waiver's five answers make a capital of 5E+308, past the end. At every frame
+/// every cell of every sheet of the edited game is the twin's but where the
+/// hand says the error lands: the capital, the firm's cash, its net worth and
+/// the card's worth now, the views' figures of them and the joke beside each,
+/// and while the firm's pocket funds the order desk the cash now, the Write
+/// sheet's field of it and Trading's cash and joke, the cash shown a frame
+/// behind; the personal pocket's every sum a number throughout. While the
+/// error stands an order of the firm's is refused by the palette, a click and
+/// a key, a sale among them, and no book, count or ledger row moves; your own
+/// pocket buys as ever; Delete writes the empty text, `#VALUE!` lands where
+/// `#NUM!` did and no joke stands beside it, the jokes being `#NUM!`'s; and
+/// when the contract's 50,000 is written back every cell is the twin's again,
+/// the cash shown a frame later, and the firm's order fills. A joke beside a
+/// figure is COUNTIF's witness that the cell holds the error itself and no
+/// number the record spells as one: no NaN and no infinity reaches a cell.
+#[test]
+fn a_balance_past_the_end_is_an_error_through_every_sum_and_recovers_when_undone() {
+    use buffet::{Typed, FIRM, PERSONAL};
+    use Act::{Key, Left, Point, Run, Show};
+    let past = Typed::Number {
+        digits: 1,
+        power: 308,
+    };
+    let contract = Typed::Number {
+        digits: buffet::CAPITAL_A_RIGHT,
+        power: 0,
+    };
+    let script: Vec<LimitFrame> = vec![
+        (1, &[Show("Trading")], &[], None),
+        (3, &[Show("Trading")], &[], None), // the Camera showed the lead at the begin
+        (4, &[Key("Digit1", true)], &[], None), // the first stock picked
+        (5, &[Key("Digit1", false)], &[], None),
+        (6, &[Run("buy-1")], &[], None), // a share for the firm, in both
+        (8, &[], &[], Some(past)),       // the edit: the capital 5E+308
+        (10, &[], &[Run("buy-1")], None), // refused: the cash shown an error
+        (12, &[Point(5, 6)], &[Left(true)], None), // Buy 1 clicked: refused
+        (13, &[], &[Left(false)], None),
+        (14, &[], &[Key("KeyF", true)], None), // sell-all by its key: a sale refused too
+        (15, &[], &[Key("KeyF", false)], None),
+        (16, &[Key("KeyC", true)], &[], None), // your own pocket, at 9:35, a tick
+        (17, &[Key("KeyC", false)], &[], None),
+        (18, &[Run("buy-1")], &[], None), // your own cash buys, in both
+        (20, &[Run("switch-cash")], &[], None), // the firm's again
+        (22, &[], &[], Some(Typed::Emptied)), // Delete: #VALUE!, and no joke
+        (24, &[], &[], Some(past)),       // the edit again
+        (26, &[], &[], Some(contract)),   // undone: the contract's worth written back
+        (28, &[Run("buy-1")], &[], None), // the firm's share fills, in both
+    ];
+    let last_frame = 31;
+    let (mut edited, mut twin) = (cartridge(), cartridge());
+    let seed = seed(&twin);
+    let market = Market::new(seed);
+    let texts = disclosure_texts(&twin);
+    let joke = joke_shown();
+    let starts = [WAIVED_CAPITAL, buffet::PERSONAL_CASH];
+    let (mut cal_t, mut cal_e) = (
+        Calendar::new(PACE, DAYS_A_YEAR),
+        Calendar::new(PACE, DAYS_A_YEAR),
+    );
+    let (mut host_t, mut host_e) = (Host::new(buffet::EXAM), Host::new(buffet::EXAM));
+    let (mut plate_t, mut plate_e) = (Plate::default(), Plate::default());
+    let mut written = contract;
+    let mut stood: Option<&'static str> = None;
+    let mut outcomes: Vec<(u64, buffet::Outcome)> = Vec::new();
+    let mut landed_at: Vec<(u64, usize)> = Vec::new();
+    let mut steps = script.iter().peekable();
+    for frame in 1..=last_frame {
+        let (mut both, mut alone) = (Vec::new(), Vec::new());
+        while let Some((_, b, a, edit)) = steps.next_if(|(at, ..)| *at == frame) {
+            both.extend_from_slice(b);
+            alone.extend_from_slice(b);
+            alone.extend_from_slice(a);
+            if let Some(typed) = edit {
+                written = *typed;
+                let row = typed.row(buffet::A_RIGHT);
+                edited
+                    .write(&row)
+                    .unwrap_or_else(|r| panic!("{row}: {} {}", r.refusal.id, r.refusal.text));
+            }
+        }
+        let error = buffet::capital_with(written, buffet::WAIVED_SCORE).err();
+        let shown_t = shown(&cal_t, seed, &market, &plate_t, starts);
+        let mut shown_e = shown(&cal_e, seed, &market, &plate_e, starts);
+        shown_e.errors = [stood, None];
+        let (last_t, now_t) = host_t.step(&mut twin, &both);
+        let (last_e, now_e) = host_e.step(&mut edited, &alone);
+        // The twin, the game with no edit, held to the hand whole.
+        plate_frame_held(
+            &twin,
+            &host_t,
+            (&now_t, &last_t),
+            &mut plate_t,
+            &mut cal_t,
+            (seed, &market),
+            &shown_t,
+            starts,
+            &texts,
+        );
+        // The edited game by hand: the same calendar and books, its orders
+        // judged by what its last frame showed.
+        cal_e.tick();
+        if cal_e.turned {
+            plate_e.pay(std::array::from_fn(|k| {
+                RUNGS[k].dividend_on(cal_e.day_of_year)
+            }));
+        }
+        let order = plate_e.frame(
+            Plate::clicked(&now_e, &last_e),
+            Plate::switch_clicked(&now_e, &last_e),
+            &host_e.command,
+            &shown_e,
+            starts,
+        );
+        if let Some(o) = order {
+            outcomes.push((frame, o.outcome));
+        }
+        assert_eq!(
+            plate_e.fills, plate_t.fills,
+            "frame {frame}: the edited game's fills, the twin's"
+        );
+        assert_eq!(
+            host_e.pending, host_t.pending,
+            "frame {frame}: the ledger's rows the host writes, the twin's"
+        );
+        // Every cell: the twin's, but for the edit itself, the order desk's
+        // record of the orders the edited game alone took, Trading's sentence
+        // and the Write sheet's fields of them, and where the error lands.
+        let mut want = grid(&twin);
+        let mut put = |sheet: &str, addr: &str, v: String| {
+            want.insert((sheet.to_string(), addr.to_string()), v);
+        };
+        put(buffet::A_RIGHT.0, buffet::A_RIGHT.1, written.spelled());
+        for (addr, text) in orders_want(
+            &plate_e,
+            (&now_e, &last_e),
+            &host_e.command,
+            order,
+            &shown_e,
+            starts,
+            error,
+        ) {
+            put("Orders", &addr, text);
+        }
+        put(
+            buffet::TRADING,
+            "A13",
+            plate_e
+                .last
+                .map_or(buffet::NO_ORDER.to_string(), |o| o.sentence()),
+        );
+        let (name, price) = order.map_or((String::new(), 0), |o| {
+            (RUNGS[o.stock as usize - 1].name.to_string(), o.price)
+        });
+        put("Write", "C5", name);
+        put("Write", "C7", price.to_string());
+        let landed = buffet::landed(error, stood, plate_e.funding(), &joke);
+        for (sheet, addr, v) in &landed {
+            put(sheet, addr, v.clone());
+        }
+        let got = grid(&edited);
+        if got != want {
+            let keys: BTreeSet<&(String, String)> = got.keys().chain(want.keys()).collect();
+            let differ: Vec<String> = keys
+                .into_iter()
+                .filter(|k| got.get(*k) != want.get(*k))
+                .map(|k| format!("{}!{}: {:?} where {:?}", k.0, k.1, got.get(k), want.get(k)))
+                .collect();
+            panic!(
+                "frame {frame}: the edited game's cells, the twin's but where the hand says\n{}",
+                differ.join("\n")
+            );
+        }
+        landed_at.push((frame, landed.len()));
+        if frame == 9 {
+            // What a figure in error draws: the error's name, its format's code
+            // spelling numbers alone, so no text row; the joke a text beside it.
+            for (sheet, figure, beside) in buffet::FIRM_FIGURES {
+                let window = format!("{figure}:{beside}");
+                let r = record(&edited, sheet, &window);
+                assert!(
+                    r.contains(&format!(
+                        "(value \"{sheet}\" \"{figure}\" (error \"#NUM!\"))"
+                    )) && !r.contains(&format!("(text \"{sheet}\" \"{figure}\"")),
+                    "{sheet}!{figure} draws the error's name\n{r}"
+                );
+                let drew = drawn_cells(&edited, sheet, &window);
+                let at = drawn_at(&drew, sheet, figure);
+                assert_eq!(at.code.as_deref(), Some("#,##0.00"), "{sheet}!{figure}");
+                assert_eq!(
+                    at.align, None,
+                    "{sheet}!{figure}: no alignment said, so the viewport's own for an error, the middle"
+                );
+            }
+        }
+        stood = error;
+    }
+    assert!(steps.next().is_none(), "every frame of the script played");
+    use buffet::Outcome::{Filled, Uncounted};
+    assert_eq!(
+        outcomes,
+        [
+            (6, Filled),
+            (10, Uncounted),
+            (12, Uncounted),
+            (14, Uncounted),
+            (18, Filled),
+            (28, Filled),
+        ],
+        "the edited game's orders, by frame"
+    );
+    assert_eq!(
+        plate_e.fills.iter().map(|f| f.pocket).collect::<Vec<_>>(),
+        [FIRM, PERSONAL, FIRM],
+        "the fills, each its pocket"
+    );
+    // Where the error stood, by frame: nothing before the edit; the firm's
+    // books, figures and jokes, and the desk's while the firm funds, the cash
+    // shown from the frame after the edit; your own pocket's frames without
+    // the desk's; the cash shown alone at the undo's frame; nothing after.
+    let count = |f: u64| landed_at[f as usize - 1].1;
+    assert_eq!(count(7), 0, "no error before the edit");
+    assert_eq!(
+        count(8),
+        4 + 2 * 5 + 2,
+        "the edit's frame, the cash shown a number still"
+    );
+    assert_eq!(count(9), 4 + 2 * 5 + 2 + 1);
+    assert_eq!(
+        count(17),
+        4 + 2 * 4,
+        "your own pocket funding: none of the desk's"
+    );
+    assert_eq!(count(26), 1, "undone: the cash shown alone, a frame behind");
+    assert!(
+        landed_at[26..].iter().all(|(_, n)| *n == 0),
+        "recovered from the frame after the undo"
+    );
+    assert_eq!(
+        grid(&edited),
+        grid(&twin),
+        "the edited game, undone, is the twin cell for cell"
     );
 }

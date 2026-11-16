@@ -78,7 +78,7 @@ Every player-visible string, which is to say:
 - license names, compliance memos and the audit's findings;
 - staff, rivals, clients, the league table;
 - achievements, titles (Intern, Associate, VP "a title given instead of a raise", Director, Managing Director, Partner, Legend);
-- error values (`#NUM!` reads "net worth exceeds the known universe");
+- error values (`#NUM!` reads "net worth exceeds the present value of the known universe");
 - fine print, tooltips, the crash screen, the prestige screen, the ending;
 - **the source itself**: sheet names, cell notes, comments and the header of every replay. The repository is public; the jokes are part of it.
 
@@ -932,7 +932,7 @@ Paper Hands (sold the bottom). Diamond Hands (held through a 40% drawdown). Bagh
 
 ### Error values
 
-- `#NUM!`: "Net worth exceeds the known universe. Please buy another universe."
+- `#NUM!`: "Net worth exceeds the present value of the known universe. Please purchase another universe to continue playing."
 - `#DIV/0!`: "Return on zero capital: infinite, and unavailable."
 - `#REF!`: "You no longer hold this position. It holds you."
 - `#VALUE!`: "The analyst entered text where a number goes. The analyst is on a call."

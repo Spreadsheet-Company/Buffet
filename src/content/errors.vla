@@ -1,0 +1,23 @@
+; SPDX-License-Identifier: CC-BY-SA-4.0
+; errors.vla - the error values' jokes: the Errors sheet, an error a row, its name as a
+; cell shows it and the joke the game shows beside a balance where that error lands
+; (docs/OMAKASE.md, PLATE.6). Words alone: one macro named after this file, whose body is
+; one call of the library's strings. The source includes this file after its manifest,
+; with every other include, and calls (errors) where the sheet's rows belong. An error's
+; name is Excel's own, as a cell draws it, so a row is rewritten in its place rather than
+; added: the language has no other errors to name. The first row is #NUM!'s, the error a
+; sum past what a double holds becomes, which the game shows today; the others wait for
+; the dishes that raise them. To change a joke, read README.md beside this file.
+
+(defmacro (errors)
+  "the error values' jokes: the Errors sheet, an error a row, its name and its joke"
+  (strings "Errors"                 ; the sheet, hidden among the tabs
+    ("Error" 8                      ; its fields, each its header and its width in characters: the error's name, as a cell draws it,
+     "Joke" 112)                    ;   and the joke shown beside a balance where it lands
+    ; each row: the error's name, then its joke
+    ("#NUM!" "Net worth exceeds the present value of the known universe. Please purchase another universe to continue playing.")
+    ("#DIV/0!" "Return on zero capital: infinite, and unavailable.")
+    ("#REF!" "You no longer hold this position. It holds you.")
+    ("#VALUE!" "The analyst entered text where a number goes. The analyst is on a call.")
+    ("#N/A" "Data not available. The data is OOO.")
+    ))                              ; the sheet's end: the five errors' jokes stand above this line

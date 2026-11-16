@@ -69,6 +69,10 @@ empty.*
 
   *Closed 2026-10-19.* Predicted `~days` for the dish; the first slice cost one sitting, the scoping, the build, its measurements and mutants, and the owner's hand test the next day. What landed: `Orders!B1` a switch's state, the switch's block `B43:B47`, the gates of `B16`, `B20` and `B21`, Trading's switch and its key, the eleventh command and the notes in the source and its cartridge, 1,048 rows and 526 formula cells; caveat 18; the hand's switch and its rule; 73 tests, the crate's 28 and the cartridge's 45; the describe golden blessed again; in `OMAKASE.md`, `BD-5`'s caveat taken; and `Delta/CLAUDE.md`'s map. The predictions missed in part, each named beside its number: the describe golden's readers, a switch's step under its range, and the cartridge's block in the page. The build found `BD-9`'s comparison first placed after the hand's, which caught the money-moving mutants first, and a harness trap. The hand test asked two things of the game the same day, a minute a second where an hour a second stood and a volatility factor, taken up as `POT.11`.
 
+- ✅ **`PLATE.6`, first slice — the limit, as a test.** A sandbox edit pushing a balance past what a double holds, the error value flowing through every sum and recovering when the edit is undone, held cell by cell, and the error's own joke from the Errors sheet, which arrives with this dish (`MENU.1`), shown where it lands. The second slice, the ending as a designed thing, is course 7's. *Oracle:* the test, and a mutant that lets the error vanish. *Pays into:* every sum written after it is written knowing an error value passes through. *Scoped and built 2026-11-15 in one sitting at the owner's word, its eight decisions built as recommended for the owner's hand test to amend (`SPIKE.md`, under THE ITEMS, SCOPED):* the edit a correct answer's worth, `Proctor!B2`, written 1E+308 after the begin, the capital 5E+308 and `#NUM!`, undone by writing 50,000 back, `alonzo` 0.3.0 having no undo; `vla-lang` 0.12.0's machine turning every result past the end into `#NUM!`, so that no NaN and no infinity reaches a cell; the error landing on the firm's capital, cash, net worth and the card's worth now, the views' figures of them and the order desk's cash, held cell by cell against a twin with no edit, itself held to the hand, and every cell the twin's again once undone; the Errors sheet, `src/content/errors.vla`, the five jokes of `BUFFET.md`'s appendix, `#NUM!`'s the row shown; beside every balance a view shows, its error's joke, the library's `error-joke`; an order against cash shown as an error refused, a sale too, so that no book takes one; and caveat 26, money that ends where a double does. *Found there and unminted:* a card's turn or the begin while the error stands latches it into the card's holds, measured; an order in the edit's own frame fills by the cash it was shown, rightly, and its ledger row keeps six of its seven fields, the host writing no error; the books' counts pass the end by play, not by edit, which the second slice's ending decides; the jokes are `#NUM!`'s alone until `ERROR.TYPE` (`vla-lang` 0.13.0) reaches a pin, on the asks table with the record's spelling of 1E+308. *Passed at the owner's hand test the same day with one change, `#NUM!`'s joke in the owner's words: "Net worth exceeds the present value of the known universe. Please purchase another universe to continue playing."* `~days`
+
+  *Closed 2026-11-15.* Predicted `~days` for the dish; the first slice cost one sitting, the scoping, the build, its measurements and mutants, and the owner's hand test the same day, which passed it with one change, the joke's words. What landed: the Errors sheet, `src/content/errors.vla`, five jokes, the layout check's content pin raised to 7; `kitchen.vla`'s `error-joke`; the eight joke cells of four views; the order desk's guard, `ISERROR(Orders!B24)`, its sixth outcome and Trading's seventh sentence; caveat 26; the source's notes and comments; 1,478 rows and 871 formula cells; the hand's end of the numbers, counted by a typed number's digits, the capital at a worth, the landing and the sixth outcome; 103 tests, the crate's 42 and the cartridge's 61, the edited game held cell by cell against a twin held to the hand through the edit, refused orders, a switch, a Delete and the undo; twenty mutants caught; the describe golden blessed again; in `OMAKASE.md`, `BD-5`'s row and two rows of the asks table; `BUFFET.md`'s appendix in the owner's words; and `Delta/CLAUDE.md`'s map. Three of the eight predictions missed in part, each named beside its number: the pass 0.5 ms dearer where 0.4 at most, the limit's test just under its range, and the page 9,398 characters longer where 8,000 at most. The build found the hand's guard against the end drawn too wide, a score of none raising ten to the 308th, and a joke reading its view's own figure living until a test of the library's rule caught it. The hand test saw `Proctor!B2` drawn as `#`s, the record's spelling of 1E+308, on the asks table.
+
 ## 🧽 THE BACK OF HOUSE
 
 - ✅ **`BACK.1` — the dish pit: the side hustle, the first button.** *Scoped 2026-10-16, approved the same day with the view named by the owner, built and hand-tested that day, and amended at the hand test, the key bound on its view alone: the scoping, the approval, every prediction beside its number, what the build found and the owner's hand test are under THE ITEMS, SCOPED.* Gigs, the game's second view, the owner's name for "the sheet where various clicker jobs can produce cash at varying speeds, cooldowns, and pay rates", and its one job at course 0, proofreading a prospectus: a button cell, `[ Proofread a prospectus ]` in a column as wide as its text, pressed by a click on it while Gigs shows, the pointer on the cell and the left button's rising edge, or by P while Gigs shows, the Keys sheet binding P on that view alone by a formula of the sheet shown, so that every view binds keys of its own (the owner's word at the hand test: "keybindings should be scoped to each tab to avoid limiting the entire application to 26 key commands"); each press a cell that holds 0 between presses; $25 a claim, once a market day, at most four claims a run, the owner's cap over a claim a day for good, four claims being $100, about twice a perfect trader's first year on the personal pocket's $100. A claim is judged by what the last frame showed and counts against the day shown, as an order fills at the price shown; its books stand on the Hustle sheet, the fee, the cap and the button's place as values, so that a layout of the view moves no formula; the fees are the claims times the fee, which `PLATE.2`'s personal pocket reads when it comes; the day moving reopens the hustle, and nothing reads the boundary. The views' date and fine print entered `kitchen.vla` at their second writing, `as-of` and `fine-print`, the Portfolio expanding over them to its bytes unchanged. *Oracle, met:* every frame of a scripted session of clicks and keys, written as the host writes them and the Keys sheet read after every step as the host reads it, held to the hand, the cap, the day a press counts against, the reset and the key's binding among them; Gigs at rest on every day of two years and two days and of eight hundred at one frame a day; the settings, the button at their place and the one key bound on its view; nothing reads a view, `BD-7`'s scan and the census's `(every-frame 0)` kept; the describe golden blessed again; nine mutants, each caught by the test written for it; a click's cost natively and in Chrome at full screen, a claim shown 48 to 50 ms after the click at p95, the contract's 100 ms met by half; and the owner's hand test in the page, twice. *Pays into:* `PLATE.1`'s six buttons a rung and `GUARD.1`'s four options a question, each a press's cell, its place values of the model and its keys its view's; the gigs to come, each its own speed, cooldown and pay. `~days`
@@ -8096,4 +8100,279 @@ word passed. The owner's words: "Tests pass; commit, then recommend next
 steps." So every decision and every draft stands as built: the bands, the five
 remarks, the two caveats, the labels and the headers. Committed at the owner's
 word.
+
+## `PLATE.6`, first slice — the limit, as a test: a balance past what a double holds
+
+*Scoped and built 2026-11-15 at the owner's word, "Scope and implement PLATE.6's
+first slice in Buffet (Delta/Buffet): the limit, as a test", in one sitting as
+`FRONT.3` and `CRITIC.1` were: each decision below stands as recommended and was
+built, the owner's to approve, amend or strike at the hand test, and every text a
+player reads is a draft. Minted already, its line in `COURSE.0`; the second slice,
+the ending as a designed thing, is course 7's (`FRONT.7`). Nothing was minted, and
+what else the scoping found stands under Found. Read for it: the item's line and
+`BD-3` in `OMAKASE.md`; `BUFFET.md`'s "Numbers" and "The ceiling" and its appendix's
+error values; `BACK.2`'s Found above, a style out of range; `FRONT.2`'s second
+slice's decision 1, the model's sheets work sheets; and, to answer the scoping's
+questions from the code: `vla-lang` 0.12.0's `calc/eval.rs` (`finite`, `binary`,
+`arithmetic`), `calc/program.rs` and `calc/vector.rs` (the lowered programs and the
+lanes), `calc/library.rs` (`IF`, `AND`, `OR`, `CHOOSE`), `calc/lookups.rs`
+(`IFERROR`, `ISERROR`), `calc/criteria.rs` (an error's criterion), `calc/value.rs`
+(`spell`), `numfmt.rs` (`Code::text`) and `view.rs` (the `text` row); `alonzo`
+0.3.0's `Cartridge::write`, `view` and `step`; and the vendored page's
+`cellEditRow` and `cellClearRow` (`web/index.template.html`) and `valueOf` and
+`alignOf` (`web/viewport.js`). Alonzo's and Frazaro's trees were read and never
+touched; the registry's sources were read in place.*
+
+**What it stands on, read on the day** (Buffet at `6d4a275`, pushed, CI green, the
+tree clean; `alonzo` =0.3.0 and `vla-lang` =0.12.0; 96 tests).
+- *The machine past the end.* `eval::finite` turns every result no double holds,
+  an infinity or a NaN, into `#NUM!`: each of `+`, `-`, `*`, `/` and `^`, negation
+  and the percent, `SUM` and the aggregates, `SIN`, `MOD`, the criteria's sums and
+  the array functions. A lowered program hands a result that is no number back to
+  the evaluator (`program::num`), and the lanes call the same `arithmetic`. An
+  error passes through every operator, the left operand's first, `IF`'s condition,
+  `AND` and `OR`, `SUM`, `CHOOSE`'s index and every comparison; `IF` takes no
+  branch it does not choose. So `BUFFET.md`'s rule, "no NaN reaches a cell", holds
+  at 0.12.0 by the machine, and no cell of Buffet's needed a change for it. The
+  record spells a number no cell can hold as `#NUM!` too (`Value::spell`), so the
+  record cannot tell the two apart; COUNTIF can, an error's criterion meeting the
+  error value alone (`criteria.rs`, `Target::Error`), and so the joke is the test's
+  witness (decision 6).
+- *What a person may type.* The page writes a typed number bare,
+  `(cell "Proctor" "B2" 1E+308)` (`cellEditRow`), and Delete the empty text
+  (`cellClearRow`), which arithmetic reads as `#VALUE!`. 1E+308 and the end itself,
+  1.7976931348623157E+308, are held; 1E+309 is refused by the row's shape,
+  `grid-row-malformed`. So no person types a balance past the end, and a sum of a
+  typed number and the game's cents never passes it either: the end and $250 round
+  back to the end. Only a product passes it, or two numbers near the end summed.
+- *The products of money.* The firm's capital, `Proctor!B39`, the capital before
+  the exam and the score at a correct answer's worth, `B2`; the hustle's fees,
+  `Hustle!B18`, the claims done at a fee; the books' costs and values, shares at a
+  price; the benchmark's worth; and the card's rounding, a worth times 20,000.
+- *Undone.* `alonzo` 0.3.0 has no undo: `ENGINE.30`'s step back is open there, and
+  at rate 0 alone. An edit is undone by a second edit writing the old value back.
+- *State.* The books are counts over their twins (`Positions!E2:I9`, the fills
+  counted `Orders!B29`), and so are the card's worths at its turns
+  (`Performance!C13:F14`) and the benchmark's shares before the begin (`B4:B5`): an
+  error any of them takes stands there after the edit is undone. The host writes no
+  derived row whose value is an error (`web/host.js`, `_readWrite`).
+- *What a figure in error draws.* An error under a format's code has no `text` row
+  (`Code::text` spells numbers and texts alone), so the viewport draws the error's
+  name, in the middle of its cell where its format says no alignment (`alignOf`), as
+  Excel draws one. The glyphs read the prices' change, `Stocks!I5:I8`, which no
+  balance reaches.
+
+**The decisions.**
+
+1. **The edit: a correct answer's worth written 1E+308 (rec).** A person writes
+   1E+308 into `Proctor!B2`, after the begin, so the waiver's five right answers make
+   the capital 5E+308, past the end; and undoes it by writing the contract's 50,000
+   back. The capital is the one product of a setting and a count that is a balance,
+   and after the begin every cell it reaches is a function of it, no state among
+   them but the order desk's (decision 4). *The alternatives:* your own cash at the
+   start, `Cash!B1`, which no number a person may type pushes past (above); the fee,
+   `Hustle!B1`, which passes the end at the second claim done, a week and a day's
+   work into the game; a stock's start, `Stocks!B5`, a price and no balance, which
+   reaches the glyphs, the books' values and the holdings; a formula typed, `=10^309`,
+   the error the edit's own cell and no sum's.
+2. **Where it lands, held cell by cell against a twin (rec).** The capital; the
+   firm's cash, the capital and its books' flows (`Cash!B3`); its net worth, the cash
+   and the holdings (`B9`); the card's worth now (`Performance!B13`); the views'
+   figures of them, the Certificate's capital, the Overview's net worth and the
+   Portfolio's cash on hand and net worth; and while the firm's pocket funds the order
+   desk, the cash now (`Orders!B31`), the Write sheet's field of a fill's cash after
+   (`Write!C8`), which writes nothing while no order fills, and Trading's cash
+   available, with the cash shown (`Orders!B24`) a frame behind, at the edit and at
+   its undo. Your own pocket's every sum stays a number, and so does every other
+   cell. The oracle: two cartridges, the edited and a twin with no edit, stepped with
+   the same inputs; the twin held to the hand at every frame by the order desk's
+   holders, its books, cash, ledger, commands and views; and every cell of every sheet
+   of the edited game, the twins and the Input sheet aside, equal to the twin's at
+   every frame but where the hand says the error lands and the order desk's record of
+   the orders the edited game alone took. Undone, every cell is the twin's from the
+   frame after, the cash shown from the frame after that. *The alternatives:* the
+   edited game held by the hand alone, every holder taught an error, which the twin
+   makes unnecessary; the landing cells alone, which cannot say the error went
+   nowhere else.
+3. **The Errors sheet, a content sheet of its own (rec, `MENU.1`'s name for it).**
+   `src/content/errors.vla`, two fields, the error's name as a cell draws it and its
+   joke, `BUFFET.md`'s five, word for word, `#NUM!` first; hidden after the Remarks;
+   its row shown, `Errors!E2`, a value, 1, the error past the end, its pickers its name
+   and its joke (`E3`, `E4`). The layout check's content pin 6 to 7, its control's
+   clean copy twelve files. *The alternatives:* the row shown by the error's kind,
+   which wants `ERROR.TYPE`, not in the language at 0.12.0 (Frazaro's `KERNEL.68`,
+   released in 0.13.0, which Buffet takes at the pin after Alonzo's next release), so
+   the gap is named and not built around: five COUNTIFs a joke would be a row of the
+   sheet no row added could join; the jokes as rows of the Caveats sheet. *(Amended at
+   the owner's hand test, 2026-11-15, the owner's words: "The joke should read 'Net
+   worth exceeds the present value of the known universe. Please purchase another
+   universe to continue playing.' to make more sense than merely 'exceeds the known
+   universe' (known universe's *what*?)": `#NUM!`'s joke in those words, `BUFFET.md`'s
+   appendix and its list of the game's texts with it, and the Joke field 112
+   characters wide where 80, since the Errors sheet's test holds each joke inside its
+   column; the cartridge 86,433 bytes where 86,386, its rows and formulas unmoved, no
+   test, golden or floor moved but the content's.)*
+4. **An order against cash shown as an error, refused (rec).** `Orders!B26` fills
+   nothing while `ISERROR(B24)`, a sale too, and `B27` says why, the sixth outcome, its
+   label "6 an error"; Trading's sentence: "Refused: the cash shown is an error. Orders
+   fill against cash the books can count.", plain as every refusal is. The closed
+   market and the stock unpicked keep their reasons first. Without it a buy fills
+   `#NUM!` (the cash shown compared with the price), and the shares, the cost, the
+   cents bought, the fills counted and the ledger's ring take it for good; a sale fills
+   by the shares, its books right, but its ledger row loses its cash after, the host
+   writing no error. Either way nothing recovers when the edit is undone, which is the
+   line's claim. *The alternatives:* no guard, the test placing no order while the error
+   stands and the latch a Found; buys alone guarded; an `IFERROR` on the fill, the
+   error hidden, which the line forbids.
+5. **What a figure in error draws: the error's name, as Excel draws it (no decision,
+   the record's rule).** In the middle of its cell, its format's code drawing numbers
+   alone; the figures' formats unchanged.
+6. **The joke beside every balance a view shows (rec).** The cell to the figure's
+   right, where its error's joke stands while it holds the error the Errors sheet
+   shows, and the empty text else: the Certificate's `C8`, the Overview's `C6:C7`, the
+   Portfolio's `C11:C12` and `C15:C16`, eight cells in all with Trading's `C12`, under
+   the cash available since the switch stands beside it. A text spills into the empty
+   cells on its right, so a joke reads whole. The library's `error-joke`, at its first
+   dish since four views write it: `=IF(COUNTIF(<the model's cell>,Errors!$E$3)=1,
+   Errors!$E$4,"")`, the model's cell the figure divides, never the view's figure, as a
+   glyph reads the model's cents. A Delete's `#VALUE!` lands where `#NUM!` did and shows
+   no joke, the jokes being `#NUM!`'s until the row shown can read an error's kind.
+   *The alternatives:* a joke a view, beside its first error; beside the net worths
+   alone, which every balance's error reaches; keyed on `ISERROR`, which would tell a
+   Delete that the universe had been exceeded.
+7. **The caveat this dish owes (`BD-5`), a draft (rec).** Row 26: "Money ends where a
+   double does, near 1.8E+308 cents: past it, every sum that reads it is an error.";
+   "A ledger keeps as many digits as a sum needs and has no ceiling; all the world's
+   wealth is under $500 trillion."; "Management considers the ceiling a long-term
+   goal."; its place `Cash!B9:B10`, the net worths. The world's wealth marked for
+   `MENU.8`.
+8. **The hand (rec).** A typed number as its digits and a power of ten; the end as its
+   seventeen digits and their power; past the end by counting places and comparing
+   seventeen digits, never in a double, the end's seventeen and one more the last a
+   double reads back as the end, held against the platform's own reading of thirteen
+   decimals at and around it; the capital at a worth, `#NUM!` past the end and
+   `#VALUE!` at the empty text, judging no capital within eight of the end's
+   seventeenth digit, where the double nearest the worth decides; the landing by a
+   list of the firm's books written by hand; and the sixth outcome in the plate.
+
+**Found at the scoping and the build**, none minted; the first three measured in
+scratch at the build, a frame a day from the first bell, the exam waived:
+- *A card's turn while the error stands.* The card's worth at its turn holds what
+  `B13` holds then (`Performance!C13`), so the edit standing at frame 92, the first
+  quarter's turn, gives the first card `#NUM!` for the firm's worth, both returns,
+  alpha, both grades, the grades' sentence and the remark, Average Co.'s row a number;
+  undone at frame 120, the second card (frame 183) reads the firm's worth again and
+  still `#NUM!` for the quarter's return, the card before it being the first, and the
+  third card (frame 274) is the hand's. An edit standing at a year's turn would hold the
+  year's start (`E13`) in error for the year. The card is history, a quarter's books as
+  they stood, so the error it took is true of that quarter; whether a card should say
+  so in words is the second slice's or the card's next dish's.
+- *The begin while the error stands.* The benchmark's shares and cents are taken until
+  the game begins and held from then (`Performance!B4:B5`), so an edit during the exam
+  that stands at the begin gives Average Co. `#NUM!` shares for good, its worth and the
+  Report's second row with them, and the firm's worths at the begin (`C13`, `E13`) until
+  the first card and the year's turn; undoing it after the begin restores the firm's
+  cash and nothing of the benchmark. A sandbox edit before the bell; the second slice's,
+  or `GUARD.1`'s next dish's, which may want the benchmark taken from the capital the
+  contract writes rather than the cell.
+- *An order in the edit's own frame.* The cash shown is the last frame's, a number, so
+  an order landing in the frame the edit does fills, rightly, and the books are the
+  hand's after the undo; but its ledger row's cash after is this frame's cash, `#NUM!`,
+  and the host writes no error, so that row holds six of its seven fields for good.
+  Not reachable by hand in one frame, the edit written on another sheet or through the
+  palette, but a keymap's own command can run a row and a command in one step, and a
+  replay can. The cash after read a frame later, or the guard reading the cash now,
+  would close it; the second is a cycle, the cash now being the fill's.
+- *The books past the end by play.* No edit is needed to pass the end once a balance is
+  near it: your own cash written 1.7E+308 buys every share it covers, a book's cents
+  bought counting a second purchase past the end, and a count over its twin keeps
+  `#NUM!` for good. The game's own ending, which the second slice designs (`FRONT.7`),
+  decides what stands there: an island before the end, or a ceiling the books refuse.
+- *Other errors and other cells.* A price in error, a stock's start deleted or past the
+  end, reaches the fill through the price shown, which the guard does not read, and a
+  dividend's day multiplies the shares by it, the dividends' count latching; neither
+  is a balance. Each is the dish's that makes the price or the dividend (`STATION.2`,
+  `PLATE.3`), written knowing an error passes through. The fees, Gigs' `B9`, and the
+  card's figures draw an error with no joke beside them.
+- *The card's own ceiling.* The returns' rounding multiplies a worth by 20,000
+  (`Performance!B17:C18`), so the card is `#NUM!` at worths past about 9E+303 cents,
+  four orders of ten below the end.
+- *A number past 10^15 under General.* The record spells 1E+308 in full, its 309
+  digits, so `Proctor!B2` draws `#` across its cell where Excel's General draws
+  `1E+308`: the viewport's or the record's (Alonzo's `hashesOf`, `vla-lang`'s
+  `number_text`), on the asks table, the owner's to pass on.
+- *Each error its own joke.* `ERROR.TYPE`, Frazaro's `KERNEL.68`, released in `vla-lang`
+  0.13.0, gives the row shown an error's kind, so every error a joke of its own and a
+  Delete's `#VALUE!` its analyst; at the pin after Alonzo's next release, on the asks
+  table.
+- *The guard's price.* `ISERROR` leaves the desk's `B26` and `B27` to the evaluator,
+  `(unlowered error)` in the census where both were lowered; they compute when an order,
+  a bell or a pocket's cash moves, so no frame pays it measurably (below).
+
+**The predictions, before any number.** Written at the build, after the expansion,
+the suite's first run and the describe's bless had shown the rows, the formula
+cells and the tests, which stand below as measurements beside no prediction; every
+other line was written before its number was taken.
+
+| | What | Predicted | The number |
+|---|---|---|---|
+| P1 | the cartridge | none: seen at the expansion | *Measurement*: `(rows 1478) (loads yes)` where 1,446, 86,386 bytes where 84,227; 871 formula cells where 861, the describe golden's budget `(budget 30 871 26130 2000000)`, shapes 261 where 254, `(every-frame 0)` and `(cycles 0)` standing, a readers row for the Errors sheet, 22 |
+| P2 | the pass and the load | each 0.1 to 0.4 ms longer | *Measurement*, one release runner over `HEAD`'s tree and this one, three rounds alternated, each a median of 21: the load 7.59 to 7.80 ms where 7.28 to 7.59, inside; the pass 10.87 to 11.55 where 10.53 to 10.75, about 0.5 longer. **Missed** in one: the pass dearer than priced, a sheet and 32 rows more |
+| P3 | the step, natively | an ordinary frame and a tick within 3% of `HEAD`'s; the edit's own frame and the undo's 0 to 10 µs dearer than `HEAD`'s same frames | *Measurement*, the same runner, five sessions of 1,200 frames, each frame's median: an ordinary frame 1.3 µs either way, a tick 20.0 to 20.1 where 19.5 to 20.5; the edit's frame 9.9 to 10.6 where 6.2 to 6.4, about 4 µs dearer, the frame after it 3.7 to 3.9 where 2.9; the undo's 6.8 to 7.0 where 3.6 to 3.8, about 3 dearer; inside, each. Unpriced: the first frame 155 to 161 µs where 137 to 139, the Errors sheet and the eight jokes computed once |
+| P4 | the suite | the limit's test 0.5 to 1.5 s alone; the whole on eight threads within 0.5 s of `HEAD`'s | *Measurement*: 103 green where 96, the crate's 42 and the cartridge's 61; the limit's test 0.47 to 0.49 s alone, three runs; the cartridge's whole on eight threads 9.88 to 9.89 s where 9.63 to 10.27, alternated, inside. **Missed** in one: the limit's test just under its range |
+| P5 | the page | 4,000 to 8,000 characters longer | *Measurement*: 3,891,936 characters where 3,882,538, both built over the same module, 9,398 longer. **Missed**: the source's comments and the notes longer than priced |
+| P6 | the checks | ALL GREEN, four checks and four controls; `check_layout.ps1` the only check edited; one file added under `src/`; fmt and clippy clean | *Measurement*, as predicted: ALL GREEN, the layout's control a clean copy of twelve files and fourteen mutants, its content pin at 7; `cargo fmt` wrapped lines of the hand's and the tests' twice, the second time a test written after the first, then clean; clippy clean |
+| P7 | mutants | 20, each into the source, the library or a content file by one anchor or two; at most one lives at the first run, likeliest a joke reading its view's own figure | *Measurement*: 20 written, each anchor applying once, each expanded and loading. At the first run 19 were caught by a test other than the describe golden, and one lived, the Overview's jokes reading their own figures, which hold the same error: as predicted. A test of the rule the library states, each joke reading the cell its figure divides, was written for it, and the second run caught it and two more (below) |
+| P8 | the hand test | the owner's, below | The owner's, 2026-11-15, on the page built here: passed, "Hand tests pass", one change asked, `#NUM!`'s joke in the owner's words (decision 3's amendment); `Proctor!B2` drawn as `#`s, predicted under Found, seen |
+
+**What the build found.** The source expanded to 1,478 rows and loaded at its first
+expansion, the `error-joke` verb's expression written whole, its empty text a text
+of the formula's and no quoted piece (the trap of `KIT.5`, `SPIKE.md`'s pin record),
+and the rows that moved from the committed cartridge were the notes, the order desk's
+three, the Errors sheet's 27, caveat 26 with the Caveats' count and four pickers, the
+eight jokes in five rows and Trading's sentence. Before any test the probe confirmed
+the scoping's questions: `#NUM!` reaching the Certificate, the Overview, the Portfolio
+and Trading with no `text` row, `Write!C8` holding it every frame, the cash shown a
+frame late at both ends, and COUNTIF telling the `#NUM!` of 1E+308 from the `#VALUE!` of
+a Delete. The suite's first run failed two of the hand's own tests and nothing of the
+cartridge's but the describe golden: the hand refused to judge the end itself, a guard
+drawn too wide, since a decimal of seventeen digits never needs one, a product's
+rounding alone does; and a score of none raised ten to the 308th. The limit's test
+held at its first run, every cell of every sheet of the edited game the twin's but the
+hand's seventeen at most, and the order desk's record of the three refused orders. The
+twenty mutants: the views' dollars, the firm's cash, the capital and the net worth each
+hiding the error by `IFERROR`, and the joke beside any error, never shown, reading the
+other pocket's cash, Trading's reading the firm's, the row shown the second, the
+`#DIV/0!` row first, the fill unguarded, the outcome unguarded, the guard on buys alone,
+the guard keyed on the price shown and Trading's sentence gone, each caught by the
+limit's test, the two rows' by the Errors sheet's test too; the joke shown always caught
+by fourteen, every long run's views holding each balance's joke cell empty; the
+Certificate's joke gone by five; the Errors sheet shown by the tab order's; the caveat's
+place an empty cell by the caveats'; and the Overview's jokes reading their own figures,
+which lived, then caught by the new test with the other pocket's and Trading's. So
+seven tests were written, four of the hand's and three of the cartridge's, beside the
+joke cells every run's views now hold empty; and twenty mutants, nineteen caught at the
+first run and all twenty at the second. Natively the
+edit's frame is about 4 µs dearer than at `HEAD`, the five joke cells' COUNTIF over the
+capital's cone, and no ordinary frame or tick moves.
+
+**The owner's hand test.** On the page built here (`web/index.html`, 3,891,936
+characters), 2026-11-15: passed, "Hand tests pass; if everything looks good, commit
+before proceeding with slice 2 of PLATE.6", with one change asked, the joke's words
+(decision 3's amendment). The owner's shots, in order: the Overview after the waiver
+at frame 289, Monday at 13:50, the firm's $7,500.00 and your own $100.00 with nothing
+beside either; `Proctor!B2` written 1E+308 at frame 1719 and drawn `##############`,
+the record's spelling under Found; the Overview on Tuesday at 14:30, the firm's net
+worth `#NUM!` in the middle of its cell with the joke beside it, your own $100.00 with
+none; the Portfolio on Wednesday at 7:30, the firm's cash on hand and net worth each
+`#NUM!` with the joke, your own two rows numbers; Trading in Wednesday's session, the
+cash available `#NUM!`, `[ Switch ]` and "or press C" in their places, the joke on the
+row under, and the last order's line "Refused: the cash shown is an error. Orders fill
+against cash the books can count."; and, after the undo written at frame 6116, the
+Errors sheet's five rows with `E1:E4` 5, 1, `#NUM!` and its joke, and the Caveats' row
+27, caveat 26's four fields. The steps no shot shows, the Certificate, a sale refused,
+your own cash's buy, the Delete's `#VALUE!` with no joke and the firm's buy after the
+undo, passed by the owner's word. Amended the same day and committed once the suite,
+the expansion and every check with its control had run green over the amendment, the
+page built again, 3,892,029 characters.
 

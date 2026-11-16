@@ -135,6 +135,17 @@
 //! comparing the alpha with each grade's from the top; the hand counts the
 //! grades it reaches. And the percent a view draws: a format's code over the
 //! hundredths divided by 10,000, where the hand spells the whole number's digits.
+//!
+//! The limit (`PLATE.6`'s first slice) shares none of its rules with its cells.
+//! The machine turns a result no double holds into `#NUM!` and passes an error
+//! through every operator; the hand reads the number a person typed as digits and
+//! a power of ten, counts the capital's places against the end's and compares
+//! seventeen digits, never in a double, and lists by hand the cells of the
+//! firm's books the capital reaches. The cells find an error's joke by a
+//! criterion spelled as its name; the hand compares the error it says landed
+//! with the error the Errors sheet shows. The order desk refuses an order by
+//! the error-test of its cash shown; the hand by the error it says the last
+//! frame showed.
 
 use std::collections::BTreeSet;
 
@@ -1756,8 +1767,13 @@ pub const LEDGER_ROWS: u64 = 100;
 /// Trading's lines: the keys, and the last order before there is one.
 pub const TRADING_KEYS: &str = "Press 1 to 4 to pick a stock, marked ▸; then B, N or M buys 1, 10 or the most, and S, D or F sells 1, 10 or all.";
 pub const NO_ORDER: &str = "No order yet.";
+/// Trading's sentence for an order refused against cash shown as an error
+/// (`PLATE.6`), plain as every refusal is, being a line a player acts on.
+pub const UNCOUNTED: &str =
+    "Refused: the cash shown is an error. Orders fill against cash the books can count.";
 
-/// Why an order filled or did not, the Orders sheet's `B27`.
+/// Why an order filled or did not, the Orders sheet's `B27`; since `PLATE.6`
+/// the sixth, the pocket's cash shown an error.
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 pub enum Outcome {
     Filled = 1,
@@ -1765,23 +1781,28 @@ pub enum Outcome {
     NoStock = 3,
     NoCash = 4,
     NoShares = 5,
+    Uncounted = 6,
 }
 
 /// What the last frame showed, by which an order is judged: whether the market
 /// was open, each stock's price now in whole cents, each pocket's cash, and
-/// the time the person saw, as the ledger writes it.
+/// the time the person saw, as the ledger writes it; and since `PLATE.6` each
+/// pocket's cash shown as an error instead, by its name, which no order fills
+/// against.
 #[derive(Clone, Debug, Default, PartialEq, Eq)]
 pub struct Shown {
     pub open: bool,
     pub prices: [u64; 4],
     pub cash: [u64; 2],
     pub when: String,
+    pub errors: [Option<&'static str>; 2],
 }
 
 /// An order as it was taken, filled or refused: its pocket, its stock from 1,
 /// 0 for none picked, and its trade from 1; what the last frame showed of the
 /// market, the price, the pocket's cash and its shares of the stock; the
-/// shares filled, a sale negative; and why.
+/// shares filled, a sale negative; and why. Since `PLATE.6`, the cash shown's
+/// error, where it showed one in place of the cash.
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
 pub struct Order {
     pub pocket: u64,
@@ -1793,6 +1814,7 @@ pub struct Order {
     pub held: u64,
     pub filled: i64,
     pub outcome: Outcome,
+    pub error: Option<&'static str>,
 }
 
 impl Order {
@@ -1824,6 +1846,7 @@ impl Order {
             ),
             Outcome::NoShares if self.held == 0 => format!("Refused: no shares of {name} to sell."),
             Outcome::NoShares => format!("Refused: fewer than 10 shares of {name} to sell."),
+            Outcome::Uncounted => UNCOUNTED.to_string(),
         }
     }
 }
@@ -2000,7 +2023,9 @@ impl Plate {
 
     /// A frame of the order desk: a click on a button, its stock and its
     /// trade, a click on the switch, and the command run, judged by what the
-    /// last frame showed. One act a frame, a click's first (`PLATE.2`): a
+    /// last frame showed, an order against cash shown as an error refused, a
+    /// sale too, after the market closed and the stock unpicked and before any
+    /// trade's own reasons (`PLATE.6`). One act a frame, a click's first (`PLATE.2`): a
     /// switch turns the pocket and takes nothing else, no pick and no order. A
     /// click picks its stock, as a pick command does, a click first; the order
     /// is a click's, else a trade command's on the stock picked before this
@@ -2049,12 +2074,13 @@ impl Plate {
             shown.prices[stock as usize - 1]
         };
         let cash = shown.cash[p];
+        let error = shown.errors[p];
         let held = if stock == 0 {
             0
         } else {
             self.book(pocket, stock).shares
         };
-        let filled: i64 = if !shown.open || stock == 0 {
+        let filled: i64 = if !shown.open || stock == 0 || error.is_some() {
             0
         } else {
             match TRADES[trade - 1] {
@@ -2070,6 +2096,8 @@ impl Plate {
             Outcome::Closed
         } else if stock == 0 {
             Outcome::NoStock
+        } else if error.is_some() {
+            Outcome::Uncounted
         } else if filled != 0 {
             Outcome::Filled
         } else if trade <= 3 {
@@ -2102,6 +2130,7 @@ impl Plate {
             held,
             filled,
             outcome,
+            error,
         };
         self.last = Some(order);
         Some(order)
@@ -2467,9 +2496,363 @@ pub fn grade_line(card: Option<&Card>) -> String {
     }
 }
 
+// ---- PLATE.6: the limit ----------------------------------------------------------
+
+/// The error a sum past what a double holds becomes (`PLATE.6`), and the error
+/// a text where a number goes becomes, by their names as a cell draws them.
+pub const NUM: &str = "#NUM!";
+pub const VALUE: &str = "#VALUE!";
+
+/// The largest number a double holds, 1.7976931348623157E+308, as its
+/// seventeen significant digits and their power of ten: the end of the numbers
+/// (`BUFFET.md`, "Numbers"). A number is past it where it is past the half of
+/// the last place above it, where a double rounds to no number at all, which
+/// in seventeen digits is past 1.7976931348623158E+308.
+pub const END: (u64, u32) = (17_976_931_348_623_157, 292);
+
+/// What a person writes into a number's cell of the model (`PLATE.6`): a
+/// number, the digits of its significand and its power of ten, `1E+308` being
+/// 1 and 308, at most seventeen digits, the most a double's shortest spelling
+/// needs; or the empty text, which Delete writes, the page's language writing
+/// no empty cell (Alonzo's `cellClearRow`).
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+pub enum Typed {
+    Number { digits: u64, power: u32 },
+    Emptied,
+}
+
+impl Typed {
+    /// What the person types for it: the digits, then an E and the power where
+    /// there is one, or the empty text in quotes.
+    pub fn typed(self) -> String {
+        match self {
+            Typed::Number { digits, power: 0 } => digits.to_string(),
+            Typed::Number { digits, power } => format!("{digits}E+{power}"),
+            Typed::Emptied => "\"\"".to_string(),
+        }
+    }
+
+    /// The row the page writes for it into a cell (Alonzo's `cellEditRow`).
+    pub fn row(self, (sheet, addr): (&str, &str)) -> String {
+        format!("(cell \"{sheet}\" \"{addr}\" {})", self.typed())
+    }
+
+    /// The cell as the record spells it: a number in full, its digits and
+    /// then a zero a power, as the shortest round trip of a whole number
+    /// past ten to the fifteenth prints; the empty text as nothing.
+    pub fn spelled(self) -> String {
+        match self {
+            Typed::Number { digits, power } => format!("{digits}{}", "0".repeat(power as usize)),
+            Typed::Emptied => String::new(),
+        }
+    }
+}
+
+/// A number's places before the point against the end's, and where it has as
+/// many, its first seventeen digits: digits times ten to a power, counted digit
+/// by digit and never in a double.
+fn beside_the_end(digits: u64, power: u32) -> (std::cmp::Ordering, Option<u64>) {
+    let places = |d: u64| d.to_string().len() as u32;
+    assert!(places(digits) <= 17, "{digits}: at most seventeen digits");
+    let (end, end_power) = END;
+    if digits == 0 {
+        return (std::cmp::Ordering::Less, None);
+    }
+    match (places(digits) + power).cmp(&(places(end) + end_power)) {
+        std::cmp::Ordering::Equal => (
+            std::cmp::Ordering::Equal,
+            Some(digits * 10u64.pow(17 - places(digits))),
+        ),
+        other => (other, None),
+    }
+}
+
+/// Whether digits times ten to a power are past the end of the numbers: more
+/// places before the point than the end has, or as many and its seventeen
+/// digits past the end's half place, the end's seventeen and one more being
+/// the last a double reads back as the end.
+pub fn past_the_end(digits: u64, power: u32) -> bool {
+    match beside_the_end(digits, power) {
+        (std::cmp::Ordering::Equal, Some(seventeen)) => seventeen > END.0 + 1,
+        (places, _) => places == std::cmp::Ordering::Greater,
+    }
+}
+
+/// The firm's capital, `Proctor!B39`, with a correct answer's worth a person
+/// wrote into `Proctor!B2` (`PLATE.6`): the capital before the exam and the
+/// score's answers at that worth, in whole cents below 2^64; past the end of
+/// the numbers, `#NUM!`; and the empty text where a number goes, `#VALUE!`.
+/// The cell multiplies the double nearest the worth, so the hand judges no
+/// capital within eight of the end's seventeenth digits of it, where that
+/// double's own rounding and the product's would decide.
+pub fn capital_with(a_right: Typed, score: u64) -> Result<u64, &'static str> {
+    match a_right {
+        Typed::Emptied => Err(VALUE),
+        Typed::Number { digits, power } => {
+            let answers = digits
+                .checked_mul(score)
+                .expect("a worth's digits times the score, below 2^64");
+            if answers == 0 {
+                return Ok(CAPITAL_BEFORE);
+            }
+            if let (_, Some(seventeen)) = beside_the_end(answers, power) {
+                assert!(
+                    seventeen.abs_diff(END.0 + 1) > 8,
+                    "{answers}E+{power}: within eight of the end's seventeenth digit, which the hand does not judge"
+                );
+            }
+            if past_the_end(answers, power) {
+                return Err(NUM);
+            }
+            let cents = 10u64
+                .checked_pow(power)
+                .and_then(|ten| answers.checked_mul(ten))
+                .and_then(|cents| cents.checked_add(CAPITAL_BEFORE))
+                .expect("the hand counts a capital below 2^64 cents, or past the end");
+            Ok(cents)
+        }
+    }
+}
+
+/// Where the firm's capital is the cell a person wrote (`PLATE.6`): the
+/// Proctor's correct answer's worth, `B2`, which the capital multiplies by the
+/// score.
+pub const A_RIGHT: (&str, &str) = ("Proctor", "B2");
+
+/// The model's cells an error of the firm's capital reaches, by the hand's
+/// reading of the books: the capital; the firm's cash, the capital and its
+/// books' flows; its net worth, the cash and the holdings; and the report
+/// card's worth now, the net worth. The holds of the card take it only at a
+/// turn, and the benchmark's only before the begin, neither of which an edit
+/// after the begin and undone within the quarter meets.
+pub const FIRM_BOOKS: [(&str, &str); 4] = [
+    ("Proctor", "B39"),
+    ("Cash", "B3"),
+    ("Cash", "B9"),
+    ("Performance", "B13"),
+];
+/// The views' figures of them, each beside the cell of its joke: the
+/// Certificate's capital, the Overview's net worth, and the Portfolio's cash
+/// on hand and net worth, the firm's rows.
+pub const FIRM_FIGURES: [(&str, &str, &str); 4] = [
+    (CERTIFICATE, "B8", "C8"),
+    (OVERVIEW, "B6", "C6"),
+    ("Portfolio", "B11", "C11"),
+    ("Portfolio", "B15", "C15"),
+];
+/// Where it lands while the firm's pocket funds the order desk: the pocket's
+/// cash now and the Write sheet's value of a fill's cash after, which writes
+/// nothing while no order fills; and Trading's cash available, its joke under
+/// it, the switch standing beside it.
+pub const FUNDING: [(&str, &str); 2] = [("Orders", "B31"), ("Write", "C8")];
+pub const FUNDING_FIGURE: (&str, &str, &str) = (TRADING, "C11", "C12");
+/// And a frame later, while the firm's pocket funds it, the cash shown, the
+/// last frame's, by which an order is judged.
+pub const CASH_SHOWN: (&str, &str) = ("Orders", "B24");
+/// The error whose joke a view shows, the Errors sheet's row shown, its first:
+/// the error past the end of the numbers.
+pub const ERROR_SHOWN: &str = NUM;
+
+/// Every cell an error of the firm's capital holds at a frame (`PLATE.6`), each
+/// with what it holds as the record spells it: `error`, the capital's error at
+/// this frame; `shown`, its error at the last frame; `funding`, the pocket an
+/// order funds at this frame; and `joke`, the Errors sheet's joke of the error
+/// it shows. A figure holds the error by its name, and the cell beside it the
+/// joke where the error is the one the Errors sheet shows, else the empty text.
+/// Every other cell of the game holds what it holds with no edit at all.
+pub fn landed(
+    error: Option<&'static str>,
+    shown: Option<&'static str>,
+    funding: u64,
+    joke: &str,
+) -> Vec<(&'static str, &'static str, String)> {
+    let spelled = |e: &str| format!("(error \"{e}\")");
+    let joke_of = |e: &str| {
+        if e == ERROR_SHOWN {
+            joke.to_string()
+        } else {
+            String::new()
+        }
+    };
+    let mut out = Vec::new();
+    if let Some(e) = error {
+        out.extend(FIRM_BOOKS.map(|(sheet, addr)| (sheet, addr, spelled(e))));
+        let mut figures = FIRM_FIGURES.to_vec();
+        if funding == FIRM {
+            out.extend(FUNDING.map(|(sheet, addr)| (sheet, addr, spelled(e))));
+            figures.push(FUNDING_FIGURE);
+        }
+        for (sheet, figure, beside) in figures {
+            out.push((sheet, figure, spelled(e)));
+            out.push((sheet, beside, joke_of(e)));
+        }
+    }
+    if let (Some(e), FIRM) = (shown, funding) {
+        out.push((CASH_SHOWN.0, CASH_SHOWN.1, spelled(e)));
+    }
+    out
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    /// The end of the numbers is a double's (`PLATE.6`): the hand's count of
+    /// places and digits says past exactly where the platform's own reading of
+    /// the same decimal is no number, at the end, a place either side of its
+    /// seventeenth digit's half, at the powers of ten around it, and at the
+    /// capital's own products.
+    #[test]
+    fn the_end_of_the_numbers_is_where_a_double_ends() {
+        for (digits, power) in [
+            (17_976_931_348_623_157, 292),
+            (17_976_931_348_623_156, 292),
+            (17_976_931_348_623_160, 292),
+            (17_976_931_348_623_199, 292),
+            (1, 308),
+            (5, 308),
+            (17, 307),
+            (18, 307),
+            (1, 309),
+            (9_999_999_999_999_999, 292),
+            (1, 307),
+            (0, 400),
+            (250_000, 0),
+        ] {
+            let read: f64 = format!("{digits}E{power}").parse().expect("a decimal");
+            assert_eq!(
+                past_the_end(digits, power),
+                read.is_infinite(),
+                "{digits}E+{power}, read as {read}"
+            );
+        }
+        assert_eq!(
+            f64::MAX,
+            1.797_693_134_862_315_7e308,
+            "the end, as END spells it"
+        );
+    }
+
+    /// The firm's capital at a correct answer's worth a person wrote: the
+    /// contract's at 50,000 cents; past the end at 1E+308 and any score from
+    /// two, and at one already, 1E+308 itself being counted; the capital before
+    /// the exam at a score of none whatever the worth; and the error of a text
+    /// where Delete leaves the empty one.
+    #[test]
+    fn a_worth_past_the_end_makes_the_capital_num() {
+        let worth = |digits, power| Typed::Number { digits, power };
+        assert_eq!(capital_with(worth(50_000, 0), 5), Ok(750_000));
+        assert_eq!(capital_with(worth(5, 4), 10), Ok(1_000_000));
+        assert_eq!(capital_with(worth(1, 308), WAIVED_SCORE), Err(NUM));
+        assert_eq!(capital_with(worth(1, 308), 2), Err(NUM));
+        assert_eq!(capital_with(worth(1, 308), 0), Ok(CAPITAL_BEFORE));
+        assert_eq!(capital_with(Typed::Emptied, WAIVED_SCORE), Err(VALUE));
+        assert!(
+            !past_the_end(1, 308),
+            "1E+308 itself a number: only the sum passes the end"
+        );
+        assert_eq!(worth(1, 308).typed(), "1E+308");
+        assert_eq!(worth(1, 308).spelled().len(), 309);
+        assert_eq!(worth(50_000, 0).spelled(), "50000");
+        assert_eq!(
+            Typed::Emptied.row(A_RIGHT),
+            "(cell \"Proctor\" \"B2\" \"\")"
+        );
+    }
+
+    /// The error's landing by hand: nothing with no error; the books, the
+    /// figures and their jokes with one, and the order desk's and Trading's
+    /// while the firm's pocket funds; the cash shown a frame behind; and the
+    /// jokes empty beside an error the Errors sheet does not show.
+    #[test]
+    fn an_error_lands_on_the_firms_books_and_beside_its_figures() {
+        assert!(landed(None, None, FIRM, "a joke").is_empty());
+        let at = |l: &[(&str, &str, String)], sheet: &str, addr: &str| {
+            l.iter()
+                .find(|(s, a, _)| *s == sheet && *a == addr)
+                .map(|(_, _, v)| v.clone())
+        };
+        let firm = landed(Some(NUM), Some(NUM), FIRM, "a joke");
+        assert_eq!(firm.len(), 4 + 2 + 2 * 5 + 1);
+        assert_eq!(at(&firm, "Cash", "B9"), Some("(error \"#NUM!\")".into()));
+        assert_eq!(at(&firm, TRADING, "C12"), Some("a joke".into()));
+        assert_eq!(at(&firm, "Orders", "B24"), Some("(error \"#NUM!\")".into()));
+        let own = landed(Some(NUM), Some(NUM), PERSONAL, "a joke");
+        assert_eq!(own.len(), 4 + 2 * 4);
+        assert_eq!(at(&own, TRADING, "C11"), None);
+        assert_eq!(at(&own, "Orders", "B24"), None);
+        let late = landed(None, Some(NUM), FIRM, "a joke");
+        assert_eq!(late, [("Orders", "B24", "(error \"#NUM!\")".to_string())]);
+        let text = landed(Some(VALUE), None, FIRM, "a joke");
+        assert_eq!(
+            at(&text, OVERVIEW, "B6"),
+            Some("(error \"#VALUE!\")".into())
+        );
+        assert_eq!(at(&text, OVERVIEW, "C6"), Some(String::new()));
+    }
+
+    /// An order against cash shown as an error, by hand (`PLATE.6`): a buy and
+    /// a sale alike refused, the sixth outcome, its sentence, no fill and every
+    /// balance as it was; the market closed and no stock picked still their
+    /// own reasons first; your own pocket's cash, a number, filling; and the
+    /// same buy filling once the cash shows a number again.
+    #[test]
+    fn an_order_against_an_error_is_refused_and_moves_no_balance() {
+        let mut shown = Shown {
+            open: true,
+            prices: [100, 500, 2_500, 10_000],
+            cash: [750_000, 10_000],
+            when: "Monday, year 1, day 1, 9:30".to_string(),
+            errors: [None, None],
+        };
+        let starts = [750_000, 10_000];
+        let mut p = Plate::default();
+        assert_eq!(
+            p.frame(Some((1, 1)), false, "", &shown, starts)
+                .map(|o| o.filled),
+            Some(1)
+        );
+        shown.errors = [Some(NUM), None];
+        let before = balances(&p, starts);
+        for (press, command) in [(Some((1, 1)), ""), (None, "sell-all"), (None, "buy-max")] {
+            let o = p
+                .frame(press, false, command, &shown, starts)
+                .expect("an order");
+            assert_eq!(
+                (o.outcome, o.filled, o.error),
+                (Outcome::Uncounted, 0, Some(NUM))
+            );
+            assert_eq!(o.sentence(), UNCOUNTED);
+            assert_eq!(balances(&p, starts), before, "{command:?} moved a balance");
+        }
+        shown.open = false;
+        assert_eq!(
+            p.frame(None, false, "buy-1", &shown, starts)
+                .map(|o| o.outcome),
+            Some(Outcome::Closed)
+        );
+        shown.open = true;
+        let mut unpicked = Plate::default();
+        assert_eq!(
+            unpicked
+                .frame(None, false, "buy-1", &shown, starts)
+                .map(|o| o.outcome),
+            Some(Outcome::NoStock)
+        );
+        p.pocket = PERSONAL;
+        assert_eq!(
+            p.frame(None, false, "buy-1", &shown, starts)
+                .map(|o| (o.outcome, o.error)),
+            Some((Outcome::Filled, None))
+        );
+        p.pocket = FIRM;
+        shown.errors = [None, None];
+        assert_eq!(
+            p.frame(None, false, "buy-1", &shown, starts)
+                .map(|o| o.outcome),
+            Some(Outcome::Filled)
+        );
+    }
 
     /// The record's spelling of a view's money is the hand's (`FRONT.1`): a
     /// number as its shortest round trip, Rust's own `{}` (Alonzo's `SPEC.md`
@@ -3442,6 +3825,7 @@ mod tests {
             prices: [100, 500, 2_500, 10_000],
             cash: [750_000, 10_000],
             when: "Monday, year 1, day 1, 9:30".to_string(),
+            errors: [None, None],
         };
         let starts = [750_000, 10_000];
         let (switch, _) = SWITCH_COMMAND;
@@ -3587,6 +3971,7 @@ mod tests {
             held: 0,
             filled: 10,
             outcome: Outcome::Filled,
+            error: None,
         };
         assert_eq!(
             order.sentence(),

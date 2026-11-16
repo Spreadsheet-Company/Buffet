@@ -118,4 +118,8 @@
      "A fund reports its quarter weeks later, once its administrator has checked the figures; an auditor checks the year."
      "Management's figures are unaudited, which saves everyone time."
      "Day!B35")
+    ("Money ends where a double does, near 1.8E+308 cents: past it, every sum that reads it is an error."
+     "A ledger keeps as many digits as a sum needs and has no ceiling; all the world's wealth is under $500 trillion."
+     "Management considers the ceiling a long-term goal."
+     "Cash!B9:B10")
     ))                              ; the sheet's end: a caveat added goes above this line

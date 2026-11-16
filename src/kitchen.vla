@@ -55,6 +55,8 @@
 ; Since FRONT.2's second slice (2026-10-30): dollars, signed-dollars and percent write
 ; numbers under a format's code, where they wrote texts of nested IFs padded to a number's
 ; edge, the page drawing a code since alonzo 0.3.0; each verb's call keeps its shape.
+; Since PLATE.6's first slice (2026-11-15): error-joke, beside a view's balance the joke of
+; the error it holds, written by four views at its first dish, as bell was by its two.
 
 ; ---- the dice (POT.1) ---------------------------------------------------------------
 ; A stream is a die and its draws. The die is one cell, the stream's state, which the
@@ -255,6 +257,26 @@
   "a view's percent in one cell or a fill: whole hundredths of a percent either way over 10,000, drawn after a gain's or nothing's + or a loss's -, and a figure not yet made, the empty text, showing nothing"
   (rule sheet at (if (= points "") "" (/ points 10000)))
   (style sheet at percent-look))
+
+; ---- a balance's error (PLATE.6) ----------------------------------------------------
+; A sum past what a double holds, about 1.8E+308, is the error #NUM!, and every sum that
+; reads it is #NUM! too, the machine's own rule (vla-lang's finite: no infinity and no
+; NaN reaches a cell), until the edit that put it there is undone. A view draws the
+; error's name where the balance's figure stands, as Excel does, its format's code
+; spelling numbers alone; and beside it, in the cell to its right, the joke of the
+; error the Errors sheet shows, a content sheet whose row shown the source writes, while
+; the balance holds that error, and the empty text while it holds a number or another
+; error. The test is COUNTIF's: a criterion spelled as an error's name, read from the
+; Errors sheet's picker, counts a cell holding that error and nothing else, so a number
+; never meets it, and a cell the record spells #NUM! meets it only as the error itself.
+; The language at vla-lang 0.12.0 names no error's kind (ERROR.TYPE comes with 0.13.0,
+; Frazaro's KERNEL.68), so the Errors sheet shows one error's joke at a time, #NUM!'s.
+; The verb reads the model's cents, the cell the figure beside it divides, never the
+; view's own figure, as a glyph reads the model's cents.
+
+(defmacro (error-joke sheet at cents)
+  "beside a view's balance in one cell or a fill: the joke of the error the Errors sheet shows, where the balance holds that error, else the empty text: =IF(COUNTIF(cents,Errors!$E$3)=1,Errors!$E$4,\"\")"
+  (rule sheet at (if (= (countif cents Errors!$E$3) 1) Errors!$E$4 "")))
 
 ; ---- a view's buttons (BACK.1, GUARD.1) ---------------------------------------------
 ; A button is a cell of a view, and its press a cell of the model that holds 0 between

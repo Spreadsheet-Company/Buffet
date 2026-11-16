@@ -17,8 +17,11 @@ cheapest pull request there is.*
    `headlines.vla` the ticker, a headline a row, of which the Overview shows
    one a day; `remarks.vla` the proctor's remarks on a report card, a remark
    a grade, the first five rows A's, B's, C's, D's and F's in that order, so
-   that a remark is rewritten in its place rather than added; and
-   `caveats.vla` the things this game gets wrong, a caveat a row.
+   that a remark is rewritten in its place rather than added; `errors.vla`
+   the error values' jokes, an error a row, its name as a cell draws it and
+   the joke shown beside a balance where it lands, the five errors Excel
+   draws, so that a joke too is rewritten in its place; and `caveats.vla`
+   the things this game gets wrong, a caveat a row.
 2. Add your row above the file's last line, the one that opens with `))`.
    A row is the sheet's fields, in the order the file names them above its
    rows. A disclosure, a headline or a remark is one line:

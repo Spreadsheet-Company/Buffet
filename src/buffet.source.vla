@@ -88,6 +88,11 @@
 ;           table's headers, in the same shade and ink; each glyph its shade, a gain's on
 ;           the mint and a loss's in the burgundy; a bold label over what it heads; and
 ;           Trading's keys, over each column of buttons and beside each stock not picked.
+;   PLATE.6 the limit, its first slice: a balance past what a double holds is the error
+;           #NUM!, which every sum that reads it is too, until the edit that put it there
+;           is undone; beside each balance a view shows, the joke of its error, from the
+;           Errors sheet, a content sheet of its own; and an order refused while the
+;           cash it would spend is an error, so that no book takes one.
 ;
 ; The market's clock (BD-7). A frame is twenty seconds of the market's time in the
 ; regular session and two minutes between sessions, so at the manifest's rate of thirty
@@ -126,12 +131,12 @@
   (read "Exam" "Certificate" "Overview" "Portfolio" "Trading" "Gigs" "Report" "Caveats")   ; no key or row of a person's writes a view or the Caveats; the model's sheets stay the open book, a person's to edit (BD-3)
   (author "Spreadsheet Company")
   (license "AGPL-3.0-or-later AND CC-BY-SA-4.0")
-  (notes "Buffet: All You Can Sheet. The front office is open for business: the game opens on the Series 777, the regulator's exam for a fund manager, eleven questions answered by a click or a key, ten of them scored, each right answer $500 more of the firm's $5,000, and the last the firm's style, which names the firm; then its certificate; then the Overview at Monday's opening bell, which waits for you to leave the exam room: the day and the hour, the firm's name and style, the net worth of the firm and your own, the market's weather, a word for how far it moved in the twenty days to the last close, and the day's headline, with the fine print at its foot. Beside it, the Portfolio, four stocks, each its price, its change since the last close and the holding of it, the firm's or your own, its shares, their cost, their value and the gain, the market open from 9:30 to 16:00 on weekdays, ten minutes a second while it trades and an hour a second between, and moving every five minutes, and under them the cash on hand and the net worth, the firm's and yours. Beside that, Trading, where each stock's six buttons buy one share, ten or as many as the cash covers, and sell one, ten or all, at the price shown while the market is open, by a click or by a key: 1 to 4 pick a stock, then B, N and M buy and S, D and F sell, each also a command of the page's palette; and beside the cash, a switch, or C, turns whose cash an order spends, the firm's or your own, moving none of it. And Gigs, where a prospectus is proofread for $250, by a click on its button or by P, a day's work, one a week and four a run, Compliance permitting. And at each quarter's end the Report, the report card, which the game shows you: the firm's return over the quarter and over the year so far against Average Co. bought at the opening bell and held, the difference its alpha, a grade for each and the proctor's remark. Behind them, the back office: the market's calendar and its hours; its dice, rolled once a day where anyone can watch them roll; the market itself, four waves and a drift, and each session's five minutes between two closes, their swings a factor of its own, and its weather, a word read off its change; four stocks priced off it in whole cents, the dearest paying a dividend four days a year, paid to the shares held; the hustle's books, every prospectus counted; the proctor's books, the exam's draw and every answer; the order desk's books, every button and command and the order they make; the positions, each pocket's shares, cost and gains; the cash, the holdings and the net worth, the firm's and yours; the ledger, the last hundred orders filled; the performance, the report card's books, the firm's worth and Average Co.'s at each card; the fine print, a disclosure a month; the Series 777's question bank, twenty questions; the four firms, each its style and its name; the headlines, one a day; the proctor's remarks, one a grade; and the model's caveats, the things this game gets wrong, each with Management's response. A returning candidate may waive the exam by writing 1 into Proctor!B3, at five correct answers and the first style's firm, or another's by writing 2, 3 or 4 into Proctor!B5. Pick the Day, the Dice, the Market, the Stocks, the Hustle, the Proctor, the Orders, the Positions, the Cash, the Ledger or the Performance sheet to watch the model work, or the Caveats sheet to read, or the Disclosures, the Questions, the Firms, the Headlines or the Remarks sheet among the hidden sheets."))
+  (notes "Buffet: All You Can Sheet. The front office is open for business: the game opens on the Series 777, the regulator's exam for a fund manager, eleven questions answered by a click or a key, ten of them scored, each right answer $500 more of the firm's $5,000, and the last the firm's style, which names the firm; then its certificate; then the Overview at Monday's opening bell, which waits for you to leave the exam room: the day and the hour, the firm's name and style, the net worth of the firm and your own, the market's weather, a word for how far it moved in the twenty days to the last close, and the day's headline, with the fine print at its foot. Beside it, the Portfolio, four stocks, each its price, its change since the last close and the holding of it, the firm's or your own, its shares, their cost, their value and the gain, the market open from 9:30 to 16:00 on weekdays, ten minutes a second while it trades and an hour a second between, and moving every five minutes, and under them the cash on hand and the net worth, the firm's and yours. Beside that, Trading, where each stock's six buttons buy one share, ten or as many as the cash covers, and sell one, ten or all, at the price shown while the market is open, by a click or by a key: 1 to 4 pick a stock, then B, N and M buy and S, D and F sell, each also a command of the page's palette; and beside the cash, a switch, or C, turns whose cash an order spends, the firm's or your own, moving none of it. A balance edited past what the numbers hold, near 1.8E+308 cents, shows its error with the error's joke beside it, and spends nothing, until the edit is undone. And Gigs, where a prospectus is proofread for $250, by a click on its button or by P, a day's work, one a week and four a run, Compliance permitting. And at each quarter's end the Report, the report card, which the game shows you: the firm's return over the quarter and over the year so far against Average Co. bought at the opening bell and held, the difference its alpha, a grade for each and the proctor's remark. Behind them, the back office: the market's calendar and its hours; its dice, rolled once a day where anyone can watch them roll; the market itself, four waves and a drift, and each session's five minutes between two closes, their swings a factor of its own, and its weather, a word read off its change; four stocks priced off it in whole cents, the dearest paying a dividend four days a year, paid to the shares held; the hustle's books, every prospectus counted; the proctor's books, the exam's draw and every answer; the order desk's books, every button and command and the order they make; the positions, each pocket's shares, cost and gains; the cash, the holdings and the net worth, the firm's and yours; the ledger, the last hundred orders filled; the performance, the report card's books, the firm's worth and Average Co.'s at each card; the fine print, a disclosure a month; the Series 777's question bank, twenty questions; the four firms, each its style and its name; the headlines, one a day; the proctor's remarks, one a grade; the error values' jokes, one an error; and the model's caveats, the things this game gets wrong, each with Management's response. A returning candidate may waive the exam by writing 1 into Proctor!B3, at five correct answers and the first style's firm, or another's by writing 2, 3 or 4 into Proctor!B5. Pick the Day, the Dice, the Market, the Stocks, the Hustle, the Proctor, the Orders, the Positions, the Cash, the Ledger or the Performance sheet to watch the model work, or the Caveats sheet to read, or the Disclosures, the Questions, the Firms, the Headlines, the Remarks or the Errors sheet among the hidden sheets."))
 
 ; The libraries whose macros this source calls, both beside it: the kit, Alonzo's
 ; common.vla copied at the pin (sheets, labels, headers, on, cells, formulas, rule, hold,
 ; pressed, count, put and camera), then Buffet's own, kitchen.vla (draws, strings, picker,
-; as-of, bell, fine-print, dollars, signed-dollars, percent and clicked); then the content sheets, each a file of src/content/ that defines
+; as-of, bell, fine-print, dollars, signed-dollars, percent, error-joke and clicked); then the content sheets, each a file of src/content/ that defines
 ; one macro of its rows, called where its sheet belongs. The manifest stands first, the
 ; cartridge's own form, then every include, then the code (the owner's word,
 ; 2026-10-15), so that a file missing is refused at the top; and each include defines
@@ -148,6 +153,7 @@
 (include "content/firms.vla")
 (include "content/headlines.vla")
 (include "content/remarks.vla")
+(include "content/errors.vla")
 (include "content/caveats.vla")
 
 ; The tabs. The Screen, the device a game draws its frame on, holds nothing here, the
@@ -662,7 +668,10 @@
 ; showed, the market open, the stock's price, the pocket's cash and its shares of the
 ; stock; then what fills: a share or ten whole, as many as the cash covers, or every
 ; share held, and nothing while the market showed closed, each refusal its reason, the
-; outcome. The fills are counted, and the ledger's row is the count's place in a ring
+; outcome. Nothing fills either while the pocket's cash shown is an error (PLATE.6), a
+; sale too: the books count over their twins, so an error a book took would stand in it
+; after the edit that made it was undone, and a ledger's row would lose the cash after
+; it, the host writing no error. The fills are counted, and the ledger's row is the count's place in a ring
 ; of a hundred, computed once (MISE.3's third probe); the last order is held as it was
 ; taken, for the view to say. Positions never pass through the Write sheet: each
 ; pocket's shares are formula state on the Positions sheet, so that an order the next
@@ -708,7 +717,7 @@
     "$B$2"                          ;   the view,
     "D$5"                           ;   the act's column
     "$C6")                          ;   and the stock's row, values a layout moves
-  (labels "A11" "the stock clicked" "the act clicked" "the command run" "the stock a command picks" "the act a command orders" "the stock picked" "the stock picked, by name" "the order's stock, by name" "the order's pocket" "the order's stock" "the order's act" "the market shown open" "the price shown, in cents" "the cash shown, in cents" "the shares shown" "filled, in shares" "the outcome: 1 filled, 2 closed, 3 no stock, 4 cash, 5 shares")
+  (labels "A11" "the stock clicked" "the act clicked" "the command run" "the stock a command picks" "the act a command orders" "the stock picked" "the stock picked, by name" "the order's stock, by name" "the order's pocket" "the order's stock" "the order's act" "the market shown open" "the price shown, in cents" "the cash shown, in cents" "the shares shown" "filled, in shares" "the outcome: 1 filled, 2 closed, 3 no stock, 4 cash, 5 shares, 6 an error")
   (formulas
     ("B11" "=SUM(D6:I6)*B6+SUM(D7:I7)*B7+SUM(D8:I8)*B8+SUM(D9:I9)*B9")   ; the stock clicked: the clicked row's rung, 0 for none
     ("B12" "=SUM(D6:D9)+2*SUM(E6:E9)+3*SUM(F6:F9)+4*SUM(G6:G9)+5*SUM(H6:H9)+6*SUM(I6:I9)")   ; the act clicked, 1 Buy 1 to 6 Sell all, 0 for none
@@ -726,8 +735,8 @@
     ("B23" "=IF(B20=0,0,CHOOSE(B20,Stocks.last!$E$5,Stocks.last!$E$6,Stocks.last!$E$7,Stocks.last!$E$8))")   ; the price shown: the last frame's price now
     ("B24" "=IF(B19=2,Cash.last!$B$4,Cash.last!$B$3)")   ; the pocket's cash as the last frame showed it
     ("B25" "=IF(B20=0,0,CHOOSE(B20+4*(B19-1),Positions.last!$E$2,Positions.last!$E$3,Positions.last!$E$4,Positions.last!$E$5,Positions.last!$E$6,Positions.last!$E$7,Positions.last!$E$8,Positions.last!$E$9))")   ; the pocket's shares of the stock as the last frame showed them
-    ("B26" "=IF(OR(B21=0,B22<>1,B20=0),0,CHOOSE(B21,IF(B23<=B24,1,0),IF(10*B23<=B24,10,0),INT(B24/B23),IF(B25>=1,-1,0),IF(B25>=10,-10,0),0-B25))")   ; filled: a share or ten whole, as many as the cash covers, every share held; a sale negative
-    ("B27" "=IF(B21=0,0,IF(B22<>1,2,IF(B20=0,3,IF(B26<>0,1,IF(B21<=3,4,5)))))"))   ; the outcome, 0 for no order
+    ("B26" "=IF(OR(B21=0,B22<>1,B20=0,ISERROR(B24)),0,CHOOSE(B21,IF(B23<=B24,1,0),IF(10*B23<=B24,10,0),INT(B24/B23),IF(B25>=1,-1,0),IF(B25>=10,-10,0),0-B25))")   ; filled: a share or ten whole, as many as the cash covers, every share held; a sale negative; none against cash shown as an error
+    ("B27" "=IF(B21=0,0,IF(B22<>1,2,IF(B20=0,3,IF(ISERROR(B24),6,IF(B26<>0,1,IF(B21<=3,4,5))))))"))   ; the outcome, 0 for no order
   (labels "A29" "orders filled" "the ledger's row" "the pocket's cash now, in cents")
   (count "B29" (if (<> B26 0) 1 0))   ; the orders filled, this one too
   (formulas
@@ -1050,6 +1059,23 @@
   (formulas
     ("D2" "=Performance!$B$22")))   ; the row shown: the card's grade's place, the remark's
 
+; ---- PLATE.6: the errors ------------------------------------------------------------
+; The Errors sheet: an error value a row, its name as a cell draws it and its joke, which
+; a view shows beside a balance where that error lands (the kitchen's error-joke). Two
+; fields, so its table runs from A to B and its values stand in E: the count in E1, the
+; row shown E2 and a picker a field in E3 and E4, the error's name and its joke. The row
+; shown is a value, the first row, #NUM!'s: the error a sum past what a double holds
+; becomes, near 1.8E+308, the one this slice raises. The language names no error's kind
+; at vla-lang 0.12.0 (ERROR.TYPE is 0.13.0's), so the row shown is written here and not
+; read off a cell; a person's edit of E2 shows another error's joke beside that error.
+
+(sheet "Errors" hidden)             ; the errors' jokes: reference data, at the back of the workbook
+(errors)                            ; the Errors sheet: its headers, its rows, their count and a picker a field
+
+(on "Errors"
+  (cells
+    ("E2" 1)))                      ; the row shown: the first, #NUM!'s, the error past the end of the numbers
+
 ; ---- MENU.5: the caveats ------------------------------------------------------------
 ; The Caveats sheet: the things this game gets wrong, each beside what the real world
 ; does, Management's response and the cell it qualifies (BD-5). It is the one content
@@ -1080,7 +1106,12 @@
 ; view out again without moving a formula. Money reaches a view as whole cents over 100,
 ; a number under a format's code, the library's dollars, and a change the model's
 ; difference of two prices in cents, the same division under a code that signs it, the
-; library's signed-dollars (see kitchen.vla).
+; library's signed-dollars (see kitchen.vla). A balance past what a double holds reaches
+; a view as its error, #NUM!, drawn in the middle of its cell as Excel draws one; and
+; beside every balance a view shows, each pocket's cash and net worth and the firm's
+; capital, the cell to its right holds its error's joke while it holds one and the
+; empty text while it holds a number, the library's error-joke (PLATE.6). A text spills
+; into the empty cells on its right, so a joke reads whole across the columns beside.
 
 ; ---- FRONT.2: the looks -------------------------------------------------------------
 ; The house's formats, the workbook's own, each named once here and by that word wherever
@@ -1200,6 +1231,7 @@
   (formulas
     ("B7" "=Proctor!$B$38&\" of 10\""))   ; the score, of the ten
   (dollars "B8" Proctor!B39)        ; the firm's capital
+  (error-joke "C8" Proctor!B39)     ;   and beside it its error's joke, where it holds one (PLATE.6)
   (formulas
     ("B9" "=IF(Proctor!$B$40=0,\"pending registration\",Firms!$E$4)"))   ; the firm's name, the Firms sheet's, once the eleventh answer gives its style
   (cells
@@ -1237,6 +1269,7 @@
   (labels "A5" "Net worth ($)" "  Firm" "  Personal")   ; each pocket's net worth, its cash and its holdings
   (style "A5" heading-look)
   (dollars "B6:B7" Cash!B9)         ; the firm's and your own, the Cash sheet's B9 and B10
+  (error-joke "C6:C7" Cash!B9)      ;   and beside each its error's joke, where it holds one (PLATE.6)
   (formulas
     ("A9" "=\"Market weather: \"&Market!$B$124&\", the market \"&IF(Market!$B$123=0,\"flat\",IF(Market!$B$123<0,\"down \",\"up \")&INT(ABS(Market!$B$123)/10)&\".\"&MOD(ABS(Market!$B$123),10)&\"%\")&\" in the \"&Market!$B$4&\" days to the last close.\"")   ; the weather: its word and the change it is read off
     ("A11" "=\"Today's headline: \"&Headlines!$D$3"))   ; the ticker: the day's headline
@@ -1299,10 +1332,12 @@
   (style "A10" heading-look)
   (dollars "B11" Cash!B3)                       ; the firm's: the exam's capital and its books' flows
   (dollars "B12" Cash!B4)                       ; the personal: $100, the hustle's fees once paid, and its books' flows
+  (error-joke "C11:C12" Cash!B3)                ;   and beside each its error's joke, where it holds one (PLATE.6)
   (labels "A14" "Net worth ($)" "  Firm" "  Personal")   ; each pocket's net worth, its cash and its holdings
   (style "A14" heading-look)
   (dollars "B15" Cash!B9)
   (dollars "B16" Cash!B10)
+  (error-joke "C15:C16" Cash!B9)                ;   and beside each its error's joke
   (fine-print "A18"))                          ; the fine print, a disclosure a month (MENU.1)
 
 ; Trading (PLATE.1): the order desk, beside the Portfolio. Its date and the bell's line;
@@ -1319,8 +1354,9 @@
 ; in a column of 12 characters drawn as a button by a style row, as Gigs' one button is,
 ; and its key: a click or C turns which pocket an order funds, the firm's or your own,
 ; and the line on whose cash, the shares and the cash available follow it, moving no
-; money; the last order, filled or refused and why; the keys, the Commands sheet's,
-; each a command of the page's palette too; and the fine print.
+; money; under the cash, its error's joke where it holds one (PLATE.6), the switch
+; standing beside it; the last order, filled or refused and why; the keys, the Commands
+; sheet's, each a command of the page's palette too; and the fine print.
 
 (on "Trading"
   (column "A" 3 shown none)         ; the mark of the stock picked; the date, the bell and the lines spill past it
@@ -1376,8 +1412,9 @@
     ("D11" "[ Switch ]")            ; the switch, beside the cash it turns: Orders!B43:B44 name this cell
     ("E11" "or press C"))           ; its key, the Commands sheet's D12
   (style "D11" lone-button-look)    ; the switch drawn as a button
+  (error-joke "C12" Orders!B31)     ; under the cash, its error's joke, where it holds one, the switch standing beside it (PLATE.6)
   (formulas
-    ("A13" "=CHOOSE(Orders!$B$41+1,\"No order yet.\",IF(Orders!$B$40>0,\"Bought \",\"Sold \")&ABS(Orders!$B$40)&IF(ABS(Orders!$B$40)=1,\" share of \",\" shares of \")&Orders!$B$32&\" at the price shown.\",\"Refused: the market was closed. Orders fill from the opening bell to the closing bell.\",\"Refused: no stock is picked. Press 1 to 4 to pick one, or click a button on its row.\",\"Refused: the cash does not cover \"&IF(Orders!$B$35=2,\"10 shares\",\"a share\")&\" of \"&Orders!$B$32&\".\",\"Refused: \"&IF(Orders!$B$39=0,\"no shares of \"&Orders!$B$32&\" to sell.\",\"fewer than 10 shares of \"&Orders!$B$32&\" to sell.\"))"))   ; the last order: filled, or refused and why
+    ("A13" "=CHOOSE(Orders!$B$41+1,\"No order yet.\",IF(Orders!$B$40>0,\"Bought \",\"Sold \")&ABS(Orders!$B$40)&IF(ABS(Orders!$B$40)=1,\" share of \",\" shares of \")&Orders!$B$32&\" at the price shown.\",\"Refused: the market was closed. Orders fill from the opening bell to the closing bell.\",\"Refused: no stock is picked. Press 1 to 4 to pick one, or click a button on its row.\",\"Refused: the cash does not cover \"&IF(Orders!$B$35=2,\"10 shares\",\"a share\")&\" of \"&Orders!$B$32&\".\",\"Refused: \"&IF(Orders!$B$39=0,\"no shares of \"&Orders!$B$32&\" to sell.\",\"fewer than 10 shares of \"&Orders!$B$32&\" to sell.\"),\"Refused: the cash shown is an error. Orders fill against cash the books can count.\")"))   ; the last order: filled, or refused and why
   (cells
     ("A15" "Press 1 to 4 to pick a stock, marked ▸; then B, N or M buys 1, 10 or the most, and S, D or F sells 1, 10 or all."))   ; the keys, the Commands sheet's
   (fine-print "A17"))               ; the fine print, every view's

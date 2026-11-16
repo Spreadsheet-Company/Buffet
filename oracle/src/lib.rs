@@ -23,7 +23,9 @@
 //! the last close made, the weather's word and the day's headline, and since
 //! `BACK.2` the firm's line and the stocks' names, and since `CRITIC.1` the
 //! report card, the quarters, the benchmark bought and held, every turn's
-//! worth, the returns, the grades and the percents spelled; the host's
+//! worth, the returns, the grades and the percents spelled, and since
+//! `PLATE.6` the limit, a typed number past the end of the numbers counted
+//! by its digits, where its error lands and the order it refuses; the host's
 //! derived writes, the
 //! Write sheet's rows as the host reads them; the door
 //! the runners and the tests
