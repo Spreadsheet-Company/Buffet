@@ -8685,9 +8685,249 @@ were wrong twice. The notice comes at a run's first act, and only in a browser t
 answered Autosave for pages from a file: the answer is kept under `alonzo-autosave` beside the
 keymap, which every page from a file shares (`ENGINE.38`'s decision 9), and the owner gave it at
 `ENGINE.38`'s hand test of 2026-11-16. The witness is the restore after a closed tab, which
-passed: from a file with Autosave unanswered, the page keeps nothing and offers nothing back. The
+passed: from a file with Autosave unanswered, the page keeps nothing and offers nothing back.
+*Measured after, over the DevTools protocol, the same page from disk in a fresh headless profile
+of Chrome 157:* no line under the bar at the opening or at Buffet picked; at the first act, A on
+the Exam, the sentence with Turn on Autosave and Keep Autosave off; Turn on Autosave hid it, the
+bar said "Autosave is on: unsaved work is kept in this browser until you save or discard it.", and
+the browser kept `on`; the same profile opened again offered the work back, Restore and Discard,
+and showed no notice at an act, as the owner's browser does. The
 rest as the steps said: the Exam's options bold at every question, a key on a view answered in
 the bar at every press, the waiver and the Certificate's `[ Open for business ]`, a buy on
 Trading landing in the Ledger's row 2 through the respelled `put`s, Save into Downloads and Open
 back to the saved frame, and Restore after the tab closed.
+
+## `HOUSE.4`, second slice — the loop oracle over Buffet's page: the owner's session, its golden and the hand
+
+*Scoped 2026-11-19 at the owner's word, "Push it, then scope HOUSE.4's second slice", after
+`HOUSE.2`'s pin to `alonzo` 0.4.0 was pushed (`bf1e6d9`, run 44499808109 green). It reads three
+sources. The first is `OMAKASE.md`'s line (`COURSE.0`'s item 21). The second is course 0's tasting:
+the owner's own session as the replay golden, its golden the Report sheet, the oracle crate's replay
+test, and the loop oracle's `replay` case with a mutant page that fills at the new day's quote. The
+third is Alonzo at `v0.4.0` (`6e7b659`), read from a `git archive` of the tag: `web/README.md`'s "A
+game's page", the template's `replay`, `save` and `keep` cases, its builder, its offline check and
+its loop check. Each decision carries its recommendation, for the owner to approve, amend or strike
+before the build. Decisions 1 and 2 are the forks, each with its designs and their costs. The
+predictions are written before any number. Approved whole by the owner the same day, each fork at
+its recommendation: the session from the exam to the first quarter's card, the hand the Rust hand's
+answers written into the page, and decisions 3 to 10 as written. The build waits for the owner's
+word, and begins with the owner's session. Nothing is built.*
+
+**What it stands on, read on the day.**
+- *The cases on a game's page.* At `v0.4.0` a page without Alonzo's own cartridges runs eighteen
+  cases and says the fifteen others are not on it. Over Buffet's page at `HOUSE.2` every one said OK,
+  at a ratio of 1, and the fifteen without `replay`, `save` and `keep` at 1.5. `pass` built the source
+  to its cartridge and `grid` held six unbound views. Three held nothing of Buffet's: `replay` plays
+  each cartridge that has a `replay-` and a `golden-` block, and `save` and `keep` play the page's
+  committed replays (`saves 0`, `cartridges 0`).
+- *A replay* (Alonzo's `docs/SPEC.md`; the recorder in `host.js`). It is a header,
+  `(replay "<name>" (spec N) (cartridge "<SHA-256 of the cartridge's LF text>") (seed S))`, then a
+  form for each frame that has rows, and the last frame always, so that it names its length. A
+  frame's rows are the Input sheet's cells that changed and each edit of a person's that landed;
+  never a derived write, never a value. The page's own recording of what it plays must equal the
+  committed text byte for byte, its leading comment lines aside (`round`). So a replay names the one
+  cartridge it was recorded on, and a cartridge changed leaves it stale until its header names the
+  new one. A replay is recorded by playing in the page: the recorder starts at each load and holds up
+  to 8 MiB, and the drawer's "The replay" gives it, Copy the replay. Brickwork's, the owner's one
+  game of 41,129 frames, is 3,994 frame forms and 8,056 rows, 281,623 LF bytes.
+- *A golden* is the `view` grid record of one window at the replay's last frame, held whole: every
+  sheet's `(sheet …)` row, the window's formats and its cells, the window the author's choice. No tool
+  of Alonzo's writes one; each was written by a scratch player over the engine, the seed written to
+  `Clock!B3`, each frame's rows one write, then the step.
+- *The hand* is the block `hand-<name>`, the one that is a script. It registers a constructor, which
+  the page makes with the replay's seed and asks, every frame from 1, `frame(n, rows)`. It answers
+  `{ cells }`, `{ "Sheet!A1": value }`: any cells at any frame and none at most, each held exactly, a
+  float to its last bit. The page reads one view of each sheet an answer names, at that frame. The
+  first difference fails the case at its frame: "buffet's committed replay, played on a fresh host,
+  is not its hand's at frame N: Sheet!A1 holds …, and the hand …". A replay with no hand is held to
+  its golden alone and counted `alone`.
+- *What the cases cost,* measured for Brickwork. A replay plays at 96 µs a frame, and a view read
+  costs from 104 µs (the Tally) to 2.8 ms (the Wall). `save` saves once, at the first frame at rest
+  at or after the middle, and compares the rest at every 64th frame. `keep` restores at frame 1, at
+  every 64th frame at rest and at the last, so about one restore for each 64 frames, and grew about
+  half a millisecond a frame. Brickwork's three took 58.8, 28.3 and 52.0 s. Buffet natively, measured
+  today over `bf1e6d9`'s cartridge in a scratch runner: a load 8.3 ms (the median of 21, 7.7 to 9.1),
+  a frame 3.55 µs.
+- *Alonzo's Rust for replays is its tests' alone.* The player, the golden's writer, the save's helpers
+  and SHA-256 are all `#[cfg(test)]`. The crate's public API is `Cartridge::load`, `write`, `step`,
+  `view`, `settle` and `describe`. A game's oracle writes its own player over them and `vla-lang`'s
+  reader, as Buffet's tests already write a person's Input rows (`input_rows`,
+  `oracle/tests/cartridge.rs`) and the host's derived writes.
+- *Alonzo's loop check judges a game's page only for its own,* a page of Kairos alone that it builds.
+  It holds that page to floors of its own: eighteen cases, the fifteen said absent, and, with the
+  module, one replay held to its golden, its round and its hand, none `alone`. It has four mutants
+  there: its hand a frame late, its hand's rule wrong, its hand dropped, and the bench refusing. Its
+  `-Page` judges whatever page it is given as Alonzo's own: over Buffet's it printed every case OK
+  and failed, "the oracle ran 15 case(s), not the 29 pinned here".
+- *Alonzo's builder and offline check carry the three blocks* (`ENGINE.3`'s second slice,
+  `ENGINE.16`). They write `<name>.replay.vla` and `<name>.golden.vla`, neither without the other,
+  and `<name>.hand.js`. The offline check holds a hand's source to the code tokens, with no `eval` or
+  `Function` and no store's name, under five mutants. Buffet's builder and offline check, Alonzo's of
+  `v0.1.3` adapted, take none of them: a `src/buffet.replay.vla` today would be built as a library,
+  and `check_layout` would refuse it as a stray. `REUSE.toml` already gives `src/buffet*.vla` "its
+  replay and its golden" (AGPL-3.0-or-later AND CC-BY-SA-4.0).
+- *The frames,* counted by the hand's calendar at the game's pace in the same runner. A weekday is
+  1,695 frames, a weekend day 720, the first day 1,411 and the first week 9,631. The first quarter's
+  card turns at frame 128,611 on day 91, 71 minutes 27 seconds at the manifest's 30 frames a second,
+  with the exam's wait before it. The year's card turns at frame 516,991, 4 hours 47 minutes.
+- *The language's gap.* `vla-lang`'s `SIN` and `^` are Rust's `sin` and `powf`, whose last bit
+  differs by platform. Over 146,000 of Buffet's inputs (2026-10-14), Windows' differed from the module
+  on 2,272 and 14,183, and V8's `Math.sin` and `Math.pow` on 1,377 and 14,237; a price rounded to whole
+  cents differed on none. The hand's doctrine (`oracle/src/buffet.rs`, its head) follows from it: in
+  the browser nothing unrounded is held, and money is rounded once to whole cents first. The fix, the
+  `libm` crate on every target, was the owner's choice and then deferred, unminted, on 2026-10-14. It
+  is Frazaro's, named here and not built around.
+- *Alonzo's hands against their Rust.* Naught's is 1,385 lines of JavaScript against 3,893 of Rust
+  before its tests, Brickwork's 430 against 1,364; Seiyaku's is 315, Superposition's 255, Kairos's 141
+  and Sand's 129. `buffet.rs` is 4,383 lines, 2,751 before its tests. The cells it is held by are
+  written in `oracle/tests/cartridge.rs`: `day_held`, `market_cells`, `stocks_held`, `cash_held`,
+  `trading_cells`, `performance_held`, `report_cells` and the rest.
+
+**The decisions.**
+
+1. **The session: the owner's own, at the game's pace, from the exam to the first quarter's card
+   (rec).** As course 0's tasting has it. The owner picks Buffet on the page built from this
+   commit's cartridge and takes the exam. Then they open for business, buy and sell in both pockets,
+   proofread a prospectus and play the first week's days. Then they let it run, the tab in view, to
+   day 91's first frame, where the Camera shows the Report and its first card, and copy the replay a
+   few seconds after. That is about 135,000 frames: the owner's attention for about ten minutes, the
+   exam and the first week, and about 75 minutes in all. The run may be paused and resumed at will,
+   but in one load: a hidden tab steps nothing, and a reload restarts the recorder. Its golden is the
+   Report sheet's window, the card, as the tasting says. Each later dish that moves `buffet.vla`
+   restamps the header and writes the golden and the hand again by one command (decision 3). The
+   session is played again only when a dish changes what its acts do. *The alternatives:*
+   - *The first week alone,* about 14,000 frames and ten minutes of the owner's. Its golden is the
+     Portfolio, both pockets' books, and the card is left to the native test of a scripted quarter
+     that holds it now. Its loop cases cost about a tenth of the quarter's (220 restores against
+     2,100), and the browser never sees a card's turn.
+   - *The first week, then the paces typed* (`Day!B1` and `Day!B28` at 3,600, a person's sandbox
+     edit) to the card, about 16,000 frames. The card reaches the browser at the week's cost, and an
+     edit lands in the replay. But the course's own replay would show a person bending time, which
+     the owner's rule keeps out of the game's controls and out of every player's pace.
+   - *No session of the owner's,* but one written by the oracle's scripted player (`MISE.5`, not yet
+     built) and written again whenever a dish moves it, as Naught's stand-in is. It costs no time of
+     the owner's and every frame is reproducible, but no person's play is in it. `MISE.5` may add one
+     beside the owner's.
+
+2. **The hand: the Rust hand's answers, written into the page by the oracle (rec).** The oracle plays
+   the owner's session through `buffet.rs` (decision 3) and writes `src/buffet.hand.js`. It holds a
+   player of about a hundred lines, made with the seed and asked each frame, and a table of the
+   rounded cells the Rust hand holds. The cells are the clock shown and the day, the four prices,
+   each pocket's cash, holdings and net worth, the positions, the ledger's last row, the exam's score
+   and the capital, the hustle's fees, and the card. The table holds them at each frame where a key, a
+   click or an edit landed and the frame after, at each day's first frame and at every 512th frame,
+   and nothing at the frames between. So the browser's session is held, frame by frame where it
+   matters, to the second plate, the oracle the native tests already trust, and no rule is written a
+   third time. A dish moves the hand by the same command as the golden. The page then holds the
+   module in the browser against the native hand, the comparison the language's gap makes worth
+   making. *The alternatives:*
+   - *The whole game a third time in JavaScript* (the line's "the third plate"). By Alonzo's ratio it
+     is about 900 to 1,400 lines for `buffet.rs` and as many again for the cells `cartridge.rs`
+     holds, and every rule of every later dish is written three times. Its market is computed with
+     V8's `Math.sin` and `Math.pow`, which differ from the module's, so a price that rounds on a half
+     cent would fail a correct page.
+   - *The rule alone in JavaScript* (the tasting's "the second writing of the rule"). It covers the
+     order desk and the books, and what they stand on: the calendar, the market's prices, the exam's
+     capital and the hustle's fees, about two thirds of the whole. The words and the looks are left to
+     the native test and the golden. It carries the same V8 risk on the prices, and every money rule
+     of every later dish is written three times.
+   - *No hand.* The session is held in the browser to its golden and its round alone, `alone`
+     allowed by Buffet's own floors, and every frame is held natively. It is the cheapest, and a
+     divergence between the module and the hand is found only where it reaches the card.
+
+3. **The oracle plays the session natively and writes what it owns: `oracle/examples/replay.rs`
+   (rec).** The command is `cargo run --example replay [-- --check]`, beside `expand`. It restamps
+   the replay's header with the SHA-256 of `src/buffet.vla`'s LF text, the oracle's own, about 85 lines
+   as Alonzo's is, held to the standard's vectors. It plays the session over the engine as the host
+   plays it: the seed, each frame's rows one write, the host's derived writes, then the step. It
+   writes `src/buffet.golden.vla`, its SPDX lines and the Report's window, and `src/buffet.hand.js`.
+   With `--check` it writes nothing and says `same` or names the file that moved. Beside it is the
+   test the tasting asks for, the session held at every frame to `buffet.rs`: the calendar at each
+   frame, the market at each tick, the books at each act, and everything at every 64th frame, by the
+   functions the existing tests hold their cells with. The golden and the hand are each held to their
+   file. A golden that moves is explained line by line before it is written again, as the describe
+   golden is. *The alternative:* ask Alonzo to publish its player, its golden's writer and SHA-256
+   (`MISE.6`), and wait.
+
+4. **The files: `src/buffet.replay.vla`, `src/buffet.golden.vla` and `src/buffet.hand.js` (rec).**
+   They sit beside the cartridge, since every block of the page is a file of `src/`, one rule for the
+   builder and the offline check, and `REUSE.toml` already names the first two. The hand falls under
+   `src/**`'s AGPL, its SPDX lines first, and `.gitattributes` keeps it LF. Each `.vla` opens with its
+   SPDX comment lines, which the page and the oracle set aside before the header. `check_layout` takes
+   three kinds, a replay, a golden and a hand, one each, and `src/`'s other `.vla` stay libraries by
+   name, no longer "every other". *The alternative:* the hand beside its generator under `oracle/`,
+   with the builder's and the check's rule widened to one file outside `src/`.
+
+5. **The builder and the offline check take the three blocks by Alonzo's rules of `v0.4.0` (rec).**
+   `build_web.ps1` writes `replay-buffet` and `golden-buffet` after `source-buffet`, and `hand-buffet`
+   as the one script block. It refuses a replay without its golden and a golden without its replay.
+   `check_web_offline.ps1` owes the three both ways and holds the hand's source as Alonzo's does: the
+   code tokens, no `eval` or `Function`, no store's name. It also holds the replay's header to the
+   SHA-256 of the cartridge beside it, as `check_vendored` computes its digests, so that a page built
+   over a stale replay fails there before any browser runs. Its control goes from 22 mutants to 29:
+   Alonzo's five of the hand (its block dropped, a `fetch`, an `eval`, `localStorage`, `indexedDB`),
+   a replay block no file is, and a replay naming another cartridge.
+
+6. **The loop check of Buffet's own: `tools/check_host_loop.ps1`, Alonzo's of `v0.4.0` adapted to
+   judge Buffet's page (rec).** It is adapted as the builder and the offline check were. Its browser
+   is found as Alonzo's is (`ALONZO_BROWSER`, `-Browser`, Chrome or Edge at their paths); it is skipped
+   without a page or a browser, and it takes `-Jobs`. It runs Buffet's page at a ratio of 1, every
+   case, and at 1.5 every case but `replay`, `save` and `keep`. Each run is judged by Buffet's own
+   floors: its eighteen cases and the fifteen absent; `replay` with one hand, none `alone`, its golden
+   and its round; `save` and `keep` each over the session. `-Control` builds five mutant pages:
+   - the hand a frame late;
+   - the hand filling the first buy at the new day's quote, at that frame (the tasting's);
+   - the hand's block dropped, counted `alone`;
+   - a cell of the golden changed;
+   - a row of the replay cut, its round failing.
+
+   *The alternative:* ask Alonzo for its check to judge a game's page by the game's floors
+   (`MISE.6`), and run it from a tag's archive in CI.
+
+7. **CI (rec).** In the crate job, after the page with the module and its offline check:
+   `cargo run --example replay -- --check` beside `expand`'s, the native test inside `cargo test`,
+   and the loop check with its control under `pwsh`, over Chrome from the image. In the ratchets job,
+   `run_checks.ps1` runs the new check over its page without the module, the double's cases alone, one
+   browser at a time as Alonzo's workflow has it on Windows; its control's mutants that need the
+   module say they do not apply, as Alonzo's do.
+
+8. **Held rounded, the gap named (rec).** The golden and the hand hold whole numbers, cents,
+   hundredths of a percent and words, never a value of the market unrounded. A rounded cell that
+   differs between the module and the hand at a frame is a finding for Frazaro's `libm` fix, never a
+   hand to bend.
+
+9. **The stale places, rewritten at the build.** `OMAKASE.md`'s line names `replay`, `grid` and
+   `pass`: `grid` and `pass` pass now, and `save` and `keep` join. "Buffet's own JavaScript hand, the
+   third plate" becomes decision 2's hand, and course 0's tasting names the session's shape. `MISE.6`
+   takes whichever rows of the Found below the owner keeps. `README.md`'s Building names the replay's
+   command beside `expand`'s, and `Delta/CLAUDE.md`'s Buffet map names the files, the check and the
+   edits that trip them.
+
+10. **The hand tests, the owner's.** At the build's start, the session, recorded on the page as
+    decision 1 says, its steps given then. At its end, on the page built from the commit: the
+    drawer's "The replay" holds Buffet's, and Play the replay plays it, the exam answered as it was.
+
+**The predictions, before any number.**
+
+| | What | Predicted | The number |
+|---|---|---|---|
+| P1 | the session | 133,000 to 137,000 frames, 128,611 to the card's turn and the exam's wait before it; 40 to 150 KB of LF text, the pointer's moves the most of its rows | |
+| P2 | the golden | the Report's window, under 10 KB | |
+| P3 | the native test | every frame held, under 30 s | |
+| P4 | the hand | a player of about 100 lines and a table of 10,000 to 20,000 cells in rows of one order, under 200 KB | |
+| P5 | the page | 4,670,699 characters grown by 100,000 to 350,000 | |
+| P6 | the loop check | 18 cases OK at a ratio of 1 and 15 at 1.5; `replay` with one hand, none `alone`, its golden and its round; `save` one save; `keep` about 2,100 restores; under five minutes here, `keep` the longest | |
+| P7 | the controls | the loop check's 5 mutants and the offline check's 29, each failing by name | |
+| P8 | CI | the crate job longer by 2 to 5 minutes | |
+
+**Found, none minted.**
+- *Alonzo's replay machinery is its tests' alone,* so a game's oracle writes its own player, golden
+  writer and SHA-256 (decision 3). A row for `MISE.6`, at the owner's word.
+- *Alonzo's loop check holds a game's page only for its own,* and its `-Page` holds any page to
+  Alonzo's floors (decision 6). A row for `MISE.6`, at the owner's word.
+- *`keep`'s watched run and live session need Kairos or Sand on the page:* both count 0 on Buffet's,
+  the part of the case Buffet's page cannot hold.
+- *A course's ending outgrows a sitting at the game's pace:* the first card at 71 minutes, the year's
+  at 4 hours 47, and course 1's rate cycle at years. `BD-1`'s replay golden at a later course will
+  want the scripted player (`MISE.5`) or another answer, at that course's scoping.
 
