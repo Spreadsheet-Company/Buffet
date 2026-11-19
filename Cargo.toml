@@ -6,18 +6,23 @@
 # never copied here, as a stranger consumes them.
 #
 # The pins are exact and never a range, and a registry version and never a
-# git rev (the owner's route, 2026-10-14): alonzo 0.3.0, the release whose
-# viewport draws what a format says, a number by its code and a text's weight,
-# color and alignment and a cell's borders (ENGINE.28), keeps a dragged width
-# a sheet's (ENGINE.26), and whose page's version 6 says which sheets' keys are
-# the game's and which no person writes (SPEC.5), beside 0.2.0's palette and a
+# git rev (the owner's route, 2026-10-14): alonzo 0.4.0, the release whose page
+# saves a running game to a file and opens one (ENGINE.5), keeps a run's
+# unsaved work in the browser through a closed tab (ENGINE.38, ENGINE.40),
+# draws a sheet's conditional formats and a font's lines (ENGINE.37), says the
+# last act's answer in the bar (ENGINE.42) and shows the region it was viewed
+# through (ENGINE.43), and whose kit takes a put's pieces by name (KIT.6);
+# beside 0.3.0's formats drawn (ENGINE.28) and version 6, the sheets whose keys
+# are the game's and those no person writes (SPEC.5), 0.2.0's palette and a
 # cartridge's own commands (ENGINE.22 to ENGINE.25), 0.1.5's edit and continue
 # (ENGINE.7) and 0.1.4's views on a game's own sheets (ENGINE.18); and vla-lang
-# 0.12.0, the version that release pins, so that the lock holds one copy of the
-# language, a formula cell held in about 14 to 19 bytes (Frazaro's KERNEL.49),
-# the library's second slice (KERNEL.8), a format's looks (KERNEL.50) and the
-# expander's loops and names (VLA.5, VLA.6 and VLA.15), every answer the same
-# to the bit. Both resolve from crates.io since alonzo 0.1.0, the engine's first
+# 0.14.0, the version that release pins, so that the lock holds one copy of the
+# language: LET and LAMBDA (Frazaro's KERNEL.29), the information functions,
+# ERROR.TYPE among them (KERNEL.68), a sheet's rules (KERNEL.58) and a macro's
+# named pieces (VLA.9), over 0.12.0's formula cell in about 14 to 19 bytes
+# (KERNEL.49), the library's second slice (KERNEL.8), a format's looks
+# (KERNEL.50) and the expander's loops and names (VLA.5, VLA.6 and VLA.15),
+# every answer the same to the bit. Both resolve from crates.io since alonzo 0.1.0, the engine's first
 # release, was published (2026-10-14): the local patch that stood in for it is
 # deleted, and Cargo.lock is committed (HOUSE.2). What this repository copies from the
 # engine's, the kit and the page, is copied at the tag this pin names, and
@@ -36,8 +41,8 @@ license = "AGPL-3.0-or-later"
 repository = "https://github.com/Spreadsheet-Company/Buffet"
 
 [workspace.dependencies]
-alonzo = "=0.3.0"
-vla-lang = "=0.12.0"
+alonzo = "=0.4.0"
+vla-lang = "=0.14.0"
 
 [profile.dev.package."*"]
 # The engine and the language, every package that is not the workspace's,

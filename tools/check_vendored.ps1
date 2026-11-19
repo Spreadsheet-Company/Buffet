@@ -32,7 +32,7 @@ WHAT IT HOLDS, four things, none needing a host or the network:
      digest is of the LF text, as a replay's digest of its cartridge is; the
      length says how far a copy that fails is from the file.
   3. The tag the baseline names is Cargo.toml's pin of alonzo: alonzo =
-     "=0.3.0" is the tag v0.3.0. A pin moved without the copies fails here,
+     "=0.4.0" is the tag v0.4.0. A pin moved without the copies fails here,
      and so do copies moved without the pin.
   4. web/ holds the page's four files and nothing else but the page the
      builder writes there, web/index.html (.gitignore). REUSE.toml gives
@@ -80,16 +80,22 @@ $repoRoot = Split-Path -Parent $PSScriptRoot
 # edits from the grid and a format's appearance drawn (SPEC.5, CART.9,
 # ENGINE.28), and whose kit's verbs take expressions (KIT.5, KIT.6's first
 # slice): the kit and the page's four files copied again at v0.3.0 (6816d65).
-# Each digest and length
+# 2026-11-18, the pin moved to alonzo 0.4.0 and the language to vla-lang
+# 0.14.0, whose page saves and opens a game and keeps a run's unsaved work
+# (ENGINE.5, ENGINE.38, ENGINE.40), draws a sheet's conditional formats
+# (ENGINE.37) and shows the region it was viewed through (ENGINE.43), and
+# whose kit takes a put's pieces by name and has no walkers (KIT.6's second
+# and third slices and its held step): the kit and the page's four files
+# copied again at v0.4.0 (6e7b659). Each digest and length
 # is `git show <tag>:<path> | sha256sum` and `| wc -c` in Alonzo's tree, the
 # blobs being stored LF.
-$tag = 'v0.3.0'
+$tag = 'v0.4.0'
 $baseline = @(
-    @{ File = 'src/common.vla'; From = 'cartridges/common.vla'; Sha256 = 'CE39F89C154EFBD29ED75CF77A11459D86AC32576C88654E1FB3D55B9DD98222'; Bytes = 26695 },
-    @{ File = 'web/index.template.html'; From = 'web/index.template.html'; Sha256 = '33FA0CD19961714B8FCA974E784D2B39307FE9D7B1D58C31E349CD3E30552B81'; Bytes = 757751 },
-    @{ File = 'web/host.js'; From = 'web/host.js'; Sha256 = '998236AEA50EAD566D51AA181191B242348F75FBFE4B5655DF13B2D684B406D1'; Bytes = 175004 },
-    @{ File = 'web/fake.js'; From = 'web/fake.js'; Sha256 = '0F8B05EE132CC5B05709AFDC713D053ECF63864139179B765C8ADCBB39C64581'; Bytes = 48023 },
-    @{ File = 'web/viewport.js'; From = 'web/viewport.js'; Sha256 = '42A987C541864DB3A64855289D6D3BEDB9A5C64ADA4B4BBB47CE813C00EE446D'; Bytes = 136286 }
+    @{ File = 'src/common.vla'; From = 'cartridges/common.vla'; Sha256 = 'B1AF0FC441CE15E345917C72A7B686F476E6152F7A6B36B83E6A1E0C17FC4DFF'; Bytes = 30107 },
+    @{ File = 'web/index.template.html'; From = 'web/index.template.html'; Sha256 = '2E50E5B717FE9D3C5DF4E4F948C381BD84738A8609955A2F7BD91D5E08F36E9A'; Bytes = 946703 },
+    @{ File = 'web/host.js'; From = 'web/host.js'; Sha256 = 'FF1EAECC0125A3210CA423F7769BA7F4893633593BE082A7C6E0A01BF1175D08'; Bytes = 209349 },
+    @{ File = 'web/fake.js'; From = 'web/fake.js'; Sha256 = '088EDC0579941B1B1F6039A0CFDD47CB092C22B9836D8D83FA7FC8F1DF054593'; Bytes = 49732 },
+    @{ File = 'web/viewport.js'; From = 'web/viewport.js'; Sha256 = '686226D40B42FFD32F1AFE38389D95BE2974701976486230644C5227C331A8EA'; Bytes = 158424 }
 )
 # The one file web/ may hold beside the copies: the page tools/build_web.ps1 writes, a build artifact.
 $builtPage = 'web/index.html'

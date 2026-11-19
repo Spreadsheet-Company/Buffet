@@ -32,11 +32,26 @@
   the tallest own size in it; a format's border draws its four edges as
   Excel draws its fourteen lines on a screen, a shared edge once, the
   heavier line winning, and a fill covers the gridlines around its cell, as
-  Excel lays one.
+  Excel lays one. Since ENGINE.36 a line feed breaks a text that wraps and draws
+  nothing in one that does not, and a carriage return draws nothing, each as
+  Excel draws them. Since ENGINE.37 a sheet's conditional formats are read
+  (Frazaro's KERNEL.58, vla-lang 0.13.0): a rule's row keeps its priority, its
+  format and its stop, a cell's lit row names the rules whose answer is true at
+  it, and the cell draws its rules' formats folded from the last lit to the
+  first over what it draws, as the language's drawn twin folds them; a lit cell
+  holding nothing draws as an empty cell, its column's format under the rules;
+  a format of groups alone draws what it says over the cell's own and leaves
+  the rest, a font's family is drawn by its name and its class, and a merged
+  range is read and not drawn. Since ENGINE.41 a clip's restore forgets the
+  font the painter noted, so that every text is drawn in its own font, the
+  first after a clip setting it: a repaint's rectangles and a full paint's
+  quadrants are each a clip, and the font a text inside one set was the
+  restore's to take back.
 
   What the viewport owns is the state no program sees (SD-23): the scroll, the
   selection, the widths a person dragged, each sheet's its own as a
-  spreadsheet keeps them (ENGINE.26), the frozen panes, the marks a host
+  spreadsheet keeps them (ENGINE.26; the scroll and the selection since
+  CART.14.1's hand test), the frozen panes, the marks a host
   asked for; the record is never written. What it does not do: no fill
   handle, no drag-move, no in-cell editing (web/CALLOSUM.md section 7,
   decision 5); the formula bar, the link to a sentence, the refusal in the
@@ -83,6 +98,26 @@
   var FIT_PX = DEFAULT_ROW_PX / 11;   // a row with no set height fits its tallest own size by the default row's ratio, 20 px to 11 points (ENGINE.28)
   var OVERFLOW_LOOKBACK = 8;     // columns to look back, and since ENGINE.28 ahead, for a text that overflows into view
   var REPAINT_SHARE = 0.25;      // a patch naming more of the cells in view than this is painted whole (ENGINE.20)
+  // A family's class as the canvas names it (ENGINE.37, decision 9): the record's word to CSS's generic family, which
+  // draws where the machine lacks the name, as Excel draws a family it lacks by its class (the probe's screenshot).
+  var GENERICS = { serif: 'serif', sans: 'sans-serif', mono: 'monospace', script: 'cursive', decorative: 'fantasy' };
+  // A font's underlines (KERNEL.58), the record's word to the kind the painter keeps; not-underline says none.
+  var UNDERLINES = { 'underline': 'single', 'double-underline': 'double', 'accounting-underline': 'single-accounting',
+                     'double-accounting-underline': 'double-accounting', 'not-underline': 'none' };
+  // The lines a font says (ENGINE.37, decision 10), as Excel 365 draws them at 100% on a display at 150%, measured at the
+  // slice's start from the owner's screenshots of the probe workbook at 11 and 22 points: each kind's first strand, its
+  // center below the text's baseline as a fraction of the font's pixels (above it where negative), and each strand's
+  // thickness as a fraction too, rounded and at least a device pixel; a double's second strand one bare strand below its
+  // first. And its reach: 'line', the drawn line's advance, the whole of a spilling text's and each wrapped line's own;
+  // 'cell', under a text the cell between its paddings, however the text aligns or spills, and under any other value its
+  // advance; last, a wrapped text's last line alone.
+  var DECORATIONS = {
+    'single': { at: 0.06, size: 0.03, strands: 1, reach: 'line', last: false },
+    'double': { at: 0.06, size: 0.03, strands: 2, reach: 'line', last: false },
+    'single-accounting': { at: 0.28, size: 0.03, strands: 1, reach: 'cell', last: true },
+    'double-accounting': { at: 0.28, size: 0.03, strands: 2, reach: 'cell', last: true },
+    'strike': { at: -0.34, size: 0.05, strands: 1, reach: 'line', last: false }
+  };
   var DEFAULT_COLORS = {
     background: '#ffffff',
     gridline: '#d9d9d2',
@@ -263,7 +298,10 @@
       // own size fits
       styled: false, bordered: false, drawn: new Map(), rowFits: {},
       filled: false,   // whether any format says a fill, by which a repaint grows its band over a fill's gridlines (decision 11)
-      counts: { forms: 0, cells: 0, formulas: 0, values: 0, texts: 0, styles: 0, sentences: 0, looks: 0, rows: 0, unknown: 0, malformed: 0 },
+      // ENGINE.37: the sheet's rules by priority, { format, stop }; its merged ranges, read and not drawn; and whether any
+      // format is of groups alone, by which a look over a cell takes the rule of what a format leaves unsaid
+      rules: {}, merges: [], partial: false,
+      counts: { forms: 0, cells: 0, formulas: 0, values: 0, texts: 0, styles: 0, sentences: 0, looks: 0, rows: 0, unknown: 0, malformed: 0, rules: 0, lits: 0, merges: 0 },
       lines: 0, readMs: 0
     };
     m.formats[0] = { fill: null, num: 'general', code: null, wrap: false, font: null, align: null, border: null };
@@ -278,12 +316,23 @@
     return m;
   }
   // The heads of a cell's rows, a bit each: an entry notes the rows read into it (rows), so that a patch takes back
-  // exactly what they counted (ENGINE.19).
-  var CELL_ROWS = { cell: 1, formula: 2, value: 4, style: 8, sentence: 16, text: 32 };
+  // exactly what they counted (ENGINE.19); since ENGINE.37 a lit row among them (decision 5), so that a frame whose
+  // answers alone moved patches its cells. And the count each head's rows are kept under.
+  var CELL_ROWS = { cell: 1, formula: 2, value: 4, style: 8, sentence: 16, text: 32, lit: 64 };
+  var COUNTED = { cell: 'cells', formula: 'formulas', value: 'values', style: 'styles', sentence: 'sentences', text: 'texts', lit: 'lits' };
   // A formula cell the values projection prints by its value or its style alone, never by its text
   // (KERNEL.37): no value yet, no text for the bar; its value row, when one comes, gives it both.
   function formulaCell(m, a, reach) {
     var e = { row: a.row, col: a.col, address: colName(a.col) + a.row, kind: 'formula', vkind: 'formula', text: '', style: 0, sentence: 0, formula: '', valued: false, lookKey: null, rows: 0 };
+    m.cells.set(cellKey(a.row, a.col), e);
+    if (a.row > reach.row) reach.row = a.row;
+    if (a.col > reach.col) reach.col = a.col;
+    return e;
+  }
+  // A lit cell holding nothing (ENGINE.37, decision 4): its lit row alone at its place makes an entry of its own, its text
+  // empty and its value none, that draws as an empty cell, its column's format under its rules; no text stops at it.
+  function emptyCell(m, a, reach) {
+    var e = { row: a.row, col: a.col, address: colName(a.col) + a.row, kind: 'empty', vkind: 'text', text: '', style: 0, sentence: 0, formula: '', valued: false, lookKey: null, rows: 0 };
     m.cells.set(cellKey(a.row, a.col), e);
     if (a.row > reach.row) reach.row = a.row;
     if (a.col > reach.col) reach.col = a.col;
@@ -328,14 +377,25 @@
       m.columns[col.index] = col;
       m.columnList.push(col);
     } else if (head === 'format') {
-      // the number format general, text, or a code of Excel's in quotes (KERNEL.47, read since CART.12), which the
-      // viewport keeps and never applies: the record prints each cell's text under it in a text row
-      var idx = numOf(f[1]), fill = strOf(f[2]), num = symOf(f[3]), code = strOf(f[3]), wrap = symOf(f[4]);
-      if (idx === null || (fill === null && symOf(f[2]) !== 'none') || (num !== 'general' && num !== 'text' && code === null) || (wrap !== 'wrap' && wrap !== 'nowrap')) { m.counts.malformed++; return; }
-      // the groups after the wrap, a font, an alignment and a border (ENGINE.28), each read as the loader reads it; a
-      // row whose groups say what a format does not take is malformed, counted and dropped, never passed over
-      var fmt = { fill: fill === null ? null : '#' + fill, num: code === null ? num : 'code', code: code, wrap: wrap === 'wrap', font: null, align: null, border: null };
-      if (!readGroups(f, fmt)) { m.counts.malformed++; return; }
+      var idx = numOf(f[1]), fmt;
+      if (idx === null) { m.counts.malformed++; return; }
+      if (Array.isArray(f[2])) {
+        // a format of groups alone (KERNEL.58, read since ENGINE.37, decisions 1 and 2): what its groups say, a fill, a
+        // number format and a wrap among them, and no more; it holds the default of what it leaves unsaid, which is what it
+        // draws as a cell's own, and notes it, so that a look or a rule of it leaves the cell's own there
+        fmt = { fill: null, num: 'general', code: null, wrap: false, font: null, align: null, border: null, unsaid: { fill: true, num: true, wrap: true } };
+        if (!readGroups(f, fmt, 2)) { m.counts.malformed++; return; }
+        m.partial = true;
+      } else {
+        // the number format general, text, or a code of Excel's in quotes (KERNEL.47, read since CART.12), which the
+        // viewport keeps and never applies: the record prints each cell's text under it in a text row
+        var fill = strOf(f[2]), num = symOf(f[3]), code = strOf(f[3]), wrap = symOf(f[4]);
+        if ((fill === null && symOf(f[2]) !== 'none') || (num !== 'general' && num !== 'text' && code === null) || (wrap !== 'wrap' && wrap !== 'nowrap')) { m.counts.malformed++; return; }
+        // the groups after the wrap, a font, an alignment and a border (ENGINE.28), each read as the loader reads it; a
+        // row whose groups say what a format does not take is malformed, counted and dropped, never passed over
+        fmt = { fill: fill === null ? null : '#' + fill, num: code === null ? num : 'code', code: code, wrap: wrap === 'wrap', font: null, align: null, border: null };
+        if (!readGroups(f, fmt, 5)) { m.counts.malformed++; return; }
+      }
       if (fmt.font || fmt.align) m.styled = true;
       if (fmt.border) m.bordered = true;
       if (fmt.fill) m.filled = true;
@@ -394,20 +454,64 @@
       if (!a || n === null || !e) { m.counts.malformed++; return; }
       e[head] = n; e.rows |= CELL_ROWS[head];
       if (head === 'style') m.counts.styles++; else m.counts.sentences++;
+    } else if (head === 'conditional') {
+      // a rule of the sheet (KERNEL.58, read since ENGINE.37, decisions 1 and 8): its priority, its format or none, and
+      // its stop; its range and its test, a formula's text or a list of words, are the language's, which answers them in
+      // the cells' lit rows, so that a kind no formula says, which lights no cell, draws nothing. A second rule of one
+      // priority is malformed
+      var pr = numOf(f[2]), fi = numOf(f[5]), test = f[4];
+      if (strOf(f[1]) === null || pr === null || pr < 1 || Math.floor(pr) !== pr || strOf(f[3]) === null || (typeof test !== 'string' && !Array.isArray(test)) ||
+          (fi === null && symOf(f[5]) !== 'none') || f.length > 7 || (f.length === 7 && symOf(f[6]) !== 'stop') || Object.prototype.hasOwnProperty.call(m.rules, pr)) { m.counts.malformed++; return; }
+      m.rules[pr] = { format: fi, stop: f.length === 7 };
+      m.counts.rules++;
+    } else if (head === 'lit') {
+      // the rules whose answer is true at a cell, in priority order up to the first that stops (KERNEL.58, drawn since
+      // ENGINE.37, decisions 3 to 5): a cell's row, after its others; alone at its place, a cell holding nothing. A second
+      // lit row of a cell, or a priority no rule of the record holds, is malformed
+      a = parseA1(strOf(f[2]) || '');
+      if (!a || strOf(f[1]) === null || f.length < 4) { m.counts.malformed++; return; }
+      var lit = [];
+      for (var lj = 3; lj < f.length; lj++) {
+        var lp = numOf(f[lj]);
+        if (lp === null || !Object.prototype.hasOwnProperty.call(m.rules, lp)) { m.counts.malformed++; return; }
+        lit.push(lp);
+      }
+      e = m.cells.get(cellKey(a.row, a.col));
+      if (e && (e.rows & CELL_ROWS.lit)) { m.counts.malformed++; return; }
+      if (!e) e = emptyCell(m, a, reach);
+      e.lit = lit; e.rows |= CELL_ROWS.lit;
+      m.counts.lits++;
+    } else if (head === 'merge') {
+      // a merged range (KERNEL.58), kept and counted and drawn not at all (ENGINE.37, decision 7): each cell it covers
+      // draws as its own
+      r = parseRange(strOf(f[2]));
+      if (strOf(f[1]) === null || !r || r.columns || r.rows || f.length !== 3) { m.counts.malformed++; return; }
+      m.merges.push(r);
+      m.counts.merges++;
     } else {
       m.counts.unknown++;
     }
   }
-  // An entry's rows taken back from its model's counts and lines, the entry removed (ENGINE.19, a patch): one form
-  // and one line a row, as the language prints a record, each counted by its head.
+  // The line feeds a text holds; and those an entry's rows hold, its formula's text, its value's and the text it draws
+  // under a code, each running its row on to another line of the record, since the language prints one raw (ENGINE.36).
+  function feedsIn(s) { var n = 0; for (var i = s.indexOf('\n'); i >= 0; i = s.indexOf('\n', i + 1)) n++; return n; }
+  function feedsOf(e) {
+    var n = 0;
+    if (e.rows & CELL_ROWS.formula) n += feedsIn(e.formula);
+    if (e.rows & (CELL_ROWS.cell | CELL_ROWS.value)) n += feedsIn(e.rows & CELL_ROWS.text ? e.value : e.text);
+    if (e.rows & CELL_ROWS.text) n += feedsIn(e.text);
+    return n;
+  }
+  // An entry's rows taken back from its model's counts and lines, the entry removed (ENGINE.19, a patch): one form a
+  // row, each counted by its head, and one line a row and its line feeds, as the language prints a record.
   function unread(m, e) {
     var n = 0;
     for (var head in CELL_ROWS) {
       if (!(e.rows & CELL_ROWS[head])) continue;
       n++;
-      m.counts[head === 'cell' ? 'cells' : head === 'formula' ? 'formulas' : head === 'value' ? 'values' : head === 'text' ? 'texts' : head === 'style' ? 'styles' : 'sentences']--;
+      m.counts[COUNTED[head]]--;
     }
-    m.counts.forms -= n; m.lines -= n;
+    m.counts.forms -= n; m.lines -= n + feedsOf(e);
     m.cells.delete(cellKey(e.row, e.col));
   }
 
@@ -437,6 +541,7 @@
     this.pad = Math.round(TEXT_PAD_PX * dpr);
     this.lineH = Math.round(FONT_PX * LINE_HEIGHT * dpr);
     this.fonts = {};   // a font string a format's weight, slant and pixels (ENGINE.28), built once each
+    this.baselines = {};   // a font string to its baseline below the middle line, measured once each (ENGINE.37)
     // The rows with settings of their own (ENGINE.8): a height in points turned into whole CSS pixels and then
     // device pixels, as a column's width is, or 0 for a hidden row; kept sorted with the running difference
     // from the default above each, so that a row's top is the default arithmetic corrected by the rows with
@@ -560,14 +665,53 @@
   // A wrapped line's height under a format: its size's.
   Geometry.prototype.lineHOf = function (fmt) { return fmt.font && fmt.font.size !== null ? Math.round(fmt.font.size / 20 * POINT_FONT_PX * LINE_HEIGHT * this.dpr) : this.lineH; };
   // The canvas font a format's text is drawn in: its slant and its weight before its pixels and the family, one string
-  // a kind, built once; a format saying no font draws in the default.
+  // a kind, built once; a format saying no font draws in the default. Since ENGINE.37 (decision 9) a family said is the
+  // family drawn, its name quoted and its class after it, else the painter's own stack after it, so that a name the
+  // machine lacks draws by its class; the size is the same whatever the family.
   Geometry.prototype.fontOf = function (fmt) {
     var f = fmt.font;
     if (!f) return this.font;
-    var px = this.sizeOf(fmt), key = (f.italic ? 'i' : '') + (f.bold ? 'b' : '') + px, s = this.fonts[key];
-    if (!s) s = this.fonts[key] = (f.italic ? 'italic ' : '') + (f.bold ? 'bold ' : '') + px + 'px ' + FONT_FAMILY;
+    var fam = f.family || null, px = this.sizeOf(fmt), key = (f.italic ? 'i' : '') + (f.bold ? 'b' : '') + px + (fam ? '\n' + fam.name + '\n' + (fam.generic || '') : ''), s = this.fonts[key];
+    if (!s) s = this.fonts[key] = (f.italic ? 'italic ' : '') + (f.bold ? 'bold ' : '') + px + 'px ' + (fam ? familyCss(fam) : FONT_FAMILY);
     return s;
   };
+  // How far a font's alphabetic baseline lies below the middle line the painter draws its text at (ENGINE.37), in device
+  // pixels: an H's ascent from each, measured once a font, the context left drawing from the middle. Excel's lines follow
+  // the baseline, which each font sets at its own depth below the middle.
+  Geometry.prototype.baselineOf = function (ctx, font) {
+    var b = this.baselines[font];
+    if (b === undefined) {
+      var was = ctx.font;
+      ctx.font = font;
+      ctx.textBaseline = 'alphabetic';
+      var a = ctx.measureText('H').actualBoundingBoxAscent;
+      ctx.textBaseline = 'middle';
+      b = this.baselines[font] = a - ctx.measureText('H').actualBoundingBoxAscent;
+      ctx.font = was;
+    }
+    return b;
+  };
+  // The strands of one drawn line of text's lines (ENGINE.37, decision 10), as rectangles in device pixels: under, the
+  // underline's kind or null, and struck, a strike; em, the font's pixels, and base, the line's baseline; tx and tw, the
+  // text's left and advance as drawn; x0 to x1, the cell between its paddings; textual, a value of kind text; and last,
+  // whether the line is its text's last.
+  function linesOf(under, struck, em, base, tx, tw, x0, x1, textual, last) {
+    var out = [], kinds = [];
+    if (under && (!DECORATIONS[under].last || last)) kinds.push(under);
+    if (struck) kinds.push('strike');
+    for (var k = 0; k < kinds.length; k++) {
+      var d = DECORATIONS[kinds[k]], t = Math.max(1, Math.round(d.size * em)), y = base + Math.round(d.at * em - t / 2);
+      var cellWide = d.reach === 'cell' && textual, a = cellWide ? x0 : Math.round(tx), b = cellWide ? x1 : Math.round(tx + tw);
+      if (b <= a) continue;
+      for (var s = 0; s < d.strands; s++) out.push({ kind: kinds[k], strand: s, x: a, y: y + 2 * t * s, w: b - a, h: t });
+    }
+    return out;
+  }
+  // A family as a canvas font names it: the name quoted as CSS quotes one, then its class's generic family, else the
+  // painter's stack.
+  function familyCss(fam) {
+    return '"' + fam.name.replace(/\\/g, '\\\\').replace(/"/g, '\\"') + '", ' + (fam.generic ? GENERICS[fam.generic] : FONT_FAMILY);
+  }
   // The first column whose right edge is past x (content coordinates), from c0.
   Geometry.prototype.columnAt = function (x, c0) {
     var c = Math.max(1, c0 || 1);
@@ -651,18 +795,31 @@
     var n = hundredths / 5;
     return n >= 20 && n <= 8191 ? n : null;
   }
+  // Since ENGINE.37 a font's words of KERNEL.58 too: an underline, one of the five words, and a strike, strike or
+  // not-strike, kept for the lines' slice; and a family, (family "<name>" [serif|sans|mono|script|decorative]), a name of
+  // 1 to 31 characters, its class where said, drawn by both (decision 9).
   function readFont(items) {
     if (!items.length) return null;
-    var font = { bold: null, italic: null, size: null, color: null };
+    var font = { bold: null, italic: null, size: null, color: null, underline: null, strike: null, family: null };
     for (var i = 0; i < items.length; i++) {
       var d = items[i], w = symOf(d);
       if (w === 'bold' || w === 'not-bold') { if (font.bold !== null) return null; font.bold = w === 'bold'; }
       else if (w === 'italic' || w === 'not-italic') { if (font.italic !== null) return null; font.italic = w === 'italic'; }
+      else if (w !== null && Object.prototype.hasOwnProperty.call(UNDERLINES, w)) { if (font.underline !== null) return null; font.underline = UNDERLINES[w]; }
+      else if (w === 'strike' || w === 'not-strike') { if (font.strike !== null) return null; font.strike = w === 'strike'; }
+      else if (Array.isArray(d) && symOf(d[0]) === 'family') { var fam = readFamily(d); if (fam === null || font.family !== null) return null; font.family = fam; }
       else if (d && d.num !== undefined) { var n = twentiethsOf(d); if (n === null || font.size !== null) return null; font.size = n; }
       else if (typeof d === 'string') { var col = hexColor(d); if (col === null || font.color !== null) return null; font.color = col; }
       else return null;
     }
     return font;
+  }
+  // A (family ...) list: { name, generic }, the generic null where unsaid; null where it is no family.
+  function readFamily(d) {
+    var name = strOf(d[1]), generic = d.length === 3 ? symOf(d[2]) : null;
+    if (name === null || d.length > 3 || (d.length === 3 && (generic === null || !Object.prototype.hasOwnProperty.call(GENERICS, generic)))) return null;
+    var chars = Array.from(name).length;
+    return chars >= 1 && chars <= 31 ? { name: name, generic: generic } : null;
   }
   function readAlign(items) {
     if (!items.length) return null;
@@ -688,16 +845,32 @@
     }
     return border;
   }
-  // The groups from a format row's fifth item on, read into the format; false where the row is malformed.
-  function readGroups(f, fmt) {
-    for (var i = 5; i < f.length; i++) {
+  // The groups from a format row's item from on, read into the format; false where the row is malformed. From the fifth,
+  // after a row's four places, a font, an alignment and a border; from the second, a format of groups alone (ENGINE.37),
+  // a fill, a number format and a wrap too, each said noted out of fmt.unsaid, and at least one group.
+  function readGroups(f, fmt, from) {
+    var alone = from === 2;
+    if (alone && f.length <= 2) return false;
+    for (var i = from; i < f.length; i++) {
       var gp = f[i];
       if (!Array.isArray(gp) || gp.length === 0) return false;
-      var head = symOf(gp[0]), items = gp.slice(1);
+      var head = symOf(gp[0]), items = gp.slice(1), u = fmt.unsaid;
       if (head === 'font') { if (fmt.font !== null) return false; fmt.font = readFont(items); if (fmt.font === null) return false; }
       else if (head === 'align') { if (fmt.align !== null) return false; fmt.align = readAlign(items); if (fmt.align === null) return false; }
       else if (head === 'border') { if (fmt.border !== null) return false; fmt.border = readBorder(items); if (fmt.border === null) return false; }
-      else return false;
+      else if (alone && head === 'fill') {
+        var fl = strOf(items[0]);
+        if (!u.fill || items.length !== 1 || (fl === null ? symOf(items[0]) !== 'none' : !/^[0-9A-Fa-f]{6}$/.test(fl))) return false;
+        fmt.fill = fl === null ? null : '#' + fl; u.fill = false;
+      } else if (alone && head === 'number') {
+        var nw = symOf(items[0]), nc = strOf(items[0]);
+        if (!u.num || items.length !== 1 || (nw !== 'general' && nw !== 'text' && nc === null)) return false;
+        fmt.num = nc === null ? nw : 'code'; fmt.code = nc; u.num = false;
+      } else if (alone && head === 'wrap') {
+        var ww = symOf(items[0]);
+        if (!u.wrap || items.length !== 1 || (ww !== 'wrap' && ww !== 'nowrap')) return false;
+        fmt.wrap = ww === 'wrap'; u.wrap = false;
+      } else return false;
     }
     return true;
   }
@@ -705,12 +878,16 @@
   // The format a cell draws with under a look (decision 2; vla-lang's Style::over): the look's fill, number format and
   // wrap in place of the cell's own, as before ENGINE.28, and, property by property, the look's weight, slant, size,
   // color, horizontal and vertical alignment and each edge where the look says one, else the cell's own format's. A
-  // said default, not-bold, not-italic, general, bottom or an edge's none, is said, and takes the cell's own back.
+  // said default, not-bold, not-italic, general, bottom or an edge's none, is said, and takes the cell's own back. Since
+  // ENGINE.37 (decision 2) a look or a rule of groups alone takes the cell's own fill, number format and wrap where it
+  // leaves them unsaid, and a font's underline, strike and family are each taken as its other properties are.
   function over(look, own) {
-    var f = { fill: look.fill, num: look.num, code: look.code, wrap: look.wrap, font: null, align: null, border: null };
+    var u = look.unsaid || null;
+    var f = { fill: u && u.fill ? own.fill : look.fill, num: u && u.num ? own.num : look.num, code: u && u.num ? own.code : look.code, wrap: u && u.wrap ? own.wrap : look.wrap, font: null, align: null, border: null };
     if (look.font || own.font) {
       var lf = look.font || {}, of = own.font || {};
-      f.font = { bold: pick(lf.bold, of.bold), italic: pick(lf.italic, of.italic), size: pick(lf.size, of.size), color: pick(lf.color, of.color) };
+      f.font = { bold: pick(lf.bold, of.bold), italic: pick(lf.italic, of.italic), size: pick(lf.size, of.size), color: pick(lf.color, of.color),
+                 underline: pick(lf.underline, of.underline), strike: pick(lf.strike, of.strike), family: pick(lf.family, of.family) };
     }
     if (look.align || own.align) { var la = look.align || {}, oa = own.align || {}; f.align = { h: pick(la.h, oa.h), v: pick(la.v, oa.v) }; }
     if (look.border || own.border) { var lb = look.border || {}, ob = own.border || {}; f.border = { left: pick(lb.left, ob.left), right: pick(lb.right, ob.right), top: pick(lb.top, ob.top), bottom: pick(lb.bottom, ob.bottom) }; }
@@ -738,12 +915,13 @@
   // own, since ENGINE.28 what the look says over the cell's own (over); else the cell's own; else, for an empty cell,
   // its column's; else format 0.
   function formatOf(model, cell, c) {
+    if (cell && cell.lit) return litFormat(model, cell, c);
     if (cell && cell.lookKey !== null && Object.prototype.hasOwnProperty.call(model.looks, cell.lookKey)) {
       var li = model.looks[cell.lookKey], lf = model.formats[li];
       if (lf) {
-        // the look's format whole where no format of the record says a group, as before ENGINE.28; else the format drawn
-        // under it, built once a pair of look and own and kept on the model
-        if (!model.styled && !model.bordered) return lf;
+        // the look's format whole where no format of the record says a group, as before ENGINE.28, and none is of groups
+        // alone (ENGINE.37); else the format drawn under it, built once a pair of look and own and kept on the model
+        if (!model.styled && !model.bordered && !model.partial) return lf;
         var oi = cell.style !== 0 && model.formats[cell.style] ? cell.style : 0, key = li + ',' + oi, d = model.drawn.get(key);
         if (!d) { d = over(lf, model.formats[oi]); model.drawn.set(key, d); }
         return d;
@@ -755,6 +933,25 @@
       if (col && col.style !== null && model.formats[col.style]) return model.formats[col.style];
     }
     return model.formats[0];
+  }
+  // The format a lit cell draws (ENGINE.37, decision 3; the language's drawn twin): what it draws unlit, its look over its
+  // own, its own, or, for a cell holding nothing, its column's (decision 4), else format 0; then each rule its lit row
+  // names, from the last to the first, its format laid over what the cell draws, so that the first wins what it says and
+  // the later ones lend what it leaves; a rule of no format lays nothing, and the stop is the language's, already in the
+  // list. Built once a look, an own format and a list, and kept on the model.
+  function litFormat(model, cell, c) {
+    var li = cell.lookKey !== null && Object.prototype.hasOwnProperty.call(model.looks, cell.lookKey) && model.formats[model.looks[cell.lookKey]] ? model.looks[cell.lookKey] : -1;
+    var oi = cell.style !== 0 && model.formats[cell.style] ? cell.style : 0, col = cell.kind === 'empty' ? model.columns[c] : null;
+    var ci = col && col.style !== null && model.formats[col.style] ? col.style : 0;
+    var key = (li >= 0 ? 'l' + li + ',' + oi : (cell.kind === 'empty' ? 'c' + ci : 's' + oi)) + '|' + cell.lit.join(','), d = model.drawn.get(key);
+    if (d) return d;
+    d = li >= 0 ? over(model.formats[li], model.formats[oi]) : model.formats[cell.kind === 'empty' ? ci : oi];
+    for (var k = cell.lit.length - 1; k >= 0; k--) {
+      var rule = model.rules[cell.lit[k]], rf = rule && rule.format !== null ? model.formats[rule.format] : null;
+      if (rf) d = over(rf, d);
+    }
+    model.drawn.set(key, d);
+    return d;
   }
   // Where a value sits in its cell: as its format says, where it says left, center or right (ENGINE.28); else, under
   // general and unsaid, as Excel aligns it under General, and everything left under a text format.
@@ -803,17 +1000,23 @@
     }
     if (!opaque) ctx.stroke();
   };
+  // A clip's paint (ENGINE.41): the restore takes back the font a text inside set, so the font the painter noted is
+  // forgotten with it, and the first text after the clip sets its own. Kept, it named a font the canvas no longer
+  // held: a repaint's next rectangle, or a full paint's next quadrant, drew its first text of that font in the one the
+  // restore left, a changing cell of a font not the default drawn in the default.
   Painter.prototype.clipped = function (rect, fn) {
     var ctx = this.ctx;
     ctx.save();
     ctx.beginPath();
     ctx.rect(rect.x, rect.y, rect.w, rect.h);
     ctx.clip();
-    try { fn(); } finally { ctx.restore(); }
+    try { fn(); } finally { ctx.restore(); this.font = null; }
   };
-  // One line of text at an anchor, clipped to a rectangle.
-  Painter.prototype.text = function (text, x, y, align, color, clip, op) {
-    var ctx = this.ctx;
+  // One line of text at an anchor, clipped to a rectangle. Since ENGINE.37 (decision 10) its font's lines with it, lined,
+  // each strand a rectangle in the text's color under the same clip, at integer device pixels, which every rasterizer
+  // covers exactly, as an edge is; and each an op of its cell's after its text's, so that a repaint lays it with the texts.
+  Painter.prototype.text = function (text, x, y, align, color, clip, op, lined) {
+    var ctx = this.ctx, i;
     ctx.save();
     ctx.beginPath();
     ctx.rect(clip.x, clip.y, clip.w, clip.h);
@@ -821,19 +1024,42 @@
     ctx.fillStyle = color;
     ctx.textAlign = align;
     ctx.fillText(text, x, y);
+    if (lined) for (i = 0; i < lined.rects.length; i++) ctx.fillRect(lined.rects[i].x, lined.rects[i].y, lined.rects[i].w, lined.rects[i].h);
     ctx.restore();
     if (op) { op.text = text; op.x = x; op.y = y; op.align = align; op.color = color; op.clip = { x: clip.x, y: clip.y, w: clip.w, h: clip.h }; this.ops.push(op); }
+    if (lined) {
+      for (i = 0; i < lined.rects.length; i++) {
+        var s = lined.rects[i];
+        this.ops.push({ op: 'decoration', kind: s.kind, strand: s.strand, row: lined.row, col: lined.col, quadrant: lined.quadrant, line: lined.line, x: s.x, y: s.y, w: s.w, h: s.h, color: color });
+      }
+    }
   };
   // A painter that paints nothing (ENGINE.20): a cell's paint run through it keeps the ops the full paint would draw,
-  // so that a repaint finds where a text lies, its spill with it, by the full paint's own code.
+  // so that a repaint finds where a text lies, its spill with it, by the full paint's own code. A text's lines lie
+  // inside its clip, so it keeps none of them.
   function Tracer(ctx) { this.ctx = ctx; this.ops = []; }
   Tracer.prototype.text = function (text, x, y, align, color, clip, op) {
     if (op) { op.text = text; op.x = x; op.y = y; op.align = align; op.color = color; op.clip = { x: clip.x, y: clip.y, w: clip.w, h: clip.h }; this.ops.push(op); }
   };
-  // A text broken at word boundaries to a width, in the context's font; a
-  // word wider than the width is cut.
+  // A text broken into the lines it draws, as Excel's drawing breaks it (ENGINE.36): a carriage return draws nothing and
+  // breaks nothing; a line feed breaks, so two together, a trailing one and a leading one are each a blank line; and a
+  // piece between them breaks at word boundaries to a width, in the context's font, a word wider than the width cut. A
+  // piece of a text holding a line feed keeps the spaces that begin it, an indent, and loses those that end it, which
+  // hang and move nothing; a text holding none is one piece, as it has always been.
   function wrapText(ctx, text, width) {
-    var words = text.split(' '), lines = [], line = '';
+    var shown = text.indexOf('\r') < 0 ? text : text.replace(/\r/g, ''), lines = [];
+    if (shown.indexOf('\n') < 0) { wrapPiece(ctx, shown, width, lines, ''); return lines; }
+    var pieces = shown.split('\n');
+    for (var p = 0; p < pieces.length; p++) {
+      var piece = pieces[p].replace(/ +$/, ''), lead = /^ */.exec(piece)[0];
+      wrapPiece(ctx, piece.slice(lead.length), width, lines, lead);
+    }
+    return lines;
+  }
+  // One piece's lines, added to lines; lead, the spaces its first line begins with.
+  function wrapPiece(ctx, text, width, lines, lead) {
+    var words = text.split(' '), line = '';
+    words[0] = lead + words[0];
     for (var i = 0; i < words.length; i++) {
       var w = words[i];
       var trial = line === '' ? w : line + ' ' + w;
@@ -855,7 +1081,6 @@
       }
     }
     lines.push(line);
-    return lines;
   }
 
   // ---- (4) the viewport ----
@@ -867,6 +1092,7 @@
     if (options.colors) for (var k2 in options.colors) if (Object.prototype.hasOwnProperty.call(options.colors, k2)) this.colors[k2] = options.colors[k2];
     this.records = {};         // sheet name -> model
     this.layouts = {};         // a sheet's name, lowercased -> its layout, learned from its records (CART.12's hand test)
+    this.views = {};           // a sheet's name, lowercased -> its selection and its scroll when it was last left (CART.14.1's hand test)
     this.bounds = {};          // a sheet's name, lowercased -> true: drawn to its extent and no further (version 6's bound)
     this.widths = {};          // a sheet's name, lowercased -> its column's letters -> CSS pixels: the widths a person dragged on it or a host set (ENGINE.26)
     this.patchCount = 0;       // the patches laid on its models (ENGINE.19)
@@ -1277,8 +1503,8 @@
     }
   };
   // One cell's text, in its format's font and color (ENGINE.28): aligned as its format says or by its kind, a
-  // nowrap text spilling into empty neighbors by its alignment, a wrapped text broken at the column's width and
-  // placed by its vertical alignment, a number too wide for its column drawn as #s. cFirst and cLast are the
+  // nowrap text spilling into empty neighbors by its alignment, a wrapped text broken at its line feeds and the column's
+  // width and placed by its vertical alignment, a number too wide for its column drawn as #s. cFirst and cLast are the
   // quadrant's columns, which a spill never leaves.
   Viewport.prototype._paintCell = function (p, model, g, cell, r, c, left, top, cLast, quadrant, qclip, cFirst) {
     var ctx = p.ctx, colors = this.colors;
@@ -1292,30 +1518,49 @@
     // text's (KERNEL.5, decision 7)
     var color = cell.kind === 'formula' && !cell.valued ? colors.formula : (fmt.font && fmt.font.color !== null ? fmt.font.color : colors.text);
     var op = { op: 'text', row: r, col: c, kind: cell.kind, valued: cell.valued, quadrant: quadrant, font: font };
+    // a font's lines (ENGINE.37, decision 10): after each line of text it draws, its underline and its strike, in its color
+    // and under its clip, from its baseline by the table, across its reach
+    var under = fmt.font && fmt.font.underline && fmt.font.underline !== 'none' ? fmt.font.underline : null, struck = !!(fmt.font && fmt.font.strike);
+    // and drawn under the text's own clip by the painter, the text's advance taken from the measure already made where there
+    // is one
+    var lines = under || struck ? function (text, ax, ly, align, i, last, tw) {
+      if (tw === undefined) tw = ctx.measureText(text).width;
+      var tx = align === 'left' ? ax : (align === 'right' ? ax - tw : ax - tw / 2);
+      var rects = linesOf(under, struck, g.sizeOf(fmt), ly + Math.round(g.baselineOf(ctx, font)), tx, tw, left + pad, left + w - pad, cell.vkind === 'text', last);
+      return rects.length ? { rects: rects, row: r, col: c, quadrant: quadrant, line: i } : null;
+    } : null;
     // one line's vertical place: the cell's middle, as before ENGINE.28, unless its format says top or bottom
     var cy = valign === 'top' ? top + half : (valign === 'bottom' ? top + h - half : top + Math.round(h / 2));
     var hashes = hashesOf(ctx, cell, fmt, w, pad);
     if (hashes !== null) {
       if (left + w <= qclip.x || left >= qclip.x + qclip.w) return;
       op.wrap = false; op.hashes = true;
-      p.text(hashes, left + w - pad, cy, 'right', color, { x: left, y: top, w: w, h: h }, op);
+      p.text(hashes, left + w - pad, cy, 'right', color, { x: left, y: top, w: w, h: h }, op, lines ? lines(hashes, left + w - pad, cy, 'right', undefined, true) : null);
       return;
     }
     if (fmt.wrap) {
       if (left + w <= qclip.x || left >= qclip.x + qclip.w) return;
-      var lines = wrapText(ctx, cell.text, Math.max(1, w - 2 * pad));
+      var broken = wrapText(ctx, cell.text, Math.max(1, w - 2 * pad));
       var clip = { x: left, y: top, w: w, h: h };
       // the block's first line from the cell's top, as before ENGINE.28, unless its format says middle or bottom
-      var ty = valign === 'middle' ? top + Math.round(h / 2) - Math.round((lines.length - 1) * lineH / 2) : (valign === 'bottom' ? top + h - half - (lines.length - 1) * lineH : top + half);
-      for (var i = 0; i < lines.length && ty - half < top + h; i++, ty += lineH) {
+      var ty = valign === 'middle' ? top + Math.round(h / 2) - Math.round((broken.length - 1) * lineH / 2) : (valign === 'bottom' ? top + h - half - (broken.length - 1) * lineH : top + half);
+      for (var i = 0; i < broken.length && ty - half < top + h; i++, ty += lineH) {
         if (ty + half <= top) continue;   // a line above the cell under a middle or bottom alignment
         var ax = align === 'left' ? left + pad : (align === 'right' ? left + w - pad : left + Math.round(w / 2));
-        var lop = { op: 'text', row: r, col: c, kind: cell.kind, quadrant: quadrant, line: i, lines: lines.length, wrap: true, font: font };
-        p.text(lines[i], ax, ty, align, color, clip, lop);
+        var lop = { op: 'text', row: r, col: c, kind: cell.kind, quadrant: quadrant, line: i, lines: broken.length, wrap: true, font: font };
+        p.text(broken[i], ax, ty, align, color, clip, lop, lines ? lines(broken[i], ax, ty, align, i, i === broken.length - 1) : null);
       }
       return;
     }
-    var textW = ctx.measureText(cell.text).width;
+    // what a text that does not wrap draws, as Excel's drawing has it (ENGINE.36): no line feed or carriage return, the
+    // letters on each side run together, and a measure that still counts each line feed, a digit's width, which the
+    // spill reads and which stands a text aligned right that far to the left of flush and a centered one half that
+    var shown = cell.text, feedW = 0;
+    if (shown.indexOf('\n') >= 0 || shown.indexOf('\r') >= 0) {
+      feedW = feedsIn(shown) * ctx.measureText('0').width;
+      shown = shown.replace(/[\r\n]/g, '');
+    }
+    var shownW = ctx.measureText(shown).width, textW = shownW + feedW;   // the letters' advance kept apart, a font's lines' reach (ENGINE.37)
     var need = textW + 2 * pad - w, clipX = left, clipW = w;
     // a nowrap text wider than its cell spills into empty neighbors by its alignment (decision 6): a left-aligned one
     // into the cells to its right, as before ENGINE.28; a text aligned right into those to its left; a centered text
@@ -1340,9 +1585,9 @@
     }
     // a text whose clip never reaches the quadrant is not drawn at all
     if (clipX + clipW <= qclip.x || clipX >= qclip.x + qclip.w) return;
-    var ax2 = align === 'left' ? left + pad : (align === 'right' ? left + w - pad : left + Math.round(w / 2));
+    var ax2 = align === 'left' ? left + pad : (align === 'right' ? left + w - pad - Math.round(feedW) : left + Math.round(w / 2) - Math.round(feedW / 2));
     op.wrap = false;
-    p.text(cell.text, ax2, cy, align, color, { x: clipX, y: top, w: clipW, h: h }, op);
+    p.text(shown, ax2, cy, align, color, { x: clipX, y: top, w: clipW, h: h }, op, lines ? lines(shown, ax2, cy, align, undefined, true, shownW) : null);
   };
 
   // The selection and the marks inside a quadrant.
@@ -1593,7 +1838,7 @@
       if (!op.row) continue;
       key = cellKey(op.row, op.col);
       if (op.op === 'fill') o.fills.set(key, op);
-      else if (op.op === 'text') { if (!drawn.has(key)) drawn.set(key, []); drawn.get(key).push(op); }
+      else if (op.op === 'text' || op.op === 'decoration') { if (!drawn.has(key)) drawn.set(key, []); drawn.get(key).push(op); }   // a text's lines with it (ENGINE.37)
     }
     drawn.forEach(function (list, k) { o.texts.set(k, list); });
   };
@@ -1640,7 +1885,8 @@
   Viewport.prototype._cellInfo = function (row, col) {
     var model = this._model();
     var cell = model ? model.cells.get(cellKey(row, col)) : null;
-    if (!cell) return { row: row, col: col, address: colName(col) + row, kind: 'empty', text: '', value: '', formula: '', valued: false, style: 0, sentence: 0 };
+    // a lit cell holding nothing (ENGINE.37) shows in the bar as the empty cell it is
+    if (!cell || cell.kind === 'empty') return { row: row, col: col, address: colName(col) + row, kind: 'empty', text: '', value: '', formula: '', valued: false, style: 0, sentence: 0 };
     // text is what the cell shows; value its value as the record spells it, the text a code draws aside (KERNEL.47),
     // empty for a formula with none yet; formula is a formula cell's own text, the bar's, beside its value
     var value = cell.value !== undefined ? cell.value : cell.valued ? cell.text : '';
@@ -1651,12 +1897,18 @@
     return { sheet: this.active, text: this._selectionText(), kind: s.kind, range: { top: r.top, left: r.left, bottom: r.bottom, right: r.right },
              focus: this._cellInfo(s.focus.row, s.focus.col) };
   };
+  // The region is what the scroller shows, measured as _scrollIntoView measures it, over its client area in device
+  // pixels, the scrollbars' strips left out (ENGINE.43): the canvas runs under the scrollbars, and a column or a row
+  // wholly under one is no cell a person sees. Measured over the canvas, an unbound sheet scrolled to its end, the column
+  // under the scrollbar laid only once the record lands, showed a column and a row past the record it was viewed
+  // through (Buffet's Exam, 2026-10-30).
   Viewport.prototype._scrollPayload = function () {
     var g = this.g;
     if (!g) return { sheet: this.active, top: 1, left: 1, window: 'A1' };
     var sx = this.scroll.x, sy = this.scroll.y;
+    var seenW = Math.min(g.canvasW, Math.round(this.scroller.clientWidth * g.dpr)), seenH = Math.min(g.canvasH, Math.round(this.scroller.clientHeight * g.dpr));
     var top = g.rowAt(g.frozenH + sy, g.fr + 1), left = g.columnAt(g.colX[g.fc + 1] + sx, g.fc + 1);
-    var bottom = Math.min(g.rows, g.rowAt(g.canvasH - 1 - g.oy + sy, top)), right = Math.min(g.cols, g.columnAt(g.canvasW - 1 - g.ox + sx, left));
+    var bottom = Math.min(g.rows, g.rowAt(seenH - 1 - g.oy + sy, top)), right = Math.min(g.cols, g.columnAt(seenW - 1 - g.ox + sx, left));
     return { sheet: this.active, top: top, left: left, bottom: bottom, right: right, window: rangeText({ top: top, left: left, bottom: bottom, right: right }) };
   };
   Viewport.prototype._setSelection = function (kind, anchor, focus, emit) {
@@ -1934,7 +2186,8 @@
       this._emit('select', this._selectPayload());
     }
     return { sheet: name, lines: model.lines, cells: model.counts.cells, formulas: model.counts.formulas, values: model.counts.values, texts: model.counts.texts, styles: model.counts.styles, sentences: model.counts.sentences,
-             looks: model.counts.looks, rows: model.counts.rows, unknown: model.counts.unknown, malformed: model.counts.malformed, window: model.windowText, extent: model.extentText, readMs: model.readMs };
+             looks: model.counts.looks, rows: model.counts.rows, unknown: model.counts.unknown, malformed: model.counts.malformed, rules: model.counts.rules, lits: model.counts.lits, merges: model.counts.merges,
+             window: model.windowText, extent: model.extentText, readMs: model.readMs };
   };
   // A window's changes laid on the model of their sheet (ENGINE.19, decision 3): the text a host's view of changes
   // answered (docs/SPEC.md section 4.5), its header (changes "<sheet>" "<range>" <since> <at> <n>), then the rows of
@@ -1979,6 +2232,7 @@
       if (e) unread(model, e);
       for (var j = 0; j < g.rows.length; j++) { readRow(model, g.rows[j], reach); model.lines++; }
       var after = model.cells.get(g.key);
+      if (after) model.lines += feedsOf(after);
       if ((after ? after.style : 0) !== was) restyled = true;
     }
     // a cell whose own format changed may move its row's fit (ENGINE.28, decision 7): the fits found again, and a
@@ -1994,7 +2248,8 @@
       this._repaint(model, spans);
     } else if (shown) this._draw();
     return { sheet: name, patched: groups.length, lines: model.lines, cells: model.counts.cells, formulas: model.counts.formulas, values: model.counts.values, texts: model.counts.texts, styles: model.counts.styles, sentences: model.counts.sentences,
-             looks: model.counts.looks, rows: model.counts.rows, unknown: model.counts.unknown, malformed: model.counts.malformed, window: model.windowText, extent: model.extentText, patchMs: now() - t0 };
+             looks: model.counts.looks, rows: model.counts.rows, unknown: model.counts.unknown, malformed: model.counts.malformed, rules: model.counts.rules, lits: model.counts.lits, merges: model.counts.merges,
+             window: model.windowText, extent: model.extentText, patchMs: now() - t0 };
   };
   // The patches this viewport has taken since it was made (ENGINE.19): a host notes the count with each record it
   // loads, so that a model a page patched is never taken for the one the host made.
@@ -2014,7 +2269,7 @@
     this.records = {}; this.sheetList = []; this.active = '';
     this.layouts = {}; this.bounds = {};
     this.widths = {}; this.drag = null;
-    this._resetView();
+    this.views = {}; this._resetView();
     this._renderTabs();
     this._draw();
   };
@@ -2039,11 +2294,14 @@
   // The range a sheet shows from A1 in this box, its columns laid as its layout and its own widths set them (ENGINE.26),
   // never the sheet shown's, and its rows at the default height, within a bound sheet's extent: the window a host views
   // a sheet through before it shows it.
+  // The headers are no row or column of cells (ENGINE.43): the client area less the column letters' row and the row
+  // numbers' column, as the region drawn will measure it, so that the first frame after a sheet is shown keeps its view.
   Viewport.prototype.fresh = function (name) {
     var key = String(name || '').toLowerCase(), layout = this.layouts[key] || null, model = this._findSheet(name) ? this.records[this._findSheet(name)] : null;
-    var w = Math.max(1, this.scroller.clientWidth), x = 0, c = 0;
+    var rh = this.g ? this.g.rhW / this.g.dpr : 0;
+    var w = Math.max(1, this.scroller.clientWidth - rh), x = 0, c = 0;
     while (x < w && c < MAX_COLUMNS) { c++; x += columnWidthCss(model, this._widthsOf(name), c, layout); }
-    var r = Math.max(1, Math.ceil(this.scroller.clientHeight / DEFAULT_ROW_PX)), ext = this.bounds[key] ? ((model && model.extent) || (layout && layout.extent)) : null;
+    var r = Math.max(1, Math.ceil((this.scroller.clientHeight - DEFAULT_ROW_PX) / DEFAULT_ROW_PX)), ext = this.bounds[key] ? ((model && model.extent) || (layout && layout.extent)) : null;
     if (ext) { c = Math.min(c, ext.right); r = Math.min(r, ext.bottom); }
     return rangeText({ top: 1, left: 1, bottom: r, right: Math.max(1, c) });
   };
@@ -2067,16 +2325,30 @@
     this.lastScroll = { x: -1, y: -1 };
     this.state.selection = { kind: 'cells', anchor: { row: 1, col: 1 }, focus: { row: 1, col: 1 } };
   };
+  // Where a sheet was left and where it is come back to (the owner's hand test of CART.14.1, 2026-10-30): its selection and
+  // its scroll, each sheet's its own as a spreadsheet keeps them, so that a person who looks at another tab comes back to the
+  // cell they were on; A1 and the top left the first time a sheet is shown, and after clear().
+  Viewport.prototype._leaveView = function () {
+    if (this.active) this.views[this.active.toLowerCase()] = { selection: this.state.selection, top: this.scroller.scrollTop, left: this.scroller.scrollLeft };
+  };
+  Viewport.prototype._comeBackView = function () {
+    var kept = this.views[this.active.toLowerCase()] || null;
+    this._resetView();
+    if (kept) this.state.selection = kept.selection;
+    return kept;
+  };
   // Show a sheet whose record is loaded; a name without a record is false.
   Viewport.prototype.show = function (name) {
     var key = this._findSheet(name);
     if (!key) return false;
-    var changed = this.active !== key;
-    if (changed) { this.active = key; this._resetView(); }
+    var changed = this.active !== key, kept = null;
+    if (changed) { this._leaveView(); this.active = key; kept = this._comeBackView(); }
     this._renderTabs();
     this._draw();
+    // the kept scroll after the draw, whose spacer gives this sheet its range
+    if (kept && (kept.top || kept.left)) { this.scroller.scrollTop = kept.top; this.scroller.scrollLeft = kept.left; this._draw(); }
     this._emit('sheet', { name: key, loaded: true, state: this._sheetState(key) });
-    // a sheet shown puts the selection at its A1 (found by the owner's hand test, 2026-10-08:
+    // a sheet shown puts the selection where it was left, or at its A1 (found by the owner's hand test, 2026-10-08:
     // the line under the grid kept the last sheet's selection), so the change is announced
     if (changed) this._emit('select', this._selectPayload());
     return true;
@@ -2229,8 +2501,10 @@
   Viewport.colIndex = colIndex;
   Viewport.RULES = RULES;
   Viewport.LINES = LINES;   // the lines' table, which the page's oracles hold to their own (ENGINE.28)
+  Viewport.GENERICS = GENERICS;   // a family's class to the canvas's generic family (ENGINE.37), the oracles' too
+  Viewport.DECORATIONS = DECORATIONS;   // a font's lines, their places and reaches (ENGINE.37, decision 10), held by the oracles
   Viewport.DEFAULT_COLORS = DEFAULT_COLORS;
-  Viewport.version = 4;
+  Viewport.version = 5;
 
   global.AlonzoViewport = Viewport;
 })(typeof window !== 'undefined' ? window : this);

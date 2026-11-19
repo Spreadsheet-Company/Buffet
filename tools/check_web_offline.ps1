@@ -6,7 +6,9 @@ WHY: SD-13 in a browser, which Buffet keeps as the house does (docs/OMAKASE.md,
 BD-5: no feed, no real market's data). The page, web/index.template.html
 filled by tools/build_web.ps1, is one HTML file that runs from disk, and its
 whole promise is that it reads nothing from the network and writes nothing
-anywhere. Alonzo's check of the same name holds Alonzo's template to that at
+anywhere but a person's keymap and a run's unsaved work, kept in the browser,
+and the files a person saves (Alonzo's ENGINE.23, ENGINE.5 and ENGINE.38).
+Alonzo's check of the same name holds Alonzo's template to that at
 every tag; this one holds the copy here to it whatever a later tag brings, and
 the page this repository builds, whose blocks are Buffet's own texts. It is
 Alonzo's tools/check_web_offline.ps1 at v0.1.3, adapted by the same copyright
@@ -20,9 +22,11 @@ WHAT IT HOLDS, neither needing a host or the network:
      object, embed, a meta refresh, @import, url(, http://, https://, fetch,
      XMLHttpRequest, WebSocket, EventSource, sendBeacon, a dynamic import,
      importScripts); a charset declaration; the five places, {{VIEWPORT_JS}},
-     {{FAKE_JS}}, {{HOST_JS}}, {{ALONZO_WASM}} and {{BLOCKS}}, once each; and
+     {{FAKE_JS}}, {{HOST_JS}}, {{ALONZO_WASM}} and {{BLOCKS}}, once each;
      no place naming a file, {{KIND:name}}, since the template names no
-     game's file and its builder writes every text at {{BLOCKS}} (ENGINE.15).
+     game's file and its builder writes every text at {{BLOCKS}} (ENGINE.15);
+     and the stores, below: each name the page writes through, once in the
+     template and in no script, and no other store named anywhere.
   2. When web/index.html stands beside the template, its markup holds to the
      same list of tags (no text the page holds may spell one), no place is
      left in it, and its blocks are src/'s files both ways. Each cartridge,
@@ -42,15 +46,32 @@ it is Alonzo's charter on its own host (its docs/CHARTER.md section 8), held
 at the tag by Alonzo's check and here by the host's digest
 (tools/check_vendored.ps1).
 
+THE STORES, since the pin to alonzo 0.4.0 (2026-11-18, HOUSE.2), Alonzo's
+rules at v0.4.0 carried whole. The page writes three things, each through
+names the template holds once, in one function, and no script names: a
+person's keymap, through localStorage, in browserStore() (Alonzo's ENGINE.23,
+written to the page at alonzo 0.2.0 and not held here until this pin); a file
+the person saves, through showSaveFilePicker, createObjectURL and
+revokeObjectURL, in personFile() (ENGINE.5), whose object URL is no address on
+any network, so those three names are set aside before 'url(' is looked for;
+and a run's unsaved work, through indexedDB under navigator.locks, in
+workStore() (ENGINE.38). No source names another store: sessionStorage,
+openDatabase, document.cookie, cookieStore, the Cache API's caches.,
+navigator.storage or showDirectoryPicker. So a store a later tag adds fails
+here by its name, as a reach out does.
+
 -Control proves the check on scratch copies: the real template and scripts
 pass, and so does a page tools/build_web.ps1 builds in the scratch folder
-with -NoWasm; and fifteen mutants fail, each for its own reason. In the
+with -NoWasm; and twenty-two mutants fail, each for its own reason. In the
 template: a script's src appended, a fetch, the viewport's place removed, an
 anchor, an image, a place naming a file, the blocks' place removed. In the
 scripts: a fetch appended to the viewport's source, and one to the host's.
 In the built page: the cartridge's block cut, a library block no file is,
 the template standing as a built page, a library block at another path, the
 source's block one character from its file, and a content sheet's block cut.
+And the stores: the template naming sessionStorage, naming localStorage a
+second time, the save picker a second time and indexedDB a second time; the
+host's source naming localStorage, the save picker and navigator.locks.
 Each built mutant proves it applied before the check is asked.
 
 House style (tools/check_*.ps1): PowerShell 5.1 and pwsh alike, host-free,
@@ -76,6 +97,16 @@ $srcDir = Join-Path $repoRoot 'src'
 $tagTokens = @('<script src', '<script type="module" src', '<link ', '<img ', '<iframe', '<form', '<a href', '<video', '<audio', '<source', '<object', '<embed', '<meta http-equiv="refresh"')
 # Code and style that reach out: held on the template and on the three scripts the builder inlines.
 $codeTokens = @('fetch(', 'XMLHttpRequest', 'WebSocket', 'EventSource', 'sendBeacon', 'import(', 'importScripts', '@import', 'url(', 'http://', 'https://')
+# The stores (THE STORES above, Alonzo's at v0.4.0): no source names any of these. Compared without case.
+$storageTokens = @('sessionStorage', 'openDatabase', 'document.cookie', 'cookieStore', 'caches.', 'navigator.storage', 'showDirectoryPicker')
+# A person's keymap (ENGINE.23): named once, in the template's browserStore(), and nowhere else.
+$keptStore = 'localStorage'
+# A person's file (ENGINE.5): the save picker and the download's object URL, each named once, in the template's
+# personFile(), and nowhere else; set aside before the code tokens are looked for, an object URL being no address.
+$keptFile = @('showSaveFilePicker', 'createObjectURL', 'revokeObjectURL')
+# A run's unsaved work (ENGINE.38): the browser's database for pages and its Web Locks, each named once, in the
+# template's workStore(), and nowhere else.
+$keptWork = @('indexedDB', 'navigator.locks')
 # The places the builder fills once each: the three scripts, the engine's module and the blocks.
 $viewportPlaceholder = '{{VIEWPORT_JS}}'
 $blocksPlaceholder = '{{BLOCKS}}'
@@ -116,10 +147,28 @@ function Test-Template([string]$path, [string]$script, [string]$fake = $fakePath
     $problems = @()
     $text = [System.IO.File]::ReadAllText($path)
     $lower = $text.ToLowerInvariant()
+    $scanned = $lower
+    foreach ($k in $keptFile) { $scanned = $scanned.Replace($k.ToLowerInvariant(), '') }
     foreach ($t in ($tagTokens + $codeTokens)) {
-        if ($lower.Contains($t.ToLowerInvariant())) { $problems += ("the template reaches out: '{0}'" -f $t) }
+        if ($scanned.Contains($t.ToLowerInvariant())) { $problems += ("the template reaches out: '{0}'" -f $t) }
+    }
+    # A person's file, written through each of its names once, in personFile() (ENGINE.5).
+    foreach ($k in $keptFile) {
+        $nk = ([regex]::Matches($lower, [regex]::Escape($k.ToLowerInvariant()))).Count
+        if ($nk -ne 1) { $problems += ("the template names {0} {1} time(s), where the page writes a person's file through it in one place, personFile() (ENGINE.5)" -f $k, $nk) }
+    }
+    # A run's unsaved work, kept through each of its names once, in workStore() (ENGINE.38).
+    foreach ($k in $keptWork) {
+        $nk = ([regex]::Matches($lower, [regex]::Escape($k.ToLowerInvariant()))).Count
+        if ($nk -ne 1) { $problems += ("the template names {0} {1} time(s), where the page keeps a run's unsaved work through it in one place, workStore() (ENGINE.38)" -f $k, $nk) }
     }
     if (-not $lower.Contains('<meta charset="utf-8">')) { $problems += 'no <meta charset="utf-8">' }
+    # The keymap's store named once (ENGINE.23); no other store named.
+    foreach ($t in $storageTokens) {
+        if ($lower.Contains($t.ToLowerInvariant())) { $problems += ("the template names '{0}', a store the page never writes" -f $t) }
+    }
+    $kept = ([regex]::Matches($lower, [regex]::Escape($keptStore.ToLowerInvariant()))).Count
+    if ($kept -ne 1) { $problems += ("the template names {0} {1} time(s), where the page writes a person's keymap through it in one place, browserStore() (ENGINE.23)" -f $keptStore, $kept) }
     foreach ($ph in $oncePlaceholders) {
         $n = ([regex]::Matches($text, [regex]::Escape($ph))).Count
         if ($n -ne 1) { $problems += ("placeholder {0} appears {1} time(s), and the template has one place for it" -f $ph, $n) }
@@ -131,6 +180,9 @@ function Test-Template([string]$path, [string]$script, [string]$fake = $fakePath
         $js = [System.IO.File]::ReadAllText($pair[1]).ToLowerInvariant()
         foreach ($t in $codeTokens) {
             if ($js.Contains($t.ToLowerInvariant())) { $problems += ("{0} reaches out: '{1}'" -f $pair[0], $t) }
+        }
+        foreach ($t in ($storageTokens + @($keptStore) + $keptFile + $keptWork)) {
+            if ($js.Contains($t.ToLowerInvariant())) { $problems += ("{0} names '{1}', and the page writes nothing but a person's keymap, through the template's one {2} (ENGINE.23), a person's file, through its one personFile() (ENGINE.5), and a run's unsaved work, through its one workStore() (ENGINE.38)" -f $pair[0], $t, $keptStore) }
         }
     }
     # Returned without the comma, as Alonzo's returns it: the callers wrap the result in @().
@@ -198,6 +250,23 @@ if ($Control) {
         $fHit = @($rf | Where-Object { $_ -like '*names a file at {{CARTRIDGE:buffet}}*' }).Count
         $hHit = @($rh | Where-Object { $_ -like '*{{BLOCKS}} appears 0 time(s)*' }).Count
         $iHit = @($ri | Where-Object { $_ -like "the host's source reaches out*" }).Count
+        # The stores (ENGINE.23, ENGINE.5, ENGINE.38): a template naming sessionStorage, and one naming localStorage, the
+        # save picker or indexedDB a second time; a host source naming localStorage, the save picker or navigator.locks;
+        # each failing by its words
+        $so = Join-Path $tmp 'so.html'; [System.IO.File]::WriteAllText($so, ($text + "`n<script>sessionStorage.setItem('x', '1');</script>`n"), $utf8)
+        $sp = Join-Path $tmp 'sp.html'; [System.IO.File]::WriteAllText($sp, ($text + "`n<script>window.localStorage.setItem('x', '1');</script>`n"), $utf8)
+        $sqjs = Join-Path $tmp 'sq.js'; [System.IO.File]::WriteAllText($sqjs, ([System.IO.File]::ReadAllText($hostPath) + "`nwindow.localStorage.setItem('x', '1');`n"), $utf8)
+        $fp = Join-Path $tmp 'fp.html'; [System.IO.File]::WriteAllText($fp, ($text + "`n<script>window.showSaveFilePicker();</script>`n"), $utf8)
+        $fqjs = Join-Path $tmp 'fq.js'; [System.IO.File]::WriteAllText($fqjs, ([System.IO.File]::ReadAllText($hostPath) + "`nwindow.showSaveFilePicker();`n"), $utf8)
+        $wr = Join-Path $tmp 'wr.html'; [System.IO.File]::WriteAllText($wr, ($text + "`n<script>window.indexedDB.open('x');</script>`n"), $utf8)
+        $wsjs = Join-Path $tmp 'ws.js'; [System.IO.File]::WriteAllText($wsjs, ([System.IO.File]::ReadAllText($hostPath) + "`nnavigator.locks.request('x', function () {});`n"), $utf8)
+        $soHit = @(@(Test-Template $so $scriptPath) | Where-Object { $_ -like "the template names 'sessionStorage'*" }).Count
+        $spHit = @(@(Test-Template $sp $scriptPath) | Where-Object { $_ -like 'the template names localStorage 2 time(s)*' }).Count
+        $sqHit = @(@(Test-Template $templatePath $scriptPath $fakePath $sqjs) | Where-Object { $_ -like "the host's source names 'localStorage'*" }).Count
+        $fpHit = @(@(Test-Template $fp $scriptPath) | Where-Object { $_ -like 'the template names showSaveFilePicker 2 time(s)*' }).Count
+        $fqHit = @(@(Test-Template $templatePath $scriptPath $fakePath $fqjs) | Where-Object { $_ -like "the host's source names 'showSaveFilePicker'*" }).Count
+        $wrHit = @(@(Test-Template $wr $scriptPath) | Where-Object { $_ -like 'the template names indexedDB 2 time(s)*' }).Count
+        $wsHit = @(@(Test-Template $templatePath $scriptPath $fakePath $wsjs) | Where-Object { $_ -like "the host's source names 'navigator.locks'*" }).Count
         # A page built in the scratch folder, which passes, and five built pages that must not.
         $shell = if (Get-Command powershell.exe -ErrorAction SilentlyContinue) { 'powershell.exe' } else { 'pwsh' }
         $page = Join-Path $tmp 'page.html'
@@ -234,9 +303,9 @@ if ($Control) {
         $mHit = @($rm | Where-Object { $_ -like '*block library-kitchen stands at data-path*' }).Count
         $nHit = @($rn | Where-Object { $_ -like "*block source-buffet is not src/buffet.source.vla's text*" }).Count
         $oHit = @($ro | Where-Object { $_ -like '*owes the built page the block library-content-disclosures*' }).Count
-        Write-Output ("control: the real set has {0} problem(s) and the page built from it {1}; the script src {2}, the fetch {3}, the missing placeholder {4}, the anchor {5}, the image {6}, the place naming a file {7}, the blocks' place removed {8}, the fetch in the viewport {9}, the fetch in the host {10}; built, the cartridge's block cut ({11}) {12}, the stray library block ({13}) {14}, the template as a page {15}, the library at another path ({16}) {17}, the source one character off ({18}) {19}, the content sheet's block cut ({20}) {21}" -f $real.Count, $realBuilt.Count, $ra.Count, $rb.Count, $rc.Count, $rd.Count, $re.Count, $fHit, $hHit, $rg.Count, $iHit, $jApplied, $jHit, $kApplied, $kHit, $lHit, $mApplied, $mHit, $nApplied, $nHit, $oApplied, $oHit)
-        if ($real.Count -eq 0 -and $realBuilt.Count -eq 0 -and $ra.Count -ge 1 -and $rb.Count -ge 1 -and $rc.Count -ge 1 -and $rd.Count -ge 1 -and $re.Count -ge 1 -and $fHit -ge 1 -and $hHit -ge 1 -and $rg.Count -ge 1 -and $iHit -ge 1 -and $jApplied -and $jHit -ge 1 -and $kApplied -and $kHit -ge 1 -and $lHit -ge 1 -and $mApplied -and $mHit -ge 1 -and $nApplied -and $nHit -ge 1 -and $oApplied -and $oHit -ge 1) {
-            Write-Output 'OK: the check passes the template, the three scripts and a page built from them, and fails each of the fifteen mutants'
+        Write-Output ("control: the real set has {0} problem(s) and the page built from it {1}; the script src {2}, the fetch {3}, the missing placeholder {4}, the anchor {5}, the image {6}, the place naming a file {7}, the blocks' place removed {8}, the fetch in the viewport {9}, the fetch in the host {10}; built, the cartridge's block cut ({11}) {12}, the stray library block ({13}) {14}, the template as a page {15}, the library at another path ({16}) {17}, the source one character off ({18}) {19}, the content sheet's block cut ({20}) {21}; the stores: sessionStorage in the template {22}, localStorage there a second time {23} and in the host {24}, the save picker there a second time {25} and in the host {26}, the work's store there a second time {27} and its locks in the host {28}" -f $real.Count, $realBuilt.Count, $ra.Count, $rb.Count, $rc.Count, $rd.Count, $re.Count, $fHit, $hHit, $rg.Count, $iHit, $jApplied, $jHit, $kApplied, $kHit, $lHit, $mApplied, $mHit, $nApplied, $nHit, $oApplied, $oHit, $soHit, $spHit, $sqHit, $fpHit, $fqHit, $wrHit, $wsHit)
+        if ($real.Count -eq 0 -and $realBuilt.Count -eq 0 -and $ra.Count -ge 1 -and $rb.Count -ge 1 -and $rc.Count -ge 1 -and $rd.Count -ge 1 -and $re.Count -ge 1 -and $fHit -ge 1 -and $hHit -ge 1 -and $rg.Count -ge 1 -and $iHit -ge 1 -and $jApplied -and $jHit -ge 1 -and $kApplied -and $kHit -ge 1 -and $lHit -ge 1 -and $mApplied -and $mHit -ge 1 -and $nApplied -and $nHit -ge 1 -and $oApplied -and $oHit -ge 1 -and $soHit -ge 1 -and $spHit -ge 1 -and $sqHit -ge 1 -and $fpHit -ge 1 -and $fqHit -ge 1 -and $wrHit -ge 1 -and $wsHit -ge 1) {
+            Write-Output 'OK: the check passes the template, the three scripts and a page built from them, and fails each of the twenty-two mutants'
             exit 0
         }
         Write-Output 'FAIL: the control did not behave'
@@ -257,7 +326,7 @@ if (Test-Path -LiteralPath $builtPath) {
     $builtNote = ("the built page ({0:N0} characters) holds too, its {1} blocks src/'s files both ways, each at its path with its text" -f (Get-Item -LiteralPath $builtPath).Length, $owedCount)
 }
 if ($problems.Count -eq 0) {
-    Write-Output ("OK: web/index.template.html, web/viewport.js, web/fake.js and web/host.js load nothing and link nowhere, the scripts', the module's and the blocks' places each in its one place, and no place naming a file; {0}" -f $builtNote)
+    Write-Output ("OK: web/index.template.html, web/viewport.js, web/fake.js and web/host.js load nothing and link nowhere, nothing names a store but the template's one localStorage, a person's keymap's, its one personFile(), a person's file's, and its one workStore(), a run's unsaved work's, the scripts', the module's and the blocks' places each in its one place, and no place naming a file; {0}" -f $builtNote)
     exit 0
 }
 Write-Output ("FAIL: the web page has {0} problem(s):" -f $problems.Count)

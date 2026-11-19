@@ -124,7 +124,7 @@
   "the sheet of n fields: its widths, its headers and its labels, then its rows, their count and a picker a field; its state is the source's row, before the call"
   (strings-widths content fields 1)
   (strings-headers content fields 1)
-  (labels-from content 1 (+expand n 2) "rows" "the row shown" "shown")
+  (labels content (address-expand 1 (+expand n 2)) "rows" "the row shown" "shown")
   (strings-labels content (cddr fields) 4 (+expand n 2))
   (strings-from content 2 n fields rows))
 
@@ -269,8 +269,9 @@
 ; error. The test is COUNTIF's: a criterion spelled as an error's name, read from the
 ; Errors sheet's picker, counts a cell holding that error and nothing else, so a number
 ; never meets it, and a cell the record spells #NUM! meets it only as the error itself.
-; The language at vla-lang 0.12.0 names no error's kind (ERROR.TYPE comes with 0.13.0,
-; Frazaro's KERNEL.68), so the Errors sheet shows one error's joke at a time, #NUM!'s.
+; The language at vla-lang 0.12.0 named no error's kind (ERROR.TYPE came with 0.13.0,
+; Frazaro's KERNEL.68, pinned since 2026-11-18 and not yet taken), so the Errors sheet
+; shows one error's joke at a time, #NUM!'s.
 ; The verb reads the model's cents, the cell the figure beside it divides, never the
 ; view's own figure, as a glyph reads the model's cents.
 

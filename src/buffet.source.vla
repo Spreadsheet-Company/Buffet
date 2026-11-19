@@ -98,6 +98,10 @@
 ;           sold past it, or a sale the pocket's cash, or whose cents no number holds, is
 ;           refused, so that no count of the books passes the end of the numbers and none
 ;           keeps an error after the edit that brought it near is undone.
+;   HOUSE.2 the pin to alonzo 0.4.0: the page saves the game to a file and opens one,
+;           keeps a run's unsaved work in the browser through a closed tab, draws a
+;           sheet's conditional formats and says the last act's answer in its bar; and
+;           the kit's put written with its pieces named, each row expanding to its bytes.
 ;
 ; The market's clock (BD-7). A frame is twenty seconds of the market's time in the
 ; regular session and two minutes between sessions, so at the manifest's rate of thirty
@@ -1093,9 +1097,10 @@
 ; fields, so its table runs from A to B and its values stand in E: the count in E1, the
 ; row shown E2 and a picker a field in E3 and E4, the error's name and its joke. The row
 ; shown is a value, the first row, #NUM!'s: the error a sum past what a double holds
-; becomes, near 1.8E+308, the one this slice raises. The language names no error's kind
-; at vla-lang 0.12.0 (ERROR.TYPE is 0.13.0's), so the row shown is written here and not
-; read off a cell; a person's edit of E2 shows another error's joke beside that error.
+; becomes, near 1.8E+308, the one this slice raises. The language named no error's kind
+; at vla-lang 0.12.0 (ERROR.TYPE is 0.13.0's, pinned since 2026-11-18 and not yet taken),
+; so the row shown is written here and not read off a cell; a person's edit of E2 shows
+; another error's joke beside that error.
 
 (sheet "Errors" hidden)             ; the errors' jokes: reference data, at the back of the workbook
 (errors)                            ; the Errors sheet: its headers, its rows, their count and a picker a field
@@ -1623,10 +1628,10 @@
 (sheet "Write" visible)             ; the derived writes: a device the game writes
 (headers "Write" "A1" "sheet" "address" "value")
 (on "Write"
-  (put "A2" "Ledger" (<> Orders!$B$26 0) (& "A" Orders!$B$30) Orders!$B$29)   ; the order's number
-  (put "A3" "Ledger" (<> Orders!$B$26 0) (& "B" Orders!$B$30) (& Day.last!$B$18 ", year " Day.last!$B$6 ", day " Day.last!$B$7 ", " Day.last!$B$16))     ; when, the five minutes the person saw
-  (put "A4" "Ledger" (<> Orders!$B$26 0) (& "C" Orders!$B$30) (if (= Orders!$B$19 2) "Personal" "Firm"))  ; the pocket
-  (put "A5" "Ledger" (<> Orders!$B$26 0) (& "D" Orders!$B$30) Orders!$B$18)   ; the stock
-  (put "A6" "Ledger" (<> Orders!$B$26 0) (& "E" Orders!$B$30) Orders!$B$26)   ; the shares, a sale negative
-  (put "A7" "Ledger" (<> Orders!$B$26 0) (& "F" Orders!$B$30) Orders!$B$23)   ; the price, in cents
-  (put "A8" "Ledger" (<> Orders!$B$26 0) (& "G" Orders!$B$30) Orders!$B$31))   ; the pocket's cash after it, in cents
+  (put "A2" (sheet "Ledger") (when (<> Orders!$B$26 0)) (address (& "A" Orders!$B$30)) (value Orders!$B$29))   ; the order's number
+  (put "A3" (sheet "Ledger") (when (<> Orders!$B$26 0)) (address (& "B" Orders!$B$30)) (value (& Day.last!$B$18 ", year " Day.last!$B$6 ", day " Day.last!$B$7 ", " Day.last!$B$16)))     ; when, the five minutes the person saw
+  (put "A4" (sheet "Ledger") (when (<> Orders!$B$26 0)) (address (& "C" Orders!$B$30)) (value (if (= Orders!$B$19 2) "Personal" "Firm")))  ; the pocket
+  (put "A5" (sheet "Ledger") (when (<> Orders!$B$26 0)) (address (& "D" Orders!$B$30)) (value Orders!$B$18))   ; the stock
+  (put "A6" (sheet "Ledger") (when (<> Orders!$B$26 0)) (address (& "E" Orders!$B$30)) (value Orders!$B$26))   ; the shares, a sale negative
+  (put "A7" (sheet "Ledger") (when (<> Orders!$B$26 0)) (address (& "F" Orders!$B$30)) (value Orders!$B$23))   ; the price, in cents
+  (put "A8" (sheet "Ledger") (when (<> Orders!$B$26 0)) (address (& "G" Orders!$B$30)) (value Orders!$B$31)))   ; the pocket's cash after it, in cents
