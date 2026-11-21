@@ -57,6 +57,13 @@
 ; edge, the page drawing a code since alonzo 0.3.0; each verb's call keeps its shape.
 ; Since PLATE.6's first slice (2026-11-15): error-joke, beside a view's balance the joke of
 ; the error it holds, written by four views at its first dish, as bell was by its two.
+; Since FRONT.8 (2026-11-19), the night desk: the frame's verbs and error-joke each draw
+; in a look of their own, the bell's line lit in the mint by a rule while the market is
+; open; card-corner, a card's far corner, and dollars-in, a view's dollars in a look of
+; the view's own, both at their first dish, every view writing the one and the Overview
+; the other beside the library's dollars; and at the owner's look, hidden-sheets, the
+; kit's sheets behind the box of hidden sheets, and margins, a card's empty rows at the
+; views' zoom, each at its first dish, seven cards writing the one.
 
 ; ---- the dice (POT.1) ---------------------------------------------------------------
 ; A stream is a die and its draws. The die is one cell, the stream's state, which the
@@ -94,7 +101,8 @@
 ; the file after its manifest, with every include, and calls its macro where the sheet
 ; belongs, after a row of its own that gives the sheet's state: hidden, as a workbook
 ; keeps its reference data at the back, or visible for a sheet a player reads whole, as
-; the caveats are (MENU.5). Whether a sheet shows is the game's to say, and the engine
+; the caveats were (MENU.5) until FRONT.8's look put every sheet but a view's card behind
+; the box of hidden sheets. Whether a sheet shows is the game's to say, and the engine
 ; takes one state a sheet, so strings writes none, and the sheet stands among the tabs
 ; where the source's row names it. Its table holds the headers in row 1 and a row of
 ; the call a row of the sheet from row 2, its fields from column A. Beside the table,
@@ -199,6 +207,15 @@
     (formula sheet at (&expand text ")"))
     (quasiquote (picker-from (unquote sheet) (unquote at) (unquote (&expand text "," letters row)) (unquote letters) (unquote (+expand row 1)) (unquote last)))))
 
+; ---- the back office (FRONT.8) ----------------------------------------------------
+; The kit's sheets writes each tab visible; a workbook's back office stands behind the
+; box of hidden sheets, open to anyone who ticks it (AD-6), out of a game's strip.
+
+(defmacro (hidden-sheets & tabs)
+  "the sheets in tab order, each hidden: a (sheet name hidden) row a name, the kit's sheets behind the box"
+  (each (tab tabs)
+    (sheet tab hidden)))
+
 ; ---- the views' frame (BACK.1, POT.10) ----------------------------------------------
 ; Every view opens on its date and the bell's line and closes on the fine print
 ; (FRONT.1, MENU.1, POT.10). The Portfolio wrote the date and the fine print first and
@@ -213,19 +230,46 @@
 ; three with no joke, being the lines a player acts on, and the bells' times written
 ; into the texts, which a test holds to the Day sheet's settings. The fine
 ; print is the Disclosures sheet's picker, a disclosure a month, read through a
-; reference, so that no view holds its text in a formula.
+; reference, so that no view holds its text in a formula. Each draws in its own
+; look on the view's card (FRONT.8): the date in lilac, the bell's line bold and, by
+; a rule over the Day sheet's open bell, in the mint while the market is open, so
+; that a glance at any view says whether an order fills, and the fine print in lilac
+; italic, smaller.
 
 (defmacro (as-of sheet at)
   "a view's date in one cell, from the Day sheet's day's name, year, day of the year and time to the five minutes: As of Monday, year 1, day 1, 9:35 (unaudited)"
-  (formula sheet at "=\"As of \"&Day!$B$18&\", year \"&Day!$B$6&\", day \"&Day!$B$7&\", \"&Day!$B$16&\" (unaudited)\""))
+  (formula sheet at "=\"As of \"&Day!$B$18&\", year \"&Day!$B$6&\", day \"&Day!$B$7&\", \"&Day!$B$16&\" (unaudited)\"")
+  (style sheet at quiet-look))
 
 (defmacro (bell sheet at)
-  "a view's line on the market's hours in one cell, from the Day sheet: open until the closing bell, waiting for the exam, opening at the bell, closed for the night, or closed for the weekend"
-  (formula sheet at "=IF(Day!$B$19=1,\"The market is open until 16:00.\",IF(Day!$B$25=1,\"The market opens when you leave the exam room.\",IF(AND(Day!$B$17<Day!$B$12,Day!$B$20<Day!$B$3),\"The market opens at 9:30.\",IF(AND(Day!$B$17<Day!$B$12-1,Day!$B$20=Day!$B$3),\"The market has closed. Analysts are analyzing the aftermath.\",\"The market is closed until Monday at 9:30.\"))))"))
+  "a view's line on the market's hours in one cell, from the Day sheet: open until the closing bell, waiting for the exam, opening at the bell, closed for the night, or closed for the weekend; in the mint while the market is open"
+  (formula sheet at "=IF(Day!$B$19=1,\"The market is open until 16:00.\",IF(Day!$B$25=1,\"The market opens when you leave the exam room.\",IF(AND(Day!$B$17<Day!$B$12,Day!$B$20<Day!$B$3),\"The market opens at 9:30.\",IF(AND(Day!$B$17<Day!$B$12-1,Day!$B$20=Day!$B$3),\"The market has closed. Analysts are analyzing the aftermath.\",\"The market is closed until Monday at 9:30.\"))))")
+  (style sheet at bell-look)
+  (conditional sheet 1 at "=Day!$B$19=1" open-look))
 
 (defmacro (fine-print sheet at)
   "a view's fine print in one cell: the Disclosures sheet's disclosure of the month, read through a reference"
-  (formula sheet at "=Disclosures!$D$3"))
+  (formula sheet at "=Disclosures!$D$3")
+  (style sheet at fine-look))
+
+; A view is a card bound to its extent (FRONT.8), the rectangle of the cells that hold
+; anything, so its far corner holds the empty text, a row of margin under the fine print
+; and in the card's last column, drawn as the card is.
+
+(defmacro (card-corner sheet at)
+  "a view's card's far corner in one cell: the empty text, which ends the view's extent there, drawn as the card"
+  (cell sheet at "")
+  (style sheet at card-look))
+
+; A card's row that holds nothing, a margin between its lines, draws the default row of
+; 15 points, the page fitting a row to the type its cells say and to nothing where it
+; holds none; so at the views' zoom each says its own height, the default row's 15
+; points at the zoom, as a row holding a text fits its type at the zoom (FRONT.8).
+
+(defmacro (margins sheet zoom & rows)
+  "a card's rows that hold nothing, each as tall as the default row's 15 points at the zoom"
+  (each (margin rows)
+    (heights sheet margin margin (*expand zoom 15))))
 
 ; ---- a view's figures (POT.10, GUARD.1, CRITIC.1, FRONT.2) ---------------------------
 ; Money is whole cents in every cell of the model and reaches a view by one division by
@@ -245,8 +289,12 @@
 
 (defmacro (dollars sheet at cents)
   "a view's dollars in one cell or a fill: whole cents over 100, drawn with two decimals and their thousands grouped by commas"
+  (dollars-in sheet at cents dollars-look))
+
+(defmacro (dollars-in sheet at cents look)
+  "a view's dollars in a look of the view's own, one with the dollars' code: the Overview's net worth, larger"
   (rule sheet at (/ cents 100))
-  (style sheet at dollars-look))
+  (style sheet at look))
 
 (defmacro (signed-dollars sheet at cents)
   "a view's change in one cell or a fill: whole cents either way over 100, drawn as dollars after a gain's or nothing's + or a loss's -"
@@ -277,7 +325,8 @@
 
 (defmacro (error-joke sheet at cents)
   "beside a view's balance in one cell or a fill: the joke of the error the Errors sheet shows, where the balance holds that error, else the empty text: =IF(COUNTIF(cents,Errors!$E$3)=1,Errors!$E$4,\"\")"
-  (rule sheet at (if (= (countif cents Errors!$E$3) 1) Errors!$E$4 "")))
+  (rule sheet at (if (= (countif cents Errors!$E$3) 1) Errors!$E$4 ""))
+  (style sheet at joke-look))
 
 ; ---- a view's buttons (BACK.1, GUARD.1) ---------------------------------------------
 ; A button is a cell of a view, and its press a cell of the model that holds 0 between

@@ -25,7 +25,8 @@
 ;           the Series 777 draws its ten scored questions (GUARD.1).
 ;   MENU.5  the caveats: the Caveats sheet, the things this game gets wrong, each beside
 ;           what the real world does and Management's response, the first the plain
-;           statement that the game is not advice; the one content sheet in the strip.
+;           statement that the game is not advice; the one content sheet a player reads
+;           whole, in the strip until FRONT.8's look put the back office behind its box.
 ;   FRONT.1 the views: the Portfolio, the game's first view and the sheet it opens on,
 ;           the day and the four stocks, each its price and its change since the last
 ;           close in dollars, and the fine print at its foot; the views first among the
@@ -62,7 +63,7 @@
 ;           frame while the market trades, ten minutes a second, and two minutes a frame
 ;           between sessions, an hour a second; a price every five minutes; and a factor
 ;           of the Market sheet on the day's swings, its closes the waves'.
-;   FRONT.3 the overview: the Overview, the view the certificate leads to, each pocket's
+;   FRONT.3 the overview: the Overview, the view the certificate led to, each pocket's
 ;           net worth, the market's weather, a word read off its change in the twenty
 ;           days to the last close, and the day's headline, which the day's market draw
 ;           picks from the Headlines sheet, a content sheet of its own.
@@ -102,6 +103,11 @@
 ;           keeps a run's unsaved work in the browser through a closed tab, draws a
 ;           sheet's conditional formats and says the last act's answer in its bar; and
 ;           the kit's put written with its pieces named, each row expanding to its bytes.
+;   FRONT.8 the night desk: every view a card of midnight plum bound to its extent, its
+;           gridlines off, the whisper and lilac on it and the lavender what a click
+;           does, drawn at the game's own zoom, 135%; the back office behind the box of
+;           hidden sheets; and the certificate leading to the Portfolio again, its
+;           prices moving from the first bell.
 ;
 ; The market's clock (BD-7). A frame is twenty seconds of the market's time in the
 ; regular session and two minutes between sessions, so at the manifest's rate of thirty
@@ -137,10 +143,11 @@
   (screen grid 80 50)
   (seed 791886)                     ; every first game's market: a first year that dips early and closes 10% up
   (game "Exam" "Certificate" "Overview" "Portfolio" "Trading" "Gigs" "Report")   ; the views: the game's keys hold on them and on no other sheet
-  (read "Exam" "Certificate" "Overview" "Portfolio" "Trading" "Gigs" "Report" "Caveats")   ; no key or row of a person's writes a view or the Caveats; the model's sheets stay the open book, a person's to edit (BD-3)
+  (read "Exam" "Certificate" "Overview" "Portfolio" "Trading" "Gigs" "Report" "Caveats")   ; no key or row of a person's writes a view or the Caveats; the model's sheets stay the open book, behind the box of hidden sheets, a person's to edit (BD-3)
+  (bound "Exam" "Certificate" "Overview" "Portfolio" "Trading" "Gigs" "Report")   ; each view a card drawn to its extent and no further, standing on the page's gray (FRONT.8)
   (author "Spreadsheet Company")
   (license "AGPL-3.0-or-later AND CC-BY-SA-4.0")
-  (notes "Buffet: All You Can Sheet. The front office is open for business: the game opens on the Series 777, the regulator's exam for a fund manager, eleven questions answered by a click or a key, ten of them scored, each right answer $500 more of the firm's $5,000, and the last the firm's style, which names the firm; then its certificate; then the Overview at Monday's opening bell, which waits for you to leave the exam room: the day and the hour, the firm's name and style, the net worth of the firm and your own, the market's weather, a word for how far it moved in the twenty days to the last close, and the day's headline, with the fine print at its foot. Beside it, the Portfolio, four stocks, each its price, its change since the last close and the holding of it, the firm's or your own, its shares, their cost, their value and the gain, the market open from 9:30 to 16:00 on weekdays, ten minutes a second while it trades and an hour a second between, and moving every five minutes, and under them the cash on hand and the net worth, the firm's and yours. Beside that, Trading, where each stock's six buttons buy one share, ten or as many as the cash covers, and sell one, ten or all, at the price shown while the market is open, by a click or by a key: 1 to 4 pick a stock, then B, N and M buy and S, D and F sell, each also a command of the page's palette; and beside the cash, a switch, or C, turns whose cash an order spends, the firm's or your own, moving none of it. A balance edited past what the numbers hold, near 1.8E+308 cents, shows its error with the error's joke beside it, and spends nothing, until the edit is undone; and the books count to 1E+307 cents, refusing an order that would take them past it. And Gigs, where a prospectus is proofread for $250, by a click on its button or by P, a day's work, one a week and four a run, Compliance permitting. And at each quarter's end the Report, the report card, which the game shows you: the firm's return over the quarter and over the year so far against Average Co. bought at the opening bell and held, the difference its alpha, a grade for each and the proctor's remark. Behind them, the back office: the market's calendar and its hours; its dice, rolled once a day where anyone can watch them roll; the market itself, four waves and a drift, and each session's five minutes between two closes, their swings a factor of its own, and its weather, a word read off its change; four stocks priced off it in whole cents, the dearest paying a dividend four days a year, paid to the shares held; the hustle's books, every prospectus counted; the proctor's books, the exam's draw and every answer; the order desk's books, every button and command and the order they make; the positions, each pocket's shares, cost and gains; the cash, the holdings and the net worth, the firm's and yours; the ledger, the last hundred orders filled; the performance, the report card's books, the firm's worth and Average Co.'s at each card; the fine print, a disclosure a month; the Series 777's question bank, twenty questions; the four firms, each its style and its name; the headlines, one a day; the proctor's remarks, one a grade; the error values' jokes, one an error; and the model's caveats, the things this game gets wrong, each with Management's response. A returning candidate may waive the exam by writing 1 into Proctor!B3, at five correct answers and the first style's firm, or another's by writing 2, 3 or 4 into Proctor!B5. Pick the Day, the Dice, the Market, the Stocks, the Hustle, the Proctor, the Orders, the Positions, the Cash, the Ledger or the Performance sheet to watch the model work, or the Caveats sheet to read, or the Disclosures, the Questions, the Firms, the Headlines, the Remarks or the Errors sheet among the hidden sheets."))
+  (notes "Buffet: All You Can Sheet. The front office is open for business: the game opens on the Series 777, the regulator's exam for a fund manager, eleven questions answered by a click or a key, ten of them scored, each right answer $500 more of the firm's $5,000, and the last the firm's style, which names the firm; then its certificate; then the Portfolio at Monday's opening bell, which waits for you to leave the exam room: four stocks, each its price, its change since the last close and the holding of it, the firm's or your own, its shares, their cost, their value and the gain, the market open from 9:30 to 16:00 on weekdays, ten minutes a second while it trades and an hour a second between, and moving every five minutes, and under them the cash on hand and the net worth, the firm's and yours, with the fine print at its foot. Beside it, the Overview: the day and the hour, the firm's name and style, the net worth of the firm and your own, the market's weather, a word for how far it moved in the twenty days to the last close, and the day's headline. On the Portfolio's other side, Trading, where each stock's six buttons buy one share, ten or as many as the cash covers, and sell one, ten or all, at the price shown while the market is open, by a click or by a key: 1 to 4 pick a stock, then B, N and M buy and S, D and F sell, each also a command of the page's palette; and beside the cash, a switch, or C, turns whose cash an order spends, the firm's or your own, moving none of it. A balance edited past what the numbers hold, near 1.8E+308 cents, shows its error with the error's joke beside it, and spends nothing, until the edit is undone; and the books count to 1E+307 cents, refusing an order that would take them past it. And Gigs, where a prospectus is proofread for $250, by a click on its button or by P, a day's work, one a week and four a run, Compliance permitting. And at each quarter's end the Report, the report card, which the game shows you: the firm's return over the quarter and over the year so far against Average Co. bought at the opening bell and held, the difference its alpha, a grade for each and the proctor's remark. Behind them, the back office: the market's calendar and its hours; its dice, rolled once a day where anyone can watch them roll; the market itself, four waves and a drift, and each session's five minutes between two closes, their swings a factor of its own, and its weather, a word read off its change; four stocks priced off it in whole cents, the dearest paying a dividend four days a year, paid to the shares held; the hustle's books, every prospectus counted; the proctor's books, the exam's draw and every answer; the order desk's books, every button and command and the order they make; the positions, each pocket's shares, cost and gains; the cash, the holdings and the net worth, the firm's and yours; the ledger, the last hundred orders filled; the performance, the report card's books, the firm's worth and Average Co.'s at each card; the fine print, a disclosure a month; the Series 777's question bank, twenty questions; the four firms, each its style and its name; the headlines, one a day; the proctor's remarks, one a grade; the error values' jokes, one an error; and the model's caveats, the things this game gets wrong, each with Management's response. A returning candidate may waive the exam by writing 1 into Proctor!B3, at five correct answers and the first style's firm, or another's by writing 2, 3 or 4 into Proctor!B5. Tick the hidden sheets to open the back office: the Day, the Dice, the Market, the Stocks, the Hustle, the Proctor, the Orders, the Positions, the Cash, the Ledger and the Performance sheet to watch the model work, the Caveats sheet to read, and the Disclosures, the Questions, the Firms, the Headlines, the Remarks and the Errors sheet."))
 
 ; The libraries whose macros this source calls, both beside it: the kit, Alonzo's
 ; common.vla copied at the pin (sheets, labels, headers, on, cells, formulas, rule, hold,
@@ -170,16 +177,22 @@
 ; until a game shows it, an ending (FRONT.7); the manifest's screen line is the window it
 ; would be drawn through. Then the views, first, the game opening on the first visible
 ; sheet (Alonzo's SPEC.md section 3.1, version 4), the Exam, whose Camera hands the game
-; to the Certificate and then to the Overview (GUARD.1, FRONT.3), the views after it in
+; to the Certificate and then to the Portfolio (GUARD.1, FRONT.8), the views after it in
 ; the order a player meets them, the Portfolio and Trading beside it (PLATE.1), then
 ; Gigs, then the Report, which the Camera shows at the first quarter's end (CRITIC.1);
-; then the model's sheets, visible, a spreadsheet a player may open (AD-6), each after
-; the books it reads; the content sheets stand after them, where each is called below,
-; then the Keys, the Camera, the Commands and the Write sheet, the devices the game
-; writes, and the engine's own devices last.
+; then the model's sheets, each after the books it reads; the content sheets stand after
+; them, where each is called below, then the Keys, the Camera, the Commands and the Write
+; sheet, the devices the game writes, and the engine's own devices last. The strip is the
+; game's seven cards and nothing else (the owner's word at FRONT.8's look: "The uncolored
+; sheets are all back-office data tabs, so shouldn't they be hidden?"): every sheet after
+; them stands hidden, a back office behind the box of hidden sheets, which opens every one
+; to anyone who ticks it, so the book stays open (AD-6, BD-3), as Seiyaku's and
+; Brickwork's workings stand behind theirs. FRONT.1 had shown the model's sheets in the
+; strip, a spreadsheet in plain sight, and named this as its alternative.
 
 (sheet "Screen" hidden)             ; the framebuffer, unused: each view is a sheet of its own
-(sheets "Exam" "Certificate" "Overview" "Portfolio" "Trading" "Gigs" "Report" "Day" "Dice" "Market" "Stocks" "Hustle" "Proctor" "Orders" "Positions" "Cash" "Ledger" "Performance")
+(sheets "Exam" "Certificate" "Overview" "Portfolio" "Trading" "Gigs" "Report")   ; the views, the strip
+(hidden-sheets "Day" "Dice" "Market" "Stocks" "Hustle" "Proctor" "Orders" "Positions" "Cash" "Ledger" "Performance")   ; the model, the back office
 
 ; ---- POT.1, POT.10, POT.11: the calendar, the market's hours and the pace -------------
 ; A block of settings and its workings, a label in column A beside each value in B, the
@@ -565,8 +578,10 @@
 ; them. The settings first: the contract's capital, $5,000 and $500 a correct answer, in
 ; whole cents; the waiver, a person's edit of B3 that skips the exam, a returning
 ; candidate's, with the score and the style a waiver takes; and where the certificate
-; leads, a view's name, the Overview since FRONT.3, where the Portfolio stood, a value, so
-; that a view laid out or renamed moves no formula.
+; leads, a view's name, the Portfolio again since FRONT.8's second look, where the
+; Overview stood from FRONT.3 (the owner's word: "The Overview tab is an anticlimactic,
+; nearly-static page that doesn't give the impression that prices are changing"), a
+; value, so that a view laid out or renamed moves no formula.
 ; Then the draw: ten questions from the bank, from a start the exam's first draw picks
 ; and a stride its second picks among the first ten primes above 1,547, each coprime to
 ; every bank a picker holds (MENU.2), so that no question repeats; the bank's size its
@@ -593,7 +608,7 @@
     ("B3" 0)                        ; the waiver: a person's edit of 1 skips the exam, the game beginning at the next step
     ("B4" 5)                        ; a waiver's correct answers: the middle of 0 to 10
     ("B5" 1)                        ; a waiver's style: the first, which names its firm (BACK.2)
-    ("B6" "Overview"))              ; where the certificate leads: the Overview, the game's first view after the exam (FRONT.3)
+    ("B6" "Portfolio"))             ; where the certificate leads: the Portfolio, its prices moving from the first bell (FRONT.8's second look; the Overview from FRONT.3)
   (labels "A8" "the bank's questions" "the start, from 0" "the stride, a prime above 1,547")
   (formulas
     ("B8" "=Questions!$K$1")        ; the bank's size, its own count: a question added joins the draw
@@ -1112,8 +1127,10 @@
 ; ---- MENU.5: the caveats ------------------------------------------------------------
 ; The Caveats sheet: the things this game gets wrong, each beside what the real world
 ; does, Management's response and the cell it qualifies (BD-5). It is the one content
-; sheet shown among the tabs, after the model's, since a player reads it whole and no
-; view can show a sheet's rows whole, the dialect picking one row at a time. Four
+; sheet a player reads whole, since no view can show a sheet's rows whole, the dialect
+; picking one row at a time; shown among the tabs after the model's until FRONT.8's look
+; put every sheet but the cards behind the box of hidden sheets, a plain sheet having no
+; place in a strip of cards until it is a card itself. Four
 ; fields, so its table runs from A to D and its values stand in G: the count in G1 and a
 ; picker a field in G3 to G6, beside their labels in F, a column as wide as its longest
 ; label, so that each reads whole beside its value.
@@ -1122,7 +1139,7 @@
 ; not advice, with its joke beside it, which the certificate reads through references,
 ; Caveats!G3:G5, its first three fields, the second reading the first (GUARD.1).
 
-(sheet "Caveats" visible)           ; the one content sheet shown: a player reads it whole
+(sheet "Caveats" hidden)            ; the one content sheet a player reads whole, behind the box with the back office
 (caveats)                           ; the Caveats sheet: its headers, its rows, their count and a picker a field
 
 (on "Caveats"
@@ -1146,38 +1163,78 @@
 ; empty text while it holds a number, the library's error-joke (PLATE.6). A text spills
 ; into the empty cells on its right, so a joke reads whole across the columns beside.
 
-; ---- FRONT.2: the looks -------------------------------------------------------------
+; ---- FRONT.8: the looks, the night desk ---------------------------------------------
 ; The house's formats, the workbook's own, each named once here and by that word wherever
 ; a view's style or look draws with it, so that an author recolors every view in this one
-; place. A format is a row the load reads: a player who wants another color becomes its
-; author, by the page's drawer, Build and Load.
+; place, its colors named first. A format is a row the load reads: a player who wants
+; another color becomes its author, by the page's drawer, Build and Load.
 ;
-; A button is Lovelace Lavender's deep shade under a white ink (the owner's words at
-; GUARD.1's hand test: "lavender background and white text"), which reads at 5.87:1 where
-; white on the logo's own #A080E0 reads at 3.2:1; bold (at FRONT.2's: white over lavender
-; "should be bolded for readability"), but for Trading's grid of them, under a band and
-; beside a column of keys that are (at its second: "E6:J9 need not be bolded"); centered in
-; its cell, but for an exam's option, whose long text reads from its left. A view's band
-; takes the same shade and ink, bold (the owner's word at FRONT.2's hand test), a header
-; over a text's column to the left, over a figure's to the right, and a key or a column
-; whose values stand centered in the middle, the band running down Trading's keys as well
-; as across its headers (at the second); a button's brackets tell it from a band. A fill covers its cell's
-; gridlines, as Excel's does, so that a button among others or a glyph's shade says the
-; gridlines' gray itself on its right and bottom, and two side by side stay two; a button
-; standing alone says the view's ink on all four sides (the owner's word, the same hand
-; test), since it has no neighbor to be told from and a page to stand out on.
+; Every view is a card of midnight plum, Brickwork's wall, standing on the page's gray as
+; Seiyaku's board and Brickwork's wall stand (the owner's word, 2026-11-19, of the arcade's
+; looks: "Kairos, Seiyaku, and Brickwork all got aesthetic passes which made them much more
+; playable"): each view bound to its extent with its gridlines off (the manifest's bound),
+; every card 126 characters wide at 100%, Trading's table and a margin of 5, so that a tab
+; turned moves no edge, and a margin row under the fine print whose far corner holds the empty
+; text, which makes the extent. A column's format paints its empty cells the card, and
+; every cell that holds anything says its format too, since a cell's own format is drawn
+; whole and a cell with none draws the sheet's white.
 ;
-; The glyphs take the owner's two colors each in the role its lightness can play (the
-; owner's words, 2026-10-16: "upward glyphs should be a minty green like #ADEBB3, while
-; downward glyphs should be a burgundy like #800020"): the mint a fill behind the view's
-; ink, 12.31:1, since as a glyph's own color it reads at 1.37:1 on white, and the burgundy a
-; glyph's own ink on white, 10.83:1. A flat day's = takes no look, and the direction never
-; rests on a color, the glyph's shape saying it. A look keys on the glyph's own text, never
-; on a number, which would shade every cell holding it (MISE.3).
+; The text is the family's whisper; a label, the date, a key's hint and the fine print a
+; light lavender, lilac; a view's headline lilac, bold and larger; the bell's line bold, in
+; the mint while the market is open (the kitchen's bell). A text spills to the card's edge
+; and no further, the card being the extent, so an error's joke beside a balance stands
+; italic and as small as the fine print, its longest, 112 characters, ending inside every
+; card where it would run past three of them at the text's size. A table's band is a shade lighter
+; than the card under lilac, bold, a header over a text's column to the left, over a
+; figure's to the right, and a key or a column whose values stand centered in the middle,
+; the band running down Trading's keys as well as across its headers (the owner's word at
+; FRONT.2's hand test). A button is lavender under white (the owner's words at GUARD.1's hand
+; test: "lavender background and white text"): the deep shade lightened toward Lovelace
+; Lavender until white reads at 4.53:1, so that it stands on the card at 3.13:1, where the
+; deep shade stands at 2.42:1; bold (at FRONT.2's: white over lavender "should be bolded for
+; readability"), but for Trading's grid (at its second: "E6:J9 need not be bolded");
+; centered, but for an exam's option, whose long text reads from its left; and a button
+; among others edged by the card on its right and below, two pixels, so that two side by
+; side stay two. The lavender is what a click does: a band is never one.
+;
+; The glyphs keep the owner's two colors (2026-10-16: "upward glyphs should be a minty green
+; like #ADEBB3, while downward glyphs should be a burgundy like #800020"), each a chip on
+; the card: a gain's ▲ in Kairos's night on the mint, 12.65:1, a loss's ▼ in the whisper on
+; the burgundy, 9.96:1, each edged by the card below so that two stay two. A flat day's =
+; takes no look, and the direction never rests on a color, the glyph's shape saying it. A
+; look keys on the glyph's own text, never on a number, which would shade every cell
+; holding it (MISE.3). The stock picked on Trading, ▸, is a chip of the whisper.
 ;
 ; The figures' codes: a dollar, a change, a percent and a count of shares, each the
-; library's verb's or a view's own style, Trading's shares centered (the same word). A bold
-; label heads what stands under it.
+; library's verb's or a view's own style, Trading's shares centered.
+;
+; The zoom (the owner's word at the look: "I zoomed the page in to 200% and it looks more
+; like a game this way, so is it possible to set the standard zoom for Buffet to this
+; size?", and at the second: "if the size now threatens scrolling on smaller monitors,
+; maybe we should scale it down a bit to be safe so side-scrolling doesn't ruin the UX").
+; The page draws a grid at its cells' own sizes and never zooms one (Alonzo's ENGINE.14,
+; decision 9), so a game's zoom is its own, as Brickwork's cells are (CART.3): every size
+; a view draws is said here at 100% and drawn at the zoom, a format's type in the-looks,
+; and a card's columns, its buttons' rows and its margins in its own sizes, one number
+; that the-zoom hands on to each macro that says a size, as Brickwork's wall-size hands on
+; its wall. At 1.35, the owner's 135%, a card is 170.1 characters wide, 1,223 pixels with
+; the row numbers, so that no card scrolls sideways in a window 1,280 pixels wide, a 1080p
+; laptop's at 150%, even with a scrollbar beside it; and its text is 14.85 points. At 1 it
+; stands as this dish first drew it, and at 2 as the first look saw it, 1,796 pixels. A
+; zoom is a multiple of 0.05, so that each size it gives is a whole number of twentieths
+; of a point, as a type's size must be. A row holding a text fits its type, and a row
+; holding nothing says its height, the kitchen's margins. The back office stands at 100%,
+; a workbook's own sheets behind the box.
+
+(define night "1C1828")             ; Kairos's night, the family's darkest: a chip's ink
+(define plum "2E2645")              ; midnight plum, Brickwork's wall: every view's card
+(define plum-band "3B3159")         ; the card a shade lighter: a table's band
+(define button-lavender "8063D2")   ; the deep shade toward Lovelace Lavender, as light as white reads at 4.5:1: a button
+(define lilac "C4B0F0")             ; a light lavender, 7.31:1 on the card: a heading, a label, the date, a hint, the fine print
+(define whisper "F7F4FC")           ; the family's whisper, 13.05:1 on the card: the text
+(define white "FFFFFF")             ; a button's text
+(define mint "ADEBB3")              ; the owner's mint: a gain, and the market open
+(define burgundy "800020")          ; the owner's burgundy: a loss
 
 (define button-look 1)
 (define dollars-look 2)
@@ -1194,22 +1251,56 @@
 (define lone-button-look 13)
 (define band-center-look 14)
 (define shares-center-look 15)
+(define card-look 16)
+(define text-look 17)
+(define quiet-look 18)
+(define bell-look 19)
+(define fine-look 20)
+(define title-look 21)
+(define question-look 22)
+(define worth-look 23)
+(define open-look 24)
+(define picked-look 25)
+(define seal-look 26)
+(define signature-look 27)
+(define joke-look 28)
 
-(format button-look "6B4FC8" general nowrap (font "FFFFFF") (align center) (border (right thin "D9D9D2") (bottom thin "D9D9D2")))   ; a button among others: white on the deep lavender, centered
-(format dollars-look none "#,##0.00" nowrap)   ; dollars
-(format change-look none "+#,##0.00;-#,##0.00;+0.00" nowrap)   ; a change in dollars, a gain's or nothing's + and a loss's -
-(format percent-look none "+0.00%;-0.00%;+0.00%" nowrap)   ; a percent, signed as a change is
-(format shares-look none "#,##0" nowrap)   ; a count of shares
-(format band-look "6B4FC8" general nowrap (font bold "FFFFFF"))   ; the band under a view's headers, over a text's column: white on the deep lavender, as a button
-(format band-figures-look "6B4FC8" general nowrap (font bold "FFFFFF") (align right))   ; the band over a figure's column, the header to the figures' side
-(format rise-look "ADEBB3" general nowrap (border (right thin "D9D9D2") (bottom thin "D9D9D2")))   ; a gain's glyph: the mint behind the view's ink
-(format fall-look none general nowrap (font "800020"))   ; a loss's glyph: the burgundy, its own ink on white
-(format glyph-look none general nowrap (align center))   ; the glyphs' column, each glyph in the middle of its 3 characters
-(format option-look "6B4FC8" general nowrap (font bold "FFFFFF") (align left) (border (right thin "D9D9D2") (bottom thin "D9D9D2")))   ; an exam's option: a button whose long text reads from its left
-(format heading-look none general nowrap (font bold))   ; a bold label, heading what stands under it
-(format lone-button-look "6B4FC8" general nowrap (font bold "FFFFFF") (align center) (border (left medium "1D1D1B") (right medium "1D1D1B") (top medium "1D1D1B") (bottom medium "1D1D1B")))   ; a button standing alone: a button, bold, its edges the view's ink
-(format band-center-look "6B4FC8" general nowrap (font bold "FFFFFF") (align center) (border (right thin "D9D9D2") (bottom thin "D9D9D2")))   ; the band in the middle of its cell: a key, or a header over a centered column
-(format shares-center-look none "#,##0" nowrap (align center))   ; a count of shares in the middle of its column
+(defmacro (the-zoom then & args)
+  "the views' zoom, handed on to a macro that says a size: (then 1.35 args...), the owner's 135%"
+  (quasiquote ((unquote then) 1.35 (unquote-splicing args))))
+
+(defmacro (the-looks z)
+  "the house's formats, each its type at the zoom z: (*expand z 11) is 11 points at 100%"
+  (format button-look button-lavender general nowrap (font white (*expand z 11)) (align center) (border (right medium plum) (bottom medium plum)))   ; a button among others: white on the lavender, centered, the card's edge between two
+  (format dollars-look plum "#,##0.00" nowrap (font whisper (*expand z 11)))   ; dollars
+  (format change-look plum "+#,##0.00;-#,##0.00;+0.00" nowrap (font whisper (*expand z 11)))   ; a change in dollars, a gain's or nothing's + and a loss's -
+  (format percent-look plum "+0.00%;-0.00%;+0.00%" nowrap (font whisper (*expand z 11)))   ; a percent, signed as a change is
+  (format shares-look plum "#,##0" nowrap (font whisper (*expand z 11)))   ; a count of shares
+  (format band-look plum-band general nowrap (font bold lilac (*expand z 11)))   ; the band under a view's headers, over a text's column
+  (format band-figures-look plum-band general nowrap (font bold lilac (*expand z 11)) (align right))   ; the band over a figure's column, the header to the figures' side
+  (format rise-look mint general nowrap (font night (*expand z 11)) (border (bottom medium plum)))   ; a gain's glyph: a chip of the mint
+  (format fall-look burgundy general nowrap (font whisper (*expand z 11)) (border (bottom medium plum)))   ; a loss's glyph: a chip of the burgundy
+  (format glyph-look plum general nowrap (font whisper (*expand z 11)) (align center))   ; the glyphs' column, each glyph in the middle of its 3 characters
+  (format option-look button-lavender general nowrap (font bold white (*expand z 11)) (align left) (border (bottom thick plum)))   ; an exam's option: a button whose long text reads from its left, the card between two
+  (format heading-look plum general nowrap (font bold lilac (*expand z 11)))   ; a bold label, heading what stands under it
+  (format lone-button-look button-lavender general nowrap (font bold white (*expand z 11)) (align center))   ; a button standing alone
+  (format band-center-look plum-band general nowrap (font bold lilac (*expand z 11)) (align center))   ; the band in the middle of its cell: a key, or a header over a centered column
+  (format shares-center-look plum "#,##0" nowrap (font whisper (*expand z 11)) (align center))   ; a count of shares in the middle of its column
+  (format card-look plum general nowrap (font (*expand z 11)))   ; the card: a view's empty cells, its columns' own, and its far corner a line tall
+  (format text-look plum general nowrap (font whisper (*expand z 11)))   ; a sentence, a name, a value
+  (format quiet-look plum general nowrap (font lilac (*expand z 11)))   ; a label, the date, a key's hint
+  (format bell-look plum general nowrap (font bold whisper (*expand z 11)))   ; the bell's line
+  (format fine-look plum general nowrap (font italic lilac (*expand z 10)))   ; the fine print
+  (format title-look plum general nowrap (font bold lilac (*expand z 13)))   ; a view's headline
+  (format question-look plum general nowrap (font bold whisper (*expand z 14)))   ; the exam's question
+  (format worth-look plum "#,##0.00" nowrap (font bold whisper (*expand z 14)))   ; the Overview's net worth, in dollars
+  (format open-look (font mint))   ; the bell's line while the market is open: a rule's, its ink alone, the line's own type kept
+  (format picked-look whisper general nowrap (font bold night (*expand z 11)) (align center))   ; the stock picked on Trading, its mark a chip of the whisper
+  (format seal-look plum general nowrap (font bold lilac (*expand z 16) (family "Georgia" serif)))   ; the certificate's title, set as a certificate's
+  (format signature-look plum general nowrap (font italic whisper (*expand z 11)))   ; the proctor's signature
+  (format joke-look plum general nowrap (font italic whisper (*expand z 10))))   ; an error's joke beside its balance, as small as the fine print, so that the longest, 112 characters, ends inside every card
+
+(the-zoom the-looks)                ; the formats, at the views' zoom
 
 ; The Exam (GUARD.1): the sheet the game opens on, the first visible among the tabs, the
 ; Series 777 one question at a time. Its date and the bell's line, every view's; the
@@ -1225,8 +1316,18 @@
 ; draws in the default look by a look of the empty text, so that no button stands where
 ; none is.
 
+(defmacro (exam-sizes z)
+  "the Exam's sizes at the zoom z: its columns, its options' rows and its margins"
+  (on "Exam"
+    (column "A" (*expand z 100) shown card-look)   ; the question and its options: as wide as the longest option with its letter
+    (column "B" (*expand z 26) shown card-look)    ; the card's margin, to every view's width
+    (heights 7 10 (*expand z 22))                  ; the options, each as tall as a button
+    (margins z 4 6 11 13)))                        ; the rows between, each a line
+
+(the-zoom exam-sizes)               ; the Exam's sizes, at the views' zoom
+
 (on "Exam"
-  (column "A" 100 shown none)       ; the question and its options: as wide as the longest option with its letter
+  (gridlines off)
   (as-of "A1")                      ; the date, every view's
   (bell "A2")                       ; the market's hours, every view's: the bell waits for the exam
   (formulas
@@ -1234,9 +1335,13 @@
     ("A5" "=IF(Proctor!$B$33=0,\"\",IF(Proctor!$B$32<10,Questions!$K$4,\"Which best describes you?\"))")   ; the question: the bank's, or the eleventh, the view's own
     ("A7:A10" "=IF(Proctor!$B$33=0,\"\",IF(Proctor!$B$32<10,\"[ \"&Proctor!A24&\" ]  \"&Questions!K5,\"[ \"&Proctor!A24&\" ]  \"&Firms!A2))")   ; its options, each a button: the Proctor's buttons name these cells
     ("A12" "=IF(Proctor!$B$33=1,\"Click an answer, or press its letter: A, B, C or D.\",\"\")"))   ; the keys, the Keys sheet's B6:B9 while a question is open
-  (style "A7:A10" option-look)      ; each option drawn as a button,
-  (look "" 0)                       ;   and an option emptied after the exam in the default look
-  (fine-print "A14"))               ; the fine print, every view's
+  (style "A3" title-look)           ; where the exam stands, the view's headline
+  (style "A5" question-look)        ; the question
+  (style "A7:A10" option-look)      ; each option drawn as a button, as tall as one (exam-sizes),
+  (look "" card-look)               ;   and an option emptied after the exam the card's
+  (style "A12" quiet-look)          ; the keys
+  (fine-print "A14")                ; the fine print, every view's
+  (card-corner "B15"))              ; the card's far corner, a row of margin under the fine print
 
 ; The Certificate (GUARD.1): what the exam decided, shown by the Camera at the eleventh
 ; answer. Its date and the bell's line; its title; whether the exam is still pending,
@@ -1250,38 +1355,57 @@
 ; proctor's signature; and the fine print. The button begins the game, the bell ringing,
 ; and the Camera shows where the certificate leads.
 
+(defmacro (certificate-sizes z)
+  "the Certificate's sizes at the zoom z: its columns, its button's row and its margins"
+  (on "Certificate"
+    (column "A" (*expand z 21) shown card-look)   ; the labels and the button: as wide as the button's text
+    (column "B" (*expand z 12) shown card-look)   ; the values: 12 characters, the width of a view's dollars
+    (column "C" (*expand z 93) shown card-look)   ; the jokes beside, and the card's margin, to every view's width
+    (heights 11 11 (*expand z 22))                ; the button, as tall as one
+    (margins z 4 6 10 12 17 19)))                 ; the rows between, each a line
+
+(the-zoom certificate-sizes)        ; the Certificate's sizes, at the views' zoom
+
 (on "Certificate"
-  (column "A" 21 shown none)        ; the labels and the button: as wide as the button's text
-  (column "B" 12 shown none)        ; the values: 12 characters, the width of a view's dollars
+  (gridlines off)
   (as-of "A1")                      ; the date, every view's
   (bell "A2")                       ; the market's hours, every view's
   (cells
     ("A3" "The Series 777: a certificate of completion"))
-  (style "A3" heading-look)         ; its title
+  (style "A3" seal-look)            ; its title, set as a certificate's
   (formulas
     ("A5" "=IF(Proctor!$B$33=1,\"Pending: the proctor certifies after the eleventh question.\",IF(Proctor!$B$3=1,\"Waived: the regulator assumes you would have passed.\",\"The bearer has sat the Series 777 and passed, as every candidate does.\"))"))   ; pending, waived or passed
+  (style "A5" text-look)
   (labels "A7" "Correct answers" "Firm capital ($)" "Firm name")
+  (style "A7:A9" quiet-look)
   (formulas
     ("B7" "=Proctor!$B$38&\" of 10\""))   ; the score, of the ten
+  (style "B7" text-look)
   (dollars "B8" Proctor!B39)        ; the firm's capital
   (error-joke "C8" Proctor!B39)     ;   and beside it its error's joke, where it holds one (PLATE.6)
   (formulas
     ("B9" "=IF(Proctor!$B$40=0,\"pending registration\",Firms!$E$4)"))   ; the firm's name, the Firms sheet's, once the eleventh answer gives its style
+  (style "B9" text-look)
   (cells
     ("A11" "[ Open for business ]")   ; the button: the Proctor's buttons name this cell
     ("B11" "or press O"))           ; its key, the Keys sheet's B10
-  (style "A11" lone-button-look)    ; the button drawn as a button
+  (style "A11" lone-button-look)    ; the button drawn as a button, as tall as one (certificate-sizes)
+  (style "B11" quiet-look)
   (cells
     ("A13" "Caveat:"))              ; the plain statement's heading, the owner's word
   (style "A13" heading-look)
   (formulas
     ("A14:A16" "=Caveats!G3"))      ; the plain statement whole, its three fields: the game is not advice
+  (style "A14:A16" text-look)
   (cells
     ("A18" "Signed for the regulator by the proctor, whose signature is, on inspection, a doodle of a bull."))
-  (fine-print "A20"))               ; the fine print, every view's
+  (style "A18" signature-look)
+  (fine-print "A20")                ; the fine print, every view's
+  (card-corner "C21"))              ; the card's far corner, a row of margin under the fine print
 
-; The Overview (FRONT.3): where the certificate leads, the game's first view after the
-; exam, the firm at a glance, two numbers, a word and a headline (BD-4: checkers first).
+; The Overview (FRONT.3): the firm at a glance, two numbers, a word and a headline
+; (BD-4: checkers first), a tab beside the Portfolio, where the certificate led until
+; FRONT.8's second look gave the lead back to the Portfolio's moving prices.
 ; Its date and the bell's line, every view's; the firm's line, its name and its investment
 ; style, the Firms sheet's, once the exam's last answer gives them, and pending
 ; registration until then (BACK.2); each pocket's net worth, the Cash
@@ -1292,26 +1416,41 @@
 ; having no act of its own at course 0: an alert that links to its panel is an act, and
 ; enters with the dish that raises it, its key and its command beside it.
 
+(defmacro (overview-sizes z)
+  "the Overview's sizes at the zoom z: its columns and its margins"
+  (on "Overview"
+    (column "A" (*expand z 22) shown card-look)   ; the labels; the date, the lines and the fine print spill past them
+    (column "B" (*expand z 16) shown card-look)   ; the net worth, in dollars, larger: 16 characters
+    (column "C" (*expand z 88) shown card-look)   ; the jokes beside, and the card's margin, to every view's width
+    (margins z 4 8 10 12)))                       ; the rows between, each a line
+
+(the-zoom overview-sizes)           ; the Overview's sizes, at the views' zoom
+
 (on "Overview"
-  (column "A" 22 shown none)        ; the labels; the date, the lines and the fine print spill past them
-  (column "B" 12 shown none)        ; the net worth, in dollars: 12 characters, the width of a view's dollars
+  (gridlines off)
   (as-of "A1")                      ; the date, every view's
   (bell "A2")                       ; the market's hours, every view's
   (formulas
     ("A3" "=IF(Proctor!$B$40=0,\"Your firm: name pending registration.\",\"Your firm: \"&Firms!$E$4&\". Investment style: \"&Firms!$E$3&\".\")"))   ; the firm's name and its style, pending until the eleventh answer gives them
+  (style "A3" title-look)
   (labels "A5" "Net worth ($)" "  Firm" "  Personal")   ; each pocket's net worth, its cash and its holdings
   (style "A5" heading-look)
-  (dollars "B6:B7" Cash!B9)         ; the firm's and your own, the Cash sheet's B9 and B10
+  (style "A6:A7" quiet-look)
+  (dollars-in "B6:B7" Cash!B9 worth-look)   ; the firm's and your own, the Cash sheet's B9 and B10, larger
   (error-joke "C6:C7" Cash!B9)      ;   and beside each its error's joke, where it holds one (PLATE.6)
   (formulas
     ("A9" "=\"Market weather: \"&Market!$B$124&\", the market \"&IF(Market!$B$123=0,\"flat\",IF(Market!$B$123<0,\"down \",\"up \")&INT(ABS(Market!$B$123)/10)&\".\"&MOD(ABS(Market!$B$123),10)&\"%\")&\" in the \"&Market!$B$4&\" days to the last close.\"")   ; the weather: its word and the change it is read off
     ("A11" "=\"Today's headline: \"&Headlines!$D$3"))   ; the ticker: the day's headline
-  (fine-print "A13"))               ; the fine print, every view's
+  (style "A9" text-look)
+  (style "A11" text-look)
+  (fine-print "A13")                ; the fine print, every view's
+  (card-corner "C14"))              ; the card's far corner, a row of margin under the fine print
 
 ; The Portfolio: the game's opening before the Exam (FRONT.1), and the sheet the
-; certificate led to until the Overview (GUARD.1, FRONT.3). Its date, and under it the
-; bell's line, whether the market is open and when it opens or closes (POT.10); then
-; whose holdings these are; then a
+; certificate leads to (GUARD.1), the Overview's from FRONT.3 until FRONT.8's second
+; look, so that the first screen after the exam shows prices moving. Its date, and
+; under it the bell's line, whether the market is open and when it opens or closes
+; (POT.10); then whose holdings these are; then a
 ; row a stock, on the Stocks sheet's own rows, each its name, the model's, its price now
 ; and its change since the last close, in dollars, and beside the change which way it
 ; went (FRONT.2), a glyph read off the cents the change is taken from, so the two never
@@ -1326,19 +1465,29 @@
 ; disclosure a month. The date, the bell and the fine print are every view's, the
 ; library's verbs (BACK.1, POT.10).
 
+(defmacro (portfolio-sizes z)
+  "the Portfolio's sizes at the zoom z: its columns and its margins"
+  (on "Portfolio"
+    (column "A" (*expand z 22) shown card-look)   ; the names; the date, the bell and the fine print spill past them
+    (column "B" (*expand z 12) shown card-look)   ; the price, in dollars: 12 characters, the width of a view's dollars
+    (column "C" (*expand z 12) shown card-look)   ; the change since the last close, in dollars, as wide
+    (column "D" (*expand z 3) shown card-look)    ; which way the change went, a glyph (FRONT.2)
+    (column "E" (*expand z 12) shown card-look)   ; the shares held
+    (column "F" (*expand z 12) shown card-look)   ; their cost basis, in dollars
+    (column "G" (*expand z 12) shown card-look)   ; their value, in dollars
+    (column "H" (*expand z 12) shown card-look)   ; the gain not yet taken, in dollars
+    (column "I" (*expand z 29) shown card-look)   ; the card's margin, to every view's width
+    (margins z 9 13 17)))                         ; the rows between, each a line
+
+(the-zoom portfolio-sizes)          ; the Portfolio's sizes, at the views' zoom
+
 (on "Portfolio"
-  (column "A" 22 shown none)        ; the names; the date, the bell and the fine print spill past them
-  (column "B" 12 shown none)        ; the price, in dollars: 12 characters, the width of a view's dollars
-  (column "C" 12 shown none)        ; the change since the last close, in dollars, as wide
-  (column "D" 3 shown none)         ; which way the change went, a glyph (FRONT.2)
-  (column "E" 12 shown none)        ; the shares held
-  (column "F" 12 shown none)        ; their cost basis, in dollars
-  (column "G" 12 shown none)        ; their value, in dollars
-  (column "H" 12 shown none)        ; the gain not yet taken, in dollars
+  (gridlines off)
   (as-of "A1")                      ; the date and the time, from the calendar: unaudited, as every number here is until the examiner calls (GUARD.3)
   (bell "A2")                       ; the market's hours: open until the close, or when it opens
   (formulas
     ("A3" "=IF(Orders!$B$19=2,\"Your own holdings, at the price now.\",\"The firm's holdings, at the price now.\")"))   ; whose holdings, the pocket an order funds
+  (style "A3" title-look)
   (headers "A4" "Security" "Price ($)" "Change ($)")
   (headers "E4" "Shares" "Cost ($)" "Value ($)" "Gain ($)")
   (cells
@@ -1349,6 +1498,7 @@
   (style "E4:H4" band-figures-look)
   (formulas
     ("A5:A8" "=Stocks!A5"))                     ; each stock's name, the model's, on its rung's row (MENU.3)
+  (style "A5:A8" text-look)
   (dollars "B5:B8" Stocks!E5)                   ; its price now
   (signed-dollars "C5:C8" Stocks!I5)            ; its change since the last close
   (formulas
@@ -1363,15 +1513,18 @@
   (signed-dollars "H5:H8" Positions!G12)        ; the gain not yet taken, either way
   (labels "A10" "Cash on hand ($)" "  Firm" "  Personal")   ; the cash on hand, each pocket's (the owner's word at GUARD.1's hand test)
   (style "A10" heading-look)
+  (style "A11:A12" quiet-look)
   (dollars "B11" Cash!B3)                       ; the firm's: the exam's capital and its books' flows
   (dollars "B12" Cash!B4)                       ; the personal: $100, the hustle's fees once paid, and its books' flows
   (error-joke "C11:C12" Cash!B3)                ;   and beside each its error's joke, where it holds one (PLATE.6)
   (labels "A14" "Net worth ($)" "  Firm" "  Personal")   ; each pocket's net worth, its cash and its holdings
   (style "A14" heading-look)
+  (style "A15:A16" quiet-look)
   (dollars "B15" Cash!B9)
   (dollars "B16" Cash!B10)
   (error-joke "C15:C16" Cash!B9)                ;   and beside each its error's joke
-  (fine-print "A18"))                          ; the fine print, a disclosure a month (MENU.1)
+  (fine-print "A18")                           ; the fine print, a disclosure a month (MENU.1)
+  (card-corner "I19"))                          ; the card's far corner, a row of margin under the fine print
 
 ; Trading (PLATE.1): the order desk, beside the Portfolio. Its date and the bell's line;
 ; where an order's money comes from; then a row a stock, its mark when picked and the key
@@ -1391,21 +1544,32 @@
 ; standing beside it; the last order, filled or refused and why; the keys, the Commands
 ; sheet's, each a command of the page's palette too; and the fine print.
 
+(defmacro (trading-sizes z)
+  "Trading's sizes at the zoom z: its columns, its buttons' rows and its margins"
+  (on "Trading"
+    (column "A" (*expand z 3) shown card-look)    ; the mark of the stock picked; the date, the bell and the lines spill past it
+    (column "B" (*expand z 22) shown card-look)   ; the names and the labels
+    (column "C" (*expand z 12) shown card-look)   ; the price now, in dollars
+    (column "D" (*expand z 12) shown card-look)   ; the shares held
+    (column "E" (*expand z 12) shown card-look)   ; Buy 1
+    (column "F" (*expand z 12) shown card-look)   ; Buy 10
+    (column "G" (*expand z 12) shown card-look)   ; Buy max
+    (column "H" (*expand z 12) shown card-look)   ; Sell 1
+    (column "I" (*expand z 12) shown card-look)   ; Sell 10
+    (column "J" (*expand z 12) shown card-look)   ; Sell all
+    (column "K" (*expand z 5) shown card-look)    ; the card's margin: every view's card as wide as this one
+    (heights 6 9 (*expand z 18))                  ; a row of buttons a stock, each a little taller than a line
+    (margins z 4 10 14 16)))                      ; the rows between, each a line
+
+(the-zoom trading-sizes)            ; Trading's sizes, at the views' zoom
+
 (on "Trading"
-  (column "A" 3 shown none)         ; the mark of the stock picked; the date, the bell and the lines spill past it
-  (column "B" 22 shown none)        ; the names and the labels
-  (column "C" 12 shown none)        ; the price now, in dollars
-  (column "D" 12 shown none)        ; the shares held
-  (column "E" 12 shown none)        ; Buy 1
-  (column "F" 12 shown none)        ; Buy 10
-  (column "G" 12 shown none)        ; Buy max
-  (column "H" 12 shown none)        ; Sell 1
-  (column "I" 12 shown none)        ; Sell 10
-  (column "J" 12 shown none)        ; Sell all
+  (gridlines off)
   (as-of "A1")                      ; the date, every view's
   (bell "A2")                       ; the market's hours, every view's
   (formulas
     ("A3" "=\"Orders fill at the price shown, while the market is open, from \"&IF(Orders!$B$19=2,\"your own cash.\",\"the firm's cash, which is to say other people's money.\")"))   ; where an order's money comes from
+  (style "A3" text-look)
   (headers "B5" "Security" "Price ($)" "Shares")
   (cells
     ("A5" "")                       ; the band spans the mark's column,
@@ -1421,7 +1585,9 @@
   (formulas
     ("A6:A9" "=IF(Orders!$B$16=Orders!B6,\"▸\",Orders!B6)")   ; the stock picked, marked; each other its key, 1 to 4
     ("B6:B9" "=Orders!A6"))         ; each stock's name, the order desk's
-  (style "A6:A9" band-center-look)  ; the band down the keys' column, in the middle of its 3 characters
+  (style "A6:A9" band-center-look)  ; the band down the keys' column, in the middle of its 3 characters,
+  (look "▸" picked-look)            ;   the stock picked a chip of the whisper
+  (style "B6:B9" text-look)
   (dollars "C6:C9" Stocks!E5)       ; its price now
   (formulas
     ("D6:D9" "=Positions!D12"))     ; the pocket's shares of it
@@ -1440,17 +1606,22 @@
   (look "[ Sell 10 ]" button-look)
   (look "[ Sell all ]" button-look)
   (labels "B11" "Cash available ($)")
+  (style "B11" quiet-look)
   (dollars "C11" Orders!B31)        ; the pocket's cash now
   (cells
     ("D11" "[ Switch ]")            ; the switch, beside the cash it turns: Orders!B43:B44 name this cell
     ("E11" "or press C"))           ; its key, the Commands sheet's D12
   (style "D11" lone-button-look)    ; the switch drawn as a button
+  (style "E11" quiet-look)
   (error-joke "C12" Orders!B31)     ; under the cash, its error's joke, where it holds one, the switch standing beside it (PLATE.6)
   (formulas
     ("A13" "=CHOOSE(Orders!$B$41+1,\"No order yet.\",IF(Orders!$B$40>0,\"Bought \",\"Sold \")&ABS(Orders!$B$40)&IF(ABS(Orders!$B$40)=1,\" share of \",\" shares of \")&Orders!$B$32&\" at the price shown.\",\"Refused: the market was closed. Orders fill from the opening bell to the closing bell.\",\"Refused: no stock is picked. Press 1 to 4 to pick one, or click a button on its row.\",\"Refused: the cash does not cover \"&IF(Orders!$B$35=2,\"10 shares\",\"a share\")&\" of \"&Orders!$B$32&\".\",\"Refused: \"&IF(Orders!$B$39=0,\"no shares of \"&Orders!$B$32&\" to sell.\",\"fewer than 10 shares of \"&Orders!$B$32&\" to sell.\"),\"Refused: the cash shown is an error. Orders fill against cash the books can count.\",\"Refused: the order would take the books past their ceiling.\")"))   ; the last order: filled, or refused and why
+  (style "A13" text-look)
   (cells
     ("A15" "Press 1 to 4 to pick a stock, marked ▸; then B, N or M buys 1, 10 or the most, and S, D or F sells 1, 10 or all."))   ; the keys, the Commands sheet's
-  (fine-print "A17"))               ; the fine print, every view's
+  (style "A15" quiet-look)
+  (fine-print "A17")                ; the fine print, every view's
+  (card-corner "K18"))              ; the card's far corner, a row of margin under the fine print
 
 ; ---- BACK.1: the gigs ---------------------------------------------------------------
 ; Gigs, the game's second view, where the side hustle is worked: its button, the key
@@ -1470,26 +1641,42 @@
 ; a button; on any other sheet P is unbound, and the viewport's, which takes no letter,
 ; as every key the Keys sheet leaves unbound is: the arrows, Enter and Space among them.
 
+(defmacro (gigs-sizes z)
+  "Gigs' sizes at the zoom z: its columns, its button's row and its margins"
+  (on "Gigs"
+    (column "A" (*expand z 26) shown card-look)   ; the button and the labels: as wide as the button's text
+    (column "B" (*expand z 12) shown card-look)   ; the counts, the fees and the button's key: 12 characters, the width of a view's dollars
+    (column "C" (*expand z 88) shown card-look)   ; the card's margin, to every view's width
+    (heights 5 5 (*expand z 22))                  ; the button, as tall as one
+    (margins z 4 6 10 12)))                       ; the rows between, each a line
+
+(the-zoom gigs-sizes)               ; Gigs' sizes, at the views' zoom
+
 (on "Gigs"
-  (column "A" 26 shown none)        ; the button and the labels: as wide as the button's text
-  (column "B" 12 shown none)        ; the counts, the fees and the button's key: 12 characters, the width of a view's dollars
+  (gridlines off)
   (as-of "A1")                      ; the date, every view's
   (bell "A2")                       ; the market's hours, every view's
   (cells
     ("A3" "Proofreading prospectuses at $250 apiece, a day's work and one a week, paid by the prospectus and not by the page.")
     ("A5" "[ Proofread a prospectus ]")   ; the button: Hustle!B3:B5 name this cell
     ("B5" "or press P"))            ; its key, the Keys sheet's B5
-  (style "A5" lone-button-look)     ; the button drawn as a button
+  (style "A3" text-look)
+  (style "A5" lone-button-look)     ; the button drawn as a button, as tall as one (gigs-sizes)
+  (style "B5" quiet-look)
   (labels "A7" "Proofread" "Left this run" "Fees earned ($)")
+  (style "A7:A9" quiet-look)
   (formulas
     ("B7" "=Hustle!B17")            ; the prospectuses proofread, their work done
     ("B8" "=Hustle!B2-Hustle!B12")) ; what remains of the run's claims
+  (style "B7:B8" text-look)
   (dollars "B9" Hustle!B18)         ; the fees
   (formulas
     ("A11" "=IF(Hustle!B16=1,\"Proofreading: the fee is paid \"&Hustle!B19&\".\",IF(Hustle!B12>=Hustle!B2,\"Compliance has approved \"&Hustle!B2&\" a run, and you have proofread \"&Hustle!B12&\".\",IF(Hustle!B14=1,\"Done for the week: the next prospectus arrives \"&IF(Hustle!B13-Day!$B$3=1,\"tomorrow\",\"in \"&(Hustle!B13-Day!$B$3)&\" days\")&\".\",\"A prospectus awaits. Nobody else has read one either.\")))"))   ; where the hustle stands: one being proofread, the run spent, this week's made, or open
-  (fine-print "A13"))               ; the fine print, every view's
+  (style "A11" text-look)
+  (fine-print "A13")                ; the fine print, every view's
+  (card-corner "C14"))              ; the card's far corner, a row of margin under the fine print
 
-(sheet "Keys" visible)              ; the keys: a device the game writes, among the engine's
+(sheet "Keys" hidden)               ; the keys: a device the game writes, among the engine's
 (on "Keys"
   (cells
     ("A5" "a"))                     ; the Input sheet's fifth button,
@@ -1514,16 +1701,27 @@
 ; the worth is the begin's, the two side by side at the start, and the card's other figures
 ; are empty. The Report holds no button and binds no key, having no act of its own.
 
+(defmacro (report-sizes z)
+  "the Report's sizes at the zoom z: its columns and its margins"
+  (on "Report"
+    (column "A" (*expand z 30) shown card-look)   ; the labels: as wide as the longest name a firm's row holds, and Average Co.'s line
+    (column "B" (*expand z 12) shown card-look)   ; the worth, in dollars: 12 characters, the width of a view's dollars
+    (column "C" (*expand z 12) shown card-look)   ; the quarter's percents, as wide
+    (column "D" (*expand z 15) shown card-look)   ; the year's, as wide as its header, The year so far
+    (column "E" (*expand z 57) shown card-look)   ; the card's margin, to every view's width
+    (margins z 4 10 13 15)))                      ; the rows between, each a line
+
+(the-zoom report-sizes)             ; the Report's sizes, at the views' zoom
+
 (on "Report"
-  (column "A" 30 shown none)        ; the labels: as wide as the longest name a firm's row holds, and Average Co.'s line
-  (column "B" 12 shown none)        ; the worth, in dollars: 12 characters, the width of a view's dollars
-  (column "C" 12 shown none)        ; the quarter's percents, as wide
-  (column "D" 15 shown none)        ; the year's, as wide as its header, The year so far
+  (gridlines off)
   (as-of "A1")                      ; the date, every view's
   (bell "A2")                       ; the market's hours, every view's
   (formulas
     ("A3" "=\"Report card for \"&IF(Proctor!$B$40=0,\"a firm pending registration\",Firms!$E$4)&\", graded by the proctor at seed \"&Clock!$B$3&\" and tier \"&Market!$B$3&\".\"")   ; whose card, and the market it was graded on
     ("A5" "=IF(Performance!$B$8=0,\"No card yet: the first is issued when the first quarter ends, after its 91st day.\",\"The \"&CHOOSE(Performance!$B$9,\"first\",\"second\",\"third\",\"fourth\")&\" quarter of year \"&Performance!$B$10&\", to its last close.\")"))   ; which quarter, or when the first card comes
+  (style "A3" title-look)
+  (style "A5" text-look)
   (cells
     ("A6" "")                       ; the band spans the labels' column, which heads nothing
     ("B6" "Worth ($)")
@@ -1536,15 +1734,20 @@
   (style "B6:D6" band-figures-look)
   (cells
     ("A9" "Alpha, the difference"))
+  (style "A7:A9" text-look)
   (dollars "B7:B8" Performance!C13) ; each one's worth at the card, or at the begin before the first
   (percent "C7:C9" Performance!B17) ; each return over the quarter, and alpha
   (percent "D7:D9" Performance!C17) ; over the year so far
   (formulas
     ("A11" "=IF(Performance!$B$8=0,\"\",\"Grade: \"&Performance!$B$21&\" for the quarter, and \"&Performance!$C$21&\" for the \"&IF(Performance!$B$9=4,\"year.\",\"year so far.\"))")   ; the grades, in a sentence
     ("A12" "=IF(Performance!$B$8=0,\"\",\"The proctor remarks: \"&Remarks!$D$3)"))   ; the proctor's remark on the card
+  (style "A11" heading-look)        ; the grades
+  (style "A12" signature-look)      ; the proctor's remark
   (cells
     ("A14" "Your own account is not graded: the proctor grades the firm's book, and your own money is your own business."))
-  (fine-print "A16"))               ; the fine print, every view's
+  (style "A14" quiet-look)
+  (fine-print "A16")                ; the fine print, every view's
+  (card-corner "E17"))              ; the card's far corner, a row of margin under the fine print
 
 ; The Camera (GUARD.1), the other device the game writes: its first two rows the Screen's
 ; window, at A1, unused while the Screen is hidden but two whole numbers for the host to
@@ -1558,7 +1761,7 @@
 ; first, and the person's tabs win between with nothing shown again. The views' names
 ; are the model's values, the Proctor's and the Performance sheet's.
 
-(sheet "Camera" visible)            ; the window and the sheet shown
+(sheet "Camera" hidden)             ; the window and the sheet shown
 (camera 1 1)                        ; the Screen's window at A1, the kit's two rows
 (on "Camera"
   (cells
@@ -1580,7 +1783,7 @@
 ; D and the hustle's P stay their own views'. The order desk reads each name from here,
 ; and a command run reaches the game as its name in Input!B20, for one frame.
 
-(sheet "Commands" visible)          ; the cartridge's commands: a device the game writes
+(sheet "Commands" hidden)           ; the cartridge's commands: a device the game writes
 (headers "Commands" "A1" "name" "words" "holds" "key")
 (on "Commands"
   (column "A" 11 shown none)        ; the names: as wide as the longest, switch-cash
@@ -1625,7 +1828,7 @@
 ; joined from the column and the ring's row while an order fills, and empty, writing
 ; nothing, while none does (MISE.3's third probe).
 
-(sheet "Write" visible)             ; the derived writes: a device the game writes
+(sheet "Write" hidden)              ; the derived writes: a device the game writes
 (headers "Write" "A1" "sheet" "address" "value")
 (on "Write"
   (put "A2" (sheet "Ledger") (when (<> Orders!$B$26 0)) (address (& "A" Orders!$B$30)) (value Orders!$B$29))   ; the order's number
@@ -1635,3 +1838,14 @@
   (put "A6" (sheet "Ledger") (when (<> Orders!$B$26 0)) (address (& "E" Orders!$B$30)) (value Orders!$B$26))   ; the shares, a sale negative
   (put "A7" (sheet "Ledger") (when (<> Orders!$B$26 0)) (address (& "F" Orders!$B$30)) (value Orders!$B$23))   ; the price, in cents
   (put "A8" (sheet "Ledger") (when (<> Orders!$B$26 0)) (address (& "G" Orders!$B$30)) (value Orders!$B$31)))   ; the pocket's cash after it, in cents
+
+; The engine's own devices (Alonzo's SPEC.md section 4.2): the Clock, the frame, the rate
+; and the seed, and the File, the cartridge's name, its size and the save, each filled by
+; the engine in a sheet the cartridge names as in one it makes, named here only to stand
+; hidden with the back office (FRONT.8). The engine's third, the Input sheet, it fills
+; only where the cartridge holds none, so a row naming it here would leave it without
+; its labels and its zeros: it stays in the strip until a game may hide it, an ask of
+; Alonzo (docs/OMAKASE.md, the asks).
+
+(sheet "Clock" hidden)              ; the engine's clock, behind the box with the back office
+(sheet "File" hidden)               ; the engine's file, behind the box with the back office

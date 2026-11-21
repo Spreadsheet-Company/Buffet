@@ -115,6 +115,8 @@ empty.*
 
   *Closed 2026-10-19.* Predicted `~days`; cost one sitting, the scoping, the build, its measurements and mutants, and the owner's hand test, which passed it whole. What landed: the Overview, the sixth view, after the Certificate, `Proctor!B6` naming it; the Market's weather at its foot, `B114:B124`, and its look back moved to the last close made; the Dice's 83rd draw; the Headlines sheet, `src/content/headlines.vla`, ten rows; caveats 21 and 22; the source's notes and comments; 1,258 rows and 805 formula cells; the hand's last close made, its change, its weather and its headline; 81 tests, the Overview and the weather held at every bell and every day's turn of the long runs and at every frame of the order desk's sessions, the run that writes the open reaching Tuesday's close; eighteen mutants caught; the describe golden blessed again; `check_layout`'s content pin at 5; and, in `OMAKASE.md`, `BD-5`'s rows and the notes on `BACK.2`, `MENU.7`, `SPECIAL.1` and `POT.4`. Three of the nine predictions missed in part, each named beside its number: Cash's readers 8 where 9; the bell no dearer where 1 to 6 µs were priced, and the first frame 19.4 µs dearer, under the 20; and the suite cheaper than priced, the hour's year 3% longer, the weekday 1% and the whole 0.15 s.
 
+- ✅ **`FRONT.8` — the night desk: every view a card of midnight plum, as Seiyaku's board and Brickwork's wall are.** *Minted, scoped and built 2026-11-19 in one sitting at the owner's word, "Buffet is boring. It looks boring, for starters, which should be an easy fix. Kairos, Seiyaku, and Brickwork all got aesthetic passes which made them much more playable. Can we do that to Buffet first so my eyes aren't bleeding during my playtest?", before `HOUSE.4`'s second slice records its session; at the owner's look the same evening, "Wow, everything looks much better", two notes built as decisions 9 and 10, the zoom and the back office hidden; at the second, 2026-11-21, the zoom brought to 135% so that a smaller screen never scrolls a card sideways, and the Input tab left for Alonzo's fix first, at the owner's word; at the third, the same day, the hand tests passed and the certificate's lead given back to the Portfolio, where the prices move: the decisions, the comparison and what the build found are under THE ITEMS, SCOPED.* Each of the seven views bound to its extent with its gridlines off, a card 126 characters wide at 100% on the page's gray, so that a tab turned moves no edge but the viewport's rounding to whole pixels, and drawn at the game's own zoom, 1.35, the owner's 135%, its type, columns and rows' heights said once at 100% and handed the zoom by the source's `the-zoom`; the strip the seven cards, every other sheet behind the box of hidden sheets but the engine's Input, an ask of Alonzo; the certificate leading to the Portfolio, its prices moving from the first bell; the whisper on midnight plum, lilac for a label, the date, a hint and the fine print, a view's headline larger in lilac, and the bell's line bold and, by a rule, in the mint while the market is open; a table's band a shade lighter; every button the deep shade lightened until white reads at 4.53:1, so that the lavender is what a click does; the glyphs chips of the owner's mint and burgundy, the stock picked a chip of the whisper; the certificate's title in Georgia; and an error's joke italic and small enough to end inside its card. No formula, address or button's place moved, and one value, the certificate's lead. *Passed at the owner's hand test, 2026-11-21, after three looks: "Passes, commit it".*
+
 ## 📜 THE MENU CARD
 
 - ✅ **`MENU.1` — the strings sheets and the picker.** *Scoped, built and hand-tested 2026-10-15: the scoping, its fourteen decisions approved whole by the owner and amended at the hand test, every prediction beside its number, what the build found and the owner's hand test are under THE ITEMS, SCOPED.* The content sheets under `src/content/`, a file a sheet holding words alone, one macro named after the file whose body is one call of the library's `strings`, each sheet one kind of string, hidden after the model's sheets, its rows of text each with the course that added it, its vintage, and the reviewer who approved it (*the vintage and the reviewer struck 2026-10-15 at the owner's word, a row's review its pull request's and no course a freeze, `BD-1` amended: `MENU.2`'s amendments after its close*); the source's manifest its first form, then every include, then the code, each content sheet's macro called where the sheet belongs (the owner's words at the hand test); the library's `picker`, `CHOOSE(k, ...)` over a sheet's rows, generated from the sheet's extent so that a row added needs no formula edited, one cell to 1,547 rows below the headers, the pages of 500 written by the dish whose sheet first passes 1,000 rows; the first sheet, the fine print as a rotating footer, the Disclosures sheet, eight rows in the owner's words, a disclosure a month from the day; and the one-page *How to add a row* in the folder, for a stranger with five minutes. Every other sheet arrives with the dish that reads it, named for it: `Questions` (`MENU.2`), `Headlines` (`FRONT.3`), `Memos` (the first of `MENU.4` and `GUARD.3`), `Firms` (`BACK.2`), `Awards` (`MENU.7`), `Errors` (`PLATE.6`) and `Exits` (`FRONT.7`). *Oracle, met:* the layout check's content rule and the source's order (`tools/check_layout.ps1`, the content sheets' pin raised from 0 to 1, its control fifteen mutants), their headers held by `check_spdx.ps1`; the page's content blocks (`tools/build_web.ps1`, `tools/check_web_offline.ps1`, its control fifteen mutants); the oracle's tests, the fine print held to the hand at every frame, the rows counted by their extent, every row picked in its turn, a row added expanding with no other edit, the one picker's limit and the tripwire before it, and every sheet written bare with the content hidden; and the owner's hand test in the page. *Pays into:* every string any view shows: the ticker (`FRONT.3`), the exam (`MENU.2`), the names (`MENU.3`), the errors (`PLATE.6`), the endings (`FRONT.7`); and the cheapest pull request there is. `~days`
@@ -8930,4 +8932,276 @@ word, and begins with the owner's session. Nothing is built.*
 - *A course's ending outgrows a sitting at the game's pace:* the first card at 71 minutes, the year's
   at 4 hours 47, and course 1's rate cycle at years. `BD-1`'s replay golden at a later course will
   want the scripted player (`MISE.5`) or another answer, at that course's scoping.
+
+## `FRONT.8` — the night desk: every view a card
+
+*Minted, scoped and built 2026-11-19 in one sitting at the owner's word, before `HOUSE.4`'s second
+slice records the owner's session, since a replay pins its cartridge's bytes: "See, the problem
+is... Buffet is boring. It looks boring, for starters, which should be an easy fix. Kairos,
+Seiyaku, and Brickwork all got aesthetic passes which made them much more playable. Can we do that
+to Buffet first so my eyes aren't bleeding during my playtest?" The looks are one section of the
+source and every color a name there, so the pass is a door that swings both ways: built at its
+recommendation, the white card rendered beside it, and the owner's look the decision.*
+
+**What it stands on.** The three passes share a recipe: a board bound to its extent on the page's
+gray (`(bound ...)`, the page's version 6, Seiyaku's Board and Brickwork's Wall), its gridlines off,
+edges and fills drawn on purpose, larger type, and the family's colors carrying state (Seiyaku's
+rules, Brickwork's shadow). Buffet's views were the opposite: an endless white grid with its
+gridlines, every text at 11 points in column A, color on the buttons and bands alone. Four facts of
+the engine at the pin, read in `vla-lang` 0.14.0 and the page at `v0.4.0` while building, shaped
+what follows: a cell's format is said once, a second `style` row over it refused (`machine/load.rs`'s
+`style`), so a view's background cannot be laid under its cells' own; a column's format paints only
+the cells that hold nothing (`viewport.js`'s `formatOf`), and a cell holding anything with no format
+draws format 0, the sheet's white; a bound sheet's extent is the rectangle of the cells that hold
+anything, styles not counted; and a text spills to the bound card's edge and no further.
+
+**The decisions, as built.**
+
+1. *Every view a card.* The manifest's `(bound ...)` names the seven views; each `(gridlines off)`;
+   each column to the card's last paints its empty cells the card, format 16, midnight plum; every
+   cell that holds anything says a format of its own, the kitchen's frame verbs saying theirs; each
+   card 126 characters wide, Trading's table and a margin of 5, every other view given a last column
+   that makes up the width (882 pixels at 96 DPI on every tab), so that a tab turned moves no edge;
+   and a row of margin under the fine print, its far corner the empty text drawn as the card, the
+   kitchen's `card-corner`, since the extent is made by the cells that hold anything.
+2. *The palette, named once.* Nine colors by `define` before the formats: Kairos's night `#1C1828`,
+   a chip's ink; midnight plum `#2E2645`, the card; the card a shade lighter `#3B3159`, a band; the
+   button's lavender `#8063D2`; lilac `#C4B0F0`, 7.31:1 on the card; the whisper `#F7F4FC`, 13.05:1;
+   white, a button's text; and the owner's mint and burgundy. An author recolors every view there.
+3. *The type.* A view's headline, row 3, bold lilac at 13 points (but Trading's and Gigs', sentences
+   of 113 characters, at the text's size); the exam's question bold at 14; the Overview's net worth
+   bold at 14 in a column of 16 characters; the certificate's title bold at 16 in Georgia; the
+   proctor's signature and remark italic; the fine print lilac italic at 10; the date and a key's
+   hint lilac; and the rows of buttons taller, the options and a lone button 22 points, Trading's
+   grid 18.
+4. *A button is lavender under white, and the lavender is what a click does.* The owner's words at
+   `GUARD.1`'s hand test, "lavender background and white text", kept: the deep shade lightened toward
+   Lovelace Lavender to the lightest where white still reads at 4.5:1, `#8063D2` at 4.53:1, so that a
+   button stands on the card at 3.13:1, WCAG's bar for a control, where the deep shade stands at
+   2.42:1. Bold but Trading's grid, as before; a button among others edged by the card on its right
+   and below, two pixels, an option by the card below it, three; and no cell off a button on it, the
+   bands now a shade of the card.
+5. *The glyphs are chips.* A gain's ▲ in the night on the mint, 12.65:1; a loss's ▼ in the whisper
+   on the burgundy, 9.96:1; each edged by the card below, so that two stay two; a flat day's = on
+   the card. The stock picked on Trading, ▸, a chip of the whisper, by a look of its mark.
+6. *The bell lights while the market is open.* The kitchen's `bell` writes, with its formula, a rule
+   over its cell, `=Day!$B$19=1`, laying the mint's ink alone (format 24, a format of groups alone),
+   so that a glance at any view says whether an order fills, 10.35:1. Seven rules, one a view; the
+   page's frame budget, 876 formula cells, stands, each rule computed where the open bell moves.
+7. *An error's joke ends inside its card.* The longest, #NUM!'s, 112 characters, spilled past three
+   cards at the text's size ("…to contin"); at the fine print's size and slant it ends inside each,
+   about 26 pixels to spare on the Overview, the tightest, once every card was widened from the 123
+   characters first built to 126, where the first width left 5.
+8. *What stands.* No formula, value, address or button's place moved; the model's sheets keep no
+   format; the hand's rules are untouched, only its constants of the buttons' formats and the card's.
+
+**The comparison.** The same source with the palette's names set to a white card (the card white,
+the band `#EFEAFA`, the labels `#5B45A8`, the text `#1D1D1B`, the buttons the deep shade) and three
+formats whose roles differ on white, built into a page in scratch and captured beside the night
+desk. It reads cleanly, but its bell can only light by a fill, and a fill covers its own cell alone:
+on Trading, three characters of the line. The night desk was built; the white card stays a palette's
+names away.
+
+**What it cost, measured.** The cartridge 86,501 bytes of LF text to 90,367, 1,494 rows to 1,614.
+Natively, four rounds alternated between `HEAD`'s cartridge and this one in one process each: the
+load 7.2 to 8.3 ms against 7.5 to 8.1, a frame 3.23 to 3.49 µs against 3.35 to 3.56; no difference
+the rounds can tell. The page 4,670,699 characters to 4,682,129. The describe golden moved by what
+the pass adds and nothing else: the manifest's `(bound ...)`; the plan's shapes 266 to 273, texts
+261 to 262, formulas 876 to 883 and alone 616 to 623, the seven rules' answers, one formula's text
+among them; the Day sheet's readers 74 to 81; and the seven shapes, `Exam[1]!A2` to `Report[1]!A2`,
+`=IFERROR(IF(Day!R19C2=1,1,0),0)`, the six after the first `(same 266)`. Alonzo's loop check from
+`v0.4.0` over the built page: every case a game's page runs gives the verdict it gave at `HOUSE.2`,
+at both ratios; only the `grid` case's counts moved, its first sheet now bound (`gridBound` 1,
+`gridCanvas` 5, `gridFonts` 190 where 64, `gridEdges` 76 where 128).
+
+**The tests.** 108, two of them new or rewritten: `the_views_draw_the_houses_looks` holds the bands,
+the button's lavender on a button's brackets and nowhere else, the chips, the buttons' edges, the
+picked mark, the emptied option the card's, the codes and the headings in lilac;
+`every_view_is_a_card` holds the manifest's bound, each view's gridlines off, every column to the
+extent's last the card's, the width, the corner a row under the fine print, and every cell holding
+anything a fill of its own at the exam and in session. `every_format_a_view_draws_reads` also holds
+each rule's format laid over its cell at 4.5:1, its format reader taught italic, a size, a family
+and a format of groups alone. Six tests of a view's columns read `shown 16` where `shown none`; the
+Overview's net worth column is `WORTH_COLUMN`, 16.
+
+**Found, none minted.**
+- *The selection's wash on a dark card:* every view opens with `A1` selected, and on the card the
+  wash blends the date's lilac to about `#D2C2F3` on about `#7F7695`, 2.6:1 (*derived*), a bright bar
+  across the Exam's 100 characters until a click moves it. Alonzo's, beside `FRONT.2`'s finding of
+  the wash on a button (`OMAKASE.md`'s asks table); the owner's to pass on.
+- *A text stops at a bound card's edge:* a later string longer than its card, a joke or a headline,
+  is cut there, and no test can measure a text's width. Its author widens the card or shortens the
+  string, at its dish.
+
+**The owner's look, 2026-11-19, and what it amended.** The owner's words, with a screenshot of
+Trading at Chrome's 200%: "Wow, everything looks much better. Good job. Two notes: I zoomed the
+page in to 200% and it looks more like a game this way, so is it possible to set the standard zoom
+for Buffet to this size? (screenshot attached) The uncolored sheets are all back-office data tabs,
+so shouldn't they be hidden?" Both built the same evening as two more decisions:
+
+9. *The zoom is the game's own.* The page draws a grid at its cells' own sizes and never zooms one
+   (Alonzo's `ENGINE.14`, decision 9), and Brickwork's answer to the owner's "a 50-100% zoom" was its
+   own cells (`CART.3`'s `cell-size`); so Buffet's zoom is one number of its source, 2, which
+   `the-zoom` hands to every macro that says a size, Brickwork's `wall-size` idiom, since a `define`
+   reaches no expand-time primitive at 0.14.0 and a macro's parameter does: `the-looks`, the
+   formats, every text's type said at 100% (11 points, the headline's 13, the question's and the
+   worth's 14, the seal's 16, the fine print's and a joke's 10) and drawn at twice it; and each view's
+   own sizes, `exam-sizes` to `report-sizes`, its columns (252 characters, 1,764 pixels), its buttons'
+   rows (44 points, Trading's 36) and its margins, each row that holds nothing 15 points at the zoom
+   by the kitchen's `margins`, since the page fits a row to the type its cells say and to nothing
+   where it holds none (`viewport.js`'s `computeFits`, 20 pixels to 11 points, so that a row of
+   22-point text fits 40 pixels, twice the default row). The card's own format says 11 points too,
+   so its corner's row is a line tall at the zoom. At 1 the cards stand as first built; the back
+   office stays at 100%. At the owner's window, 2,508 pixels wide, the card leaves about 700 to
+   spare; a screen narrower than about 1,800 scrolls it, and Chrome's zoom shrinks it. The page's own
+   bar, headers and tabs keep the page's size, and Chrome's zoom over the game's draws the card at
+   four times. *Alternatives:* Chrome's zoom alone, which Chrome keeps for every page opened from a
+   file and which no other player inherits; a zoom the record carries a sheet, as Excel's sheet
+   view keeps `zoomScale`, which the language and the page do not read, `ENGINE.14`'s decision 9
+   standing against it: the owner's to raise with Alonzo, these rows going back to 100% under it.
+   (*Amended at the owner's second look, 2026-11-21: the zoom 1.35, so that no card scrolls
+   sideways in a window 1,280 pixels wide; below.*)
+10. *The back office behind the box.* Every sheet after the seven cards is hidden: the model's
+    eleven by the kitchen's `hidden-sheets`, the twin of the kit's `sheets`; the Caveats, `MENU.5`'s
+    one content sheet shown, a plain sheet having no place in a strip of cards until it is a card
+    itself; the Keys, the Camera, the Commands and the Write sheet; and the engine's Clock and File,
+    named hidden by the source, which the engine fills in a sheet the cartridge names as in one it
+    makes. The strip reads the seven cards and Input, its box "hidden sheets (58)". It reverses
+    `FRONT.1`'s decision 5, the model in plain sight, whose recorded alternative this was, at the
+    owner's word; `AD-6` and `BD-3` stand, the box opening every sheet to anyone who ticks it, and
+    the notes now say so, "Tick the hidden sheets to open the back office". The engine fills the
+    Input sheet only where the cartridge holds none (`make_own_sheets`, at `alonzo` 0.4.0 and on
+    Alonzo's main), so a row naming it would leave it without its labels and its zeros; the source
+    copying the engine's seventy cells to hide it would be a workaround the engine's fix deletes, so
+    the Input tab stays, an ask of Alonzo (`OMAKASE.md`'s asks), Seiyaku's Found of the engine's own
+    sheets shown as tabs (`CART.14`) met again. (*Amended at the owner's second look: the engine's
+    fix first, at the owner's word; below.*)
+
+*What the look's amendments cost.* The cartridge 1,614 rows to 1,645, the 29 margins' rows and the
+Clock's and the File's; the page 4,682,129 characters to 4,690,858; nothing natively to time, the rows
+added being sizes and states, which no frame computes. The describe golden moved by one line, the
+notes' last sentence, the sizes and the sheets' states being no line of it. Alonzo's loop check from
+`v0.4.0` over the built page: all 40 of its case verdicts as at this item's build, at both ratios,
+and one count moved, the pass's rows, 1,614 to 1,645. Captured at the owner's window, 2,508 by 1,350
+at a ratio of 1, every view at the exam, in session and with a balance past the end of the numbers,
+#NUM!'s joke ending about 55 pixels inside the Overview's card.
+
+*The tests.* Still 108. `every_view_is_a_card` also holds every row of a card that holds nothing at
+15 points at the zoom and every cell that holds anything a size of its own, at the exam and in
+session, each caught by its mutant, Report's row 15 left out of its margins and the text's look
+without a size (`Certificate!A14` at the exam); its widths, and five tests' columns, read through
+`card_column`, a width said at 100% drawn at the hand's `ZOOM`; the stock names held to a view's
+column at the zoom; the hand's buttons' and card's formats functions of the zoom, `button_format` and
+its three kin; and `every_sheet_is_written_bare_...` holds the strip, the seven cards and Input,
+every other sheet hidden.
+
+*Found at the look, none minted.*
+- *The engine's Input sheet stays a tab* (decision 10): an ask of Alonzo.
+- *The page's bar and tabs at 100% beside a card at 200%:* the page draws its own controls at its
+  own size whatever a game's zoom; a page whose bar and strip follow a game's zoom is Alonzo's to
+  weigh, the owner's to pass on.
+
+**The owner's second look, 2026-11-21, and what it amended.** The owner's words: "Hand tests pass.
+The input tab cannot be hidden? Also, if the size now threatens scrolling on smaller monitors, maybe
+we should scale it down a bit to be safe so side-scrolling doesn't ruin the UX on smaller monitors."
+
+*What was measured before the choice.* The page's own answer, by a headless Chrome at a window's
+viewport, each view after the exam: the grid's box is the window's whole width, the row numbers 32
+pixels and a scrollbar 15, so at 2 a card is 1,796 pixels and scrolls sideways in any window
+narrower, 1,811 where it also scrolls down; at 1,366 by 633, a 1366-by-768 laptop's viewport under
+Chrome's own bars, and at 1,280 by 585, a 1080p laptop's at 150%, every view did. The candidates,
+each card's width by the viewport's rule (`columnPixels` over the source's widths at the zoom) and
+the windows that scroll it sideways:
+
+| Zoom | Card, pixels | Sideways at 1,280 by 585 | at 1,366 by 633 | at 1,440 and wider |
+|---|---|---|---|---|
+| 200% | 1,796 | 531 | 445 | 371 at 1,440, 275 at 1,536; none at 1,920 |
+| 175% | 1,575 | 310 | 224 | 150 at 1,440, 54 at 1,536 |
+| 150% | 1,355 | 90 | 4 | none |
+| 145% | 1,312 | 47 | none | none |
+| 140% | 1,270 | 5 | none | none |
+| 135% | 1,223 | none, 42 spare | none | none |
+| 125% | 1,135 | none, 130 spare | none | none |
+
+Any multiple of 5% is exact: the language takes a type's size in whole twentieths of a point
+(`FontSize::parse` at `vla-lang` 0.14.0), and `*expand` spells its product to fifteen significant
+digits (`str_`), so 1.35 times 11 is written 14.85. The owner chose 135% from these, and for the
+Input tab the engine's fix first.
+
+9. *(Amended.)* The zoom is 1.35, the one number `the-zoom` hands on: a card 170.1 characters, its
+   text 14.85 points (the fine print's and a joke's 13.5, the headline's 17.55, the question's and
+   the worth's 18.9, the seal's 21.6), its buttons' rows 29.7 points (Trading's 24.3) and its margins
+   20.25. No card scrolls sideways from a window 1,280 pixels wide up, even beside a scrollbar; on
+   the owner's window a card is about half its width, and Chrome's own zoom at 150% over it draws
+   about the first look's 200%, the bar and the tabs with it. A zoom is a multiple of 5%, the
+   source's note says why.
+10. *(Amended.)* The Input tab waits for Alonzo, at the owner's word: the engine filling a sheet
+    named Input that the cartridge declares and leaves empty, as it already fills a declared Clock
+    and File, so that one row, `(sheet "Input" hidden)`, hides it after the pin that brings the
+    fix. The owner's rule decided it: a fix that would change the rows the cartridge writes goes
+    first, and the copy of the engine's seventy cells, a path the engine supports ("The cartridge's
+    own Input sheet is left as it wrote it", its test), would be written twice. The playtest goes
+    ahead with the tab.
+
+*What the second look cost.* The cartridge still 1,645 rows, its sizes' values alone moving; the page
+4,691,645 characters; the describe golden unmoved; Alonzo's loop check from `v0.4.0` over the built
+page, all 40 case verdicts and every count as at the first look. The hand's `ZOOM` is `ZOOM_PERCENT`, 135, and
+`zoomed` spells a size as the record does from `zoomed_hundredths`, in whole hundredths so that no
+float enters a test; the tests read a width and a type's size in hundredths (`hundredths`). Three
+checks that the zoom of 2 had loosened, a length held to twice itself, hold a text at the zoom again:
+the hustle's button in its column, a band's header in its column, and the Commands sheet's words read
+in hundredths. Still 108 tests, fmt and clippy clean, the checks all green. Two controls, each
+restored byte for byte: the source's zoom set to 1.3 with the hand left at 135 fails eight tests;
+the Gigs button's column a character narrower at 100%, its margin a character wider so that the card
+keeps its width, fails the hustle's, "the button's text, 3510 hundredths of a character at the zoom,
+runs past its column of 3375", which the check at 2 passed. On the built page at 1,280 by 585, 1,366
+by 633, 1,440 by 790, 1,536 by 729, 1,920 by 945 and the owner's 2,508 by 1,350, no view scrolls
+sideways; the Certificate, the Portfolio, Trading and the Report scroll down at 1,280, three of them
+at 1,366, and the Certificate at 1,536. Captured at the owner's window and at 1,280 by 585, the
+balance past the end of the numbers among them, #NUM!'s joke ending inside the Overview's card.
+
+*Found at the second look, none minted.*
+- *A tab turned moves the card's edge by up to 4 pixels at 135%.* The viewport rounds each column
+  down to whole pixels by Excel's rule, so the cards are 1,219 pixels (Trading's eleven columns) to
+  1,223 (the Exam, the Overview and Gigs), where at 2 every width was whole; 125% and 150% round
+  within a pixel. The cure that keeps 135%: each card's margin column absorbing its own card's
+  rounding, a verb of the kitchen's and a test of pixels by the viewport's rule; the owner's to weigh.
+- *A card's scroll range grows as it is read on a small window.* The viewport knows a row's fitted
+  height only inside the region it has read (`ENGINE.43`), so on a window that shows part of a card
+  the rows below count 20 pixels until scrolled to: the Certificate measured 570 pixels tall at
+  1,280 by 585 and 610 at 1,440 by 790. Alonzo's, the owner's to pass on.
+
+**The owner's third look, 2026-11-21, and what it amended.** The owner's words, with a screenshot
+of the Portfolio in a window snapped beside the editor: "Wow, half screen really is right at the width
+because there's no scrollbar but it almost looks cut off. I do think Open for Business (or O) should
+switch to the Portfolio tab so the player can see that the market is open and things are happening.
+The Overview tab is an anticlimactic, nearly-static page that doesn't give the impression that
+prices are changing. Hand tests pass."
+
+11. *The certificate leads to the Portfolio.* `Proctor!B6` reads `Portfolio`, one value and no
+    formula moved, so that the certificate's button and its key, O, land where the prices move from
+    the first bell: the alternative `FRONT.3`'s decision 1 named, "the lead kept on the Portfolio,
+    the Overview a tab the player finds". The Overview stays a tab beside it, third in the strip,
+    whose order is unchanged. The hand's `LEAD` is the Portfolio, and the notes say the Portfolio
+    first, the Overview beside it.
+
+*What the third look cost.* The cartridge's one value; the describe golden by one line, the notes;
+the page 4,692,453 characters. Still 108 tests: the Overview's own, which starts on the Overview
+with the exam waived, now sees the waiver's frame end on the lead and turns back to the Overview by
+a person's tab, so that every frame it holds steps with the Overview shown. A control, the source's
+`B6` put back to `Overview` with the hand left at the Portfolio, fails five tests: the waiver's,
+the Camera's, the scripted exam's, the Overview's and the Proctor's settings. On the built page, the
+exam answered and O pressed, the tab shown is the Portfolio.
+
+*Found at the third look, none minted.*
+- *A card as wide as its window looks cut off.* The owner's window, snapped beside the editor, is
+  about a card's own width by the screenshot, near 1,220 pixels, so the plum meets the window's edge
+  with no gray beside it, and the card's empty margin column reads as a card that runs on. Every
+  fixed width meets some window so. The cures: a rim on each card's edge, a format of its margin
+  column's and of its corner's; or a zoom a step smaller, which only moves the window it happens at.
+  The owner's to weigh.
+
+**The owner's look.** Passed, 2026-11-21: "Hand tests pass". The lead was built after it, its hand
+test one step: the certificate's O lands on the Portfolio; it passed too, and the item closed at the
+owner's word, "Passes, commit it".
 

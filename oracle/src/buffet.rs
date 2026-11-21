@@ -978,7 +978,7 @@ pub fn dollars(cents: i64) -> String {
     }
 }
 
-/// The width in characters of the columns a view's dollars stand in
+/// The width in characters at 100% of the columns a view's dollars stand in
 /// (`POT.10`): wide enough for $9,999,999.99 under a format's code, past which
 /// the viewport draws `#`s and a person drags the column wider, as in Excel.
 pub const DOLLARS_COLUMN: u64 = 12;
@@ -1073,7 +1073,8 @@ pub fn glyph(now: i64, was: i64) -> &'static str {
     }
 }
 
-/// The Overview (`FRONT.3`): where the certificate leads, and its firm's line
+/// The Overview (`FRONT.3`): the firm at a glance, a tab beside the Portfolio,
+/// where the certificate led until `FRONT.8`'s second look; and its firm's line
 /// before the exam's last answer gives the firm its style and its name
 /// (`BACK.2`).
 pub const OVERVIEW: &str = "Overview";
@@ -1372,9 +1373,12 @@ pub const WAIVED_STYLE: u64 = 1;
 pub const PERSONAL_CASH: u64 = 10_000;
 /// The waiver's cell, which a person's edit of 1 waives the exam by, `B3`.
 pub const WAIVER: (&str, &str) = ("Proctor", "B3");
-/// Where the certificate leads, `B6`: the Overview since `FRONT.3`, where the
-/// Portfolio stood; and the exam's two views.
-pub const LEAD: &str = OVERVIEW;
+/// Where the certificate leads, `B6`: the Portfolio, its prices moving from the
+/// first bell, again since `FRONT.8`'s second look (the owner's word: "The
+/// Overview tab is an anticlimactic, nearly-static page that doesn't give the
+/// impression that prices are changing"), where the Overview stood from
+/// `FRONT.3`; and the exam's two views.
+pub const LEAD: &str = "Portfolio";
 pub const EXAM: &str = "Exam";
 pub const CERTIFICATE: &str = "Certificate";
 /// The most rows one picker holds (`MISE.3`'s probe 3), so the most a bank
@@ -1402,7 +1406,7 @@ pub const ANSWER_KEYS_TEXT: &str = "Click an answer, or press its letter: A, B, 
 /// The eleventh question, ungraded, the Exam view's own (`MENU.2`'s decision
 /// 4).
 pub const STYLE_PROMPT: &str = "Which best describes you?";
-/// The Exam's width in characters, its column A, inside which every option
+/// The Exam's width in characters at 100%, its column A, inside which every option
 /// stands whole with its letter, so that every character of it is its
 /// button.
 pub const EXAM_COLUMN: u64 = 100;
@@ -1415,21 +1419,90 @@ pub const NAME_PENDING: &str = "pending registration";
 /// the hand test, so that its "You." does not stand alone.
 pub const CAVEAT_HEADING: &str = "Caveat:";
 /// The buttons' look (`GUARD.1`'s hand test, the owner's words: "lavender
-/// background and white text"; `FRONT.2`'s second slice): format 1, a button of
-/// Trading's grid, white on Lovelace Lavender's deep shade, not bold at the owner's
-/// word at `FRONT.2`'s second hand test, centered, its right and bottom edges the
-/// gridlines' gray, since a fill covers its own, so that two side by side stay two.
-pub const BUTTON_FORMAT: &str = "(format 1 \"6B4FC8\" general nowrap (font \"FFFFFF\") (align center) (border (right thin \"D9D9D2\") (bottom thin \"D9D9D2\")))";
+/// background and white text"; `FRONT.8`, the night desk): format 1, a button of
+/// Trading's grid, white on the button's lavender, the deep shade lightened toward
+/// Lovelace Lavender until white reads at 4.53:1, not bold at the owner's word at
+/// `FRONT.2`'s second hand test, its text 11 points at the zoom, [`zoomed`], centered, its
+/// right and bottom edges the card's own, two pixels, so that two side by side stay
+/// two.
+pub fn button_format() -> String {
+    format!(
+        "(format 1 \"8063D2\" general nowrap (font \"FFFFFF\" {}) (align center) (border (right medium \"2E2645\") (bottom medium \"2E2645\")))",
+        zoomed(11)
+    )
+}
 /// An exam's option, a button whose long text reads from its left, bold as every
-/// white over lavender is (`FRONT.2`'s hand test, the owner's word).
-pub const OPTION_FORMAT: &str = "(format 11 \"6B4FC8\" general nowrap (font bold \"FFFFFF\") (align left) (border (right thin \"D9D9D2\") (bottom thin \"D9D9D2\")))";
-/// A button standing alone, its four edges the view's ink (`FRONT.2`'s hand test,
-/// the owner's word): the certificate's, the switch and the hustle's.
-pub const LONE_BUTTON_FORMAT: &str = "(format 13 \"6B4FC8\" general nowrap (font bold \"FFFFFF\") (align center) (border (left medium \"1D1D1B\") (right medium \"1D1D1B\") (top medium \"1D1D1B\") (bottom medium \"1D1D1B\")))";
+/// white over lavender is (`FRONT.2`'s hand test, the owner's word), the card
+/// between two, three pixels.
+pub fn option_format() -> String {
+    format!(
+        "(format 11 \"8063D2\" general nowrap (font bold \"FFFFFF\" {}) (align left) (border (bottom thick \"2E2645\")))",
+        zoomed(11)
+    )
+}
+/// A button standing alone, on the card with no neighbor to be told from: the
+/// certificate's, the switch and the hustle's.
+pub fn lone_button_format() -> String {
+    format!(
+        "(format 13 \"8063D2\" general nowrap (font bold \"FFFFFF\" {}) (align center))",
+        zoomed(11)
+    )
+}
 /// The buttons' format's index, an option's, and a button's standing alone.
 pub const BUTTON_LOOK: u64 = 1;
 pub const OPTION_LOOK: u64 = 11;
 pub const LONE_BUTTON_LOOK: u64 = 13;
+/// The views' zoom in percent (`FRONT.8`, the owner's look: "I zoomed the page in
+/// to 200% and it looks more like a game this way, so is it possible to set the
+/// standard zoom for Buffet to this size?", and the second, "maybe we should scale
+/// it down a bit to be safe so side-scrolling doesn't ruin the UX on smaller
+/// monitors"): every size a view draws, its type, its columns and its rows'
+/// heights, is said at 100% and drawn at this many hundredths of it, the source's
+/// `the-zoom` handing it to each macro that says a size, since the page draws a
+/// grid at its cells' own sizes and never zooms one (Alonzo's `ENGINE.14`, decision
+/// 9). At 135% no card scrolls sideways in a window 1,280 pixels wide. A zoom is a
+/// multiple of 5, so that each size it gives is a whole number of twentieths of a
+/// point, as a type's size must be. Every width and size in this file is said at
+/// 100%, in characters or points, the unit a text's length is held to; a view
+/// draws it [`zoomed`].
+pub const ZOOM_PERCENT: u64 = 135;
+
+/// A size said at 100%, in hundredths as a view draws it at the zoom: a column's
+/// width in hundredths of a character, a font's size or a row's height in
+/// hundredths of a point; exact, so that a length is held to it with no float.
+pub const fn zoomed_hundredths(at_100: u64) -> u64 {
+    at_100 * ZOOM_PERCENT
+}
+
+/// A size said at 100%, as a view draws it at the zoom and the record spells it,
+/// at its shortest: `135`, `35.1`, `28.35`.
+pub fn zoomed(at_100: u64) -> String {
+    let n = zoomed_hundredths(at_100);
+    match n % 100 {
+        0 => format!("{}", n / 100),
+        p if p % 10 == 0 => format!("{}.{}", n / 100, p / 10),
+        p => format!("{}.{p:02}", n / 100),
+    }
+}
+
+/// Every view's card (`FRONT.8`): the format its columns paint their empty cells
+/// with, midnight plum, a line of text tall where a cell holds the empty text, the
+/// format's index; each view's width in characters at 100%, Trading's table and a
+/// margin of 5, so that a tab turned moves no edge; and the Overview's net worth's
+/// column, its figures larger.
+pub const CARD_LOOK: u64 = 16;
+pub fn card_format() -> String {
+    format!(
+        "(format 16 \"2E2645\" general nowrap (font {}))",
+        zoomed(11)
+    )
+}
+pub const CARD_WIDTH: u64 = 126;
+pub const WORTH_COLUMN: u64 = 16;
+/// The height of a card's row that holds nothing, the default row's 15 points,
+/// said by the kitchen's `margins` at the zoom since the page fits a row to no type
+/// where it holds none.
+pub const MARGIN_ROW: u64 = 15;
 
 /// The first ten primes above `floor`, by trial division.
 pub const fn primes_above(floor: u64) -> [u64; 10] {
@@ -1722,7 +1795,7 @@ pub const TRADE_TEXTS: [&str; 6] = [
 ];
 pub const TRADE_COLUMNS: [u64; 6] = [5, 6, 7, 8, 9, 10];
 pub const STOCK_ROWS: [u64; 4] = [6, 7, 8, 9];
-/// The width of each button's column on Trading, in characters.
+/// The width of each button's column on Trading, in characters at 100%.
 pub const BUTTON_COLUMN: u64 = 12;
 /// The commands that pick a stock, each its name and its key, the Commands
 /// sheet's rows 2 to 5; and those that trade the stock picked, rows 6 to 11,
