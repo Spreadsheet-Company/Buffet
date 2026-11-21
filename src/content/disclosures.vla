@@ -12,7 +12,7 @@
   (strings "Disclosures"            ; the sheet, hidden among the tabs
     ("disclosure" 100)              ; its one field: the header over its texts, and its width in characters
     ; each row: the disclosure
-    ("Past performance is not indicative of future results, but history has proven (slightly) less coy than the future.")
+    ("Past performance is not indicative of future results, but history has proven slightly less coy than the future.")
     ("Buffet is not a financial advisor. Buffet is barely a game.")
     ("All investments carry risk; some investments also carry a reward.")
     ("Buffet is not FDIC-insured. Is the FDIC FDIC-insured? Food for thought.")
