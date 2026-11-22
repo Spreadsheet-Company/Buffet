@@ -1,0 +1,1496 @@
+; SPDX-License-Identifier: AGPL-3.0-or-later AND CC-BY-SA-4.0
+; The owner's session of 2026-11-21 (HOUSE.4's second slice), recorded in the page on FRONT.8's
+; cartridge: the Series 777 answered by key, all ten scored right and the fourth style; the
+; certificate's O at frame 3,736, the market's first bell, leading to the Portfolio; the first
+; weeks' trades by the order desk's commands in both pockets, its switch among them, 98 orders, 97
+; filled, one a sale of shares the pocket held none of; four prospectuses proofread on Gigs;
+; every view looked at; then the market let run to the first quarter's card, the firm's +5.80%
+; against Average Co.'s -1.04%, an A, which the Camera showed at frame 132,346. Its header names
+; the cartridge beside it, restamped by oracle/examples/replay.rs; the page plays it on a fresh
+; host and holds its end to src/buffet.golden.vla, its recording to this file and every frame
+; to src/buffet.hand.js.
+(replay "buffet" (spec 6) (cartridge "9FA4E0E0F8F86EE7C89F3BA5931EA7490083B4CF110CA76CA99EE3F8D506D9FC") (seed 791886))
+(frame 1
+  (cell "Input" "B1" 0)
+  (cell "Input" "C1" 0)
+  (cell "Input" "D1" 0)
+  (cell "Input" "E1" 0)
+  (cell "Input" "B2" 0)
+  (cell "Input" "C2" 0)
+  (cell "Input" "D2" 0)
+  (cell "Input" "E2" 0)
+  (cell "Input" "B3" 0)
+  (cell "Input" "C3" 0)
+  (cell "Input" "D3" 0)
+  (cell "Input" "E3" 0)
+  (cell "Input" "B4" 0)
+  (cell "Input" "C4" 0)
+  (cell "Input" "D4" 0)
+  (cell "Input" "E4" 0)
+  (cell "Input" "B5" 0)
+  (cell "Input" "C5" 0)
+  (cell "Input" "D5" 0)
+  (cell "Input" "E5" 0)
+  (cell "Input" "B6" 0)
+  (cell "Input" "C6" 0)
+  (cell "Input" "D6" 0)
+  (cell "Input" "E6" 0)
+  (cell "Input" "B7" 0)
+  (cell "Input" "C7" 0)
+  (cell "Input" "D7" 0)
+  (cell "Input" "E7" 0)
+  (cell "Input" "B8" 0)
+  (cell "Input" "C8" 0)
+  (cell "Input" "D8" 0)
+  (cell "Input" "E8" 0)
+  (cell "Input" "B9" 0)
+  (cell "Input" "C9" 0)
+  (cell "Input" "D9" 0)
+  (cell "Input" "E9" 0)
+  (cell "Input" "B10" 0)
+  (cell "Input" "C10" 0)
+  (cell "Input" "D10" 0)
+  (cell "Input" "E10" 0)
+  (cell "Input" "B11" 0)
+  (cell "Input" "B12" 0)
+  (cell "Input" "B13" 0)
+  (cell "Input" "B14" 0)
+  (cell "Input" "B15" 0)
+  (cell "Input" "B16" 0)
+  (cell "Input" "B17" "")
+  (cell "Input" "B18" "")
+  (cell "Input" "B19" "Exam")
+  (cell "Input" "B20" ""))
+(frame 6
+  (cell "Input" "B11" 1)
+  (cell "Input" "B12" 1))
+(frame 29
+  (cell "Input" "B12" 2))
+(frame 124
+  (cell "Input" "B9" 1)
+  (cell "Input" "B17" "d")
+  (cell "Input" "B18" "KeyD"))
+(frame 125
+  (cell "Input" "B17" "")
+  (cell "Input" "B18" ""))
+(frame 126
+  (cell "Input" "B9" 0))
+(frame 378
+  (cell "Input" "B8" 1)
+  (cell "Input" "B17" "c")
+  (cell "Input" "B18" "KeyC"))
+(frame 379
+  (cell "Input" "B17" "")
+  (cell "Input" "B18" ""))
+(frame 380
+  (cell "Input" "B8" 0))
+(frame 529
+  (cell "Input" "B9" 1)
+  (cell "Input" "B17" "d")
+  (cell "Input" "B18" "KeyD"))
+(frame 530
+  (cell "Input" "B17" "")
+  (cell "Input" "B18" ""))
+(frame 532
+  (cell "Input" "B9" 0))
+(frame 768
+  (cell "Input" "B9" 1)
+  (cell "Input" "B17" "d")
+  (cell "Input" "B18" "KeyD"))
+(frame 769
+  (cell "Input" "B17" "")
+  (cell "Input" "B18" ""))
+(frame 771
+  (cell "Input" "B9" 0))
+(frame 1160
+  (cell "Input" "B6" 1)
+  (cell "Input" "B17" "a")
+  (cell "Input" "B18" "KeyA"))
+(frame 1161
+  (cell "Input" "B17" "")
+  (cell "Input" "B18" ""))
+(frame 1163
+  (cell "Input" "B6" 0))
+(frame 1452
+  (cell "Input" "B6" 1)
+  (cell "Input" "B17" "a")
+  (cell "Input" "B18" "KeyA"))
+(frame 1453
+  (cell "Input" "B17" "")
+  (cell "Input" "B18" ""))
+(frame 1454
+  (cell "Input" "B6" 0))
+(frame 1784
+  (cell "Input" "B8" 1)
+  (cell "Input" "B17" "c")
+  (cell "Input" "B18" "KeyC"))
+(frame 1785
+  (cell "Input" "B17" "")
+  (cell "Input" "B18" ""))
+(frame 1786
+  (cell "Input" "B8" 0))
+(frame 1968
+  (cell "Input" "B7" 1)
+  (cell "Input" "B17" "b")
+  (cell "Input" "B18" "KeyB"))
+(frame 1969
+  (cell "Input" "B17" "")
+  (cell "Input" "B18" ""))
+(frame 1970
+  (cell "Input" "B7" 0))
+(frame 2461
+  (cell "Input" "B8" 1)
+  (cell "Input" "B17" "c")
+  (cell "Input" "B18" "KeyC"))
+(frame 2462
+  (cell "Input" "B17" "")
+  (cell "Input" "B18" ""))
+(frame 2463
+  (cell "Input" "B8" 0))
+(frame 2955
+  (cell "Input" "B7" 1)
+  (cell "Input" "B17" "b")
+  (cell "Input" "B18" "KeyB"))
+(frame 2956
+  (cell "Input" "B17" "")
+  (cell "Input" "B18" ""))
+(frame 2958
+  (cell "Input" "B7" 0))
+(frame 3221
+  (cell "Input" "B9" 1)
+  (cell "Input" "B17" "d")
+  (cell "Input" "B18" "KeyD"))
+(frame 3222
+  (cell "Input" "B9" 0)
+  (cell "Input" "B17" "")
+  (cell "Input" "B18" "")
+  (cell "Input" "B19" "Certificate"))
+(frame 3736
+  (cell "Input" "B10" 1)
+  (cell "Input" "B17" "o")
+  (cell "Input" "B18" "KeyO"))
+(frame 3737
+  (cell "Input" "B10" 0)
+  (cell "Input" "B17" "")
+  (cell "Input" "B18" "")
+  (cell "Input" "B19" "Portfolio"))
+(frame 3843
+  (cell "Input" "B17" "Control")
+  (cell "Input" "B18" "ControlLeft"))
+(frame 3844
+  (cell "Input" "B17" "")
+  (cell "Input" "B18" ""))
+(frame 3858
+  (cell "Input" "B17" "Control")
+  (cell "Input" "B18" "ControlLeft"))
+(frame 3862
+  (cell "Input" "B17" "")
+  (cell "Input" "B18" ""))
+(frame 3863
+  (cell "Input" "B17" "Control")
+  (cell "Input" "B18" "ControlLeft"))
+(frame 3865
+  (cell "Input" "B17" "Alt")
+  (cell "Input" "B18" "AltLeft"))
+(frame 3866
+  (cell "Input" "B17" "")
+  (cell "Input" "B18" ""))
+(frame 3869
+  (cell "Input" "B19" "Trading"))
+(frame 3877
+  (cell "Input" "B19" "Gigs"))
+(frame 3899
+  (cell "Input" "B11" 3))
+(frame 3905
+  (cell "Input" "B12" 3))
+(frame 3909
+  (cell "Input" "B12" 4))
+(frame 3911
+  (cell "Input" "B11" 2))
+(frame 3918
+  (cell "Input" "B12" 5))
+(frame 3919
+  (cell "Input" "B11" 1))
+(frame 3956
+  (cell "Input" "B5" 1)
+  (cell "Input" "B17" "p")
+  (cell "Input" "B18" "KeyP"))
+(frame 3957
+  (cell "Input" "B17" "")
+  (cell "Input" "B18" ""))
+(frame 3958
+  (cell "Input" "B5" 0))
+(frame 3962
+  (cell "Input" "B17" "Control")
+  (cell "Input" "B18" "ControlLeft"))
+(frame 3963
+  (cell "Input" "B17" "")
+  (cell "Input" "B18" ""))
+(frame 3972
+  (cell "Input" "B17" "Alt")
+  (cell "Input" "B18" "AltLeft"))
+(frame 3973
+  (cell "Input" "B17" "")
+  (cell "Input" "B18" ""))
+(frame 3978
+  (cell "Input" "B19" "Trading"))
+(frame 4161
+  (cell "Input" "B20" "rung-2"))
+(frame 4162
+  (cell "Input" "B20" ""))
+(frame 4514
+  (cell "Input" "B20" "buy-1"))
+(frame 4515
+  (cell "Input" "B20" ""))
+(frame 4545
+  (cell "Input" "B20" "buy-1"))
+(frame 4546
+  (cell "Input" "B20" ""))
+(frame 4603
+  (cell "Input" "B20" "buy-1"))
+(frame 4604
+  (cell "Input" "B20" ""))
+(frame 5326
+  (cell "Input" "B20" "rung-4"))
+(frame 5327
+  (cell "Input" "B20" ""))
+(frame 5681
+  (cell "Input" "B20" "buy-10"))
+(frame 5682
+  (cell "Input" "B20" ""))
+(frame 5726
+  (cell "Input" "B20" "buy-10"))
+(frame 5727
+  (cell "Input" "B20" ""))
+(frame 5807
+  (cell "Input" "B20" "buy-10"))
+(frame 5808
+  (cell "Input" "B20" ""))
+(frame 5831
+  (cell "Input" "B20" "buy-10"))
+(frame 5832
+  (cell "Input" "B20" ""))
+(frame 5865
+  (cell "Input" "B20" "buy-10"))
+(frame 5866
+  (cell "Input" "B20" ""))
+(frame 5923
+  (cell "Input" "B20" "buy-10"))
+(frame 5924
+  (cell "Input" "B20" ""))
+(frame 6157
+  (cell "Input" "B20" "sell-10"))
+(frame 6158
+  (cell "Input" "B20" ""))
+(frame 6196
+  (cell "Input" "B20" "sell-10"))
+(frame 6197
+  (cell "Input" "B20" ""))
+(frame 6269
+  (cell "Input" "B20" "sell-10"))
+(frame 6270
+  (cell "Input" "B20" ""))
+(frame 7408
+  (cell "Input" "B17" "ArrowUp")
+  (cell "Input" "B18" "ArrowUp"))
+(frame 7409
+  (cell "Input" "B17" "")
+  (cell "Input" "B18" ""))
+(frame 7577
+  (cell "Input" "B20" "buy-10"))
+(frame 7578
+  (cell "Input" "B20" ""))
+(frame 7744
+  (cell "Input" "B20" "buy-10"))
+(frame 7745
+  (cell "Input" "B20" ""))
+(frame 7780
+  (cell "Input" "B20" "buy-10"))
+(frame 7781
+  (cell "Input" "B20" ""))
+(frame 7920
+  (cell "Input" "B20" "buy-10"))
+(frame 7921
+  (cell "Input" "B20" ""))
+(frame 8204
+  (cell "Input" "B20" "sell-10"))
+(frame 8205
+  (cell "Input" "B20" ""))
+(frame 8798
+  (cell "Input" "B11" 2))
+(frame 8805
+  (cell "Input" "B11" 3)
+  (cell "Input" "B12" 4))
+(frame 8807
+  (cell "Input" "B12" 7))
+(frame 8808
+  (cell "Input" "B12" 13))
+(frame 8809
+  (cell "Input" "B11" 0)
+  (cell "Input" "B12" 0))
+(frame 8889
+  (cell "Input" "B19" "Portfolio"))
+(frame 9178
+  (cell "Input" "B19" "Trading"))
+(frame 9400
+  (cell "Input" "B20" "buy-10"))
+(frame 9401
+  (cell "Input" "B20" ""))
+(frame 9442
+  (cell "Input" "B20" "buy-10"))
+(frame 9443
+  (cell "Input" "B20" ""))
+(frame 9464
+  (cell "Input" "B20" "buy-10"))
+(frame 9465
+  (cell "Input" "B20" ""))
+(frame 9760
+  (cell "Input" "B20" "switch-cash"))
+(frame 9761
+  (cell "Input" "B20" ""))
+(frame 9970
+  (cell "Input" "B20" "rung-3"))
+(frame 9971
+  (cell "Input" "B20" ""))
+(frame 10344
+  (cell "Input" "B20" "rung-2"))
+(frame 10345
+  (cell "Input" "B20" ""))
+(frame 10649
+  (cell "Input" "B20" "buy-10"))
+(frame 10650
+  (cell "Input" "B20" ""))
+(frame 10786
+  (cell "Input" "B20" "sell-10"))
+(frame 10787
+  (cell "Input" "B20" ""))
+(frame 11034
+  (cell "Input" "B20" "buy-10"))
+(frame 11035
+  (cell "Input" "B20" ""))
+(frame 11069
+  (cell "Input" "B20" "buy-10"))
+(frame 11070
+  (cell "Input" "B20" ""))
+(frame 11088
+  (cell "Input" "B20" "buy-10"))
+(frame 11089
+  (cell "Input" "B20" ""))
+(frame 11144
+  (cell "Input" "B20" "sell-10"))
+(frame 11145
+  (cell "Input" "B20" ""))
+(frame 11182
+  (cell "Input" "B20" "sell-10"))
+(frame 11183
+  (cell "Input" "B20" ""))
+(frame 11325
+  (cell "Input" "B20" "buy-10"))
+(frame 11326
+  (cell "Input" "B20" ""))
+(frame 11386
+  (cell "Input" "B20" "buy-10"))
+(frame 11387
+  (cell "Input" "B20" ""))
+(frame 11408
+  (cell "Input" "B20" "buy-10"))
+(frame 11409
+  (cell "Input" "B20" ""))
+(frame 11464
+  (cell "Input" "B20" "buy-10"))
+(frame 11465
+  (cell "Input" "B20" ""))
+(frame 11495
+  (cell "Input" "B20" "buy-10"))
+(frame 11496
+  (cell "Input" "B20" ""))
+(frame 13850
+  (cell "Input" "B20" "sell-10"))
+(frame 13851
+  (cell "Input" "B20" ""))
+(frame 13906
+  (cell "Input" "B20" "sell-10"))
+(frame 13907
+  (cell "Input" "B20" ""))
+(frame 14001
+  (cell "Input" "B20" "buy-10"))
+(frame 14002
+  (cell "Input" "B20" ""))
+(frame 14029
+  (cell "Input" "B20" "buy-10"))
+(frame 14030
+  (cell "Input" "B20" ""))
+(frame 14084
+  (cell "Input" "B20" "buy-10"))
+(frame 14085
+  (cell "Input" "B20" ""))
+(frame 14477
+  (cell "Input" "B20" "sell-10"))
+(frame 14478
+  (cell "Input" "B20" ""))
+(frame 14510
+  (cell "Input" "B20" "sell-10"))
+(frame 14511
+  (cell "Input" "B20" ""))
+(frame 14538
+  (cell "Input" "B20" "sell-10"))
+(frame 14539
+  (cell "Input" "B20" ""))
+(frame 14588
+  (cell "Input" "B20" "sell-10"))
+(frame 14589
+  (cell "Input" "B20" ""))
+(frame 14626
+  (cell "Input" "B20" "sell-10"))
+(frame 14627
+  (cell "Input" "B20" ""))
+(frame 14766
+  (cell "Input" "B20" "sell-10"))
+(frame 14767
+  (cell "Input" "B20" ""))
+(frame 15441
+  (cell "Input" "B19" "Portfolio"))
+(frame 15485
+  (cell "Input" "B11" 1)
+  (cell "Input" "B12" 19))
+(frame 15487
+  (cell "Input" "B12" 18))
+(frame 15491
+  (cell "Input" "B12" 17))
+(frame 15529
+  (cell "Input" "B12" 18))
+(frame 15537
+  (cell "Input" "B12" 17))
+(frame 15538
+  (cell "Input" "B11" 2))
+(frame 15541
+  (cell "Input" "B11" 3))
+(frame 15559
+  (cell "Input" "B12" 18))
+(frame 15571
+  (cell "Input" "B12" 19))
+(frame 15574
+  (cell "Input" "B11" 0)
+  (cell "Input" "B12" 0))
+(frame 15629
+  (cell "Input" "B11" 2)
+  (cell "Input" "B12" 19))
+(frame 15632
+  (cell "Input" "B12" 18))
+(frame 15635
+  (cell "Input" "B12" 17))
+(frame 15638
+  (cell "Input" "B12" 16))
+(frame 15643
+  (cell "Input" "B12" 15))
+(frame 15644
+  (cell "Input" "B11" 3))
+(frame 15646
+  (cell "Input" "B12" 14))
+(frame 15648
+  (cell "Input" "B11" 4))
+(frame 16005
+  (cell "Input" "B12" 15))
+(frame 16530
+  (cell "Input" "B11" 5))
+(frame 16531
+  (cell "Input" "B12" 18))
+(frame 16532
+  (cell "Input" "B11" 0)
+  (cell "Input" "B12" 0))
+(frame 16608
+  (cell "Input" "B19" "Gigs"))
+(frame 16628
+  (cell "Input" "B11" 3)
+  (cell "Input" "B12" 14))
+(frame 16629
+  (cell "Input" "B11" 2)
+  (cell "Input" "B12" 13))
+(frame 16630
+  (cell "Input" "B12" 12))
+(frame 16631
+  (cell "Input" "B12" 11))
+(frame 16633
+  (cell "Input" "B12" 10))
+(frame 16634
+  (cell "Input" "B12" 9))
+(frame 16635
+  (cell "Input" "B12" 8))
+(frame 16636
+  (cell "Input" "B12" 7))
+(frame 16638
+  (cell "Input" "B11" 1)
+  (cell "Input" "B12" 6))
+(frame 16641
+  (cell "Input" "B12" 5))
+(frame 16666
+  (cell "Input" "B13" 1))
+(frame 16668
+  (cell "Input" "B13" 0))
+(frame 16683
+  (cell "Input" "B12" 6))
+(frame 16684
+  (cell "Input" "B11" 2))
+(frame 16687
+  (cell "Input" "B11" 3))
+(frame 16934
+  (cell "Input" "B12" 7))
+(frame 16968
+  (cell "Input" "B12" 8))
+(frame 16969
+  (cell "Input" "B12" 9))
+(frame 16970
+  (cell "Input" "B12" 11))
+(frame 16971
+  (cell "Input" "B12" 14))
+(frame 16972
+  (cell "Input" "B11" 0)
+  (cell "Input" "B12" 0))
+(frame 17023
+  (cell "Input" "B19" "Trading"))
+(frame 17220
+  (cell "Input" "B20" "buy-10"))
+(frame 17221
+  (cell "Input" "B20" ""))
+(frame 17266
+  (cell "Input" "B20" "buy-10"))
+(frame 17267
+  (cell "Input" "B20" ""))
+(frame 17284
+  (cell "Input" "B20" "buy-10"))
+(frame 17285
+  (cell "Input" "B20" ""))
+(frame 17310
+  (cell "Input" "B20" "buy-10"))
+(frame 17311
+  (cell "Input" "B20" ""))
+(frame 17345
+  (cell "Input" "B20" "buy-10"))
+(frame 17346
+  (cell "Input" "B20" ""))
+(frame 17432
+  (cell "Input" "B20" "buy-10"))
+(frame 17433
+  (cell "Input" "B20" ""))
+(frame 18996
+  (cell "Input" "B20" "sell-10"))
+(frame 18997
+  (cell "Input" "B20" ""))
+(frame 19053
+  (cell "Input" "B20" "sell-10"))
+(frame 19054
+  (cell "Input" "B20" ""))
+(frame 19068
+  (cell "Input" "B20" "sell-10"))
+(frame 19069
+  (cell "Input" "B20" ""))
+(frame 19100
+  (cell "Input" "B20" "sell-10"))
+(frame 19101
+  (cell "Input" "B20" ""))
+(frame 19126
+  (cell "Input" "B20" "sell-10"))
+(frame 19127
+  (cell "Input" "B20" ""))
+(frame 19160
+  (cell "Input" "B20" "sell-10"))
+(frame 19161
+  (cell "Input" "B20" ""))
+(frame 19241
+  (cell "Input" "B20" "sell-10"))
+(frame 19242
+  (cell "Input" "B20" ""))
+(frame 19765
+  (cell "Input" "B20" "buy-10"))
+(frame 19766
+  (cell "Input" "B20" ""))
+(frame 19807
+  (cell "Input" "B20" "buy-10"))
+(frame 19808
+  (cell "Input" "B20" ""))
+(frame 19895
+  (cell "Input" "B20" "buy-10"))
+(frame 19896
+  (cell "Input" "B20" ""))
+(frame 20602
+  (cell "Input" "B20" "buy-10"))
+(frame 20603
+  (cell "Input" "B20" ""))
+(frame 20764
+  (cell "Input" "B20" "buy-10"))
+(frame 20765
+  (cell "Input" "B20" ""))
+(frame 20823
+  (cell "Input" "B20" "buy-10"))
+(frame 20824
+  (cell "Input" "B20" ""))
+(frame 20862
+  (cell "Input" "B20" "buy-10"))
+(frame 20863
+  (cell "Input" "B20" ""))
+(frame 21281
+  (cell "Input" "B20" "switch-cash"))
+(frame 21282
+  (cell "Input" "B20" ""))
+(frame 21349
+  (cell "Input" "B17" "Control")
+  (cell "Input" "B18" "ControlLeft"))
+(frame 21350
+  (cell "Input" "B17" "")
+  (cell "Input" "B18" ""))
+(frame 21355
+  (cell "Input" "B17" "Alt")
+  (cell "Input" "B18" "AltLeft"))
+(frame 21356
+  (cell "Input" "B17" "")
+  (cell "Input" "B18" ""))
+(frame 21362
+  (cell "Input" "B19" "Portfolio"))
+(frame 21640
+  (cell "Input" "B19" "Trading"))
+(frame 21669
+  (cell "Input" "B19" "Portfolio"))
+(frame 21940
+  (cell "Input" "B17" "Control")
+  (cell "Input" "B18" "ControlLeft"))
+(frame 21941
+  (cell "Input" "B17" "")
+  (cell "Input" "B18" ""))
+(frame 21944
+  (cell "Input" "B17" "Alt")
+  (cell "Input" "B18" "AltLeft"))
+(frame 21945
+  (cell "Input" "B17" "")
+  (cell "Input" "B18" ""))
+(frame 21949
+  (cell "Input" "B19" "Trading"))
+(frame 22001
+  (cell "Input" "B20" "switch-cash"))
+(frame 22002
+  (cell "Input" "B20" ""))
+(frame 22035
+  (cell "Input" "B17" "Control")
+  (cell "Input" "B18" "ControlLeft"))
+(frame 22036
+  (cell "Input" "B17" "")
+  (cell "Input" "B18" ""))
+(frame 22039
+  (cell "Input" "B17" "Alt")
+  (cell "Input" "B18" "AltLeft"))
+(frame 22040
+  (cell "Input" "B17" "")
+  (cell "Input" "B18" ""))
+(frame 22044
+  (cell "Input" "B19" "Portfolio"))
+(frame 22125
+  (cell "Input" "B17" "Control")
+  (cell "Input" "B18" "ControlLeft"))
+(frame 22126
+  (cell "Input" "B17" "")
+  (cell "Input" "B18" ""))
+(frame 22129
+  (cell "Input" "B17" "Alt")
+  (cell "Input" "B18" "AltLeft"))
+(frame 22130
+  (cell "Input" "B17" "")
+  (cell "Input" "B18" ""))
+(frame 22134
+  (cell "Input" "B19" "Trading"))
+(frame 22171
+  (cell "Input" "B17" "Control")
+  (cell "Input" "B18" "ControlLeft"))
+(frame 22172
+  (cell "Input" "B17" "")
+  (cell "Input" "B18" ""))
+(frame 22176
+  (cell "Input" "B17" "Alt")
+  (cell "Input" "B18" "AltLeft"))
+(frame 22177
+  (cell "Input" "B17" "")
+  (cell "Input" "B18" ""))
+(frame 22182
+  (cell "Input" "B19" "Portfolio"))
+(frame 22215
+  (cell "Input" "B17" "Control")
+  (cell "Input" "B18" "ControlLeft"))
+(frame 22216
+  (cell "Input" "B17" "")
+  (cell "Input" "B18" ""))
+(frame 22220
+  (cell "Input" "B17" "Alt")
+  (cell "Input" "B18" "AltLeft"))
+(frame 22221
+  (cell "Input" "B17" "")
+  (cell "Input" "B18" ""))
+(frame 22226
+  (cell "Input" "B19" "Trading"))
+(frame 22306
+  (cell "Input" "B17" "Control")
+  (cell "Input" "B18" "ControlLeft"))
+(frame 22307
+  (cell "Input" "B17" "")
+  (cell "Input" "B18" ""))
+(frame 22321
+  (cell "Input" "B17" "Control")
+  (cell "Input" "B18" "ControlLeft"))
+(frame 22372
+  (cell "Input" "B17" "")
+  (cell "Input" "B18" ""))
+(frame 22373
+  (cell "Input" "B17" "Control")
+  (cell "Input" "B18" "ControlLeft"))
+(frame 22380
+  (cell "Input" "B17" "")
+  (cell "Input" "B18" ""))
+(frame 22381
+  (cell "Input" "B17" "Control")
+  (cell "Input" "B18" "ControlLeft"))
+(frame 22382
+  (cell "Input" "B17" "Alt")
+  (cell "Input" "B18" "AltLeft"))
+(frame 22383
+  (cell "Input" "B17" "")
+  (cell "Input" "B18" ""))
+(frame 22388
+  (cell "Input" "B19" "Portfolio"))
+(frame 22407
+  (cell "Input" "B19" "Trading"))
+(frame 22415
+  (cell "Input" "B19" "Gigs"))
+(frame 22431
+  (cell "Input" "B19" "Trading"))
+(frame 22436
+  (cell "Input" "B19" "Portfolio"))
+(frame 24276
+  (cell "Input" "B17" "Control")
+  (cell "Input" "B18" "ControlLeft"))
+(frame 24277
+  (cell "Input" "B17" "")
+  (cell "Input" "B18" ""))
+(frame 24280
+  (cell "Input" "B17" "Alt")
+  (cell "Input" "B18" "AltLeft"))
+(frame 24281
+  (cell "Input" "B17" "")
+  (cell "Input" "B18" ""))
+(frame 24295
+  (cell "Input" "B17" "Alt")
+  (cell "Input" "B18" "AltLeft"))
+(frame 24327
+  (cell "Input" "B19" "Trading"))
+(frame 24328
+  (cell "Input" "B17" "")
+  (cell "Input" "B18" ""))
+(frame 24408
+  (cell "Input" "B17" "Alt")
+  (cell "Input" "B18" "AltLeft"))
+(frame 24409
+  (cell "Input" "B17" "")
+  (cell "Input" "B18" ""))
+(frame 30840
+  (cell "Input" "B19" "Portfolio"))
+(frame 30877
+  (cell "Input" "B11" 6)
+  (cell "Input" "B12" 19))
+(frame 30879
+  (cell "Input" "B12" 18))
+(frame 30882
+  (cell "Input" "B11" 5)
+  (cell "Input" "B12" 17))
+(frame 30885
+  (cell "Input" "B12" 16))
+(frame 30967
+  (cell "Input" "B11" 6))
+(frame 30968
+  (cell "Input" "B11" 7)
+  (cell "Input" "B12" 17))
+(frame 30969
+  (cell "Input" "B11" 9))
+(frame 30970
+  (cell "Input" "B11" 0)
+  (cell "Input" "B12" 0))
+(frame 31877
+  (cell "Input" "B19" "Overview"))
+(frame 32068
+  (cell "Input" "B19" "Trading"))
+(frame 32129
+  (cell "Input" "B19" "Gigs"))
+(frame 32186
+  (cell "Input" "B11" 2)
+  (cell "Input" "B12" 14))
+(frame 32187
+  (cell "Input" "B11" 3))
+(frame 32198
+  (cell "Input" "B12" 13))
+(frame 32203
+  (cell "Input" "B12" 12))
+(frame 32205
+  (cell "Input" "B12" 11))
+(frame 32206
+  (cell "Input" "B12" 10))
+(frame 32208
+  (cell "Input" "B12" 9))
+(frame 32239
+  (cell "Input" "B12" 8))
+(frame 32242
+  (cell "Input" "B11" 2))
+(frame 32244
+  (cell "Input" "B12" 7))
+(frame 32249
+  (cell "Input" "B12" 6))
+(frame 32253
+  (cell "Input" "B12" 5))
+(frame 32282
+  (cell "Input" "B11" 1))
+(frame 32302
+  (cell "Input" "B13" 1))
+(frame 32304
+  (cell "Input" "B13" 0))
+(frame 32319
+  (cell "Input" "B12" 6))
+(frame 32322
+  (cell "Input" "B11" 2)
+  (cell "Input" "B12" 7))
+(frame 32324
+  (cell "Input" "B12" 8))
+(frame 32325
+  (cell "Input" "B12" 10))
+(frame 32326
+  (cell "Input" "B11" 0)
+  (cell "Input" "B12" 0))
+(frame 32430
+  (cell "Input" "B19" "Report"))
+(frame 32514
+  (cell "Input" "B19" "Input"))
+(frame 32567
+  (cell "Input" "B19" "Trading"))
+(frame 32912
+  (cell "Input" "B11" 9)
+  (cell "Input" "B12" 14))
+(frame 32913
+  (cell "Input" "B11" 8)
+  (cell "Input" "B12" 15))
+(frame 32914
+  (cell "Input" "B11" 7)
+  (cell "Input" "B12" 16))
+(frame 32915
+  (cell "Input" "B12" 17))
+(frame 33487
+  (cell "Input" "B12" 16))
+(frame 33488
+  (cell "Input" "B11" 8))
+(frame 33490
+  (cell "Input" "B11" 9))
+(frame 33491
+  (cell "Input" "B11" 10))
+(frame 33493
+  (cell "Input" "B11" 0)
+  (cell "Input" "B12" 0))
+(frame 33998
+  (cell "Input" "B11" 11)
+  (cell "Input" "B12" 9))
+(frame 33999
+  (cell "Input" "B11" 9)
+  (cell "Input" "B12" 8))
+(frame 34000
+  (cell "Input" "B11" 8))
+(frame 34001
+  (cell "Input" "B11" 7))
+(frame 34013
+  (cell "Input" "B11" 6))
+(frame 34016
+  (cell "Input" "B11" 5))
+(frame 34018
+  (cell "Input" "B12" 9))
+(frame 34027
+  (cell "Input" "B11" 4))
+(frame 34028
+  (cell "Input" "B12" 10))
+(frame 34033
+  (cell "Input" "B12" 11))
+(frame 34045
+  (cell "Input" "B13" 1))
+(frame 34048
+  (cell "Input" "B13" 0))
+(frame 34055
+  (cell "Input" "B11" 5)
+  (cell "Input" "B12" 12))
+(frame 34057
+  (cell "Input" "B11" 6))
+(frame 34104
+  (cell "Input" "B20" "buy-1"))
+(frame 34105
+  (cell "Input" "B20" ""))
+(frame 34212
+  (cell "Input" "B20" "rung-1"))
+(frame 34213
+  (cell "Input" "B20" ""))
+(frame 34234
+  (cell "Input" "B20" "buy-1"))
+(frame 34235
+  (cell "Input" "B20" ""))
+(frame 34261
+  (cell "Input" "B20" "buy-1"))
+(frame 34262
+  (cell "Input" "B20" ""))
+(frame 34326
+  (cell "Input" "B20" "rung-2"))
+(frame 34327
+  (cell "Input" "B20" ""))
+(frame 34348
+  (cell "Input" "B20" "buy-10"))
+(frame 34349
+  (cell "Input" "B20" ""))
+(frame 34427
+  (cell "Input" "B20" "buy-10"))
+(frame 34428
+  (cell "Input" "B20" ""))
+(frame 34658
+  (cell "Input" "B20" "switch-cash"))
+(frame 34659
+  (cell "Input" "B20" ""))
+(frame 34688
+  (cell "Input" "B20" "rung-1"))
+(frame 34689
+  (cell "Input" "B20" ""))
+(frame 35721
+  (cell "Input" "B20" "buy-1"))
+(frame 35722
+  (cell "Input" "B20" ""))
+(frame 35791
+  (cell "Input" "B20" "buy-1"))
+(frame 35792
+  (cell "Input" "B20" ""))
+(frame 35847
+  (cell "Input" "B20" "buy-1"))
+(frame 35848
+  (cell "Input" "B20" ""))
+(frame 35882
+  (cell "Input" "B20" "buy-1"))
+(frame 35883
+  (cell "Input" "B20" ""))
+(frame 35900
+  (cell "Input" "B20" "buy-1"))
+(frame 35901
+  (cell "Input" "B20" ""))
+(frame 35911
+  (cell "Input" "B20" "buy-1"))
+(frame 35912
+  (cell "Input" "B20" ""))
+(frame 35924
+  (cell "Input" "B20" "buy-1"))
+(frame 35925
+  (cell "Input" "B20" ""))
+(frame 35930
+  (cell "Input" "B20" "buy-1"))
+(frame 35931
+  (cell "Input" "B20" ""))
+(frame 35935
+  (cell "Input" "B20" "buy-1"))
+(frame 35936
+  (cell "Input" "B20" ""))
+(frame 35945
+  (cell "Input" "B20" "buy-1"))
+(frame 35946
+  (cell "Input" "B20" ""))
+(frame 35953
+  (cell "Input" "B20" "buy-1"))
+(frame 35954
+  (cell "Input" "B20" ""))
+(frame 35968
+  (cell "Input" "B20" "buy-1"))
+(frame 35969
+  (cell "Input" "B20" ""))
+(frame 36001
+  (cell "Input" "B20" "buy-1"))
+(frame 36002
+  (cell "Input" "B20" ""))
+(frame 36005
+  (cell "Input" "B20" "buy-1"))
+(frame 36006
+  (cell "Input" "B20" ""))
+(frame 36010
+  (cell "Input" "B20" "buy-1"))
+(frame 36011
+  (cell "Input" "B20" ""))
+(frame 36014
+  (cell "Input" "B20" "buy-1"))
+(frame 36015
+  (cell "Input" "B20" ""))
+(frame 36019
+  (cell "Input" "B20" "buy-1"))
+(frame 36020
+  (cell "Input" "B20" ""))
+(frame 36022
+  (cell "Input" "B20" "buy-1"))
+(frame 36023
+  (cell "Input" "B20" ""))
+(frame 36027
+  (cell "Input" "B20" "buy-1"))
+(frame 36028
+  (cell "Input" "B20" ""))
+(frame 36031
+  (cell "Input" "B20" "buy-1"))
+(frame 36032
+  (cell "Input" "B20" ""))
+(frame 36036
+  (cell "Input" "B20" "buy-1"))
+(frame 36037
+  (cell "Input" "B20" ""))
+(frame 36040
+  (cell "Input" "B20" "buy-1"))
+(frame 36041
+  (cell "Input" "B20" ""))
+(frame 36045
+  (cell "Input" "B20" "buy-1"))
+(frame 36046
+  (cell "Input" "B20" ""))
+(frame 36064
+  (cell "Input" "B20" "buy-1"))
+(frame 36065
+  (cell "Input" "B20" ""))
+(frame 36070
+  (cell "Input" "B20" "buy-1"))
+(frame 36071
+  (cell "Input" "B20" ""))
+(frame 36214
+  (cell "Input" "B20" "buy-1"))
+(frame 36215
+  (cell "Input" "B20" ""))
+(frame 36224
+  (cell "Input" "B20" "buy-1"))
+(frame 36225
+  (cell "Input" "B20" ""))
+(frame 36680
+  (cell "Input" "B20" "rung-3"))
+(frame 36681
+  (cell "Input" "B20" ""))
+(frame 37152
+  (cell "Input" "B20" "sell-1"))
+(frame 37153
+  (cell "Input" "B20" ""))
+(frame 37441
+  (cell "Input" "B20" "switch-cash"))
+(frame 37442
+  (cell "Input" "B20" ""))
+(frame 37662
+  (cell "Input" "B20" "rung-2"))
+(frame 37663
+  (cell "Input" "B20" ""))
+(frame 40550
+  (cell "Input" "B12" 13))
+(frame 40551
+  (cell "Input" "B12" 16))
+(frame 40552
+  (cell "Input" "B11" 0)
+  (cell "Input" "B12" 0))
+(frame 40634
+  (cell "Input" "B19" "Gigs"))
+(frame 41053
+  (cell "Input" "B11" 3)
+  (cell "Input" "B12" 13))
+(frame 41054
+  (cell "Input" "B11" 0)
+  (cell "Input" "B12" 0))
+(frame 41624
+  (cell "Input" "B11" 3)
+  (cell "Input" "B12" 14))
+(frame 41625
+  (cell "Input" "B12" 13))
+(frame 41626
+  (cell "Input" "B12" 14))
+(frame 41627
+  (cell "Input" "B11" 0)
+  (cell "Input" "B12" 0))
+(frame 41636
+  (cell "Input" "B11" 1)
+  (cell "Input" "B12" 14))
+(frame 41639
+  (cell "Input" "B12" 12))
+(frame 41640
+  (cell "Input" "B12" 11))
+(frame 41642
+  (cell "Input" "B12" 10))
+(frame 41643
+  (cell "Input" "B12" 8))
+(frame 41644
+  (cell "Input" "B12" 7))
+(frame 41645
+  (cell "Input" "B12" 6))
+(frame 41654
+  (cell "Input" "B12" 5))
+(frame 41667
+  (cell "Input" "B13" 1))
+(frame 41670
+  (cell "Input" "B13" 0))
+(frame 41847
+  (cell "Input" "B13" 1))
+(frame 41850
+  (cell "Input" "B13" 0))
+(frame 41860
+  (cell "Input" "B12" 6))
+(frame 41861
+  (cell "Input" "B11" 2)
+  (cell "Input" "B12" 10))
+(frame 41862
+  (cell "Input" "B11" 0)
+  (cell "Input" "B12" 0))
+(frame 42020
+  (cell "Input" "B19" "Trading"))
+(frame 42092
+  (cell "Input" "B11" 2)
+  (cell "Input" "B12" 17))
+(frame 42093
+  (cell "Input" "B12" 15))
+(frame 42094
+  (cell "Input" "B12" 14))
+(frame 42095
+  (cell "Input" "B12" 13))
+(frame 42098
+  (cell "Input" "B12" 12))
+(frame 42100
+  (cell "Input" "B12" 11))
+(frame 42108
+  (cell "Input" "B12" 10))
+(frame 42259
+  (cell "Input" "B12" 11))
+(frame 42261
+  (cell "Input" "B11" 3))
+(frame 42338
+  (cell "Input" "B11" 4)
+  (cell "Input" "B12" 12))
+(frame 42340
+  (cell "Input" "B11" 7)
+  (cell "Input" "B12" 14))
+(frame 42341
+  (cell "Input" "B11" 0)
+  (cell "Input" "B12" 0))
+(frame 45531
+  (cell "Input" "B11" 2)
+  (cell "Input" "B12" 18))
+(frame 45533
+  (cell "Input" "B12" 16))
+(frame 45534
+  (cell "Input" "B12" 15))
+(frame 45535
+  (cell "Input" "B12" 14))
+(frame 45536
+  (cell "Input" "B12" 13))
+(frame 45537
+  (cell "Input" "B11" 1))
+(frame 45538
+  (cell "Input" "B12" 12))
+(frame 45540
+  (cell "Input" "B12" 11))
+(frame 45541
+  (cell "Input" "B11" 2)
+  (cell "Input" "B12" 10))
+(frame 45542
+  (cell "Input" "B12" 8))
+(frame 45543
+  (cell "Input" "B12" 7))
+(frame 45544
+  (cell "Input" "B12" 5))
+(frame 45545
+  (cell "Input" "B12" 4))
+(frame 45546
+  (cell "Input" "B12" 3))
+(frame 45639
+  (cell "Input" "B12" 4))
+(frame 45657
+  (cell "Input" "B12" 5))
+(frame 45658
+  (cell "Input" "B12" 6))
+(frame 45660
+  (cell "Input" "B11" 3)
+  (cell "Input" "B12" 7))
+(frame 45662
+  (cell "Input" "B12" 8))
+(frame 45665
+  (cell "Input" "B12" 10))
+(frame 45674
+  (cell "Input" "B11" 2))
+(frame 45685
+  (cell "Input" "B11" 3)
+  (cell "Input" "B12" 11))
+(frame 45688
+  (cell "Input" "B11" 4))
+(frame 45689
+  (cell "Input" "B11" 6)
+  (cell "Input" "B12" 12))
+(frame 45690
+  (cell "Input" "B11" 7))
+(frame 45712
+  (cell "Input" "B12" 11))
+(frame 45734
+  (cell "Input" "B11" 8))
+(frame 45736
+  (cell "Input" "B11" 9)
+  (cell "Input" "B12" 10))
+(frame 45737
+  (cell "Input" "B11" 11)
+  (cell "Input" "B12" 11))
+(frame 45738
+  (cell "Input" "B11" 0)
+  (cell "Input" "B12" 0))
+(frame 46345
+  (cell "Input" "B19" "Portfolio"))
+(frame 48455
+  (cell "Input" "B19" "Gigs"))
+(frame 50805
+  (cell "Input" "B11" 1)
+  (cell "Input" "B12" 13))
+(frame 50806
+  (cell "Input" "B11" 2)
+  (cell "Input" "B12" 10))
+(frame 50807
+  (cell "Input" "B12" 6))
+(frame 50808
+  (cell "Input" "B12" 4))
+(frame 50809
+  (cell "Input" "B12" 3))
+(frame 50839
+  (cell "Input" "B12" 4))
+(frame 50843
+  (cell "Input" "B12" 5))
+(frame 50855
+  (cell "Input" "B12" 6))
+(frame 50866
+  (cell "Input" "B12" 5))
+(frame 50980
+  (cell "Input" "B12" 6))
+(frame 51032
+  (cell "Input" "B12" 7))
+(frame 51033
+  (cell "Input" "B11" 3)
+  (cell "Input" "B12" 8))
+(frame 51034
+  (cell "Input" "B12" 9))
+(frame 51035
+  (cell "Input" "B12" 11))
+(frame 51036
+  (cell "Input" "B11" 0)
+  (cell "Input" "B12" 0))
+(frame 51081
+  (cell "Input" "B19" "Trading"))
+(frame 51294
+  (cell "Input" "B11" 4)
+  (cell "Input" "B12" 18))
+(frame 51295
+  (cell "Input" "B12" 16))
+(frame 51296
+  (cell "Input" "B12" 14))
+(frame 51297
+  (cell "Input" "B12" 13))
+(frame 51301
+  (cell "Input" "B12" 14))
+(frame 51303
+  (cell "Input" "B12" 15))
+(frame 51304
+  (cell "Input" "B11" 3)
+  (cell "Input" "B12" 16))
+(frame 51312
+  (cell "Input" "B12" 17))
+(frame 51314
+  (cell "Input" "B11" 2))
+(frame 51362
+  (cell "Input" "B12" 18))
+(frame 51363
+  (cell "Input" "B11" 0)
+  (cell "Input" "B12" 0))
+(frame 51396
+  (cell "Input" "B19" "Portfolio"))
+(frame 51461
+  (cell "Input" "B19" "Trading"))
+(frame 51706
+  (cell "Input" "B19" "Portfolio"))
+(frame 83040
+  (cell "Input" "B11" 7)
+  (cell "Input" "B12" 19))
+(frame 83041
+  (cell "Input" "B11" 6)
+  (cell "Input" "B12" 17))
+(frame 83042
+  (cell "Input" "B11" 5)
+  (cell "Input" "B12" 15))
+(frame 83043
+  (cell "Input" "B11" 3)
+  (cell "Input" "B12" 12))
+(frame 83044
+  (cell "Input" "B12" 10))
+(frame 83045
+  (cell "Input" "B11" 2)
+  (cell "Input" "B12" 7))
+(frame 83047
+  (cell "Input" "B12" 6))
+(frame 83048
+  (cell "Input" "B11" 1))
+(frame 83050
+  (cell "Input" "B12" 5))
+(frame 83053
+  (cell "Input" "B12" 4))
+(frame 83060
+  (cell "Input" "B11" 0)
+  (cell "Input" "B12" 0))
+(frame 102139
+  (cell "Input" "B11" 3)
+  (cell "Input" "B12" 19))
+(frame 102140
+  (cell "Input" "B11" 2)
+  (cell "Input" "B12" 18))
+(frame 102141
+  (cell "Input" "B12" 17))
+(frame 102142
+  (cell "Input" "B11" 1))
+(frame 102143
+  (cell "Input" "B12" 16))
+(frame 102145
+  (cell "Input" "B12" 15))
+(frame 102148
+  (cell "Input" "B12" 14))
+(frame 102183
+  (cell "Input" "B12" 15))
+(frame 102314
+  (cell "Input" "B12" 16))
+(frame 102392
+  (cell "Input" "B11" 2))
+(frame 102393
+  (cell "Input" "B12" 17))
+(frame 102398
+  (cell "Input" "B12" 18))
+(frame 102411
+  (cell "Input" "B11" 3))
+(frame 102412
+  (cell "Input" "B11" 7)
+  (cell "Input" "B12" 16))
+(frame 102413
+  (cell "Input" "B11" 0)
+  (cell "Input" "B12" 0))
+(frame 122532
+  (cell "Input" "B11" 7)
+  (cell "Input" "B12" 19))
+(frame 122533
+  (cell "Input" "B11" 6))
+(frame 122545
+  (cell "Input" "B12" 18))
+(frame 122555
+  (cell "Input" "B12" 17))
+(frame 122611
+  (cell "Input" "B12" 16))
+(frame 122612
+  (cell "Input" "B12" 15))
+(frame 122614
+  (cell "Input" "B12" 14))
+(frame 122626
+  (cell "Input" "B13" 1))
+(frame 122629
+  (cell "Input" "B13" 0))
+(frame 122654
+  (cell "Input" "B11" 5))
+(frame 122657
+  (cell "Input" "B12" 13))
+(frame 122833
+  (cell "Input" "B12" 14))
+(frame 122902
+  (cell "Input" "B11" 6))
+(frame 123004
+  (cell "Input" "B11" 5))
+(frame 123007
+  (cell "Input" "B12" 16))
+(frame 123008
+  (cell "Input" "B12" 18))
+(frame 123009
+  (cell "Input" "B11" 0)
+  (cell "Input" "B12" 0))
+(frame 123591
+  (cell "Input" "B19" "Trading"))
+(frame 123703
+  (cell "Input" "B19" "Portfolio"))
+(frame 127758
+  (cell "Input" "B19" "Trading"))
+(frame 127769
+  (cell "Input" "B11" 5)
+  (cell "Input" "B12" 17))
+(frame 127770
+  (cell "Input" "B12" 15))
+(frame 127771
+  (cell "Input" "B12" 14))
+(frame 127775
+  (cell "Input" "B12" 13))
+(frame 127781
+  (cell "Input" "B12" 12))
+(frame 127784
+  (cell "Input" "B12" 11))
+(frame 127787
+  (cell "Input" "B12" 10))
+(frame 127790
+  (cell "Input" "B12" 9))
+(frame 127791
+  (cell "Input" "B11" 4))
+(frame 127802
+  (cell "Input" "B13" 1))
+(frame 127803
+  (cell "Input" "B13" 0))
+(frame 127806
+  (cell "Input" "B11" 5))
+(frame 127810
+  (cell "Input" "B12" 10))
+(frame 127811
+  (cell "Input" "B11" 6))
+(frame 127812
+  (cell "Input" "B11" 7)
+  (cell "Input" "B12" 11))
+(frame 127813
+  (cell "Input" "B11" 8)
+  (cell "Input" "B12" 12))
+(frame 127979
+  (cell "Input" "B20" "switch-cash"))
+(frame 127980
+  (cell "Input" "B20" ""))
+(frame 128013
+  (cell "Input" "B20" "switch-cash"))
+(frame 128014
+  (cell "Input" "B20" ""))
+(frame 128032
+  (cell "Input" "B20" "switch-cash"))
+(frame 128033
+  (cell "Input" "B20" ""))
+(frame 128043
+  (cell "Input" "B20" "switch-cash"))
+(frame 128044
+  (cell "Input" "B20" ""))
+(frame 128084
+  (cell "Input" "B20" "switch-cash"))
+(frame 128085
+  (cell "Input" "B20" ""))
+(frame 128101
+  (cell "Input" "B20" "switch-cash"))
+(frame 128102
+  (cell "Input" "B20" ""))
+(frame 128278
+  (cell "Input" "B20" "rung-2"))
+(frame 128279
+  (cell "Input" "B20" ""))
+(frame 129741
+  (cell "Input" "B20" "sell-all"))
+(frame 129742
+  (cell "Input" "B20" ""))
+(frame 129847
+  (cell "Input" "B20" "rung-4"))
+(frame 129848
+  (cell "Input" "B20" ""))
+(frame 129890
+  (cell "Input" "B20" "buy-max"))
+(frame 129891
+  (cell "Input" "B20" ""))
+(frame 130775
+  (cell "Input" "B12" 11))
+(frame 130786
+  (cell "Input" "B11" 9)
+  (cell "Input" "B12" 12))
+(frame 130787
+  (cell "Input" "B11" 0)
+  (cell "Input" "B12" 0))
+(frame 132347
+  (cell "Input" "B19" "Report"))
+(frame 132945)

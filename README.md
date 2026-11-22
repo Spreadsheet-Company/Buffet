@@ -67,9 +67,17 @@ crates.io as a stranger does, pinned exactly in `Cargo.toml`:
 
 ```text
 cargo run --release --example expand      # src/buffet.source.vla into src/buffet.vla
+cargo run --release --example replay      # the owner's session restamped, its golden and hand
 cargo test --workspace
 tools\run_checks.ps1
 ```
+
+Beside the cartridge stands the owner's own session, played in the page from
+the exam to the first quarter's report card: `src/buffet.replay.vla`, the
+Report's window at its last frame, `src/buffet.golden.vla`, and
+`src/buffet.hand.js`, the cells the page holds it to. An edit that moves the
+cartridge moves all three by the second command, and the tests and the page
+hold every frame of the session to the game written by hand.
 
 Both pins, `alonzo = "=0.4.0"` and `vla-lang = "=0.14.0"`, the language
 that release pins, resolve from crates.io, and `Cargo.lock` is committed.

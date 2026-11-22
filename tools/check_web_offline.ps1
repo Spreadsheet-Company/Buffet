@@ -41,6 +41,18 @@ WHAT IT HOLDS, neither needing a host or the network:
      at a path the source's includes do not resolve to, where Build in the
      drawer would refuse or write other bytes, fails here and not at a hand
      test.
+  3. The session beside the cartridge (HOUSE.4's second slice, Alonzo's
+     rules of v0.4.0): its replay and its golden, src/<name>.replay.vla and
+     src/<name>.golden.vla, are replay- and golden- blocks at their paths,
+     and its hand, src/<name>.hand.js, the hand- block, the one block that
+     is a script, <script id="hand-NAME" data-path="PATH">, each owed both
+     ways with its file's text as the others are. The hand's source is the
+     page's code once its block runs, so it is held to the code tokens, makes
+     no code of a text (eval, Function) and names no store. And the replay's
+     header names its cartridge by the SHA-256 of src/<name>.vla's LF text,
+     as tools/check_vendored.ps1 computes its digests, so that a page built
+     over a replay the cartridge has moved under fails here before a
+     browser plays it: cargo run --release --example replay restamps it.
 Alonzo's list of the Web Audio calls its host never makes is not held here:
 it is Alonzo's charter on its own host (its docs/CHARTER.md section 8), held
 at the tag by Alonzo's check and here by the host's digest
@@ -62,7 +74,7 @@ here by its name, as a reach out does.
 
 -Control proves the check on scratch copies: the real template and scripts
 pass, and so does a page tools/build_web.ps1 builds in the scratch folder
-with -NoWasm; and twenty-two mutants fail, each for its own reason. In the
+with -NoWasm; and twenty-nine mutants fail, each for its own reason. In the
 template: a script's src appended, a fetch, the viewport's place removed, an
 anchor, an image, a place naming a file, the blocks' place removed. In the
 scripts: a fetch appended to the viewport's source, and one to the host's.
@@ -72,7 +84,11 @@ source's block one character from its file, and a content sheet's block cut.
 And the stores: the template naming sessionStorage, naming localStorage a
 second time, the save picker a second time and indexedDB a second time; the
 host's source naming localStorage, the save picker and navigator.locks.
-Each built mutant proves it applied before the check is asked.
+And the session's (HOUSE.4's second slice): the built page without the
+hand's block, and a replay block no file is; a hand calling fetch, one
+calling eval, one naming localStorage and one naming indexedDB; and a replay
+naming another cartridge. Each built mutant proves it applied before the
+check is asked.
 
 House style (tools/check_*.ps1): PowerShell 5.1 and pwsh alike, host-free,
 no network; exit 0 clean, exit 1 with every problem named.
@@ -115,6 +131,10 @@ $oncePlaceholders = @($viewportPlaceholder, '{{FAKE_JS}}', '{{HOST_JS}}', '{{ALO
 $namedPlace = '\{\{[A-Z]+:[^}]*\}\}'
 # A block of a kind the page reads, its id, its attributes and its text.
 $blockPattern = '<script type="text/plain" id="((cartridge|source|replay|golden|library|fixture)-[a-z0-9_-]+)"([^>]*)>([\s\S]*?)</script>'
+# A hand's block (Alonzo's ENGINE.16): the one block that is a script, run where it stands.
+$handPattern = '<script id="(hand-[a-z0-9_-]+)"([^>]*)>([\s\S]*?)</script>'
+# A hand's source runs as the page's code: the code tokens, and no text made code.
+$handEval = '\beval\s*\(|\bFunction\s*\('
 
 # The blocks src/ owes a page, by id: the file each is read from, its data-path and its data-file.
 function Get-OwedBlocks([string]$src) {
@@ -123,12 +143,20 @@ function Get-OwedBlocks([string]$src) {
     $vla = @(Get-ChildItem -LiteralPath $src -File | Where-Object { $_.Extension -eq '.vla' } | Sort-Object Name)
     $carts = New-Object System.Collections.Generic.List[string]
     foreach ($f in $vla) { if ($f.Name.EndsWith('.source.vla')) { $carts.Add($f.Name.Substring(0, $f.Name.Length - '.source.vla'.Length)) } }
+    $session = New-Object System.Collections.Generic.List[string]
     foreach ($n in $carts) {
         $owed['cartridge-' + $n] = @{ File = (Join-Path $src ($n + '.vla')); Path = ('src/' + $n + '.vla'); DataFile = ($n + '.vla') }
         $owed['source-' + $n] = @{ File = (Join-Path $src ($n + '.source.vla')); Path = ('src/' + $n + '.source.vla'); DataFile = '' }
+        # The session beside it (HOUSE.4's second slice): its replay, its golden and its hand, each where it stands.
+        foreach ($kind in @(@('replay', '.replay.vla'), @('golden', '.golden.vla'), @('hand', '.hand.js'))) {
+            $file = Join-Path $src ($n + $kind[1])
+            if (Test-Path -LiteralPath $file) { $owed[$kind[0] + '-' + $n] = @{ File = $file; Path = ('src/' + $n + $kind[1]); DataFile = '' } }
+        }
+        $session.Add($n + '.replay.vla'); $session.Add($n + '.golden.vla')
     }
     foreach ($f in $vla) {
         if ($f.Name.EndsWith('.source.vla')) { continue }
+        if ($session -contains $f.Name) { continue }
         $base = [System.IO.Path]::GetFileNameWithoutExtension($f.Name)
         if ($carts -contains $base) { continue }
         $owed['library-' + $base] = @{ File = $f.FullName; Path = ('src/' + $f.Name); DataFile = '' }
@@ -210,6 +238,12 @@ function Test-Built([string]$path, [string]$src = $srcDir) {
         $df = [regex]::Match($attrs, 'data-file="([^"]*)"')
         $held[$id] = @{ Path = $(if ($p.Success) { $p.Groups[1].Value } else { '' }); DataFile = $(if ($df.Success) { $df.Groups[1].Value } else { '' }); Text = $m.Groups[4].Value }
     }
+    foreach ($m in [regex]::Matches($text, $handPattern)) {
+        $id = $m.Groups[1].Value
+        if ($held.ContainsKey($id)) { $problems += ("the built page holds the block {0} twice" -f $id); continue }
+        $p = [regex]::Match($m.Groups[2].Value, 'data-path="([^"]*)"')
+        $held[$id] = @{ Path = $(if ($p.Success) { $p.Groups[1].Value } else { '' }); DataFile = ''; Text = $m.Groups[3].Value }
+    }
     $owed = Get-OwedBlocks $src
     foreach ($id in @($owed.Keys | Sort-Object)) {
         $o = $owed[$id]
@@ -222,6 +256,48 @@ function Test-Built([string]$path, [string]$src = $srcDir) {
         if (-not [string]::Equals($h.Text, $want, [System.StringComparison]::Ordinal)) { $problems += ("the block {0} is not {1}'s text: build the page again (tools/build_web.ps1)" -f $id, $o.Path) }
     }
     foreach ($id in @($held.Keys | Sort-Object)) { if (-not $owed.ContainsKey($id)) { $problems += ("the built page holds the block {0}, and no file of src/ is it" -f $id) } }
+    return $problems
+}
+
+# The hands' sources (HOUSE.4's second slice; Alonzo's ENGINE.16), src/<name>.hand.js: each is the page's code once
+# its block runs, so each is held to the code tokens, makes no code of a text and names no store.
+function Test-Hands([string]$src = $srcDir) {
+    $problems = @()
+    if (-not (Test-Path -LiteralPath $src)) { return $problems }
+    foreach ($f in @(Get-ChildItem -LiteralPath $src -File | Where-Object { $_.Name.EndsWith('.hand.js') } | Sort-Object Name)) {
+        $n = $f.Name.Substring(0, $f.Name.Length - '.hand.js'.Length)
+        $js = [System.IO.File]::ReadAllText($f.FullName)
+        $lower = $js.ToLowerInvariant()
+        foreach ($t in $codeTokens) { if ($lower.Contains($t.ToLowerInvariant())) { $problems += ("the hand of {0} reaches out: '{1}'" -f $n, $t) } }
+        if ([regex]::IsMatch($js, $handEval)) { $problems += ("the hand of {0} makes code of a text: '{1}'" -f $n, [regex]::Match($js, $handEval).Value) }
+        foreach ($t in ($storageTokens + @($keptStore) + $keptFile + $keptWork)) { if ($lower.Contains($t.ToLowerInvariant())) { $problems += ("the hand of {0} names '{1}', and the page writes nothing but a person's keymap, file and unsaved work, each through the template's one place" -f $n, $t) } }
+    }
+    return $problems
+}
+
+# The SHA-256 of a file's text with CRLF read as LF, upper case, as tools/check_vendored.ps1 computes its digests.
+function Get-LfSha256([string]$path) {
+    $text = [System.IO.File]::ReadAllText($path, (New-Object System.Text.UTF8Encoding($false)))
+    $bytes = (New-Object System.Text.UTF8Encoding($false)).GetBytes($text.Replace("`r`n", "`n"))
+    $sha = [System.Security.Cryptography.SHA256]::Create()
+    try { $hash = $sha.ComputeHash($bytes) } finally { $sha.Dispose() }
+    return (($hash | ForEach-Object { $_.ToString('X2') }) -join '')
+}
+
+# Each replay's header (HOUSE.4's second slice): it names the cartridge beside it by the SHA-256 of its LF text,
+# which the page's player requires of the file it loads.
+function Test-Session([string]$src = $srcDir) {
+    $problems = @()
+    if (-not (Test-Path -LiteralPath $src)) { return $problems }
+    foreach ($f in @(Get-ChildItem -LiteralPath $src -File | Where-Object { $_.Name.EndsWith('.replay.vla') } | Sort-Object Name)) {
+        $n = $f.Name.Substring(0, $f.Name.Length - '.replay.vla'.Length)
+        $cart = Join-Path $src ($n + '.vla')
+        $m = [regex]::Match([System.IO.File]::ReadAllText($f.FullName), '(?m)^\(replay "[^"]*" \(spec \d+\) \(cartridge "([0-9A-F]{64})"\) \(seed \d+\)\)\r?$')
+        if (-not $m.Success) { $problems += ("src/{0} has no replay's header, (replay ""<name>"" (spec N) (cartridge ""<SHA-256>"") (seed S))" -f $f.Name); continue }
+        if (-not (Test-Path -LiteralPath $cart)) { $problems += ("src/{0} stands beside no cartridge, src/{1}.vla" -f $f.Name, $n); continue }
+        $digest = Get-LfSha256 $cart
+        if ($m.Groups[1].Value -cne $digest) { $problems += ("src/{0} names the cartridge {1}, and src/{2}.vla is {3}: restamp it, cargo run --release --example replay" -f $f.Name, $m.Groups[1].Value, $n, $digest) }
+    }
     return $problems
 }
 
@@ -297,20 +373,55 @@ if ($Control) {
         $nApplied = $at -ge 0 -and ([System.IO.File]::ReadAllText($n)).Length -eq $built.Length + 1 -and ([System.IO.File]::ReadAllText($n)).Contains('(include  "kitchen.vla")')
         $oApplied = $built.Contains('id="library-content-disclosures" data-path="src/content/disclosures.vla"') -and -not ([System.IO.File]::ReadAllText($o)).Contains('id="library-content-disclosures"')
         $rj = @(Test-Built $j); $rk = @(Test-Built $k); $rl = @(Test-Built $l); $rm = @(Test-Built $m); $rn = @(Test-Built $n); $ro = @(Test-Built $o)
+        # The session (HOUSE.4's second slice): the page without the hand's block, and a replay block no file is; a
+        # scratch folder whose hand calls fetch, calls eval, names localStorage or names indexedDB; and one whose replay
+        # names another cartridge. The real hands and session pass first.
+        $realHands = @(Test-Hands)
+        $realSession = @(Test-Session)
+        $hb = Join-Path $tmp 'hb.html'; [System.IO.File]::WriteAllText($hb, [regex]::Replace($built, '<script id="hand-buffet"[^>]*>[\s\S]*?</script>\n?', ''), $utf8)
+        $hbApplied = $built.Contains('<script id="hand-buffet"') -and -not ([System.IO.File]::ReadAllText($hb)).Contains('<script id="hand-buffet"')
+        $hbHit = @(@(Test-Built $hb) | Where-Object { $_ -like '*owes the built page the block hand-buffet*' }).Count
+        $rs = Join-Path $tmp 'rs.html'; [System.IO.File]::WriteAllText($rs, $built.Replace('<script type="text/plain" id="alonzo-wasm">', '<script type="text/plain" id="replay-nowhere" data-path="src/nowhere.replay.vla">x</script>' + "`n" + '<script type="text/plain" id="alonzo-wasm">'), $utf8)
+        $rsApplied = ([System.IO.File]::ReadAllText($rs)).Contains('id="replay-nowhere"')
+        $rsHit = @(@(Test-Built $rs) | Where-Object { $_ -like '*holds the block replay-nowhere, and no file*' }).Count
+        $handText = [System.IO.File]::ReadAllText((Join-Path $srcDir 'buffet.hand.js'))
+        $handHits = New-Object System.Collections.Generic.List[string]
+        $handsOk = $true
+        foreach ($pl in @(@('fetch', "`nfetch('x');", "the hand of buffet reaches out: 'fetch('"), @('eval', "`neval('1');", "the hand of buffet makes code of a text: 'eval('"), @('localStorage', "`nwindow.localStorage.setItem('x', '1');", "the hand of buffet names 'localStorage'"), @('indexedDB', "`nindexedDB.open('x');", "the hand of buffet names 'indexedDB'"))) {
+            $copy = Join-Path $tmp ('hand_' + $pl[0])
+            New-Item -ItemType Directory -Path $copy | Out-Null
+            [System.IO.File]::WriteAllText((Join-Path $copy 'buffet.hand.js'), ($handText + $pl[1] + "`n"), $utf8)
+            $hApplied = ([System.IO.File]::ReadAllText((Join-Path $copy 'buffet.hand.js'))).Contains($pl[1].Trim())
+            $hHit = @(@(Test-Hands $copy) | Where-Object { $_ -like ($pl[2] + '*') }).Count
+            $handHits.Add(("{0} {1}" -f $pl[0], $(if ($hApplied -and $hHit -ge 1) { 'failed' } else { 'NOT failed' })))
+            if (-not ($hApplied -and $hHit -ge 1)) { $handsOk = $false }
+        }
+        $other = Join-Path $tmp 'other'
+        New-Item -ItemType Directory -Path $other | Out-Null
+        Copy-Item -LiteralPath (Join-Path $srcDir 'buffet.vla') -Destination (Join-Path $other 'buffet.vla')
+        $replayText = [System.IO.File]::ReadAllText((Join-Path $srcDir 'buffet.replay.vla'))
+        $stamp = [regex]::Match($replayText, '\(cartridge "([0-9A-F]{64})"\)')
+        $otherText = if ($stamp.Success) { $replayText.Replace($stamp.Groups[1].Value, ('0' * 64)) } else { $replayText }
+        [System.IO.File]::WriteAllText((Join-Path $other 'buffet.replay.vla'), $otherText, $utf8)
+        $otApplied = $stamp.Success -and ([System.IO.File]::ReadAllText((Join-Path $other 'buffet.replay.vla'))).Contains('(cartridge "' + ('0' * 64) + '")')
+        $otHit = @(@(Test-Session $other) | Where-Object { $_ -like '*names the cartridge 0000*restamp it*' }).Count
         $jHit = @($rj | Where-Object { $_ -like '*owes the built page the block cartridge-buffet*' }).Count
         $kHit = @($rk | Where-Object { $_ -like '*holds the block library-nowhere, and no file*' }).Count
         $lHit = @($rl | Where-Object { $_ -like '*has {{BLOCKS}} left in it*' }).Count
         $mHit = @($rm | Where-Object { $_ -like '*block library-kitchen stands at data-path*' }).Count
         $nHit = @($rn | Where-Object { $_ -like "*block source-buffet is not src/buffet.source.vla's text*" }).Count
         $oHit = @($ro | Where-Object { $_ -like '*owes the built page the block library-content-disclosures*' }).Count
+        Write-Output ("control: the session: the real hands {0} problem(s) and the replay's header {1}; built, the hand's block cut ({2}) {3}, a stray replay block ({4}) {5}; the hands: {6}; a replay naming another cartridge ({7}) {8}" -f $realHands.Count, $realSession.Count, $hbApplied, $hbHit, $rsApplied, $rsHit, ($handHits -join ', '), $otApplied, $otHit)
         Write-Output ("control: the real set has {0} problem(s) and the page built from it {1}; the script src {2}, the fetch {3}, the missing placeholder {4}, the anchor {5}, the image {6}, the place naming a file {7}, the blocks' place removed {8}, the fetch in the viewport {9}, the fetch in the host {10}; built, the cartridge's block cut ({11}) {12}, the stray library block ({13}) {14}, the template as a page {15}, the library at another path ({16}) {17}, the source one character off ({18}) {19}, the content sheet's block cut ({20}) {21}; the stores: sessionStorage in the template {22}, localStorage there a second time {23} and in the host {24}, the save picker there a second time {25} and in the host {26}, the work's store there a second time {27} and its locks in the host {28}" -f $real.Count, $realBuilt.Count, $ra.Count, $rb.Count, $rc.Count, $rd.Count, $re.Count, $fHit, $hHit, $rg.Count, $iHit, $jApplied, $jHit, $kApplied, $kHit, $lHit, $mApplied, $mHit, $nApplied, $nHit, $oApplied, $oHit, $soHit, $spHit, $sqHit, $fpHit, $fqHit, $wrHit, $wsHit)
-        if ($real.Count -eq 0 -and $realBuilt.Count -eq 0 -and $ra.Count -ge 1 -and $rb.Count -ge 1 -and $rc.Count -ge 1 -and $rd.Count -ge 1 -and $re.Count -ge 1 -and $fHit -ge 1 -and $hHit -ge 1 -and $rg.Count -ge 1 -and $iHit -ge 1 -and $jApplied -and $jHit -ge 1 -and $kApplied -and $kHit -ge 1 -and $lHit -ge 1 -and $mApplied -and $mHit -ge 1 -and $nApplied -and $nHit -ge 1 -and $oApplied -and $oHit -ge 1 -and $soHit -ge 1 -and $spHit -ge 1 -and $sqHit -ge 1 -and $fpHit -ge 1 -and $fqHit -ge 1 -and $wrHit -ge 1 -and $wsHit -ge 1) {
-            Write-Output 'OK: the check passes the template, the three scripts and a page built from them, and fails each of the twenty-two mutants'
+        if ($real.Count -eq 0 -and $realBuilt.Count -eq 0 -and $ra.Count -ge 1 -and $rb.Count -ge 1 -and $rc.Count -ge 1 -and $rd.Count -ge 1 -and $re.Count -ge 1 -and $fHit -ge 1 -and $hHit -ge 1 -and $rg.Count -ge 1 -and $iHit -ge 1 -and $jApplied -and $jHit -ge 1 -and $kApplied -and $kHit -ge 1 -and $lHit -ge 1 -and $mApplied -and $mHit -ge 1 -and $nApplied -and $nHit -ge 1 -and $oApplied -and $oHit -ge 1 -and $soHit -ge 1 -and $spHit -ge 1 -and $sqHit -ge 1 -and $fpHit -ge 1 -and $fqHit -ge 1 -and $wrHit -ge 1 -and $wsHit -ge 1 -and $realHands.Count -eq 0 -and $realSession.Count -eq 0 -and $hbApplied -and $hbHit -ge 1 -and $rsApplied -and $rsHit -ge 1 -and $handsOk -and $otApplied -and $otHit -ge 1) {
+            Write-Output 'OK: the check passes the template, the three scripts, the hand, the replay''s header and a page built from them, and fails each of the twenty-nine mutants'
             exit 0
         }
         Write-Output 'FAIL: the control did not behave'
         foreach ($p in $real) { Write-Output ('  real: ' + $p) }
         foreach ($p in $realBuilt) { Write-Output ('  real page: ' + $p) }
+        foreach ($p in $realHands) { Write-Output ('  real hand: ' + $p) }
+        foreach ($p in $realSession) { Write-Output ('  real session: ' + $p) }
         exit 1
     } finally {
         Remove-Item -Recurse -Force $tmp -ErrorAction SilentlyContinue
@@ -319,6 +430,8 @@ if ($Control) {
 
 if (-not (Test-Path -LiteralPath $templatePath)) { Write-Output ("FAIL: no template at {0}" -f $templatePath); exit 1 }
 $problems = @(Test-Template $templatePath $scriptPath)
+$problems += @(Test-Hands)
+$problems += @(Test-Session)
 $builtNote = 'no built page beside it (tools/build_web.ps1 writes one)'
 if (Test-Path -LiteralPath $builtPath) {
     $problems += @(Test-Built $builtPath)
@@ -326,7 +439,7 @@ if (Test-Path -LiteralPath $builtPath) {
     $builtNote = ("the built page ({0:N0} characters) holds too, its {1} blocks src/'s files both ways, each at its path with its text" -f (Get-Item -LiteralPath $builtPath).Length, $owedCount)
 }
 if ($problems.Count -eq 0) {
-    Write-Output ("OK: web/index.template.html, web/viewport.js, web/fake.js and web/host.js load nothing and link nowhere, nothing names a store but the template's one localStorage, a person's keymap's, its one personFile(), a person's file's, and its one workStore(), a run's unsaved work's, the scripts', the module's and the blocks' places each in its one place, and no place naming a file; {0}" -f $builtNote)
+    Write-Output ("OK: web/index.template.html, web/viewport.js, web/fake.js, web/host.js and src/'s hand load nothing and link nowhere, no hand makes code of a text, each replay names the cartridge beside it, nothing names a store but the template's one localStorage, a person's keymap's, its one personFile(), a person's file's, and its one workStore(), a run's unsaved work's, the scripts', the module's and the blocks' places each in its one place, and no place naming a file; {0}" -f $builtNote)
     exit 0
 }
 Write-Output ("FAIL: the web page has {0} problem(s):" -f $problems.Count)

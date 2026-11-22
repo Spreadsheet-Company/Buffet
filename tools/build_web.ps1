@@ -16,8 +16,16 @@ page", ENGINE.15). The blocks are written in this order: the page's name
 (page-name, Buffet); each cartridge, src/<name>.vla beside its source
 src/<name>.source.vla, the cartridge's block with data-file, the name a load
 passes on, and then its source's, since Build in the drawer runs the pass
-over the texts the page holds (cartridge-, source-); every other .vla of
-src/, a library at its own path (library-): today src/common.vla, the kit,
+over the texts the page holds (cartridge-, source-), and the cartridge's
+session when it has one, since HOUSE.4's second slice: its replay and its
+golden, src/<name>.replay.vla and src/<name>.golden.vla, neither without the
+other (replay-, golden-: the page plays the replay on a fresh host and holds
+its end to the golden and its recording to the replay), and its hand,
+src/<name>.hand.js (hand-, the one block that is a script: <script
+id="hand-NAME" data-path="PATH">, which the page runs where it stands, its
+loop oracle's replay case answering it each frame, Alonzo's ENGINE.16);
+every other .vla of src/, a library at its own path (library-): today
+src/common.vla, the kit,
 and src/kitchen.vla, Buffet's own; and each .vla of src/content/, a content
 sheet (MENU.1), a library block of its own at its path, its id
 library-content-<name>, so that a sheet named as a library never collides
@@ -43,8 +51,10 @@ Alonzo's own and refuse on a game's page. And the module is required: a
 game's page without it plays nothing, the double, web/fake.js, reading a
 cartridge's manifest and no row after it and holding no pass. -NoWasm builds
 a page without the module anyway, for the ratchets job, which has no cargo,
-and for tools/check_web_offline.ps1's control. The replay and golden blocks
-come with COURSE.0's tasting, with their files. tools/check_web_offline.ps1
+and for tools/check_web_offline.ps1's control. The session's blocks are
+Alonzo's builder's of v0.4.0, adapted the same way (HOUSE.4's second slice):
+a game's replay, golden and hand beside its cartridge in src/, where Alonzo's
+stand in a cartridge's folder. tools/check_web_offline.ps1
 holds the page this writes: its markup, and each block its file's path and
 text, both ways.
 
@@ -96,7 +106,23 @@ if ($cartridges.Count -eq 0) { Write-Output ("FAIL: {0} holds no <name>.source.v
 foreach ($name in $cartridges) {
     if (-not (Test-Path -LiteralPath (Join-Path $srcDir ($name + '.vla')))) { Write-Output ("FAIL: src/{0}.source.vla has no cartridge beside it, src/{0}.vla: expand it first (cargo run --release --example expand)" -f $name); exit 1 }
 }
-$libraries = @($vla | Where-Object { -not $_.Name.EndsWith('.source.vla') -and $cartridges -notcontains [System.IO.Path]::GetFileNameWithoutExtension($_.Name) })
+# The session beside a cartridge (HOUSE.4's second slice): its replay and its golden, neither without the other,
+# and its hand, src/<name>.hand.js; no library.
+$replayFiles = @{}
+$goldenFiles = @{}
+$handFiles = @{}
+foreach ($name in $cartridges) {
+    $replay = Join-Path $srcDir ($name + '.replay.vla')
+    if (Test-Path -LiteralPath $replay) { $replayFiles[$name] = $replay }
+    $golden = Join-Path $srcDir ($name + '.golden.vla')
+    if (Test-Path -LiteralPath $golden) { $goldenFiles[$name] = $golden }
+    $hand = Join-Path $srcDir ($name + '.hand.js')
+    if (Test-Path -LiteralPath $hand) { $handFiles[$name] = $hand }
+}
+foreach ($name in $replayFiles.Keys) { if (-not $goldenFiles.ContainsKey($name)) { Write-Output ("FAIL: src/{0}.replay.vla has no golden beside it, src/{0}.golden.vla: write it with cargo run --release --example replay" -f $name); exit 1 } }
+foreach ($name in $goldenFiles.Keys) { if (-not $replayFiles.ContainsKey($name)) { Write-Output ("FAIL: src/{0}.golden.vla has no replay beside it, src/{0}.replay.vla" -f $name); exit 1 } }
+$session = @($cartridges | ForEach-Object { $_ + '.replay.vla'; $_ + '.golden.vla' })
+$libraries = @($vla | Where-Object { -not $_.Name.EndsWith('.source.vla') -and $cartridges -notcontains [System.IO.Path]::GetFileNameWithoutExtension($_.Name) -and $session -notcontains $_.Name })
 # The content sheets (MENU.1): each .vla of src/content/, a library block of its own at its path.
 $contentDir = Join-Path $srcDir 'content'
 $contents = @()
@@ -116,6 +142,10 @@ function New-Block([string]$id, [string]$path, [string]$text, [string]$file = ''
     if ($path -ne '') { $attrs += ' data-path="' + $path + '"' }
     return '<script type="text/plain" id="' + $id + '"' + $attrs + '>' + $text + '</script>'
 }
+# A hand (Alonzo's ENGINE.16): the one block that is a script, run where it stands, never through eval.
+function New-HandBlock([string]$name, [string]$path, [string]$text) {
+    return '<script id="hand-' + $name + '" data-path="' + $path + '">' + $text + '</script>'
+}
 try {
     $scripts = @{ '{{VIEWPORT_JS}}' = (Read-Inlined $viewportJs $false); '{{FAKE_JS}}' = (Read-Inlined $fakeJs $false); '{{HOST_JS}}' = (Read-Inlined $hostJs $false) }
     $blocks = New-Object System.Collections.Generic.List[string]
@@ -123,6 +153,11 @@ try {
     foreach ($name in $cartridges) {
         $blocks.Add((New-Block ('cartridge-' + $name) ('src/' + $name + '.vla') (Read-Inlined (Join-Path $srcDir ($name + '.vla')) $true) ($name + '.vla')))
         $blocks.Add((New-Block ('source-' + $name) ('src/' + $name + '.source.vla') (Read-Inlined (Join-Path $srcDir ($name + '.source.vla')) $true)))
+        if ($replayFiles.ContainsKey($name)) {
+            $blocks.Add((New-Block ('replay-' + $name) ('src/' + $name + '.replay.vla') (Read-Inlined $replayFiles[$name] $true)))
+            $blocks.Add((New-Block ('golden-' + $name) ('src/' + $name + '.golden.vla') (Read-Inlined $goldenFiles[$name] $true)))
+        }
+        if ($handFiles.ContainsKey($name)) { $blocks.Add((New-HandBlock $name ('src/' + $name + '.hand.js') (Read-Inlined $handFiles[$name] $true))) }
     }
     foreach ($lib in $libraries) {
         $blocks.Add((New-Block ('library-' + [System.IO.Path]::GetFileNameWithoutExtension($lib.Name)) ('src/' + $lib.Name) (Read-Inlined $lib.FullName $true)))
@@ -155,5 +190,5 @@ foreach ($ph in @('{{VIEWPORT_JS}}', '{{FAKE_JS}}', '{{HOST_JS}}', '{{ALONZO_WAS
 $outDir = Split-Path -Parent $Out
 if ($outDir -ne '' -and -not (Test-Path -LiteralPath $outDir)) { New-Item -ItemType Directory -Path $outDir | Out-Null }
 [System.IO.File]::WriteAllText($Out, $page, (New-Object System.Text.UTF8Encoding($false)))
-Write-Output ("OK: wrote {0} ({1:N0} characters): the viewport, the fake module and the host, {2} block(s): the page's name, {3} cartridge(s) with their source(s), {4} librar{5} and {6} content sheet(s), {7}" -f $Out, $page.Length, $blocks.Count, $cartridges.Count, $libraries.Count, $(if ($libraries.Count -eq 1) { 'y' } else { 'ies' }), $contents.Count, $wasmNote)
+Write-Output ("OK: wrote {0} ({1:N0} characters): the viewport, the fake module and the host, {2} block(s): the page's name, {3} cartridge(s) with their source(s), {4} replay(s) with {5} golden(s) and {6} hand(s), {7} librar{8} and {9} content sheet(s), {10}" -f $Out, $page.Length, $blocks.Count, $cartridges.Count, $replayFiles.Count, $goldenFiles.Count, $handFiles.Count, $libraries.Count, $(if ($libraries.Count -eq 1) { 'y' } else { 'ies' }), $contents.Count, $wasmNote)
 exit 0

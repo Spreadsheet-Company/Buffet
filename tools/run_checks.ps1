@@ -24,7 +24,7 @@ THE SHELL. Each check runs in its own process under Windows PowerShell 5.1
 shell is named in the header.
 
 -WithExtras runs the hardcoded list below of the verifiers that take
-arguments, today the four controls, each proving its check on mutants, and says so
+arguments, today the five controls, each proving its check on mutants, and says so
 separately: pretending a control is interchangeable with a plain pass/fail
 scan would hide what it asserts.
 
@@ -71,7 +71,11 @@ $selfName = Split-Path -Leaf $PSCommandPath
 # unchanged by it; and check_web_offline.ps1 (the page's template and
 # scripts load nothing and link nowhere, and a built page's blocks are
 # src/'s files both ways, each at its path with its text).
-$expectedAtLeast = 4
+# 2026-11-21, HOUSE.4's second slice, the session: 5 - check_host_loop.ps1
+# (the page's loop oracle run headless over Buffet's own blocks and judged by
+# Buffet's floors, the owner's session played and every frame held to its
+# golden, its round and its hand; skipped without a page or a browser).
+$expectedAtLeast = 5
 if ($Floor -gt 0) { $expectedAtLeast = $Floor }
 
 # --- The other verifiers, each with the arguments it needs. ---
@@ -80,8 +84,9 @@ if ($Floor -gt 0) { $expectedAtLeast = $Floor }
 $extras = @(
     @{ Script = 'check_spdx.ps1'; Args = @('-Control'); What = 'HOUSE.1 license map: a clean scratch tree passes, five mutants fail' },
     @{ Script = 'check_vendored.ps1'; Args = @('-Control'); What = 'HOUSE.3, HOUSE.4 the copies from Alonzo: clean copies pass, five mutants fail' },
-    @{ Script = 'check_layout.ps1'; Args = @('-Control'); What = 'MISE.1, MENU.1 the layout and the content rule: a clean copy passes, fourteen mutants fail' },
-    @{ Script = 'check_web_offline.ps1'; Args = @('-Control'); What = 'HOUSE.4, MENU.1, HOUSE.2 the page offline and its stores: the real set and a built page pass, twenty-two mutants fail' }
+    @{ Script = 'check_layout.ps1'; Args = @('-Control'); What = 'MISE.1, MENU.1, HOUSE.4 the layout and the content rule: a clean copy passes, fifteen mutants fail' },
+    @{ Script = 'check_web_offline.ps1'; Args = @('-Control'); What = 'HOUSE.4, MENU.1, HOUSE.2 the page offline, its stores and the session''s blocks: the real set and a built page pass, twenty-nine mutants fail' },
+    @{ Script = 'check_host_loop.ps1'; Args = @('-Control'); What = 'HOUSE.4 the session in the page: five mutant pages fail, each by its own words (skipped without the module)' }
 )
 
 # --- The shell each check runs under. ---

@@ -26,7 +26,10 @@
 //! worth, the returns, the grades and the percents spelled, and since
 //! `PLATE.6` the limit, a typed number past the end of the numbers counted
 //! by its digits, where its error lands and the order it refuses, and since its
-//! second slice the books' ceiling, a person's judged exactly; the host's
+//! second slice the books' ceiling, a person's judged exactly; since
+//! `HOUSE.4`'s second slice the owner's session ([`replay`]), the replay read,
+//! restamped with the oracle's own SHA-256 and played as the page's host plays
+//! it, its golden and the hand the page holds it to; the host's
 //! derived writes, the
 //! Write sheet's rows as the host reads them; the door
 //! the runners and the tests
@@ -46,6 +49,7 @@ use alonzo::pass::{expand, folder_of, includes, Expansion};
 use vla_lang::machine::{LineRefusal, Step, Viewed};
 
 pub mod buffet;
+pub mod replay;
 
 /// The repository's root, the folder above this crate.
 pub fn root() -> PathBuf {
@@ -111,21 +115,39 @@ pub fn values(cart: &Cartridge, sheet: &str, window: &str) -> BTreeMap<String, S
     let Ok(Viewed::Text(record)) = cart.view("values", sheet, Some(window)) else {
         panic!("the {sheet} sheet's record of {window}");
     };
+    // One pass over the record's lines, each kind's rows kept apart, then a
+    // cell's row laid over a value's and a text's over both, in the record's
+    // order within each kind (`HOUSE.4`'s second slice: three passes cost a
+    // replay's every frame three times over in the unoptimized oracle).
+    let sheet_head = format!("\"{sheet}\" \"");
+    let mut kinds: [Vec<(&str, &str)>; 3] = [Vec::new(), Vec::new(), Vec::new()];
+    for line in record.lines() {
+        let (kind, rest) = if let Some(rest) = line.strip_prefix("(value ") {
+            (0, rest)
+        } else if let Some(rest) = line.strip_prefix("(cell ") {
+            (1, rest)
+        } else if let Some(rest) = line.strip_prefix("(text ") {
+            (2, rest)
+        } else {
+            continue;
+        };
+        let Some((addr, v)) = rest
+            .strip_prefix(sheet_head.as_str())
+            .and_then(|rest| rest.split_once("\" "))
+        else {
+            continue;
+        };
+        let v = v.strip_suffix(')').unwrap_or(v);
+        let v = v
+            .strip_prefix('"')
+            .and_then(|t| t.strip_suffix('"'))
+            .unwrap_or(v);
+        kinds[kind].push((addr, v));
+    }
     let mut out = BTreeMap::new();
-    for head in ["(value ", "(cell ", "(text "] {
-        let head = format!("{head}\"{sheet}\" \"");
-        for line in record.lines() {
-            if let Some((addr, v)) = line
-                .strip_prefix(head.as_str())
-                .and_then(|rest| rest.split_once("\" "))
-            {
-                let v = v.strip_suffix(')').unwrap_or(v);
-                let v = v
-                    .strip_prefix('"')
-                    .and_then(|t| t.strip_suffix('"'))
-                    .unwrap_or(v);
-                out.insert(addr.to_string(), v.to_string());
-            }
+    for kind in kinds {
+        for (addr, v) in kind {
+            out.insert(addr.to_string(), v.to_string());
         }
     }
     out

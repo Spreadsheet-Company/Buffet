@@ -150,6 +150,7 @@ use buffet_oracle::buffet::{
     DIFFICULTY, DIVIDEND_DAYS, DRAWS_A_DAY, FIRST_MINUTE, LOOK_BACK, PACE, QUARTER_HOUR, RUNGS,
     WAVES, YEAR,
 };
+use buffet_oracle::replay::{self, Replay, Session};
 use buffet_oracle::{derived, expand_source, gather, lf, load, read, root, values};
 use vla_lang::calc::value::Value;
 use vla_lang::form::Form;
@@ -3740,7 +3741,7 @@ fn books_cash_held(cart: &Cartridge, frame: u64, cash: [u64; 2], holdings: [u64;
 /// being proofread, those done, their fees and when the fee is paid; Gigs'
 /// counts, its fees in dollars and its sentence; and since `GUARD.1`'s hand
 /// test the cash on hand, the personal cash $100 and the fees once paid.
-fn hustle_held(
+fn hustle_books_held(
     cart: &Cartridge,
     cal: &Calendar,
     h: &Hustle,
@@ -3804,11 +3805,26 @@ fn hustle_held(
             cal.day
         );
     }
+}
+
+/// The hustle at this frame with the cash its sessions hold (`BACK.1`): the
+/// Gigs view and the Hustle sheet, `hustle_books_held`, and the cash on hand,
+/// the waived exam's capital and the personal pocket's $100 and its fees, no
+/// order filled.
+fn hustle_held(
+    cart: &Cartridge,
+    cal: &Calendar,
+    h: &Hustle,
+    now: &Inputs,
+    last: &Inputs,
+    claim: bool,
+) {
+    hustle_books_held(cart, cal, h, now, last, claim);
     cash_held(
         cart,
         cal.frame,
         buffet::CAPITAL_BEFORE + buffet::CAPITAL_A_RIGHT * buffet::WAIVED_SCORE,
-        buffet::PERSONAL_CASH + h.earned(at),
+        buffet::PERSONAL_CASH + h.earned(cal.five_minutes()),
     );
 }
 
@@ -4587,6 +4603,9 @@ struct Host {
     waiting: VecDeque<String>,
     command: String,
     pending: Vec<String>,
+    /// Since `HOUSE.4`'s second slice, a replay's: the Input sheet's cells as
+    /// its rows have left them, by address, each value as a row spells it.
+    input: BTreeMap<String, String>,
 }
 
 impl Host {
@@ -4606,6 +4625,7 @@ impl Host {
             waiting: VecDeque::new(),
             command: String::new(),
             pending: Vec::new(),
+            input: BTreeMap::new(),
         }
     }
 
@@ -4679,26 +4699,93 @@ impl Host {
         self.written = Some(rows);
         let step = cart.step(0);
         assert!(step.done, "{}", step.row());
-        self.keys = values(cart, "Keys", "B1:E10");
-        let sheet = values(cart, "Commands", "A2:D101");
-        self.commands = (2..=101)
-            .filter_map(|row| {
-                let name = sheet.get(&format!("A{row}"))?;
-                let holds = sheet.get(&format!("C{row}")).is_some_and(|h| h == "true");
-                let key = sheet.get(&format!("D{row}")).cloned().unwrap_or_default();
-                Some((name.clone(), holds, key))
-            })
-            .collect();
-        self.pending = derived(cart);
         let now = self.now.clone();
+        if let Some(shows) = self.read_after(cart, true) {
+            self.now.sheet = shows;
+        }
+        (last, now)
+    }
+
+    /// After a step, what the host reads: the keymap, the commands, which a
+    /// replay's frame needs none of, its twentieth row naming the command, the
+    /// Write sheet's rows, made before the next frame's inputs, and the
+    /// Camera. The sheet the Camera turned to, where it turned, which the host
+    /// then shows.
+    fn read_after(&mut self, cart: &Cartridge, commands: bool) -> Option<String> {
+        self.keys = values(cart, "Keys", "B1:E10");
+        if commands {
+            let sheet = values(cart, "Commands", "A2:D101");
+            self.commands = (2..=101)
+                .filter_map(|row| {
+                    let name = sheet.get(&format!("A{row}"))?;
+                    let holds = sheet.get(&format!("C{row}")).is_some_and(|h| h == "true");
+                    let key = sheet.get(&format!("D{row}")).cloned().unwrap_or_default();
+                    Some((name.clone(), holds, key))
+                })
+                .collect();
+        }
+        self.pending = derived(cart);
         let shows = values(cart, "Camera", "B3")
             .remove("B3")
             .unwrap_or_default();
-        if shows != self.camera && !shows.is_empty() {
-            self.now.sheet = shows.clone();
-        }
+        let turned = (shows != self.camera && !shows.is_empty()).then(|| shows.clone());
         self.camera = shows;
-        (last, now)
+        turned
+    }
+
+    /// One frame of a replay (`HOUSE.4`'s second slice), as the page's host
+    /// plays one: the derived writes the last step's Write sheet asked for,
+    /// each its own write; the frame's rows as the replay logs them, one write;
+    /// and the step; then what `step` reads after it. What the host holds is
+    /// the replay's: the Input sheet's cells as its rows leave them, the sheet
+    /// shown, the pointer's cell and the left button; a key held where its
+    /// button's cell is 1, by the code the keymap read before the frame binds
+    /// it to, and every code it binds; and the command the twentieth row names.
+    /// The last frame's inputs, this frame's, and the sheet the Camera turned
+    /// to, which the next frame's rows show.
+    fn play(&mut self, cart: &mut Cartridge, rows: &[String]) -> (Inputs, Inputs, Option<String>) {
+        let last = self.now.clone();
+        for row in rows {
+            if let Some((addr, value)) = replay::input_cell(row) {
+                self.input.insert(addr.to_string(), value.to_string());
+            }
+        }
+        let at = |addr: &str| self.input.get(addr).map_or("", String::as_str);
+        let text = |addr: &str| at(addr).trim_matches('"').to_string();
+        let number = |addr: &str| at(addr).parse::<u64>().unwrap_or(0);
+        let now = Inputs {
+            sheet: text("B19"),
+            column: number("B11"),
+            row: number("B12"),
+            left: at("B13") == "1",
+            held: self
+                .keys
+                .iter()
+                .filter(|(cell, code)| !code.is_empty() && at(cell) == "1")
+                .map(|(_, code)| code.clone())
+                .collect(),
+            bound: self
+                .keys
+                .values()
+                .filter(|code| !code.is_empty())
+                .cloned()
+                .collect(),
+        };
+        self.command = text("B20");
+        self.now = now;
+        for row in std::mem::take(&mut self.pending) {
+            cart.write(&row)
+                .unwrap_or_else(|r| panic!("{row}: {} {}", r.refusal.id, r.refusal.text));
+        }
+        if !rows.is_empty() {
+            cart.write(&rows.join("\n")).unwrap_or_else(|r| {
+                panic!("the replay's rows: {} {}", r.refusal.id, r.refusal.text)
+            });
+        }
+        let step = cart.step(0);
+        assert!(step.done, "{}", step.row());
+        let turned = self.read_after(cart, false);
+        (last, self.now.clone(), turned)
     }
 }
 
@@ -5895,6 +5982,35 @@ fn plate_frame_held(
     starts: [u64; 2],
     texts: &[String],
 ) -> Option<Order> {
+    let (order, landed) = plate_frame(host, io, plate, cal, shown, starts);
+    plate_held(
+        cart,
+        host,
+        io,
+        plate,
+        cal,
+        (seed, market),
+        (shown, starts),
+        texts,
+        (order, landed),
+        buffet::WAIVED_STYLE,
+    );
+    order
+}
+
+/// A frame of the order desk by hand, and nothing held (`HOUSE.4`'s second
+/// slice, `plate_frame_held`'s first half): the hand's calendar on a frame,
+/// the dividends of a day's first frame paid to the shares the last frame
+/// held, and the order judged by what the last frame showed. The order taken,
+/// and the fills before it.
+fn plate_frame(
+    host: &Host,
+    io: (&Inputs, &Inputs),
+    plate: &mut Plate,
+    cal: &mut Calendar,
+    shown: &Shown,
+    starts: [u64; 2],
+) -> (Option<Order>, usize) {
     let (now, last) = io;
     let landed = plate.fills.len();
     cal.tick();
@@ -5910,6 +6026,28 @@ fn plate_frame_held(
         shown,
         starts,
     );
+    (order, landed)
+}
+
+/// Every cell of the order desk held to the hand at this frame
+/// (`plate_frame_held`'s second half): the desk, the books, the cash, the
+/// ledger, the commands and both views, the Overview's firm line the
+/// `style`'s, and the Write sheet's rows the host read, seven while an order
+/// fills and none else.
+#[allow(clippy::too_many_arguments)]
+fn plate_held(
+    cart: &Cartridge,
+    host: &Host,
+    io: (&Inputs, &Inputs),
+    plate: &Plate,
+    cal: &Calendar,
+    (seed, market): (u64, &Market),
+    (shown, starts): (&Shown, [u64; 2]),
+    texts: &[String],
+    (order, landed): (Option<Order>, usize),
+    style: u64,
+) {
+    let (now, last) = io;
     let f = cal.frame;
     let stocks = stocks_held(cart, cal, seed, market, DIFFICULTY);
     let prices = prices_of(&stocks);
@@ -5947,7 +6085,7 @@ fn plate_frame_held(
         texts,
         plate,
         (starts, prices),
-        buffet::WAIVED_STYLE,
+        style,
     );
     let wrote = plate.fills.len() > landed;
     assert_eq!(
@@ -5956,7 +6094,6 @@ fn plate_frame_held(
         "frame {f}: the Write sheet's rows, seven while an order fills and none else: {:?}",
         host.pending
     );
-    order
 }
 
 /// The order desk at work (`PLATE.1`'s decisions 3 to 11), every frame of a
@@ -6956,6 +7093,254 @@ fn a_scripted_quarter_holds_every_card_to_the_hand() {
         hustle.earned(cal.five_minutes()),
         buffet::FEE,
         "the fee paid in the next quarter"
+    );
+}
+
+/// The clock at this frame (`HOUSE.4`'s second slice), the hand's: the day
+/// and the time in seconds, the Day sheet's `B3` and `B4`, the one cell that
+/// moves every frame and of which every other cell of the calendar is a
+/// function, which `day_held` holds whole at the frames a session holds whole.
+fn clock_held(cart: &Cartridge, cal: &Calendar) {
+    let got = values(cart, "Day", "B3:B4");
+    assert_eq!(
+        (got.get("B3"), got.get("B4")),
+        (Some(&cal.day.to_string()), Some(&cal.seconds().to_string())),
+        "frame {}: Day!B3:B4, the day and the time in seconds",
+        cal.frame
+    );
+}
+
+/// The first line where two texts differ, for a file too long to print.
+fn first_difference(a: &str, b: &str) -> String {
+    let (x, y): (Vec<&str>, Vec<&str>) = (a.lines().collect(), b.lines().collect());
+    for k in 0..x.len().max(y.len()) {
+        if x.get(k) != y.get(k) {
+            return format!("line {}: {:?} against {:?}", k + 1, x.get(k), y.get(k));
+        }
+    }
+    "nowhere by line".to_string()
+}
+
+/// The owner's session (`HOUSE.4`'s second slice, decision 3), the replay the
+/// page recorded on 2026-11-21 from the exam to the first quarter's card,
+/// played as the page's host plays one and every frame held to the hand. The
+/// exam's every frame, as the scripted exam's are, its market and stocks
+/// beside it. From the frame after the certificate's key began the game, the
+/// calendar at every frame and the market at every tick; and at every frame
+/// a key, a click or a command landed and the frame after, at each day's first
+/// frame, at every 64th and at the last, the order desk, the books, the cash,
+/// the ledger, the commands and the views whole, the exam's books, views and
+/// keys, the hustle's, the Performance sheet and the Report. The sheet the
+/// Camera turned to is the next frame's shown. The hand the page holds, its
+/// cells read at its frames, is its file, as the golden is at the last frame,
+/// and the replay's header names the cartridge beside it.
+#[test]
+fn the_owners_session_holds_every_frame_to_the_hand() {
+    let replay = Replay::read(&read(replay::REPLAY)).expect("the replay reads");
+    let mut cart = loaded();
+    let seed = seed(&cart);
+    assert_eq!(replay.seed, seed, "the replay's seed, the manifest's");
+    assert_eq!(
+        replay.cartridge,
+        replay::cartridge_digest(&read(CARTRIDGE)),
+        "the replay's header names the cartridge beside it: cargo run --example replay"
+    );
+    let w = words(&cart);
+    let mut exam = exam_of(&cart, &w);
+    let market = Market::new(seed);
+    let texts = disclosure_texts(&cart);
+    let mut cal = Calendar::new(PACE, DAYS_A_YEAR);
+    let mut host = Host::new(buffet::EXAM);
+    let mut plate = Plate::default();
+    let mut hustle = Hustle::default();
+    let mut cards = Cards::default();
+    let mut held = Vec::new();
+    let (mut acted_last, mut turned_to) = (false, None::<String>);
+    let (mut begun_at, mut orders, mut claims, mut issued, mut wholes) =
+        (None, Vec::new(), 0, Vec::new(), 0);
+    for (n, rows) in replay.every_frame() {
+        let begun_before = exam.begun;
+        let capital = exam.capital();
+        let starts_last = [
+            capital,
+            buffet::PERSONAL_CASH + hustle.earned(cal.five_minutes()),
+        ];
+        let mut next = cal;
+        next.tick();
+        let starts = [
+            capital,
+            buffet::PERSONAL_CASH + hustle.earned(next.five_minutes()),
+        ];
+        // What the last frame showed, which an order is judged by and the whole
+        // frames hold, the hand's dearest sum: made where an act lands, at the
+        // frame after, where the day turns, at every 64th and at the last.
+        let acted = replay::acted(rows);
+        let needed = acted || acted_last || next.turned || n % 64 == 0 || n == replay.last();
+        let shown = if needed {
+            shown(&cal, seed, &market, &plate, starts_last)
+        } else {
+            Shown::default()
+        };
+        let (day_shown, seen, tick_before) = (cal.day, cal.shown(), cal.tick);
+        let (last, now, turned) = host.play(&mut cart, rows);
+        if let Some(sheet) = turned_to.take() {
+            assert_eq!(
+                now.sheet, sheet,
+                "frame {n}: the sheet the Camera turned to at the frame before, shown"
+            );
+        }
+        turned_to = turned;
+        let (mut order, mut landed, mut claim) = (None, 0, false);
+        if begun_before {
+            claim = hustle.frame(&now, &last, day_shown, seen);
+            (order, landed) =
+                plate_frame(&host, (&now, &last), &mut plate, &mut cal, &shown, starts);
+        } else {
+            exam_frame_held(&cart, &host, (&now, &last), &mut exam, &mut cal, &w);
+            market_held(&cart, &cal, seed, &market, DIFFICULTY);
+            stocks_held(&cart, &cal, seed, &market, DIFFICULTY);
+            if exam.begun {
+                begun_at = Some(n);
+            }
+        }
+        assert_eq!(cal.frame, n, "the hand's frame, the replay's");
+        claims += usize::from(claim);
+        if let Some(o) = order {
+            orders.push((n, o.pocket, o.stock, o.outcome));
+        }
+        let whole = acted || acted_last || cal.turned || n % 64 == 0 || n == replay.last();
+        assert!(
+            !whole || needed || !begun_before,
+            "frame {n}: held whole, and what it showed not made"
+        );
+        if begun_before && whole {
+            wholes += 1;
+            day_held(&cart, &cal);
+            plate_held(
+                &cart,
+                &host,
+                (&now, &last),
+                &plate,
+                &cal,
+                (seed, &market),
+                (&shown, starts),
+                &texts,
+                (order, landed),
+                exam.style(),
+            );
+            hustle_books_held(&cart, &cal, &hustle, &now, &last, claim);
+            let books = values(&cart, "Proctor", "B32:B41");
+            for (addr, want) in [
+                ("B32", exam.answers.len()),
+                ("B38", exam.score() as usize),
+                ("B39", exam.capital() as usize),
+                ("B40", exam.style() as usize),
+                ("B41", 1),
+            ] {
+                assert_eq!(
+                    books.get(addr),
+                    Some(&want.to_string()),
+                    "frame {n}: Proctor!{addr}, the exam's books after the begin"
+                );
+            }
+            exam_views_held(&cart, &cal, &exam, &w);
+            keys_held(cal.frame, &host.keys, &now.sheet, &exam);
+        } else if begun_before {
+            clock_held(&cart, &cal);
+            if cal.tick != tick_before || cal.turned {
+                stocks_held(&cart, &cal, seed, &market, DIFFICULTY);
+            }
+        }
+        let index = market.path(seed, DIFFICULTY, &cal).now;
+        let prices: [u64; 4] = std::array::from_fn(|k| RUNGS[k].price_at(index));
+        let price = prices[buffet::BENCHMARK];
+        let firm = plate.cash(buffet::FIRM, exam.capital()) + plate.holdings(buffet::FIRM, prices);
+        let card = cards.frame(&cal, begun_before, exam.capital(), price, firm);
+        if card {
+            issued.push((n, cards.card().expect("a card")));
+        }
+        if begun_before {
+            assert_eq!(
+                host.camera,
+                if card { buffet::CARD_VIEW } else { "" },
+                "frame {n}: Camera!B3, the Report at a card and nothing between"
+            );
+        }
+        if begun_before && whole {
+            performance_held(&cart, &cal, &cards, price, firm);
+            report_cells(&cart, &cal, &cards, (seed, &texts), exam.style());
+        }
+        if acted || acted_last || cal.turned || n % replay::HAND_EVERY == 0 {
+            held.push((n, replay::hand_values(&cart).expect("the hand's cells")));
+        }
+        acted_last = acted;
+    }
+    let (sheet, window) = replay::GOLDEN_WINDOW;
+    let session = Session {
+        golden: replay::grid_record(&cart, sheet, window).expect("the golden's window"),
+        held,
+        last: replay.last(),
+        seed,
+    };
+    for (path, want) in [
+        (replay::GOLDEN, replay::golden_text(&session)),
+        (replay::HAND, replay::hand_text(&session)),
+    ] {
+        let file = lf(&read(path));
+        assert!(
+            file == want,
+            "{path} is not the session's, {}: cargo run --example replay",
+            first_difference(&file, &want)
+        );
+    }
+    // The owner's session as it played: the exam begun at the certificate's
+    // O, all ten scored right and the fourth style; 98 orders in both pockets,
+    // one refused, a sale of shares the pocket held none of; four prospectuses
+    // proofread; and the first quarter's card, the firm's book graded A beside
+    // Average Co. bought and held.
+    use buffet::Outcome::{Filled, NoShares};
+    assert_eq!(replay.last(), 132_945, "the session's frames");
+    assert_eq!(
+        begun_at,
+        Some(3_736),
+        "the game begun at the certificate's O"
+    );
+    assert_eq!(
+        (exam.answers.len(), exam.correct(), exam.style()),
+        (buffet::ASKED, 10, 4),
+        "eleven answered, ten right, the fourth style"
+    );
+    let refused: Vec<_> = orders.iter().filter(|o| o.3 != Filled).collect();
+    assert_eq!(orders.len(), 98, "the orders taken");
+    assert_eq!(
+        refused,
+        [&(37_152, buffet::PERSONAL, 3, NoShares)],
+        "the one refused, a sale of Average Co. your own pocket held none of"
+    );
+    assert!(
+        orders.iter().any(|o| o.1 == buffet::FIRM)
+            && orders.iter().any(|o| o.1 == buffet::PERSONAL),
+        "orders from both pockets"
+    );
+    assert_eq!(claims, 4, "four prospectuses proofread");
+    assert_eq!(issued.len(), 1, "one card, the first quarter's");
+    let (at, card) = &issued[0];
+    assert_eq!(*at, 132_346, "the card at the second quarter's first frame");
+    assert_eq!(
+        (
+            card.quarter,
+            card.year,
+            card.returns[0],
+            card.alpha[0],
+            card.grades[0].1
+        ),
+        (1, 1, [580, -104], 684, "A"),
+        "the firm's +5.80% against Average Co.'s -1.04%, alpha 6.84, an A"
+    );
+    assert_eq!(
+        (wholes, session.held.len()),
+        (2_417, 685),
+        "the frames held whole and the frames the page's hand holds"
     );
 }
 

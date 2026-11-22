@@ -17,10 +17,13 @@ beside them: it holds what no row says, and needs no cargo to say it.
 WHAT IT HOLDS, four things, none needing a host, cargo or the network:
   1. src/ holds exactly the files the baseline names, each of a kind: the
      source, its cartridge, the two libraries, the content sheets and their
-     how-to, src/content/README.md. Any other file under src/ fails by name.
+     how-to, src/content/README.md, and since HOUSE.4's second slice the
+     owner's session beside the cartridge, its replay, its golden and the
+     hand the page holds it to. Any other file under src/ fails by name.
      Each kind is counted against the count pinned for it below: sources 1,
-     cartridges 1, libraries 2, how-tos 1, and content sheets (a .vla of
-     src/content/) 7 since PLATE.6 wrote the seventh. No course has a folder:
+     cartridges 1, libraries 2, how-tos 1, replays 1, goldens 1, hands 1, and
+     content sheets (a .vla of src/content/) 7 since PLATE.6 wrote the
+     seventh. No course has a folder:
      a course is a tranche of the one game, never a frozen copy of it (the
      owner's word of 2026-10-15, docs/OMAKASE.md, BD-1, amended).
   2. The cartridge's second line is the pass's banner naming its source,
@@ -54,8 +57,8 @@ WHAT IT HOLDS, four things, none needing a host, cargo or the network:
      file defines its rows and the source calls them: an include among the
      source's first forms defines macros alone.
 
--Control proves the check on a scratch copy of the twelve files: the clean
-copy passes; a stray file under src/, the cartridge missing, a banner naming
+-Control proves the check on a scratch copy of the fifteen files: the clean
+copy passes; a stray file under src/, the cartridge missing, the hand missing, a banner naming
 another source, an include in kitchen.vla, the source's includes out of
 order, an eighth content sheet past its pin, a content sheet the source does
 not include, a content sheet that includes, a content sheet that defines a
@@ -91,9 +94,15 @@ $repoRoot = Split-Path -Parent $PSScriptRoot
 # FRONT.3: the fifth, the Headlines sheet's, the ticker's headline of the day;
 # and the same day, CRITIC.1, the sixth, the Remarks sheet's, the proctor's
 # remark on a report card's grade. 2026-11-15, PLATE.6: the seventh, the Errors
-# sheet's, the error values' jokes.
+# sheet's, the error values' jokes. 2026-11-21, HOUSE.4's second slice: the
+# owner's session beside the cartridge, its replay, its golden and the hand,
+# each a block of the page, which the builder and the offline check name by
+# these paths, and which oracle/examples/replay.rs writes again.
 $sourceName = 'buffet.source.vla'
 $cartridgeName = 'buffet.vla'
+$replayName = 'buffet.replay.vla'
+$goldenName = 'buffet.golden.vla'
+$handName = 'buffet.hand.js'
 $includeOrder = @('common.vla', 'kitchen.vla')
 $includesNothing = @('kitchen.vla')
 $contentFolder = 'content'
@@ -112,6 +121,15 @@ $kinds = @(
        Raise = 'a file added or removed moves its name and this pin together, in this file' },
     @{ Kind = 'library'; Plural = 'libraries'; Pinned = 2; Names = $includeOrder
        Missing = 'which the source includes'
+       Raise = 'a file added or removed moves its name and this pin together, in this file' },
+    @{ Kind = 'replay'; Plural = 'replays'; Pinned = 1; Names = @($replayName)
+       Missing = 'the owner''s session, which the page plays and holds to its golden and its hand (HOUSE.4)'
+       Raise = 'a file added or removed moves its name and this pin together, in this file' },
+    @{ Kind = 'golden'; Plural = 'goldens'; Pinned = 1; Names = @($goldenName)
+       Missing = 'the Report''s window at the session''s last frame: cargo run --release --example replay'
+       Raise = 'a file added or removed moves its name and this pin together, in this file' },
+    @{ Kind = 'hand'; Plural = 'hands'; Pinned = 1; Names = @($handName)
+       Missing = 'the cells the page holds the session to: cargo run --release --example replay'
        Raise = 'a file added or removed moves its name and this pin together, in this file' },
     @{ Kind = 'how-to'; Plural = 'how-tos'; Pinned = 1; Names = @($howTo)
        Missing = 'the How to add a row beside the content sheets, for a stranger with five minutes (MENU.1)'
@@ -211,7 +229,7 @@ function Get-Report([string]$root) {
             }
         }
         if ($null -eq $kind) {
-            $failures.Add("stray: src/$rel is no file the layout names: the source, its cartridge, the two libraries, a content sheet (src/content/<name>.vla) and its how-to (src/$howTo)")
+            $failures.Add("stray: src/$rel is no file the layout names: the source, its cartridge, the two libraries, the session's replay, golden and hand, a content sheet (src/content/<name>.vla) and its how-to (src/$howTo)")
         } elseif (-not $found[$kind].Contains($unit)) {
             $found[$kind].Add($unit)
         }
@@ -335,7 +353,7 @@ if ($Control) {
         $headlinesName = 'headlines.vla'
         $remarksName = 'remarks.vla'
         $errorsName = 'errors.vla'
-        $copied = @($sourceName, $cartridgeName) + $includeOrder + @($howTo, "$contentFolder/$sheetName", "$contentFolder/$bankName", "$contentFolder/$caveatsName", "$contentFolder/$firmsName", "$contentFolder/$headlinesName", "$contentFolder/$remarksName", "$contentFolder/$errorsName")
+        $copied = @($sourceName, $cartridgeName, $replayName, $goldenName, $handName) + $includeOrder + @($howTo, "$contentFolder/$sheetName", "$contentFolder/$bankName", "$contentFolder/$caveatsName", "$contentFolder/$firmsName", "$contentFolder/$headlinesName", "$contentFolder/$remarksName", "$contentFolder/$errorsName")
         foreach ($n in $copied) {
             $from = Join-Path (Join-Path $repoRoot 'src') $n
             if (-not (Test-Path -LiteralPath $from -PathType Leaf)) {
@@ -356,6 +374,8 @@ if ($Control) {
         $remarksC = Join-Path $contentC $remarksName
         $errorsC = Join-Path $contentC $errorsName
         $howToC = Join-Path $tsrc $howTo
+        $handC = Join-Path $tsrc $handName
+        $hand0 = [System.IO.File]::ReadAllBytes($handC)
         $source0 = [System.IO.File]::ReadAllBytes($sourceC)
         $cart0 = [System.IO.File]::ReadAllBytes($cartC)
         $kitchen0 = [System.IO.File]::ReadAllBytes($kitchenC)
@@ -379,11 +399,11 @@ if ($Control) {
         $verdicts = New-Object System.Collections.Generic.List[string]
         $ok = $true
         $clean = Get-Report $tmp
-        if ($clean.Failures.Count -eq 0 -and $clean.Files -eq 12) {
-            $verdicts.Add("the clean copy: passes, 12 files read ($(Format-Found $clean.Found))")
+        if ($clean.Failures.Count -eq 0 -and $clean.Files -eq 15) {
+            $verdicts.Add("the clean copy: passes, 15 files read ($(Format-Found $clean.Found))")
         } else {
             $ok = $false
-            $verdicts.Add("the clean copy: $($clean.Failures.Count) problem(s), $($clean.Files) file(s) read; wanted 0 and 12: $($clean.Failures -join ' | ')")
+            $verdicts.Add("the clean copy: $($clean.Failures.Count) problem(s), $($clean.Files) file(s) read; wanted 0 and 15: $($clean.Failures -join ' | ')")
         }
 
         $mutants = @(
@@ -395,6 +415,10 @@ if ($Control) {
                Apply = { Remove-Item -LiteralPath $cartC -Force }
                Applied = { -not (Test-Path -LiteralPath $cartC) }
                Want = "missing: src/$cartridgeName" },
+            @{ Name = 'the hand missing'
+               Apply = { Remove-Item -LiteralPath $handC -Force }
+               Applied = { -not (Test-Path -LiteralPath $handC) }
+               Want = "missing: src/$handName" },
             @{ Name = 'a banner naming another source'
                Apply = { $t = [System.IO.File]::ReadAllText($cartC, $utf8); $script:hits = [regex]::Matches($t, [regex]::Escape($banner0)).Count; [System.IO.File]::WriteAllText($cartC, $t.Replace($banner0, $banner1), $utf8) }
                Applied = { ($script:hits -eq 1) -and ((Get-LfLines $cartC)[1] -ceq $banner1) }
@@ -462,6 +486,7 @@ if ($Control) {
             [System.IO.File]::WriteAllBytes($sourceC, $source0)
             [System.IO.File]::WriteAllBytes($cartC, $cart0)
             [System.IO.File]::WriteAllBytes($kitchenC, $kitchen0)
+            [System.IO.File]::WriteAllBytes($handC, $hand0)
             foreach ($extra in @($stray, $contentC)) {
                 if (Test-Path -LiteralPath $extra) { Remove-Item -LiteralPath $extra -Recurse -Force }
             }

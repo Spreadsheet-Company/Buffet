@@ -22,8 +22,15 @@
 # (MISE.2). What Alonzo's crate job runs and this one does not, until Buffet
 # has it: the package's own tests from its tarball (the oracle is never
 # published) and the frames runner (MISE.4's floors). No artifact is kept:
-# the page is deployed at a release (HOUSE.5). The actions are at their
-# Node 24 majors, v7.
+# the page is deployed at a release (HOUSE.5). Since HOUSE.4's second slice
+# the crate job also holds the owner's session: the replay restamped and its
+# golden and hand the oracle's (cargo run --example replay -- --check, in the
+# dev profile, so that it reuses the engine the tests compiled optimized), and
+# the page in the image's headless Chrome, its loop oracle judged by Buffet's
+# own floors (tools/check_host_loop.ps1) with the control's five mutant pages;
+# the ratchets job runs the same check over its page without the module, the
+# double's cases alone, one browser at a time, as Alonzo's Windows steps run
+# theirs. The actions are at their Node 24 majors, v7.
 name: checks
 on:
   push:
@@ -41,6 +48,8 @@ jobs:
           exit $LASTEXITCODE
       - name: every tools/check_*.ps1 under Windows PowerShell 5.1, the floor and the controls
         shell: pwsh
+        env:
+          BUFFET_LOOP_JOBS: 1
         run: |
           & powershell -NoProfile -ExecutionPolicy Bypass -File tools/run_checks.ps1 -WithExtras
           exit $LASTEXITCODE
@@ -66,4 +75,13 @@ jobs:
           pwsh -NoProfile -File tools/build_web.ps1
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
           pwsh -NoProfile -File tools/check_web_offline.ps1
+          exit $LASTEXITCODE
+      - name: the owner's session restamped, its golden and its hand the oracle's, compared and written nowhere (HOUSE.4)
+        run: cargo run --locked --example replay -- --check
+      - name: the game's page in headless Chrome, its loop oracle judged by Buffet's floors, and the control's five mutant pages, under pwsh (HOUSE.4)
+        shell: pwsh
+        run: |
+          pwsh -NoProfile -File tools/check_host_loop.ps1
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          pwsh -NoProfile -File tools/check_host_loop.ps1 -Control
           exit $LASTEXITCODE
