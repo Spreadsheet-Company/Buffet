@@ -263,8 +263,8 @@
     <button type="button" id="eng-pause" data-command="pause">Pause</button>
     <button type="button" id="eng-sound" data-command="sound" aria-pressed="false">Sound on</button>
     <button type="button" id="eng-load" data-command="load" title="the cartridge in the drawer's box, loaded again from frame 0; Ctrl+Enter in that box, Cmd+Enter on a Mac" aria-keyshortcuts="Control+Enter Meta+Enter">Load</button>
-    <button type="button" id="eng-save" data-command="save" title="the running game saved to a file of yours, a cartridge that opens at its frame; Ctrl+S, Cmd+S on a Mac" aria-keyshortcuts="Control+S Meta+S">Save</button>
-    <button type="button" id="eng-open" data-command="open" title="a cartridge or a save opened from a file of yours, and loaded; Ctrl+O, Cmd+O on a Mac" aria-keyshortcuts="Control+O Meta+O">Open</button>
+    <button type="button" id="eng-save" data-command="save" title="the running game saved to a file of yours, a cartridge that opens at its frame; or, where the cartridge reads a file, that file written back; Ctrl+S, Cmd+S on a Mac" aria-keyshortcuts="Control+S Meta+S">Save</button>
+    <button type="button" id="eng-open" data-command="open" title="a cartridge or a save opened from a file of yours, and loaded; or a file the cartridge reads, opened into its sheets; Ctrl+O, Cmd+O on a Mac" aria-keyshortcuts="Control+O Meta+O">Open</button>
     <input type="file" id="eng-open-file" accept=".vla,text/plain" hidden>
     <span id="frame-short" class="frame-short"></span>
     <p id="eng-status" class="status"></p>
@@ -612,7 +612,8 @@
   // and every other are the keymap's, a text a person reads and rebinds in the drawer, where a person also writes
   // commands of their own, a mnemonic and a macro of steps (the second slice, the owner's word). The registry's names and
   // words are the page's, a game's page vendoring them; player() gives each name its act, and the loop oracle's palette
-  // and keys cases hold the rest. hidden: no line of the palette's own; repeats: a held key presses it at each repeat.
+  // and keys cases hold the rest. hidden: no line of the palette's own; repeats: a held key presses it at each fresh
+  // repeat (ENGINE.39), unless a person's binding says (once).
   var COMMANDS = [
     { name: 'palette', words: 'open the command palette, or close it', hidden: true },
     { name: 'pick', words: 'pick a cartridge: the picker opened, Enter loading the one chosen' },
@@ -620,8 +621,10 @@
     { name: 'pause', words: 'pause the loop at its frame' },
     { name: 'sound', words: 'turn the sound on, or off' },
     { name: 'load', words: 'load the cartridge in the drawer\'s box again from frame 0' },
-    { name: 'save', words: 'save the running game to a file of yours, a cartridge that opens at its frame' },
-    { name: 'open', words: 'open a cartridge or a save from a file of yours, and load it' },
+    { name: 'save', words: 'save the running game to a file of yours, a cartridge that opens at its frame; where the cartridge reads a file, write that file back' },
+    { name: 'save-as', words: 'save under another name: a dialog asks where, and where the cartridge reads a file Save writes there from then on' },
+    { name: 'save-cartridge', words: 'save the running game itself to a file of yours, a cartridge that opens at its frame, where Save writes the file the cartridge reads' },
+    { name: 'open', words: 'open a cartridge or a save from a file of yours, and load it; or a file the cartridge reads, into its sheets' },
     { name: 'restore', words: 'restore the unsaved work the line under the bar names, at its frame, paused' },
     { name: 'discard', words: 'discard the unsaved work the line under the bar names from this browser' },
     { name: 'autosave-on', words: 'turn on Autosave: unsaved work kept in this browser until you save or discard it, which a page from a file does only at your word' },
@@ -632,6 +635,9 @@
     { name: 'next-sheet', words: 'show the next sheet', repeats: true },
     { name: 'previous-sheet', words: 'show the previous sheet', repeats: true },
     { name: 'hidden-sheets', words: 'show the hidden sheets\' tabs, or hide them' },
+    { name: 'copy', words: 'copy the selection\'s cells to the clipboard as they show, as Excel copies a range' },
+    { name: 'cut', words: 'cut the selection\'s cells: they stand until a paste moves them' },
+    { name: 'paste', words: 'paste the clipboard into the selection, each cell as typed, the page\'s own copy as its values' },
     { name: 'game', words: 'give the game the keys, the Screen\'s place' },
     { name: 'edit', words: 'give the drawer\'s edit row the keys' },
     { name: 'write', words: 'write the edit row\'s row as a person\'s edit at the next frame' },
@@ -659,7 +665,9 @@
   // its windows, matched by the key's place under Escape; never with Shift, Edge keeping Ctrl+Shift+K for a duplicated
   // tab though the page cancels it, nor Ctrl+` alone, Opera's (measured). The next and previous sheet on Excel for the
   // web's Ctrl+Alt+PageDown and Ctrl+Alt+PageUp, the page's in a window, and on Excel's Ctrl+PageDown and Ctrl+PageUp,
-  // the page's in full screen. And ENGINE.22's keys of the drawer's boxes, moved in.
+  // the page's in full screen. And ENGINE.22's keys of the drawer's boxes, moved in. And since ENGINE.39's second slice
+  // the grid's copy, cut and paste on Ctrl+C, Ctrl+X and Ctrl+V, on the Screen and in the drawer's sheets, each key
+  // passing on to the browser's own clipboard event, which the grid answers (clipKeyAct).
   var KEYMAP_DEFAULTS = [
     '; The page\'s keys (ENGINE.23), yours to change and apply: a binding a line, (bind "keys" command [argument]',
     '; [place ...]), and a command of your own, (command "name" "its words" step ...), run from the palette by its name',
@@ -669,7 +677,8 @@
     '; Tab, PageDown, F2, Space) or a key by its place in brackets ([Backquote], the key under Escape). A place: anywhere,',
     '; the default, every place but a box, and a box too for a key held with Ctrl or Cmd; screen; viewer; or a box,',
     '; edit, source, library, cartridge, replay or keys. And a sheet, (on "Portfolio"): the Screen or the drawer\'s',
-    '; sheets while that sheet shows, before a binding of the same key on none. The palette keeps a key, the way to',
+    '; sheets while that sheet shows, before a binding of the same key on none. And (repeat) or (once): whether the key',
+    '; held runs its command again at each repeat, over the command\'s own word. The palette keeps a key, the way to',
     '; every command. A game\'s own command is its cartridge\'s name and its own, (bind "B" buffet.buy-1): it holds',
     '; while that cartridge is loaded and the command holds, its key passing on otherwise (ENGINE.25). And where the',
     '; palette opens, (palette "floating"), away from the cell the selection stands on, or (palette "top") or',
@@ -683,7 +692,11 @@
     '(bind "Ctrl+PageDown" next-sheet)',
     '(bind "Ctrl+PageUp" previous-sheet)',
     '(bind "Ctrl+S" save)',
+    '(bind "Ctrl+Shift+S" save-as)',
     '(bind "Ctrl+O" open)',
+    '(bind "Ctrl+C" copy screen viewer)',
+    '(bind "Ctrl+X" cut screen viewer)',
+    '(bind "Ctrl+V" paste screen viewer)',
     '(bind "Enter" write edit)',
     '(bind "Ctrl+Enter" write edit)',
     '(bind "Ctrl+Enter" build source library)',
@@ -728,9 +741,19 @@
   function gameName(s) { var m = GAME_COMMAND.exec(String(s)); return m ? { cart: m[1], name: m[2] } : null; }
   // A cartridge's commands as a page lists them: the host's commands(), each named with the cartridge's name, its words
   // or its name, whether it holds now, and its own key, a code, and in words, on the Screen.
+  // Whether a binding's key held presses it again at a repeat (ENGINE.39; docs/SPEC.md section 3.10): the person's (repeat)
+  // or (once), else the command's own word, the page's list's for a command of the page, the loaded cartridge's Commands
+  // sheet's column E for a game's (version 8), and none for a person's own command. b, the binding; commands, the host's
+  // commands(); cart, the loaded cartridge's name. A page takes the repeat only where the host says it is fresh.
+  function bindingRepeats(b, commands, cart) {
+    if (b.repeat !== undefined) return b.repeat;
+    if (b.custom) return false;
+    if (b.game) { var g = gameName(b.command); return !!g && g.cart === cart && (commands || []).some(function (c) { return c.name === g.name && !!c.repeats; }); }
+    return COMMANDS.some(function (c) { return c.name === b.command && !!c.repeats; });
+  }
   function gameCommands(list, cart) {
     return (list || []).map(function (c) {
-      return { name: cart + '.' + c.name, bare: c.name, words: c.words || c.name, holds: !!c.holds, code: c.key || '', own: c.key ? codeWords(c.key) + ' on the Screen' : '' };
+      return { name: cart + '.' + c.name, bare: c.name, words: c.words || c.name, holds: !!c.holds, repeats: !!c.repeats, code: c.key || '', own: c.key ? codeWords(c.key) + ' on the Screen' : '' };
     });
   }
   // Where a command stands in the palette's lines and in the list, the owner's word at ENGINE.25's hand test: a person's own
@@ -833,6 +856,13 @@
       if (gn) { b.game = true; b.cart = gn.cart; }   // a game's command (ENGINE.25), held while its cartridge is loaded and it holds
       for (i = 3; i < d.length; i++) {
         if (typeof d[i] === 'string') { if (cmd !== 'sheet') { problems.push(at + cmd + ' takes nothing after its name'); return; } b.arg = d[i]; continue; }
+        // whether the key held presses it again at each repeat (ENGINE.39): (repeat) or (once), over the command's own word
+        if (head(d[i]) === 'repeat' || head(d[i]) === 'once') {
+          if (d[i].length !== 1) { problems.push(at + '(' + head(d[i]) + ') takes nothing: (bind "' + d[1] + '" ' + cmd + ' (' + head(d[i]) + '))'); return; }
+          if (b.repeat !== undefined) { problems.push(at + 'a binding says once whether its key repeats: (repeat) or (once)'); return; }
+          b.repeat = head(d[i]) === 'repeat';
+          continue;
+        }
         if (head(d[i]) === 'on') {
           var on = d[i].slice(1);
           if (!on.length || on.some(function (n) { return typeof n !== 'string' || !n.trim(); })) { problems.push(at + 'a sheet is named in quotes: (on "Portfolio")'); return; }
@@ -841,7 +871,7 @@
           continue;
         }
         var p = d[i] && d[i].sym;
-        if (!p || !KEY_PLACES[p]) { problems.push(at + 'no place named ' + (p || printForm(d[i])) + ': the places are anywhere, screen, viewer, edit, source, library, cartridge, replay and keys, and a sheet, (on "Portfolio")'); return; }
+        if (!p || !KEY_PLACES[p]) { problems.push(at + 'no place named ' + (p || printForm(d[i])) + ': the places are anywhere, screen, viewer, edit, source, library, cartridge, replay and keys, and a sheet, (on "Portfolio"); and a binding may say (repeat) or (once)'); return; }
         if (p !== 'anywhere') { b.places = b.places || {}; b.places[p] = 1; }
       }
       if (cmd === 'sheet' && b.arg === null) { problems.push(at + 'sheet needs a sheet\'s name: (bind "' + d[1] + '" sheet "Portfolio")'); return; }
@@ -896,6 +926,7 @@
       if (b.command !== name || (arg !== undefined && b.arg !== arg)) return;
       var said = notes ? notes(b) : '', on = b.sheets ? Object.keys(b.sheets).map(function (s) { return b.sheets[s]; }) : null;
       out.push(b.keys.text + (b.places ? ' ' + Object.keys(b.places).map(function (p) { return PLACE_WORDS[p]; }).join(', ') : '') + (on ? ' while ' + (on.length > 1 ? on.slice(0, -1).join(', ') + ' or ' + on[on.length - 1] : on[0]) + ' shows' : '') +
+        (b.repeat === true ? ', repeating while held' : b.repeat === false ? ', once while held' : '') +
         (b.arg && arg === undefined ? ' (' + b.arg + ')' : '') + (said ? ' [' + said + ']' : ''));
     });
     return out.join('; ');
@@ -1950,6 +1981,272 @@
     this.select(at, at);
     this.splice(at, 0, ev.dataTransfer.getData('text/plain').replace(/\r\n?/g, '\n'), 'insertFromDrop');
   };
+  // ---- copy, cut and paste in the grid (ENGINE.39's second slice; docs/SPEC.md section 7.2) ----
+  // Commands of the page (decision 6), bound to Ctrl+C, Ctrl+X and Ctrl+V on the Screen and in the drawer's sheets. Their
+  // keydown passes on unprevented, so that the browser fires its own clipboard event at the grid, which answers it: no
+  // permission asked, Cmd on a Mac by the browser's own mapping, Ctrl+Insert, Shift+Insert and Shift+Delete answered too,
+  // and a game's key first wherever the host takes it, its keydown prevented and no event fired. On any other key, or from
+  // the palette, a copy and a cut write the clipboard by the browser's writeText inside the act's gesture, and a paste
+  // reads it by readText at the browser's permission, a refusal said. In a box nothing changes, each keeping its own.
+  var CLIP_ACTS = { copy: 1, cut: 1, paste: 1 };
+  // The act of the clipboard a key's default fires (measured at the scoping in Chrome 157): Ctrl or Cmd, not both, with C, X
+  // or V, a letter matched as the keymap matches one, by the letter the key types or, on a layout typing no Latin letter,
+  // by its place; Ctrl+Insert a copy, Shift+Insert a paste and Shift+Delete a cut; null for any other key.
+  function clipboardChord(ev) {
+    if (!ev || ev.altKey) return null;
+    var key = String(ev.key || ''), low = key.toLowerCase(), code = String(ev.code || '');
+    var letter = /^[a-z]$/.test(low) ? low : /^Key[A-Z]$/.test(code) && !/^[a-z0-9]$/.test(low) ? code.charAt(3).toLowerCase() : '';
+    if (!!ev.ctrlKey !== !!ev.metaKey && !ev.shiftKey) return letter === 'c' || key === 'Insert' ? 'copy' : letter === 'x' ? 'cut' : letter === 'v' ? 'paste' : null;
+    if (!ev.ctrlKey && !ev.metaKey && ev.shiftKey) return key === 'Insert' ? 'paste' : key === 'Delete' ? 'cut' : null;
+    return null;
+  }
+  // What the page makes of a key its keymap bound (decision 6), pure: 'pass' where the binding is the page's copy, cut or
+  // paste and the key the browser's own for that act, the keydown left unprevented and unpressed, so that the browser's
+  // event follows and a game's key goes first; 'press' for any other, the binding pressed as every binding is.
+  function clipKeyAct(b, ev) { return b && !b.custom && !b.game && CLIP_ACTS[b.command] && clipboardChord(ev) === b.command ? 'pass' : 'press'; }
+  // Excel's text of a range (decision 7, measured at the scoping): each cell's shown text, a tab between cells and a CRLF
+  // after every row, the last too; a field holding a tab, a line feed or a carriage return quoted, its quotes doubled, and
+  // any other bare, a quote alone too. rows, an array of rows, each an array of texts.
+  function clipField(s) { s = String(s); return /[\t\n\r]/.test(s) ? '"' + s.replace(/"/g, '""') + '"' : s; }
+  function clipText(rows) {
+    return rows.map(function (r) { return r.map(clipField).join('\t') + '\r\n'; }).join('');
+  }
+  // A text read as Excel reads a paste of text from elsewhere (decision 8): rows at CRLF, LF or CR, the last dropped when it
+  // is empty; fields at tabs; a field opening with a quote read to its closing quote, a doubled quote one and its tabs and
+  // line ends kept, the rest of the field after it as written; and a quote never closed read as written. An array of rows,
+  // each an array of texts, a row as long as its fields.
+  function clipFields(text) {
+    var t = String(text), n = t.length, rows = [], row = [], i = 0;
+    for (;;) {
+      var field = '', j, q;
+      if (t.charAt(i) === '"') {
+        for (j = i + 1, q = ''; j < n; j++) {
+          if (t.charAt(j) !== '"') { q += t.charAt(j); continue; }
+          if (t.charAt(j + 1) === '"') { q += '"'; j++; continue; }
+          break;
+        }
+        if (j < n) { field = q; i = j + 1; }   // closed: what follows it to the field's end, as written
+      }
+      var k = i;
+      while (k < n && !/[\t\r\n]/.test(t.charAt(k))) k++;
+      row.push(field + t.slice(i, k));
+      if (k >= n) { rows.push(row); break; }
+      if (t.charAt(k) === '\t') { i = k + 1; continue; }
+      rows.push(row); row = [];
+      i = k + (t.charAt(k) === '\r' && t.charAt(k + 1) === '\n' ? 2 : 1);
+    }
+    var last = rows[rows.length - 1];
+    if (last.length === 1 && last[0] === '') rows.pop();
+    return rows;
+  }
+  // A field as typing it writes (decision 8): =... a formula as written, its references unmoved, Excel's rule for text from
+  // elsewhere; what the page's reader reads as a number, a number as it is spelled; TRUE or FALSE in any case, a truth
+  // value; the empty text, the cell emptied as Delete empties one; and any other, a text, Excel's spellings of a locale
+  // among them, 1,234.50, 12%, $5 and a date, since the locale is the host's (the owner's decision of 2026-10-20). { kind,
+  // spelled }: kind 'formula', 'value' or 'empty', spelled the row's last part.
+  function clipValue(field) {
+    var f = String(field), forms = null;
+    if (f === '') return { kind: 'empty', spelled: '""' };
+    if (f.charAt(0) === '=') return { kind: 'formula', spelled: vlaString(f) };
+    try { forms = VP.readForms(f); } catch (e) { forms = null; }
+    if (forms && forms.length === 1 && forms[0] && forms[0].num !== undefined && forms[0].text !== undefined) return { kind: 'value', spelled: forms[0].text };
+    if (/^(true|false)$/i.test(f.trim())) return { kind: 'value', spelled: f.trim().toLowerCase() };
+    return { kind: 'value', spelled: vlaString(f) };
+  }
+  // A selection's cells (decision 7): a range of cells as it stands; whole rows or columns, or the sheet, their cells within
+  // the sheet's extent; null where they hold none. sel, a viewport's selection, { kind, range }; extent, the sheet's or null.
+  function selectionCells(sel, extent) {
+    var r = sel.range;
+    if (sel.kind === 'cells') return { top: r.top, left: r.left, bottom: r.bottom, right: r.right };
+    if (!extent) return null;
+    var out = { top: sel.kind === 'rows' ? r.top : 1, left: sel.kind === 'columns' ? r.left : 1,
+                bottom: sel.kind === 'rows' ? Math.min(r.bottom, extent.bottom) : extent.bottom, right: sel.kind === 'columns' ? Math.min(r.right, extent.right) : extent.right };
+    return out.top <= out.bottom && out.left <= out.right ? out : null;
+  }
+  // Where a paste writes (decision 9, Excel's paste of its own copy measured): from the selection's corner; the page's own
+  // copy or cut tiled in each dimension on its own, over the selection's extent where the selection is at least the
+  // block's, filled exactly, the last copies cut at its edge as Excel's fill handle cuts a pattern, and over the block's
+  // own where it is smaller, so that one cell takes the whole block and a row of cells the block's rows across it, one
+  // cell copied filling the selection; and a text from elsewhere never tiled. Excel pastes its copy once over a selection
+  // no multiple of it and refuses a cut there (the owner's words at ENGINE.39's push and its hand tests). sel, { top,
+  // left, bottom, right }; h and w, the block's rows and columns; own, whether it is the page's own copy or cut. The range
+  // written.
+  function pasteRange(sel, h, w, own) {
+    var sh = sel.bottom - sel.top + 1, sw = sel.right - sel.left + 1;
+    if (own) return { top: sel.top, left: sel.left, bottom: sel.top + Math.max(sh, h) - 1, right: sel.left + Math.max(sw, w) - 1 };
+    return { top: sel.top, left: sel.left, bottom: sel.top + h - 1, right: sel.left + w - 1 };
+  }
+  // A paste's rows (decision 10): a row a cell, each the block's cell its place in the range stands at, tiled, a short row
+  // of a text's fields leaving the cells past it as they stand; and one value over a range one range row, the writer's
+  // economy. sheet; range, pasteRange's; block, rows of { kind, spelled }. [{ row, sheet, address, kind, cells }].
+  function pasteRows(sheet, range, block) {
+    var h = block.length, w = maxWidth(block), out = [], at = vlaString(sheet) + ' ', one = h === 1 && w === 1 ? block[0][0] : null;
+    if (one && one.kind !== 'formula' && (range.bottom > range.top || range.right > range.left)) {
+      var whole = VP.rangeText(range);
+      return [{ row: '(cell ' + at + vlaString(whole) + ' ' + one.spelled + ')', sheet: sheet, address: whole, kind: one.kind, cells: (range.bottom - range.top + 1) * (range.right - range.left + 1) }];
+    }
+    for (var r = range.top; r <= range.bottom; r++) {
+      var line = block[(r - range.top) % h];
+      for (var c = range.left; c <= range.right; c++) {
+        var x = line[(c - range.left) % w], a = VP.colName(c) + r;
+        if (!x) continue;   // past a short row of a text's fields: the cell stands
+        out.push({ row: '(' + (x.kind === 'formula' ? 'formula' : 'cell') + ' ' + at + vlaString(a) + ' ' + x.spelled + ')', sheet: sheet, address: a, kind: x.kind, cells: 1 });
+      }
+    }
+    return out;
+  }
+  function maxWidth(block) { var w = 0; for (var i = 0; i < block.length; i++) w = Math.max(w, block[i].length); return w; }
+  // A paste's formulas (the third slice, decision 13): each fill of the page's copy, its rectangle and its first cell's
+  // text, laid over each tile of the range as one fill row, cut at the range's edge where a last copy is cut and left out
+  // wholly past it, its first cell's text kept, its text moved as far as the tile stands from the copy, so that
+  // every cell's references move as Excel moves a formula copied, a fill writing each cell's own; or, for a cut's text, its
+  // move and each paste after it, its text as it was cut in every tile, so that every cell's references stay, as Excel's
+  // move keeps a moved formula's; and one formula of a copy filling a range, one fill row over it, where a cut's one
+  // formula is a row a cell, since a fill row moves each cell's references from the first's. sheet; range, pasteRange's;
+  // h and w, the block's rows and columns; from, the copy's range on its sheet; fills, the copy's; move(text, rows,
+  // columns), the text moved, or null for a cut's text. [{ row, sheet, address, kind, cells }].
+  function pasteFills(sheet, range, h, w, from, fills, move) {
+    var out = [], at = vlaString(sheet) + ' ';
+    function fill(r, text, dr, dc) {
+      var t = move ? move(text, dr, dc) : text, a = VP.rangeText(r);
+      out.push({ row: '(formula ' + at + vlaString(a) + ' ' + vlaString(t === null ? text : t) + ')', sheet: sheet, address: a, kind: 'formula', cells: (r.bottom - r.top + 1) * (r.right - r.left + 1) });
+    }
+    if (move && h === 1 && w === 1 && fills.length === 1) { fill(range, fills[0].text, range.top - from.top, range.left - from.left); return out; }
+    for (var tt = range.top; tt <= range.bottom; tt += h) {
+      for (var tl = range.left; tl <= range.right; tl += w) {
+        for (var i = 0; i < fills.length; i++) {
+          var f = fills[i], dr = tt - from.top, dc = tl - from.left, top = f.top + dr, left = f.left + dc;
+          if (top > range.bottom || left > range.right) continue;   // a last copy cut at the selection's edge
+          fill({ top: top, left: left, bottom: Math.min(f.bottom + dr, range.bottom), right: Math.min(f.right + dc, range.right) }, f.text, dr, dc);
+        }
+      }
+    }
+    return out;
+  }
+  // A count of cells in words: a word below ten, a number from there.
+  var CLIP_COUNTS = ['no cells', 'one cell', 'two cells', 'three cells', 'four cells', 'five cells', 'six cells', 'seven cells', 'eight cells', 'nine cells'];
+  function cellsWords(n) { return n < CLIP_COUNTS.length ? CLIP_COUNTS[n] : thousands(n) + ' cells'; }
+  // Whether a row writes into a sheet's range: a cell or formula row's sheet, compared without case, and its cells meeting it.
+  function rowMeets(row, sheet, range) {
+    var f = VP.readForms(String(row))[0], q;
+    if (!Array.isArray(f) || typeof f[1] !== 'string' || typeof f[2] !== 'string' || f[1].toLowerCase() !== String(sheet).toLowerCase() || !(q = VP.parseRange(f[2]))) return false;
+    var bottom = q.rows || q.columns ? (q.rows ? q.bottom : 1048576) : q.bottom, right = q.rows ? 16384 : q.right;
+    return q.top <= range.bottom && bottom >= range.top && q.left <= range.right && right >= range.left;
+  }
+  // The grid's clipboard (decisions 6 to 12): the page's last copy beside the browser's clipboard, a cut's mark, and the
+  // three acts over a viewport. host, the page's host; api, the browser's clipboard for the acts no clipboard event
+  // carries, navigator.clipboard or an oracle's double, null for none. kept: { text, sheet, range, cells, fills, cut,
+  // asCut }, the copy's Excel text, its sheet and range, each cell { shown, value, formula } as the host read it, its
+  // formulas' fills, whether it is a cut whose cells stand until its paste moves them, and whether it was cut at all, so
+  // that every paste of its text writes its cells as they were cut (the owner's word at the third slice's hand test).
+  function GridClip(host, api) {
+    var self = this;
+    this.host = host; this.api = api || null; this.kept = null;
+    host.on('wrote', function (e) { self.wrote(e); });
+    host.on('load', function () { if (self.kept) self.kept.cut = false; });   // a load's grid holds no cut's cells: its texts stay as cut
+  }
+  // The browser's clipboard events at a viewport answered (decision 6): a copy and a cut writing Excel's text into the
+  // event's data, a paste reading it; the default prevented where the grid took the event, and left to the browser where
+  // nothing was copied. And Escape there letting a cut's mark go, the key passed on (decision 12).
+  GridClip.prototype.listen = function (vp) {
+    var self = this, el = vp.root;
+    el.addEventListener('copy', function (ev) { self.event(ev, vp, 'copy'); });
+    el.addEventListener('cut', function (ev) { self.event(ev, vp, 'cut'); });
+    el.addEventListener('paste', function (ev) { self.event(ev, vp, 'paste'); });
+    el.addEventListener('keydown', function (ev) { if (ev.key === 'Escape' && !ev.ctrlKey && !ev.metaKey && !ev.altKey && !ev.shiftKey) self.letGo('Escape'); });
+  };
+  GridClip.prototype.event = function (ev, vp, kind) {
+    var data = ev.clipboardData;
+    if (!data) return;
+    if (kind === 'paste') { ev.preventDefault(); this.put(vp, data.getData('text/plain')); return; }
+    var text = this.take(vp, kind === 'cut');
+    if (text === null) return;
+    ev.preventDefault();
+    data.setData('text/plain', text);
+  };
+  // The acts no clipboard event carries (decision 6): a copy and a cut from the palette, or from a key of a person's binding
+  // that is not the browser's own, write the clipboard by writeText inside the act's gesture, and a paste reads it by
+  // readText at the browser's permission, which a page opened from a file may never hold; a refusal said. A promise, or
+  // null where nothing was asked of the browser.
+  GridClip.prototype.act = function (vp, kind) {
+    var self = this, api = this.api, host = this.host;
+    function why(e) { return e && e.message ? e.message : String(e); }
+    if (kind === 'paste') {
+      if (!api || !api.readText) { host.sayAct('Nothing was pasted: this browser gives a page the clipboard\'s text only at its own paste, Ctrl+V.', true); return null; }
+      return api.readText().then(function (t) { self.put(vp, t); }, function (e) { host.sayAct('Nothing was pasted: the browser refused the page the clipboard\'s text (' + why(e) + '); Ctrl+V pastes without asking.', true); });
+    }
+    var text = this.take(vp, kind === 'cut');
+    if (text === null) return null;
+    var key = kind === 'cut' ? 'Ctrl+X' : 'Ctrl+C';
+    if (!api || !api.writeText) { this.kept = null; host.sayAct('The ' + kind + ' was not put on the clipboard: this browser lets a page write it only at its own ' + kind + ', ' + key + '.', true); return null; }
+    return api.writeText(text).then(null, function (e) { self.kept = null; host.sayAct('The ' + kind + ' was not put on the clipboard: the browser refused it (' + why(e) + '); ' + key + ' ' + (kind === 'cut' ? 'cuts' : 'copies') + ' without asking.', true); });
+  };
+  // A copy or a cut of a viewport's selection (decisions 7, 11 and 12): Excel's text of its cells as they show, the page's
+  // copy kept and, for a cut, marked, its cells standing until a paste of it moves them; a cut refused on a read-only sheet.
+  // The text, or null where nothing was taken, the host having said why.
+  GridClip.prototype.take = function (vp, cut) {
+    var host = this.host, sheet = vp.sheet(), word = cut ? 'cut' : 'copied';
+    if (!host.cart || !sheet) { host.sayAct('Nothing was ' + word + ': no cartridge is loaded.', true); return null; }
+    if (cut && host.sheetMode(sheet).read) { host.sayAct('Nothing was cut: ' + sheet + ' is a read-only sheet, named by the manifest\'s (read ...), and a cut empties its cells; a copy takes them (version 6, docs/SPEC.md section 7.2).', true); return null; }
+    var sel = vp.selection(), range = selectionCells(sel, sel.kind === 'cells' ? null : host.extentOf(sheet));
+    if (!range) { host.sayAct('Nothing was ' + word + ': ' + sheet + ' holds no cells there.', true); return null; }
+    var c = host.cellsOf(sheet, range);
+    if (!c.ok) return null;
+    var text = clipText(c.rows.map(function (r) { return r.map(function (x) { return x.shown; }); }));
+    var n = (range.bottom - range.top + 1) * (range.right - range.left + 1), where = sheet + '!' + VP.rangeText(range), them = n === 1 ? 'it' : 'them';
+    this.kept = { text: text, sheet: sheet, range: range, cells: c.rows, fills: c.fills || [], cut: !!cut, asCut: !!cut };
+    host.sayAct(cut ? 'Cut ' + where + ', ' + cellsWords(n) + ': a paste of ' + them + ' moves ' + them + ', and Escape or another copy lets ' + them + ' stand.'
+                    : 'Copied ' + where + ', ' + cellsWords(n) + ', to the clipboard.');
+    return text;
+  };
+  // A paste of a text into a viewport's selection (decisions 8 to 13): the page's own copy where the text is its text, its
+  // kept values tiled as Excel tiles its own, and since the third slice its formulas by their fills, each moved as Excel
+  // moves a formula copied, where the module has the mover, else each formula's value, said; any other text read as Excel
+  // reads text from elsewhere, the page's copy and a cut's mark let go; a cut's own paste moving its cells, tiled as the
+  // page's copy is, its formulas' references kept, its range emptied as Delete empties one in the same act; and every paste
+  // of a cut's text after its move, or after its mark is let go, writing its cells again as they were cut, tiled the same
+  // way, said, so that a cut pastes the same cells wherever it goes and only a copy moves references (the owner's words at
+  // the third slice's hand test and at its push). True where the host took the act.
+  GridClip.prototype.put = function (vp, text) {
+    var host = this.host, sheet = vp.sheet(), kept = this.kept, own = !!kept && String(text) === kept.text, asCut = own && kept.asCut, formulas = 0, block;
+    if (!host.cart || !sheet) { host.sayAct('Nothing was pasted: no cartridge is loaded.', true); return false; }
+    if (!own) this.kept = null;   // the clipboard holds another text than the page's copy
+    var fills = own && kept.fills && kept.fills.length && host.moved(kept.fills[0].text, 0, 0) !== null ? kept.fills : null;   // a module with the mover
+    if (own) block = kept.cells.map(function (r) { return r.map(function (x) { if (x.formula && fills) return null; if (x.formula) formulas++; return { kind: x.value === '""' ? 'empty' : 'value', spelled: x.value }; }); });
+    else block = clipFields(text).map(function (r) { return r.map(clipValue); });
+    if (!block.length) { host.sayAct('Nothing was pasted: the clipboard holds no text.', true); return false; }
+    var sel = vp.selection(), area = selectionCells(sel, sel.kind === 'cells' ? null : host.extentOf(sheet)) || { top: sel.range.top, left: sel.range.left, bottom: sel.range.top, right: sel.range.left };
+    var h = block.length, w = maxWidth(block), range = pasteRange(area, h, w, own), rows = pasteRows(sheet, range, block), n = 0;
+    if (fills) rows = rows.concat(pasteFills(sheet, range, h, w, kept.range, fills, asCut ? null : function (t, dr, dc) { return host.moved(t, dr, dc); }));
+    for (var i = 0; i < rows.length; i++) n += rows[i].cells;
+    var where = sheet + '!' + VP.rangeText(range), note = formulas ? ', ' + (formulas === 1 ? 'a formula as its value' : cellsWords(formulas).replace(/cells?$/, 'formulas') + ' as their values') : '';
+    var p = { sheet: sheet, range: range, rows: rows, place: { sheet: sheet, col: range.left, row: range.top } };
+    if (own && kept.cut) {
+      var from = VP.rangeText(kept.range), src = kept.sheet + '!' + from;
+      p.rows = [{ row: '(cell ' + vlaString(kept.sheet) + ' ' + vlaString(from) + ' "")', sheet: kept.sheet, address: from, kind: 'empty', cells: 0 }].concat(rows);
+      p.what = 'the move of ' + src + ' to ' + where + note; p.done = 'moved ' + src + ' to ' + where + note; p.move = true;
+    } else {
+      if (asCut) note += n === 1 ? ', as it was cut' : ', as they were cut';
+      p.what = 'the paste of ' + cellsWords(n) + ' into ' + where + note; p.done = 'pasted ' + cellsWords(n) + ' into ' + where + note;
+    }
+    var took = host.paste(p);
+    if (took && p.move) kept.cut = false;   // the cut spent, its texts kept: the clipboard's text pastes its cells again as they were cut
+    return took;
+  };
+  // A cut's mark let go, its cells standing and its texts kept as they were cut (decision 12): by Escape, and by a person's
+  // edit of its cells, each said; a copy, a load and a paste of another text let it go with no word of their own, the act's
+  // answer its own.
+  GridClip.prototype.letGo = function (why) {
+    var k = this.kept;
+    if (!k || !k.cut) return;
+    k.cut = false;
+    this.host.sayAct('The cut of ' + k.sheet + '!' + VP.rangeText(k.range) + ' was let go by ' + why + ': its cells stand, and a paste writes them as they were cut.');
+  };
+  GridClip.prototype.wrote = function (e) {
+    var k = this.kept;
+    if (!k || !k.cut || e.move) return;
+    for (var i = 0; i < e.rows.length; i++) if (rowMeets(e.rows[i], k.sheet, k.range)) { this.letGo('an edit of its cells'); return; }
+  };
   // A keymap's text with the palette's place (SPEC.5's rider, the owner's food for thought at CART.9's second hand test):
   // every (palette ...) line taken out and, for the top or the bottom, one written at its end; floating writes none, the
   // keymap's default. A comment that names the line is kept.
@@ -2195,6 +2492,130 @@
   };
   FullEscape.prototype.reset = function () { this.at = -Infinity; };
 
+  // ---- a file the cartridge reads (CART.16's second slice; docs/SPEC.md section 3.11): the page's own reading of its kind ----
+  // A cartridge written to version 9 may say a file's lines on its Format sheet, and its type in Format!B1, a dot and its
+  // letters, which the host reads (fileType). Open then offers that kind of file beside a cartridge, a file of the kind
+  // is read into the cartridge's sheets where any other is a cartridge, and Save writes the file under its name.
+  // A picker's kind of file: the type the loaded cartridge reads, or, for none, a cartridge's. Its words are what the
+  // system's dialog shows as the type, so each says its type in them (the owner's word at ENGINE.49's hand test):
+  // "A .prolog file", "An Alonzo cartridge (.vla)".
+  function fileKind(kind) { return kind ? { description: 'A ' + kind + ' file', accept: { 'text/plain': [kind] } } : { description: 'An Alonzo cartridge (.vla)', accept: { 'text/plain': ['.vla'] } }; }
+  // What Open's picker offers: the cartridge's kind of file first, where it reads one, and a cartridge.
+  function openKinds(kind) { return kind ? [fileKind(kind), fileKind('')] : [fileKind('')]; }
+  // Whether a file's name ends with a type, compared without case, a name that is the type alone being no such file.
+  function ofKind(name, kind) { return !!kind && name.length > kind.length && name.toLowerCase().slice(-kind.length) === kind.toLowerCase(); }
+  // Whether a file opened is read as the cartridge's lines: its name of the cartridge's kind, and never a cartridge's own.
+  function opensAsLines(name, kind) { return ofKind(name, kind) && !ofKind(name, '.vla'); }
+  // What the picker says of a file opened: where it was read as a cartridge's lines, the cartridge and the file it is at
+  // work on, Afterlife (walter.prolog) (the owner's word at the hand test: the cartridge employs the file); a cartridge or
+  // a save opened is the file alone, as it was.
+  function openedTitle(name, into) { return into ? into + ' (' + name + ')' : 'The file ' + name; }
+
+  // ---- a person's file, and the file a work is tied to (ENGINE.5; ENGINE.49) ----
+  // A save is written to a file of the person's through the browser's calls the desk is given, the page's personFile()
+  // or the oracle's double: pickSave(options), a promise of the handle a person chose in the browser's dialog, or null
+  // where the browser has no such dialog; and download(text, file). Since ENGINE.49 the desk keeps the tie, the file a
+  // work is written into: the handle the open's picker gave, or the one the last dialog answered, with the entry of the
+  // page's picker and the load it was made at. A save of the file a cartridge reads is written into the tie with nothing
+  // asked but the browser's own question, once a sitting, whether the page may change that file; a save under another
+  // name, a first save and a cartridge's own save ask where. The act is the door (docs/REARVIEW.md, ENGINE.49): a file
+  // is replaced with no dialog between, so the tie holds for its entry at its load and for nothing else, a cartridge
+  // picked, a file opened, a load pressed and work restored each leaving a save that asks; the browser's refusal writes
+  // nothing; and a file changed on disk since the page last read or wrote it is refused once.
+  function FileDesk(files) { this.files = files; this.tie = null; }
+  // The tie of an entry at a load, or null where the desk holds none, or one for another entry or another load.
+  FileDesk.prototype.tieOf = function (entry, load) {
+    var t = this.tie;
+    return t && t.entry === entry && t.load === load ? t : null;
+  };
+  // A tie made, at an open through the picker ('opened') or at a dialog's answer ('saved'): changed, the file's time of
+  // last change as the page then read it. With no handle the desk holds no tie, the one it held let go.
+  FileDesk.prototype.tieTo = function (entry, load, handle, changed, by) {
+    this.tie = handle ? { entry: entry, load: load, handle: handle, name: handle.name, changed: typeof changed === 'number' ? changed : null, by: by || 'opened', wrote: by === 'saved', over: false } : null;
+    return this.tie;
+  };
+  // A text written through a handle: the browser writes a swap file and moves it over the file at the close, so a write
+  // that fails leaves the file as it was.
+  function writeInto(handle, text) {
+    return handle.createWritable().then(function (w) { return w.write(text).then(function () { return w.close(); }); });
+  }
+  // A save written. o: entry and load, the picker's entry and the count of loads, which a tie is held to; text; name,
+  // the file's name as the host says it; kind, the type the cartridge reads, none for a cartridge's own save; ask,
+  // whether a person's act is at hand, which a dialog and the browser's question each want; as, a save under another
+  // name; ties, whether the save is the file a cartridge reads, the one save a tie is made for and written through.
+  // Answers a promise of { how, name }: 'tied', written into the tie; 'picked', written where the dialog said, and for
+  // a file tied there; 'downloaded'; 'cancelled', the dialog closed; 'refused', the browser not allowed; 'changed', the
+  // file changed on disk, said once, the next save writing over it; 'unasked', a question or a dialog wanted and no
+  // act at hand; 'gone', the file no longer there and no act at hand; 'failed', with why.
+  FileDesk.prototype.save = function (o) {
+    var tie = o.ties && !o.as ? this.tieOf(o.entry, o.load) : null;
+    return tie ? this._into(tie, o) : this._under(o);
+  };
+  FileDesk.prototype._into = function (tie, o) {
+    var self = this, h = tie.handle, mode = { mode: 'readwrite' };
+    return Promise.resolve(typeof h.queryPermission === 'function' ? h.queryPermission(mode) : 'granted').then(function (state) {
+      if (state === 'granted') return state;
+      if (!o.ask) return 'unasked';   // the browser's question wants a person's act at hand
+      return h.requestPermission(mode);
+    }).then(function (state) {
+      if (state === 'unasked') return { how: 'unasked', name: tie.name };
+      if (state !== 'granted') return { how: 'refused', name: tie.name };
+      return h.getFile().then(function (f) {
+        if (tie.changed !== null && f.lastModified !== tie.changed && !tie.over) { tie.over = true; return { how: 'changed', name: tie.name, since: tie.wrote ? 'saved' : 'opened' }; }
+        return writeInto(h, o.text).then(function () { return h.getFile(); }).then(function (g) {
+          tie.changed = g.lastModified; tie.over = false; tie.wrote = true;
+          return { how: 'tied', name: tie.name, by: tie.by };
+        });
+      });
+    }).then(null, function (e) {
+      // the file gone, moved or its drive away: a save under a name where a person's act is at hand, and said where not
+      if (e && e.name === 'NotFoundError') { self.tie = null; return o.ask ? self._under(o) : { how: 'gone', name: tie.name }; }
+      if (e && (e.name === 'NotAllowedError' || e.name === 'SecurityError')) return { how: 'refused', name: tie.name };
+      return { how: 'failed', name: tie.name, why: e && e.message ? e.message : String(e) };
+    });
+  };
+  FileDesk.prototype._under = function (o) {
+    var self = this, files = this.files;
+    // no act of a person's at hand: a save under another name wants its dialog, and is said; any other is downloaded,
+    // as a save that waited and a cartridge's own always were (ENGINE.5)
+    if (!o.ask) {
+      if (o.as) return Promise.resolve({ how: 'unasked', name: o.name, as: true });
+      files.download(o.text, o.name);
+      return Promise.resolve({ how: 'downloaded', name: o.name });
+    }
+    // the dialog opens where the file this entry was tied to stands, at this load or an earlier, and in the Downloads
+    // folder where it was tied to none (ENGINE.5's ruling); the file is offered under its own name
+    var near = this.tie && this.tie.entry === o.entry ? this.tie.handle : null;
+    var asked = files.pickSave({ suggestedName: o.name, startIn: near || 'downloads', types: [fileKind(o.kind)] });
+    if (!asked) { files.download(o.text, o.name); return Promise.resolve({ how: 'downloaded', name: o.name }); }
+    return asked.then(function (h) {
+      return writeInto(h, o.text).then(function () {
+        if (!o.ties) return { how: 'picked', name: h.name };
+        return h.getFile().then(function (f) { self.tieTo(o.entry, o.load, h, f.lastModified, 'saved'); return { how: 'picked', name: h.name }; });
+      });
+    }).then(null, function (e) {
+      if (e && e.name === 'AbortError') return { how: 'cancelled', name: o.name };
+      files.download(o.text, o.name);
+      return { how: 'downloaded', name: o.name };
+    });
+  };
+  // What the bar says of a file's save, by how the desk wrote it (ENGINE.49, decision 6): { text, refused }, refused
+  // where nothing was written and it was no person's choice.
+  function fileSavedWords(r, lines) {
+    var n = thousands(lines) + ' line' + (lines === 1 ? '' : 's'), name = r.name;
+    switch (r.how) {
+      case 'tied': return { text: 'Saved ' + name + ', ' + n + ', into the file you ' + (r.by === 'saved' ? 'saved it as' : 'opened') + '.' };
+      case 'picked': return { text: 'Saved as ' + name + ', ' + n + ': Save writes there now.' };
+      case 'downloaded': return { text: 'Saved ' + name + ', ' + n + ', into your downloads.' };
+      case 'cancelled': return { text: 'The file was not written: the picker was closed.' };
+      case 'refused': return { text: name + ' was not written: the browser was not allowed to change it. Save asks again.', refused: true };
+      case 'changed': return { text: name + ' has changed on disk since it was ' + (r.since === 'saved' ? 'saved' : 'opened') + ': Save again writes over it, Save as keeps both.', refused: true };
+      case 'unasked': return { text: r.as ? 'The file was not written: a save under another name asks where at your press, and this one waited for the grid to rest. Save as again.' : name + ' was not written: the browser asks at your press whether this page may change it, and this save waited for the grid to rest. Save again.', refused: true };
+      case 'gone': return { text: name + ' was not written: it is no longer where it was. Save again, and choose where.', refused: true };
+      default: return { text: name + ' was not written: ' + (r.why || 'the browser refused the write') + '.', refused: true };
+    }
+  }
+
   // ---- the player (ENGINE.14; ENGINE.1's panel before it): the host's loop over the module, the window the game's ----
   function bytesOfBase64(s) {
     var bin = atob(s.replace(/\s+/g, ''));
@@ -2262,6 +2683,10 @@
     // are, every sheet viewed through the cells in view and never whole.
     var dvp = new VP(document.getElementById('eng-grid'));
     var shownAt = -1, shownTime = -1e9, rate = -1, mode = 'plane', items = {}, viewerSheet = 'Clock', choosing = false, cellOpenHeard = false;
+    // The grid's clipboard (ENGINE.39's second slice): the browser's own events answered in the drawer's sheets, and on the
+    // Screen once its viewport is made, at the first grid load
+    var clip = new GridClip(host, navigator.clipboard || null);
+    clip.listen(dvp);
     dvp.on('sheet', function (e) { if (e.loaded && !choosing) viewerSheet = e.name; host.answer(dvp, e); });
     dvp.on('scroll', function () { host.refreshSheet(dvp, true); });
     // The keys go to what shows the Screen: the plane's canvas, or the viewport's scroller.
@@ -2342,7 +2767,7 @@
       // the load having viewed it over a box not yet laid out (ENGINE.18); the Screen is the frame's own
       if (mode === 'grid' && host.vp) { host.vp.redraw(); host.refreshSheet(host.vp); }
       // Enter, F2 or a double click on a cell opens its edit with what it holds (CART.9), heard once the viewport is made
-      if (mode === 'grid' && host.vp && !cellOpenHeard) { cellOpenHeard = true; host.vp.on('cellopen', function () { if (!(rate > 0 && lastKeyRead && host.gameKeysHere())) openCellEdit(null); }); }
+      if (mode === 'grid' && host.vp && !cellOpenHeard) { cellOpenHeard = true; host.vp.on('cellopen', function () { if (!(rate > 0 && lastKeyRead && host.gameKeysHere())) openCellEdit(null); }); clip.listen(host.vp); }
       frameEl.className = 'frame-line';
       // a save opens at its frame (ENGINE.5), its values computed when it was saved
       frameShort.textContent = 'Frame ' + thousands(e.frame || 0);
@@ -2354,11 +2779,12 @@
     function loadCartridge() {
       var screenHad = placeOf(document.activeElement) === 'screen';
       var r = host.load(cartEl.value, current().file);
-      if (r.ok) { host.start(); showViewer(); if (screenHad) focusScreen(); return; }
+      if (r.ok) { host.start(); showViewer(); if (screenHad) focusScreen(); return true; }
       // a refusal is red, as the viewport's own status line paints one (the owner's hand test, 2026-10-09)
       frameEl.className = 'frame-line refused';
       frameEl.textContent = 'No cartridge is loaded: the last load was refused, and the log says why.';
       frameShort.textContent = 'No cartridge';
+      return false;
     }
     // Build: the pass in the page (SPEC.3), an act of its own. The cartridge it writes goes into the
     // cartridge's box, opened, to be read before Load loads it; nothing is loaded and nothing stopped,
@@ -2392,7 +2818,7 @@
     }
     // Run and Pause each say so in the bar with the frame, so that the line never reads paused while the loop
     // runs (the owner's hand test of ENGINE.14: "Paused at frame 740." beside the frame counter at 1,553).
-    function sayBar(text) { statusEl.textContent = text; statusEl.title = text; statusEl.className = 'status'; barHoldsKey = false; }
+    function sayBar(text, refused) { statusEl.textContent = text; statusEl.title = text; statusEl.className = refused ? 'status refused' : 'status'; barHoldsKey = false; }
     document.getElementById('eng-run').addEventListener('click', function () { host.start(); if (host.running) sayBar('Running from frame ' + thousands(host.counters().frame) + '.'); focusScreen(); });
     document.getElementById('eng-pause').addEventListener('click', function () { host.stop(); sayBar('Paused at frame ' + thousands(host.counters().frame) + '.'); });
     // Sound on and off (ENGINE.4, decision 5): the audio context is made at this press, a person's act, as
@@ -2426,57 +2852,86 @@
       keeper.replaced(['source', 'cartridge', 'replay']);
       if (host.m) { loadCartridge(); focusScreen(); }
     });
-    // ---- Save and Open (ENGINE.5; docs/SPEC.md sections 3.7 and 7.5) ----
-    // A file of the person's: the browser's save picker where it has one and the save is a person's act still at hand,
-    // the one place the page names the picker (tools/check_web_offline.ps1); else a download into the browser's own
+    // ---- Save and Open (ENGINE.5; docs/SPEC.md sections 3.7 and 7.5), and the file a work is tied to (ENGINE.49) ----
+    // A person's files, the browser's calls for them, each named here once and nowhere else on the page
+    // (tools/check_web_offline.ps1): its dialog for a file to save into and its dialog for a file to open, where it has
+    // them, each asked for at its use, so that a browser without one answers null; and a download into the browser's own
     // folder, which needs no act, so that a cartridge's save (File!B3) and one that waited for its settle are written
-    // too. Nothing else on the page writes a file. The picker opens in the Downloads folder every time, startIn with no
-    // id, which the File System Access API sets before the folder it last chose (the owner's word at the hand test).
-    // Answers a promise of how it was written.
-    function personFile(text, file, ask) {
-      var blob = new Blob([text], { type: 'text/plain' }), pick = window.showSaveFilePicker;
-      function download() {
-        var a = document.createElement('a');
-        a.href = URL.createObjectURL(blob); a.download = file; a.style.display = 'none';
-        document.body.appendChild(a); a.click(); document.body.removeChild(a);
-        setTimeout(function () { URL.revokeObjectURL(a.href); }, 1000);
-        return 'downloaded';
-      }
-      if (!ask || typeof pick !== 'function') return Promise.resolve(download());
-      return pick.call(window, { suggestedName: file, startIn: 'downloads', types: [{ description: 'An Alonzo cartridge', accept: { 'text/plain': ['.vla'] } }] })
-        .then(function (h) { return h.createWritable(); })
-        .then(function (w) { return w.write(blob).then(function () { return w.close(); }); })
-        .then(function () { return 'picked'; }, function (e) { return e && e.name === 'AbortError' ? 'cancelled' : download(); });
+    // too. Nothing else on the page writes a file. What is done through them is the desk's (FileDesk, above): the save
+    // dialog opens in the Downloads folder, startIn with no id, which the File System Access API sets before the folder it
+    // last chose (the owner's word at ENGINE.5's hand test), or where the file a work is tied to stands.
+    function personFile() {
+      return {
+        pickSave: function (options) { var pick = window.showSaveFilePicker; return typeof pick === 'function' ? pick.call(window, options) : null; },
+        pickOpen: function (options) { var pick = window.showOpenFilePicker; return typeof pick === 'function' ? pick.call(window, options) : null; },
+        download: function (text, file) {
+          var a = document.createElement('a'), blob = new Blob([text], { type: 'text/plain' });
+          a.href = URL.createObjectURL(blob); a.download = file; a.style.display = 'none';
+          document.body.appendChild(a); a.click(); document.body.removeChild(a);
+          setTimeout(function () { URL.revokeObjectURL(a.href); }, 1000);
+        }
+      };
     }
-    // A save the host took, written: through the picker when a person asked and it was taken at once, else downloaded.
+    var files = personFile(), desk = new FileDesk(files), loads = 0;
+    host.on('load', function () { loads++; });   // a tie is a load's (ENGINE.49): a save after any other load asks where
+    // A file saved under a name its dialog answered (ENGINE.49): the work is that file's from here on. The host is told
+    // the name, which the next save is said by; and the picker's entry of a file opened follows it, Afterlife
+    // (walter2.prolog), Load loading it under that name.
+    function fileRenamed(entry, name) {
+      host.fileNamed(name);
+      if (!opened || entry !== opened) return;
+      opened.file = name; opened.title = openedTitle(name, host.cart ? host.cart.title : '');
+      var opt = pickEl.querySelector('option[value="' + OPENED + '"]');
+      if (opt) opt.textContent = opened.title;
+    }
+    // A save the host took, written by the desk. The file the cartridge reads (CART.16's second slice; docs/SPEC.md
+    // section 3.11) is the module's text as it stands, no box of the drawer in it: written into the file the work is
+    // tied to, the one opened or the one the last dialog answered, with no dialog (ENGINE.49); else where its dialog
+    // says, which ties it; the work it holds is saved, and what was typed in the drawer stays kept. A cartridge's save
+    // is a new file each time: through its dialog when a person asked and it was taken at once, else downloaded.
     host.on('save', function (e) {
+      var entry = current(), ask = e.by === 'person' && !e.waited;
+      if (e.kind === 'file') {
+        desk.save({ entry: entry, load: loads, text: e.text, name: e.file, kind: host.fileType(), ask: ask, as: e.as, ties: true }).then(function (r) {
+          var said = fileSavedWords(r, e.lines);
+          sayBar(said.text, said.refused);
+          if (r.how === 'tied' || r.how === 'picked' || r.how === 'downloaded') keeper.saved();
+          if (r.how === 'picked') fileRenamed(entry, r.name);
+        });
+        return;
+      }
       // the drawer's boxes typed after the grid's rows, a draft each (ENGINE.40), the whole file held to section 10's
       var kd = keeper.drafts(), text = e.text + draftForms(kd.texts, kd.names), bytes = new TextEncoder().encode(text).length;
       if (bytes > HOST.MAX_CARTRIDGE_BYTES) { sayBar('The save was not written: with the boxes you typed in the drawer it is ' + thousands(bytes) + ' bytes, over the ' + thousands(HOST.MAX_CARTRIDGE_BYTES) + ' (16 MiB) a cartridge may be (docs/SPEC.md section 10), which the engine would not load again.'); return; }
-      personFile(text, e.file, e.by === 'person' && !e.waited).then(function (how) {
-        var where = how === 'picked' ? 'where you chose' : (how === 'downloaded' ? 'into your downloads' : null);
-        sayBar(where ? 'Saved frame ' + thousands(e.frame) + ' as ' + e.file + (kd.names.length ? ', with ' + andList(kd.names.map(draftWords)) : '') + ', ' + where + '.' : 'The save was not written: the picker was closed.');
+      desk.save({ entry: entry, load: loads, text: text, name: e.file, kind: '', ask: ask, as: false, ties: false }).then(function (r) {
+        var where = r.how === 'picked' ? 'where you chose' : (r.how === 'downloaded' ? 'into your downloads' : null);
+        sayBar(where ? 'Saved frame ' + thousands(e.frame) + ' as ' + (r.how === 'picked' ? r.name : e.file) + (kd.names.length ? ', with ' + andList(kd.names.map(draftWords)) : '') + ', ' + where + '.' : 'The save was not written: the picker was closed.');
         if (where) keeper.saved(kd.version);   // the work saved, and the typing it carried, unsaved no longer (ENGINE.38, ENGINE.40)
       });
     });
-    document.getElementById('eng-save').addEventListener('click', function () {
-      var r = host.save('person');
-      if (r.waiting) sayBar('The save waits for the act to settle, and is downloaded then.');
+    // Save, and Save as (ENGINE.49): a save asked of the host, which takes it at rest and hands it back by the event
+    // above; under, a save under another name, the file's dialog asked whatever the work is tied to.
+    function askSave(under) {
+      var r = host.save('person', undefined, under);
+      if (r.waiting) sayBar(host.fileType() ? 'The save waits for the act to settle.' : 'The save waits for the act to settle, and is downloaded then.');
       else if (!r.ok) sayBar(r.words || 'The save was refused, and the log says why.');
-    });
+    }
+    document.getElementById('eng-save').addEventListener('click', function () { askSave(false); });
     // Open: a file of the person's read through the browser's open picker where it has one, in the Downloads folder as
     // Save's starts, and through the file input elsewhere, any browser; put in the picker as the file opened, its text in
     // the cartridge's box; then loaded and run as a picked cartridge is, so that Load loads it again from where it was
     // saved.
     var openFileEl = document.getElementById('eng-open-file');
     document.getElementById('eng-open').addEventListener('click', function () {
-      var pickOpen = window.showOpenFilePicker;
-      if (typeof pickOpen !== 'function') { openFileEl.value = ''; openFileEl.click(); return; }
-      pickOpen.call(window, { startIn: 'downloads', types: [{ description: 'An Alonzo cartridge', accept: { 'text/plain': ['.vla'] } }] })
-        .then(function (hs) { return hs[0].getFile(); })
-        .then(openedFile, function (e) { if (!(e && e.name === 'AbortError')) sayBar('The file was not opened: ' + (e && e.message ? e.message : e) + '.'); });
+      // a file the loaded cartridge reads is offered first, where it reads one, and a cartridge beside it; the handle
+      // the picker gives is kept for the file's tie (ENGINE.49), which the file input, any other browser's way, has none of
+      var kind = host.fileType(), picked = null;
+      var asked = files.pickOpen({ startIn: 'downloads', types: openKinds(kind) });
+      if (!asked) { openFileEl.accept = '.vla,text/plain' + (kind ? ',' + kind : ''); openFileEl.value = ''; openFileEl.click(); return; }
+      asked.then(function (hs) { picked = hs[0]; return hs[0].getFile(); })
+        .then(function (f) { openedFile(f, picked); }, function (e) { if (!(e && e.name === 'AbortError')) sayBar('The file was not opened: ' + (e && e.message ? e.message : e) + '.'); });
     });
-    openFileEl.addEventListener('change', function () { if (openFileEl.files && openFileEl.files[0]) openedFile(openFileEl.files[0]); });
+    openFileEl.addEventListener('change', function () { if (openFileEl.files && openFileEl.files[0]) openedFile(openFileEl.files[0], null); });
     // Each box a record or a file carries put back as it was typed (ENGINE.40), a keymap and a replay standing in their boxes,
     // never applied nor played; the source put back with the cartridge's entry, which showTexts writes.
     function putBoxes(texts, from) {
@@ -2486,22 +2941,37 @@
       if (texts.keys) keysEl.value = texts.keys.text;
       for (var tn in texts) if (Object.prototype.hasOwnProperty.call(texts, tn) && tn.indexOf('library:') === 0) { libEdits[tn.slice(8)] = texts[tn].text; if (libShown === tn.slice(8)) libEl.value = texts[tn].text; }
     }
-    function openedFile(f) {
+    function openedFile(f, handle) {
       f.text().then(function (whole) {
-        var taken = takeDrafts(whole), text = taken.text, src = taken.drafts.source;   // the drawer's boxes the file carries (ENGINE.40)
-        opened = { name: '', title: 'The file ' + f.name, file: f.name, path: 'the file ' + f.name + ', opened from your machine', text: text,
+        // A file the loaded cartridge reads (CART.16's second slice; docs/SPEC.md section 3.11): read by the module into
+        // the cartridge's text, the file's lines in its sheets, which is then the file opened as any cartridge is, under
+        // the file's name; and written back at once, the first line a save would change said before anything is edited.
+        // A file no line of the cartridge reads is said by the host, and nothing is loaded.
+        var kind = host.fileType(), lines = opensAsLines(f.name, kind), title = lines && host.cart ? host.cart.title : '';
+        if (lines) {
+          var read = host.fileRead(whole, f.name);
+          if (!read.ok) return;
+        }
+        var taken = lines ? { text: read.text, drafts: {} } : takeDrafts(whole), text = taken.text, src = taken.drafts.source;   // the drawer's boxes the file carries (ENGINE.40)
+        opened = { name: '', title: openedTitle(f.name, title), file: f.name, path: 'the file ' + f.name + ', opened from your machine' + (lines ? ' into ' + (title || 'the cartridge') + ', a cartridge with its lines in its sheets' : ''), text: text,
                    source: src ? src.text : undefined, sourcePath: src ? src.path : undefined,
-                   notes: 'The file ' + f.name + ', opened from your machine: a cartridge loads at frame 0 and a save at the frame it was saved at. Load loads it again from there.' };
+                   notes: lines ? 'The file ' + f.name + ', opened from your machine into ' + (title || 'the cartridge') + ': its lines are the rows of the sheets, Save writes them back as the file, and Load loads it again as it was opened.'
+                                : 'The file ' + f.name + ', opened from your machine: a cartridge loads at frame 0 and a save at the frame it was saved at. Load loads it again from there.' };
         var opt = pickEl.querySelector('option[value="' + OPENED + '"]');
         if (!opt) { opt = document.createElement('option'); opt.value = OPENED; pickEl.appendChild(opt); }
-        opt.textContent = 'The file ' + f.name;
+        opt.textContent = opened.title;
         pickEl.value = OPENED;
         keeper.tick();   // the run's typing written before the boxes take the file's texts (ENGINE.40)
         showTexts(opened);
         offerReplay(opened);
         keeper.replaced(['source', 'cartridge', 'replay'].concat(Object.keys(taken.drafts)));
-        if (host.m) { loadCartridge(); focusScreen(); }
+        var loaded = false;
+        if (host.m) { loaded = loadCartridge(); focusScreen(); }
+        // the tie (ENGINE.49): the file the open's picker gave, where it was read into the cartridge's lines and that
+        // cartridge loaded, a save then writing into it; any other open leaves the desk with none
+        desk.tieTo(opened, loads, lines && loaded && handle ? handle : null, f.lastModified, 'opened');
         putBoxes(taken.drafts, 'the file ' + f.name);   // after the load, so that the cartridge's box shows what was typed in it
+        if (lines && host.m) host.fileCheck(whole, f.name);   // the open's check, said in the bar, at once or when the load's act has settled
       }, function () { sayBar('The file ' + f.name + ' could not be read.'); });
     }
     // A text on the clipboard, the button saying so, or the way to copy it by hand when the browser keeps the clipboard closed.
@@ -2623,6 +3093,14 @@
       sound: function () { soundEl.click(); },
       load: function () { document.getElementById('eng-load').click(); },
       save: function () { document.getElementById('eng-save').click(); },
+      // a save under another name (ENGINE.49): the file's dialog asked whatever the work is tied to, which it then is
+      'save-as': function () { askSave(true); },
+      // the grid itself as a cartridge, where Save writes the file the cartridge reads (CART.16's second slice)
+      'save-cartridge': function () {
+        var r = host.save('person', 'cartridge');
+        if (r.waiting) sayBar('The save waits for the act to settle, and is downloaded then.');
+        else if (!r.ok) sayBar(r.words || 'The save was refused, and the log says why.');
+      },
       open: function () { document.getElementById('eng-open').click(); },
       restore: function () { keeper.restoreOffer(); },
       discard: function () { keeper.discardOffer(); },
@@ -2634,6 +3112,9 @@
       'next-sheet': function () { stepSheet(1); },
       'previous-sheet': function () { stepSheet(-1); },
       'hidden-sheets': toggleHidden,
+      copy: function () { clip.act(sheetsViewport(), 'copy'); },
+      cut: function () { clip.act(sheetsViewport(), 'cut'); },
+      paste: function () { clip.act(sheetsViewport(), 'paste'); },
       game: focusScreen,
       edit: function () { give(editEl); },
       write: function () { document.getElementById('eng-write').click(); },
@@ -2985,7 +3466,8 @@
     paletteBtn.addEventListener('click', function () { palette.toggle(mode === 'grid' && host.vp ? host.vp.scroller : planeCv); });
     // The keys, heard on the document in the capture phase before the game, the viewport or a box hear them. Record a key
     // first; the palette's prompt is its own but for the palette's key; then the keymap's binding in the place that has
-    // the keys, a held key pressing it once and the next and previous sheet at each repeat. Then Tab on the Screen while
+    // the keys, a held key pressing it once and the next and previous sheet at each repeat, the page's copy, cut and
+    // paste on the browser's own key passed on unpressed for its clipboard event (ENGINE.39). Then Tab on the Screen while
     // a game runs, the game's, its walk out of the page kept from it (the owner's hand test): the palette's key leads out.
     // And Escape in full screen, locked to the page: the first passes on with a hint, and a second within three seconds
     // leaves full screen.
@@ -3005,7 +3487,6 @@
       if (dvp.root.contains(el)) return 'viewer';
       return /^(INPUT|TEXTAREA|SELECT)$/.test(el.tagName) || el.isContentEditable ? 'box' : 'page';
     }
-    function repeats(name) { return COMMANDS.some(function (c) { return c.name === name && c.repeats; }); }
     document.addEventListener('keydown', function (ev) {
       if (recording) { recordTake(ev); return; }
       if (ev.isComposing) return;
@@ -3016,9 +3497,11 @@
         return;
       }
       b = keymapFind(keymap, ev, place, shownIn(place), gameLive);
+      // the page's copy, cut and paste on the browser's own key pass on, its clipboard event the grid's (ENGINE.39)
+      if (b && clipKeyAct(b, ev) === 'pass') return;
       if (b) {
         ev.preventDefault(); ev.stopPropagation();
-        if (!ev.repeat || repeats(b.command)) press(b);
+        if (!ev.repeat || (bindingRepeats(b, host.cart ? host.commands() : [], loadedName()) && host.freshRepeat(ev, !b.game && !b.custom))) { press(b); host.rested(); }
         return;
       }
       // a character typed on a cell of the grid opens that cell's edit in the palette, Delete empties the selection's cells
@@ -3576,7 +4059,7 @@
     }
     if (lifeText.split('(rate 30)').length !== 2 || lifeText.split('(spec 2)').length !== 2) P.push('the anchors (rate 30) and (spec 2) are not in the cartridge exactly once');
     expectLoad(host.load(lifeText.replace('(rate 30)', ''), 'life.vla'), 'cart-manifest-invalid');
-    expectLoad(host.load(lifeText.replace('(spec 2)', '(spec 8)'), 'life.vla'), 'cart-spec-unsupported');
+    expectLoad(host.load(lifeText.replace('(spec 2)', '(spec 10)'), 'life.vla'), 'cart-spec-unsupported');
     expectLoad(host.loadBytes(new Uint8Array([0x28, 0xff, 0xfe, 0x29]), 'bad.vla'), 'is not UTF-8');
     var ok = host.load(lifeText, 'life.vla');
     if (!ok.ok) P.push('Life did not load: ' + ok.sentence);
@@ -3779,7 +4262,7 @@
       var D = new Driver({ exports: exports }), out = [];
       function load(text) { return D.call('alonzo_load', [], [text, 'life.vla']); }
       out.push(['a manifest without its rate', load(lifeText.replace('(rate 30)', ''))]);
-      out.push(['a (spec 8)', load(lifeText.replace('(spec 2)', '(spec 8)'))]);
+      out.push(['a (spec 10)', load(lifeText.replace('(spec 2)', '(spec 10)'))]);
       out.push(['bytes that are not UTF-8', D.call('alonzo_load', [], [new Uint8Array([0x28, 0xff, 0xfe, 0x29]), 'bad.vla'])]);
       var L = load(lifeText), m = /^\(cartridge (\d+) /.exec(L.text);
       if (!m) { P.push('Life did not load for the parity: ' + L.id + ' ' + L.text); return out; }
@@ -6640,13 +7123,16 @@
   // ---- ENGINE.5: a save, the host's own, resumes as the run (the replay law's host half) ----
   // Every committed replay the page holds, played on a host over the module to its middle and on to the first frame at
   // rest, a cartridge that settles saved between acts; there the host's own save, saveText, the path Save and File!B3
-  // take. Loaded plainly on a second host, it opens at the Clock's frame with the seed it ran on. Loaded on a third, it
-  // plays the rest of the replay, its frames counted from the save and its header naming the save's digest, frame for
-  // frame beside the first: every sheet's fills the same, the File's name and size apart, at the load, the frame after,
-  // every 64th frame and the last. Where a cartridge settles, a save asked inside an act's settle waits, says so, and is
-  // handed to the page by the event save at the frame the settle ends, at rest.
+  // take. Loaded plainly on a second host, it opens at the Clock's frame with the seed it ran on, owing the derived writes
+  // its run owes there. Loaded on a third, it plays the rest of the replay, its frames counted from the save and its
+  // header naming the save's digest, frame for frame beside the first: every sheet's fills the same, the File's name and
+  // size apart, at the load, the frame after, every 64th frame and the last. Where a cartridge settles, a save asked
+  // inside an act's settle waits, says so, and is handed to the page by the event save at the frame the settle ends, at
+  // rest. And where a cartridge's Write sheet asks a derived write at a frame at rest, the same again at the first such
+  // frame, its save owing the writes (owing) and played on beside the run to its 64th frame after (owed): a save loaded
+  // past frame 0 makes at its next frame the writes its run made (ENGINE.30's decision 13; docs/SPEC.md section 7.5).
   function caseSave() {
-    var P = [], k = { saves: 0, opened: 0, seeds: 0, resumed: 0, compared: 0, frames: 0, waited: 0, kilobytes: 0 };
+    var P = [], k = { saves: 0, opened: 0, seeds: 0, resumed: 0, compared: 0, frames: 0, waited: 0, kilobytes: 0, owing: 0, owed: 0 };
     var wasm = builtModule();
     if (!wasm) return { counters: k, problems: P };
     var bytes = bytesOfBase64(wasm);
@@ -6666,17 +7152,22 @@
       }
       return out.join('\n');
     }
-    for (var cn in CARTRIDGES) {
-      if (!Object.prototype.hasOwnProperty.call(CARTRIDGES, cn) || !CARTRIDGES[cn].replayPath) continue;
-      var cart = CARTRIDGES[cn], exA = HOST.instantiateSync(bytes), DA = new Driver({ exports: exA }), A = host(exA);
-      if (!A || !A.load(cart.text, cart.file).ok) { P.push(cn + ': a fresh host did not load ' + cart.file + ' over the module'); continue; }
+    // the derived writes a host owes its next frame, as it will issue them (docs/SPEC.md section 3.9)
+    function owedOf(h) { return h.pending.map(function (x) { return x.text; }).join(' '); }
+    // One save of a committed replay's run, opened and played on: at its middle, or, owed, at the first frame at rest where
+    // the run owes a derived write, played on to its 64th frame after. Answers whether the cartridge has a Write sheet.
+    function resume(cn, cart, owed) {
+      var exA = HOST.instantiateSync(bytes), DA = new Driver({ exports: exA }), A = host(exA);
+      if (!A || !A.load(cart.text, cart.file).ok) { P.push(cn + ': a fresh host did not load ' + cart.file + ' over the module'); return false; }
+      var writes = !!A.cart.devices.write;
+      if (owed && !writes) return false;
       var pa = A.play(cart.replay);
-      if (!pa.ok) { P.push(cn + ': its committed replay did not play: ' + (pa.sentence || '')); continue; }
-      var last = pa.frames, settles = A.cart.settle > 0, waitedOn = false;
+      if (!pa.ok) { P.push(cn + ': its committed replay did not play: ' + (pa.sentence || '')); return false; }
+      var last = pa.frames, settles = !owed && A.cart.settle > 0, waitedOn = false;
       // a save asked inside an act's settle: it waits, and the page is handed it at the frame the settle ends
       if (settles) A.on('save', function (e) { if (e.waited && !A.settling) waitedOn = e; });
       var asked = false;
-      while (A.player && (A.counters().frame < Math.floor(last / 2) || A.settling || A.inFrame)) {
+      while (A.player && (A.settling || A.inFrame || (owed ? !owedOf(A) : A.counters().frame < Math.floor(last / 2)))) {
         step(A);
         if (settles && !asked && A.settling) {
           asked = true;
@@ -6688,18 +7179,20 @@
         if (waitedOn && waitedOn.by === 'person' && waitedOn.ok !== false) k.waited++;
         else P.push(cn + ': the save asked inside an act\'s settle was never handed to the page at rest' + (asked ? '' : ' (no settle was met before the middle)'));
       }
-      if (!A.player) { P.push(cn + ': its replay ended before a frame at rest from its middle'); continue; }
+      if (!A.player) { if (!owed) P.push(cn + ': its replay ended before a frame at rest from its middle'); return writes; }   // owed: no frame at rest owes a write
       var at = A.counters().frame, s = A.saveText();
-      if (!s.ok) { P.push(cn + ': the host\'s save at frame ' + at + ' was refused: ' + (s.words || 'it waits')); continue; }
+      if (!s.ok) { P.push(cn + ': the host\'s save at frame ' + at + ' was refused: ' + (s.words || 'it waits')); return writes; }
       k.saves++; k.kilobytes += Math.round(s.bytes / 1024);
-      var before = fillsOf(A, DA), clockFrame = A._clockAt('B1') || 0;
-      // a plain load: the Clock's frame, and the seed it ran on
+      var before = fillsOf(A, DA), clockFrame = A._clockAt('B1') || 0, owes = owedOf(A);
+      // a plain load: the Clock's frame, the seed it ran on, and the derived writes its run owes there
       var exO = HOST.instantiateSync(bytes), DO = new Driver({ exports: exO }), O = host(exO);
-      if (!O || !O.load(s.text, s.file).ok) { P.push(cn + ': the save at frame ' + at + ' did not load: ' + (O ? O.sentences().slice(-1)[0].text : 'no host')); continue; }
+      if (!O || !O.load(s.text, s.file).ok) { P.push(cn + ': the save at frame ' + at + ' did not load: ' + (O ? O.sentences().slice(-1)[0].text : 'no host')); return writes; }
       if (O.counters().frame === clockFrame && fillsOf(O, DO) === before) k.opened++;
       else P.push(cn + ': the save at frame ' + at + ' opens at frame ' + O.counters().frame + ', the Clock saying ' + clockFrame + (fillsOf(O, DO) === before ? '' : ', and its sheets are not the run\'s there'));
       if (O._clockAt('B3') === A._clockAt('B3')) k.seeds++;
       else P.push(cn + ': the save at frame ' + at + ' opens on the seed ' + O._clockAt('B3') + ', and the run\'s is ' + A._clockAt('B3'));
+      if (owedOf(O) !== owes) P.push(cn + ': the save at frame ' + at + ' opens owing ' + (owedOf(O) || 'nothing') + ', where its run owes ' + (owes || 'nothing'));
+      else if (owes) k.owing++;
       // the rest of the replay on a third host, its frames counted from the frame the save opens at
       var rp = A._readReplay(cart.replay), off = at - O.counters().frame, rest = afterComments(cart.replay).split('\n')[0].replace(/\(cartridge "[0-9A-F]{64}"\)/, '(cartridge "' + HOST.sha256(s.text) + '")') + '\n';
       for (var f = at + 1; f <= rp.last; f++) {
@@ -6708,22 +7201,425 @@
         else if (f === rp.last) rest += '(frame ' + (f - off) + ')\n';
       }
       var exB = HOST.instantiateSync(bytes), DB = new Driver({ exports: exB }), B = host(exB);
-      if (!B || !B.load(s.text, s.file).ok) { P.push(cn + ': the save did not load on the third host'); continue; }
+      if (!B || !B.load(s.text, s.file).ok) { P.push(cn + ': the save did not load on the third host'); return writes; }
       var pb = B.play(rest);
-      if (!pb.ok) { P.push(cn + ': the rest of the replay did not play on the save: ' + (pb.sentence || '')); continue; }
+      if (!pb.ok) { P.push(cn + ': the rest of the replay did not play on the save: ' + (pb.sentence || '')); return writes; }
       var bad = '';
       if (fillsOf(B, DB) !== before) bad = 'at its load';
       var j = 0;
-      while (!bad && A.player && B.player) {
+      while (!bad && A.player && B.player && !(owed && j >= 64)) {
         step(A); step(B); j++; k.frames++;
         if (j === 1 || j % 64 === 0 || !A.player) {
           k.compared++;
           if (fillsOf(B, DB) !== fillsOf(A, DA)) bad = 'at frame ' + A.counters().frame;
         }
       }
-      if (!bad && (A.player || B.player)) bad = 'at the end: the run stands at frame ' + A.counters().frame + ' and the save\'s at ' + B.counters().frame;
+      if (!bad && !owed && (A.player || B.player)) bad = 'at the end: the run stands at frame ' + A.counters().frame + ' and the save\'s at ' + B.counters().frame;
       if (bad) P.push(cn + ': the save at frame ' + at + ' played on is not the run ' + bad);
-      else k.resumed++;
+      else { k.resumed++; if (owed) k.owed++; }
+      return writes;
+    }
+    for (var cn in CARTRIDGES) {
+      if (!Object.prototype.hasOwnProperty.call(CARTRIDGES, cn) || !CARTRIDGES[cn].replayPath) continue;
+      if (resume(cn, CARTRIDGES[cn], false)) resume(cn, CARTRIDGES[cn], true);
+    }
+    return { counters: k, problems: P };
+  }
+  // ---- CART.16's second slice: a file opened, edited and saved (docs/SPEC.md section 3.11) ----
+  // A card written to a version, one sheet and its Format sheet: a file of settings, a word, an equals sign and a whole
+  // number or the rest, its comments led by a number sign, from row 2 under a header, beside a column of the sheet's
+  // own. settle: the card settles its acts.
+  function fileCard(spec, settle) {
+    return '(cartridge "pairs"\n  (spec ' + spec + ')\n  (title "Pairs")\n  (rate 0)\n  (screen grid 4 3)\n  (seed 1)' + (settle ? '\n  (settle 4)' : '') + ')\n' +
+      '(sheet "Pairs" visible)\n(cell "Pairs" "A1" "Key")\n(cell "Pairs" "B1" "Value")\n(cell "Pairs" "A2" "OLD")\n(cell "Pairs" "B2" "was")\n(formula "Pairs" "C2:C6" "=LEN(B2)")\n' +
+      '(cell "Format" "A1" "type")\n(cell "Format" "B1" ".env")\n(cell "Format" "A2" "comment")\n(cell "Format" "B2" "#")\n(cell "Format" "A3" "first row")\n(cell "Format" "B3" 2)\n' +
+      '(cell "Format" "A6" "Pairs")\n(cell "Format" "B6" "{A:word}={B:whole|rest}")\n';
+  }
+  // Pure, the host's and the page's: where two files part and its words, a file's kind and what Open offers. Over the
+  // double, which holds neither call: a file read and a file written each declined in words. Over the module, the
+  // card: its type and the name a file is written under; a file read into the cartridge's text, the grid that runs left
+  // as it was; that cartridge loaded under the file's name, and the open's check, the file written back at once and held
+  // to the file, CR LF and all (same), a file written loosely said by its first line that would change (loose); an edit
+  // its line, a person's save the file, under its name, by the event save with its kind, a save under another name
+  // handed over marked so and the name it gave the file's from there on (renamed), and the cartridge's own save
+  // and a person's save of the cartridge a cartridge still; a line no template reads refused by its number, nothing
+  // loaded; a row no line says refused by its cell, nothing handed to the page; a cartridge that says no file's lines
+  // saved and opened as before; and, where the load's act still settles, the check and a save each waiting for the grid
+  // to rest. On Alonzo's own page, Afterlife's reel: its tabs written as the file, a .prolog of 934 lines, opened under
+  // the cartridge and written back byte for byte. Then the desk (ENGINE.49), which needs no module: the page's saves
+  // over a double of the browser's file calls.
+  function caseFile() {
+    var res = caseFileGrid();
+    return fileDeskCase(res.counters, res.problems).then(function () { return res; });
+  }
+  // The desk (ENGINE.49; docs/REARVIEW.md), FileDesk over a double of the browser's file calls and of a file's handle:
+  // a file opened through the picker and saved, written into it with the browser asked once and no dialog (tied, once);
+  // the browser's question refused, nothing written, the tie kept and the question asked again (unallowed); a file
+  // changed on disk since the page read it refused once, written over at the next save, and refused in its turn when it
+  // changes after the page's own write (moved); a file no longer there said where no act is at hand, and a save under a
+  // name where one is (absent); a save under another name, its dialog where the tied file stands and offering the file's
+  // own name under its kind's words, the file opened left as it was and Save writing there from then on (under); a first save
+  // asking where and tying, and a dialog closed writing nothing (first, shut); a save that waited for its settle
+  // written where the permission is had, said where it is not, a save under another name that waited said, and one with
+  // no tie downloaded as it always was (resting); a cartridge's own save asking where beside a file tied, the file left
+  // as it was (plain); a save under another entry of the picker, and one after the entry is loaded again, each asking
+  // where and writing nothing into the tied file, the tie standing for its entry at its load alone (dropped); a browser
+  // with no dialog downloading (elsewhere); and the bar's words for each outcome (said).
+  function fileDeskCase(k, P) {
+    ['tied', 'once', 'unallowed', 'moved', 'absent', 'under', 'first', 'shut', 'resting', 'plain', 'dropped', 'elsewhere', 'said'].forEach(function (n) { k[n] = 0; });
+    function named(name) { var e = new Error(name); e.name = name; return e; }
+    function fail(what) { P.push('file: ' + what); }
+    // A file's handle, doubled: its text and the time it was last changed, what the browser's permission says and what a
+    // person answers when asked, and what was done to it. It writes whatever it is told to, so that a desk that asks no
+    // permission is found by its write.
+    function Handle(name, text, at) { this.name = name; this.text = text; this.at = at; this.state = 'prompt'; this.answer = 'granted'; this.asks = 0; this.writes = 0; this.gone = false; }
+    Handle.prototype.queryPermission = function () { return Promise.resolve(this.state); };
+    Handle.prototype.requestPermission = function () { this.asks++; if (this.answer === 'granted') this.state = 'granted'; return Promise.resolve(this.answer); };
+    Handle.prototype.getFile = function () { return this.gone ? Promise.reject(named('NotFoundError')) : Promise.resolve({ name: this.name, lastModified: this.at }); };
+    Handle.prototype.createWritable = function () {
+      var h = this, held = null;
+      if (h.gone) return Promise.reject(named('NotFoundError'));
+      return Promise.resolve({ write: function (t) { held = String(t); return Promise.resolve(); }, close: function () { h.text = held; h.at += 7; h.writes++; return Promise.resolve(); } });
+    };
+    // The browser's calls, doubled: its dialog answers the handle put in next, once, and is closed otherwise; none, a
+    // browser with no dialog.
+    function Files() { this.asked = []; this.downloads = []; this.next = null; this.none = false; }
+    Files.prototype.pickSave = function (o) { if (this.none) return null; this.asked.push(o); var n = this.next; this.next = null; return n ? Promise.resolve(n) : Promise.reject(named('AbortError')); };
+    Files.prototype.download = function (text, file) { this.downloads.push({ text: text, file: file }); };
+    var KIND = '.prolog', A = { title: 'an entry of the picker' }, B = { title: 'another' };
+    function fresh() { var f = new Files(); return { files: f, desk: new FileDesk(f) }; }
+    function granted(name, text, at) { var h = new Handle(name, text, at); h.state = 'granted'; return h; }
+    function save(d, entry, load, text, name, more) {
+      var o = { entry: entry, load: load, text: text, name: name, kind: KIND, ask: true, as: false, ties: true };
+      for (var n in (more || {})) o[n] = more[n];
+      return d.desk.save(o);
+    }
+    var steps = [
+      function () {   // tied, once
+        var d = fresh(), h = new Handle('walter.prolog', 'old\n', 100);
+        d.desk.tieTo(A, 1, h, 100, 'opened');
+        return save(d, A, 1, 'one\n', 'walter.prolog').then(function (r) {
+          if (r.how === 'tied' && r.name === 'walter.prolog' && r.by === 'opened' && h.text === 'one\n' && h.asks === 1 && h.writes === 1 && !d.files.asked.length && !d.files.downloads.length) k.tied++;
+          else fail('a file opened through the picker and saved answers ' + JSON.stringify(r) + ', its file holding ' + JSON.stringify(h.text) + ' after ' + h.asks + ' question(s) and ' + d.files.asked.length + ' dialog(s), where it is written into the file opened, the browser asked once and no dialog');
+          return save(d, A, 1, 'two\n', 'walter.prolog');
+        }).then(function (r) {
+          if (r.how === 'tied' && h.text === 'two\n' && h.asks === 1 && h.writes === 2 && !d.files.asked.length) k.once++;
+          else fail('a second save answers ' + JSON.stringify(r) + ' after ' + h.asks + ' question(s), where the browser is asked once a sitting and the file is written again');
+        });
+      },
+      function () {   // unallowed
+        var d = fresh(), h = new Handle('walter.prolog', 'old\n', 100), first, kept;
+        h.answer = 'denied';
+        d.desk.tieTo(A, 1, h, 100, 'opened');
+        return save(d, A, 1, 'one\n', 'walter.prolog').then(function (r) {
+          first = r; kept = d.desk.tieOf(A, 1) !== null && h.writes === 0;
+          h.answer = 'granted';
+          return save(d, A, 1, 'two\n', 'walter.prolog');
+        }).then(function (r) {
+          if (first.how === 'refused' && kept && r.how === 'tied' && h.text === 'two\n' && h.writes === 1 && h.asks === 2 && !d.files.asked.length && !d.files.downloads.length) k.unallowed++;
+          else fail('the browser\'s question refused answers ' + JSON.stringify(first) + ' and, allowed at the next save, ' + JSON.stringify(r) + ', the file written ' + h.writes + ' time(s), where a refusal writes nothing, keeps the tie and is asked again');
+        });
+      },
+      function () {   // moved
+        var d = fresh(), h = granted('walter.prolog', 'old\n', 100), got = [], untouched;
+        d.desk.tieTo(A, 1, h, 100, 'opened');
+        h.text = 'another editor\'s\n'; h.at = 150;   // changed on disk since it was opened
+        return save(d, A, 1, 'one\n', 'walter.prolog').then(function (r) {
+          got.push(r); untouched = h.text === 'another editor\'s\n' && h.writes === 0;
+          return save(d, A, 1, 'one\n', 'walter.prolog');
+        }).then(function (r) {
+          got.push(r);
+          return save(d, A, 1, 'two\n', 'walter.prolog');
+        }).then(function (r) {
+          got.push(r);
+          h.at += 1000;   // and changed again, after the page's own write
+          return save(d, A, 1, 'three\n', 'walter.prolog');
+        }).then(function (r) {
+          got.push(r);
+          if (got[0].how === 'changed' && got[0].since === 'opened' && untouched && got[1].how === 'tied' && got[2].how === 'tied' && got[3].how === 'changed' && got[3].since === 'saved' && h.text === 'two\n' && h.writes === 2) k.moved++;
+          else fail('a file changed on disk since it was opened answers ' + JSON.stringify(got) + ' and holds ' + JSON.stringify(h.text) + ', where the save is refused once, the next writes over it, a save after that writes, and a change after the page\'s own write is refused in its turn');
+        });
+      },
+      function () {   // absent
+        var d = fresh(), h = granted('walter.prolog', 'old\n', 100), h2 = granted('found.prolog', '', 1), first, quiet;
+        h.gone = true;
+        d.desk.tieTo(A, 1, h, 100, 'opened');
+        return save(d, A, 1, 'one\n', 'walter.prolog', { ask: false }).then(function (r) {
+          first = r; quiet = !d.files.asked.length && !d.files.downloads.length;
+          d.desk.tieTo(A, 1, h, 100, 'opened'); d.files.next = h2;
+          return save(d, A, 1, 'one\n', 'walter.prolog');
+        }).then(function (r) {
+          var tie = d.desk.tieOf(A, 1);
+          if (first.how === 'gone' && quiet && r.how === 'picked' && r.name === 'found.prolog' && h2.text === 'one\n' && d.files.asked.length === 1 && d.files.asked[0].startIn === 'downloads' && tie && tie.handle === h2) k.absent++;
+          else fail('a file no longer where it was answers ' + JSON.stringify(first) + ' with no act at hand and ' + JSON.stringify(r) + ' with one, where the first is said and the second asks where and is tied there');
+        });
+      },
+      function () {   // under
+        var d = fresh(), h = granted('walter.prolog', 'old\n', 100), h3 = granted('walter2.prolog', '', 1), first, dialog, o;
+        d.desk.tieTo(A, 1, h, 100, 'opened'); d.files.next = h3;
+        return save(d, A, 1, 'one\n', 'walter.prolog', { as: true }).then(function (r) {
+          first = r; o = d.files.asked[0] || {};
+          dialog = d.files.asked.length === 1 && o.suggestedName === 'walter.prolog' && o.startIn === h && o.types.length === 1 && o.types[0].description === 'A .prolog file' && o.types[0].accept['text/plain'].join() === '.prolog';
+          return save(d, A, 1, 'two\n', 'walter2.prolog');
+        }).then(function (r) {
+          if (first.how === 'picked' && first.name === 'walter2.prolog' && dialog && r.how === 'tied' && r.by === 'saved' && h3.text === 'two\n' && h.text === 'old\n' && h.writes === 0 && d.files.asked.length === 1) k.under++;
+          else fail('a save under another name answers ' + JSON.stringify(first) + ' through a dialog offering ' + JSON.stringify({ name: o.suggestedName, where: o.startIn === h ? 'the tied file' : o.startIn, types: o.types }) + ', and the next save ' + JSON.stringify(r) + ', where the dialog offers the file\'s own name, walter.prolog, as "A .prolog file" where the tied file stands, the file opened is left as it was, and Save writes there from then on');
+        });
+      },
+      function () {   // shut, first
+        var d = fresh(), h4 = granted('mum.prolog', '', 1), shut, none, first, o;
+        return save(d, A, 1, 'one\n', 'afterlife.prolog').then(function (r) {   // the dialog closed
+          shut = r; none = d.desk.tieOf(A, 1) === null && !d.files.downloads.length;
+          d.files.next = h4;
+          return save(d, A, 1, 'one\n', 'afterlife.prolog');
+        }).then(function (r) {
+          first = r; o = d.files.asked[1] || {};
+          return save(d, A, 1, 'two\n', 'mum.prolog');
+        }).then(function (r) {
+          if (shut.how === 'cancelled' && none) k.shut++;
+          else fail('a dialog closed answers ' + JSON.stringify(shut) + ', where nothing is written, nothing downloaded and nothing tied');
+          if (first.how === 'picked' && first.name === 'mum.prolog' && o.startIn === 'downloads' && o.suggestedName === 'afterlife.prolog' && r.how === 'tied' && h4.text === 'two\n' && d.files.asked.length === 2) k.first++;
+          else fail('a first save answers ' + JSON.stringify(first) + ' and the next ' + JSON.stringify(r) + ' after ' + d.files.asked.length + ' dialog(s), where the first asks where, in the Downloads folder, and the next is written there');
+        });
+      },
+      function () {   // resting
+        var d = fresh(), h = new Handle('walter.prolog', 'old\n', 100), g = granted('granted.prolog', 'old\n', 100), got = [], quiet = [];
+        d.desk.tieTo(A, 1, h, 100, 'opened');
+        return save(d, A, 1, 'one\n', 'walter.prolog', { ask: false }).then(function (r) {
+          got.push(r); quiet.push(h.asks === 0 && h.writes === 0 && !d.files.asked.length && !d.files.downloads.length);
+          return save(d, A, 1, 'one\n', 'walter.prolog', { ask: false, as: true });
+        }).then(function (r) {
+          got.push(r); quiet.push(h.writes === 0 && !d.files.asked.length && !d.files.downloads.length);
+          d.desk.tieTo(A, 1, g, 100, 'opened');
+          return save(d, A, 1, 'one\n', 'granted.prolog', { ask: false });
+        }).then(function (r) {
+          got.push(r);
+          return save(d, B, 1, 'one\n', 'afterlife.prolog', { ask: false });
+        }).then(function (r) {
+          got.push(r);
+          if (got[0].how === 'unasked' && quiet[0]) k.resting++; else fail('a save that waited, the browser not yet asked, answers ' + JSON.stringify(got[0]) + ' after ' + h.asks + ' question(s), where nothing is asked with no act at hand and nothing is written');
+          if (got[1].how === 'unasked' && got[1].as === true && quiet[1]) k.resting++; else fail('a save under another name that waited answers ' + JSON.stringify(got[1]) + ', where its dialog wants an act at hand and nothing is written');
+          if (got[2].how === 'tied' && g.text === 'one\n' && g.asks === 0) k.resting++; else fail('a save that waited, the browser\'s permission already had, answers ' + JSON.stringify(got[2]) + ', where it is written into the file');
+          if (got[3].how === 'downloaded' && d.files.downloads.length === 1 && d.files.downloads[0].file === 'afterlife.prolog' && !d.files.asked.length) k.resting++; else fail('a save that waited where no file is tied answers ' + JSON.stringify(got[3]) + ', where it is downloaded as it always was');
+        });
+      },
+      function () {   // plain
+        var d = fresh(), h = granted('walter.prolog', 'old\n', 100), v = granted('afterlife-4.vla', '', 1);
+        d.desk.tieTo(A, 1, h, 100, 'opened'); d.files.next = v;
+        return save(d, A, 1, '(cartridge "afterlife")\n', 'afterlife-4.vla', { kind: '', ties: false }).then(function (r) {
+          var o = d.files.asked[0] || {}, tie = d.desk.tieOf(A, 1);
+          if (r.how === 'picked' && v.text === '(cartridge "afterlife")\n' && h.writes === 0 && h.text === 'old\n' && tie && tie.handle === h && o.suggestedName === 'afterlife-4.vla' && o.types[0].accept['text/plain'].join() === '.vla') k.plain++;
+          else fail('a cartridge\'s save beside a file tied answers ' + JSON.stringify(r) + ', the file written ' + h.writes + ' time(s), where it asks where as it always did and the file is left as it was, tied still');
+        });
+      },
+      function () {   // dropped
+        var d = fresh(), h = granted('walter.prolog', 'old\n', 100), got = [], held = [];
+        d.desk.tieTo(A, 1, h, 100, 'opened');
+        return save(d, B, 1, 'another cartridge\'s rows\n', 'other.prolog').then(function (r) {   // another entry picked: its dialog, closed
+          got.push(r); held.push(h.writes === 0 && d.files.asked.length === 1 && d.files.asked[0].startIn === 'downloads');
+          return save(d, A, 2, 'the file as it was opened\n', 'walter.prolog');   // the same entry, loaded again: its dialog, closed
+        }).then(function (r) {
+          got.push(r); held.push(h.writes === 0 && d.files.asked.length === 2 && d.files.asked[1].startIn === h);
+          return save(d, A, 1, 'one\n', 'walter.prolog');
+        }).then(function (r) {
+          if (got[0].how === 'cancelled' && held[0]) k.dropped++; else fail('a save under another entry of the picker answers ' + JSON.stringify(got[0]) + ', the tied file written ' + h.writes + ' time(s), where no save writes one file\'s rows into another\'s: it asks where');
+          if (got[1].how === 'cancelled' && held[1]) k.dropped++; else fail('a save after the entry is loaded again answers ' + JSON.stringify(got[1]) + ', the tied file written ' + h.writes + ' time(s), where a tie is a load\'s and the save asks where, its dialog opening where the file stands');
+          if (r.how === 'tied' && h.text === 'one\n' && h.writes === 1) k.dropped++; else fail('at the entry and the load a tie was made at, a save answers ' + JSON.stringify(r) + ', where it is written into the file');
+        });
+      },
+      function () {   // elsewhere
+        var d = fresh();
+        d.files.none = true;
+        return save(d, A, 1, 'one\n', 'walter.prolog').then(function (r) {
+          if (r.how === 'downloaded' && r.name === 'walter.prolog' && d.files.downloads.length === 1 && d.files.downloads[0].file === 'walter.prolog' && d.files.downloads[0].text === 'one\n') k.elsewhere++;
+          else fail('a browser with no dialog answers ' + JSON.stringify(r) + ', where the file is downloaded under its own name, as it always was');
+        });
+      }
+    ];
+    // the bar's words, by how the desk wrote it
+    [[{ how: 'tied', name: 'walter.prolog', by: 'opened' }, /^Saved walter\.prolog, 934 lines, into the file you opened\.$/, false],
+     [{ how: 'tied', name: 'walter2.prolog', by: 'saved' }, /^Saved walter2\.prolog, 934 lines, into the file you saved it as\.$/, false],
+     [{ how: 'picked', name: 'walter2.prolog' }, /^Saved as walter2\.prolog, 934 lines: Save writes there now\.$/, false],
+     [{ how: 'downloaded', name: 'walter.prolog' }, /^Saved walter\.prolog, 934 lines, into your downloads\.$/, false],
+     [{ how: 'cancelled', name: 'walter.prolog' }, /^The file was not written: the picker was closed\.$/, false],
+     [{ how: 'refused', name: 'walter.prolog' }, /^walter\.prolog was not written: the browser was not allowed to change it\. Save asks again\.$/, true],
+     [{ how: 'changed', name: 'walter.prolog', since: 'opened' }, /^walter\.prolog has changed on disk since it was opened: Save again writes over it, Save as keeps both\.$/, true],
+     [{ how: 'changed', name: 'walter.prolog', since: 'saved' }, /^walter\.prolog has changed on disk since it was saved: Save again writes over it, Save as keeps both\.$/, true],
+     [{ how: 'unasked', name: 'walter.prolog' }, /^walter\.prolog was not written: the browser asks at your press .* Save again\.$/, true],
+     [{ how: 'unasked', name: 'walter.prolog', as: true }, /^The file was not written: a save under another name asks where at your press.* Save as again\.$/, true],
+     [{ how: 'gone', name: 'walter.prolog' }, /^walter\.prolog was not written: it is no longer where it was\. Save again, and choose where\.$/, true],
+     [{ how: 'failed', name: 'walter.prolog', why: 'the disk is full' }, /^walter\.prolog was not written: the disk is full\.$/, true]
+    ].forEach(function (x) {
+      var w = fileSavedWords(x[0], 934);
+      if (x[1].test(w.text) && !!w.refused === x[2]) k.said++; else fail('a save ' + JSON.stringify(x[0]) + ' is said ' + JSON.stringify(w) + ', where ' + x[1] + (x[2] ? ', refused,' : '') + ' is due');
+    });
+    return steps.reduce(function (p, step) { return p.then(step); }, Promise.resolve()).then(null, function (e) { fail('the desk\'s case threw: ' + (e && e.message ? e.message : e)); });
+  }
+  function caseFileGrid() {
+    var P = [], k = { changes: 0, words: 0, kinds: 0, double: 0, named: 0, read: 0, opened: 0, same: 0, loose: 0, edited: 0, saved: 0, cartridge: 0, refused: 0, unwritten: 0, none: 0, waited: 0, renamed: 0 };
+    // ---- pure: where two files part, and its words ----
+    var FC = HOST.firstChange, CW = HOST.changeWords, U;
+    [['a\nb\n', 'a\nb\n', null, ''],
+     ['', '', null, ''],
+     ['a\nb\n', 'a\nB\n', { line: 2, was: 'b', now: 'B' }, '"B" would be written where the file has "b"'],
+     ['a\r\nb\r\n', 'a\nb\n', { line: 1, was: 'a\r', now: 'a' }, 'its line end would be LF where the file has CR LF'],
+     ['a\nb\n', 'a\r\nb\r\n', { line: 1, was: 'a', now: 'a\r' }, 'its line end would be CR LF where the file has LF'],
+     ['a\nb', 'a\nb\n', { line: 2, was: 'b', now: 'b', end: true }, 'its last line has no line end, and would be given one'],
+     ['a\n', 'a\nb\n', { line: 2, was: U, now: 'b' }, 'a line would be added, "b"'],
+     ['a\n\n\n', 'a\n', { line: 2, was: '', now: U }, 'it ends with an empty line, or more, which would not be written'],
+     ['a\nb\nc\n', 'a\n', { line: 2, was: 'b', now: U }, 'the line "b" and what follows it would not be written'],
+     ['', 'a\n', { line: 1, was: U, now: 'a' }, 'a line would be added, "a"']
+    ].forEach(function (x) {
+      var got = FC(x[0], x[1]), due = x[2];
+      var same = due === null ? got === null : !!got && got.line === due.line && got.was === due.was && got.now === due.now && got.end === due.end;
+      if (same) k.changes++; else P.push('file: ' + JSON.stringify(x[0]) + ' beside ' + JSON.stringify(x[1]) + ' part at ' + JSON.stringify(got) + ', where ' + JSON.stringify(due) + ' is due: files are held to each other line for line, line ends and all');
+      if (due === null) return;
+      if (CW(due) === x[3]) k.words++; else P.push('file: the difference ' + JSON.stringify(due) + ' is said ' + JSON.stringify(CW(due)) + ', where ' + JSON.stringify(x[3]) + ' is due');
+    });
+    var cut = CW({ line: 1, was: 'x'.repeat(100), now: 'y' });
+    if (cut === '"y" would be written where the file has "' + 'x'.repeat(69) + '..."') k.words++; else P.push('file: a line of 100 characters is said ' + JSON.stringify(cut) + ', where it is cut to 69 and three dots');
+    // ---- pure: a file's kind, and what Open offers ----
+    [['walter.prolog', '.prolog', true], ['WALTER.PROLOG', '.prolog', true], ['walter.Prolog', '.PROLOG', true], ['.prolog', '.prolog', false], ['walter.prolog.txt', '.prolog', false], ['walter.vla', '.prolog', false], ['walter.prolog', '', false], ['a.vla', '.vla', false]
+    ].forEach(function (x) {
+      if (opensAsLines(x[0], x[1]) === x[2]) k.kinds++; else P.push('file: ' + x[0] + ' under a cartridge that reads ' + (x[1] || 'no file') + ' opens as lines: ' + opensAsLines(x[0], x[1]) + ', where ' + x[2] + ' is due');
+    });
+    // what Open offers, each kind's words the type the system's dialog shows, its type said in them (the owner's word
+    // at ENGINE.49's hand test): "A .prolog file", and "An Alonzo cartridge (.vla)"
+    var offered = openKinds('.prolog'), plain = openKinds(''), CART = 'An Alonzo cartridge (.vla)';
+    if (offered.length === 2 && offered[0].description === 'A .prolog file' && offered[0].accept['text/plain'].join() === '.prolog' && offered[1].description === CART && offered[1].accept['text/plain'].join() === '.vla' && plain.length === 1 && plain[0].description === CART && plain[0].accept['text/plain'].join() === '.vla') k.kinds++;
+    else P.push('file: Open offers ' + JSON.stringify(offered) + ' under a cartridge that reads .prolog and ' + JSON.stringify(plain) + ' under one that reads none, where the file\'s kind stands first, "A .prolog file", and a cartridge beside it, "' + CART + '", and a cartridge alone');
+    // what the picker says of a file opened: the cartridge and the file it reads, or the file alone
+    [['walter.prolog', 'Afterlife', 'Afterlife (walter.prolog)'], ['afterlife-1.vla', '', 'The file afterlife-1.vla']
+    ].forEach(function (x) {
+      if (openedTitle(x[0], x[1]) === x[2]) k.kinds++; else P.push('file: ' + x[0] + ' opened' + (x[1] ? ' into ' + x[1] : '') + ' stands in the picker as "' + openedTitle(x[0], x[1]) + '", where "' + x[2] + '" is due');
+    });
+    // ---- over the double: no file's calls, each declined in words ----
+    var D = new HOST({ drive: 'manual', budget: 0, now: frozen });
+    if (D.attach(FAKE.create({}).exports).ok && D.load('(cartridge "tiny"\n  (spec 2)\n  (title "Tiny")\n  (rate 0)\n  (screen grid 4 3)\n  (seed 1))\n(cell "Screen" "A1" 1)\n', 'tiny.vla').ok) {
+      var dread = D.fileRead('A=1\n', 'a.env'), dtext = D.fileText();
+      if (D.fileType() === '' && D.fileName() === '' && !dread.ok && /^a\.env was not opened: the module exports no alonzo_file_read/.test(dread.sentence || '') && !dtext.ok && /^The file was not written: the module exports no alonzo_file_write/.test(dtext.words || '')) k.double++;
+      else P.push('file: over the double the type is ' + JSON.stringify(D.fileType()) + ', a file read answers ' + JSON.stringify(dread.sentence || dread) + ' and a file written ' + JSON.stringify(dtext.words || dtext) + ', where it says no type and each call is declined in words');
+    } else P.push('file: the double did not load a card: ' + (D.sentences().slice(-1)[0] || {}).text);
+    // ---- over the module ----
+    var wasm = builtModule();
+    if (!wasm) return { counters: k, problems: P };
+    var bytes = bytesOfBase64(wasm);
+    k.module = bytes.length;
+    function host(opts) { var o = { drive: 'manual', budget: 0, now: frozen }; for (var n in (opts || {})) o[n] = opts[n]; var h = new HOST(o); return h.attach(HOST.instantiateSync(bytes)).ok ? h : null; }
+    function last(h) { var t = h.sentences(); return t.length ? t[t.length - 1].text : ''; }
+    function busy(h) { return h.settling || h.inFrame || h.edits.length > 0; }
+    function rest(h) { var t = 1000; h.start(); for (var i = 0; i < 64 && busy(h); i++) { t += 17; h.tick(t); } }
+    var A = host(), card = fileCard(9, false);
+    if (!A || !A.load(card, 'pairs.vla').ok) { P.push('file: the card did not load over the module: ' + (A ? last(A) : 'no host')); return { counters: k, problems: P }; }
+    var handed = [];
+    A.on('save', function (e) { handed.push(e); });
+    // the type, and the name a file is written under before one is opened: the cartridge's own with the type
+    var own = A.fileText();
+    if (A.fileType() === '.env' && A.fileName() === 'pairs.env' && own.ok && own.text === 'OLD=was\n' && own.lines === 1 && own.file === 'pairs.env') k.named++;
+    else P.push('file: the card says the type ' + JSON.stringify(A.fileType()) + ', its file is saved under ' + JSON.stringify(A.fileName()) + ' and its own rows are written ' + JSON.stringify(own.text || own.words) + ', where .env, pairs.env and OLD=was are due');
+    // a file read into the cartridge's text: nothing loaded, the grid that runs as it was
+    var file = '# settings\r\nPORT=8080\r\nNAME=a b\r\n', was = A.counters().handle, read = A.fileRead(file, 'settings.env');
+    if (read.ok && /^\(cartridge "pairs"/.test(read.text) && read.text.indexOf('(cell "Pairs" "B3" 8080)') > 0 && read.text.indexOf('"OLD"') < 0 && A.counters().handle === was && A.fileText().text === 'OLD=was\n') k.read++;
+    else P.push('file: the file read answers ' + JSON.stringify(read.ok ? read.text.slice(0, 80) : read.sentence) + ' and the grid that runs then writes ' + JSON.stringify(A.fileText().text) + ', where the answer is the cartridge with the file\'s rows and the grid is left as it was');
+    if (!read.ok) return { counters: k, problems: P };
+    // loaded under the file's name, and the open's check: the file written back, CR LF and all
+    if (!A.load(read.text, 'settings.env').ok) { P.push('file: the cartridge the file was read into did not load: ' + last(A)); return { counters: k, problems: P }; }
+    var chk = A.fileCheck(file, 'settings.env');
+    if (A.fileName() === 'settings.env' && A.fileType() === '.env') k.named++; else P.push('file: after settings.env is opened its file is saved under ' + JSON.stringify(A.fileName()) + ', where the name it was opened by is due');
+    if (chk.ok && chk.same === true && chk.lines === 3) k.same++;
+    else P.push('file: the open\'s check of a file whose line ends are CR LF answers ' + JSON.stringify(chk) + ', where the file comes back as it is, line ends and all');
+    var beside = A.viewRecord('Pairs', 'C3');
+    if (last(A) === 'Opened settings.env, 3 lines: Save writes it back as it is.' && /\(formula "Pairs" "C3" "=LEN\(B3\)"\)/.test(beside || '')) k.opened++;
+    else P.push('file: the open\'s check says ' + JSON.stringify(last(A)) + ' and Pairs!C3 holds ' + JSON.stringify(beside) + ', where the file is said opened and the sheet\'s own formula stands beside its rows');
+    // an edit is its line, and a person's save the file, under its name
+    A.edit('(cell "Pairs" "B3" 9090)'); rest(A);
+    handed.length = 0;
+    var sv = A.save('person'), want = '# settings\r\nPORT=9090\r\nNAME=a b\r\n';
+    if (sv.ok && handed.length === 1 && handed[0].kind === 'file' && handed[0].text === want) k.edited++;
+    else P.push('file: after an edit a person\'s save ' + (handed.length && handed[0].kind === 'cartridge' ? 'wrote a cartridge, ' + handed[0].file : 'handed the page ' + JSON.stringify(handed.length ? handed[0].text : sv)) + ', where the file is due with the edit its line');
+    if (handed.length === 1 && handed[0].file === 'settings.env' && handed[0].lines === 3 && handed[0].by === 'person' && last(A) === 'Wrote settings.env: 3 lines, ' + want.length + ' bytes.') k.saved++;
+    else P.push('file: the file is saved under ' + JSON.stringify(handed.length ? handed[0].file : null) + ' and said ' + JSON.stringify(last(A)) + ', where settings.env and its three lines are due');
+    // a save under another name (ENGINE.49): the same file handed over, marked for the page, whose dialog it is; a
+    // save is not so marked, and the cartridge's own never is
+    var plainSave = handed.length === 1 && handed[0].as === false;
+    handed.length = 0;
+    A.save('person', undefined, true); A.save('cartridge', undefined, true);
+    if (plainSave && handed.length === 2 && handed[0].kind === 'file' && handed[0].as === true && handed[0].text === want && handed[1].kind === 'cartridge' && handed[1].as === false) k.saved++;
+    else P.push('file: a save under another name handed the page ' + JSON.stringify(handed.map(function (h) { return [h.kind, h.as]; })) + ' after a save marked ' + (plainSave ? 'plainly' : 'as one') + ', where the file is handed over marked as a save under another name, a save is not, and the cartridge\'s own never is');
+    // the file's name after a save under another (ENGINE.49): a name of the card's type is the file's from there on,
+    // the next save written under it, and a name of any other type is not taken
+    var took = A.fileNamed('other.env'), then = A.fileName(), not = A.fileNamed('notes.txt');
+    if (took === true && then === 'other.env' && not === false && A.fileName() === 'other.env') k.renamed++;
+    else P.push('file: the card\'s file named other.env (' + took + ') is written under ' + JSON.stringify(then) + ', and notes.txt taken: ' + not + ', where a name of the card\'s type is taken and any other is not');
+    // the cartridge's own save, and a person's save of the cartridge, a cartridge still
+    handed.length = 0;
+    A.save('cartridge');
+    if (handed.length === 1 && handed[0].kind === 'cartridge' && /^pairs-\d+\.vla$/.test(handed[0].file) && /^\(cartridge "pairs"/.test(handed[0].text)) k.cartridge++;
+    else P.push('file: the cartridge\'s own save handed the page ' + (handed.length ? 'a ' + handed[0].kind + ', ' + handed[0].file : 'nothing') + ', where the grid as a cartridge is due, as before');
+    handed.length = 0;
+    A.save('person', 'cartridge');
+    if (handed.length === 1 && handed[0].kind === 'cartridge' && /^pairs-\d+\.vla$/.test(handed[0].file)) k.cartridge++;
+    else P.push('file: a person\'s save of the cartridge handed the page ' + (handed.length ? 'a ' + handed[0].kind + ', ' + handed[0].file : 'nothing') + ', where the grid as a cartridge is due');
+    // a file written loosely: the first line a save would change, said
+    var loose = 'PORT =8080\nNAME=x\n', lr = A.fileRead(loose, 'loose.env');
+    if (lr.ok && A.load(lr.text, 'loose.env').ok) {
+      var lc = A.fileCheck(loose, 'loose.env');
+      if (lc.ok && lc.same === false && lc.line === 1 && last(A) === 'Opened loose.env, 2 lines. Save would change it, first at line 1: "PORT=8080" would be written where the file has "PORT =8080".') k.loose++;
+      else P.push('file: the open\'s check of a file written loosely answers ' + JSON.stringify(lc) + ' and says ' + JSON.stringify(last(A)) + ', where its first line is said');
+    } else P.push('file: a file written loosely was not read: ' + last(A));
+    // a line no template reads: refused by its number, nothing loaded
+    var at = A.counters().handle, bad = A.fileRead('PORT=1\nno equals sign\n', 'bad.env');
+    if (!bad.ok && /^bad\.env was not opened: line 2 is no line the Format sheet says/.test(bad.sentence || '') && /\[cart-file-unread\]\.$/.test(bad.sentence || '') && A.counters().handle === at && A.fileName() === 'loose.env') k.refused++;
+    else P.push('file: a file a line of which no template reads answers ' + JSON.stringify(bad.sentence || bad) + ', where it is refused by its line and nothing is loaded');
+    // a row no line says: refused by its cell, nothing handed to the page
+    A.edit('(cell "Pairs" "A3" "TWO WORDS")'); rest(A);
+    handed.length = 0;
+    var un = A.save('person');
+    if (!un.ok && !handed.length && /^The file was not written: Pairs!A3 holds "TWO WORDS", which is not a word/.test(last(A)) && /\[cart-file-unwritten\]\.$/.test(last(A))) k.unwritten++;
+    else P.push('file: a row no line says is saved as ' + JSON.stringify(handed.length ? handed[0].text : un) + ' and said ' + JSON.stringify(last(A)) + ', where it is refused by its cell and nothing is written');
+    // a cartridge that says no file's lines: saved and opened as before
+    var N = host(), nsaved = [];
+    if (N && N.load(fileCard(8, false), 'pairs.vla').ok) {
+      N.on('save', function (e) { nsaved.push(e); });
+      N.save('person');
+      var nr = N.fileRead('A=1\n', 'a.env');
+      if (N.fileType() === '' && nsaved.length === 1 && nsaved[0].kind === 'cartridge' && !nr.ok && /^a\.env was not opened: .*\[cart-format-invalid\]\.$/.test(nr.sentence || '')) k.none++;
+      else P.push('file: a card written to version 8 says the type ' + JSON.stringify(N.fileType()) + ', its save is ' + (nsaved.length ? 'a ' + nsaved[0].kind : 'not handed over') + ' and a file read answers ' + JSON.stringify(nr.sentence || nr) + ', where it says no file, saves a cartridge and reads none');
+    } else P.push('file: the card written to version 8 did not load');
+    // where the load's act still settles: the check waits for the grid to rest, and so does a save
+    var S0 = host(), slow = '# settings\nPORT=8080\n', sr = S0 && S0.load(fileCard(9, true), 'pairs.vla').ok ? S0.fileRead(slow, 'slow.env') : { ok: false };
+    var W = host({ callsPerTick: 1 }), wsaved = [];
+    if (W && sr.ok && W.load(sr.text, 'slow.env').ok) {
+      W.on('save', function (e) { wsaved.push(e); });
+      var settling = W.settling || W.inFrame, wc = W.fileCheck(slow, 'slow.env'), early = /^Opened slow\.env/.test(last(W));
+      rest(W);
+      if (settling && wc.waiting === true && !early && last(W) === 'Opened slow.env, 2 lines: Save writes it back as it is.') k.waited++;
+      else P.push('file: asked while the load\'s act ' + (settling ? 'settles' : 'rests') + ', the check answers ' + JSON.stringify(wc) + ' and the check ' + (/^Opened slow\.env/.test(last(W)) ? 'was said ' + (early ? 'at once' : 'at rest') : 'was never said') + ': ' + JSON.stringify(last(W)) + ', where it waits and is said once the grid rests');
+      W.edit('(cell "Pairs" "B3" 1)');
+      var mid = W.settling || W.inFrame, ws = W.save('person');
+      rest(W);
+      if (mid && ws.waiting === true && wsaved.length === 1 && wsaved[0].kind === 'file' && wsaved[0].waited === true && wsaved[0].text === '# settings\nPORT=1\n') k.waited++;
+      else P.push('file: a save asked while an act ' + (mid ? 'settles' : 'rests') + ' answers ' + JSON.stringify(ws.waiting ? 'waiting' : ws) + ' and the page is handed ' + JSON.stringify(wsaved.length ? wsaved[0].kind + ': ' + wsaved[0].text : null) + ', where the file waits for the settle and is handed over at rest');
+    } else P.push('file: the card that settles did not open a file: ' + (W ? last(W) : 'no host'));
+    // ---- Alonzo's own: Afterlife's reel, its tabs the file and the file its tabs ----
+    if (OWN && CARTRIDGES.afterlife) {
+      k.golden = 0; k.lines = 0;
+      var G = host(), ac = CARTRIDGES.afterlife;
+      if (G && G.load(ac.text, ac.file).ok) {
+        rest(G);
+        var reel = G.fileText();
+        // a reel is a .prolog, the cartridge's type (the owner's word at ENGINE.49's hand test)
+        if (reel.ok && G.fileType() === '.prolog' && reel.file === 'afterlife.prolog') {
+          k.lines = reel.lines;
+          var gr = G.fileRead(reel.text, 'walter.prolog');
+          if (gr.ok && G.load(gr.text, 'walter.prolog').ok) {
+            rest(G);
+            var gc = G.fileCheck(reel.text, 'walter.prolog'), back = G.fileText();
+            if (gc.same === true && back.ok && back.text === reel.text && back.file === 'walter.prolog') k.golden++;
+            else P.push('file: Afterlife\'s reel opened under its cartridge is checked ' + JSON.stringify(gc) + ' and written back ' + (back.ok ? back.text.length + ' characters' : back.words) + ', where it comes back byte for byte');
+          } else P.push('file: Afterlife\'s reel was not opened under its cartridge: ' + last(G));
+        } else P.push('file: Afterlife\'s tabs were not written as a .prolog file: ' + JSON.stringify(reel.ok ? [G.fileType(), reel.file] : reel.words));
+      } else P.push('file: Afterlife did not load over the module');
     }
     return { counters: k, problems: P };
   }
@@ -6791,7 +7687,7 @@
       var C = doubleHost();
       var wrong = [
         ['another cartridge\'s replay', CARTRIDGES.inputcard.replay, 'a replay plays only on the file it was recorded from'],
-        ['a later version\'s replay', text.replace('(spec 3)', '(spec 8)'), 'this host implements versions 1 to 7'],
+        ['a later version\'s replay', text.replace('(spec 3)', '(spec 10)'), 'this host implements versions 1 to 9'],
         ['a derived row', text.replace('(frame 1\n', '(frame 1\n  (derived "State" "B1" 1)\n'), 'holds a derived row'],
         ['frames out of order', text + '(frame 1)\n', 'frames are out of order'],
         ['a row outside a frame', text.replace('(frame 1\n', '(cell "State" "B1" 1)\n(frame 1\n'), 'outside a frame'],
@@ -8003,8 +8899,8 @@
   function caseKeys() {
     var P = [], k = { defaults: 0, refused: 0, places: 0, steps: 0, lines: 0, kept: 0, spelled: 0, said: 0, sheets: 0, last: 0, game: 0 };
     var map = readKeymap(KEYMAP_DEFAULTS, COMMANDS);
-    if (map.ok && map.bindings.length === 16 && !map.order.length && map.bindings.some(function (b) { return b.command === 'palette'; })) k.defaults++;
-    else P.push('keys: the page\'s own keymap reads ' + (map.ok ? map.bindings.length + ' binding(s)' : 'refused: ' + map.problems.join('; ')) + ', where 16 bindings, the palette\'s and Save\'s and Open\'s among them, are due');
+    if (map.ok && map.bindings.length === 20 && !map.order.length && ['palette', 'save', 'save-as', 'copy', 'cut', 'paste'].every(function (n) { return map.bindings.some(function (b) { return b.command === n; }); })) k.defaults++;
+    else P.push('keys: the page\'s own keymap reads ' + (map.ok ? map.bindings.length + ' binding(s)' : 'refused: ' + map.problems.join('; ')) + ', where 20 bindings, the palette\'s, Save\'s and Open\'s, since ENGINE.39 the clipboard\'s three and since ENGINE.49 Save as\'s among them, are due');
     // every refusal whole, by its line and its words
     var base = KEYMAP_DEFAULTS + '\n', at = base.split('\n').length;
     var noPalette = KEYMAP_DEFAULTS.replace('(bind "Ctrl+K" palette)\n', '').replace('(bind "Control+Shift+[Backquote]" palette)\n', '');
@@ -8091,6 +8987,10 @@
     if (o2.length === 0) k.offered++; else P.push('keys: a keymap offered every command is offered ' + JSON.stringify(o2) + ' again, where a key taken out stays out');
     if (JSON.stringify(o3) === JSON.stringify(['(bind "Ctrl+O" open)'])) k.offered++; else P.push('keys: a keymap holding Ctrl+S for run is offered ' + JSON.stringify(o3) + ', where Open\'s key alone is due');
     if (JSON.stringify(o4) === JSON.stringify(['(bind "Ctrl+O" open)'])) k.offered++; else P.push('keys: a keymap binding save to Alt+Shift+S is offered ' + JSON.stringify(o4) + ', where Open\'s key alone is due');
+    // ENGINE.49: a keymap kept before Save as gains Ctrl+Shift+S, once
+    var beforeAs = readKeymap(KEYMAP_DEFAULTS.split('\n').filter(function (l) { return l !== '(bind "Ctrl+Shift+S" save-as)'; }).join('\n'), COMMANDS, true);
+    var o5 = offeredLines(beforeAs, names.filter(function (n) { return n !== 'save-as'; }), KEYMAP_DEFAULTS, COMMANDS), o6 = offeredLines(beforeAs, names, KEYMAP_DEFAULTS, COMMANDS);
+    if (JSON.stringify(o5) === JSON.stringify(['(bind "Ctrl+Shift+S" save-as)']) && o6.length === 0) k.offered++; else P.push('keys: a keymap kept before Save as is offered ' + JSON.stringify(o5) + ', and ' + JSON.stringify(o6) + ' once it has been offered it, where Ctrl+Shift+S alone and then nothing are due');
     store.keep(mine, KEYMAP_DEFAULTS); store.know(names);
     var knownBack = store.known();
     store.keep(KEYMAP_DEFAULTS, KEYMAP_DEFAULTS);
@@ -8200,7 +9100,7 @@
     var P = [], k = { named: 0, lines: 0, read: 0, refusals: 0, found: 0, steps: 0, shadow: 0, note: 0, order: 0,
                       module: 0, opened: 0, listed: 0, frames: 0, ran: 0, landed: 0, emptied: 0, apart: 0, twice: 0, repeats: 0, ctrl: 0, holdsNot: 0, refused: 0,
                       passed: 0, noted: 0, words: 0, waited: 0, dropped: 0, said: 0, replayed: 0, replayFrames: 0, replaySame: 0, during: 0, rate0: 0, rate0Empty: 0,
-                      rate0Replayed: 0, older: 0, keypad: 0, chords: 0, chordsOlder: 0 };
+                      rate0Replayed: 0, older: 0, keypad: 0, chords: 0, chordsOlder: 0, repeating: 0, repeatWords: 0 };
     commandsPage(k, P);
     var wasm = builtModule();
     if (!wasm) return { counters: k, problems: P };
@@ -8209,6 +9109,7 @@
     commandsRun(bytes, k, P);
     commandsOlder(bytes, k, P);
     commandsChords(bytes, k, P);
+    commandsRepeats(bytes, k, P);
     return { counters: k, problems: P };
   }
   // The case's page half (slice 2), pure, needing no module: a game's command as a page names it; the palette's lines of a
@@ -8246,6 +9147,33 @@
      [base + '(bind "U" commandcard.count-up "x")', 'line ' + at + ': commandcard.count-up takes nothing after its name']].forEach(function (x) {
       var r = readKeymap(x[0], COMMANDS), said = r.problems.join('; ');
       if (!r.ok && said.indexOf(x[1]) >= 0) k.refusals++; else P.push('commands: the text ending ' + JSON.stringify(x[0].slice(-50)) + ' was ' + (r.ok ? 'applied' : 'refused in the words ' + JSON.stringify(said)) + ', where it is refused, saying ' + JSON.stringify(x[1]));
+    });
+    // ENGINE.39: a person's (repeat) and (once) in a binding, over the command's own word; the list's words of it; and their
+    // refusals
+    var rm = readKeymap(base + '(bind "U" commandcard.count-up (once))\n(bind "J" commandcard.note (repeat))\n(bind "F7" next-sheet (once))\n(bind "F6" pause (repeat) screen)\n' +
+                        '(command "twice" "count up twice" (commandcard.count-up) (commandcard.count-up))\n(bind "Ctrl+J" twice (repeat))\n(bind "Ctrl+M" twice)\n(bind "W" commandcard.count-up)\n', COMMANDS);
+    if (!rm.ok) P.push('commands: the keymap with (repeat) and (once) was refused: ' + rm.problems.join('; '));
+    else {
+      var bk = function (keys) { return rm.bindings.filter(function (b) { return b.keys.text === keys; })[0]; };
+      var cmdsNow = [{ name: 'count-up', repeats: true }, { name: 'note', repeats: false }];
+      [['U, (once) over the column\'s repeat', bk('U'), cmdsNow, 'commandcard', false], ['J, (repeat) over the column\'s once', bk('J'), cmdsNow, 'commandcard', true],
+       ['W, the column\'s repeat', bk('W'), cmdsNow, 'commandcard', true], ['W, another cartridge loaded', bk('W'), cmdsNow, 'kairos', false],
+       ['W, the column saying once', bk('W'), [{ name: 'count-up', repeats: false }], 'commandcard', false],
+       ['F7, (once) over the next sheet\'s repeat', bk('F7'), [], '', false], ['the page\'s Ctrl+PageDown, the next sheet\'s own repeat', bk('Ctrl+PageDown'), [], '', true],
+       ['F6, (repeat) over pause', bk('F6'), [], '', true], ['the page\'s Ctrl+S, save once', bk('Ctrl+S'), [], '', false],
+       ['Ctrl+J, (repeat) over a person\'s own', bk('Ctrl+J'), [], '', true], ['Ctrl+M, a person\'s own once', bk('Ctrl+M'), [], '', false]].forEach(function (x) {
+        var got = x[1] ? bindingRepeats(x[1], x[2], x[3]) : 'no binding';
+        if (got === x[4]) k.repeatWords++; else P.push('commands: ' + x[0] + ' repeats ' + got + ', where ' + x[4] + ' is due');
+      });
+      var said = commandKeys(rm, 'commandcard.count-up') + ' | ' + commandKeys(rm, 'commandcard.note') + ' | ' + commandKeys(rm, 'pause');
+      if (said === 'U, once while held; W | J, repeating while held | F6 on the Screen, repeating while held') k.repeatWords++;
+      else P.push('commands: the list says the keys ' + JSON.stringify(said) + ', where each binding\'s repeat in words is due');
+    }
+    [[base + '(bind "U" commandcard.count-up (repeat 2))', 'line ' + at + ': (repeat) takes nothing'],
+     [base + '(bind "U" commandcard.count-up (repeat) (once))', 'line ' + at + ': a binding says once whether its key repeats'],
+     [base + '(bind "U" commandcard.count-up repeat)', 'line ' + at + ': no place named repeat']].forEach(function (x) {
+      var r = readKeymap(x[0], COMMANDS), said = r.problems.join('; ');
+      if (!r.ok && said.indexOf(x[1]) >= 0) k.repeatWords++; else P.push('commands: the text ending ' + JSON.stringify(x[0].slice(-50)) + ' was ' + (r.ok ? 'applied' : 'refused in the words ' + JSON.stringify(said)) + ', where it is refused, saying ' + JSON.stringify(x[1]));
     });
     if (!m.ok) return;
     // a binding of a game's command found while live, its key passing on while not
@@ -8568,6 +9496,577 @@
         if (e2.defaultPrevented && b2 === 'count-up') k.chordsOlder++; else P.push('commands, version 6: Shift+U was ' + (e2.defaultPrevented ? 'taken' : 'passed on') + ' and Input!B20 holds ' + JSON.stringify(b2) + ', where the bare U is count-up\'s, Shift either way');
       });
     } finally { stage.removeChild(box); }
+  }
+  // ---- ENGINE.39's first slice: version 8, a command that repeats ----
+  // The repeats card, at (spec 8): count-up on U repeating (E2 TRUE), count-ten on T once (E3 empty), note on N repeating
+  // while it has noted fewer than two (E4 a formula over the Desk), and bad on X, whose E5 is a text, said once and run
+  // once. The host is given a clock of the case's own and each key's time on it (keyTime), so that a repeat pressed before
+  // the last act came to rest is one the browser kept behind a step. At 30 frames a second: U, then its repeat at the next
+  // frame, run each; two repeats before one frame, one run, the other finding a command waiting; a repeat pressed before
+  // the frame its last command ran at came to rest, none; T's repeat taken and running nothing; X's repeat running
+  // nothing; N's repeats run while the formula says so and not after; and while a command waits, at the frame of the two
+  // repeats, a page's own command's repeat fresh by its time and a game's not. At rate 0: a repeat at once, a stale one running nothing, and after the
+  // key's release a repeat the browser kept, none.
+  var REPEATCARD = { file: 'repeatcard.vla',
+                     text: '(cartridge "repeatcard"\n  (spec 8)\n  (title "A repeats card")\n  (rate 30)\n  (screen grid 20 10)\n  (seed 1))\n' +
+                           '(sheet "Screen" hidden)\n(sheet "Desk" visible)\n(sheet "Commands" visible)\n' +
+                           '(cell "Commands" "A1" "name")\n(cell "Commands" "B1" "words")\n(cell "Commands" "C1" "holds")\n(cell "Commands" "D1" "key")\n(cell "Commands" "E1" "repeats")\n' +
+                           '(cell "Commands" "A2" "count-up")\n(cell "Commands" "D2" "KeyU")\n(cell "Commands" "E2" true)\n' +
+                           '(cell "Commands" "A3" "count-ten")\n(cell "Commands" "D3" "KeyT")\n' +
+                           '(cell "Commands" "A4" "note")\n(cell "Commands" "D4" "KeyN")\n(formula "Commands" "E4" "=Desk!$B$3<2")\n' +
+                           '(cell "Commands" "A5" "bad")\n(cell "Commands" "D5" "KeyX")\n(cell "Commands" "E5" "often")\n' +
+                           '(cell "Desk" "A1" "count")\n(formula "Desk" "B1" "=Desk.last!B1+IF(Input!$B$20=\\"count-up\\",1,0)+IF(Input!$B$20=\\"count-ten\\",10,0)")\n' +
+                           '(cell "Desk" "A3" "noted")\n(formula "Desk" "B3" "=Desk.last!B3+IF(Input!$B$20=\\"note\\",1,0)")\n' +
+                           '(cell "Screen" "A1" "the Screen")\n' };
+  function commandsRepeats(bytes, k, P) {
+    var stage = document.getElementById('stage'), box = document.createElement('div');
+    box.style.cssText = 'width:640px;height:300px;position:relative;background:#fff;';
+    stage.appendChild(box);
+    function run(rate, each) {
+      var clock = { t: 0 }, exports = HOST.instantiateSync(bytes), D = new Driver({ exports: exports });
+      var host = new HOST({ drive: 'manual', budget: 0, now: function () { return clock.t; }, keyTime: function (ev) { return ev.at; }, grid: box });
+      try {
+        var ld = host.attach(exports).ok ? host.load(REPEATCARD.text.replace('(rate 30)', '(rate ' + rate + ')'), REPEATCARD.file) : { ok: false };
+        if (!ld.ok) { P.push('commands, version 8 at ' + rate + ': the repeats card did not load: ' + ld.sentence); return; }
+        var sc = host.vp.scroller;
+        function press(type, init, at) {
+          var o = { bubbles: true, cancelable: true };
+          for (var x in init) if (Object.prototype.hasOwnProperty.call(init, x)) o[x] = init[x];
+          var ev = new KeyboardEvent(type, o);
+          ev.at = at;
+          sc.dispatchEvent(ev);
+          return ev;
+        }
+        function vals(sheet, win) { return recordValues(D.call('alonzo_view', [ld.handle], ['grid', sheet, win]).text); }
+        each(host, press, vals, clock);
+      } finally { host.destroy(); }
+    }
+    try {
+      run(30, function (host, press, vals, clock) {
+        // at the load a formula of column E has no value until the first step, and repeats not, as an empty cell does
+        function listed() { return host.commands().map(function (c) { return c.name + ' ' + (c.repeats ? 'repeats' : 'once'); }).join(', '); }
+        var atLoad = listed();
+        if (atLoad === 'count-up repeats, count-ten once, note once, bad once') k.repeating++;
+        else P.push('commands, version 8: at the load the host lists ' + atLoad + ', where count-up repeats and the rest run once, note\'s formula holding no value yet');
+        var w = 'Commands!E5 holds "often", which is no truth value', n = host.sentences().filter(function (s) { return s.text.indexOf(w) >= 0; }).length;
+        if (n === 1) k.repeating++; else P.push('commands, version 8: the host said ' + JSON.stringify(w) + ' ' + n + ' time(s), where once is due');
+        // [frame, presses before it, each { init, its time against the last frame's, 1 after it or -1 before }, the command
+        // due, the count and the notes after it]
+        var u = { code: 'KeyU', key: 'u' }, ur = { code: 'KeyU', key: 'u', repeat: true }, nr = { code: 'KeyN', key: 'n', repeat: true }, plan = [
+          [2, [[u, 1]], 'count-up', 1, 0],
+          [3, [[ur, 1]], 'count-up', 2, 0],
+          [4, [[ur, 1], [ur, 2]], 'count-up', 3, 0],
+          [5, [[ur, -5]], '', 3, 0],
+          [6, [[{ code: 'KeyT', key: 't' }, 1]], 'count-ten', 13, 0],
+          [7, [[{ code: 'KeyT', key: 't', repeat: true }, 1]], '', 13, 0],
+          [8, [[{ code: 'KeyX', key: 'x' }, 1]], 'bad', 13, 0],
+          [9, [[{ code: 'KeyX', key: 'x', repeat: true }, 1]], '', 13, 0],
+          [10, [[{ code: 'KeyN', key: 'n' }, 1]], 'note', 13, 1],
+          [11, [[nr, 1]], 'note', 13, 2],
+          [12, [[nr, 1]], '', 13, 2],
+          [13, [[u, 1]], 'count-up', 14, 2]
+        ];
+        var t = 1000;
+        clock.t = t; host.start(); host.tick(t);
+        while (host.counters().frame < 1) { t += 1000 / 30; clock.t = t; host.tick(t); }
+        if (listed() === 'count-up repeats, count-ten once, note repeats, bad once') k.repeating++;
+        else P.push('commands, version 8: after the first frame the host lists ' + listed() + ', where count-up and note repeat and count-ten and bad run once');
+        for (var i = 0; i < plan.length; i++) {
+          var x = plan[i], at = 'commands, version 8, frame ' + x[0], ok = true;
+          while (host.counters().frame < x[0] - 1) { t += 1000 / 30; clock.t = t; host.tick(t); }
+          x[1].forEach(function (pr) {
+            var ev = press('keydown', pr[0], clock.t + pr[1]);
+            if (!ev.defaultPrevented) { ok = false; P.push(at + ': ' + pr[0].code + (pr[0].repeat ? '\'s repeat' : '') + ' was passed on, where it is its command\'s key'); }
+            press('keyup', { code: pr[0].code, key: pr[0].key }, clock.t);
+          });
+          if (x[0] === 4) {
+            var own = host.freshRepeat({ repeat: true, at: clock.t + 1 }, true), game = host.freshRepeat({ repeat: true, at: clock.t + 1 });
+            if (own && !game) k.repeating++; else P.push(at + ': while count-up waits a page\'s own repeat is ' + (own ? 'fresh' : 'stale') + ' and a game\'s ' + (game ? 'fresh' : 'stale') + ', where the page\'s is judged by its time alone');
+          }
+          t += 1000 / 30; clock.t = t; host.tick(t);
+          if (host.counters().frame !== x[0]) { P.push(at + ': after its tick the host is at frame ' + host.counters().frame); break; }
+          var b20 = vals('Input', 'B20').B20, desk = vals('Desk', 'B1:B3');
+          b20 = b20 === undefined ? '' : b20;
+          if (b20 !== x[2]) { ok = false; P.push(at + ': Input!B20 holds ' + JSON.stringify(b20) + ', where ' + (x[2] ? 'the command ' + x[2] + ' runs' : 'no command runs and it is empty')); }
+          else if (viewsNum(desk.B1) !== x[3] || viewsNum(desk.B3) !== x[4]) { ok = false; P.push(at + ': the Desk counts ' + viewsNum(desk.B1) + ' and noted ' + viewsNum(desk.B3) + ', where ' + x[3] + ' and ' + x[4] + ' are due'); }
+          if (ok) k.repeating++;
+        }
+      });
+      run(0, function (host, press, vals, clock) {
+        function count() { return viewsNum(vals('Desk', 'B1').B1); }
+        var u = { code: 'KeyU', key: 'u' }, ur = { code: 'KeyU', key: 'u', repeat: true };
+        // [what, the clock as the step runs, the key's time, the count due after it, the frames due after it]
+        var plan = [['U', 100, 100, 1], ['U\'s repeat after the act came to rest', 200, 150, 2], ['a repeat pressed before the last act came to rest', 210, 199, 2],
+                    ['U\'s next repeat', 300, 250, 3], ['T', 400, 400, 13], ['T\'s repeat', 500, 450, 13]], f0 = host.counters().frame;
+        plan.forEach(function (x, i) {
+          clock.t = x[1];
+          var init = i === 0 ? u : i < 4 ? ur : i === 4 ? { code: 'KeyT', key: 't' } : { code: 'KeyT', key: 't', repeat: true };
+          var ev = press('keydown', init, x[2]);
+          if (ev.defaultPrevented && count() === x[3]) k.repeating++;
+          else P.push('commands, version 8 at rate 0: after ' + x[0] + ' the Desk counts ' + count() + ' and the key was ' + (ev.defaultPrevented ? 'taken' : 'passed on') + ', where ' + x[3] + ' and taken are due');
+        });
+        press('keyup', u, 520);
+        var before = host.counters().frame;
+        clock.t = 600;
+        press('keydown', ur, 290);   // a repeat the browser kept behind the step, handed over after the key went up
+        if (count() === 13 && host.counters().frame === before && before - f0 === 4) k.repeating++;
+        else P.push('commands, version 8 at rate 0: a repeat kept behind the step and handed over after the release left the Desk at ' + count() + ' and ran ' + (host.counters().frame - before) + ' frame(s), ' + (before - f0) + ' before it, where 13, none and four are due');
+      });
+    } finally { stage.removeChild(box); }
+  }
+  // ---- ENGINE.39's second slice: copy, cut and paste in the grid ----
+  // The clipboard card, the page's own as the repeats card is, at (spec 6) and rate 0: a Work sheet holding the kinds of the
+  // range Excel's copy was measured over, a number, a formula of a third under "0.00", texts holding a tab, a line feed and a
+  // quote, a truth value, the empty text, an error and a text, and since the third slice a fill, L1:L2 =A1*10, and a formula
+  // reading it, M2 =L1+1; a Bench, the game's, where a person writes formulas; a Ledger, read-only; a Board bound to its
+  // extent, A1:C3; and a hidden Screen of 8 by 4.
+  var CLIPCARD = { file: 'clipcard.vla',
+                   text: '(cartridge "clipcard"\n  (spec 6)\n  (title "A clipboard card")\n  (rate 0)\n  (screen grid 8 4)\n  (seed 1)\n' +
+                         '  (bound "Board")\n  (game "Bench")\n  (read "Ledger")\n  (work "Work"))\n' +
+                         '(sheet "Screen" hidden)\n(sheet "Work" visible)\n(sheet "Bench" visible)\n(sheet "Ledger" visible)\n(sheet "Board" visible)\n' +
+                         '(format 1 none "0.00" nowrap)\n' +
+                         '(cell "Work" "A1" 1)\n(formula "Work" "B1" "=1/3")\n(style "Work" "B1" 1)\n(cell "Work" "C1" "a\tb")\n(cell "Work" "D1" "line1\nline2")\n(cell "Work" "E1" "say \\"hi\\"")\n' +
+                         '(cell "Work" "A2" 2)\n(cell "Work" "B2" true)\n(cell "Work" "C2" "")\n(formula "Work" "D2" "=1/0")\n(cell "Work" "E2" "x")\n' +
+                         '(formula "Work" "L1:L2" "=A1*10")\n(formula "Work" "M2" "=L1+1")\n' +
+                         '(cell "Bench" "A1" 0)\n(cell "Ledger" "A1" "kept")\n(cell "Board" "A1:C3" 0)\n(cell "Screen" "A1" "the Screen")\n' };
+  // Excel's text of the card's Work!A1:E2 after its first step: its shown texts, 0.33 for the third, as Excel's copy writes them.
+  var CLIP_WORK = '1\t0.33\t"a\tb"\t"line1\nline2"\tsay "hi"\r\n2\tTRUE\t\t#DIV/0!\tx\r\n';
+  // The clipboard case (ENGINE.39's second slice; docs/SPEC.md section 7.2). Its page half, pure: the browser's own chords;
+  // the page's keymap passing its copy, cut and paste on to the browser and pressing any other binding; Excel's text of the
+  // measured range to the byte; a text read back as Excel reads one; a field as typed; a paste's shape; its rows; a whole
+  // selection within its extent. Over the module, the clipboard card's events at the grid's scroller: a range copied; the
+  // page's copy pasted back, its third exact; tiled, one cell filling a range, a block at the corner; a text from elsewhere
+  // split, = a formula and numbers by the reader, locale spellings texts; past a bound sheet's extent and the sheet's edge
+  // refused whole; a read sheet's paste and cut and a game sheet's value refused, its formula taken; each paste one frame;
+  // a cut standing until its paste, then moved in one act, and let go by Escape, an edit of its cells and a paste of another
+  // text; the run's replay played on a fresh host to the same cells, a paste one frame of its rows, and a paste refused while
+  // a replay plays. At a rate, a paste waiting for its frame. On Alonzo's own page, Brickwork's Ctrl+X: the game's cut on its
+  // Wall, the host taking the key the page passed on, and the grid's on its Pace. And the acts no event carries, over a double
+  // of the browser's clipboard: a copy written, a paste refused by the browser and a copy refused, each said.
+  function caseClipboard() {
+    var P = [], notes = [], k = { chords: 0, bindings: 0, text: 0, fields: 0, values: 0, shapes: 0, rows: 0, cells: 0, laid: 0,
+                                  module: 0, copied: 0, pasted: 0, exact: 0, tiled: 0, fills: 0, partial: 0, across: 0, typed: 0, edges: 0, refused: 0, frames: 0,
+                                  cut: 0, moved: 0, letGo: 0, replayed: 0, rate: 0, game: 0, api: 0, mover: 0, formulas: 0, offSheet: 0, kept: 0, again: 0, gate: 0 };
+    clipPage(k, P);
+    var wasm = builtModule();
+    if (!wasm) return { counters: k, problems: P };
+    var bytes = bytesOfBase64(wasm);
+    k.module = bytes.length;
+    clipRun(bytes, k, P);
+    clipRate(bytes, k, P);
+    if (OWN) { clipGame(bytes, k, P); clipNaught(bytes, k, P); }
+    else notes.push('Brickwork\'s Ctrl+X, the game\'s on its Wall and the grid\'s on its Pace, and a gate of Naught\'s copied along its room are held on Alonzo\'s own page, over its own cartridges');
+    return clipApi(bytes, k, P).then(function () { return { counters: k, problems: P, notes: notes }; });
+  }
+  function clipPage(k, P) {
+    function key(o) { return { key: o.key || '', code: o.code || '', ctrlKey: !!o.ctrl, metaKey: !!o.meta, shiftKey: !!o.shift, altKey: !!o.alt, repeat: false }; }
+    [[{ key: 'c', code: 'KeyC', ctrl: true }, 'copy'], [{ key: 'c', code: 'KeyC', meta: true }, 'copy'], [{ key: 'x', code: 'KeyX', ctrl: true }, 'cut'], [{ key: 'v', code: 'KeyV', ctrl: true }, 'paste'],
+     [{ key: 'Insert', code: 'Insert', ctrl: true }, 'copy'], [{ key: 'Insert', code: 'Insert', shift: true }, 'paste'], [{ key: 'Delete', code: 'Delete', shift: true }, 'cut'],
+     [{ key: 'C', code: 'KeyC', ctrl: true, shift: true }, null], [{ key: 'c', code: 'KeyC', ctrl: true, alt: true }, null], [{ key: 'c', code: 'KeyC', ctrl: true, meta: true }, null],
+     [{ key: 'с', code: 'KeyC', ctrl: true }, 'copy'], [{ key: 'c', code: 'KeyI', ctrl: true }, 'copy'], [{ key: 'j', code: 'KeyC', ctrl: true }, null],
+     [{ key: 'Delete', code: 'Delete' }, null], [{ key: 'c', code: 'KeyC' }, null]].forEach(function (x) {
+      var got = clipboardChord(key(x[0]));
+      if (got === x[1]) k.chords++; else P.push('clipboard: ' + JSON.stringify(x[0]) + ' is the browser\'s ' + got + ', where ' + x[1] + ' is due');
+    });
+    // the page's keymap: its copy, cut and paste on the Screen and in the drawer's sheets, passed on to the browser; none in a
+    // box; Cmd on a Mac by the browser's mapping; a person's binding of copy on another key pressed, and of another command on
+    // Ctrl+C pressed; the list's words; and a keymap kept before the three gaining them once
+    var map = readKeymap(KEYMAP_DEFAULTS, COMMANDS), live = function () { return false; };
+    [['the page\'s Ctrl+C on the Screen', map, { key: 'c', code: 'KeyC', ctrl: true }, 'screen', 'copy', 'pass'], ['the page\'s Ctrl+X in the drawer\'s sheets', map, { key: 'x', code: 'KeyX', ctrl: true }, 'viewer', 'cut', 'pass'],
+     ['the page\'s Ctrl+V on the Screen', map, { key: 'v', code: 'KeyV', ctrl: true }, 'screen', 'paste', 'pass'], ['Cmd+C on the Screen', map, { key: 'c', code: 'KeyC', meta: true }, 'screen', 'copy', 'pass'],
+     ['Ctrl+C in the source\'s box', map, { key: 'c', code: 'KeyC', ctrl: true }, 'source', null, null],
+     ['a person\'s F7 for copy', readKeymap(KEYMAP_DEFAULTS + '(bind "F7" copy)\n', COMMANDS), { key: 'F7', code: 'F7' }, 'screen', 'copy', 'press'],
+     ['a person\'s Ctrl+C for pause', readKeymap(KEYMAP_DEFAULTS.replace('(bind "Ctrl+C" copy screen viewer)', '(bind "Ctrl+C" pause screen)'), COMMANDS), { key: 'c', code: 'KeyC', ctrl: true }, 'screen', 'pause', 'press']].forEach(function (x) {
+      var b = x[1].ok ? keymapFind(x[1], key(x[2]), x[3], null, live) : null, act = b ? clipKeyAct(b, key(x[2])) : null;
+      if ((b ? b.command : null) === x[4] && act === x[5]) k.bindings++;
+      else P.push('clipboard: ' + x[0] + ' is ' + (b ? b.command + ', ' + (act === 'pass' ? 'passed on' : 'pressed') : 'no binding') + ', where ' + (x[4] ? x[4] + ', ' + (x[5] === 'pass' ? 'passed on' : 'pressed') : 'no binding') + ' is due');
+    });
+    var words = commandKeys(map, 'copy') + ' | ' + commandKeys(map, 'paste');
+    if (words === 'Ctrl+C on the Screen, in the drawer\'s sheets | Ctrl+V on the Screen, in the drawer\'s sheets') k.bindings++; else P.push('clipboard: the list says ' + JSON.stringify(words) + ', where Ctrl+C and Ctrl+V on the Screen and in the drawer\'s sheets are due');
+    var before = KEYMAP_DEFAULTS.split('\n').filter(function (l) { return !/^\(bind "Ctrl\+[CXV]" (copy|cut|paste) /.test(l); }).join('\n'), knew = COMMANDS.map(function (c) { return c.name; }).filter(function (n) { return !CLIP_ACTS[n]; });
+    var offered = offeredLines(readKeymap(before, COMMANDS, true), knew, KEYMAP_DEFAULTS, COMMANDS).join(' | ');
+    if (offered === '(bind "Ctrl+C" copy screen viewer) | (bind "Ctrl+X" cut screen viewer) | (bind "Ctrl+V" paste screen viewer)') k.bindings++; else P.push('clipboard: a keymap kept before the clipboard is offered ' + JSON.stringify(offered) + ', where its three bindings are due');
+    // Excel's text, to the byte, of the range measured at the scoping, one cell, and a field with a carriage return and a quote
+    var measured = [['1', '0.33', 'a\tb', 'line1\nline2', 'say "hi"'], ['2', 'TRUE', '', '#DIV/0!', '2023-03-15'], ['1,234.50', '007', '2', '', '12%']];
+    var excel = '1\t0.33\t"a\tb"\t"line1\nline2"\tsay "hi"\r\n2\tTRUE\t\t#DIV/0!\t2023-03-15\r\n1,234.50\t007\t2\t\t12%\r\n';
+    [[measured, excel, 'the measured range'], [[['6']], '6\r\n', 'one cell'], [[['a"\rb', '']], '"a""\rb"\t\r\n', 'a carriage return and a quote']].forEach(function (x) {
+      var got = clipText(x[0]);
+      if (got === x[1]) k.text++; else P.push('clipboard: Excel\'s text of ' + x[2] + ' is ' + JSON.stringify(got) + ', where ' + JSON.stringify(x[1]) + ' is due');
+    });
+    // a text read as Excel reads one: the measured text back to its fields, each line end, the last empty row dropped, quotes
+    [[excel, measured], ['a\tb\nc\rd\r\n', [['a', 'b'], ['c'], ['d']]], ['a\r\n\r\n', [['a'], ['']]], ['"x""y"\tz', [['x"y', 'z']]], ['"ab\tc', [['"ab', 'c']]],
+     ['"a"b\tc', [['ab', 'c']]], ['', []], ['\r\n', [['']]], ['a\t', [['a', '']]]].forEach(function (x) {
+      var got = clipFields(x[0]);
+      if (JSON.stringify(got) === JSON.stringify(x[1])) k.fields++; else P.push('clipboard: ' + JSON.stringify(x[0]) + ' reads as ' + JSON.stringify(got) + ', where ' + JSON.stringify(x[1]) + ' is due');
+    });
+    // a field as typed: a formula unmoved, numbers by the page's reader, truth values in any case, the empty text, and texts
+    [['=A1+1', 'formula', '"=A1+1"'], ['42', 'value', '42'], [' 42 ', 'value', '42'], ['007', 'value', '007'], ['1e3', 'value', '1e3'], ['-0.5', 'value', '-0.5'], ['.5', 'value', '.5'],
+     ['1E+307', 'value', '1E+307'], ['TRUE', 'value', 'true'], ['false', 'value', 'false'], ['', 'empty', '""'], ['1,234.50', 'value', '"1,234.50"'], ['12%', 'value', '"12%"'],
+     ['$5', 'value', '"$5"'], ['2026-11-18', 'value', '"2026-11-18"'], ['1/2', 'value', '"1/2"'], ['say "hi"', 'value', '"say \\"hi\\""'], ['(1', 'value', '"(1"']].forEach(function (x) {
+      var got = clipValue(x[0]);
+      if (got.kind === x[1] && got.spelled === x[2]) k.values++; else P.push('clipboard: the field ' + JSON.stringify(x[0]) + ' is ' + got.kind + ' ' + got.spelled + ', where ' + x[1] + ' ' + x[2] + ' is due');
+    });
+    // a paste's shape, each dimension on its own: into a cell the block; into a multiple tiled; into a selection no multiple
+    // of it filled exactly, its last copies cut at the edge (the owner's word, where Excel pastes the block once); one cell
+    // filling a range; into a selection smaller in a row or a column the block's own rows or columns, tiled across the rest
+    // (the owner's second word); a text never tiled
+    var one = { top: 5, left: 3, bottom: 5, right: 3 }, four = { top: 5, left: 3, bottom: 8, right: 6 }, three = { top: 5, left: 3, bottom: 7, right: 5 }, two = { top: 5, left: 3, bottom: 5, right: 4 };
+    [[one, 2, 2, true, 'C5:D6'], [four, 2, 2, true, 'C5:F8'], [three, 2, 2, true, 'C5:E7'], [three, 1, 1, true, 'C5:E7'], [two, 2, 2, true, 'C5:D6'], [four, 2, 2, false, 'C5:D6'], [three, 1, 1, false, 'C5'], [{ top: 5, left: 3, bottom: 5, right: 5 }, 2, 1, true, 'C5:E6'], [{ top: 5, left: 3, bottom: 7, right: 3 }, 2, 2, true, 'C5:D7']].forEach(function (x) {
+      var got = VP.rangeText(pasteRange(x[0], x[1], x[2], x[3]));
+      if (got === x[4]) k.shapes++; else P.push('clipboard: a ' + x[1] + ' by ' + x[2] + (x[3] ? ' copy of the page\'s' : ' text') + ' into ' + VP.rangeText(x[0]) + ' writes ' + got + ', where ' + x[4] + ' is due');
+    });
+    // a paste's rows: one value over a range one range row; a block tiled cell by cell; a short row of a text's fields leaving
+    // the cells past it standing
+    var v = function (s) { return { kind: 'value', spelled: s }; };
+    [['one value over C5:E7', pasteRows('Work', three, [[v('7')]]), '(cell "Work" "C5:E7" 7)', 9],
+     ['a 2 by 2 block tiled over C5:F8', pasteRows('Work', four, [[v('1'), v('2')], [v('3'), v('4')]]), '(cell "Work" "C5" 1) (cell "Work" "D5" 2) (cell "Work" "E5" 1) (cell "Work" "F5" 2) (cell "Work" "C6" 3) (cell "Work" "D6" 4) (cell "Work" "E6" 3) (cell "Work" "F6" 4) (cell "Work" "C7" 1) (cell "Work" "D7" 2) (cell "Work" "E7" 1) (cell "Work" "F7" 2) (cell "Work" "C8" 3) (cell "Work" "D8" 4) (cell "Work" "E8" 3) (cell "Work" "F8" 4)', 16],
+     ['a text of a short row', pasteRows('Work', { top: 5, left: 3, bottom: 6, right: 4 }, [[v('"a"'), { kind: 'formula', spelled: '"=C5"' }], [v('"c"')]]), '(cell "Work" "C5" "a") (formula "Work" "D5" "=C5") (cell "Work" "C6" "c")', 3],
+     ['a 2 by 1 block cut at C7', pasteRows('Work', { top: 5, left: 3, bottom: 7, right: 3 }, [[v('1')], [v('2')]]), '(cell "Work" "C5" 1) (cell "Work" "C6" 2) (cell "Work" "C7" 1)', 3]].forEach(function (x) {
+      var got = x[1].map(function (r) { return r.row; }).join(' '), n = x[1].reduce(function (s, r) { return s + r.cells; }, 0);
+      if (got === x[2] && n === x[3]) k.rows++; else P.push('clipboard: ' + x[0] + ' writes ' + JSON.stringify(got) + ', ' + n + ' cells, where ' + JSON.stringify(x[2]) + ', ' + x[3] + ', is due');
+    });
+    // a paste's formulas (the third slice): each fill laid over each tile, its text moved as far as the tile stands from the
+    // copy, the mover a stand-in that names the move; one formula over a range one fill row; a cut's move each text as it
+    // stands, and over a whole multiple each tile the same; one formula of a cut filling a range a row a cell, each as it
+    // was cut
+    var mark = function (t, dr, dc) { return t + '@' + dr + ',' + dc; }, from = { top: 1, left: 12, bottom: 2, right: 13 }, lm = [{ top: 1, left: 12, bottom: 2, right: 12, text: '=A1*10' }, { top: 2, left: 13, bottom: 2, right: 13, text: '=L1+1' }];
+    [['L1:M2 into N50:O51', pasteFills('Work', { top: 50, left: 14, bottom: 51, right: 15 }, 2, 2, from, lm, mark), '(formula "Work" "N50:N51" "=A1*10@49,2") (formula "Work" "O51" "=L1+1@49,2")', 3],
+     ['L1:M2 filling N50:P52, cut at its edge', pasteFills('Work', { top: 50, left: 14, bottom: 52, right: 16 }, 2, 2, from, lm, mark), '(formula "Work" "N50:N51" "=A1*10@49,2") (formula "Work" "O51" "=L1+1@49,2") (formula "Work" "P50:P51" "=A1*10@49,4") (formula "Work" "N52" "=A1*10@51,2") (formula "Work" "P52" "=A1*10@51,4")', 7],
+     ['L1:M2 tiled over N50:Q53', pasteFills('Work', { top: 50, left: 14, bottom: 53, right: 17 }, 2, 2, from, lm, mark), '(formula "Work" "N50:N51" "=A1*10@49,2") (formula "Work" "O51" "=L1+1@49,2") (formula "Work" "P50:P51" "=A1*10@49,4") (formula "Work" "Q51" "=L1+1@49,4") (formula "Work" "N52:N53" "=A1*10@51,2") (formula "Work" "O53" "=L1+1@51,2") (formula "Work" "P52:P53" "=A1*10@51,4") (formula "Work" "Q53" "=L1+1@51,4")', 12],
+     ['L1 filling N54:O55', pasteFills('Work', { top: 54, left: 14, bottom: 55, right: 15 }, 1, 1, { top: 1, left: 12, bottom: 1, right: 12 }, [{ top: 1, left: 12, bottom: 1, right: 12, text: '=A1*10' }], mark), '(formula "Work" "N54:O55" "=A1*10@53,2")', 4],
+     ['a cut of L1:M2 moved to N60', pasteFills('Work', { top: 60, left: 14, bottom: 61, right: 15 }, 2, 2, from, lm, null), '(formula "Work" "N60:N61" "=A1*10") (formula "Work" "O61" "=L1+1")', 3],
+     ['a cut of L1:M2 tiled over N60:O63', pasteFills('Work', { top: 60, left: 14, bottom: 63, right: 15 }, 2, 2, from, lm, null), '(formula "Work" "N60:N61" "=A1*10") (formula "Work" "O61" "=L1+1") (formula "Work" "N62:N63" "=A1*10") (formula "Work" "O63" "=L1+1")', 6],
+     ['a cut of L1 filling N64:O65', pasteFills('Work', { top: 64, left: 14, bottom: 65, right: 15 }, 1, 1, { top: 1, left: 12, bottom: 1, right: 12 }, [{ top: 1, left: 12, bottom: 1, right: 12, text: '=A1*10' }], null), '(formula "Work" "N64" "=A1*10") (formula "Work" "O64" "=A1*10") (formula "Work" "N65" "=A1*10") (formula "Work" "O65" "=A1*10")', 4]].forEach(function (x) {
+      var got = x[1].map(function (r) { return r.row; }).join(' '), n = x[1].reduce(function (s, r) { return s + r.cells; }, 0);
+      if (got === x[2] && n === x[3] && x[1].every(function (r) { return r.kind === 'formula'; })) k.laid++; else P.push('clipboard: ' + x[0] + ' lays ' + JSON.stringify(got) + ', ' + n + ' cells, where ' + JSON.stringify(x[2]) + ', ' + x[3] + ', is due');
+    });
+    // a selection's cells: a range as it stands; whole rows, columns and the sheet within the extent; none past it
+    var ext = { top: 1, left: 1, bottom: 20, right: 6 };
+    [[{ kind: 'cells', range: { top: 2, left: 2, bottom: 3, right: 3 } }, ext, 'B2:C3'], [{ kind: 'rows', range: { top: 2, left: 1, bottom: 3, right: 40 } }, ext, 'A2:F3'],
+     [{ kind: 'columns', range: { top: 1, left: 2, bottom: 60, right: 3 } }, ext, 'B1:C20'], [{ kind: 'sheet', range: { top: 1, left: 1, bottom: 60, right: 40 } }, ext, 'A1:F20'],
+     [{ kind: 'rows', range: { top: 30, left: 1, bottom: 31, right: 40 } }, ext, 'none'], [{ kind: 'sheet', range: { top: 1, left: 1, bottom: 60, right: 40 } }, null, 'none']].forEach(function (x) {
+      var r = selectionCells(x[0], x[1]), got = r ? VP.rangeText(r) : 'none';
+      if (got === x[2]) k.cells++; else P.push('clipboard: a selection of ' + x[0].kind + ' takes ' + got + ', where ' + x[2] + ' is due');
+    });
+  }
+  // The card over the module at rate 0, its events at the grid's scroller as the browser fires them.
+  function clipRun(bytes, k, P) {
+    var stage = document.getElementById('stage'), box = document.createElement('div');
+    box.style.cssText = 'width:640px;height:300px;position:relative;background:#fff;';
+    stage.appendChild(box);
+    var exports = HOST.instantiateSync(bytes), D = new Driver({ exports: exports }), host = new HOST({ drive: 'manual', budget: 0, now: frozen, grid: box });
+    try {
+      var ld = host.attach(exports).ok ? host.load(CLIPCARD.text, CLIPCARD.file) : { ok: false };
+      if (!ld.ok) { P.push('clipboard: the clipboard card did not load: ' + ld.sentence); return; }
+      var vp = host.vp, sc = vp.scroller, clip = new GridClip(host, null);
+      clip.listen(vp);
+      function fire(kind, text) {
+        var dt = new DataTransfer();
+        if (text !== undefined) dt.setData('text/plain', text);
+        var ev = new ClipboardEvent(kind, { clipboardData: dt, cancelable: true, bubbles: true });
+        sc.dispatchEvent(ev);
+        return { prevented: ev.defaultPrevented, text: dt.getData('text/plain') };
+      }
+      function at(sheet, sel) { host.showSheet(vp, sheet); vp.select(sel); }
+      function vals(sheet, win) { return recordValues(D.call('alonzo_view', [ld.handle], ['grid', sheet, win]).text); }
+      function said() { var s = host.sentences(); return s.length ? s[s.length - 1].text : ''; }
+      function frame() { return host.counters().frame; }
+      function show(v) { return v === undefined ? 'nothing' : JSON.stringify(v && v.num !== undefined ? v.text : v && v.sym !== undefined ? v.sym : Array.isArray(v) ? v[0].sym + ' ' + v[1] : v); }
+      // a paste through the browser's event: one frame, saying words; true where it was
+      function paste(what, text, words) {
+        var f0 = frame(), e = fire('paste', text), n = frame() - f0;
+        if (!e.prevented) P.push('clipboard: ' + what + ' was left to the browser');
+        else if (n !== 1) P.push('clipboard: ' + what + ' stepped ' + n + ' frames, where one is due');
+        else if (said() !== 'frame ' + frame() + ': stepped once for ' + words + '.') P.push('clipboard: after ' + what + ' the host said ' + JSON.stringify(said()) + ', where "frame ' + frame() + ': stepped once for ' + words + '." is due');
+        else { k.frames++; return true; }
+        return false;
+      }
+      // the cells a range holds, each as the record spells its value, the empty for none
+      function holds(what, sheet, want) {
+        var box = null;
+        Object.keys(want).forEach(function (a) {
+          var q = VP.parseRange(a);
+          box = box ? { top: Math.min(box.top, q.top), left: Math.min(box.left, q.left), bottom: Math.max(box.bottom, q.bottom), right: Math.max(box.right, q.right) } : q;
+        });
+        var got = vals(sheet, VP.rangeText(box)), bad = [];
+        Object.keys(want).forEach(function (a) { if (show(got[a]) !== want[a]) bad.push(sheet + '!' + a + ' holds ' + show(got[a]) + ', where ' + want[a]); });
+        if (bad.length) P.push('clipboard: ' + what + ': ' + bad.join('; '));
+        return !bad.length;
+      }
+      host.edit('(cell "Work" "H20" 0)');   // the first step, the third computed
+      // a range copied: Excel's text of its shown cells, the third shown 0.33
+      at('Work', 'A1:E2');
+      var c1 = fire('copy');
+      if (c1.prevented && c1.text === CLIP_WORK && said() === 'Copied Work!A1:E2, 10 cells, to the clipboard.') k.copied++;
+      else P.push('clipboard: the copy of Work!A1:E2 gave ' + JSON.stringify(c1.text) + (c1.prevented ? '' : ', left to the browser') + ' and said ' + JSON.stringify(said()) + ', where ' + JSON.stringify(CLIP_WORK) + ' is due');
+      // the page's copy pasted back: its values exact, the third and the error among them, its formulas said
+      at('Work', 'A10');
+      if (paste('the paste of the page\'s copy into Work!A10', CLIP_WORK, 'the paste of 10 cells into Work!A10:E11') &&
+          holds('the page\'s copy pasted into A10', 'Work', { A10: '"1"', B10: '"0.3333333333333333"', C10: '"a\\tb"', D10: '"line1\\nline2"', E10: '"say \\"hi\\""', A11: '"2"', B11: '"true"', C11: '""', D11: '"error #DIV/0!"', E11: '"x"' })) { k.pasted++; k.exact++; }
+      // tiled into a multiple, one cell filling a range, a selection no multiple of the block filled exactly, its last copies
+      // cut at its edge, and a selection a row smaller than the block tiled across it, the block's rows kept
+      at('Work', 'A1:B2'); fire('copy'); at('Work', 'G1:J4');
+      if (paste('the page\'s 2 by 2 copy into Work!G1:J4', '1\t0.33\r\n2\tTRUE\r\n', 'the paste of 16 cells into Work!G1:J4') &&
+          holds('the 2 by 2 copy tiled', 'Work', { G1: '"1"', H1: '"0.3333333333333333"', I1: '"1"', J1: '"0.3333333333333333"', G2: '"2"', H2: '"true"', I2: '"2"', J2: '"true"', G3: '"1"', J4: '"true"' })) k.tiled++;
+      at('Work', 'A2'); fire('copy'); at('Work', 'G6:I8');
+      var replayBefore = (host.replayText() || '').length;
+      if (paste('one cell into Work!G6:I8', '2\r\n', 'the paste of nine cells into Work!G6:I8') && holds('one cell filling G6:I8', 'Work', { G6: '"2"', H7: '"2"', I8: '"2"' })) {
+        if ((host.replayText() || '').slice(replayBefore).indexOf('  (cell "Work" "G6:I8" 2)') >= 0) k.fills++;
+        else P.push('clipboard: one cell filling Work!G6:I8 was recorded as ' + JSON.stringify((host.replayText() || '').slice(replayBefore, replayBefore + 200)) + ', where one range row is due');
+      }
+      at('Work', 'A1:B2'); fire('copy'); at('Work', 'G10:I12');
+      if (paste('the page\'s 2 by 2 copy into Work!G10:I12', '1\t0.33\r\n2\tTRUE\r\n', 'the paste of nine cells into Work!G10:I12') &&
+          holds('G10:I12 filled exactly', 'Work', { G10: '"1"', H10: '"0.3333333333333333"', I10: '"1"', G11: '"2"', H11: '"true"', I11: '"2"', G12: '"1"', H12: '"0.3333333333333333"', I12: '"1"' })) k.partial++;
+      at('Work', 'G14:J14');
+      if (paste('the page\'s 2 by 2 copy into Work!G14:J14', '1\t0.33\r\n2\tTRUE\r\n', 'the paste of eight cells into Work!G14:J15') &&
+          holds('the 2 by 2 copy across G14:J14', 'Work', { G14: '"1"', H14: '"0.3333333333333333"', I14: '"1"', J14: '"0.3333333333333333"', G15: '"2"', H15: '"true"', I15: '"2"', J15: '"true"' })) k.across++;
+      // a text from elsewhere: split as Excel's, = a formula unmoved, numbers by the reader, a truth value; never tiled
+      at('Work', 'A20:D23');
+      if (paste('a text from elsewhere into Work!A20:D23', 'x\t=A1*2\r\n 42 \tTRUE\r\n', 'the paste of four cells into Work!A20:B21') &&
+          holds('the text pasted into A20', 'Work', { A20: '"x"', B20: '"2"', A21: '"42"', B21: '"true"', C20: 'nothing', A22: 'nothing' }) &&
+          D.call('alonzo_view', [ld.handle], ['grid', 'Work', 'B20']).text.indexOf('(formula "Work" "B20" "=A1*2")') >= 0) k.typed++;
+      at('Work', 'A25');
+      if (paste('a locale\'s spellings into Work!A25', '1,234.50\t12%\t2026-11-18\r\n', 'the paste of three cells into Work!A25:C25') &&
+          holds('a locale\'s spellings, texts', 'Work', { A25: '"1,234.50"', B25: '"12%"', C25: '"2026-11-18"' })) k.typed++;
+      // past an edge, refused whole and said, its first cell named: a bound sheet's extent, which a write would grow, and the
+      // sheet's own
+      [['Board', 'C3', '1\t2\r\n', 'The paste of two cells into Board!C3:D3 was not written: it reaches Board!D3, past the extent Board is bound to, A1:C3.'],
+       ['Work', 'XFD1', 'a\tb\r\n', 'The paste of two cells into Work!XFD1:XFE1 was not written: it reaches Work!XFE1, past the sheet\'s last cell, XFD1048576.']].forEach(function (x) {
+        at(x[0], x[1]);
+        var f0 = frame(), e = fire('paste', x[2]), ext = host.extentOf('Board');
+        if (e.prevented && frame() === f0 && said() === x[3] && ext && VP.rangeText(ext) === 'A1:C3') k.edges++;
+        else P.push('clipboard: a paste past an edge at ' + x[0] + '!' + x[1] + ' stepped ' + (frame() - f0) + ' frame(s), left Board\'s extent ' + (ext ? VP.rangeText(ext) : 'none') + ' and said ' + JSON.stringify(said()) + ', where none, A1:C3 and ' + JSON.stringify(x[3]) + ' are due');
+      });
+      // a read-only sheet: a paste and a cut refused by its name, a copy taken; a game sheet: a value refused, a formula taken
+      at('Ledger', 'A1');
+      var f1 = frame(), r1 = fire('paste', '5\r\n'), ledger = show(vals('Ledger', 'A1').A1);
+      if (r1.prevented && frame() === f1 && ledger === '"kept"' && /^The paste of one cell into Ledger!A1 was not written: Ledger is a read-only sheet/.test(said())) k.refused++;
+      else P.push('clipboard: a paste into the read-only Ledger stepped ' + (frame() - f1) + ' frame(s), left Ledger!A1 holding ' + ledger + ' and said ' + JSON.stringify(said()) + ', where it is refused by the sheet\'s name');
+      var r2 = fire('cut');
+      if (!r2.prevented && /^Nothing was cut: Ledger is a read-only sheet/.test(said()) && !(clip.kept && clip.kept.cut)) k.refused++;
+      else P.push('clipboard: a cut on the read-only Ledger was ' + (r2.prevented ? 'taken' : 'left to the browser') + ' and said ' + JSON.stringify(said()) + ', where it is refused by the sheet\'s name');
+      var r3 = fire('copy');
+      if (r3.prevented && r3.text === 'kept\r\n') k.copied++; else P.push('clipboard: a copy of the read-only Ledger!A1 gave ' + JSON.stringify(r3.text) + ', where "kept\\r\\n" is due');
+      at('Bench', 'A1');
+      var f2 = frame(), r4 = fire('paste', '5\r\n');
+      if (r4.prevented && frame() === f2 && /^The paste of one cell into Bench!A1 was not written: Bench is the game's, where a person writes a formula and no value/.test(said())) k.refused++;
+      else P.push('clipboard: a value pasted into the game\'s Bench stepped ' + (frame() - f2) + ' frame(s) and said ' + JSON.stringify(said()) + ', where it is refused, a person writing formulas there');
+      if (paste('a formula into the game\'s Bench!A1', '=1+1\r\n', 'the paste of one cell into Bench!A1') && holds('a formula pasted into the Bench', 'Bench', { A1: '"2"' })) k.pasted++;
+      // a cut: its cells standing until its paste, which moves them in one act, its range emptied; its text again its cells as
+      // they were cut
+      at('Work', 'A30');
+      paste('a text into Work!A30', 'p\tq\r\n', 'the paste of two cells into Work!A30:B30');
+      at('Work', 'A30:B30');
+      var f3 = frame(), x1 = fire('cut');
+      if (x1.prevented && x1.text === 'p\tq\r\n' && frame() === f3 && show(vals('Work', 'A30').A30) === '"p"' && clip.kept && clip.kept.cut && said() === 'Cut Work!A30:B30, two cells: a paste of them moves them, and Escape or another copy lets them stand.') k.cut++;
+      else P.push('clipboard: the cut of Work!A30:B30 left Work!A30 holding ' + show(vals('Work', 'A30').A30) + ', stepped ' + (frame() - f3) + ' frame(s) and said ' + JSON.stringify(said()) + ', where its cells stand until its paste');
+      at('Work', 'A32');
+      if (paste('the cut\'s paste into Work!A32', 'p\tq\r\n', 'the move of Work!A30:B30 to Work!A32:B32') && holds('the cut moved', 'Work', { A30: '""', B30: '""', A32: '"p"', B32: '"q"' }) && !clip.kept.cut) k.moved++;
+      at('Work', 'A34');
+      if (paste('the cut\'s text pasted again into Work!A34', 'p\tq\r\n', 'the paste of two cells into Work!A34:B34, as they were cut') && holds('the cut\'s text again as it was cut', 'Work', { A32: '"p"', A34: '"p"', B34: '"q"' })) k.moved++;
+      // a cut let go: by Escape, said; by an edit of its cells, said; by a paste of another text; each leaving its cells
+      at('Work', 'A32:B32'); fire('cut');
+      sc.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', code: 'Escape', bubbles: true, cancelable: true }));
+      var esc = said();
+      at('Work', 'A36');
+      if (esc === 'The cut of Work!A32:B32 was let go by Escape: its cells stand, and a paste writes them as they were cut.' && paste('the text of a cut let go into Work!A36', 'p\tq\r\n', 'the paste of two cells into Work!A36:B36, as they were cut') && holds('a cut let go by Escape', 'Work', { A32: '"p"', A36: '"p"' })) k.letGo++;
+      else if (esc.indexOf('let go by Escape') < 0) P.push('clipboard: Escape after a cut said ' + JSON.stringify(esc) + ', where the cut let go is due');
+      at('Work', 'A36:B36'); fire('cut');
+      host.edit('(cell "Work" "A36" "edited")');
+      var ed = host.sentences().slice(-2).map(function (s) { return s.text; }).join(' | ');
+      at('Work', 'A38');
+      if (/The cut of Work!A36:B36 was let go by an edit of its cells: its cells stand, and a paste writes them as they were cut\./.test(ed) && paste('the text of a cut let go by an edit into Work!A38', 'p\tq\r\n', 'the paste of two cells into Work!A38:B38, as they were cut') && holds('a cut let go by an edit', 'Work', { A36: '"edited"', B36: '"q"', A38: '"p"' })) k.letGo++;
+      else if (!/let go by an edit/.test(ed)) P.push('clipboard: an edit of a cut\'s cells said ' + JSON.stringify(ed) + ', where the cut let go is due');
+      at('Work', 'A38:B38'); fire('cut'); at('Work', 'A40');
+      if (paste('another text over a cut', 'other\r\n', 'the paste of one cell into Work!A40') && holds('a cut let go by another text', 'Work', { A38: '"p"', A40: '"other"' }) && clip.kept === null) k.letGo++;
+      // the third slice: a formula's references moved by the language's mover, through the module's thirteenth export, over
+      // Excel's three moves measured at the scoping
+      var three = [host.moved('=A1+1', 18, 12), host.moved('=A1+1', -1, 12), host.moved('=$A$1+A1', 2, 10)];
+      if (three.join(' ') === '=M19+1 =#REF!+1 =$A$1+K3') k.mover++; else P.push('clipboard: the mover answered ' + JSON.stringify(three) + ', where Excel\'s =M19+1, =#REF!+1 and =$A$1+K3 are due');
+      // the formulas a grid record says of a range, each cell's text by its address
+      function formulasOf(sheet, win) {
+        var out = {};
+        VP.readForms(D.call('alonzo_view', [ld.handle], ['grid', sheet, win]).text).forEach(function (f) { if (Array.isArray(f) && f[0] && f[0].sym === 'formula') out[f[2]] = f[3]; });
+        return out;
+      }
+      function laidAs(what, sheet, win, want) {
+        var got = formulasOf(sheet, win), bad = Object.keys(want).filter(function (a) { return got[a] !== want[a]; });
+        if (bad.length) P.push('clipboard: ' + what + ' holds ' + bad.map(function (a) { return sheet + '!' + a + ' ' + JSON.stringify(got[a] === undefined ? 'no formula' : got[a]); }).join(', ') + ', where ' + bad.map(function (a) { return JSON.stringify(want[a]); }).join(', ') + ' is due');
+        return !bad.length;
+      }
+      // the page's copy of a fill and a formula reading it, pasted: each formula's references moved as far as it went, the
+      // fill written as one fill row, and the empty cell beside them emptying its target
+      at('Work', 'L1:M2'); fire('copy');
+      replayBefore = (host.replayText() || '').length;
+      at('Work', 'N50');
+      if (paste('the page\'s copy of Work!L1:M2 into Work!N50', '10\t\r\n20\t11\r\n', 'the paste of four cells into Work!N50:O51') &&
+          laidAs('the page\'s copy of Work!L1:M2 pasted at Work!N50', 'Work', 'N50:O51', { N50: '=C50*10', N51: '=C51*10', O51: '=N50+1' }) &&
+          holds('the copy of L1:M2 pasted at N50', 'Work', { N50: '"0"', N51: '"0"', O50: '""', O51: '"1"' })) {
+        if ((host.replayText() || '').slice(replayBefore).indexOf('  (formula "Work" "N50:N51" "=C50*10")') >= 0) k.formulas++;
+        else P.push('clipboard: the copy of Work!L1:M2 pasted at Work!N50 was recorded as ' + JSON.stringify((host.replayText() || '').slice(replayBefore, replayBefore + 300)) + ', where its fill is one row');
+      }
+      // one formula filling a range, one fill row, every cell's references its own
+      at('Work', 'L1'); fire('copy'); at('Work', 'N54:O55');
+      if (paste('the page\'s copy of Work!L1 into Work!N54:O55', '10\r\n', 'the paste of four cells into Work!N54:O55') &&
+          laidAs('Work!L1 filling Work!N54:O55', 'Work', 'N54:O55', { N54: '=C54*10', O54: '=D54*10', N55: '=C55*10', O55: '=D55*10' })) k.formulas++;
+      // a reference moved off the sheet, #REF!, as Excel writes it
+      at('Work', 'M2'); fire('copy'); at('Work', 'K1');
+      if (paste('the page\'s copy of Work!M2 into Work!K1', '11\r\n', 'the paste of one cell into Work!K1') &&
+          laidAs('Work!M2 pasted at Work!K1', 'Work', 'K1', { K1: '=#REF!+1' }) && holds('a reference off the sheet', 'Work', { K1: '"error #REF!"' })) k.offSheet++;
+      // a cut's move of a fill: its references kept, as Excel's move keeps a moved formula's, its source emptied, and tiled
+      // over a whole multiple as the page's copy is, each tile as it was cut (the owner's word at ENGINE.39's push)
+      at('Work', 'L1:L2'); fire('cut'); at('Work', 'N60:N63');
+      if (paste('the cut\'s paste of Work!L1:L2 into Work!N60:N63', '10\r\n20\r\n', 'the move of Work!L1:L2 to Work!N60:N63') &&
+          laidAs('the cut of Work!L1:L2 moved to Work!N60', 'Work', 'N60:N63', { N60: '=A1*10', N61: '=A2*10', N62: '=A1*10', N63: '=A2*10' }) &&
+          holds('the cut of L1:L2 moved', 'Work', { L1: '""', L2: '""', N60: '"10"', N61: '"20"', N62: '"10"', N63: '"20"' })) k.kept++;
+      // the cut's text pasted again (the owner's word at the third slice's hand test): its cells written as they were cut,
+      // their references kept again, tiled the same way and the last copy cut at the selection's edge, the move's cells
+      // standing as they are
+      at('Work', 'P60:P64');
+      if (paste('the cut\'s text pasted again over Work!P60:P64', '10\r\n20\r\n', 'the paste of five cells into Work!P60:P64, as they were cut') &&
+          laidAs('the cut of Work!L1:L2 pasted again at Work!P60', 'Work', 'P60:P64', { P60: '=A1*10', P61: '=A2*10', P62: '=A1*10', P63: '=A2*10', P64: '=A1*10' }) &&
+          holds('the cut of L1:L2 pasted again', 'Work', { L1: '""', L2: '""', N60: '"10"', N61: '"20"', P60: '"10"', P61: '"20"', P62: '"10"', P63: '"20"', P64: '"10"' })) k.again++;
+      // one cell of a cut filling a range: every cell its text as it was cut, a row a cell, where a fill row would move each
+      // cell's references from the first's (found by real keys before the commit)
+      at('Work', 'N60'); fire('cut'); at('Work', 'R60:S61');
+      if (paste('the cut\'s paste of Work!N60 over Work!R60:S61', '10\r\n', 'the move of Work!N60 to Work!R60:S61') &&
+          laidAs('the cut of Work!N60 filling Work!R60:S61', 'Work', 'R60:S61', { R60: '=A1*10', S60: '=A1*10', R61: '=A1*10', S61: '=A1*10' }) &&
+          holds('the cut of N60 filling R60:S61', 'Work', { N60: '""', R60: '"10"', S60: '"10"', R61: '"10"', S61: '"10"' })) k.kept++;
+      // the run's replay, played on a fresh host: the same cells, a paste one frame of its rows, the move's emptying among them
+      var text = host.replayText() || '', M = new HOST({ drive: 'manual', budget: 0, now: frozen }), ex2 = HOST.instantiateSync(bytes), MD = new Driver({ exports: ex2 });
+      try {
+        var live = cellRows(D.call('alonzo_view', [ld.handle], ['values', 'Work', 'A1:J40']).text);
+        if (!M.attach(ex2).ok || !M.load(CLIPCARD.text, CLIPCARD.file).ok) P.push('clipboard: a fresh host did not load the clipboard card');
+        else {
+          var pm = M.play(text, true), played = cellRows(MD.call('alonzo_view', [M.counters().handle], ['values', 'Work', 'A1:J40']).text);
+          var moveFrame = /\(frame \d+\n(?:  \(cell "Input" [^\n]*\n)*  \(cell "Work" "A30:B30" ""\)\n  \(cell "Work" "A32" "p"\)\n  \(cell "Work" "B32" "q"\)\)/.test(text);
+          if (pm.ok && pm.frames === frame() && played === live && moveFrame) k.replayed++;
+          else P.push('clipboard: the run\'s replay played on a fresh host ' + (pm.ok ? 'to frame ' + pm.frames : 'was refused') + ' of ' + frame() + (played === live ? '' : ', its Work not the live run\'s') + (moveFrame ? '' : ', the move not one frame of its rows'));
+          // a paste refused while a replay plays, as every edit is
+          M.play(text);
+          var pr = M.paste({ sheet: 'Work', range: { top: 50, left: 1, bottom: 50, right: 1 }, rows: [{ row: '(cell "Work" "A50" 1)', sheet: 'Work', address: 'A50', kind: 'value', cells: 1 }], what: 'the paste of one cell into Work!A50', done: 'pasted one cell into Work!A50', place: { sheet: 'Work', col: 1, row: 50 } });
+          var ms = M.sentences(), mlast = ms.length ? ms[ms.length - 1].text : '';
+          if (!pr && /^The paste of one cell into Work!A50 was not written: a replay is playing/.test(mlast)) k.refused++;
+          else P.push('clipboard: a paste while a replay plays was ' + (pr ? 'taken' : 'refused') + ', saying ' + JSON.stringify(mlast) + ', where it is refused as every edit is');
+        }
+      } finally { M.destroy(); }
+      var refusals = host.sentences().filter(function (sn) { return sn.refusal && !/was not written|Nothing was cut/.test(sn.text); });
+      if (refusals.length) P.push('clipboard: the host was refused: ' + refusals[0].text);
+    } finally { host.destroy(); stage.removeChild(box); }
+  }
+  // A record's cell and value rows, each spelled again, the rest left out: what two grids' cells are compared by.
+  function cellRows(text) {
+    return VP.readForms(text).filter(function (f) { return Array.isArray(f) && f[0] && (f[0].sym === 'cell' || f[0].sym === 'value'); })
+      .map(function (f) { return f[0].sym + ' ' + JSON.stringify(f.slice(1)); }).join('\n');
+  }
+  // At a rate a paste waits for its frame, said while the loop is paused, and lands at it, said.
+  function clipRate(bytes, k, P) {
+    var stage = document.getElementById('stage'), box = document.createElement('div');
+    box.style.cssText = 'width:640px;height:300px;position:relative;background:#fff;';
+    stage.appendChild(box);
+    var clock = { t: 1000 }, exports = HOST.instantiateSync(bytes), host = new HOST({ drive: 'manual', budget: 0, now: function () { return clock.t; }, grid: box });
+    try {
+      var ld = host.attach(exports).ok ? host.load(CLIPCARD.text.replace('(rate 0)', '(rate 30)'), CLIPCARD.file) : { ok: false };
+      if (!ld.ok) { P.push('clipboard at 30: the card did not load: ' + ld.sentence); return; }
+      var clip = new GridClip(host, null);
+      host.showSheet(host.vp, 'Work'); host.vp.select('A10');
+      clip.put(host.vp, '7\t8\r\n');
+      var waited = host.sentences().slice(-1)[0].text;
+      host.start(); host.tick(clock.t);
+      for (var i = 0; i < 3 && host.counters().frame < 1; i++) { clock.t += 1000 / 30; host.tick(clock.t); }
+      var landed = host.sentences().filter(function (s) { return /pasted two cells into Work!A10:B10\.$/.test(s.text); }).length;
+      if (waited === 'frame 0: the paste of two cells into Work!A10:B10 waits for the next frame, which Run brings: the loop is paused at 30 frames a second.' && landed === 1 && host.counters().pastes === 1) k.rate++;
+      else P.push('clipboard at 30: a paste while paused said ' + JSON.stringify(waited) + ' and landed ' + landed + ' time(s), where it waits for Run and lands at the next frame');
+    } finally { host.destroy(); stage.removeChild(box); }
+  }
+  // Brickwork's Ctrl+X (CART.3's decision 8): on its Wall, a game and read-only sheet, the page's keymap finds its cut and
+  // passes the key on, and the host takes it as the game's cut, its keydown prevented so that the browser fires no cut; on
+  // its Pace, a work sheet, the key passes the host too and the browser's cut is the grid's.
+  function clipGame(bytes, k, P) {
+    var stage = document.getElementById('stage'), box = document.createElement('div');
+    box.style.cssText = 'width:900px;height:600px;position:relative;background:#fff;';
+    stage.appendChild(box);
+    var clock = { t: 1000 }, exports = HOST.instantiateSync(bytes), host = new HOST({ drive: 'manual', budget: 0, now: function () { return clock.t; }, grid: box });
+    try {
+      var ld = host.attach(exports).ok ? host.load(CARTRIDGES.brickwork.text, CARTRIDGES.brickwork.file) : { ok: false };
+      if (!ld.ok) { P.push('clipboard: Brickwork did not load: ' + ld.sentence); return; }
+      var vp = host.vp, clip = new GridClip(host, null), map = readKeymap(KEYMAP_DEFAULTS, COMMANDS);
+      clip.listen(vp);
+      host.start();
+      for (var i = 0; i < 4; i++) { host.tick(clock.t); clock.t += 1000 / 60; }
+      function ctrlX(sheet) {
+        var ev = new KeyboardEvent('keydown', { key: 'x', code: 'KeyX', ctrlKey: true, bubbles: true, cancelable: true });
+        var b = keymapFind(map, ev, 'screen', sheet, function () { return false; }), act = b ? clipKeyAct(b, ev) : 'none';
+        if (act === 'pass') vp.scroller.dispatchEvent(ev);
+        else if (act === 'press') clip.act(vp, 'cut');   // the page's own press, the key kept from the host
+        return { binding: b ? b.command : null, act: act, prevented: ev.defaultPrevented };
+      }
+      var wall = vp.sheet(), c0 = host.counters().commands, w = ctrlX(wall);
+      for (var j = 0; j < 3; j++) { host.tick(clock.t); clock.t += 1000 / 60; }
+      var ran = host.counters().commands - c0;
+      if (/^wall$/i.test(wall) && w.binding === 'cut' && w.act === 'pass' && w.prevented && ran === 1 && !clip.kept) k.game++;
+      else P.push('clipboard: Ctrl+X on Brickwork\'s ' + wall + ' was the page\'s ' + w.binding + ', ' + (w.act === 'pass' ? 'passed on' : 'pressed') + ', its keydown ' + (w.prevented ? 'prevented' : 'unprevented') + ', ran ' + ran + ' command(s) and left the page\'s cut ' + (clip.kept ? 'taken' : 'none') + ', where the game\'s cut runs');
+      host.showSheet(vp, 'Pace'); vp.select('B1:B2');
+      var p = ctrlX('Pace'), dt = new DataTransfer(), cut = new ClipboardEvent('cut', { clipboardData: dt, cancelable: true, bubbles: true });
+      if (p.act === 'pass' && !p.prevented) vp.scroller.dispatchEvent(cut);   // the browser's cut, the key unprevented
+      if (p.act === 'pass' && !p.prevented && cut.defaultPrevented && clip.kept && clip.kept.cut && clip.kept.sheet === 'Pace' && dt.getData('text/plain').split('\r\n').length === 3) k.game++;
+      else P.push('clipboard: Ctrl+X on Brickwork\'s Pace was ' + (p.act === 'pass' ? 'passed on' : 'pressed') + ', its keydown ' + (p.prevented ? 'prevented' : 'unprevented') + ', and the grid\'s cut ' + (clip.kept && clip.kept.cut ? 'took ' + clip.kept.sheet : 'took nothing') + ', where the browser\'s cut is the grid\'s');
+    } finally { host.destroy(); stage.removeChild(box); }
+  }
+  // A gate of Naught's copied along its room (the third slice): on level I, a game sheet where a person writes formulas, two
+  // gates written, =1-A3*A3 in C3 and =1-C3*C3 in D3, and D3 copied and pasted into E3 by the browser's events, the pasted
+  // gate reading the gate before it, =1-D3*D3, as Excel moves a formula copied, and computing 1 from the switch's 0.
+  function clipNaught(bytes, k, P) {
+    var stage = document.getElementById('stage'), box = document.createElement('div');
+    box.style.cssText = 'width:900px;height:600px;position:relative;background:#fff;';
+    stage.appendChild(box);
+    var exports = HOST.instantiateSync(bytes), D = new Driver({ exports: exports }), host = new HOST({ drive: 'manual', budget: 0, now: frozen, grid: box });
+    try {
+      var ld = host.attach(exports).ok ? host.load(CARTRIDGES.naught.text, CARTRIDGES.naught.file) : { ok: false };
+      if (!ld.ok) { P.push('clipboard: Naught did not load: ' + ld.sentence); return; }
+      var vp = host.vp, sc = vp.scroller, clip = new GridClip(host, null);
+      clip.listen(vp);
+      host.showSheet(vp, 'I NON');
+      host.edit('(formula "I NON" "C3" "=1-A3*A3")');
+      host.edit('(formula "I NON" "D3" "=1-C3*C3")');
+      vp.select('D3');
+      var dt = new DataTransfer(), ce = new ClipboardEvent('copy', { clipboardData: dt, cancelable: true, bubbles: true });
+      sc.dispatchEvent(ce);
+      vp.select('E3');
+      var dt2 = new DataTransfer();
+      dt2.setData('text/plain', dt.getData('text/plain'));
+      var pe = new ClipboardEvent('paste', { clipboardData: dt2, cancelable: true, bubbles: true });
+      sc.dispatchEvent(pe);
+      var grid = D.call('alonzo_view', [ld.handle], ['grid', 'I NON', 'C3:E3']).text, f = {}, v = recordValues(grid);
+      VP.readForms(grid).forEach(function (x) { if (Array.isArray(x) && x[0] && x[0].sym === 'formula') f[x[2]] = x[3]; });
+      if (ce.defaultPrevented && pe.defaultPrevented && f.E3 === '=1-D3*D3' && viewsNum(v.C3) === 1 && viewsNum(v.D3) === 0 && viewsNum(v.E3) === 1) k.gate++;
+      else P.push('clipboard: Naught\'s gate D3 pasted into E3 on I NON holds ' + JSON.stringify(f.E3 === undefined ? 'no formula' : f.E3) + ', its gates computing ' + [v.C3, v.D3, v.E3].map(viewsNum).join(', ') + ', where =1-D3*D3 and 1, 0, 1 are due');
+    } finally { host.destroy(); stage.removeChild(box); }
+  }
+  // The acts no event carries, over a double of the browser's clipboard: a copy from the palette written by writeText; a
+  // paste refused by the browser's readText, said; and a copy the browser refuses, said and not kept.
+  function clipApi(bytes, k, P) {
+    var stage = document.getElementById('stage'), box = document.createElement('div');
+    box.style.cssText = 'width:640px;height:300px;position:relative;background:#fff;';
+    stage.appendChild(box);
+    var exports = HOST.instantiateSync(bytes), host = new HOST({ drive: 'manual', budget: 0, now: frozen, grid: box }), written = [];
+    function done() { host.destroy(); stage.removeChild(box); }
+    try {
+      if (!host.attach(exports).ok || !host.load(CLIPCARD.text, CLIPCARD.file).ok) { P.push('clipboard: the card did not load for the browser\'s clipboard'); done(); return Promise.resolve(); }
+      host.edit('(cell "Work" "H20" 0)');
+      host.showSheet(host.vp, 'Work'); host.vp.select('A1:B1');
+      var api = { writeText: function (t) { written.push(t); return Promise.resolve(); }, readText: function () { return Promise.reject(new Error('Read permission denied.')); } };
+      var refusing = { writeText: function () { return Promise.reject(new Error('Write permission denied.')); } };
+      var clip = new GridClip(host, api), clip2 = new GridClip(host, refusing);
+      var p1 = clip.act(host.vp, 'copy'), p2 = clip.act(host.vp, 'paste'), p3 = clip2.act(host.vp, 'copy');
+      return Promise.all([p1, p2, p3]).then(function () {
+        var texts = host.sentences().map(function (s) { return s.text; });
+        if (written.length === 1 && written[0] === '1\t0.33\r\n' && clip.kept && clip.kept.text === written[0]) k.api++; else P.push('clipboard: a copy from the palette wrote ' + JSON.stringify(written) + ', where "1\\t0.33\\r\\n" is due');
+        if (texts.indexOf('Nothing was pasted: the browser refused the page the clipboard\'s text (Read permission denied.); Ctrl+V pastes without asking.') >= 0) k.api++; else P.push('clipboard: a paste the browser refused said ' + JSON.stringify(texts.slice(-3)) + ', where the refusal is said');
+        if (clip2.kept === null && texts.indexOf('The copy was not put on the clipboard: the browser refused it (Write permission denied.); Ctrl+C copies without asking.') >= 0) k.api++; else P.push('clipboard: a copy the browser refused said ' + JSON.stringify(texts.slice(-2)) + (clip2.kept ? ' and was kept' : '') + ', where the refusal is said and nothing kept');
+        done();
+      }, function (e) { P.push('clipboard: the browser\'s clipboard\'s double failed: ' + (e && e.message ? e.message : e)); done(); });
+    } catch (e) { done(); throw e; }
   }
   // ---- CART.12: version 6, an act settled ----
   // The settle card, the page's own as the commands card is, written here and never a file, at version 6, so that a game's
@@ -9423,7 +10922,7 @@
   };
   WorkDouble.prototype.close = function () { for (var n in this.s.locks) if (this.s.locks[n] === this.tab) delete this.s.locks[n]; };
   function caseKeep() {
-    var P = [], k = { cartridges: 0, frames: 0, restores: 0, held: 0, keyframes: 0, writes: 0, session: 0, watched: 0, saved: 0, discarded: 0, tabs: 0, stale: 0, torn: 0, capped: 0, refused: 0, typed: 0, switched: 0, typedSaved: 0, draftsRound: 0, draftsLoaded: 0, store: 0 };
+    var P = [], k = { cartridges: 0, frames: 0, restores: 0, held: 0, owing: 0, owed: 0, keyframes: 0, writes: 0, session: 0, watched: 0, saved: 0, discarded: 0, tabs: 0, stale: 0, torn: 0, capped: 0, refused: 0, typed: 0, switched: 0, typedSaved: 0, draftsRound: 0, draftsLoaded: 0, store: 0 };
     var wasm = builtModule(), notes = [];
     if (!wasm) return { counters: k, problems: P };
     // one instance of the module for every host of the case, each grid a handle of its own and unloaded when done, since a
@@ -9452,34 +10951,45 @@
       return out.join('\n');
     }
     function records(world) { var n = 0; for (var x in world.work) if (Object.prototype.hasOwnProperty.call(world.work, x)) n++; return n; }
+    // the derived writes a host owes its next frame, as it will issue them (docs/SPEC.md section 3.9)
+    function owedOf(h) { return h.pending.map(function (x) { return x.text; }).join(' '); }
     // The tab dies at a frame at rest: a fresh page over what the browser kept, its locks gone with the tab, opens on the
-    // empty sheet, is offered the newest record, restores it, and stands where the run stood, every sheet's fills.
+    // empty sheet, is offered the newest record, restores it, and stands where the run stood, every sheet's fills, owing
+    // the derived writes the run owes there (ENGINE.30's decision 13). Answers whether it held.
     function closure(name, A, KA, world) {
       KA.tick();
       var at = A.counters().frame, W = workWorld(world), DB = new WorkDouble(W, 'b'), B = host(37), KB = B && keeper(B, DB);
-      if (!B || !B.load(EMPTY.text, EMPTY.file).ok) { P.push(name + ': frame ' + at + ': a fresh page did not open'); return; }
-      if (!KB.offer || KB.offer.run !== KA.run) { P.push(name + ': frame ' + at + ': the page opened offers ' + (KB.offer ? 'the run ' + KB.offer.run + ', not the one kept last, ' + KA.run : 'nothing') + ' (' + records(W) + ' kept)'); return; }
+      if (!B || !B.load(EMPTY.text, EMPTY.file).ok) { P.push(name + ': frame ' + at + ': a fresh page did not open'); return false; }
+      if (!KB.offer || KB.offer.run !== KA.run) { P.push(name + ': frame ' + at + ': the page opened offers ' + (KB.offer ? 'the run ' + KB.offer.run + ', not the one kept last, ' + KA.run : 'nothing') + ' (' + records(W) + ' kept)'); return false; }
       KB.restoreOffer();
       k.restores++;
-      if (B.counters().restores !== 1) { P.push(name + ': frame ' + at + ': the offer was not restored: ' + KB.said.concat(B.sentences().slice(-1).map(function (x) { return x.text; })).join(' | ')); return; }
-      if (fillsOf(B) === fillsOf(A)) k.held++;
+      if (B.counters().restores !== 1) { P.push(name + ': frame ' + at + ': the offer was not restored: ' + KB.said.concat(B.sentences().slice(-1).map(function (x) { return x.text; })).join(' | ')); return false; }
+      var held = fillsOf(B) === fillsOf(A), owes = owedOf(A);
+      if (held) k.held++;
       else P.push(name + ': frame ' + at + ': the work restored is not the run there, restored at frame ' + B.counters().frame);
+      if (owedOf(B) !== owes) { held = false; P.push(name + ': frame ' + at + ': the work restored owes ' + (owedOf(B) || 'nothing') + ', where the run owes ' + (owes || 'nothing')); }
+      else if (owes) k.owing++;
       if (KB.run !== KA.run) P.push(name + ': frame ' + at + ': the restored run is ' + KB.run + ', and it goes on as ' + KA.run);
       B.unload();
+      return held;
     }
     // Each committed replay, played frame by frame at a keyframe every 37 frames; the tab dies at frame 1, every 64th frame
-    // at rest and the last.
+    // at rest and the last. And where its Write sheet asks a derived write at a frame at rest, a keyframe at the first such
+    // frame a person's act has come before, the tab dying there and at the next frame at rest, where the restore makes the
+    // writes the run made (owed).
     for (var cn in CARTRIDGES) {
       if (!Object.prototype.hasOwnProperty.call(CARTRIDGES, cn) || !CARTRIDGES[cn].replayPath) continue;
       var cart = CARTRIDGES[cn], world = workWorld(), DA = new WorkDouble(world, 'a'), A = host(37), KA = A && keeper(A, DA);
       if (!A || !A.load(cart.text, cart.file).ok) { P.push(cn + ': a fresh host did not load ' + cart.file); continue; }
       if (!A.play(cart.replay).ok) { P.push(cn + ': its committed replay did not play'); continue; }
       k.cartridges++;
-      var j = 0;
+      var j = 0, owedAt = 0;
       while (A.player) {
         step(A); j++; k.frames++;
         if (A.settling || A.inFrame) continue;
         KA.tick();
+        if (owedAt > 0) { owedAt = -1; if (closure(cn, A, KA, world)) k.owed++; }
+        else if (owedAt === 0 && A.pending.length && (A.keep.frames === 0 || A.keyframeNow())) { owedAt = A.counters().frame; closure(cn, A, KA, world); }
         if (j === 1 || j % 64 === 0 || !A.player) closure(cn, A, KA, world);
       }
       k.keyframes += A.counters().keyframes; k.writes += KA.c.writes;
@@ -9698,7 +11208,8 @@
     var cases = [['rate30', caseRate30], ['rate0', caseRate0], ['yield', caseYield], ['slice', caseSlice], ['pace', casePace], ['memory', caseMemory], ['abi', caseAbi], ['refusals', caseRefusals],
                  ['scale', caseScale], ['engine', caseEngine], ['parity', caseParity], ['plane', casePlane], ['pass', casePass], ['input', caseInput], ['replay', caseReplay],
                  ['audio', caseAudio], ['sound', caseSound], ['grid', caseGrid], ['tabs', caseTabs], ['empty', caseEmpty], ['still', caseStill], ['views', caseViews], ['changes', caseChanges],
-                 ['continue', caseContinue], ['palette', casePalette], ['drawer', caseDrawer], ['keys', caseKeys], ['commands', caseCommands], ['settle', caseSettle], ['widths', caseWidths], ['modes', caseModes], ['save', caseSave], ['keep', caseKeep]];
+                 ['continue', caseContinue], ['palette', casePalette], ['drawer', caseDrawer], ['keys', caseKeys], ['commands', caseCommands], ['settle', caseSettle], ['widths', caseWidths], ['modes', caseModes], ['save', caseSave], ['keep', caseKeep],
+                 ['clipboard', caseClipboard], ['file', caseFile]];
     if (asked) {
       var unknown = asked.filter(function (n) { return !cases.some(function (c) { return c[0] === n; }); });
       if (unknown.length) { out.push('loop failed: the cases asked name no case: ' + unknown.join(', ')); document.getElementById('loop').textContent = out.join('\n'); return; }
@@ -9707,7 +11218,7 @@
     // On a game's page (ENGINE.16) a case runs when it needs nothing of Alonzo's own files, over the page's own
     // blocks; every other case is Alonzo's own, proven in Alonzo's CI for the release the page was built from,
     // and says so in one line.
-    var GAME_CASES = { abi: 1, pass: 1, replay: 1, grid: 1, empty: 1, still: 1, views: 1, changes: 1, 'continue': 1, palette: 1, drawer: 1, keys: 1, commands: 1, settle: 1, widths: 1, modes: 1, save: 1, keep: 1 }, absent = 0;
+    var GAME_CASES = { abi: 1, pass: 1, replay: 1, grid: 1, empty: 1, still: 1, views: 1, changes: 1, 'continue': 1, palette: 1, drawer: 1, keys: 1, commands: 1, settle: 1, widths: 1, modes: 1, save: 1, keep: 1, clipboard: 1, file: 1 }, absent = 0;
     function failed(e) { return { counters: { error: 1 }, problems: ['error: ' + (e && e.message ? e.message : e)] }; }
     // a case's notes, each a line of its own under it, say what it ran without (a replay held without a hand)
     function record(name, res) { out.push(loopLine(name, res.counters, res.problems)); (res.notes || []).forEach(function (n) { out.push('  note: ' + n); }); if (!res.problems.length) ok++; }
@@ -9955,8 +11466,9 @@
   // twenty steps, the runs went on to about frame 4,000, and each run's last frame was held between
   // the runs, whose Life and view swept a large board's megabytes through the cache before the next.
   // The size ladder (ENGINE.9): Life and the gun at four and sixteen times the window's area, each
-  // built here by the module's own pass from its source with the ladder's definition of board-size
-  // after the source's own, the native runner's text (engine/src/ladder.rs), on a module of its own
+  // built here by the module's own pass from its source with the ladder's values of its board's two
+  // parameters given as a door's by alonzo_expand_given, the native runner's text
+  // (engine/src/ladder.rs), on a module of its own
   // so that no fixture's memory holds the pass; each held over its whole board to this page's Life,
   // and named by its SHA-256 over LF, which tools/bench_frames.ps1 holds to the native runner's.
   // Every fixture's row carries the module's memory after its fourth frame, a fresh module a fixture,
@@ -9989,11 +11501,12 @@
       }
       return g;
     }
-    // The size ladder's definition of a source's board-size, the native runner's own text
-    // (engine/src/ladder.rs): a board of w by h cells under a still Camera at its top-left.
-    function ladderDefinition(w, h) {
-      return '(defmacro (board-size then & args)\r\n  "the size ladder (ENGINE.9): a board of ' + w + ' by ' + h +
-        ' cells under a still Camera at its top-left"\r\n  (quasiquote (begin (camera 1 1) ((unquote then) ' + w + ' ' + h + ' (unquote-splicing args)))))\r\n';
+    // The size ladder's values for a source's board, a door's, the native runner's own text
+    // (engine/src/ladder.rs's door): a board of w by h cells, which the source's own still-camera puts
+    // under a still Camera at its top-left (since ENGINE.30's pin to vla-lang 0.15.0, whose parameter
+    // is Frazaro's VLA.11, where a second definition of board-size after the source's own stood before).
+    function ladderDoor(w, h) {
+      return '(parameter board-width ' + w + ')\r\n(parameter board-height ' + h + ')\r\n';
     }
     // The clock: this page's Life over a fixed workload in two planes it keeps, a generation untimed
     // to warm them, the best of a few batches, milliseconds a generation.
@@ -10039,7 +11552,7 @@
       for (var ri = 0; ri < RUNGS.length; ri++) {
         var mult = RUNGS[ri][0], rw = RUNGS[ri][1], rh = RUNGS[ri][2];
         if (!passer) passer = new Driver({ exports: HOST.instantiateSync(bytes) });
-        var expanded = passer.call('alonzo_expand', [], [base.cart.source + '\n' + ladderDefinition(rw, rh), base.cart.sourcePath, packed.join('\u0000')]);
+        var expanded = passer.call('alonzo_expand_given', [], [base.cart.source, base.cart.sourcePath, packed.join('\u0000'), ladderDoor(rw, rh)]);
         if (expanded.status !== 0) throw new Error(base.name + ': the pass refused the board of ' + rw + ' by ' + rh + ' at line ' + expanded.line + ': ' + expanded.text + ' [' + expanded.id + ']');
         fixtures.push({ name: base.name + '-x' + mult, text: expanded.text, by: 'Life', w: rw, h: rh, next: lifeOn(rw, rh), digest: HOST.sha256(expanded.text.replace(/\r\n/g, '\n')) });
       }

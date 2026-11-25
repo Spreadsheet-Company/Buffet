@@ -79,7 +79,7 @@ Report's window at its last frame, `src/buffet.golden.vla`, and
 cartridge moves all three by the second command, and the tests and the page
 hold every frame of the session to the game written by hand.
 
-Both pins, `alonzo = "=0.4.0"` and `vla-lang = "=0.14.0"`, the language
+Both pins, `alonzo = "=0.5.0"` and `vla-lang = "=0.15.0"`, the language
 that release pins, resolve from crates.io, and `Cargo.lock` is committed.
 
 The page is Alonzo's player, its template and scripts vendored unchanged

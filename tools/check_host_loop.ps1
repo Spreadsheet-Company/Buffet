@@ -5,8 +5,9 @@ floors, the owner's session among them, every frame held to the hand.
 
 WHY: the page, web/index.template.html filled by tools/build_web.ps1, is
 Alonzo's, vendored unchanged; its loop oracle (?loop=1) runs on a game's
-page the eighteen cases that need nothing of Alonzo's own files and says the
-fifteen others are not on it (Alonzo's ENGINE.16). Alonzo's loop check holds
+page the twenty cases that need nothing of Alonzo's own files, clipboard and
+file among them since alonzo 0.5.0, and says the fifteen others are not on it
+(Alonzo's ENGINE.16). Alonzo's loop check holds
 a game's page only for its own, a page of Kairos alone that it builds, and
 its -Page judges any page it is given as Alonzo's own: over Buffet's it
 printed every case OK and failed, "the oracle ran 15 case(s), not the 29
@@ -14,7 +15,8 @@ pinned here" (docs/SPIKE.md, HOUSE.4's second slice). So the page is held
 here by a check of Buffet's own: Alonzo's tools/check_host_loop.ps1 at
 v0.4.0, adapted by the same copyright holder under this repository's terms
 (decision 6), its browser, its runs and its judgment carried, its floors
-Buffet's and its mutants the session's.
+Buffet's and its mutants the session's. At the pin to alonzo 0.5.0 the case
+list follows Alonzo's at v0.5.0, whose judgment is v0.4.0's unchanged.
 
 WHAT IT HOLDS: the built page, web/index.html (or -Page), run headless at a
 ratio of 1, every case, in four runs side by side: the replay case, the save
@@ -122,15 +124,23 @@ $floors = @(
     @{ Case = 'settle';   Min = @{}; WithModule = @{} },
     @{ Case = 'widths';   Min = @{}; WithModule = @{} },
     @{ Case = 'modes';    Min = @{}; WithModule = @{} },
-    @{ Case = 'save';     Min = @{}; WithModule = @{ saves = 1; opened = 1; seeds = 1; resumed = 1 } },
-    @{ Case = 'keep';     Min = @{}; WithModule = @{ cartridges = 1; restores = 1; held = 1 } }
+    @{ Case = 'save';     Min = @{}; WithModule = @{ saves = 1; opened = 1; seeds = 1; resumed = 1; owing = 1; owed = 1 } },
+    @{ Case = 'keep';     Min = @{}; WithModule = @{ cartridges = 1; restores = 1; held = 1; owing = 1; owed = 1 } },
+    @{ Case = 'clipboard'; Min = @{}; WithModule = @{} },
+    @{ Case = 'file';     Min = @{}; WithModule = @{} }
 )
+# 2026-11-24, the pin to alonzo 0.5.0: twenty cases, clipboard and file over the page's own cards, Brickwork's cut and
+# Afterlife's reel left to Alonzo's page (game 0, gate 0); and Alonzo's ENGINE.30's decision 13 over the session, each
+# the floor of its first count: a second save where an order's derived writes wait, opened owing them as its run owes
+# them (owing 1) and played on beside the run, every frame compared the same (owed 1), saves 2 in all over 66,537
+# frames; and the keep case back, 2,081 restores held of 2,081, four of them owing the writes the run owed there
+# (owing 4), and a keyframe taken where an order's writes wait, restored at the next frame at rest, held (owed 1).
 # The counts no run may count: a live allocation or a misfree, a fill past its sheet, and a replay held to its golden
 # and its recording alone, with no hand.
 $zero = @('live', 'misfrees', 'filled', 'alone')
 # Alonzo's own page's cases, each of which says it is not on a game's page.
 $absent = @('rate30', 'rate0', 'yield', 'slice', 'pace', 'memory', 'refusals', 'scale', 'engine', 'parity', 'plane', 'input', 'audio', 'sound', 'tabs')
-$expectedCases = 18
+$expectedCases = 20
 $scales = @('1', '1.5')
 # The engine's artifact: a page built beside it must hold it.
 $artifact = Join-Path $repoRoot 'target/wasm32-unknown-unknown/release/alonzo.wasm'
@@ -446,18 +456,15 @@ if ($Control) {
 Write-Output ("  the browser: {0}" -f $script:browser)
 Write-Output ("  the page: {0}{1}" -f $Page, $(if ($hasModule) { '' } else { ', built without the engine''s module: the double''s cases alone' }))
 $names = @($floors | ForEach-Object { $_.Case })
-# Withheld, each with its reason, said on every run: the keep case restores the session's work at every 64th frame
-# at rest, and two of its 2,079 restores, at frames 4,544 and 36,032, are not the run there (2026-11-21): the page's
-# host keeps a keyframe at a frame's end at rest while the derived rows of an order filled in that frame still wait,
-# and a restore opens the keyframe and loses them, the order's ledger row unwritten. Alonzo's, in the page vendored
-# unchanged, ENGINE.30's Found (its decision 13: a save's load loses a waiting derived write), met again on a game's
-# page at HOUSE.4's second slice and Alonzo's to fix at the owner's word; the case comes back with the pin that brings
-# the fix.
-$withheld = @{ keep = "the page's host keeps a keyframe while an order's derived rows wait, and a restore loses them (Alonzo's ENGINE.30 Found)" }
-foreach ($w in @($withheld.Keys | Sort-Object)) { Write-Output ("  withheld: the {0} case, {1}" -f $w, $withheld[$w]) }
+# The keep case, withheld from HOUSE.4's second slice to the pin to alonzo 0.5.0 (2026-11-21 to 2026-11-24): two of its
+# 2,079 restores of the session, at frames 4,544 and 36,032, were not the run there, the page's host keeping a
+# keyframe at a frame's end while an order's derived rows waited and a restore losing them. Alonzo's ENGINE.30's
+# decision 13, built at Buffet's ask and released in 0.5.0: a save loaded past frame 0 makes at its next frame the
+# derived writes its run made, so the case runs again, a run of its own.
 $runs = @(
     @{ Key = 'replay'; Label = 'ratio 1, the replay case'; Scale = $scales[0]; Cases = @('abi', 'replay') },
     @{ Key = 'save'; Label = 'ratio 1, the save case'; Scale = $scales[0]; Cases = @('abi', 'save') },
+    @{ Key = 'keep'; Label = 'ratio 1, the keep case'; Scale = $scales[0]; Cases = @('abi', 'keep') },
     @{ Key = 'rest'; Label = 'ratio 1, the other cases, and Alonzo''s own fifteen said absent'; Scale = $scales[0]; Cases = @(@($names | Where-Object { @('replay', 'save', 'keep') -notcontains $_ }) + $absent) },
     @{ Key = 'second'; Label = 'ratio 1.5, every case but replay, save and keep'; Scale = $scales[1]; Cases = @($names | Where-Object { @('replay', 'save', 'keep') -notcontains $_ }) }
 )
@@ -477,7 +484,7 @@ foreach ($run in $runs) {
 Write-Output ''
 if ($failed.Count -eq 0) {
     $held = if ($hasModule) { "the session's {0:N0} frames held to its golden, its round and its hand at {1:N0} frames, {2:N0} cells" -f $session.Last, $session.Held, ($session.Held * $session.Cells) } else { 'the page without the engine''s module, so the session played nowhere: the double''s cases alone' }
-    Write-Output ("=== CHECK: clean - every case OK on Buffet's page but the {0} withheld, the replay and save cases at the first ratio and every other at both, every count at or above its floor; {1} ===" -f (@($withheld.Keys) -join ', '), $held)
+    Write-Output ("=== CHECK: clean - every case OK on Buffet's page, the replay, save and keep cases at the first ratio and every other at both, every count at or above its floor; {0} ===" -f $held)
     exit 0
 }
 Write-Output "=== CHECK: $($failed.Count) problem(s) ==="

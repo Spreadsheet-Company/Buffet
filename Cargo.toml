@@ -6,23 +6,29 @@
 # never copied here, as a stranger consumes them.
 #
 # The pins are exact and never a range, and a registry version and never a
-# git rev (the owner's route, 2026-10-14): alonzo 0.4.0, the release whose page
-# saves a running game to a file and opens one (ENGINE.5), keeps a run's
-# unsaved work in the browser through a closed tab (ENGINE.38, ENGINE.40),
-# draws a sheet's conditional formats and a font's lines (ENGINE.37), says the
-# last act's answer in the bar (ENGINE.42) and shows the region it was viewed
-# through (ENGINE.43), and whose kit takes a put's pieces by name (KIT.6);
-# beside 0.3.0's formats drawn (ENGINE.28) and version 6, the sheets whose keys
-# are the game's and those no person writes (SPEC.5), 0.2.0's palette and a
-# cartridge's own commands (ENGINE.22 to ENGINE.25), 0.1.5's edit and continue
-# (ENGINE.7) and 0.1.4's views on a game's own sheets (ENGINE.18); and vla-lang
-# 0.14.0, the version that release pins, so that the lock holds one copy of the
-# language: LET and LAMBDA (Frazaro's KERNEL.29), the information functions,
-# ERROR.TYPE among them (KERNEL.68), a sheet's rules (KERNEL.58) and a macro's
-# named pieces (VLA.9), over 0.12.0's formula cell in about 14 to 19 bytes
-# (KERNEL.49), the library's second slice (KERNEL.8), a format's looks
-# (KERNEL.50) and the expander's loops and names (VLA.5, VLA.6 and VLA.15),
-# every answer the same to the bit. Both resolve from crates.io since alonzo 0.1.0, the engine's first
+# git rev (the owner's route, 2026-10-14): alonzo 0.5.0, the release whose page
+# goes on as a game went from a save or kept work opened where its Write sheet
+# waits, an order's rows waiting among them (Alonzo's ENGINE.30, decision 13, at
+# Buffet's ask), copies, cuts and pastes in the grid (ENGINE.39) and saves a
+# file a cartridge reads into the file opened (CART.16, ENGINE.49), and whose
+# kit gains the Format sheet's verb (file-lines); beside 0.4.0's save and open
+# (ENGINE.5), a run's unsaved work kept through a closed tab (ENGINE.38,
+# ENGINE.40), a sheet's conditional formats drawn (ENGINE.37), the last act's
+# answer in the bar (ENGINE.42), the region shown the region seen (ENGINE.43)
+# and a put's pieces by name (KIT.6); 0.3.0's formats drawn (ENGINE.28) and
+# version 6, the sheets whose keys are the game's and those no person writes
+# (SPEC.5), 0.2.0's palette and a cartridge's own commands (ENGINE.22 to
+# ENGINE.25), 0.1.5's edit and continue (ENGINE.7) and 0.1.4's views on a game's
+# own sheets (ENGINE.18); and vla-lang 0.15.0, the version that release pins, so
+# that the lock holds one copy of the language: a cell given back to no value as
+# Excel's ClearContents does (Frazaro's KERNEL.46), dynamic arrays whole
+# (KERNEL.55), a cell alone read in place (KERNEL.74), functions at expand time
+# (VLA.8) and a source's parameters (VLA.11), over 0.14.0's LET and LAMBDA
+# (KERNEL.29), the information functions, ERROR.TYPE among them (KERNEL.68), a
+# sheet's rules (KERNEL.58) and a macro's named pieces (VLA.9), 0.12.0's formula
+# cell in about 14 to 19 bytes (KERNEL.49), the library's second slice
+# (KERNEL.8), a format's looks (KERNEL.50) and the expander's loops and names
+# (VLA.5, VLA.6 and VLA.15), every answer the same to the bit. Both resolve from crates.io since alonzo 0.1.0, the engine's first
 # release, was published (2026-10-14): the local patch that stood in for it is
 # deleted, and Cargo.lock is committed (HOUSE.2). What this repository copies from the
 # engine's, the kit and the page, is copied at the tag this pin names, and
@@ -41,8 +47,8 @@ license = "AGPL-3.0-or-later"
 repository = "https://github.com/Spreadsheet-Company/Buffet"
 
 [workspace.dependencies]
-alonzo = "=0.4.0"
-vla-lang = "=0.14.0"
+alonzo = "=0.5.0"
+vla-lang = "=0.15.0"
 
 [profile.dev.package."*"]
 # The engine and the language, every package that is not the workspace's,

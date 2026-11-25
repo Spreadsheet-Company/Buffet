@@ -320,6 +320,31 @@
   (cell "Camera" "A2" "column")
   (cell "Camera" "B2" left))
 
+; ---- the Format sheet (docs/SPEC.md section 3.11) ----------------------------------------
+; A file's lines, said once, for a cartridge written to (spec 9): the file's type, the
+; leader of its comments and the row a sheet's first line stands on, each beside its
+; label, with the line end, which a file opened brings with it; then each kind of line,
+; a sheet of the cartridge's own and the line written out with a hole for each column:
+; ("Responses" "response({A:name}, {B:text}).") reads response(hello, "Hello.") into a row
+; of Responses, hello in column A and Hello. in column B, and writes that row back as
+; that line. The page's Open then reads such a file into the sheets, and its Save writes
+; them as the file. A hole's kinds are name, word, text, whole, rest and note; a line
+; that holds a double quote of its own is written as a raw string, #"say "{A:rest}""#,
+; which takes a quote as it stands.
+
+(defmacro (file-lines type comment first-row & lines)
+  "the Format sheet: a file's type, its comment's leader and the row a sheet's first line stands on, then each kind of line, its sheet and the line written out with holes"
+  (cells "Format"
+    ("A1" "type")       ("B1" type)
+    ("A2" "comment")    ("B2" comment)
+    ("A3" "first row")  ("B3" first-row)
+    ("A4" "line end")   ("B4" "LF")
+    ("A5" "sheet")      ("B5" "line"))
+  (each-index (place (tab template) lines 6)
+    (begin
+      (cell "Format" (&expand "A" place) tab)
+      (cell "Format" (&expand "B" place) template))))
+
 ; ---- the Write sheet (docs/SPEC.md section 3.9) ------------------------------------------
 ; A row a write, from its cell in column A: the sheet a value goes to; in column B its
 ; address, or a range every cell of which takes the value, while a test holds, and
@@ -364,10 +389,10 @@
 ; A board's interior (ENGINE.9): first-frame over every cell of a board but its border,
 ; one cell wide, which stays empty and reads as 0. The board's size comes first, its
 ; width and its height in cells, and not the sheet, so that a source states its board
-; once, as a parameter that hands the size on: (board-size interior sheet start rule)
-; becomes (interior 320 200 sheet start rule). A door builds the source on a larger board
-; by handing the pass a later definition of the parameter (docs/SPEC.md section 7.8), and the
-; same rule covers it. Its sheet is no first argument, so on cannot name it.
+; once, as parameters a macro hands on: (board-size interior sheet start rule) becomes
+; (interior 320 200 sheet start rule). A door builds the source on a larger board by
+; giving those parameters other values (docs/SPEC.md section 7.8), and the same rule
+; covers it. Its sheet is no first argument, so on cannot name it.
 
 (defmacro (interior width height sheet start rule)
   "first-frame over a board width by height cells, less its border: B2 to the cell before its last row and column"

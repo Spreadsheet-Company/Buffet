@@ -39,6 +39,8 @@ empty.*
 
 - ✅ **`HOUSE.2`, the pin to `alonzo` 0.4.0 — the engine at 0.4.0 and the language at `vla-lang` 0.14.0, the kit and the page copied again at `v0.4.0`, and the eight calls the new kit spells anew.** *Built 2026-11-18 at the owner's word, the day Alonzo released 0.4.0, as the pin to 0.3.0 was (`2213bf1`): what moved, what held, the loop oracle over the page and what arrived with it unasked are under THE ITEMS, SCOPED.* `alonzo = "=0.4.0"` and `vla-lang = "=0.14.0"`, the version that release pins, and the lock with them under crates.io's checksums; the kit and the page's template and three scripts copied again at `v0.4.0` (`6e7b659`), `check_vendored.ps1`'s tag and five digests read again off the tag; the seven Ledger `put`s written with their pieces named, and the content sheets' `labels-from` called by its verb, `labels`, the cartridge its source expanded byte for byte; and `check_web_offline.ps1` carrying Alonzo's three stores at the tag, a person's keymap's, a person's file's and a run's unsaved work's, so that the page's Save, which names `createObjectURL`, passes and a store a later tag adds fails by its name. The manifest stays `(spec 6)`. *Oracle, met:* `expand --check` `same` against the committed cartridge; 107 tests, every frame held and the describe golden unmoved; fmt and clippy clean; the checks and their controls ALL GREEN, the offline check's control twenty-two mutants; Alonzo's loop oracle at `v0.4.0` over the page built here, every case a game's page runs OK, eighteen at the first ratio and fifteen at the second, `grid` among them (`MISE.6`); the owner's hand test. `~hours`
 
+- ✅ **`HOUSE.2`, the pin to `alonzo` 0.5.0 — the engine at 0.5.0 and the language at `vla-lang` 0.15.0, the kit and the page copied again at `v0.5.0`, and the keep case back.** *Built 2026-11-24 at the owner's word, the day Alonzo released 0.5.0: "Alonzo 0.5.0 is live on GitHub and crates.io, so pin Buffet to the new version before recommending next steps for Buffet". What moved, what held, the loop check over the page and what arrived with it unasked are under THE ITEMS, SCOPED.* `alonzo = "=0.5.0"` and `vla-lang = "=0.15.0"`, the lock with them under crates.io's checksums; the kit, the template and the host copied again at `v0.5.0` (`5aab4c6`), the fake module and the viewport unchanged, `check_vendored.ps1`'s tag and three digests read again off the tag; no call spelled anew, the cartridge its source expanded byte for byte and the session's three files as they were; `check_web_offline.ps1` carrying Alonzo's open picker beside the save picker (`ENGINE.49`); and `tools/check_host_loop.ps1` at twenty cases, `clipboard` and `file` among them, with the keep case back in a run of its own, Alonzo's fix of the restore that lost an order's rows (`ENGINE.30`'s decision 13, Buffet's ask) its floors. The manifest stays `(spec 6)`. *Oracle:* `expand --check` `same`; 112 tests, every frame held and the describe golden unmoved; the replay's `--check` `same`; fmt and clippy clean; the checks and their controls ALL GREEN; every case of Buffet's page OK at both ratios, every restore of the session held; the owner's hand test. *Passed at the owner's hand test, 2026-11-24, but for two steps, a save opened on the Exam and no restore after it, each measured after and Alonzo's, the second the hand test's own step: "commit and push the pin".* `~hours`
+
   *Built 2026-11-18.* Predicted `~hours`; cost one sitting, after `PLATE.6`'s two commits were pushed at the owner's word: the pin, its checks, the offline check's stores, and the loop oracle run twice, over the page before the source's notes and after. What landed: `Cargo.toml`, `Cargo.lock`, `src/common.vla` and the page's four files; the eight calls, in `src/buffet.source.vla` and `src/kitchen.vla`; `tools/check_vendored.ps1`, `tools/check_web_offline.ps1` and `tools/run_checks.ps1`'s line for the latter's control; the source's notes; `README.md`, `OMAKASE.md` and this file. The module came out 2,258,410 bytes, 0.3.0's 1,866,609, and the page 4,670,699 characters, `PLATE.6`'s 3,897,066. *The owner's hand test, 2026-11-19:* passed, the notice of Autosave from a file excepted, which the owner's browser no longer shows: it answered Autosave at `ENGINE.38`'s hand test, and every page from a file shares the answer.
 
 ## 🍽 THE COURSES
@@ -9247,4 +9249,127 @@ exam answered and O pressed, the tab shown is the Portfolio.
 **The owner's look.** Passed, 2026-11-21: "Hand tests pass". The lead was built after it, its hand
 test one step: the certificate's O lands on the Portfolio; it passed too, and the item closed at the
 owner's word, "Passes, commit it".
+
+## `HOUSE.2` — the pin to `alonzo` 0.5.0: the engine at 0.5.0, the language at `vla-lang` 0.15.0, the kit and the page copied again at `v0.5.0`, and the keep case back
+
+*Built 2026-11-24 at the owner's word, the day Alonzo released 0.5.0: "Alonzo 0.5.0 is live on
+GitHub and crates.io, so pin Buffet to the new version before recommending next steps for Buffet."
+No decision was asked and nothing was minted; the manifest stays `(spec 6)`. Read for it: Alonzo's
+`RELEASES.md`, `## 0.5.0`, "For a game that carries the page"; Alonzo's `tools/check_web_offline.ps1`
+and `tools/check_host_loop.ps1` diffed between `v0.4.0` and `v0.5.0` before anything was copied,
+the 0.4.0 pin's lesson; and Alonzo's records of Buffet's `7ef30e6` over the release: the keep case
+over the owner's session holding 2,077 of its 2,079 restores without decision 13's line and all
+2,079 with it (`REARVIEW.md`, `ENGINE.30`), and the source expanding to its bytes under 0.15.0's
+rules (`RELEASES.md`, 0.5.0). Buffet stood at `7ef30e6`, three commits ahead of its origin, none
+pushed.*
+
+**The pins.** `alonzo = "=0.5.0"` and `vla-lang = "=0.15.0"`, the version that release pins, so
+that the lock holds one copy of the language; `cargo update -p alonzo -p vla-lang` moved the lock's
+two packages and nothing else, `alonzo`'s checksum `336006cd…` and `vla-lang`'s `a08a78a5…`, the
+one Alonzo's `check_engine_deps.ps1` pins. The oracle compiles with no port. `Cargo.toml`'s comment
+names what the two releases bring.
+
+**The copies.** Each read off the tag by `git show v0.5.0:<path>` in Alonzo's clone and written
+here byte for byte, the kit checked out CRLF and the page's files LF, as `.gitattributes` gives
+them; its SHA-256 and length over its LF text are `check_vendored.ps1`'s baseline. The kit 31,592
+bytes where 30,107 at `v0.4.0`, its gain `file-lines`, the Format sheet's verb; the template
+1,093,414 where 946,703; the host 237,358 where 209,349; the fake module and the viewport unchanged
+since `v0.4.0`, their digests the same.
+
+**No call spelled anew.** The kit spells no call anew, its notes say, and 0.15.0's rules (each
+macro defined once, no parameter at a list's head, no bare word in a formula, none of the prelude's
+list words defined again) find nothing in Buffet's source: `expand --check` says `same` against the
+committed `src/buffet.vla`, so no row of the cartridge moved and no expansion was written anew. The
+session's replay keeps its header, and `cargo run --example replay -- --check` says `same` for the
+replay, the golden and the hand. The source's banner gains this pin's line, a comment the pass drops.
+
+**What held.** 112 tests, the hand's 47 and the cartridge's 65, every frame of every session held
+to the hand, the owner's 132,945 among them; the cartridge's in 45.8 s by cargo's own threads, where
+they took 34.5 at `HOUSE.4`'s second slice, one run of each; and the describe golden unmoved. fmt
+and `clippy -D warnings` clean. The module, built from the registry crate under the workspace's
+release profile, is 2,614,394 bytes, 0.4.0's 2,258,410: 296 bytes over the 2,614,098 Alonzo built
+for its own page of the release, the paths the module names, as 0.4.0's stood 304 over. The page
+is 5,439,472 characters, the session's 4,788,334: the module's growth in base64, about 474,600, the
+template's and the host's 174,720, the kit's 1,485 and the banner's lines the rest.
+
+**The offline check.** Alonzo's rule at the tag names one thing more: since `ENGINE.49` a save of a
+file a cartridge reads is written into the file the person opened, through the handle the
+browser's open picker gave, so `showOpenFilePicker` is a way to a write and is named once, in
+`personFile()`, beside the save picker and the download's two names. Carried here, the header's
+stores saying so. Buffet's cartridge reads no file, so its Save writes a cartridge and asks where,
+as at 0.4.0. The control's twenty-nine mutants stand and fail by their words.
+
+**The loop check.** `tools/check_host_loop.ps1`'s case list follows Alonzo's at `v0.5.0`, whose
+judgment is `v0.4.0`'s unchanged: a game's page runs twenty cases where it ran eighteen,
+`clipboard` and `file` over the page's own cards, Brickwork's cut and Afterlife's reel left to
+Alonzo's page (`game 0`, `gate 0`), and the fifteen others say they are not on it. The keep case is
+back, a run of its own at the first ratio, its withholding taken out, and the save case grows a
+second save. Under headless Chrome 158, one browser at a time, none running before, every case OK
+at both ratios:
+- *the replay case*: the session's 132,945 frames in 9.2 s, 43,155 cells held at 685 frames, its
+  golden and its round, as at `HOUSE.4`'s second slice;
+- *the save case*: two saves where it made one, the second at the first frame at rest where an
+  order's derived writes wait, opened owing them as its run owes them (`owing 1`) and played on
+  beside the run, every frame compared the same (`owed 1`), 1,042 comparisons over 66,537 frames,
+  22.5 s;
+- *the keep case*: 2,081 restores held of 2,081, the two that parted at frames 4,544 and 36,032
+  among them, four owing the writes the run owed there (`owing 4`), and a keyframe taken where an
+  order's writes wait, restored at the next frame at rest, held (`owed 1`); 3,593 keyframes, 75.1 s.
+The four counts of decision 13 are floors, each at its first count. The check takes 113 s where it
+took 34, the keep case its longest; its control's five mutant pages fail as before, each by its
+words.
+
+**What arrived with the page, unasked.**
+- *Copy, cut and paste in the grid* (`ENGINE.39`): Ctrl+C on a view puts its cells on the clipboard
+  as Excel's text; Ctrl+V on a view is refused, the views being read-only, in the author's words a
+  key there meets (`MISE.6`), and on a model's sheet, shown from the box of hidden sheets, a paste is
+  a person's edit as a typed cell is: `PLATE.6`'s hand test's paste into `Orders!B49`, met (`MISE.6`).
+- *A held key's repeat* (`ENGINE.39`'s first slice): a game's command repeats at version 8 alone,
+  which a `(spec 6)` cartridge does not take; the page's next and previous sheet repeat.
+- *Save as* (`ENGINE.49`), Ctrl+Shift+S, beside Save; a cartridge's save asks where either way.
+- *A file's lines* (`CART.16`, version 9), a file read into a cartridge's sheets and written back,
+  which Buffet does not use.
+- *The language at 0.15.0*: a row that empties a cell (`KERNEL.46`), dynamic arrays whole
+  (`KERNEL.55`), a cell alone read in place (`KERNEL.74`), functions at expand time (`VLA.8`) and a
+  source's parameters (`VLA.11`); every answer of the cartridge the same to the bit, every frame held.
+
+**Found, none minted.**
+- *The suite's time*: the cartridge's tests 45.8 s where 34.5, one run of each, not traced; the
+  session's test sets it, as at `HOUSE.4`'s second slice.
+- *Delete writes the empty text still*: the page's `cellClearRow` at `v0.5.0` writes `""`, which
+  arithmetic reads as `#VALUE!`, though the language now empties a cell (`KERNEL.46`). Where Alonzo
+  moves Delete to the empty row, which its `ENGINE.39` record says Delete waits on, a Delete over a
+  model's number reads as 0, and `MISE.6`'s note of a Delete's `#VALUE!` moves with it.
+- *The Input tab*: not in 0.5.0, `make_own_sheets` filling the Input sheet only where the cartridge
+  holds none, so the tab stays the strip's eighth (`MISE.6`).
+- *A key or a paste on a view answered in an author's words*, at 0.5.0 too (`MISE.6`).
+- *`ERROR.TYPE` pinned and not taken*, at 0.15.0 too: the Errors sheet's row shown stays a value.
+- *A save opened on the Exam*, the hand test's (below): Alonzo's, the page's opening.
+- *The market's time watched after a load kept nowhere*, the hand test's (below): Alonzo's keeper by its design,
+  the owner's to weigh.
+
+**The owner's hand test.** 2026-11-24, the page from disk: passed at every step but two, the owner's
+words, "Buffet didn't restore on closing and reopening the tab, and opening from a save file opened
+on the Exam tab". Both measured after over the DevTools protocol, the same page from disk in fresh
+headless profiles of Chrome 158, Autosave turned on, the browser's two pickers stubbed so that Save
+and Open ran with no dialog:
+- *The save opened on the Exam.* Saved on the Portfolio at frame 748, past the opening bell, and
+  opened: the Exam shown. The page opens a version 4 cartridge on the sheet its Camera's third row
+  names, else on its first visible sheet (Alonzo's `Host.prototype._open`), and Buffet's Camera names
+  none between the cards, so every save past the bell opens on the first view, the Exam, where no
+  key is the game's.
+- *No restore.* The steps saved, opened the save and closed the tab, and the keeper keeps nothing of
+  a run no person has acted in since its load, a record a save leaves nothing unsaved dropped
+  (`WorkKeeper.prototype.tick`, Alonzo's `ENGINE.38`): with no act after the Open nothing was
+  offered, and a key on the Exam the save opened on is refused and is no act. With an act after the
+  Open, a game's key while the exam stood, the work was offered and restored, frame 962 from its
+  keyframe at frame 624, 338 frames played again in 85 ms, and offered again after the restore with
+  no act since. So the restore holds, and the step was the hand test's own: a restore follows an act
+  after the last Save or Open. What stands is that the market's time watched after a load is kept
+  nowhere, a game whose clock runs losing it with the tab.
+
+The rest passed: the exam by keys, the certificate's O landing on the Portfolio, a buy on Trading and
+its row on the Ledger, the Portfolio's cells copied as Excel's text and a paste on a view refused,
+and Save. The pin committed and pushed at the owner's word, "commit and push the pin", the two
+Founds minted after it.
 

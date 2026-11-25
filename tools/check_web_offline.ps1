@@ -67,7 +67,11 @@ the person saves, through showSaveFilePicker, createObjectURL and
 revokeObjectURL, in personFile() (ENGINE.5), whose object URL is no address on
 any network, so those three names are set aside before 'url(' is looked for;
 and a run's unsaved work, through indexedDB under navigator.locks, in
-workStore() (ENGINE.38). No source names another store: sessionStorage,
+workStore() (ENGINE.38). Since the pin to alonzo 0.5.0 (2026-11-24), Alonzo's
+rule at v0.5.0 beside them: a save of a file a cartridge reads is written into
+the file a person opened, through the handle the browser's open picker gave
+(ENGINE.49), so showOpenFilePicker is a way to a write too and is named once,
+in personFile(), with the three. No source names another store: sessionStorage,
 openDatabase, document.cookie, cookieStore, the Cache API's caches.,
 navigator.storage or showDirectoryPicker. So a store a later tag adds fails
 here by its name, as a reach out does.
@@ -113,13 +117,15 @@ $srcDir = Join-Path $repoRoot 'src'
 $tagTokens = @('<script src', '<script type="module" src', '<link ', '<img ', '<iframe', '<form', '<a href', '<video', '<audio', '<source', '<object', '<embed', '<meta http-equiv="refresh"')
 # Code and style that reach out: held on the template and on the three scripts the builder inlines.
 $codeTokens = @('fetch(', 'XMLHttpRequest', 'WebSocket', 'EventSource', 'sendBeacon', 'import(', 'importScripts', '@import', 'url(', 'http://', 'https://')
-# The stores (THE STORES above, Alonzo's at v0.4.0): no source names any of these. Compared without case.
+# The stores (THE STORES above, Alonzo's at v0.5.0): no source names any of these. Compared without case.
 $storageTokens = @('sessionStorage', 'openDatabase', 'document.cookie', 'cookieStore', 'caches.', 'navigator.storage', 'showDirectoryPicker')
 # A person's keymap (ENGINE.23): named once, in the template's browserStore(), and nowhere else.
 $keptStore = 'localStorage'
 # A person's file (ENGINE.5): the save picker and the download's object URL, each named once, in the template's
 # personFile(), and nowhere else; set aside before the code tokens are looked for, an object URL being no address.
-$keptFile = @('showSaveFilePicker', 'createObjectURL', 'revokeObjectURL')
+# Since the pin to alonzo 0.5.0 the open picker with them, its handle a way to a write, a save into the file opened
+# (ENGINE.49).
+$keptFile = @('showSaveFilePicker', 'showOpenFilePicker', 'createObjectURL', 'revokeObjectURL')
 # A run's unsaved work (ENGINE.38): the browser's database for pages and its Web Locks, each named once, in the
 # template's workStore(), and nowhere else.
 $keptWork = @('indexedDB', 'navigator.locks')

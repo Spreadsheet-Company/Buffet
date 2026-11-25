@@ -32,7 +32,7 @@ WHAT IT HOLDS, four things, none needing a host or the network:
      digest is of the LF text, as a replay's digest of its cartridge is; the
      length says how far a copy that fails is from the file.
   3. The tag the baseline names is Cargo.toml's pin of alonzo: alonzo =
-     "=0.4.0" is the tag v0.4.0. A pin moved without the copies fails here,
+     "=0.5.0" is the tag v0.5.0. A pin moved without the copies fails here,
      and so do copies moved without the pin.
   4. web/ holds the page's four files and nothing else but the page the
      builder writes there, web/index.html (.gitignore). REUSE.toml gives
@@ -86,14 +86,21 @@ $repoRoot = Split-Path -Parent $PSScriptRoot
 # (ENGINE.37) and shows the region it was viewed through (ENGINE.43), and
 # whose kit takes a put's pieces by name and has no walkers (KIT.6's second
 # and third slices and its held step): the kit and the page's four files
-# copied again at v0.4.0 (6e7b659). Each digest and length
+# copied again at v0.4.0 (6e7b659). 2026-11-24, the pin moved to alonzo 0.5.0
+# and the language to vla-lang 0.15.0, whose page goes on as a game went from a
+# save or kept work opened where its Write sheet waits (ENGINE.30's decision 13,
+# Buffet's ask), copies, cuts and pastes in the grid (ENGINE.39) and saves a
+# file a cartridge reads into the file opened (CART.16, ENGINE.49), and whose
+# kit gains file-lines: the kit, the template and host.js copied again at
+# v0.5.0 (5aab4c6); fake.js and viewport.js unchanged since v0.4.0, their
+# digests the same. Each digest and length
 # is `git show <tag>:<path> | sha256sum` and `| wc -c` in Alonzo's tree, the
 # blobs being stored LF.
-$tag = 'v0.4.0'
+$tag = 'v0.5.0'
 $baseline = @(
-    @{ File = 'src/common.vla'; From = 'cartridges/common.vla'; Sha256 = 'B1AF0FC441CE15E345917C72A7B686F476E6152F7A6B36B83E6A1E0C17FC4DFF'; Bytes = 30107 },
-    @{ File = 'web/index.template.html'; From = 'web/index.template.html'; Sha256 = '2E50E5B717FE9D3C5DF4E4F948C381BD84738A8609955A2F7BD91D5E08F36E9A'; Bytes = 946703 },
-    @{ File = 'web/host.js'; From = 'web/host.js'; Sha256 = 'FF1EAECC0125A3210CA423F7769BA7F4893633593BE082A7C6E0A01BF1175D08'; Bytes = 209349 },
+    @{ File = 'src/common.vla'; From = 'cartridges/common.vla'; Sha256 = '6680CA14029EC4849D7FA0C784318D5AE83202FB1B4828F13E362EF4DA59EB8F'; Bytes = 31592 },
+    @{ File = 'web/index.template.html'; From = 'web/index.template.html'; Sha256 = 'EEBBCE851EBE70F03241E18AEED3E71423696A9DB5C5998D26D4A7C63BFF77FA'; Bytes = 1093414 },
+    @{ File = 'web/host.js'; From = 'web/host.js'; Sha256 = 'CB70470B611F3146D12B29AE5EC2A51D553FA1D789A230A27743E323B25378CD'; Bytes = 237358 },
     @{ File = 'web/fake.js'; From = 'web/fake.js'; Sha256 = '088EDC0579941B1B1F6039A0CFDD47CB092C22B9836D8D83FA7FC8F1DF054593'; Bytes = 49732 },
     @{ File = 'web/viewport.js'; From = 'web/viewport.js'; Sha256 = '686226D40B42FFD32F1AFE38389D95BE2974701976486230644C5227C331A8EA'; Bytes = 158424 }
 )

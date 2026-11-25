@@ -108,6 +108,10 @@
 ;           does, drawn at the game's own zoom, 135%; the back office behind the box of
 ;           hidden sheets; and the certificate leading to the Portfolio again, its
 ;           prices moving from the first bell.
+;   HOUSE.2 the pin to alonzo 0.5.0: a save or a closed tab's work opened where an
+;           order's rows wait goes on as the game went, its ledger row written; the
+;           grid copies, cuts and pastes; and the kit's every call as it was, each row
+;           expanding to its bytes.
 ;
 ; The market's clock (BD-7). A frame is twenty seconds of the market's time in the
 ; regular session and two minutes between sessions, so at the manifest's rate of thirty
